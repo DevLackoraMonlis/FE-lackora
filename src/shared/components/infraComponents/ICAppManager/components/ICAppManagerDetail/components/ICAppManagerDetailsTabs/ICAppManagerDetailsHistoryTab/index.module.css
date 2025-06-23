@@ -1,0 +1,55 @@
+.input{
+    border-color: var(--mantine-color-gray-2);
+}
+
+[data-mantine-color-scheme='dark'] .input {
+    border-color: var(--mantine-color-gray-7);
+}
+
+.header, .pagination {
+    height: 56px;
+    background-color: var(--mantine-color-gray-1);
+}
+
+[data-mantine-color-scheme='dark'] .pagination {
+    background-color: var(--mantine-color-gray-8);
+}
+
+[data-mantine-color-scheme='dark'] .header {
+    background-color: var(--mantine-color-gray-8);
+}
+
+.header {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.table {
+    background-color: var(--mantine-color-white);
+    border-color: var(--mantine-color-gray-2);
+    border-radius: 8px;
+    tbody tr {
+        height: 56px;
+    }
+    thead tr th {
+        input {
+            background-color: var(--mantine-color-gray-1);
+        }
+    }
+    input {
+        border: 2px solid var(--mantine-color-gray-6);
+    }
+}
+
+[data-mantine-color-scheme='dark'] .table {
+    background-color: var(--mantine-color-black);
+    border-color: var(--mantine-color-gray-7);
+    thead tr th {
+        input {
+            background-color: var(--mantine-color-gray-8);
+        }
+    }
+    input {
+        border: 2px solid var(--mantine-color-gray-3);
+    }
+}

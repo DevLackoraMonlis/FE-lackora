@@ -1,0 +1,7 @@
+.activeButtonRoot {
+    border: none;
+}
+
+.validRoot, .activeRoot {
+    border-radius: 0.25rem;
+}

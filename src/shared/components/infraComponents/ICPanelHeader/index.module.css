@@ -1,0 +1,33 @@
+.cardHeader {
+    border-bottom: 1px solid var(--mantine-color-gray-2);
+}
+
+.cardTitle {
+    font-weight: bold;
+}
+
+[data-mantine-color-scheme='dark'] .cardHeader {
+    border-bottom: 1px solid var(--mantine-color-gray-9);
+}
+
+[data-mantine-color-scheme='dark'] .cardTitle {
+    color: white;
+}
+
+.generatePasswordBtn {
+    border-color: var(--mantine-color-gray-2);
+    background-color: var(--mantine-color-white);
+}
+
+[data-mantine-color-scheme='dark'] .generatePasswordBtn {
+    border-color: var(--mantine-color-gray-7);
+    background-color: var(--mantine-color-black);
+}
+
+.generatePasswordBtnText {
+    color: var(--mantine-color-gray-6);
+}
+
+[data-mantine-color-scheme='dark'] .generatePasswordBtnText {
+    color: var(--mantine-color-gray-3);
+}

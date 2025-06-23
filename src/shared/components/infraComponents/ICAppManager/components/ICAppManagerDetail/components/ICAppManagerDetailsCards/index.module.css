@@ -1,0 +1,9 @@
+.cardBox {
+	background-color: var(--mantine-color-white) !important;
+	gap: 12px;
+	border-radius: 4px;
+}
+
+[data-mantine-color-scheme='dark'] .cardBox {
+	background-color: var(--mantine-color-black) !important;
+}

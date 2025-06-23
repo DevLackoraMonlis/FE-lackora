@@ -1,0 +1,4 @@
+.notificationRoot {
+	background: var(--mantine-color-green-1);
+	border: 1px solid var(--mantine-color-green-6);
+}

@@ -1,0 +1,19 @@
+import * as React from "react";
+import type { Ref, SVGProps } from "react";
+import { forwardRef, memo } from "react";
+const SvgPw = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
+	<svg
+		xmlns="http://www.w3.org/2000/svg"
+		viewBox="0 0 16 10"
+		width="1em"
+		height="1em"
+		ref={ref}
+		{...props}
+	>
+		<path fill="#09F" d="M0 0h16v10H0z" />
+		<circle cx={7} cy={5} r={3} fill="#FF0" />
+	</svg>
+);
+const ForwardRef = forwardRef(SvgPw);
+const Memo = memo(ForwardRef);
+export default Memo;

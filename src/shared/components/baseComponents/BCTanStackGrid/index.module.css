@@ -1,0 +1,23 @@
+.agRow {
+	--ag-row-border-color: var(--mantine-color-gray-1) !important;
+}
+
+[data-mantine-color-scheme="dark"] .agRow {
+	--ag-row-border-color: var(--mantine-color-gray-8) !important;
+}
+
+.agCell {
+	--ag-cell-horizontal-border: 1px solid var(--mantine-color-gray-1) !important;
+}
+
+[data-mantine-color-scheme="dark"] .agCell {
+	--ag-cell-horizontal-border: 1px solid var(--mantine-color-gray-8) !important;
+}
+
+.agTable {
+	border: 1px solid var(--mantine-color-gray-1);
+}
+
+[data-mantine-color-scheme="dark"] .agTable {
+	border: 1px solid var(--mantine-color-gray-8);
+}

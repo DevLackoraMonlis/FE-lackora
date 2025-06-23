@@ -1,0 +1,286 @@
+import type { CustomError } from "@/http/end-points/GeneralService.types";
+import dayjs from "dayjs";
+import { isNumber } from "lodash";
+
+export function capitalizeFirstLetter(string: string) {
+	return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+export function copyToClipboard(text: string): void {
+	if (navigator.clipboard) {
+		void navigator.clipboard.writeText(text);
+	} else {
+		unsecuredCopyToClipboard(text);
+	}
+}
+
+type ValidationOptions = {
+	required?: boolean;
+	minLength?: number;
+	maxLength?: number;
+	mustBeNumber?: boolean;
+	onlyNumbers?: boolean;
+	onlyEnglishChars?: boolean;
+	onlyEnglishWithSpaces?: boolean;
+	mustBeNonEmptyArray?: boolean;
+	mustBeEmail?: boolean;
+	mustContainSpecialChars?: boolean;
+};
+
+export function validateInput(
+	value: unknown,
+	options: ValidationOptions = {},
+): string | null {
+	const {
+		required,
+		minLength,
+		maxLength,
+		mustBeNumber,
+		onlyNumbers,
+		onlyEnglishChars,
+		onlyEnglishWithSpaces,
+		mustBeNonEmptyArray,
+		mustBeEmail,
+		mustContainSpecialChars,
+	} = options;
+
+	// Array validation
+	if (mustBeNonEmptyArray) {
+		if (!Array.isArray(value)) {
+			return "Value must be an array";
+		}
+		if (value.length === 0) {
+			return "Array must not be empty";
+		}
+		return null;
+	}
+
+	// Required check
+	if (required) {
+		if (typeof value !== "string" || value.trim() === "") {
+			return "Value is required";
+		}
+	}
+
+	if (typeof value !== "string") {
+		return "Value must be a string";
+	}
+
+	if (mustBeEmail) {
+		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+		if (!emailRegex.test(value)) {
+			return "Value must be a valid email address";
+		}
+	}
+
+	if (minLength !== undefined && value.length < minLength) {
+		return `Minimum length is ${minLength} characters`;
+	}
+
+	if (maxLength !== undefined && value.length > maxLength) {
+		return `Maximum length is ${maxLength} characters`;
+	}
+
+	if (mustBeNumber && isNaN(Number(value))) {
+		return "Value must be a valid number";
+	}
+
+	if (onlyNumbers && !/^\d+$/.test(value)) {
+		return "Value must contain only numeric digits";
+	}
+
+	if (onlyEnglishChars && !/^[A-Za-z]+$/.test(value)) {
+		return "Value must contain only English letters (no spaces)";
+	}
+
+	if (onlyEnglishWithSpaces && !/^[A-Za-z\s]+$/.test(value)) {
+		return "Value must contain only English letters and spaces";
+	}
+
+	if (mustContainSpecialChars) {
+		// Define special characters commonly used in passwords
+		const specialCharRegex = /[!@#$%^&*()\[\]{}\-_+=~`:;"'<>,.?\\/|]/;
+		if (!specialCharRegex.test(value)) {
+			return "Value must contain at least one special character";
+		}
+	}
+
+	return null;
+}
+
+export function unsecuredCopyToClipboard(text: string | number) {
+	const textArea = document.createElement("textarea");
+	textArea.value = text.toString();
+	document.body.appendChild(textArea);
+	textArea.focus({ preventScroll: true });
+	textArea.select();
+	try {
+		document.execCommand("copy");
+	} catch (err) {
+		console.error("Unable to copy to clipboard", err);
+	}
+	document.body.removeChild(textArea);
+}
+
+export function normalizeForFlag(string?: string) {
+	if (!string) return "";
+	return string.charAt(0).toUpperCase() + string.charAt(1).toLowerCase();
+}
+
+export function objectToSelectOptions<T>(
+	value: Record<string, string | number>,
+	fieldName = "value",
+) {
+	return Object.keys(value)
+		.filter((key) => Number.isNaN(Number(key)))
+		.map((key) => ({
+			label: key,
+			[fieldName]: value[key],
+		})) as T[];
+}
+
+export function basicBrowserDownload(url: string, fileName: string) {
+	const a = window.document.createElement("a");
+	a.style.setProperty("display", "none");
+	a.download = fileName;
+	a.href = url;
+	document.body.appendChild(a);
+	a.click();
+	document.body.removeChild(a);
+	a.remove();
+}
+
+export const getErrorMessage = (error: CustomError) => {
+	if (Array.isArray(error.response?.data?.detail)) {
+		return error.response?.data?.detail?.[0]?.msg;
+	}
+	return error.response?.data?.detail || "Unhandled Error";
+};
+
+export function isValidJson(str: string) {
+	try {
+		JSON.parse(str);
+		return true;
+	} catch (e) {
+		console.log(e);
+		return false;
+	}
+}
+
+type EnumRecord = Record<string, string | number>;
+
+export function enumToRecord(e: EnumRecord): EnumRecord {
+	const record: EnumRecord = {};
+	for (const [key, value] of Object.entries(e)) {
+		record[key] = value;
+	}
+	return record;
+}
+export function getEnumKeyByValue(
+	value: string,
+	enumObject: EnumRecord,
+): string | undefined {
+	const entries = Object.entries(enumObject);
+	for (const [key, val] of entries) {
+		if (val === value) {
+			return key;
+		}
+	}
+	return undefined; // if the value is not found
+}
+
+export function objectToBase64<T>(obj: T) {
+	return Buffer.from(JSON.stringify(obj), "utf8").toString("base64");
+}
+
+export function base64ToObject<T>(base64String: string) {
+	// Decode the base64 string to JSON string
+	const jsonString = atob(base64String);
+
+	// Parse the JSON string back to an object
+	return JSON.parse(jsonString) as T;
+}
+
+// Testing the function
+
+export function validateIP(ipAddress: string) {
+	const ipv4Regex =
+		/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+
+	return ipv4Regex.test(ipAddress);
+}
+
+export function validateFQDN(FQDNAddress: string) {
+	const FQDNAdress =
+		/^(?=.{1,253}$)(([a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,})\.?$/;
+	return FQDNAdress.test(FQDNAddress);
+}
+
+export function validateWildCard(wildCard: string) {
+	const WildCardAdress = /(.+?)(?=\.)/;
+	return WildCardAdress.test(wildCard);
+}
+
+export function validateAddress(address: string) {
+	const addressRegex =
+		/^(?=.{1,253}$)(([a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,})\.?$/;
+
+	return addressRegex.test(address);
+}
+
+export function validatePort(value: string | number) {
+	const convertType = Number(value);
+	if (Number.isNaN(convertType)) {
+		return "Port must be number";
+	}
+	if ((value && +value < 0) || (value && +value > 65535)) {
+		return "Port must be between 0 and 65535";
+	}
+	return null;
+}
+
+export function getValueType(
+	value: string,
+): "string" | "number" | "date" | "ip" {
+	if (validateIP(value)) {
+		return "ip";
+	}
+	if (dayjs(value, "YYYY-MMM-DD", true).isValid()) {
+		return "date";
+	}
+	if (isNumber(value)) {
+		return "number";
+	}
+	return "string";
+}
+
+export function PercentageConversion(value: number, total: number) {
+	if (!total) {
+		return 0;
+	}
+	return (value / total) * 100;
+}
+
+export function JsonParse<T extends object>(value?: string): T | undefined {
+	if (!value) return undefined;
+	let result: T | undefined;
+	try {
+		result = JSON.parse(value);
+		if (!result) {
+			result = undefined;
+		}
+		if (typeof result !== "object") {
+			result = undefined;
+		}
+	} catch (_err) {
+		result = undefined;
+	}
+	return result;
+}
+
+export function numberToLocaleString(value: string | number) {
+	if (isNumber(+value)) {
+		return (+value).toLocaleString();
+	}
+	return value;
+}

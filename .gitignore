@@ -1,0 +1,50 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+/test-results
+/allure-results
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+.lh
+*.csv
+=======
+/logs
+
+# testing
+/coverage
+.idea
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# local env files
+.env*.local
+
+debug.log
+
+
+# vercel
+.vercel
+.vscode
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# Playwright
+node_modules/
+/playwright-report/
+/blob-report/
+/playwright/.cache/

@@ -1,0 +1,49 @@
+/* react-flow styles */
+
+html,
+body {
+	height: 100%;
+}
+
+input {
+	background-color: light-dark(
+		var(--mantine-color-white),
+		var(--mantine-color-black)
+	);
+}
+
+.rc-tree-checkbox {
+	width: 21px !important;
+	height: 21px !important;
+	background-image: url("../../public/images/check-box-empty.svg") !important;
+	background-position: 0 !important;
+	margin-top: 2px !important;
+}
+
+.rc-tree-checkbox.rc-tree-checkbox-checked {
+	background-image: url("../../public/images/check-box-checked.svg") !important;
+}
+
+.rc-tree-title {
+	font-size: 14px;
+}
+
+.rc-tree-switcher_open,
+.rc-tree-switcher_close {
+	background-image: none !important;
+}
+
+.rc-tree-iconEle {
+	background: none !important;
+	width: 4px !important;
+	height: 0 !important;
+}
+
+.rc-tree-node-selected {
+	background-color: var(--mantine-color-primary-1);
+	box-shadow: var(--mantine-color-primary-1);
+	border-radius: 4px;
+}
+.rc-tree-node-content-wrapper {
+	display: inline !important;
+}

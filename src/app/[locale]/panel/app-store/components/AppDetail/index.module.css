@@ -1,0 +1,21 @@
+.linkClass {
+	text-decoration: none;
+}
+
+.linkClass:visited {
+	color: light-dark(
+		var(--mantine-color-primary-6),
+		var(--mantine-color-primary-3)
+	);
+}
+
+.link {
+	color: light-dark(
+		var(--mantine-color-primary-4),
+		var(--mantine-color-primary-2)
+	);
+}
+
+.title {
+	color: light-dark(var(--mantine-color-gray-6), var(--mantine-color-gray-3)) !important;
+}

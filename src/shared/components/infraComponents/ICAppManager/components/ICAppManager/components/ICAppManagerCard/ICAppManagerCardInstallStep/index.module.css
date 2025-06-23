@@ -1,0 +1,21 @@
+.InstallStepRoot {
+    border-radius: 0.5rem;
+}
+
+.progress {
+    background-color: var(--mantine-color-white);
+}
+
+[data-mantine-color-scheme='dark'] .progress {
+	background-color: var(--mantine-color-black);
+}
+
+.installStepText {
+    display: block;
+    display: -webkit-box;
+    max-width: 100%;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

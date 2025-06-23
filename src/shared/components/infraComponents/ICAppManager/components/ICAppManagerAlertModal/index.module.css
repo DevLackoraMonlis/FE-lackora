@@ -1,0 +1,41 @@
+
+.alertHeader {
+    /* height: 49px; */
+    padding: 12px 16px !important;
+    background-color: #E02D3C;
+    color: #fafafa;
+}
+
+.alertHeader h2 {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.alertHeader svg {
+    color: #fafafa;
+}
+
+.alertHeader button:hover {
+    background-color: transparent;
+}
+
+.PluginLicenseSupportAlertContent {
+    border-radius: 0.5rem;
+}
+
+.PluginLicenseSupportAlertBody {
+    height: 17.313rem;
+    padding: 2rem 1.5rem;
+}
+
+.PluginManagerLicenseButton {
+    border: 1px solid #41454D;
+    background-color: white;
+    border-radius: 0.25rem;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.PluginManagerLicenseButton:hover {
+    background-color: transparent;
+}

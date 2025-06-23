@@ -1,0 +1,10 @@
+.actionIconRoot {
+    background-color: #FF6600;
+    width: 2.25rem;
+    height: 2.25rem;
+    border: 1px solid #E1E2F0;
+    border-radius: 0.25rem;
+}
+.actionIconRoot:hover {
+    background-color: #FF6600;
+}

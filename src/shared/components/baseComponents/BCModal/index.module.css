@@ -1,0 +1,34 @@
+.root {
+	border-radius: 16px;
+}
+
+.body {
+	background-color: light-dark(
+		var(--mantine-color-gray-1),
+		var(--mantine-color-gray-8)
+	);
+	padding: 0 !important;
+	position: relative;
+	height: calc(100% - 60px);
+	overflow: auto;
+}
+
+.title {
+	font-weight: 700;
+	font-size: 16px;
+}
+
+.footer {
+	background-color: light-dark(
+		var(--mantine-color-white),
+		var(--mantine-color-black)
+	);
+	height: 60px;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	z-index: 2;
+	border-top: 1px solid
+		light-dark(var(--mantine-color-gray-2), var(--mantine-color-gray-7));
+}

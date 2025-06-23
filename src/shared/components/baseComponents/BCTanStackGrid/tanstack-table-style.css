@@ -1,0 +1,139 @@
+/* Define variables */
+:root {
+	--tanstack-border-color: #cacbe0;
+	--tanstack-resizer-color: #a8a9bc;
+	--tanstack-header-color: #f2f3fa;
+	--tanstack-row-hight: 43px;
+	--tanstack-header-hight: 50px;
+}
+
+.ellipsis {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	width: 100%;
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+	font-family: inherit;
+	table-layout: fixed;
+}
+
+thead {
+	height: var(--tanstack-header-hight);
+	background-color: var(--mantine-color-gray-1);
+}
+
+[data-mantine-color-scheme="dark"] thead {
+	background-color: var(--mantine-color-gray-8);
+}
+
+tr,
+.tr {
+	width: fit-content;
+	border-bottom: 1px solid var(--tanstack-border-color);
+}
+
+tbody tr {
+	background: var(--mantine-color-white);
+}
+
+[data-mantine-color-scheme="dark"] tbody tr {
+	background: var(--mantine-color-black);
+}
+
+th {
+	border-bottom: 1px solid var(--tanstack-border-color);
+	border-left: 1px solid var(--tanstack-border-color);
+	padding: 2px 4px;
+	text-align: left;
+}
+
+th:hover {
+	background-color: var(--mantine-color-white);
+	color: var(--mantine-color-gray-7);
+}
+
+[data-mantine-color-scheme="dark"] th:hover {
+	background-color: var(--mantine-color-black);
+	color: var(--mantine-color-gray-2);
+}
+
+td {
+	padding: 6px;
+	/*border-bottom: 1px solid var(--tanstack-border-color);*/
+	/*border-left: 1px solid var(--tanstack-border-color);*/
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+tbody td:hover {
+	background-color: var(--mantine-color-gray-1);
+	color: var(--mantine-color-gray-7);
+}
+
+[data-mantine-color-scheme="dark"] tbody td:hover {
+	background-color: var(--mantine-color-gray-8);
+	color: var(--mantine-color-gray-2);
+}
+
+td p {
+	font-size: var(--mantine-font-size-sm);
+}
+
+.container {
+	border: 1px solid var(--tanstack-border-color);
+	border-radius: 8px 8px 0 0;
+}
+
+.tanstackTableTheme {
+	text-align: center;
+}
+
+.defaultTdChild {
+	height: 100%;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	width: 100%;
+}
+
+.defaultNonStyleChild {
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+}
+
+.resizer {
+	position: absolute;
+	top: 0;
+	height: 100%;
+	width: 4px;
+	background: var(--tanstack-resizer-color);
+	cursor: col-resize;
+	user-select: none;
+	touch-action: none;
+}
+
+.resizer.ltr {
+	right: 0;
+}
+
+.resizer.isResizing {
+	background: var(--tanstack-resizer-color);
+	opacity: 1;
+}
+
+@media (hover: hover) {
+	.resizer {
+		opacity: 0;
+	}
+
+	*:hover > .resizer {
+		opacity: 1;
+	}
+}

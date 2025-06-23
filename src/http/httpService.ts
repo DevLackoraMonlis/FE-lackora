@@ -1,0 +1,193 @@
+import { getHttpRequestXNonce } from "@/app/actions/get-http-request-x-nonce";
+import type { Token } from "@/http/generated/models";
+import { AppRoutes } from "@/shared/constants/app-routes";
+import envStore from "@/shared/stores/envStore";
+import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
+import axios from "axios";
+import type { Session } from "next-auth";
+import { getSession, signIn, signOut } from "next-auth/react";
+
+export type SessionUserType = {
+	data: Token;
+	name?: string;
+};
+
+type SessionType = Session & {
+	user: SessionUserType;
+};
+
+type QueueRequest = {
+	resolve: (value: AxiosResponse) => void;
+	reject: (reason?: unknown) => void;
+};
+
+class HttpService {
+	private readonly axiosService: AxiosInstance;
+	private isRefreshing = false;
+	private failedQueue: QueueRequest[] = [];
+
+	private sessionCache: {
+		value: SessionType | null;
+		timestamp: number | null;
+	} = { value: null, timestamp: null };
+	private readonly CACHE_DURATION = 60 * 60 * 1000; // 60 minutes in milliseconds
+
+	constructor() {
+		this.axiosService = axios.create({
+			headers: {
+				"Content-Type": "application/json",
+			},
+		});
+
+		this.axiosService.interceptors.response.use(
+			(successResponse) => successResponse,
+			async (failedResponse) => {
+				const { status } = failedResponse.response;
+				const originalRequest = failedResponse.config;
+				const session = await getSession();
+				const sessionToken = session?.user as SessionUserType;
+				const refreshToken = sessionToken?.data.refresh_token;
+				const name = sessionToken?.name;
+
+				if (status === 401 && refreshToken) {
+					if (!this.isRefreshing) {
+						this.isRefreshing = true;
+
+						try {
+							const response = await signIn("credentials", {
+								redirect: false,
+								password: "",
+								refreshToken,
+								username: name,
+							});
+
+							if (!response?.ok) {
+								this.processQueue(null, response?.error);
+								void signOut({ redirect: true, callbackUrl: AppRoutes.login });
+								return Promise.reject(response?.error);
+							}
+
+							this.processQueue(response, null);
+							this.isRefreshing = false;
+
+							return this.axiosService(originalRequest);
+						} catch (refreshError) {
+							console.error("Failed to refresh token:", refreshError);
+							this.processQueue(null, refreshError);
+							this.isRefreshing = false;
+							void signOut({ redirect: true, callbackUrl: AppRoutes.login });
+							return Promise.reject(refreshError);
+						}
+					}
+
+					return new Promise<AxiosResponse>((resolve, reject) => {
+						this.failedQueue.push({ resolve, reject });
+					})
+						.then((tokenResponse) => {
+							const res = tokenResponse as { access_token?: string };
+							originalRequest.headers.Authorization = `Bearer ${res?.access_token}`;
+							return this.axiosService(originalRequest);
+						})
+						.catch((err) => Promise.reject(err));
+				}
+
+				return Promise.reject(failedResponse);
+			},
+		);
+
+		this.axiosService.interceptors.request.use(async (request) => {
+			const session = await this.getCachedSession();
+			const xNonce = await getHttpRequestXNonce({
+				method: request.method || "GET",
+				route: request.url || "",
+			});
+
+			const sessionToken = session?.user as SessionUserType;
+			if (sessionToken) {
+				request.headers.Authorization = `Bearer ${sessionToken?.data?.access_token}`;
+				request.headers["x-nonce"] = xNonce.data;
+			}
+			return request;
+		});
+	}
+
+	private processQueue(tokenResponse: unknown, error: unknown) {
+		this.failedQueue.forEach(({ resolve, reject }) => {
+			if (tokenResponse) {
+				resolve(tokenResponse as AxiosResponse);
+			} else {
+				reject(error);
+			}
+		});
+		this.failedQueue = [];
+	}
+
+	private async getCachedSession() {
+		const now = Date.now();
+
+		if (
+			this.sessionCache.value?.user?.data?.access_token &&
+			this.sessionCache.timestamp &&
+			now - this.sessionCache.timestamp < this.CACHE_DURATION
+		) {
+			return this.sessionCache.value;
+		}
+
+		// Otherwise, fetch fresh session and cache it
+		const session = (await getSession()) as SessionType | null;
+		this.sessionCache = {
+			value: session,
+			timestamp: now,
+		};
+		return session;
+	}
+
+	async get<T>(
+		url: string,
+		config?: AxiosRequestConfig,
+	): Promise<AxiosResponse<T>> {
+		return this.axiosService.get(
+			`${envStore.getState().envs.baseUrl}${url}`,
+			config,
+		);
+	}
+
+	async post<T>(
+		url: string,
+		data?: unknown,
+		config?: AxiosRequestConfig,
+	): Promise<AxiosResponse<T>> {
+		return this.axiosService.post(
+			`${envStore.getState().envs.baseUrl}${url}`,
+			data,
+			config,
+		);
+	}
+
+	async put<T>(
+		url: string,
+		data?: unknown,
+		config?: AxiosRequestConfig,
+	): Promise<AxiosResponse<T>> {
+		return this.axiosService.put(
+			`${envStore.getState().envs.baseUrl}${url}`,
+			data,
+			config,
+		);
+	}
+
+	async delete<T>(
+		url: string,
+		config?: AxiosRequestConfig,
+	): Promise<AxiosResponse<T>> {
+		return this.axiosService.delete(
+			`${envStore.getState().envs.baseUrl}${url}`,
+			config,
+		);
+	}
+}
+
+// Create an instance of HttpService with the ApiDefaultError type
+const httpService = new HttpService();
+
+export { httpService };

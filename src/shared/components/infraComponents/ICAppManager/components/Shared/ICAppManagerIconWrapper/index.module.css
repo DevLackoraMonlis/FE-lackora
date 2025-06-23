@@ -1,0 +1,21 @@
+.iconCard {
+    border: 1px solid #E1E2F0;
+    background-color: #F7F8FC;
+    border-radius: 0.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.installBadge {
+    position: absolute;
+    right: -10px;
+    bottom: -10px;
+}
+
+.newBadge {
+    position: absolute;
+    right: -10px;
+    top: -10px;
+}

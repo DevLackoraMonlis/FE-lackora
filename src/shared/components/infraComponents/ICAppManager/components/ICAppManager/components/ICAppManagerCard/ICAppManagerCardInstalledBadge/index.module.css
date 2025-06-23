@@ -1,0 +1,27 @@
+.installBadgeRoot {
+    position: absolute;
+    right: -8px;
+    bottom: -8px;
+    background-color: white;
+    border: 1px solid gray;
+}
+
+.LargeInstallBadgeRoot {
+    background-color: #424466;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ffff;
+}
+
+.installBadgeLabel,.LargeInstallBadgeLabel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.installBadgeLabel svg {
+    width: 1rem !important;
+    height: 1rem !important;
+}
+

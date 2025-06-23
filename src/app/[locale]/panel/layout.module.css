@@ -1,0 +1,19 @@
+.layoutBody {
+	height: calc(100% - 48px);
+	background-color: var(--mantine-color-black);
+}
+
+.layoutBodyContainer {
+	background-color: var(--mantine-color-white);
+	overflow: auto;
+	border: 1px solid var(--mantine-color-white);
+	border-radius: 16px 0;
+	padding: var(--mantine-spacing-xs);
+}
+
+.aboutHeader {
+	padding: 8px;
+	color: var(--mantine-color-white);
+	background-color: var(--mantine-color-gray-6);
+	border-radius: 8px 8px 0 0;
+}
