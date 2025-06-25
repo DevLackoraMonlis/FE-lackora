@@ -6,8 +6,8 @@ import { useContext } from "react";
 type Props = {
 	pluginName: string;
 	moduleName: string;
-	userPlugins: string[];
-	userPluginModules: string[];
+	userApps: string[];
+	userAppModules: string[];
 	onRedirectToPluginPage: () => void;
 	loading?: boolean;
 };
@@ -16,7 +16,7 @@ export default function ICAppManagerDetailPage(props: Props) {
 	const { apps } = useContext(ICAppManagerContext);
 
 	const getPlugin = apps.find((plugin) => plugin.name === props.pluginName);
-	const getUserPlugin = props.userPlugins.find(
+	const getUserPlugin = props.userApps.find(
 		(plugin) => plugin === props.pluginName,
 	);
 
@@ -40,7 +40,7 @@ export default function ICAppManagerDetailPage(props: Props) {
 	const getModule = getPlugin.modules.find(
 		(module) => module.name === props.moduleName,
 	);
-	const getUserPluginModule = props.userPluginModules.find(
+	const getUserPluginModule = props.userAppModules.find(
 		(module) => module === props.moduleName,
 	);
 

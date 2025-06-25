@@ -6,9 +6,9 @@ import { getHotkeyHandler } from "@mantine/hooks";
 import { IconSearch } from "@tabler/icons-react";
 import React, { useEffect } from "react";
 import type {
-	AppManagerHistoryRs,
 	ICAppManagerAxiosApiFn,
 	ICAppManagerHistoryRq,
+	ICAppManagerHistoryRs,
 	PaginationRs,
 } from "../../../../../index.types";
 import { useHistoryTableColumns } from "./index.hooks";
@@ -18,7 +18,7 @@ type Props = {
 	name?: string;
 	getPluginHistory: ICAppManagerAxiosApiFn<
 		ICAppManagerHistoryRq,
-		PaginationRs<AppManagerHistoryRs>
+		PaginationRs<ICAppManagerHistoryRs>
 	>;
 };
 
@@ -74,7 +74,7 @@ export default function ICAppManagerDetailsHistoryTab(props: Props) {
 				</ActionIcon>
 			</Flex>
 			<Flex w="100%" direction="column" h="677px">
-				<BCTanStackGrid<AppManagerHistoryRs>
+				<BCTanStackGrid<ICAppManagerHistoryRs>
 					{...tablePagination}
 					withRowBorders
 					idAccessor={"id"}

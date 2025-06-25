@@ -26,7 +26,7 @@ type Props = {
 	submitApi: ICAppManagerProps["submitActivateAppApi"];
 	onRequestPurchase?: ICAppManagerProps["onRequestPurchase"];
 	showSupportLicenseError: boolean;
-	permissions: ModulePermissionRs;
+	permissions?: ModulePermissionRs;
 };
 
 export default function AppManagerCard(props: Props) {
@@ -55,7 +55,6 @@ export default function AppManagerCard(props: Props) {
 		if (!props.cardData.isInstalled) {
 			return (
 				<ICAppManagerCardNotInstalledApp
-					permissions={props.permissions}
 					openLicenseModal={props.openLicenseModal}
 					isExpiredLicenseSupport={props.showSupportLicenseError}
 					openActivateModalModal={handlerActivateModalModal.open}
@@ -79,7 +78,6 @@ export default function AppManagerCard(props: Props) {
 		) {
 			return (
 				<ICAppManagerCardExpiredApp
-					permissions={props.permissions}
 					openLicenseModal={props.openLicenseModal}
 					isExpiredLicenseSupport={props.cardData.isExpiredLicenseSupport}
 					isExpiredCommercial={props.cardData.isExpiredCommercial}

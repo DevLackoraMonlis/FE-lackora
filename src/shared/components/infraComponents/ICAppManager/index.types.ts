@@ -129,13 +129,19 @@ export type ModulePermissionRs = {
 	[key: string]: boolean;
 };
 
+export type ICAppManagerActivationRs = {
+	message?: string;
+	activation_code?: string;
+	activation_time?: string;
+};
+
 export type ICAppManagerProps = {
 	onGotoLicenseManagement: () => void;
 	showSupportLicenseError: boolean;
 	onRequestPurchase?: (pluginName: string) => void;
 	submitActivateAppApi: ICAppManagerAxiosApiFn<
 		{ name: string; activationCode: string },
-		Record<string, boolean>
+		ICAppManagerActivationRs
 	>;
 	// checkSupportLicenseApi: PluginAxiosApiFn<undefined, { expireDate: string }>;
 	getAppsApi: ICAppManagerAxiosApiFn<ICAppManagerRq, ICAppManagerPaginationRs>;
@@ -143,7 +149,7 @@ export type ICAppManagerProps = {
 	// getAllPluginsPayload: PluginManagerRq;
 	onClick: ICAppManagerCardProps["onClick"];
 	onShowNotification: ICAppManagerCardProps["onShowNotification"];
-	permissions: ModulePermissionRs;
+	permissions?: ModulePermissionRs;
 };
 
 export type PaginationRs<T> = {
@@ -161,7 +167,7 @@ export type PaginationRq = {
 	search?: string;
 };
 
-export type AppManagerHistoryRs = {
+export type ICAppManagerHistoryRs = {
 	id: string;
 	user: string;
 	createdTime: string;
@@ -182,7 +188,7 @@ export type ICAppManagerDetailsProps = {
 	getAppDetails: ICAppManagerProps["getAppApi"];
 	getAppHistory: ICAppManagerAxiosApiFn<
 		ICAppManagerHistoryRq,
-		PaginationRs<AppManagerHistoryRs>
+		PaginationRs<ICAppManagerHistoryRs>
 	>;
 	name: string;
 } & Pick<

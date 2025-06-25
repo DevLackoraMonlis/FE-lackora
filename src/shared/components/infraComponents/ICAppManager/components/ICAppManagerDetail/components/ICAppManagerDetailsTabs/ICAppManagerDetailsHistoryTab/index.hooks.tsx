@@ -1,9 +1,9 @@
 import { Text } from "@mantine/core";
 import type { DataTableColumn } from "mantine-datatable";
-import type { AppManagerHistoryRs } from "../../../../../index.types";
+import type { ICAppManagerHistoryRs } from "../../../../../index.types";
 
 export const useHistoryTableColumns = () => {
-	const columns: DataTableColumn<AppManagerHistoryRs>[] = [
+	const columns: DataTableColumn<ICAppManagerHistoryRs>[] = [
 		{
 			accessor: "createdTime",
 			title: "Date and Time",

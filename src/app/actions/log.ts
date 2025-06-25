@@ -1,6 +1,6 @@
 "use server";
 
-import { serverLogger } from "@/app/lib/logger/serverLogger";
+import { serverLogger } from "@/shared/lib/logger/serverLogger";
 
 export async function logClientEvent(
 	level: "error" | "warn" | "info" | "debug",

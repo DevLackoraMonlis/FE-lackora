@@ -36,7 +36,8 @@ export default function AppModule() {
 					getUserPluginsQuery.isLoading || getUserPluginsQuery.isFetching
 				}
 				appName={appName.replaceAll("%20", " ")}
-				userAppModules={appModules?.modules || []}
+				//todo modules type
+				userAppModules={(appModules?.modules as string[]) || []}
 				appModuleName={appModuleName.replaceAll("%20", " ")}
 				userAvailableApps={
 					getUserPluginsQuery.data?.data?.plugins?.map((item) => item.name) ||

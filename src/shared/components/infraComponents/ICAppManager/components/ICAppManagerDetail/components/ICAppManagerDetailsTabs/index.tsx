@@ -2,9 +2,9 @@ import ICAppManagerDetailsHistoryTab from "@/shared/components/infraComponents/I
 import ICAppManagerDetailsSummaryTab from "@/shared/components/infraComponents/ICAppManager/components/ICAppManagerDetail/components/ICAppManagerDetailsTabs/ICAppManagerDetailsSummaryTab";
 import { Tabs, Text } from "@mantine/core";
 import type {
-	AppManagerHistoryRs,
 	ICAppManagerAxiosApiFn,
 	ICAppManagerHistoryRq,
+	ICAppManagerHistoryRs,
 	PaginationRs,
 } from "../../../../index.types";
 import { pluginDetailsEnum } from "../index.types";
@@ -16,7 +16,7 @@ type Props = {
 	name?: string;
 	getPluginHistory: ICAppManagerAxiosApiFn<
 		ICAppManagerHistoryRq,
-		PaginationRs<AppManagerHistoryRs>
+		PaginationRs<ICAppManagerHistoryRs>
 	>;
 };
 

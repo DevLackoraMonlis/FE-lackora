@@ -33,8 +33,12 @@ async function logout(refreshToken: string) {
 	});
 }
 
-async function getNonce({ xNonceAuthenticate, ...params }: GetNonceRq) {
-	return axios.get<string>(`${CoreControllerPath}/get-nonce`, {
+async function getNonce({
+	xNonceAuthenticate,
+	baseUrl,
+	...params
+}: GetNonceRq) {
+	return axios.get<string>(`${baseUrl}/${CoreControllerPath}/get-nonce`, {
 		params,
 		headers: {
 			"x-nonce-authenticate": xNonceAuthenticate,

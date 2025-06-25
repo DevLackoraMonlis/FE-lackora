@@ -2,7 +2,6 @@ import type { ICPanelHeaderProps } from "@/shared/components/infraComponents/ICP
 import {
 	ActionIcon,
 	Avatar,
-	Badge,
 	Box,
 	Flex,
 	Menu,
@@ -85,25 +84,6 @@ export default function ICPanelHeaderAvatarMenu(props: ICPanelHeaderProps) {
 							</Text>
 						</Menu.Item>
 						<Menu.Divider />
-						{userSession?.data?.profile.platform &&
-							userSession?.data?.profile.version && (
-								<>
-									<Menu.Item
-										id="data-test-profile-menu-about"
-										onClick={aboutMenuHandler.open}
-									>
-										<Text size="sm">About</Text>
-									</Menu.Item>
-									<Flex columnGap="5px" p="xs">
-										<Text size="sm" c={colors.gray[5]}>
-											{userSession?.data?.profile.platform} Platform
-										</Text>
-										<Badge size="sm" radius="sm" color={colors.gray[6]}>
-											v.{userSession?.data?.profile.version}
-										</Badge>
-									</Flex>
-								</>
-							)}
 					</Box>
 					<Box lightHidden={!aboutMenuOpened} darkHidden={aboutMenuOpened}>
 						<Flex justify="space-between" className={classes.aboutHeader}>
@@ -119,23 +99,6 @@ export default function ICPanelHeaderAvatarMenu(props: ICPanelHeaderProps) {
 								<IconX />
 							</ActionIcon>
 						</Flex>
-						<Menu.Label>
-							<Flex direction="column" rowGap="lg">
-								<Text fw="bold" mt="xs">
-									{userSession?.data?.profile.platform} Platform
-								</Text>
-								<Flex direction="column" rowGap="xs">
-									<Flex columnGap="2px">
-										<Text c={colors.gray[4]}>Version:</Text>
-										<Text>{userSession?.data?.profile.version}</Text>
-									</Flex>
-									<Flex columnGap="2px">
-										<Text c={colors.gray[4]}>Updated on:</Text>
-										<Text>{userSession?.data?.profile.updatedOn || "-"}</Text>
-									</Flex>
-								</Flex>
-							</Flex>
-						</Menu.Label>
 						<Menu.Divider />
 						<Menu.Item
 							id="data-test-profile-menu-about-privacy-policy"

@@ -13,7 +13,7 @@ type Props = {
 	isExpiredLicenseSupport: boolean;
 	type: ICAppManagerBusinessTypeEnum;
 	openActivateModalModal: () => void;
-	permissions: ModulePermissionRs;
+	permissions?: ModulePermissionRs;
 };
 export default function ICAppManagerCardExpiredApp(props: Props) {
 	const handelArrowButton = (
@@ -44,7 +44,7 @@ export default function ICAppManagerCardExpiredApp(props: Props) {
 			<Text fw={400} fz={14} c="#41454D">
 				{props.isExpiredCommercial ? "Commercial" : "Free"}
 			</Text>
-			{props.permissions.create && (
+			{props.permissions?.create && (
 				<Button
 					w={32}
 					h={32}

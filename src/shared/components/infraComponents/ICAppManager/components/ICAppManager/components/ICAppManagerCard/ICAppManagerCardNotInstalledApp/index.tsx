@@ -12,7 +12,7 @@ type Props = {
 	openActivateModalModal: () => void;
 	isExpiredLicenseSupport: boolean;
 	openLicenseModal: () => void;
-	permissions: ModulePermissionRs;
+	permissions?: ModulePermissionRs;
 };
 
 export default function ICAppManagerCardNotInstalledApp(props: Props) {
@@ -34,7 +34,7 @@ export default function ICAppManagerCardNotInstalledApp(props: Props) {
 			<Text fz={14} fw={400} c="#41454D">
 				{props.type}
 			</Text>
-			{props.permissions.create && (
+			{props.permissions?.create && (
 				<Button
 					w={32}
 					h={32}

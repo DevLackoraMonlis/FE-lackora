@@ -2,9 +2,10 @@
 
 export default {
 	api: {
-		input: "http://185.73.113.53:7777/openapi.json",
+		input: "http://193.151.146.46/openapi.json",
 		biome: true,
 		prettier: true,
+		clean: true,
 		output: {
 			namingConvention: "PascalCase",
 			mode: "tags",

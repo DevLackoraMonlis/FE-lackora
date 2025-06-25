@@ -1,10 +1,10 @@
 "use client";
 
+import { clientLogger } from "@/shared/lib/logger/clientLogger";
 import { Box, Button, Flex, Text } from "@mantine/core";
 import { IconAlertTriangle } from "@tabler/icons-react";
 import { useEffect } from "react";
 import { UAParser } from "ua-parser-js";
-import { clientLogger } from "../lib/logger/clientLogger";
 
 export default function ErrorComponent({
 	error,

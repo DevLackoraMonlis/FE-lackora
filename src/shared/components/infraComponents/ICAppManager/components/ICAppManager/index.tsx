@@ -93,7 +93,6 @@ export default function ICAppManager(props: Props) {
 						{data?.data.results?.map((item) => (
 							<Grid.Col key={item.name} span={4} w="100%">
 								<AppManagerCard
-									permissions={props.permissions}
 									showSupportLicenseError={props.showSupportLicenseError}
 									onShowNotification={props.onShowNotification}
 									key={item.name}

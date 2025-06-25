@@ -1,18 +1,18 @@
 "use client";
 
-import { useLicensingDetails } from "@/app/[locale]/panel/management-center/system-setting/licensing/components/index.hooks";
-import { useModulePermissions } from "@/hooks/useAppPermissions";
-import { PluginServices } from "@/http/end-points/PluginsService";
-import type { PluginStatusFilter } from "@/http/types/PluginsService.types";
+import {
+	getApplication,
+	getApplications,
+	verifyApplication,
+} from "@/http/generated/application-management";
 import { useI18n } from "@/locales/client";
 import ICAppManager from "@/shared/components/infraComponents/ICAppManager/components/ICAppManager";
+import {
+	ICAppManagerBusinessTypeEnum,
+	type ICAppManagerRqFilterType,
+	type ICAppManagerRs,
+} from "@/shared/components/infraComponents/ICAppManager/index.types";
 import { AppRoutes } from "@/shared/constants/app-routes";
-import { BRBreadcrumbs } from "@behinrahkar/br-core";
-import type {
-	PluginBusinessType,
-	PluginManagerRqFilterType,
-	PluginManagerRs,
-} from "@behinrahkar/br-plugin-manager";
 import { CheckIcon, Flex } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 import Link from "next/link";
@@ -22,9 +22,8 @@ import classes from "./index.module.css";
 export default function AppManager() {
 	const t = useI18n();
 	const router = useRouter();
-	const { permissionObject } = useModulePermissions("PLUGIN_MANAGEMENT");
 
-	const { supportData } = useLicensingDetails();
+	// const { supportData } = useLicensingDetails();
 
 	const handleOpenInNewTab = () => {
 		window.open("https://cp-uat.behinrahkar.com/", "_blank");
@@ -32,9 +31,7 @@ export default function AppManager() {
 
 	return (
 		<>
-			<BRBreadcrumbs items={[{ title: t("pluginManagement") }]} />
 			<ICAppManager
-				permissions={permissionObject}
 				onShowNotification={(pluginName, moduleName) => {
 					notifications.show({
 						classNames: {
@@ -81,55 +78,55 @@ export default function AppManager() {
 				}}
 				onRequestPurchase={() => handleOpenInNewTab()}
 				getAppApi={async (variables, config) => {
-					return PluginServices.getPluginByName(variables.name, config).then(
-						(response) => {
-							const item = response.data;
-							const data: PluginManagerRs = {
-								activationCode: item.activation_token,
-								active: item.status === "active",
-								buildBy: item.build_by || "",
-								category: item.category || "",
-								description: item.description || "",
-								expireDate: item.expiration_time,
-								hasConfig: item.has_config,
-								installingSteps:
-									item.installingsteps?.map((st) => ({
-										...st,
-										active: st.action,
-									})) || [],
-								isExpiredCommercial: item.status === "expired",
-								isExpiredLicenseSupport:
-									item.status === "support_licensed_expired",
-								isInstalled: item.status !== null,
-								isInstalling: item.is_installing,
-								isNew: item.is_new && item.status === null,
-								name: item.name,
-								resources: item.resources || "",
-								summary: item.summary || "",
-								type: (item.is_paid
-									? "Commercial"
-									: "Free") as PluginBusinessType,
-								module: item.module,
-							};
+					return getApplication(
+						variables.name,
+						config?.signal as AbortSignal,
+					).then((response) => {
+						const item = response.data;
+						const data: ICAppManagerRs = {
+							//todo
+							activationCode: "",
+							active: item.status === "active",
+							buildBy: item.creator || "",
+							category: item.category || "",
+							description: item.description || "",
+							expireDate: item.expiration_time as string,
+							hasConfig: item.is_configurable,
+							installingSteps:
+								item.installingsteps?.map((st) => ({
+									...st,
+									active: st.action,
+								})) || [],
+							isExpiredCommercial: item.status === "expired",
+							isExpiredLicenseSupport:
+								item.status === "support_licensed_expired",
+							isInstalled: item.status !== null,
+							isInstalling: item.is_installing,
+							isNew: item.is_new && item.status === null,
+							name: item.name || "",
+							resources: item.placement || "",
+							summary: item.summary || "",
+							type:
+								item.type === "Commercial"
+									? ICAppManagerBusinessTypeEnum.COMMERCIAL
+									: ICAppManagerBusinessTypeEnum.FREE,
+							module: item.modules,
+						};
 
-							return {
-								...response,
-								data,
-							};
-						},
-					);
+						return {
+							...response,
+							data,
+						};
+					});
 				}}
 				getAppsApi={async (variables, config) => {
-					const statusMap: Record<
-						PluginManagerRqFilterType,
-						PluginStatusFilter
-					> = {
-						ALL: "all",
-						MY_PLUGIN: "my_plugins",
-						FEATURED: "featured_plugins",
+					const statusMap: Record<ICAppManagerRqFilterType, string> = {
+						All: "all",
+						MyApps: "my_plugins",
+						Featured: "featured_plugins",
 					};
 
-					return PluginServices.getPlugins(
+					return getApplications(
 						{
 							limit: 100,
 							page: 1,
@@ -139,22 +136,23 @@ export default function AppManager() {
 								variables.sortBy === "Oldest" || variables.sortBy === "Name"
 									? "asc"
 									: "desc",
-							...(variables.pricing !== "ALL" && {
+							...(variables.pricing !== ICAppManagerBusinessTypeEnum.ALL && {
 								is_paid: variables.pricing === "Commercial",
 							}),
 							status: statusMap[variables.filter],
 						},
 						config,
 					).then((response) => {
-						const results: PluginManagerRs[] = response.data.results.map(
+						const results: ICAppManagerRs[] = response.data.results.map(
 							(item) => ({
-								activationCode: item.activation_token,
-								active: item.status === "active",
-								buildBy: item.build_by || "",
+								//todo activationCode
+								activationCode: "",
+								active: item.is_active,
+								buildBy: item.creator || "",
 								category: item.category || "",
 								description: item.description || "",
 								expireDate: item.expiration_time,
-								hasConfig: item.has_config,
+								hasConfig: item.is_configurable,
 								installingSteps:
 									item.installingsteps?.map((st) => ({
 										...st,
@@ -167,12 +165,14 @@ export default function AppManager() {
 								isInstalling: item.is_installing,
 								isNew: item.is_new && item.status === null,
 								name: item.name,
-								resources: item.resources || "",
+								//todo resources
+								resources: "",
 								summary: item.summary || "",
-								type: (item.is_paid
-									? "Commercial"
-									: "Free") as PluginBusinessType,
-								module: item.module,
+								type:
+									item.type === "Commercial"
+										? ICAppManagerBusinessTypeEnum.COMMERCIAL
+										: ICAppManagerBusinessTypeEnum.FREE,
+								module: item.modules,
 							}),
 						);
 
@@ -182,11 +182,11 @@ export default function AppManager() {
 								...response.data,
 								results,
 								info: {
-									ALL: response.data.metadata?.plugin_type.All || 0,
-									FEATURED:
-										response.data.metadata?.plugin_type.featured_plugins || 0,
+									ALL: response.data.metadata?.application_type.all || 0,
+									FEATURED: response.data.metadata?.application_type.base || 0,
 									MY_PLUGIN:
-										response.data.metadata?.plugin_type.my_plugins || 0,
+										response.data.metadata?.application_type.my_applications ||
+										0,
 								},
 							},
 						};
@@ -195,11 +195,12 @@ export default function AppManager() {
 				onGotoLicenseManagement={() => {
 					router.push(AppRoutes.root);
 				}}
-				showSupportLicenseError={supportData?.status === "expired"}
+				showSupportLicenseError={false}
+				//todo
+				// showSupportLicenseError={supportData?.status === "expired"}
 				submitActivateAppApi={(variables) => {
-					return PluginServices.getPluginVerification({
-						code: variables.activationCode,
-						plugin_name: variables.name,
+					return verifyApplication(variables.name, {
+						activation_code: variables.activationCode,
 					});
 				}}
 				onClick={(pluginName) => {
