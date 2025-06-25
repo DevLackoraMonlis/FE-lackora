@@ -1,13 +1,13 @@
 "use client";
 import ICPanelSidebarPopoverMenu from "@/shared/components/infraComponents/ICPanelSidebar/components/ICPanelSidebarPopoverMenu";
-import type { ICPanelSidebarPopoverMenuProps } from "@/shared/components/infraComponents/ICPanelSidebar/index.types";
+import type { ICPanelSidebarPopoverMenuGroupProps } from "@/shared/components/infraComponents/ICPanelSidebar/index.types";
 import { Flex, Text, Tooltip } from "@mantine/core";
 import { IconChevronDown, IconInfoCircle } from "@tabler/icons-react";
 import type { PropsWithChildren } from "react";
 
 type Props = PropsWithChildren<{
 	title: string;
-	menuGroup?: Omit<ICPanelSidebarPopoverMenuProps, "target">;
+	menuGroup?: Omit<ICPanelSidebarPopoverMenuGroupProps, "target">;
 	description?: string;
 	prevHref?: string;
 }>;

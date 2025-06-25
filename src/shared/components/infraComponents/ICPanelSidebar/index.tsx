@@ -1,19 +1,19 @@
+import { useGetActiveApplications } from "@/http/generated/application-management";
 import BCNavLink from "@/shared/components/baseComponents/BCNavLink";
 import ICPanelSidebarPopoverMenu from "@/shared/components/infraComponents/ICPanelSidebar/components/ICPanelSidebarPopoverMenu";
-import type { ICPanelSidebarPopoverMenuProps } from "@/shared/components/infraComponents/ICPanelSidebar/index.types";
+import {
+	SIDE_PANEL_APP_ICON,
+	SIDE_PANEL_APP_MODULE_ICON,
+} from "@/shared/components/infraComponents/ICPanelSidebar/index.constants";
+import type { ICPanelSidebarPopoverMenuGroupProps } from "@/shared/components/infraComponents/ICPanelSidebar/index.types";
+import { AppRoutes } from "@/shared/constants/app-routes";
 import { ActionIcon, Divider, Flex, ScrollArea } from "@mantine/core";
 import { useViewportSize } from "@mantine/hooks";
 import {
 	IconArrowLeft,
 	IconArrowRight,
-	IconBox,
-	IconChartHistogram,
 	IconChevronRight,
-	IconDashboard,
-	IconNetwork,
-	IconReport,
 	IconSettings,
-	IconShield,
 } from "@tabler/icons-react";
 import type { ReactNode } from "react";
 import classes from "./index.module.css";
@@ -22,122 +22,7 @@ type SideMenuItem = {
 	label: string;
 	href: string;
 	icon: ReactNode;
-	menuGroup?: Omit<ICPanelSidebarPopoverMenuProps, "target">;
-};
-
-const topMenuData: SideMenuItem[] = [
-	{
-		label: "Dashboard",
-		href: "",
-		icon: <IconChartHistogram color={"white"} />,
-	},
-	{
-		label: "Report",
-		href: "",
-		icon: <IconReport color={"white"} />,
-		menuGroup: {
-			title: "Management Center",
-			staticMenuGroup: [
-				{
-					href: "#",
-					label: "Users",
-				},
-				{
-					href: "#",
-					label: "Groups",
-				},
-				{
-					href: "#",
-					label: "Roles",
-				},
-			],
-			dynamicMenuGroup: [
-				{
-					label: "Connections",
-					href: "#",
-				},
-				{
-					label: "Licensing",
-					href: "#",
-				},
-			],
-		},
-	},
-];
-const applicationMenuData: SideMenuItem[] = [
-	{
-		label: "Asset Management",
-		href: "",
-		icon: <IconBox color={"blue"} />,
-		menuGroup: {
-			title: "Management Center",
-			dynamicMenuGroup: [
-				{
-					label: "Assets",
-					href: "#",
-				},
-				{
-					label: "Another Module",
-					href: "#",
-				},
-				{
-					label: "Another Module2",
-					href: "#",
-				},
-			],
-		},
-	},
-	{
-		label: "Vulnerability Management",
-		href: "",
-		icon: <IconShield color={"blue"} />,
-	},
-	{
-		label: "Network Management",
-		href: "",
-		icon: <IconNetwork color={"yellow"} />,
-	},
-];
-
-const sideMenuData: SideMenuItem[] = [
-	{
-		label: "Policies",
-		href: "",
-		icon: <IconDashboard color={"white"} />,
-	},
-	{
-		label: "Reports",
-		href: "",
-		icon: <IconDashboard color={"white"} />,
-	},
-];
-
-const managementMenuData: SideMenuItem["menuGroup"] = {
-	title: "Management Center",
-	staticMenuGroup: [
-		{
-			href: "#",
-			label: "Users",
-		},
-		{
-			href: "#",
-			label: "Groups",
-		},
-		{
-			href: "#",
-			label: "Roles",
-		},
-	],
-	dynamicMenuGroup: [
-		{
-			label: "Connections",
-			href: "#",
-		},
-		{
-			label: "Licensing",
-			href: "#",
-		},
-	],
+	menuGroupProps?: Omit<ICPanelSidebarPopoverMenuGroupProps, "target">;
 };
 
 type Props = {
@@ -155,7 +40,7 @@ const generateMenuItem = (params: {
 				leftSection={link.icon}
 				rightSection={
 					params.opened &&
-					link.menuGroup && <IconChevronRight color={"white"} size={16} />
+					link.menuGroupProps && <IconChevronRight color={"white"} size={16} />
 				}
 				key={link.label}
 				label={params.opened ? link.label : ""}
@@ -163,15 +48,15 @@ const generateMenuItem = (params: {
 			/>
 		);
 
-		if (link.menuGroup) {
+		if (link.menuGroupProps) {
 			return (
 				<ICPanelSidebarPopoverMenu
 					withoutOffset={!params.opened}
 					key={link.label}
 					target={navLink}
-					title={link.menuGroup.title}
-					dynamicMenuGroup={link.menuGroup.dynamicMenuGroup}
-					staticMenuGroup={link.menuGroup.staticMenuGroup}
+					title={link.menuGroupProps.title}
+					dynamicMenuGroup={link.menuGroupProps.dynamicMenuGroup}
+					staticMenuGroup={link.menuGroupProps.staticMenuGroup}
 				/>
 			);
 		}
@@ -179,18 +64,86 @@ const generateMenuItem = (params: {
 	});
 };
 
+function generatePopoverMenuGroup(params: {
+	title: string;
+	name: string;
+	modules: string[];
+}): Omit<ICPanelSidebarPopoverMenuGroupProps, "target"> {
+	return {
+		title: params.title,
+		dynamicMenuGroup: params.modules.map((item) => ({
+			href: AppRoutes.appModulePage(params.name, item),
+			icon: SIDE_PANEL_APP_MODULE_ICON[item],
+			label: item,
+		})),
+	};
+}
+
 export default function ICPanelSidebar(props: Props) {
 	const { height } = useViewportSize();
+
+	const getUserApplicationsQuery = useGetActiveApplications();
+
+	console.log(getUserApplicationsQuery.error, "data");
+
 	const topMenuItems = generateMenuItem({
-		items: topMenuData,
+		items:
+			getUserApplicationsQuery.data?.data?.applications
+				?.filter((item) => item.priority)
+				?.sort()
+				?.map((item) => ({
+					href: AppRoutes.appLandingPage(item.name),
+					icon: SIDE_PANEL_APP_ICON[item.name],
+					label: item.display_name,
+					menuGroupProps:
+						item.placement !== "sidebar"
+							? generatePopoverMenuGroup({
+									modules: item.modules,
+									name: item.name,
+									title: item.display_name,
+								})
+							: undefined,
+				})) || [],
 		opened: props.opened,
 	});
+
 	const applicationMenuItems = generateMenuItem({
-		items: applicationMenuData,
+		items:
+			getUserApplicationsQuery.data?.data?.applications
+				?.filter((item) => !item.priority && item.placement === "application")
+				?.map((item) => ({
+					href: AppRoutes.appLandingPage(item.name),
+					icon: SIDE_PANEL_APP_ICON[item.name],
+					label: item.display_name,
+					menuGroupProps:
+						item.placement !== "sidebar"
+							? generatePopoverMenuGroup({
+									modules: item.modules,
+									name: item.name,
+									title: item.display_name,
+								})
+							: undefined,
+				})) || [],
 		opened: props.opened,
 	});
+
 	const sidebarMenuItems = generateMenuItem({
-		items: sideMenuData,
+		items:
+			getUserApplicationsQuery.data?.data?.applications
+				?.filter((item) => !item.priority && item.placement === "sidebar")
+				?.map((item) => ({
+					href: AppRoutes.appLandingPage(item.name),
+					icon: SIDE_PANEL_APP_ICON[item.name],
+					label: item.display_name,
+					menuGroupProps:
+						item.placement !== "sidebar"
+							? generatePopoverMenuGroup({
+									modules: item.modules,
+									name: item.name,
+									title: item.display_name,
+								})
+							: undefined,
+				})) || [],
 		opened: props.opened,
 	});
 
@@ -207,27 +160,35 @@ export default function ICPanelSidebar(props: Props) {
 						<Divider color={"var(--mantine-color-gray-7)"} />
 						{sidebarMenuItems}
 						<Divider color={"var(--mantine-color-gray-7)"} />
-
-						{managementMenuData && (
-							<ICPanelSidebarPopoverMenu
-								withoutOffset={!props.opened}
-								target={
-									<BCNavLink
-										leftSection={<IconSettings color={"white"} />}
-										rightSection={
-											props.opened && (
-												<IconChevronRight color={"white"} size={16} />
-											)
-										}
-										key={"management-center"}
-										label={props.opened && "Management Center"}
-									/>
-								}
-								title={managementMenuData.title}
-								dynamicMenuGroup={managementMenuData.dynamicMenuGroup}
-								staticMenuGroup={managementMenuData.staticMenuGroup}
-							/>
-						)}
+						<ICPanelSidebarPopoverMenu
+							withoutOffset={!props.opened}
+							target={
+								<BCNavLink
+									leftSection={<IconSettings color={"white"} />}
+									rightSection={
+										props.opened && (
+											<IconChevronRight color={"white"} size={16} />
+										)
+									}
+									key={"management-center"}
+									label={props.opened && "Management Center"}
+								/>
+							}
+							title={"Management Center"}
+							dynamicMenuGroup={getUserApplicationsQuery.data?.data?.applications
+								?.filter((item) => item.placement === "management_center")
+								?.sort((a, b) => b.priority - a.priority)
+								?.map((item) => ({
+									href: AppRoutes.appLandingPage(item.name),
+									icon: SIDE_PANEL_APP_ICON[item.name],
+									label: item.display_name,
+									childrenItems: item.modules.map((subItem) => ({
+										href: AppRoutes.appModulePage(item.name, subItem),
+										label: subItem,
+										icon: SIDE_PANEL_APP_MODULE_ICON[subItem],
+									})),
+								}))}
+						/>
 					</Flex>
 				</ScrollArea>
 				<Flex justify={"flex-end"} align={"center"} pr={"sm"}>

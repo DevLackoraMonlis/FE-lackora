@@ -11,6 +11,7 @@ import "mantine-datatable/styles.layer.css";
 import "@leenguyen/react-flip-clock-countdown/dist/index.css";
 import "../globals.css";
 import { I18nProviderClient } from "@/locales/client";
+import ICAppManagerProvider from "@/shared/components/infraComponents/ICAppManager/components/ICAppManagerProvider";
 import { openSans } from "@/shared/constants/open-sans";
 import ContextProvider from "@/shared/providers/ContextProvider";
 import { EnvProvider } from "@/shared/providers/EnvProvider";
@@ -52,7 +53,9 @@ export default async function RootLayout({
 						>
 							<QueryClientProvider>
 								<ContextProvider>
-									<NextAuthSessionProvider>{children}</NextAuthSessionProvider>
+									<NextAuthSessionProvider>
+										<ICAppManagerProvider>{children}</ICAppManagerProvider>
+									</NextAuthSessionProvider>
 								</ContextProvider>
 							</QueryClientProvider>
 						</EnvProvider>

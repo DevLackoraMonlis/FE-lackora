@@ -1,25 +1,25 @@
 "use client";
-import { useEffect } from "react";
+import AssetIdentificationDiscoverySettingsPage from "@/builtinApps/AssetIdentificationApp/DiscoverySettings";
+import { AllApplications } from "@/shared/enums/index.enums";
 import type { PropsWithChildren } from "react";
-import { useState } from "react";
 import type { ICAppManagerType } from "../../index.types";
 import ICAppManagerContext from "./ICAppManagerContext";
 
-export default function ICAppManagerProvider(
-	props: PropsWithChildren<{ plugins: ICAppManagerType[] }>,
-) {
-	const [plugins, registerPlugins] = useState<ICAppManagerType[]>(
-		props.plugins,
-	);
+const apps: ICAppManagerType[] = [
+	{
+		name: AllApplications.ASSET_IDENTIFICATION.name,
+		modules: [
+			{
+				name: AllApplications.ASSET_IDENTIFICATION.modules.DISCOVERY_SETTINGS,
+				page: AssetIdentificationDiscoverySettingsPage,
+			},
+		],
+	},
+];
 
-	useEffect(() => {
-		if (props.plugins.length) {
-			registerPlugins(props.plugins);
-		}
-	}, [props.plugins]);
-
+export default function ICAppManagerProvider(props: PropsWithChildren) {
 	return (
-		<ICAppManagerContext.Provider value={{ apps: plugins }}>
+		<ICAppManagerContext.Provider value={{ apps: apps }}>
 			{props.children}
 		</ICAppManagerContext.Provider>
 	);

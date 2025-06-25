@@ -174,9 +174,7 @@ export type ICAppManagerHistoryRs = {
 	activationToken: string;
 	appId?: string;
 	status: string;
-	updatedTime?: string | null;
 	creator?: string | null;
-	updater?: string | null;
 };
 
 export type ICAppManagerHistoryRq = {

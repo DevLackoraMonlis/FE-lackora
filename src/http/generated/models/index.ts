@@ -9,6 +9,7 @@
 export * from './ActivatePluginWithCode';
 export * from './ActivatePluginWithCodeResponse';
 export * from './ActiveApplicationsResponse';
+export * from './ApplicationPlacementEnum';
 export * from './ApplicationPurchaseLinkResponse';
 export * from './BodyGetAccessToken';
 export * from './BodyGetAccessTokenClientId';
@@ -35,6 +36,7 @@ export * from './EachDiscoverySettingIcon';
 export * from './EachDiscoverySettingMetadataWrapper';
 export * from './EachDiscoverySettingOutput';
 export * from './EachDiscoverySettingSchema';
+export * from './EachDiscoverySettingTags';
 export * from './GetApplicationHistoryParams';
 export * from './GetApplicationsParams';
 export * from './GetDiscoverySettingsParams';

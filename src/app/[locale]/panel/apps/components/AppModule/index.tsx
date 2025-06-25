@@ -1,6 +1,5 @@
 "use client";
-
-import { useListActivePlugins } from "@/http/generated/plugin-management";
+import { useGetActiveApplications } from "@/http/generated/application-management";
 import ICAppManagerPluginPage from "@/shared/components/infraComponents/ICAppManager/components/ICAppManagerPluginPage";
 import { AppRoutes } from "@/shared/constants/app-routes";
 import { Box, LoadingOverlay } from "@mantine/core";
@@ -13,14 +12,9 @@ export default function AppModule() {
 	const appName = (params.appName as string) || "";
 	const appModuleName = (params.appModuleName as string) || "";
 
-	const getUserPluginsQuery = useListActivePlugins({
-		query: {
-			queryKey: ["get-user-apps"],
-			refetchOnMount: true,
-		},
-	});
+	const getUserPluginsQuery = useGetActiveApplications();
 
-	const appModules = getUserPluginsQuery.data?.data?.plugins?.find(
+	const appModules = getUserPluginsQuery.data?.data?.applications?.find(
 		(item) => item.name === appName.replaceAll("%20", " "),
 	);
 
@@ -40,8 +34,9 @@ export default function AppModule() {
 				userAppModules={(appModules?.modules as string[]) || []}
 				appModuleName={appModuleName.replaceAll("%20", " ")}
 				userAvailableApps={
-					getUserPluginsQuery.data?.data?.plugins?.map((item) => item.name) ||
-					[]
+					getUserPluginsQuery.data?.data?.applications?.map(
+						(item) => item.name as string,
+					) || []
 				}
 				onRedirectToAppStorePage={() => {
 					router.push(AppRoutes.appStore);

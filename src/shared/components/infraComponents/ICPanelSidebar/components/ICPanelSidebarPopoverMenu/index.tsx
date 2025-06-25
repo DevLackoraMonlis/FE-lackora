@@ -1,12 +1,71 @@
 import BCNavLink from "@/shared/components/baseComponents/BCNavLink";
-import type { ICPanelSidebarPopoverMenuProps } from "@/shared/components/infraComponents/ICPanelSidebar/index.types";
+import type {
+	ICPanelSidebarPopoverMenuGroupItem,
+	ICPanelSidebarPopoverMenuGroupProps,
+} from "@/shared/components/infraComponents/ICPanelSidebar/index.types";
 import { Box, Divider, Flex, Menu, Text } from "@mantine/core";
 import { IconArrowsLeftRight } from "@tabler/icons-react";
+import { useRouter } from "next/navigation";
 import classes from "./index.module.css";
 
 export default function ICPanelSidebarPopoverMenu(
-	props: ICPanelSidebarPopoverMenuProps,
+	props: ICPanelSidebarPopoverMenuGroupProps,
 ) {
+	const router = useRouter();
+	const generateMenuGroup = (
+		groupMenu?: ICPanelSidebarPopoverMenuGroupItem[],
+	) => {
+		return groupMenu?.map((item) => {
+			if (item.childrenItems?.length) {
+				return (
+					<BCNavLink
+						c={"white"}
+						label={
+							<Text
+								onClick={(event) => {
+									event.stopPropagation();
+									event.preventDefault();
+									router.push(item.href);
+								}}
+							>
+								{item.label}
+							</Text>
+						}
+						key={item.label}
+						leftSection={
+							item.icon || <IconArrowsLeftRight color={"white"} size={12} />
+						}
+					>
+						{item.childrenItems.map((subMenu) => (
+							<BCNavLink
+								c={"white"}
+								label={subMenu.label}
+								key={subMenu.label}
+								href={subMenu.href}
+								leftSection={
+									subMenu.icon || (
+										<IconArrowsLeftRight color={"white"} size={12} />
+									)
+								}
+							/>
+						))}
+					</BCNavLink>
+				);
+			}
+			return (
+				<BCNavLink
+					c={"white"}
+					label={item.label}
+					key={item.label}
+					href={item.href}
+					leftSection={
+						item.icon || <IconArrowsLeftRight color={"white"} size={12} />
+					}
+				/>
+			);
+		});
+	};
+
 	return (
 		<Menu
 			trigger={props.trigger || "hover"}
@@ -32,49 +91,11 @@ export default function ICPanelSidebarPopoverMenu(
 					{props.title}
 				</Text>
 				<Flex direction={"column"}>
-					{props.staticMenuGroup?.map((item) => (
-						<BCNavLink
-							c={"white"}
-							label={item.label}
-							key={item.label}
-							href={item.href}
-							leftSection={
-								item.icon || <IconArrowsLeftRight color={"white"} size={12} />
-							}
-						>
-							<BCNavLink
-								c={"white"}
-								label={item.label}
-								key={item.label}
-								href={item.href}
-								leftSection={
-									item.icon || <IconArrowsLeftRight color={"white"} size={12} />
-								}
-							/>
-							<BCNavLink
-								c={"white"}
-								label={item.label}
-								key={item.label}
-								href={item.href}
-								leftSection={
-									item.icon || <IconArrowsLeftRight color={"white"} size={12} />
-								}
-							/>
-						</BCNavLink>
-					))}
+					{generateMenuGroup(props.staticMenuGroup)}
 					{props.staticMenuGroup?.length && props.dynamicMenuGroup?.length && (
 						<Divider color={"gray.7"} />
 					)}
-					{props.dynamicMenuGroup?.map((item) => (
-						<BCNavLink
-							label={item.label}
-							key={item.label}
-							href={item.href}
-							leftSection={
-								item.icon || <IconArrowsLeftRight color={"white"} size={12} />
-							}
-						/>
-					))}
+					{generateMenuGroup(props.dynamicMenuGroup)}
 				</Flex>
 			</Menu.Dropdown>
 		</Menu>

@@ -10,6 +10,7 @@ export default function useMantineBaseTheme() {
 		spacing: {
 			...DEFAULT_THEME.spacing,
 			xxl: "40px",
+			"2xs": "4px",
 		},
 		fontSizes: {
 			...DEFAULT_THEME.fontSizes,

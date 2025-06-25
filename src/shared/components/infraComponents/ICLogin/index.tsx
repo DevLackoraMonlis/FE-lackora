@@ -1,14 +1,11 @@
 "use client";
 
-import { useListActivePlugins } from "@/http/generated/plugin-management";
 import ICLoginForm from "@/shared/components/infraComponents/ICLogin/components/ICLoginForm";
 import ICLoginSlogan from "@/shared/components/infraComponents/ICLogin/components/ICLoginSlogan";
 import { Box, Grid } from "@mantine/core";
 import BG from "../../../../../public/images/login/login-background.png";
 import classes from "./index.module.css";
 export default function ICLogin() {
-	const { data } = useListActivePlugins({ query: { queryKey: ["sasas"] } });
-
 	return (
 		<Box h={"100%"} w={"100%"}>
 			<Grid

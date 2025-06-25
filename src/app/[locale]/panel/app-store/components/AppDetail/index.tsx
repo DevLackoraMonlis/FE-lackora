@@ -57,7 +57,7 @@ export default function AppDetail() {
 					const data: ICAppManagerRs = {
 						//todo
 						activationCode: "",
-						active: !!item.is_active,
+						active: item.is_active,
 						buildBy: item.creator || "",
 						category: item.category || "",
 						description: item.description || "",
@@ -72,10 +72,10 @@ export default function AppDetail() {
 							})) || [],
 						isExpiredCommercial: item.status === "expired",
 						isExpiredLicenseSupport: item.status === "support_licensed_expired",
-						isInstalled: item.status !== null,
+						isInstalled: item.current_step === "installed",
 						isInstalling: item.is_installing,
 						isNew: item.is_new && item.status === null,
-						name: item.name,
+						name: item.name || "",
 						resources: "",
 						summary: item.summary || "",
 						type:
@@ -99,14 +99,12 @@ export default function AppDetail() {
 					const data = response.data.results;
 					const results: ICAppManagerHistoryRs[] = data.map((item) => ({
 						//todo application_id,updater,updated_time,user
-						activation_token: item.application_id || "",
-						created_time: item.created_time,
+						activationToken: item.application_id || "",
+						createdTime: item.created_time,
 						creator: item.creator || "",
 						id: item.id,
 						appId: item.application_id,
 						status: item.status,
-						updated_time: item.created_time,
-						updater: item.creator,
 						user: item.creator,
 					}));
 

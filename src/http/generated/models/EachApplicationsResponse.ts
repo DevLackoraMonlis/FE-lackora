@@ -15,16 +15,16 @@ import type { EachApplicationsResponseViewer } from './EachApplicationsResponseV
 import type { EachApplicationsResponseLastView } from './EachApplicationsResponseLastView';
 
 export interface EachApplicationsResponse {
-  id?: string;
-  product_id?: string;
-  name?: string;
-  display_name?: string;
-  version?: string;
+  id: string;
+  product_id: string;
+  name: string;
+  display_name: string;
+  version: string;
   type?: string;
   summary?: string;
   description?: string;
-  status?: string;
-  is_active?: boolean;
+  status: string;
+  is_active: boolean;
   activation_time?: EachApplicationsResponseActivationTime;
   expiration_time?: EachApplicationsResponseExpirationTime;
   category?: EachApplicationsResponseCategory;

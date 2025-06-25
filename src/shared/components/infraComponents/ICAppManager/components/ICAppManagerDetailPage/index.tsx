@@ -4,7 +4,7 @@ import { Flex, Loader } from "@mantine/core";
 import { useContext } from "react";
 
 type Props = {
-	pluginName: string;
+	appName: string;
 	moduleName: string;
 	userApps: string[];
 	userAppModules: string[];
@@ -15,9 +15,9 @@ type Props = {
 export default function ICAppManagerDetailPage(props: Props) {
 	const { apps } = useContext(ICAppManagerContext);
 
-	const getPlugin = apps.find((plugin) => plugin.name === props.pluginName);
+	const getPlugin = apps.find((plugin) => plugin.name === props.appName);
 	const getUserPlugin = props.userApps.find(
-		(plugin) => plugin === props.pluginName,
+		(plugin) => plugin === props.appName,
 	);
 
 	if (props.loading) {
@@ -31,7 +31,7 @@ export default function ICAppManagerDetailPage(props: Props) {
 	if (!getPlugin || !getUserPlugin || !getPlugin.modules.length) {
 		return (
 			<ICAppManagerRestrictAccess
-				appName={props.pluginName}
+				appName={props.appName}
 				onRedirectToAppStorePage={props.onRedirectToPluginPage}
 			/>
 		);
@@ -47,7 +47,7 @@ export default function ICAppManagerDetailPage(props: Props) {
 	if (!getModule || !getUserPluginModule) {
 		return (
 			<ICAppManagerRestrictAccess
-				appName={props.pluginName}
+				appName={props.appName}
 				onRedirectToAppStorePage={props.onRedirectToPluginPage}
 			/>
 		);

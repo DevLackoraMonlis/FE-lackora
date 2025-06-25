@@ -5,12 +5,13 @@
  * MonoWatch Security Asset Management - BackBone Structure
  * OpenAPI spec version: 1.0.0
  */
+import type { ApplicationPlacementEnum } from "./ApplicationPlacementEnum";
 
 export interface EachActiveApplications {
-  name: string;
-  display_name: string;
-  type: string;
-  placement: string;
-  priority: number;
-  modules: unknown[];
+	name: string;
+	display_name: string;
+	type: string;
+	placement: ApplicationPlacementEnum;
+	priority: number;
+	modules: string[];
 }
