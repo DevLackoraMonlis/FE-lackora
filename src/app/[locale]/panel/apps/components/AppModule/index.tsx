@@ -1,9 +1,11 @@
 "use client";
-import { useGetActiveApplications } from "@/http/generated/application-management";
 import ICAppManagerPluginPage from "@/shared/components/infraComponents/ICAppManager/components/ICAppManagerPluginPage";
 import { AppRoutes } from "@/shared/constants/app-routes";
-import { Box, LoadingOverlay } from "@mantine/core";
+import activeAppsStore from "@/shared/stores/activeAppsStore";
+import { Box } from "@mantine/core";
 import { useParams, useRouter } from "next/navigation";
+import { useStore } from "zustand/index";
+import { useShallow } from "zustand/react/shallow";
 
 export default function AppModule() {
 	const router = useRouter();
@@ -12,32 +14,26 @@ export default function AppModule() {
 	const appName = (params.appName as string) || "";
 	const appModuleName = (params.appModuleName as string) || "";
 
-	const getUserPluginsQuery = useGetActiveApplications();
+	const store = useStore(
+		activeAppsStore,
+		useShallow((state) => ({
+			apps: state.apps,
+		})),
+	);
 
-	const appModules = getUserPluginsQuery.data?.data?.applications?.find(
+	const appModules = store.apps.find(
 		(item) => item.name === appName.replaceAll("%20", " "),
 	);
 
 	return (
 		<Box style={{ position: "relative" }}>
-			<LoadingOverlay
-				visible={
-					getUserPluginsQuery.isLoading || getUserPluginsQuery.isFetching
-				}
-			/>
 			<ICAppManagerPluginPage
-				loading={
-					getUserPluginsQuery.isLoading || getUserPluginsQuery.isFetching
-				}
+				loading={false}
 				appName={appName.replaceAll("%20", " ")}
 				//todo modules type
 				userAppModules={(appModules?.modules as string[]) || []}
 				appModuleName={appModuleName.replaceAll("%20", " ")}
-				userAvailableApps={
-					getUserPluginsQuery.data?.data?.applications?.map(
-						(item) => item.name as string,
-					) || []
-				}
+				userAvailableApps={store.apps.map((item) => item.name as string) || []}
 				onRedirectToAppStorePage={() => {
 					router.push(AppRoutes.appStore);
 				}}

@@ -6,7 +6,7 @@ export const AppRoutes = {
 	appStore: "/panel/app-store",
 	licenseManagement: "/panel/",
 	appDetailPage: (appName: string) => `/panel/app-store/${appName}`,
-	appLandingPage: (appName: string) => `/panel/apps/${appName}/app-landing`,
+	appLandingPage: (appName: string) => `/panel/apps/${appName}`,
 	appModulePage: (appName: string, appModuleName: string) =>
 		`/panel/apps/${appName}/${appModuleName}`,
 	appModuleDetailPage: (

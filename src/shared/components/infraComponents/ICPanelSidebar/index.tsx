@@ -1,4 +1,3 @@
-import { useGetActiveApplications } from "@/http/generated/application-management";
 import BCNavLink from "@/shared/components/baseComponents/BCNavLink";
 import ICPanelSidebarPopoverMenu from "@/shared/components/infraComponents/ICPanelSidebar/components/ICPanelSidebarPopoverMenu";
 import {
@@ -7,6 +6,7 @@ import {
 } from "@/shared/components/infraComponents/ICPanelSidebar/index.constants";
 import type { ICPanelSidebarPopoverMenuGroupProps } from "@/shared/components/infraComponents/ICPanelSidebar/index.types";
 import { AppRoutes } from "@/shared/constants/app-routes";
+import activeAppsStore from "@/shared/stores/activeAppsStore";
 import { ActionIcon, Divider, Flex, ScrollArea } from "@mantine/core";
 import { useViewportSize } from "@mantine/hooks";
 import {
@@ -16,6 +16,8 @@ import {
 	IconSettings,
 } from "@tabler/icons-react";
 import type { ReactNode } from "react";
+import { useStore } from "zustand";
+import { useShallow } from "zustand/react/shallow";
 import classes from "./index.module.css";
 
 type SideMenuItem = {
@@ -82,16 +84,19 @@ function generatePopoverMenuGroup(params: {
 export default function ICPanelSidebar(props: Props) {
 	const { height } = useViewportSize();
 
-	const getUserApplicationsQuery = useGetActiveApplications();
-
-	console.log(getUserApplicationsQuery.error, "data");
+	const store = useStore(
+		activeAppsStore,
+		useShallow((state) => ({
+			apps: state.apps,
+		})),
+	);
 
 	const topMenuItems = generateMenuItem({
 		items:
-			getUserApplicationsQuery.data?.data?.applications
-				?.filter((item) => item.priority)
-				?.sort()
-				?.map((item) => ({
+			store.apps
+				.filter((item) => item.priority)
+				.sort()
+				.map((item) => ({
 					href: AppRoutes.appLandingPage(item.name),
 					icon: SIDE_PANEL_APP_ICON[item.name],
 					label: item.display_name,
@@ -109,9 +114,9 @@ export default function ICPanelSidebar(props: Props) {
 
 	const applicationMenuItems = generateMenuItem({
 		items:
-			getUserApplicationsQuery.data?.data?.applications
-				?.filter((item) => !item.priority && item.placement === "application")
-				?.map((item) => ({
+			store.apps
+				.filter((item) => !item.priority && item.placement === "application")
+				.map((item) => ({
 					href: AppRoutes.appLandingPage(item.name),
 					icon: SIDE_PANEL_APP_ICON[item.name],
 					label: item.display_name,
@@ -129,9 +134,9 @@ export default function ICPanelSidebar(props: Props) {
 
 	const sidebarMenuItems = generateMenuItem({
 		items:
-			getUserApplicationsQuery.data?.data?.applications
-				?.filter((item) => !item.priority && item.placement === "sidebar")
-				?.map((item) => ({
+			store.apps
+				.filter((item) => !item.priority && item.placement === "sidebar")
+				.map((item) => ({
 					href: AppRoutes.appLandingPage(item.name),
 					icon: SIDE_PANEL_APP_ICON[item.name],
 					label: item.display_name,
@@ -175,10 +180,10 @@ export default function ICPanelSidebar(props: Props) {
 								/>
 							}
 							title={"Management Center"}
-							dynamicMenuGroup={getUserApplicationsQuery.data?.data?.applications
-								?.filter((item) => item.placement === "management_center")
-								?.sort((a, b) => b.priority - a.priority)
-								?.map((item) => ({
+							dynamicMenuGroup={store.apps
+								.filter((item) => item.placement === "management_center")
+								.sort((a, b) => b.priority - a.priority)
+								.map((item) => ({
 									href: AppRoutes.appLandingPage(item.name),
 									icon: SIDE_PANEL_APP_ICON[item.name],
 									label: item.display_name,

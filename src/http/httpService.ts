@@ -42,9 +42,9 @@ class HttpService {
 		this.axiosService.interceptors.response.use(
 			(successResponse) => successResponse,
 			async (failedResponse) => {
-				const { status } = failedResponse.response;
-				const originalRequest = failedResponse.config;
-				const session = await getSession();
+				const status = failedResponse?.response?.status;
+				const originalRequest = failedResponse?.config;
+				const session = await this.getCachedSession();
 				const sessionToken = session?.user as SessionUserType;
 				const refreshToken = sessionToken?.data.refresh_token;
 				const name = sessionToken?.name;
@@ -100,6 +100,8 @@ class HttpService {
 			const xNonce = await getHttpRequestXNonce({
 				method: request.method || "GET",
 				route: request.url || "",
+				accessToken: session?.user.data.access_token || "",
+				baseUrl: envStore.getState().envs.baseUrl,
 			});
 
 			const sessionToken = session?.user as SessionUserType;

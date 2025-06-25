@@ -13,8 +13,8 @@ type Props = {
 export default function ICAppManagerLandingPage(props: Props) {
 	const { apps } = useContext(ICAppManagerContext);
 
-	const getPlugin = apps.find((plugin) => plugin.name === props.appName);
-	const getUserPlugin = props.userAvailableApps.find(
+	const getApp = apps.find((app) => app.name === props.appName);
+	const getAvailableApp = props.userAvailableApps.find(
 		(plugin) => plugin === props.appName,
 	);
 
@@ -26,7 +26,7 @@ export default function ICAppManagerLandingPage(props: Props) {
 		);
 	}
 
-	if (!getPlugin || !getUserPlugin) {
+	if (!getApp || !getAvailableApp) {
 		return (
 			<ICAppManagerRestrictAccess
 				appName={props.appName}
@@ -35,8 +35,8 @@ export default function ICAppManagerLandingPage(props: Props) {
 		);
 	}
 
-	if (getPlugin.landing) {
-		const LandingPlugin = getPlugin.landing;
+	if (getApp.landing) {
+		const LandingPlugin = getApp.landing;
 		return <LandingPlugin />;
 	}
 

@@ -1,36 +1,32 @@
 "use client";
-
-import { useGetActiveApplications } from "@/http/generated/application-management";
 import ICAppManagerLandingPage from "@/shared/components/infraComponents/ICAppManager/components/ICAppManagerLandingPage";
 import { AppRoutes } from "@/shared/constants/app-routes";
-import { Box, LoadingOverlay } from "@mantine/core";
+import activeAppsStore from "@/shared/stores/activeAppsStore";
+import { Box } from "@mantine/core";
 import { useParams, useRouter } from "next/navigation";
+import { useStore } from "zustand/index";
+import { useShallow } from "zustand/react/shallow";
 
 export default function AppLanding() {
 	const router = useRouter();
 	const params = useParams();
 
-	const pluginName = (params.appName as string) || "";
+	const appName = (params.appName as string) || "";
 
-	const getUserPluginsQuery = useGetActiveApplications();
+	const store = useStore(
+		activeAppsStore,
+		useShallow((state) => ({
+			apps: state.apps,
+		})),
+	);
 
+	console.log(store, "sytyy");
 	return (
 		<Box style={{ position: "relative" }}>
-			<LoadingOverlay
-				visible={
-					getUserPluginsQuery.isLoading || getUserPluginsQuery.isFetching
-				}
-			/>
 			<ICAppManagerLandingPage
-				loading={
-					getUserPluginsQuery.isLoading || getUserPluginsQuery.isFetching
-				}
-				appName={pluginName.replaceAll("%20", " ")}
-				userAvailableApps={
-					getUserPluginsQuery.data?.data?.applications?.map(
-						(item) => item.name as string,
-					) || []
-				}
+				loading={false}
+				appName={appName.replaceAll("%20", " ")}
+				userAvailableApps={store.apps.map((item) => item.name as string) || []}
 				onRedirectToAppStorePage={() => {
 					router.push(AppRoutes.appStore);
 				}}

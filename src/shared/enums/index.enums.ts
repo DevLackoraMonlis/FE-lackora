@@ -1,9 +1,9 @@
 export const AllApplications = {
 	ASSET_IDENTIFICATION: {
-		name: "asset identification",
+		name: "asset_identification",
 		modules: {
-			DISCOVERY_SETTINGS: "discovery settings",
-			PROFILING_SETTINGS: "profiling settings",
+			DISCOVERY_SETTINGS: "Discovery Settings",
+			PROFILING_SETTINGS: "Profiling Settings",
 		},
 	},
 } as const;

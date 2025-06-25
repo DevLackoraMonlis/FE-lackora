@@ -1,4 +1,4 @@
-import { AuthService } from "@/http/end-points/AuthService";
+import { GlobalService } from "@/http/end-points/GlobalService";
 import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
@@ -25,7 +25,7 @@ export const sessionOptions: NextAuthOptions = {
 			async authorize(credentials) {
 				if (credentials?.refreshToken) {
 					try {
-						const response = await AuthService.getRefreshToken(
+						const response = await GlobalService.getRefreshToken(
 							credentials?.refreshToken,
 						);
 						return {
@@ -41,7 +41,7 @@ export const sessionOptions: NextAuthOptions = {
 					}
 				} else {
 					try {
-						const response = await AuthService.getAccessToken({
+						const response = await GlobalService.getAccessToken({
 							username: credentials?.username || "",
 							password: credentials?.password || "",
 							baseUrl: credentials?.baseUrl || "",

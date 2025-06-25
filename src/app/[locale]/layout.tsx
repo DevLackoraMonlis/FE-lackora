@@ -10,6 +10,7 @@ import "@mantine/core/styles.css";
 import "mantine-datatable/styles.layer.css";
 import "@leenguyen/react-flip-clock-countdown/dist/index.css";
 import "../globals.css";
+import * as process from "node:process";
 import { I18nProviderClient } from "@/locales/client";
 import ICAppManagerProvider from "@/shared/components/infraComponents/ICAppManager/components/ICAppManagerProvider";
 import { openSans } from "@/shared/constants/open-sans";
