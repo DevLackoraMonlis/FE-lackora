@@ -6,6 +6,7 @@ import { IconRadar2, IconBuilding } from "@tabler/icons-react";
 import { DiscoverySettingsTabs } from "./index.enum";
 
 import DiscoverySettingsDiscoveryAdapters from "./components/DiscoveryAdapters";
+import DiscoverySettingsNoneCredentialAdapters from "./components/NoneCredentialAdapters";
 
 export default function AssetIdentificationDiscoverySettingsPage() {
   return (
@@ -32,7 +33,7 @@ export default function AssetIdentificationDiscoverySettingsPage() {
             <DiscoverySettingsDiscoveryAdapters />
           </Tabs.Panel>
           <Tabs.Panel value={DiscoverySettingsTabs.NoneCredentialAdapters}>
-            <DiscoverySettingsDiscoveryAdapters />
+            <DiscoverySettingsNoneCredentialAdapters />
           </Tabs.Panel>
         </Grid.Col>
       </Grid>

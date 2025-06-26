@@ -97,7 +97,7 @@ const DiscoverySettingsDiscoveryAdapters = () => {
           </Card.Section>
         </Card>
       </Grid.Col>
-      <Grid.Col span={{ xs: 12, lg: 8 }} offset={{ lg: 1 }}>
+      <Grid.Col span={{ xs: 12, lg: 9 }} >
         <Accordion
           variant="separated"
           defaultValue="Apples"
