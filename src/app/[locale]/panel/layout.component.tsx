@@ -19,7 +19,7 @@ export default function PanelLayout(
 	}>,
 ) {
 	const { black, white } = useMantineTheme();
-	const [opened, handlers] = useDisclosure(true);
+	const [opened, handlers] = useDisclosure(false);
 
 	useEffect(() => {
 		if (props.status === "unauthenticated") {
