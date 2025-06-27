@@ -1,4 +1,4 @@
-import { getHttpRequestXNonce } from "@/app/actions/get-http-request-x-nonce";
+"use client";
 import type { Token } from "@/http/generated/models";
 import { AppRoutes } from "@/shared/constants/app-routes";
 import envStore from "@/shared/stores/envStore";
@@ -97,17 +97,27 @@ class HttpService {
 
 		this.axiosService.interceptors.request.use(async (request) => {
 			const session = await this.getCachedSession();
-			// const xNonce = await getHttpRequestXNonce({
-			// 	method: request.method || "GET",
-			// 	route: request.url || "",
-			// 	accessToken: session?.user.data.access_token || "",
-			// 	baseUrl: envStore.getState().envs.baseUrl,
-			// });
+			let xNonce = "";
+			try {
+				const xNonceRes = await axios.post<{ nonce: string }>(
+					"/api/get-xnonce",
+					{
+						method: request.method || "GET",
+						route: request.url || "",
+						accessToken: session?.user.data.access_token || "",
+						baseUrl: envStore.getState().envs.baseUrl,
+					},
+				);
+				xNonce = xNonceRes.data.nonce;
+			} catch (err) {
+				console.error("Failed to refresh token:", err);
+				void signOut({ redirect: true, callbackUrl: AppRoutes.login });
+			}
 
 			const sessionToken = session?.user as SessionUserType;
 			if (sessionToken) {
 				request.headers.Authorization = `Bearer ${sessionToken?.data?.access_token}`;
-				request.headers["x-nonce"] = ""
+				request.headers["x-nonce"] = xNonce;
 			}
 			return request;
 		});
