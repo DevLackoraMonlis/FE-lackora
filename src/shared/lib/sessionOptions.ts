@@ -8,7 +8,6 @@ export const sessionOptions: NextAuthOptions = {
 		// This option can be used with or without a database for users/accounts.
 		// Note: `jwt` is automatically set to `true` if no database is specified.
 		strategy: "jwt",
-
 		// Set the session expiration time to 2 weeks (14 days)
 		maxAge: 14 * 24 * 60 * 60, // 14 days in seconds
 	},
@@ -77,7 +76,7 @@ export const sessionOptions: NextAuthOptions = {
 	},
 	secret: process.env.NEXT_AUTH,
 	pages: {
-		signOut: "/logout",
+		signOut: "/signoutsideb",
 		signIn: "/login",
 	},
 };

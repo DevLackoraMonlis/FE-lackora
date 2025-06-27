@@ -41,7 +41,7 @@ export default function PanelLayout(
 						paddingRight: "14px",
 						paddingBottom: "4px",
 						paddingLeft: "14px",
-						backgroundColor: black,
+						backgroundColor: "#1e2e4f",
 					}}
 					applicationLogo={<IconBox color={white} />}
 					onLogout={() =>

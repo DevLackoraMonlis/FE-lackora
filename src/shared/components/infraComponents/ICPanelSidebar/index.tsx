@@ -1,9 +1,10 @@
 import BCNavLink from "@/shared/components/baseComponents/BCNavLink";
+import ICPanelSidebarIconWrapper from "@/shared/components/infraComponents/ICPanelSidebar/components/ICPanelSidebarIconWrapper";
 import ICPanelSidebarPopoverMenu from "@/shared/components/infraComponents/ICPanelSidebar/components/ICPanelSidebarPopoverMenu";
 import {
-	SIDE_PANEL_APP_ICON,
-	SIDE_PANEL_APP_MODULE_ICON,
-} from "@/shared/components/infraComponents/ICPanelSidebar/index.constants";
+	getSidePanelAppIcon,
+	getSidePanelAppModuleIcon,
+} from "@/shared/components/infraComponents/ICPanelSidebar/index.helper";
 import type { ICPanelSidebarPopoverMenuGroupProps } from "@/shared/components/infraComponents/ICPanelSidebar/index.types";
 import { AppRoutes } from "@/shared/constants/app-routes";
 import activeAppsStore from "@/shared/stores/activeAppsStore";
@@ -75,7 +76,11 @@ function generatePopoverMenuGroup(params: {
 		title: params.title,
 		dynamicMenuGroup: params.modules.map((item) => ({
 			href: AppRoutes.appModulePage(params.name, item),
-			icon: SIDE_PANEL_APP_MODULE_ICON[item],
+			icon: (
+				<ICPanelSidebarIconWrapper>
+					{getSidePanelAppModuleIcon(12, item)}
+				</ICPanelSidebarIconWrapper>
+			),
 			label: item,
 		})),
 	};
@@ -94,11 +99,13 @@ export default function ICPanelSidebar(props: Props) {
 	const topMenuItems = generateMenuItem({
 		items:
 			store.apps
-				.filter((item) => item.priority)
+				.filter(
+					(item) => item.priority && item.placement !== "management_center",
+				)
 				.sort()
 				.map((item) => ({
 					href: AppRoutes.appLandingPage(item.name),
-					icon: SIDE_PANEL_APP_ICON[item.name],
+					icon: getSidePanelAppIcon(24, item.name),
 					label: item.display_name,
 					menuGroupProps:
 						item.placement !== "sidebar"
@@ -118,7 +125,7 @@ export default function ICPanelSidebar(props: Props) {
 				.filter((item) => !item.priority && item.placement === "application")
 				.map((item) => ({
 					href: AppRoutes.appLandingPage(item.name),
-					icon: SIDE_PANEL_APP_ICON[item.name],
+					icon: getSidePanelAppIcon(24, item.name),
 					label: item.display_name,
 					menuGroupProps:
 						item.placement !== "sidebar"
@@ -138,7 +145,7 @@ export default function ICPanelSidebar(props: Props) {
 				.filter((item) => !item.priority && item.placement === "sidebar")
 				.map((item) => ({
 					href: AppRoutes.appLandingPage(item.name),
-					icon: SIDE_PANEL_APP_ICON[item.name],
+					icon: getSidePanelAppIcon(24, item.name),
 					label: item.display_name,
 					menuGroupProps:
 						item.placement !== "sidebar"
@@ -160,12 +167,19 @@ export default function ICPanelSidebar(props: Props) {
 				<ScrollArea h={height - 48}>
 					<Flex direction={"column"} gap={"sm"}>
 						{topMenuItems}
-						<Divider color={"var(--mantine-color-gray-7)"} />
+						{!!topMenuItems.length && (
+							<Divider color={"var(--mantine-color-gray-7)"} />
+						)}
 						{applicationMenuItems}
-						<Divider color={"var(--mantine-color-gray-7)"} />
+						{!!applicationMenuItems.length && (
+							<Divider color={"var(--mantine-color-gray-7)"} />
+						)}
 						{sidebarMenuItems}
-						<Divider color={"var(--mantine-color-gray-7)"} />
+						{!!sidebarMenuItems.length && (
+							<Divider color={"var(--mantine-color-gray-7)"} />
+						)}
 						<ICPanelSidebarPopoverMenu
+							width={300}
 							withoutOffset={!props.opened}
 							target={
 								<BCNavLink
@@ -185,12 +199,15 @@ export default function ICPanelSidebar(props: Props) {
 								.sort((a, b) => b.priority - a.priority)
 								.map((item) => ({
 									href: AppRoutes.appLandingPage(item.name),
-									icon: SIDE_PANEL_APP_ICON[item.name],
+									icon: (
+										<ICPanelSidebarIconWrapper>
+											{getSidePanelAppIcon(12, item.name)}
+										</ICPanelSidebarIconWrapper>
+									),
 									label: item.display_name,
 									childrenItems: item.modules.map((subItem) => ({
 										href: AppRoutes.appModulePage(item.name, subItem),
 										label: subItem,
-										icon: SIDE_PANEL_APP_MODULE_ICON[subItem],
 									})),
 								}))}
 						/>

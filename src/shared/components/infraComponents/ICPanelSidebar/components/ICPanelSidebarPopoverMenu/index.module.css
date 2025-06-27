@@ -1,7 +1,12 @@
 .dropdown {
-	background-color: var(--mantine-color-black);
+	background-color: #182540;
 }
 
 .itemSection:hover {
-	background-color: var(--mantine-color-primary-0);
+	background-color: #228be61a;
+}
+
+.subMenu {
+	border-left: 1px solid #dee2e6;
+	margin-left: 4px;
 }

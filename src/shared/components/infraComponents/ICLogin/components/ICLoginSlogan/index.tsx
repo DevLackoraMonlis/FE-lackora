@@ -1,5 +1,5 @@
-import { AppLogoWhiteMd } from "@/shared/icons/component/general";
-import { Flex, Text, Title } from "@mantine/core";
+import { MonoWatchLogo } from "@/shared/icons/component/general";
+import { Flex, Text } from "@mantine/core";
 
 export default function ICLoginSlogan() {
 	return (
@@ -7,14 +7,24 @@ export default function ICLoginSlogan() {
 			<Flex
 				gap={"xs"}
 				direction={"column"}
-				w={"70%"}
-				justify={"center"}
-				align={"center"}
+				w={"50%"}
+				justify={"flex-start"}
+				align={"flex-start"}
 			>
-				<AppLogoWhiteMd width={215} height={132.5} />
-				<Title order={2} fw={"bold"} c={"white"}>
+				<MonoWatchLogo width={54.4} height={54.4} />
+				<Text c={"white"} fz={"2xxl"} fw={"bold"}>
+					MonoWatch
+				</Text>
+				<Text
+					style={{
+						wordSpacing: "4px",
+					}}
+					w={"50%"}
+					fz={"xxl"}
+					c={"white"}
+				>
 					Gain visibility into your entire attack surface
-				</Title>
+				</Text>
 				<Text fz={"md"} c={"white"}>
 					Continuously discover, monitor, and secure your external assets.
 				</Text>

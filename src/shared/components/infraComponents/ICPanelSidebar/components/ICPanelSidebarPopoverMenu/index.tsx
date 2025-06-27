@@ -38,15 +38,12 @@ export default function ICPanelSidebarPopoverMenu(
 					>
 						{item.childrenItems.map((subMenu) => (
 							<BCNavLink
+								className={classes.subMenu}
 								c={"white"}
 								label={subMenu.label}
 								key={subMenu.label}
 								href={subMenu.href}
-								leftSection={
-									subMenu.icon || (
-										<IconArrowsLeftRight color={"white"} size={12} />
-									)
-								}
+								leftSection={subMenu.icon}
 							/>
 						))}
 					</BCNavLink>
@@ -77,7 +74,7 @@ export default function ICPanelSidebarPopoverMenu(
 			classNames={{
 				dropdown: classes.dropdown,
 			}}
-			width={200}
+			width={props.width || 200}
 			position={props.position || "right-start"}
 			withArrow
 			arrowOffset={10}
