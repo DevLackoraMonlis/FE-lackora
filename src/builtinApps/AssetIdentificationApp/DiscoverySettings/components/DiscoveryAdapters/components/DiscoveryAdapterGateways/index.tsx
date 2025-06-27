@@ -1,82 +1,65 @@
-import { ActionIcon, Badge, Card, Flex, Text } from "@mantine/core";
-import { IconListDetails, IconPencil, IconPlugConnected, IconX } from "@tabler/icons-react";
+import { useQueryClient } from "@tanstack/react-query";
+import { Flex, LoadingOverlay } from "@mantine/core";
+import { notifications } from "@mantine/notifications";
+
+import {
+  useDeleteDiscoverySettingConfiguration,
+  useGetDiscoverySettingConfigurations,
+} from "@/http/generated/asset-identification-discovery-settings";
+
+import { ADAPTER_CONFIGURATIONS_QUERY_KEY } from "../../../../index.constants";
 
 import DiscoveryAdaptersForm from "./components/DiscoveryAdaptersForm";
+import DiscoveryAdapterCard from "./components/DiscoveryAdapterCard";
 
-const DiscoveryAdapterGateways = ({ is_used = true }) => {
+type Props = {
+  adapterId: string;
+};
+const DiscoveryAdapterGateways = ({ adapterId }: Props) => {
+  const queryClient = useQueryClient();
+  const adapterConfigurations = useGetDiscoverySettingConfigurations(adapterId, {
+    query: { enabled: !!adapterId, queryKey: [ADAPTER_CONFIGURATIONS_QUERY_KEY] },
+  });
+
+  const deleteAdapterConfigurations = useDeleteDiscoverySettingConfiguration();
+  const handleDeleteAdapterConfigurations = (configuration_id: string) => {
+    deleteAdapterConfigurations.mutate(
+      { adapterId, data: { configuration_id } },
+      {
+        onError(res) {
+          notifications.show({
+            title: "Failed",
+            message: res?.detail?.join(", ") || "The operation failed.",
+            color: "red",
+            position: "top-center",
+          });
+        },
+        onSuccess(res) {
+          notifications.show({
+            title: "Success",
+            message: res?.data?.message || "The operation was successful.",
+            color: "green",
+            position: "top-center",
+          });
+          queryClient.refetchQueries({ queryKey: [ADAPTER_CONFIGURATIONS_QUERY_KEY] });
+        },
+      }
+    );
+  };
+
   return (
     <>
-      <Flex gap="xs">
-        <Card
-          style={({ colors: { gray }, spacing, other }) => ({
-            padding: `${spacing.xs} ${spacing.sm}`,
-            width: "100%",
-            background: other.darkMode ? gray[7] : gray[1],
-          })}
-        >
-          <Flex align="center" justify="space-between">
-            <Text fw="bold" fz="sm">
-              192.168.1.1 - Connection Name
-            </Text>
-            <Flex gap="2xs">
-              <Badge
-                variant="light"
-                color={is_used ? "green" : "red"}
-                styles={({ spacing }) => ({ root: { padding: spacing.sm } })}
-              >
-                <Text p="2xs" tt="capitalize">
-                  {is_used ? "Connected" : "Disconnected"}
-                </Text>
-              </Badge>
-              <ActionIcon
-                // onClick={() => form.removeListItem("gateways", index)}
-                title="Test Connection"
-                className="cursor-pointer"
-                variant="subtle"
-                styles={({ white, colors: { gray }, other: { darkMode } }) => ({
-                  icon: { color: darkMode ? white : gray[8] },
-                })}
-              >
-                <IconPlugConnected size={20} />
-              </ActionIcon>
-              <ActionIcon
-                // onClick={() => form.removeListItem("gateways", index)}
-                title="View Results"
-                className="cursor-pointer"
-                variant="subtle"
-                styles={({ white, colors: { gray }, other: { darkMode } }) => ({
-                  icon: { color: darkMode ? white : gray[8] },
-                })}
-              >
-                <IconListDetails size={20} />
-              </ActionIcon>
-              <ActionIcon
-                // onClick={() => form.removeListItem("gateways", index)}
-                title="Edit"
-                className="cursor-pointer"
-                variant="subtle"
-                styles={({ white, colors: { gray }, other: { darkMode } }) => ({
-                  icon: { color: darkMode ? white : gray[8] },
-                })}
-              >
-                <IconPencil size={20} />
-              </ActionIcon>
-              <ActionIcon
-                // onClick={() => form.removeListItem("gateways", index)}
-                title="Delete"
-                className="cursor-pointer"
-                variant="subtle"
-                styles={({ white, colors: { gray }, other: { darkMode } }) => ({
-                  icon: { color: darkMode ? white : gray[8] },
-                })}
-              >
-                <IconX size={20} />
-              </ActionIcon>
-            </Flex>
-          </Flex>
-        </Card>
+      <Flex gap="xs" direction="column" pos="relative">
+        <LoadingOverlay visible={adapterConfigurations.isFetching} />
+        {adapterConfigurations?.data?.data?.results?.map((item) => (
+          <DiscoveryAdapterCard
+            key={item.id}
+            handleDeleteAdapterConfigurations={() => handleDeleteAdapterConfigurations(item.id)}
+            {...item}
+          />
+        ))}
       </Flex>
-      <DiscoveryAdaptersForm />
+      <DiscoveryAdaptersForm disabled={adapterConfigurations.isFetching} adapterId={adapterId} />
     </>
   );
 };

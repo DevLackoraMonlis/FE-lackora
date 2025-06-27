@@ -1,17 +1,64 @@
+import { useQueryClient } from "@tanstack/react-query";
 import { useForm } from "@mantine/form";
 import { randomId } from "@mantine/hooks";
-import { TextInput, ActionIcon, Button, Card, Flex, Select } from "@mantine/core";
+import { notifications } from "@mantine/notifications";
 import { IconCheck, IconPlus, IconX } from "@tabler/icons-react";
+import { TextInput, ActionIcon, Button, Card, Flex, Select, LoadingOverlay, Box } from "@mantine/core";
+
+import { useCreateDiscoverySettingConfiguration } from "@/http/generated/asset-identification-discovery-settings";
+
+import { ADAPTER_CONFIGURATIONS_QUERY_KEY } from "../../../../../../index.constants";
 
 type GatewayForm = { gateways: { ip: string; connection: string; key: string }[] };
 
-const DiscoveryAdaptersForm = () => {
+type Props = {
+  disabled: boolean;
+  adapterId: string;
+};
+
+const DiscoveryAdaptersForm = (props: Props) => {
+  const queryClient = useQueryClient();
+  const createAdapterConfigurations = useCreateDiscoverySettingConfiguration();
+
   const form = useForm<GatewayForm>({
     mode: "uncontrolled",
     initialValues: {
       gateways: [],
     },
   });
+
+  const handleCreateGateways = (index: number) => {
+    const { connection, ip } = form.getValues().gateways[index] || {};
+    if (!connection || !ip) {
+      return form.setErrors({
+        [`gateways.${index}.ip`]: ip ? "" : "Field is required",
+        [`gateways.${index}.connection`]: connection ? "" : "Field is required",
+      });
+    }
+    createAdapterConfigurations.mutate(
+      { adapterId: props.adapterId, data: { configs: { connection, ip } } },
+      {
+        onError(res) {
+          notifications.show({
+            title: "Failed",
+            message: res?.detail?.join(", ") || "The operation failed.",
+            color: "red",
+            position: "top-center",
+          });
+        },
+        onSuccess(res) {
+          notifications.show({
+            title: "Success",
+            message: "The operation was successful.",
+            color: "green",
+            position: "top-center",
+          });
+          queryClient.refetchQueries({ queryKey: [ADAPTER_CONFIGURATIONS_QUERY_KEY] });
+          form.removeListItem("gateways", index);
+        },
+      }
+    );
+  };
 
   const fields = form.getValues().gateways.map((item, index) => (
     <Flex key={item.key} gap="xs" mt="xs">
@@ -22,7 +69,7 @@ const DiscoveryAdaptersForm = () => {
             withAsterisk
             style={{ flex: 1 }}
             key={form.key(`gateways.${index}.ip`)}
-            {...form.getInputProps(`employees.${index}.ip`)}
+            {...form.getInputProps(`gateways.${index}.ip`)}
           />
           <Select
             label="Connection"
@@ -38,7 +85,7 @@ const DiscoveryAdaptersForm = () => {
         <ActionIcon
           size="input-sm"
           title="Save"
-          onClick={() => form.removeListItem("gateways", index)}
+          onClick={() => handleCreateGateways(index)}
           styles={({ colors, other: { darkMode } }) => ({
             root: { background: darkMode ? colors.primary[2] : colors.primary[9] },
             icon: { color: darkMode ? colors.gray[7] : colors.gray[2] },
@@ -62,17 +109,19 @@ const DiscoveryAdaptersForm = () => {
   ));
 
   return (
-    <>
+    <Box pos="relative">
+      <LoadingOverlay visible={createAdapterConfigurations.isPending} />
       {fields}
       <Button
         mt="sm"
         leftSection={<IconPlus size={20} />}
         variant="transparent"
+        disabled={props.disabled}
         onClick={() => form.insertListItem("gateways", { ip: "", connection: "", key: randomId() })}
       >
         Add Gateway
       </Button>
-    </>
+    </Box>
   );
 };
 export default DiscoveryAdaptersForm;

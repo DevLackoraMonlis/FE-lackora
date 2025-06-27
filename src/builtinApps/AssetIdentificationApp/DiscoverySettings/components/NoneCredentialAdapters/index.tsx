@@ -2,14 +2,13 @@ import { Badge, Card, Flex, getGradient, Grid, Text } from "@mantine/core";
 import { Accordion } from "@mantine/core";
 import { IconBrowserCheck, IconCircleDot } from "@tabler/icons-react";
 
-import { useDiscoverySettings } from "../../index.hooks";
 import { NoneCredentialAdaptersSections } from "../../index.enum";
 
 import NoneCredentialAdaptersPortDetectionForm from "./components/PortDetectionForm";
 import NoneCredentialAdaptersWebServiceDetectionForm from "./components/WebServiceDetectionForm";
 
 const DiscoverySettingsNoneCredentialAdapters = () => {
-  const { discoverySettingsUQ } = useDiscoverySettings({ type: "none-credential" });
+  // const { discoverySettingsUQ } = useDiscoverySettings({ type: "none-credential" });
   return (
     <Grid p="sm" pt="lg" gutter="lg">
       <Grid.Col span={{ xs: 12, lg: 9 }} offset={{ lg: 3 }}>
@@ -67,6 +66,9 @@ const DiscoverySettingsNoneCredentialAdapters = () => {
               style={({ colors: { gray }, white, other }) => ({
                 background: other.darkMode ? gray[7] : white,
               })}
+              renderRoot={({ children, ...others }) =>
+                !others["aria-hidden"] && <section {...others}>{children}</section>
+              }
             >
               <NoneCredentialAdaptersPortDetectionForm />
             </Accordion.Panel>
@@ -117,6 +119,9 @@ const DiscoverySettingsNoneCredentialAdapters = () => {
               style={({ colors: { gray }, white, other }) => ({
                 background: other.darkMode ? gray[7] : white,
               })}
+              renderRoot={({ children, ...others }) =>
+                !others["aria-hidden"] && <section {...others}>{children}</section>
+              }
             >
               <NoneCredentialAdaptersWebServiceDetectionForm />
             </Accordion.Panel>

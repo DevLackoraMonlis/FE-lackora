@@ -4,9 +4,8 @@ import { Accordion, Checkbox, TextInput } from "@mantine/core";
 import { useDebouncedValue } from "@mantine/hooks";
 import { IconSearch, IconX } from "@tabler/icons-react";
 
+import { useGetDiscoverySettings } from "@/http/generated/asset-identification-discovery-settings";
 import type { GetDiscoverySettingsParams } from "@/http/generated/models";
-
-import { useDiscoverySettings } from "../../index.hooks";
 
 import DiscoveryAdapterGateways from "./components/DiscoveryAdapterGateways";
 
@@ -15,7 +14,11 @@ type DiscoveryAdapterFilters = Pick<GetDiscoverySettingsParams, "method" | "vend
 const DiscoverySettingsDiscoveryAdapters = () => {
   const [queryParams, setQueryParams] = useState<GetDiscoverySettingsParams>({ type: "discovery" });
   const [debouncedParams] = useDebouncedValue(queryParams, 200);
-  const { discoverySettingsUQ } = useDiscoverySettings(debouncedParams);
+  const discoverySettingsUQ = useGetDiscoverySettings(debouncedParams, {
+    query: {
+      select: (res) => res?.data,
+    },
+  });
 
   const handleUpdateQueryParams = (params: Partial<GetDiscoverySettingsParams>) => {
     setQueryParams((perParams) => ({ ...perParams, ...params }));
@@ -69,7 +72,7 @@ const DiscoverySettingsDiscoveryAdapters = () => {
                 label: { fontWeight: other.fontWeights.medium },
               })}
             />
-            {discoverySettingsUQ?.data?.data?.metadata?.filters?.map(({ label, param, items }) => {
+            {discoverySettingsUQ?.data?.metadata?.filters?.map(({ label, param, items }) => {
               const value = queryParams[param as keyof DiscoveryAdapterFilters] || [];
               return (
                 <Fragment key={param}>
@@ -121,7 +124,7 @@ const DiscoverySettingsDiscoveryAdapters = () => {
             },
           })}
         >
-          {discoverySettingsUQ?.data?.data?.results?.map((item) => (
+          {discoverySettingsUQ?.data?.results?.map((item) => (
             <Accordion.Item
               key={item.id}
               value={item.id}
@@ -167,11 +170,14 @@ const DiscoverySettingsDiscoveryAdapters = () => {
                 style={({ colors: { gray }, white, other }) => ({
                   background: other.darkMode ? gray[7] : white,
                 })}
+                renderRoot={({ children, ...others }) =>
+                  !others["aria-hidden"] && <section {...others}>{children}</section>
+                }
               >
                 <Text py="xs" c="gray.6">
                   Added Gateways
                 </Text>
-                <DiscoveryAdapterGateways />
+                <DiscoveryAdapterGateways adapterId={item.id} />
               </Accordion.Panel>
             </Accordion.Item>
           ))}

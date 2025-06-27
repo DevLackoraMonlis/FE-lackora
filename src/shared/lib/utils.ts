@@ -162,7 +162,7 @@ export function isValidJson(str: string) {
 		JSON.parse(str);
 		return true;
 	} catch (e) {
-		console.log(e);
+		console.error(e);
 		return false;
 	}
 }

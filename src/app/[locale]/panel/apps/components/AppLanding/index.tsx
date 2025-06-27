@@ -20,7 +20,6 @@ export default function AppLanding() {
 		})),
 	);
 
-	console.log(store, "sytyy");
 	return (
 		<Box style={{ position: "relative" }}>
 			<ICAppManagerLandingPage
