@@ -53,16 +53,17 @@ export const getActiveApplications = (
 async function getNonce({
 	xNonceAuthenticate,
 	baseUrl,
-	accessToken,
 	...params
 }: GetNonceRq) {
-	return axios.get<string>(`${baseUrl}${CoreControllerPath}/get-nonce`, {
-		params,
-		headers: {
-			"x-nonce-authenticate": xNonceAuthenticate,
-			Authorization: `Bearer ${accessToken}`,
+	return axios.get<{ nonce: string }>(
+		`${baseUrl}${CoreControllerPath}/get-nonce`,
+		{
+			params,
+			headers: {
+				"x-nonce-authenticate": xNonceAuthenticate,
+			},
 		},
-	});
+	);
 }
 
 export const GlobalService = {
