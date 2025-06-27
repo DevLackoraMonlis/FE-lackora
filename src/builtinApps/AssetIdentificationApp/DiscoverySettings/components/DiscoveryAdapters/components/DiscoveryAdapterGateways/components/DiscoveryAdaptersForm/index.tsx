@@ -36,7 +36,7 @@ const DiscoveryAdaptersForm = () => {
       </Card>
       <Flex direction="column" gap="xs" justify="space-between" align="center">
         <ActionIcon
-        size="input-sm"
+          size="input-sm"
           title="Save"
           onClick={() => form.removeListItem("gateways", index)}
           styles={({ colors, other: { darkMode } }) => ({
@@ -47,7 +47,7 @@ const DiscoveryAdaptersForm = () => {
           <IconCheck size={30} />
         </ActionIcon>
         <ActionIcon
-        size="input-sm"
+          size="input-sm"
           title="Cancel"
           onClick={() => form.removeListItem("gateways", index)}
           styles={({ colors, other: { darkMode } }) => ({

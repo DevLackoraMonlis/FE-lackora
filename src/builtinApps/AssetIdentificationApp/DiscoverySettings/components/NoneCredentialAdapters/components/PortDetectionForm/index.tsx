@@ -5,7 +5,7 @@ import { IconCheck, IconPlus, IconX } from "@tabler/icons-react";
 
 type GatewayForm = { ports: { name: string; protocol: string; portRange: string; key: string }[] };
 
-const NoneCredentialAdaptersSection = () => {
+const NoneCredentialAdaptersPortDetectionForm = () => {
   const form = useForm<GatewayForm>({
     mode: "uncontrolled",
     initialValues: {
@@ -91,4 +91,4 @@ const NoneCredentialAdaptersSection = () => {
   );
 };
 
-export default NoneCredentialAdaptersSection;
+export default NoneCredentialAdaptersPortDetectionForm;

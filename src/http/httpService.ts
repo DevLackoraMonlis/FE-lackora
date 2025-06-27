@@ -97,17 +97,17 @@ class HttpService {
 
 		this.axiosService.interceptors.request.use(async (request) => {
 			const session = await this.getCachedSession();
-			const xNonce = await getHttpRequestXNonce({
-				method: request.method || "GET",
-				route: request.url || "",
-				accessToken: session?.user.data.access_token || "",
-				baseUrl: envStore.getState().envs.baseUrl,
-			});
+			// const xNonce = await getHttpRequestXNonce({
+			// 	method: request.method || "GET",
+			// 	route: request.url || "",
+			// 	accessToken: session?.user.data.access_token || "",
+			// 	baseUrl: envStore.getState().envs.baseUrl,
+			// });
 
 			const sessionToken = session?.user as SessionUserType;
 			if (sessionToken) {
 				request.headers.Authorization = `Bearer ${sessionToken?.data?.access_token}`;
-				request.headers["x-nonce"] = xNonce.data;
+				request.headers["x-nonce"] = ""
 			}
 			return request;
 		});

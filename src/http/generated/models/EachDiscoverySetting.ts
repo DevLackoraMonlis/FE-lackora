@@ -7,6 +7,7 @@
  */
 import type { EachDiscoverySettingDescription } from './EachDiscoverySettingDescription';
 import type { EachDiscoverySettingIcon } from './EachDiscoverySettingIcon';
+import type { EachDiscoverySettingCaption } from './EachDiscoverySettingCaption';
 import type { EachDiscoverySettingTags } from './EachDiscoverySettingTags';
 import type { EachDiscoverySettingSchema } from './EachDiscoverySettingSchema';
 import type { EachDiscoverySettingOutput } from './EachDiscoverySettingOutput';
@@ -26,7 +27,7 @@ export interface EachDiscoverySetting {
   is_used: boolean;
   has_config: boolean;
   is_manageable: boolean;
-  caption: string;
+  caption?: EachDiscoverySettingCaption;
   job_type: string;
   job_category: string;
   tags?: EachDiscoverySettingTags;

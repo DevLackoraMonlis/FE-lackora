@@ -1,6 +1,7 @@
 import { Fragment, useState } from "react";
-import { Badge, Card, Divider, Flex, Grid, Switch, Text } from "@mantine/core";
+import { Badge, Card, Divider, Flex, Grid, LoadingOverlay, Switch, Text } from "@mantine/core";
 import { Accordion, Checkbox, TextInput } from "@mantine/core";
+import { useDebouncedValue } from "@mantine/hooks";
 import { IconSearch, IconX } from "@tabler/icons-react";
 
 import type { GetDiscoverySettingsParams } from "@/http/generated/models";
@@ -13,7 +14,8 @@ type DiscoveryAdapterFilters = Pick<GetDiscoverySettingsParams, "method" | "vend
 
 const DiscoverySettingsDiscoveryAdapters = () => {
   const [queryParams, setQueryParams] = useState<GetDiscoverySettingsParams>({ type: "discovery" });
-  const { discoverySettingsRQ } = useDiscoverySettings(queryParams);
+  const [debouncedParams] = useDebouncedValue(queryParams, 200);
+  const { discoverySettingsUQ } = useDiscoverySettings(debouncedParams);
 
   const handleUpdateQueryParams = (params: Partial<GetDiscoverySettingsParams>) => {
     setQueryParams((perParams) => ({ ...perParams, ...params }));
@@ -21,6 +23,7 @@ const DiscoverySettingsDiscoveryAdapters = () => {
 
   return (
     <Grid p="sm" pt="lg" gutter="lg">
+      <LoadingOverlay visible={discoverySettingsUQ.isFetching} />
       <Grid.Col span={{ xs: 12, lg: 3 }}>
         <Card withBorder shadow="sm" radius="md" bd="1px solid gray.6" h="80dvh">
           <Card.Section
@@ -38,9 +41,20 @@ const DiscoverySettingsDiscoveryAdapters = () => {
           <Card.Section withBorder inheritPadding py="2xs">
             <TextInput
               my="sm"
-              leftSection={<IconSearch size={16} />}
+              leftSection={
+                queryParams.search ? (
+                  <IconX
+                    size={15}
+                    onClick={() => handleUpdateQueryParams({ search: null })}
+                    className="cursor-pointer"
+                  />
+                ) : (
+                  <IconSearch size={15} />
+                )
+              }
               variant="filled"
               radius="md"
+              value={queryParams.search || ""}
               placeholder="Search by adapter Name"
               onChange={(e) => handleUpdateQueryParams({ search: e.target.value })}
             />
@@ -50,11 +64,12 @@ const DiscoverySettingsDiscoveryAdapters = () => {
               labelPosition="left"
               label="Show only used adapters"
               size="md"
+              onChange={(e) => handleUpdateQueryParams({ used: e.target.checked })}
               styles={({ other }) => ({
                 label: { fontWeight: other.fontWeights.medium },
               })}
             />
-            {discoverySettingsRQ?.data?.metadata?.filters?.map(({ label, param, items }) => {
+            {discoverySettingsUQ?.data?.data?.metadata?.filters?.map(({ label, param, items }) => {
               const value = queryParams[param as keyof DiscoveryAdapterFilters] || [];
               return (
                 <Fragment key={param}>
@@ -97,17 +112,16 @@ const DiscoverySettingsDiscoveryAdapters = () => {
           </Card.Section>
         </Card>
       </Grid.Col>
-      <Grid.Col span={{ xs: 12, lg: 9 }} >
+      <Grid.Col span={{ xs: 12, lg: 9 }}>
         <Accordion
           variant="separated"
-          defaultValue="Apples"
           styles={({ other }) => ({
             chevron: {
               fontWeight: other.fontWeights.bold,
             },
           })}
         >
-          {discoverySettingsRQ?.data?.results?.map((item) => (
+          {discoverySettingsUQ?.data?.data?.results?.map((item) => (
             <Accordion.Item
               key={item.id}
               value={item.id}

@@ -1,5 +1,3 @@
-"use client";
-
 import { DEFAULT_THEME } from "@mantine/core";
 import type { MantineColorScheme, MantineThemeOverride } from "@mantine/core";
 
