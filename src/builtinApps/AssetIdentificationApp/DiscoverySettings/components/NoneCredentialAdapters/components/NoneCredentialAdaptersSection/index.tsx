@@ -9,7 +9,7 @@ const NoneCredentialAdaptersSection = () => {
   const form = useForm<GatewayForm>({
     mode: "uncontrolled",
     initialValues: {
-      ports: [{ name: "", protocol: "", portRange: "", key: randomId() }],
+      ports: [{ name: "", protocol: "", portRange: "", key: "string" }],
     },
   });
 
@@ -44,13 +44,13 @@ const NoneCredentialAdaptersSection = () => {
           placeholder="e.g., 22, 1000–2000 (1–65535)"
           withAsterisk
           key={form.key(`ports.${index}.portRange`)}
-          {...form.getInputProps(`employees.${index}.portRange`)}
+          {...form.getInputProps(`ports.${index}.portRange`)}
         />
         <Flex gap="xs" pt={index ? "sm" : 23} align="center">
           <ActionIcon
             size="input-sm"
             title="Save"
-            onClick={() => form.removeListItem("gateways", index)}
+            onClick={() => form.removeListItem("ports", index)}
             styles={({ colors, other: { darkMode } }) => ({
               root: { background: darkMode ? colors.primary[2] : colors.primary[9] },
               icon: { color: darkMode ? colors.gray[7] : colors.gray[2] },
@@ -61,7 +61,7 @@ const NoneCredentialAdaptersSection = () => {
           <ActionIcon
             size="input-sm"
             title="Cancel"
-            onClick={() => form.removeListItem("gateways", index)}
+            onClick={() => form.removeListItem("ports", index)}
             styles={({ colors, other: { darkMode } }) => ({
               root: { background: darkMode ? colors.gray[6] : colors.gray[2] },
               icon: { color: darkMode ? colors.gray[2] : colors.gray[7] },
@@ -81,7 +81,9 @@ const NoneCredentialAdaptersSection = () => {
         mt="sm"
         leftSection={<IconPlus size={20} />}
         variant="transparent"
-        onClick={() => form.insertListItem("ports", { ip: "", connection: "", key: randomId() })}
+        onClick={() =>
+          form.insertListItem("ports", { name: "", protocol: "", portRange: "", key: randomId() })
+        }
       >
         Add Another
       </Button>

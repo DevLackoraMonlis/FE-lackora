@@ -2,6 +2,7 @@ export const AppRoutes = {
 	root: "/",
 	panel: "/panel",
 	login: "/login",
+	signout: "/signout",
 	updatePassword: "/update-password",
 	appStore: "/panel/app-store",
 	licenseManagement: "/panel/",

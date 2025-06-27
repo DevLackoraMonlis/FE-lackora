@@ -16,9 +16,7 @@ export default function ICPageWrapper(props: Props) {
 	return (
 		<Flex direction={"column"}>
 			<Flex justify={"flex-start"} align={"center"} gap={"xs"}>
-				<Text c={"primary.1"} size={"md"}>
-					{props.title}
-				</Text>
+				<Text size={"md"}>{props.title}</Text>
 				<Flex gap={"xs"} align={"center"} justify={"center"}>
 					{props.menuGroup && (
 						<ICPanelSidebarPopoverMenu

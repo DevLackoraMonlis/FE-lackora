@@ -1,6 +1,6 @@
 import { Badge, Card, Flex, getGradient, Grid, Text } from "@mantine/core";
 import { Accordion } from "@mantine/core";
-import { IconSearch } from "@tabler/icons-react";
+import { IconCircleDot } from "@tabler/icons-react";
 
 import { useDiscoverySettings } from "../../index.hooks";
 
@@ -43,7 +43,7 @@ const DiscoverySettingsNoneCredentialAdapters = () => {
                         },
                       })}
                     >
-                      <IconSearch size={30} />
+                      <IconCircleDot size={30} />
                     </Card>
                     <Flex direction="column" gap="2xs">
                       <Text fw="bold">{item.display_name}</Text>

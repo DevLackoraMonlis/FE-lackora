@@ -21,11 +21,11 @@ export default function ICLogin() {
 				}}
 				h={"100%"}
 			>
+				<Grid.Col span={6}>
+					<ICLoginSlogan />
+				</Grid.Col>
 				<Grid.Col span={4}>
 					<ICLoginForm />
-				</Grid.Col>
-				<Grid.Col span={8}>
-					<ICLoginSlogan />
 				</Grid.Col>
 			</Grid>
 		</Box>
