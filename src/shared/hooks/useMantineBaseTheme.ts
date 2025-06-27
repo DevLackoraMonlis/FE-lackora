@@ -2,7 +2,7 @@ import { DEFAULT_THEME } from "@mantine/core";
 import type { MantineColorScheme, MantineThemeOverride } from "@mantine/core";
 
 declare module "@mantine/core" {
-  export interface MantineThemeOther {
+  interface MantineThemeOther {
     darkMode: boolean;
     colorScheme: MantineColorScheme;
     fontWeights: {
