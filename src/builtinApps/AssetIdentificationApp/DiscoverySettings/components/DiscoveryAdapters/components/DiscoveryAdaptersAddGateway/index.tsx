@@ -6,7 +6,7 @@ import { TextInput, ActionIcon, Button, Card, Flex, Select, LoadingOverlay, Box 
 
 import { useCreateDiscoverySettingConfiguration } from "@/http/generated/asset-identification-discovery-settings";
 
-import { ADAPTER_CONFIGURATIONS_QUERY_KEY } from "../../../../../../index.constants";
+import { ADAPTER_CONFIGURATIONS_QUERY_KEY } from "../../../../index.constants";
 
 type FormValues = { gateways: { ip: string; connection: string; key: string }[] };
 
@@ -69,22 +69,18 @@ const DiscoveryAdaptersAddGateway = (props: Props) => {
         <ActionIcon
           size="input-sm"
           title="Save"
+          c="gray.2"
+          bg="primary.8"
           onClick={() => handleCreateGateways(index)}
-          styles={({ colors }) => ({
-            root: { background: colors.primary[9] },
-            icon: { color: colors.gray[2] },
-          })}
         >
           <IconCheck size={30} />
         </ActionIcon>
         <ActionIcon
           size="input-sm"
           title="Cancel"
+          c="gray.8"
+          bg="gray.2"
           onClick={() => form.removeListItem("gateways", index)}
-          styles={({ colors }) => ({
-            root: { background: colors.gray[2] },
-            icon: { color: colors.gray[7] },
-          })}
         >
           <IconX size={30} />
         </ActionIcon>

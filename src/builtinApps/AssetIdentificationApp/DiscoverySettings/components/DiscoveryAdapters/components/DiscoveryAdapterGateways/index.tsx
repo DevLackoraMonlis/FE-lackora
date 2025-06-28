@@ -9,8 +9,8 @@ import type { EachAdapterConfiguration } from "@/http/generated/models";
 
 import { ADAPTER_CONFIGURATIONS_QUERY_KEY } from "../../../../index.constants";
 
-import DiscoveryAdapterCard from "./components/DiscoveryAdapterCard";
-import DiscoveryAdaptersAddGateway from "./components/DiscoveryAdaptersAddGateway";
+import DiscoveryAdapterCard from "../DiscoveryAdapterCard";
+import DiscoveryAdaptersAddGateway from "../DiscoveryAdaptersAddGateway";
 
 type Props = {
   adapterId: string;

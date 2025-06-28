@@ -26,23 +26,13 @@ const DiscoveryAdapterCard = (props: Props) => {
           onCancel={() => setEditMode(false)}
         />
       ) : (
-        <Card
-          style={({ colors: { gray }, spacing }) => ({
-            padding: `${spacing.xs} ${spacing.sm}`,
-            width: "100%",
-            background: gray[1],
-          })}
-        >
+        <Card bg="gray.1" w="100%" padding="xs">
           <Flex align="center" justify="space-between">
             <Text fw="bold" fz="sm">
               {`${props.config?.ip} - ${props.config?.connection}`}
             </Text>
             <Flex gap="2xs">
-              <Badge
-                variant="light"
-                color={props.is_active ? "green" : "red"}
-                styles={({ spacing }) => ({ root: { padding: spacing.sm } })}
-              >
+              <Badge variant="light" color={props.is_active ? "green" : "red"} p="sm">
                 <Text p="2xs" tt="capitalize">
                   {props.is_active ? "Connected" : "Disconnected"}
                 </Text>
@@ -50,33 +40,24 @@ const DiscoveryAdapterCard = (props: Props) => {
               <ActionIcon
                 // onClick={() => form.removeListItem("gateways", index)}
                 title="Test Connection"
-                className="cursor-pointer"
                 variant="subtle"
-                styles={({ colors: { gray } }) => ({
-                  icon: { color: gray[8] },
-                })}
+                c="gray.8"
               >
                 <IconPlugConnected size={20} />
               </ActionIcon>
               <ActionIcon
                 // onClick={() => form.removeListItem("gateways", index)}
                 title="View Results"
-                className="cursor-pointer"
                 variant="subtle"
-                styles={({ colors: { gray } }) => ({
-                  icon: { color: gray[8] },
-                })}
+                c="gray.8"
               >
                 <IconListDetails size={20} />
               </ActionIcon>
               <ActionIcon
                 onClick={() => setEditMode((perValue) => !perValue)}
                 title="Edit"
-                className="cursor-pointer"
                 variant="subtle"
-                styles={({ colors: { gray } }) => ({
-                  icon: { color: gray[8] },
-                })}
+                c="gray.8"
               >
                 <IconPencil size={20} />
               </ActionIcon>
@@ -87,15 +68,7 @@ const DiscoveryAdapterCard = (props: Props) => {
                 confirmBtnText="Delete"
                 message="Are you shure to delete gateway ?"
                 renderProps={(onToggle) => (
-                  <ActionIcon
-                    onClick={onToggle}
-                    title="Delete"
-                    className="cursor-pointer"
-                    variant="subtle"
-                    styles={({ colors: { gray } }) => ({
-                      icon: { color: gray[8] },
-                    })}
-                  >
+                  <ActionIcon onClick={onToggle} title="Delete" variant="subtle" c="gray.8">
                     <IconX size={20} />
                   </ActionIcon>
                 )}

@@ -53,7 +53,7 @@ export function useChangePassword(params?: DefaultParams) {
 		mutationKey: ["reset-password"],
 		mutationFn: UserManagementService.changePassword,
 		onSuccess: () => params?.onSuccess?.(),
-		onMutate: () => ({ message: "Reset Password Successfully" }), 
+		onMutate: () => ({ successMessage: "Reset Password Successfully" }), 
 	});
 	return {
 		changePassword,

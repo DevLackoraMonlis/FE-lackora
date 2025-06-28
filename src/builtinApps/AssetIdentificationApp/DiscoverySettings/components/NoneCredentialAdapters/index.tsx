@@ -13,13 +13,7 @@ const DiscoverySettingsNoneCredentialAdapters = () => {
     <Grid p="sm" pt="lg" gutter="lg">
       <Grid.Col span={{ xs: 12, lg: 9 }} offset={{ lg: 3 }}>
         <Accordion variant="separated">
-          <Accordion.Item
-            value={NoneCredentialAdaptersSections.PortDetection}
-            style={({ colors: { gray }, black }) => ({
-              background: gray[2],
-              color: black,
-            })}
-          >
+          <Accordion.Item value={NoneCredentialAdaptersSections.PortDetection}>
             <Accordion.Control>
               <Flex align="center" justify="space-between">
                 <Flex gap="sm">
@@ -43,11 +37,7 @@ const DiscoverySettingsNoneCredentialAdapters = () => {
                   </Flex>
                 </Flex>
                 <Flex align="center" gap="xs" px="sm">
-                  <Badge
-                    variant="light"
-                    radius="xs"
-                    styles={({ spacing }) => ({ root: { padding: spacing.lg } })}
-                  >
+                  <Badge variant="light" radius="xs" p="lg">
                     <Text tt="capitalize" p="2xs">
                       Configure
                     </Text>
@@ -63,13 +53,7 @@ const DiscoverySettingsNoneCredentialAdapters = () => {
               <NoneCredentialAdaptersPortDetectionForm />
             </Accordion.Panel>
           </Accordion.Item>
-          <Accordion.Item
-            value={NoneCredentialAdaptersSections.WebServiceDetection}
-            style={({ colors: { gray }, black }) => ({
-              background: gray[2],
-              color: black,
-            })}
-          >
+          <Accordion.Item value={NoneCredentialAdaptersSections.WebServiceDetection}>
             <Accordion.Control>
               <Flex align="center" justify="space-between">
                 <Flex gap="sm">
@@ -93,11 +77,7 @@ const DiscoverySettingsNoneCredentialAdapters = () => {
                   </Flex>
                 </Flex>
                 <Flex align="center" gap="xs" px="sm">
-                  <Badge
-                    variant="light"
-                    radius="xs"
-                    styles={({ spacing }) => ({ root: { padding: spacing.lg } })}
-                  >
+                  <Badge variant="light" radius="xs" p="lg">
                     <Text tt="capitalize" p="2xs">
                       Configure
                     </Text>

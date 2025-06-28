@@ -3,10 +3,10 @@ import { TextInput, ActionIcon, Button, Select, Flex } from "@mantine/core";
 import { randomId } from "@mantine/hooks";
 import { IconCheck, IconPlus, IconX } from "@tabler/icons-react";
 
-type GatewayForm = { ports: { name: string; protocol: string; portRange: string; key: string }[] };
+type FormValues = { ports: { name: string; protocol: string; portRange: string; key: string }[] };
 
 const NoneCredentialAdaptersPortDetectionForm = () => {
-  const form = useForm<GatewayForm>({
+  const form = useForm<FormValues>({
     initialValues: {
       ports: [{ name: "", protocol: "", portRange: "", key: "string" }],
     },
@@ -46,22 +46,18 @@ const NoneCredentialAdaptersPortDetectionForm = () => {
           <ActionIcon
             size="input-sm"
             title="Save"
+            c="gray.2"
+            bg="primary.8"
             onClick={() => form.removeListItem("ports", index)}
-            styles={({ colors }) => ({
-              root: { background: colors.primary[9] },
-              icon: { color: colors.gray[2] },
-            })}
           >
             <IconCheck size={30} />
           </ActionIcon>
           <ActionIcon
             size="input-sm"
             title="Cancel"
+            c="gray.8"
+            bg="gray.2"
             onClick={() => form.removeListItem("ports", index)}
-            styles={({ colors }) => ({
-              root: { background: colors.gray[2] },
-              icon: { color: colors.gray[7] },
-            })}
           >
             <IconX size={30} />
           </ActionIcon>

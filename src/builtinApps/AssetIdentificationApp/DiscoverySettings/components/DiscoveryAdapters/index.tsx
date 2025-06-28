@@ -27,16 +27,7 @@ const DiscoverySettingsDiscoveryAdapters = () => {
       <LoadingOverlay visible={discoverySettingsUQ.isFetching} />
       <Grid.Col span={{ xs: 12, lg: 3 }}>
         <Card withBorder shadow="sm" radius="md" bd="1px solid gray.4" h="80dvh">
-          <Card.Section
-            withBorder
-            inheritPadding
-            py="2xs"
-            style={({ colors: { gray }, black }) => ({
-              background: gray[2],
-              color: black,
-              fontWeight: "bold",
-            })}
-          >
+          <Card.Section withBorder inheritPadding py="2xs" fw="bold" bg="gray.2">
             Filter
           </Card.Section>
           <Card.Section withBorder inheritPadding py="2xs">
@@ -113,16 +104,9 @@ const DiscoverySettingsDiscoveryAdapters = () => {
       <Grid.Col span={{ xs: 12, lg: 9 }}>
         <Accordion variant="separated">
           {discoverySettingsUQ?.data?.results?.map((item) => (
-            <Accordion.Item
-              key={item.id}
-              value={item.id}
-              style={({ colors: { gray }, black }) => ({
-                background: gray[2],
-                color: black,
-              })}
-            >
+            <Accordion.Item key={item.id} value={item.id}>
               <Accordion.Control>
-                <Flex align="center" justify="space-between">
+                <Flex align="center" justify="space-between" bg="transparent">
                   <Flex gap="sm">
                     <Card variant="light" p="xs">
                       <IconSearch size={30} />
@@ -135,18 +119,10 @@ const DiscoverySettingsDiscoveryAdapters = () => {
                     </Flex>
                   </Flex>
                   <Flex align="center" gap="xs" px="sm">
-                    <Badge
-                      variant="light"
-                      color={item.is_used ? "green" : "gray"}
-                      styles={({ spacing }) => ({ root: { padding: spacing.md } })}
-                    >
+                    <Badge variant="light" color={item.is_used ? "green" : "gray"} p="md">
                       <Text p="2xs">{item.is_used ? "USED" : "UNUSED"}</Text>
                     </Badge>
-                    <Badge
-                      variant="light"
-                      radius="xs"
-                      styles={({ spacing }) => ({ root: { padding: spacing.lg } })}
-                    >
+                    <Badge variant="light" radius="xs" p="lg">
                       <Text tt="capitalize" p="2xs">
                         Configure
                       </Text>

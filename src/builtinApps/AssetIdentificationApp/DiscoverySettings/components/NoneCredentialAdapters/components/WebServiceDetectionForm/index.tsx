@@ -47,22 +47,18 @@ const NoneCredentialAdaptersWebServiceDetectionForm = () => {
             <ActionIcon
               size="input-sm"
               title="Save"
+              c="gray.2"
+              bg="primary.8"
               onClick={() => form.removeListItem("ports", index)}
-              styles={({ colors }) => ({
-                root: { background: colors.primary[9] },
-                icon: { color: colors.gray[2] },
-              })}
             >
               <IconCheck size={30} />
             </ActionIcon>
             <ActionIcon
               size="input-sm"
               title="Cancel"
+              c="gray.8"
+              bg="gray.2"
               onClick={() => form.removeListItem("ports", index)}
-              styles={({ colors }) => ({
-                root: { background: colors.gray[2] },
-                icon: { color: colors.gray[7] },
-              })}
             >
               <IconX size={30} />
             </ActionIcon>

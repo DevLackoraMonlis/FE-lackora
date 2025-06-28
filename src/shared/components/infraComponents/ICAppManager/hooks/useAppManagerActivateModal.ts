@@ -10,7 +10,7 @@ export const useAppManagerActivateModal = (params: Params) => {
   const submitActivationCode = useMutation({
     mutationKey: ["send-activation-code"],
     mutationFn: params.submitActivationCodeHandler,
-    onMutate: () => ({ message: "Code is Valid" }), 
+    onMutate: () => ({ successMessage: "Code is Valid" }), 
   });
 
   return { submitActivationCode };

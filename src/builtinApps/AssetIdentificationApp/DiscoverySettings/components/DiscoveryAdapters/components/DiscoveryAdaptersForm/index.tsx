@@ -15,9 +15,7 @@ type Props = {
 };
 
 const DiscoveryAdaptersForm = ({ config, loading, onCancel, handleEditAdapterConfigurations }: Props) => {
-  const form = useForm<FormValues>({
-    mode: "uncontrolled",
-  });
+  const form = useForm<FormValues>({});
 
   const handleSubmit = (values: typeof form.values) => {
     handleEditAdapterConfigurations(values);
@@ -52,27 +50,10 @@ const DiscoveryAdaptersForm = ({ config, loading, onCancel, handleEditAdapterCon
             </Flex>
           </Card>
           <Flex direction="column" gap="xs" justify="space-between" align="center">
-            <ActionIcon
-              size="input-sm"
-              title="Save"
-              type="submit"
-              styles={({ colors }) => ({
-                root: { background: colors.primary[9] },
-                icon: { color: colors.gray[2] },
-              })}
-            >
+            <ActionIcon size="input-sm" title="Save" type="submit" c="gray.2" bg="primary.8">
               <IconCheck size={30} />
             </ActionIcon>
-            <ActionIcon
-              size="input-sm"
-              title="Cancel"
-              type="reset"
-              onClick={onCancel}
-              styles={({ colors }) => ({
-                root: { background: colors.gray[2] },
-                icon: { color: colors.gray[7] },
-              })}
-            >
+            <ActionIcon size="input-sm" title="Cancel" type="reset" c="gray.8" bg="gray.2" onClick={onCancel}>
               <IconX size={30} />
             </ActionIcon>
           </Flex>
