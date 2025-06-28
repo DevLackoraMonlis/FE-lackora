@@ -51,7 +51,7 @@ class WsClient {
 		});
 
 		this.webSocket.addEventListener("close", () => {
-			console.log("WebSocket is closed");
+			console.info("WebSocket is closed");
 			this.onClose();
 		});
 	}

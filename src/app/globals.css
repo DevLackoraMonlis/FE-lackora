@@ -47,3 +47,7 @@ input {
 .rc-tree-node-content-wrapper {
 	display: inline !important;
 }
+
+.cursor-pointer {
+	cursor: pointer;
+}

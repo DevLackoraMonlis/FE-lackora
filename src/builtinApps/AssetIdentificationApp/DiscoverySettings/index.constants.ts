@@ -1,0 +1,1 @@
+export const ADAPTER_CONFIGURATIONS_QUERY_KEY= "adapter-configurations-query-key"

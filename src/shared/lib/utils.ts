@@ -1,4 +1,4 @@
-import type { CustomError } from "@/http/end-points/GeneralService.types";
+import type { CustomError, CustomSuccess, MutationContext } from "@/http/end-points/GeneralService.types";
 import dayjs from "dayjs";
 import { isNumber } from "lodash";
 
@@ -150,11 +150,14 @@ export function basicBrowserDownload(url: string, fileName: string) {
 	a.remove();
 }
 
-export const getErrorMessage = (error: CustomError) => {
+export const getErrorMessage = (error: CustomError, context: MutationContext) => {
 	if (Array.isArray(error.response?.data?.detail)) {
-		return error.response?.data?.detail?.[0]?.msg;
+		return error.response?.data?.detail?.[0]?.msg || context?.errorMessage || "Unhandled Error";
 	}
-	return error.response?.data?.detail || "Unhandled Error";
+	return error.response?.data?.detail || context?.errorMessage || "Unhandled Error";
+};
+export const getSuccessMessage = (response: CustomSuccess, context: MutationContext) => {
+	return response?.data?.message || context?.successMessage || "The operation was successful.";
 };
 
 export function isValidJson(str: string) {
@@ -162,7 +165,7 @@ export function isValidJson(str: string) {
 		JSON.parse(str);
 		return true;
 	} catch (e) {
-		console.log(e);
+		console.error(e);
 		return false;
 	}
 }

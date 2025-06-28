@@ -8,7 +8,7 @@ export type GlobalSetting = {
 };
 
 const GlobalSettingContext = createContext<GlobalSetting>({
-	openSidePanel: true,
+	openSidePanel: false,
 });
 
 export default GlobalSettingContext;

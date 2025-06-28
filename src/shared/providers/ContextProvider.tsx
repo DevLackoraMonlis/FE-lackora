@@ -5,7 +5,7 @@ import type { PropsWithChildren } from "react";
 import { useState } from "react";
 
 export default function ContextProvider(props: PropsWithChildren) {
-	const [openSidePanel, setOpenSidePanel] = useState<boolean>(true);
+	const [openSidePanel, setOpenSidePanel] = useState<boolean>(false);
 
 	return (
 		<GlobalSettingContext.Provider value={{ openSidePanel, setOpenSidePanel }}>
