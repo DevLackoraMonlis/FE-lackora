@@ -48,7 +48,7 @@ export default function AppDetail() {
 					activation_code: variables.activationCode,
 				});
 			}}
-			getPluginDetails={async (variables, config) => {
+			getAppDetails={async (variables, config) => {
 				return getApplication(
 					variables.name,
 					config?.signal as AbortSignal,
@@ -90,7 +90,7 @@ export default function AppDetail() {
 					};
 				});
 			}}
-			getPluginHistory={async (variables, config) => {
+			getAppHistory={async (variables, config) => {
 				return getApplicationHistory(
 					variables.name,
 					{ ...variables.pagination },

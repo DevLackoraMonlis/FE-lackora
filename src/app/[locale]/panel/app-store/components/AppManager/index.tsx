@@ -139,9 +139,9 @@ export default function AppManager() {
 							...(variables.pricing !== ICAppManagerBusinessTypeEnum.ALL && {
 								is_paid: variables.pricing === "Commercial",
 							}),
-							status: statusMap[variables.filter],
+							type: statusMap[variables.filter],
 						},
-						config,
+						config?.signal as AbortSignal,
 					).then((response) => {
 						const results: ICAppManagerRs[] = response.data.results.map(
 							(item) => ({
