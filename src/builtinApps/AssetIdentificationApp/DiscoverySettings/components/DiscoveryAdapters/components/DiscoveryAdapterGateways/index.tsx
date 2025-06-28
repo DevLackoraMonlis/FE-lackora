@@ -1,6 +1,5 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { Flex, LoadingOverlay } from "@mantine/core";
-import { notifications } from "@mantine/notifications";
 
 import {
   useDeleteDiscoverySettingConfiguration,
@@ -28,21 +27,7 @@ const DiscoveryAdapterGateways = ({ adapterId }: Props) => {
     deleteAdapterConfigurations.mutate(
       { adapterId, data: { configuration_id } },
       {
-        onError(res) {
-          notifications.show({
-            title: "Failed",
-            message: res?.detail?.join(", ") || "The operation failed.",
-            color: "red",
-            position: "top-center",
-          });
-        },
-        onSuccess(res) {
-          notifications.show({
-            title: "Success",
-            message: res?.data?.message || "The operation was successful.",
-            color: "green",
-            position: "top-center",
-          });
+        onSuccess: () => {
           queryClient.refetchQueries({ queryKey: [ADAPTER_CONFIGURATIONS_QUERY_KEY] });
         },
       }
@@ -57,21 +42,7 @@ const DiscoveryAdapterGateways = ({ adapterId }: Props) => {
     editAdapterConfigurations.mutate(
       { adapterId, data: { configs, configuration_id } },
       {
-        onError(res) {
-          notifications.show({
-            title: "Failed",
-            message: res?.detail?.join(", ") || "The operation failed.",
-            color: "red",
-            position: "top-center",
-          });
-        },
-        onSuccess() {
-          notifications.show({
-            title: "Success",
-            message: "The operation was successful.",
-            color: "green",
-            position: "top-center",
-          });
+        onSuccess: () => {
           queryClient.refetchQueries({ queryKey: [ADAPTER_CONFIGURATIONS_QUERY_KEY] });
         },
       }

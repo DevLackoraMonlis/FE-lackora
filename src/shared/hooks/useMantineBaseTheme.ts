@@ -21,6 +21,14 @@ declare module "@mantine/core" {
 
 export default function useMantineBaseTheme({ colorScheme }: { colorScheme: MantineColorScheme }) {
   const mantineBaseTheme: MantineThemeOverride = {
+    components: {
+      Loader: {
+        defaultProps: {
+          type: "dots",
+          size: "lg",
+        },
+      },
+    },
     fontFamily: "var(--open-sans) !important",
     white: "#FAFAFA",
     black: "#11121F",

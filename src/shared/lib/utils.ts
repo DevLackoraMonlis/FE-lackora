@@ -1,4 +1,4 @@
-import type { CustomError } from "@/http/end-points/GeneralService.types";
+import type { CustomError, CustomSuccess } from "@/http/end-points/GeneralService.types";
 import dayjs from "dayjs";
 import { isNumber } from "lodash";
 
@@ -155,6 +155,9 @@ export const getErrorMessage = (error: CustomError) => {
 		return error.response?.data?.detail?.[0]?.msg;
 	}
 	return error.response?.data?.detail || "Unhandled Error";
+};
+export const getSuccessMessage = (response: CustomSuccess) => {
+	return response?.data?.message || "The operation was successful.";
 };
 
 export function isValidJson(str: string) {

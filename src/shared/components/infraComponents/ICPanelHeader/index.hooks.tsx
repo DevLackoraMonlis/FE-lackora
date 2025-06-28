@@ -1,8 +1,5 @@
-import type { CustomError } from "@/http/end-points/GeneralService.types";
 import { UserManagementService } from "@/http/end-points/UserManagementService";
 import type { ICAuthValidatePasswordRs } from "@/shared/components/infraComponents/index.types";
-import { getErrorMessage } from "@/shared/lib/utils";
-import { notifications } from "@mantine/notifications";
 import { useMutation } from "@tanstack/react-query";
 import debounce from "lodash/debounce";
 import { startTransition, useState } from "react";
@@ -55,23 +52,7 @@ export function useChangePassword(params?: DefaultParams) {
 	const changePassword = useMutation({
 		mutationKey: ["reset-password"],
 		mutationFn: UserManagementService.changePassword,
-		onSuccess: () => {
-			notifications.show({
-				title: "Success",
-				message: "Reset Password Successfully",
-				color: "green",
-				withBorder: true,
-			});
-			params?.onSuccess?.();
-		},
-		onError: (err: CustomError) => {
-			notifications.show({
-				title: "Failed",
-				message: getErrorMessage(err),
-				color: "red",
-				withBorder: true,
-			});
-		},
+		onSuccess: () => params?.onSuccess?.(),
 	});
 	return {
 		changePassword,
@@ -83,14 +64,6 @@ export const useGetGeneratePasswordQuery = (params?: DefaultParams) => {
 		mutationKey: ["generate-password"],
 		mutationFn: UserManagementService.generatePassword,
 		onSuccess: () => params?.onSuccess?.(),
-		onError: (error: CustomError) => {
-			notifications.show({
-				title: "Failed to generate password",
-				message: getErrorMessage(error),
-				color: "red",
-				withBorder: true,
-			});
-		},
 	});
 	return { getGeneratePassword };
 };

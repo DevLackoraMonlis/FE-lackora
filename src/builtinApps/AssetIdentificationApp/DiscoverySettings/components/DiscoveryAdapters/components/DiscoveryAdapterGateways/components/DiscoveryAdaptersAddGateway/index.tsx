@@ -38,21 +38,7 @@ const DiscoveryAdaptersAddGateway = (props: Props) => {
     createAdapterConfigurations.mutate(
       { adapterId: props.adapterId, data: { configs: { connection, ip } } },
       {
-        onError(res) {
-          notifications.show({
-            title: "Failed",
-            message: res?.detail?.join(", ") || "The operation failed.",
-            color: "red",
-            position: "top-center",
-          });
-        },
-        onSuccess(res) {
-          notifications.show({
-            title: "Success",
-            message: "The operation was successful.",
-            color: "green",
-            position: "top-center",
-          });
+        onSuccess: () => {
           queryClient.refetchQueries({ queryKey: [ADAPTER_CONFIGURATIONS_QUERY_KEY] });
           form.removeListItem("gateways", index);
         },
