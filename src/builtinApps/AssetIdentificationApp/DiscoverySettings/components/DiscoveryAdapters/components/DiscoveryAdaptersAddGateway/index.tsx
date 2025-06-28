@@ -17,7 +17,7 @@ type Props = {
 
 const DiscoveryAdaptersAddGateway = (props: Props) => {
   const queryClient = useQueryClient();
-  const createAdapterConfigurations = useCreateDiscoverySettingConfiguration();
+  const createDiscoverySettingConfiguration = useCreateDiscoverySettingConfiguration();
 
   const form = useForm<FormValues>({
     initialValues: {
@@ -33,7 +33,7 @@ const DiscoveryAdaptersAddGateway = (props: Props) => {
         [`gateways.${index}.connection`]: connection ? "" : "Field is required",
       });
     }
-    createAdapterConfigurations.mutate(
+    createDiscoverySettingConfiguration.mutate(
       { adapterId: props.adapterId, data: { configs: { connection, ip } } },
       {
         onSuccess: () => {
@@ -90,7 +90,7 @@ const DiscoveryAdaptersAddGateway = (props: Props) => {
 
   return (
     <Box pos="relative">
-      <LoadingOverlay visible={createAdapterConfigurations.isPending} />
+      <LoadingOverlay visible={createDiscoverySettingConfiguration.isPending} />
       {fields}
       <Button
         mt="sm"

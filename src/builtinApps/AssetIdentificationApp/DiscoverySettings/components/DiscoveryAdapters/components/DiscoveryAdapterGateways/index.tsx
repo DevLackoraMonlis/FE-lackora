@@ -17,37 +17,37 @@ type Props = {
 };
 
 const DiscoveryAdapterGateways = ({ adapterId }: Props) => {
-  const adapterConfigurations = useGetDiscoverySettingConfigurations(adapterId, {
+  const discoverySettingConfigurations = useGetDiscoverySettingConfigurations(adapterId, {
     query: { enabled: !!adapterId, queryKey: [ADAPTER_CONFIGURATIONS_QUERY_KEY] },
   });
 
-  const deleteAdapterConfigurations = useDeleteDiscoverySettingConfiguration();
+  const deleteDiscoverySetting = useDeleteDiscoverySettingConfiguration();
   const handleDeleteAdapterConfigurations = (configuration_id: string) => {
-    deleteAdapterConfigurations.mutate(
+    deleteDiscoverySetting.mutate(
       { adapterId, data: { configuration_id } },
-      { onSuccess: () => adapterConfigurations.refetch() }
+      { onSuccess: () => discoverySettingConfigurations.refetch() }
     );
   };
 
-  const editAdapterConfigurations = useEditDiscoverySettingConfiguration();
+  const editDiscoverySetting = useEditDiscoverySettingConfiguration();
   const handleEditAdapterConfigurations = (
     configuration_id: string,
     configs: EachAdapterConfiguration["config"]
   ) => {
-    editAdapterConfigurations.mutate(
+    editDiscoverySetting.mutate(
       { adapterId, data: { configs, configuration_id } },
-      { onSuccess: () => adapterConfigurations.refetch() }
+      { onSuccess: () => discoverySettingConfigurations.refetch() }
     );
   };
 
   return (
     <>
       <Flex gap="xs" direction="column" pos="relative" mih="50px">
-        <LoadingOverlay visible={adapterConfigurations.isFetching} />
-        {adapterConfigurations?.data?.data?.results?.map((item) => (
+        <LoadingOverlay visible={discoverySettingConfigurations.isFetching} />
+        {discoverySettingConfigurations?.data?.data?.results?.map((item) => (
           <DiscoveryAdapterCard
             key={item.id}
-            loading={deleteAdapterConfigurations.isPending || editAdapterConfigurations.isPending}
+            loading={deleteDiscoverySetting.isPending || editDiscoverySetting.isPending}
             handleDeleteAdapterConfigurations={() => handleDeleteAdapterConfigurations(item.id)}
             handleEditAdapterConfigurations={(newConfigs) =>
               handleEditAdapterConfigurations(item.id, newConfigs)
@@ -56,7 +56,10 @@ const DiscoveryAdapterGateways = ({ adapterId }: Props) => {
           />
         ))}
       </Flex>
-      <DiscoveryAdaptersAddGateway disabled={adapterConfigurations.isFetching} adapterId={adapterId} />
+      <DiscoveryAdaptersAddGateway
+        disabled={discoverySettingConfigurations.isFetching}
+        adapterId={adapterId}
+      />
     </>
   );
 };
