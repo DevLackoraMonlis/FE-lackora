@@ -23,7 +23,6 @@ export default function QueryClientProvider({ children }: { children: ReactNode 
               title: "Failed",
               message: getErrorMessage(errorMessage),
               color: "red",
-              position: "top-center",
               withBorder: true,
             });
           },
@@ -33,7 +32,6 @@ export default function QueryClientProvider({ children }: { children: ReactNode 
               title: "Success",
               message: getSuccessMessage(successMessage),
               color: "green",
-              position: "top-center",
               withBorder: true,
             });
           },

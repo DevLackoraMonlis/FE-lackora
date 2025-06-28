@@ -1,7 +1,6 @@
 import { useQueryClient } from "@tanstack/react-query";
 import { useForm } from "@mantine/form";
 import { randomId } from "@mantine/hooks";
-import { notifications } from "@mantine/notifications";
 import { IconCheck, IconPlus, IconX } from "@tabler/icons-react";
 import { TextInput, ActionIcon, Button, Card, Flex, Select, LoadingOverlay, Box } from "@mantine/core";
 

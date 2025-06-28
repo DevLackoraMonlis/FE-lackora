@@ -3,7 +3,7 @@ import { useForm } from "@mantine/form";
 import { IconCheck, IconX } from "@tabler/icons-react";
 import { TextInput, ActionIcon, Card, Flex, Select, LoadingOverlay, Box } from "@mantine/core";
 
-import { EachAdapterConfiguration } from "@/http/generated/models";
+import type { EachAdapterConfiguration } from "@/http/generated/models";
 
 type GatewayForm = EachAdapterConfiguration["config"];
 
