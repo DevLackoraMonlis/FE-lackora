@@ -19,10 +19,10 @@ import { IconInfoCircle } from "@tabler/icons-react";
 import classes from "./index.module.css";
 
 export default function ICAppManagerDetail(props: {
-	getPluginDetails: ICAppManagerProps["getAppApi"];
+	getAppDetails: ICAppManagerProps["getAppApi"];
 	submitApi: ICAppManagerProps["submitActivateAppApi"];
 	name?: string;
-	getPluginHistory: ICAppManagerDetailsProps["getAppHistory"];
+	getAppHistory: ICAppManagerDetailsProps["getAppHistory"];
 	onRequestPurchase?: ICAppManagerProps["onRequestPurchase"];
 	onGotoLicenseManagement: ICAppManagerProps["onGotoLicenseManagement"];
 }) {
@@ -32,7 +32,7 @@ export default function ICAppManagerDetail(props: {
 
 	const { pluginDetails, pluginDetailsLoading, pluginDetailsRefetch } =
 		useGetPluginDetails({
-			getPluginDetails: props.getPluginDetails,
+			getPluginDetails: props.getAppDetails,
 			name: props.name,
 		});
 
@@ -118,7 +118,7 @@ export default function ICAppManagerDetail(props: {
 				{pluginDetails?.isInstalled ? (
 					<ICAppManagerDetailsTabs
 						name={pluginDetails?.name || ""}
-						getPluginHistory={props.getPluginHistory}
+						getPluginHistory={props.getAppHistory}
 						loading={pluginDetailsLoading}
 						summary={pluginDetails?.summary as string}
 					/>

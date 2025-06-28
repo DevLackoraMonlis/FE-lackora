@@ -24,7 +24,6 @@ export default function QueryClientProvider({ children }: { children: ReactNode 
               message: getErrorMessage(error as CustomError, mutationContext),
               color: "red",
               withBorder: true,
-              hidden: mutationContext.hideMessage,
             });
           },
           onSuccess: (response, _, context) => {

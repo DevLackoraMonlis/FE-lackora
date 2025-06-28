@@ -110,7 +110,7 @@ export default function ICPanelSidebar(props: Props) {
 					menuGroupProps:
 						item.placement !== "sidebar"
 							? generatePopoverMenuGroup({
-									modules: item.modules,
+									modules: item.modules as string[],
 									name: item.name,
 									title: item.display_name,
 								})
@@ -130,7 +130,7 @@ export default function ICPanelSidebar(props: Props) {
 					menuGroupProps:
 						item.placement !== "sidebar"
 							? generatePopoverMenuGroup({
-									modules: item.modules,
+									modules: item.modules as string[],
 									name: item.name,
 									title: item.display_name,
 								})
@@ -150,7 +150,7 @@ export default function ICPanelSidebar(props: Props) {
 					menuGroupProps:
 						item.placement !== "sidebar"
 							? generatePopoverMenuGroup({
-									modules: item.modules,
+									modules: item.modules as string[],
 									name: item.name,
 									title: item.display_name,
 								})
@@ -206,8 +206,8 @@ export default function ICPanelSidebar(props: Props) {
 									),
 									label: item.display_name,
 									childrenItems: item.modules.map((subItem) => ({
-										href: AppRoutes.appModulePage(item.name, subItem),
-										label: subItem,
+										href: AppRoutes.appModulePage(item.name, subItem as string),
+										label: subItem as string,
 									})),
 								}))}
 						/>

@@ -31,9 +31,8 @@ export default async function Layout(props: PropsWithChildren) {
 			baseUrl: process.env.BASE_URL,
 			method: "GET",
 			route: "/api/application-management/active-applications",
-			accessToken,
 		});
-		xNonce = xNonceRes.data;
+		xNonce = xNonceRes.data.nonce;
 		console.info("get new x-nonce successfully");
 		console.info("trying to get active-apps ...");
 		const activeAppsRes = await GlobalService.getActiveApplications(
@@ -61,9 +60,8 @@ export default async function Layout(props: PropsWithChildren) {
 					baseUrl: process.env.BASE_URL,
 					method: "GET",
 					route: "/api/application-management/active-applications",
-					accessToken,
 				});
-				xNonce = xNonceRes.data;
+				xNonce = xNonceRes.data.nonce;
 				console.info("get new x-nonce with new token successfully");
 				console.info("trying to get new active-apps with new token ...");
 				const activeAppsRes = await GlobalService.getActiveApplications(

@@ -15,9 +15,7 @@ const DiscoverySettingsDiscoveryAdapters = () => {
   const [queryParams, setQueryParams] = useState<GetDiscoverySettingsParams>({ type: "discovery" });
   const [debouncedParams] = useDebouncedValue(queryParams, 200);
   const discoverySettingsUQ = useGetDiscoverySettings(debouncedParams, {
-    query: {
-      select: (res) => res?.data,
-    },
+    query: { select: (res) => res?.data },
   });
 
   const handleUpdateQueryParams = (params: Partial<GetDiscoverySettingsParams>) => {
