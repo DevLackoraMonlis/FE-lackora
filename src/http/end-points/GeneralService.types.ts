@@ -29,3 +29,5 @@ export type SessionEnvs = {
 export type CustomError = AxiosError<{ detail: { msg: string }[] | string }>;
 
 export type CustomSuccess = AxiosResponse<{ message: string }>;
+
+export type MutationContext = { message?: string; errorMessage?:string; hideMessage?:boolean };

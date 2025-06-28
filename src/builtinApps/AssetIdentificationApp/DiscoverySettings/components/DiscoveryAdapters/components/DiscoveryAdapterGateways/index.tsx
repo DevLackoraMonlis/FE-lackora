@@ -26,11 +26,7 @@ const DiscoveryAdapterGateways = ({ adapterId }: Props) => {
   const handleDeleteAdapterConfigurations = (configuration_id: string) => {
     deleteAdapterConfigurations.mutate(
       { adapterId, data: { configuration_id } },
-      {
-        onSuccess: () => {
-          queryClient.refetchQueries({ queryKey: [ADAPTER_CONFIGURATIONS_QUERY_KEY] });
-        },
-      }
+      { onSuccess: () => queryClient.refetchQueries({ queryKey: [ADAPTER_CONFIGURATIONS_QUERY_KEY] }) }
     );
   };
 
@@ -41,17 +37,13 @@ const DiscoveryAdapterGateways = ({ adapterId }: Props) => {
   ) => {
     editAdapterConfigurations.mutate(
       { adapterId, data: { configs, configuration_id } },
-      {
-        onSuccess: () => {
-          queryClient.refetchQueries({ queryKey: [ADAPTER_CONFIGURATIONS_QUERY_KEY] });
-        },
-      }
+      { onSuccess: () => queryClient.refetchQueries({ queryKey: [ADAPTER_CONFIGURATIONS_QUERY_KEY] }) }
     );
   };
 
   return (
     <>
-      <Flex gap="xs" direction="column" pos="relative">
+      <Flex gap="xs" direction="column" pos="relative" mih="50px">
         <LoadingOverlay visible={adapterConfigurations.isFetching} />
         {adapterConfigurations?.data?.data?.results?.map((item) => (
           <DiscoveryAdapterCard

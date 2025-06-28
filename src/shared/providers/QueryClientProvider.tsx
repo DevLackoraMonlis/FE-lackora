@@ -5,7 +5,7 @@ import { notifications } from "@mantine/notifications";
 import { QueryClient, QueryClientProvider as RQueryClientProvider } from "@tanstack/react-query";
 
 import { getErrorMessage, getSuccessMessage } from "@/shared/lib/utils";
-import type { CustomError, CustomSuccess } from "@/http/end-points/GeneralService.types";
+import type { CustomError, CustomSuccess, MutationContext } from "@/http/end-points/GeneralService.types";
 
 export default function QueryClientProvider({ children }: { children: ReactNode }) {
   const [queryClient] = useState(
@@ -17,22 +17,24 @@ export default function QueryClientProvider({ children }: { children: ReactNode 
           retry: false,
         },
         mutations: {
-          onError: (error) => {
-            const errorMessage = error as CustomError;
+          onError: (error, _, context) => {
+            const mutationContext = context as MutationContext;
             notifications.show({
               title: "Failed",
-              message: getErrorMessage(errorMessage),
+              message: getErrorMessage(error as CustomError, mutationContext),
               color: "red",
               withBorder: true,
+              hidden: mutationContext.hideMessage,
             });
           },
-          onSuccess: (response) => {
-            const successMessage = response as CustomSuccess;
+          onSuccess: (response, _, context) => {
+            const mutationContext = context as MutationContext;
             notifications.show({
               title: "Success",
-              message: getSuccessMessage(successMessage),
+              message: getSuccessMessage(response as CustomSuccess, mutationContext),
               color: "green",
               withBorder: true,
+              hidden: mutationContext.hideMessage,
             });
           },
         },

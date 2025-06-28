@@ -53,6 +53,7 @@ export function useChangePassword(params?: DefaultParams) {
 		mutationKey: ["reset-password"],
 		mutationFn: UserManagementService.changePassword,
 		onSuccess: () => params?.onSuccess?.(),
+		onMutate: () => ({ message: "Reset Password Successfully" }), 
 	});
 	return {
 		changePassword,
@@ -64,6 +65,7 @@ export const useGetGeneratePasswordQuery = (params?: DefaultParams) => {
 		mutationKey: ["generate-password"],
 		mutationFn: UserManagementService.generatePassword,
 		onSuccess: () => params?.onSuccess?.(),
+		onMutate: () => ({ errorMessage: "Failed to generate password"}), 
 	});
 	return { getGeneratePassword };
 };

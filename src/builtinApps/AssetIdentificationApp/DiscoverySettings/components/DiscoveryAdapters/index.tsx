@@ -28,7 +28,7 @@ const DiscoverySettingsDiscoveryAdapters = () => {
     <Grid p="sm" pt="lg" gutter="lg">
       <LoadingOverlay visible={discoverySettingsUQ.isFetching} />
       <Grid.Col span={{ xs: 12, lg: 3 }}>
-        <Card withBorder shadow="sm" radius="md" bd="1px solid gray.6" h="80dvh">
+        <Card withBorder shadow="sm" radius="md" bd="1px solid gray.4" h="80dvh">
           <Card.Section
             withBorder
             inheritPadding
