@@ -1,25 +1,7 @@
 import { DEFAULT_THEME } from "@mantine/core";
-import type { MantineColorScheme, MantineThemeOverride } from "@mantine/core";
+import type { MantineThemeOverride } from "@mantine/core";
 
-declare module "@mantine/core" {
-  interface MantineThemeOther {
-    darkMode: boolean;
-    colorScheme: MantineColorScheme;
-    fontWeights: {
-      thin: 100;
-      extraLight: 200;
-      light: 300;
-      normal: 400;
-      medium: 500;
-      semiBold: 600;
-      bold: 700;
-      extraBold: 800;
-      black: 900;
-    };
-  }
-}
-
-export default function useMantineBaseTheme({ colorScheme }: { colorScheme: MantineColorScheme }) {
+export default function useMantineBaseTheme() {
   const mantineBaseTheme: MantineThemeOverride = {
     components: {
       Loader: {
@@ -41,21 +23,6 @@ export default function useMantineBaseTheme({ colorScheme }: { colorScheme: Mant
       ...DEFAULT_THEME.fontSizes,
       xxl: "26px",
       "2xxl": "32px",
-    },
-    other: {
-      colorScheme,
-      darkMode: colorScheme === "dark",
-      fontWeights: {
-        thin: 100,
-        extraLight: 200,
-        light: 300,
-        normal: 400,
-        medium: 500,
-        semiBold: 600,
-        bold: 700,
-        extraBold: 800,
-        black: 900,
-      },
     },
     primaryColor: "primary",
     colors: {

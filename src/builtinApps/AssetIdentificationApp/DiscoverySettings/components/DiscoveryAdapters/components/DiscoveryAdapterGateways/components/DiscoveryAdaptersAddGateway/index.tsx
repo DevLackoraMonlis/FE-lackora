@@ -8,7 +8,7 @@ import { useCreateDiscoverySettingConfiguration } from "@/http/generated/asset-i
 
 import { ADAPTER_CONFIGURATIONS_QUERY_KEY } from "../../../../../../index.constants";
 
-type GatewayForm = { gateways: { ip: string; connection: string; key: string }[] };
+type FormValues = { gateways: { ip: string; connection: string; key: string }[] };
 
 type Props = {
   disabled: boolean;
@@ -19,8 +19,7 @@ const DiscoveryAdaptersAddGateway = (props: Props) => {
   const queryClient = useQueryClient();
   const createAdapterConfigurations = useCreateDiscoverySettingConfiguration();
 
-  const form = useForm<GatewayForm>({
-    mode: "uncontrolled",
+  const form = useForm<FormValues>({
     initialValues: {
       gateways: [],
     },
@@ -71,9 +70,9 @@ const DiscoveryAdaptersAddGateway = (props: Props) => {
           size="input-sm"
           title="Save"
           onClick={() => handleCreateGateways(index)}
-          styles={({ colors, other: { darkMode } }) => ({
-            root: { background: darkMode ? colors.primary[2] : colors.primary[9] },
-            icon: { color: darkMode ? colors.gray[7] : colors.gray[2] },
+          styles={({ colors }) => ({
+            root: { background: colors.primary[9] },
+            icon: { color: colors.gray[2] },
           })}
         >
           <IconCheck size={30} />
@@ -82,9 +81,9 @@ const DiscoveryAdaptersAddGateway = (props: Props) => {
           size="input-sm"
           title="Cancel"
           onClick={() => form.removeListItem("gateways", index)}
-          styles={({ colors, other: { darkMode } }) => ({
-            root: { background: darkMode ? colors.gray[6] : colors.gray[2] },
-            icon: { color: darkMode ? colors.gray[2] : colors.gray[7] },
+          styles={({ colors }) => ({
+            root: { background: colors.gray[2] },
+            icon: { color: colors.gray[7] },
           })}
         >
           <IconX size={30} />

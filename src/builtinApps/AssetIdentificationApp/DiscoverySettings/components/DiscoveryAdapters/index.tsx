@@ -31,10 +31,10 @@ const DiscoverySettingsDiscoveryAdapters = () => {
             withBorder
             inheritPadding
             py="2xs"
-            style={({ colors: { gray }, white, black, other }) => ({
-              background: other.darkMode ? gray[7] : gray[2],
-              color: other.darkMode ? white : black,
-              fontWeight: other.fontWeights.bold,
+            style={({ colors: { gray }, black }) => ({
+              background: gray[2],
+              color: black,
+              fontWeight: "bold",
             })}
           >
             Filter
@@ -66,9 +66,6 @@ const DiscoverySettingsDiscoveryAdapters = () => {
               label="Show only used adapters"
               size="md"
               onChange={(e) => handleUpdateQueryParams({ used: e.target.checked })}
-              styles={({ other }) => ({
-                label: { fontWeight: other.fontWeights.medium },
-              })}
             />
             {discoverySettingsUQ?.data?.metadata?.filters?.map(({ label, param, items }) => {
               const value = queryParams[param as keyof DiscoveryAdapterFilters] || [];
@@ -114,21 +111,14 @@ const DiscoverySettingsDiscoveryAdapters = () => {
         </Card>
       </Grid.Col>
       <Grid.Col span={{ xs: 12, lg: 9 }}>
-        <Accordion
-          variant="separated"
-          styles={({ other }) => ({
-            chevron: {
-              fontWeight: other.fontWeights.bold,
-            },
-          })}
-        >
+        <Accordion variant="separated">
           {discoverySettingsUQ?.data?.results?.map((item) => (
             <Accordion.Item
               key={item.id}
               value={item.id}
-              style={({ colors: { gray }, white, black, other }) => ({
-                background: other.darkMode ? gray[7] : gray[2],
-                color: other.darkMode ? white : black,
+              style={({ colors: { gray }, black }) => ({
+                background: gray[2],
+                color: black,
               })}
             >
               <Accordion.Control>
@@ -165,9 +155,6 @@ const DiscoverySettingsDiscoveryAdapters = () => {
                 </Flex>
               </Accordion.Control>
               <Accordion.Panel
-                style={({ colors: { gray }, white, other }) => ({
-                  background: other.darkMode ? gray[7] : white,
-                })}
                 renderRoot={({ children, ...others }) =>
                   !others["aria-hidden"] && <section {...others}>{children}</section>
                 }

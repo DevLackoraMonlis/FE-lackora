@@ -27,10 +27,10 @@ const DiscoveryAdapterCard = (props: Props) => {
         />
       ) : (
         <Card
-          style={({ colors: { gray }, spacing, other }) => ({
+          style={({ colors: { gray }, spacing }) => ({
             padding: `${spacing.xs} ${spacing.sm}`,
             width: "100%",
-            background: other.darkMode ? gray[7] : gray[1],
+            background: gray[1],
           })}
         >
           <Flex align="center" justify="space-between">
@@ -52,8 +52,8 @@ const DiscoveryAdapterCard = (props: Props) => {
                 title="Test Connection"
                 className="cursor-pointer"
                 variant="subtle"
-                styles={({ white, colors: { gray }, other: { darkMode } }) => ({
-                  icon: { color: darkMode ? white : gray[8] },
+                styles={({ colors: { gray } }) => ({
+                  icon: { color: gray[8] },
                 })}
               >
                 <IconPlugConnected size={20} />
@@ -63,8 +63,8 @@ const DiscoveryAdapterCard = (props: Props) => {
                 title="View Results"
                 className="cursor-pointer"
                 variant="subtle"
-                styles={({ white, colors: { gray }, other: { darkMode } }) => ({
-                  icon: { color: darkMode ? white : gray[8] },
+                styles={({ colors: { gray } }) => ({
+                  icon: { color: gray[8] },
                 })}
               >
                 <IconListDetails size={20} />
@@ -74,8 +74,8 @@ const DiscoveryAdapterCard = (props: Props) => {
                 title="Edit"
                 className="cursor-pointer"
                 variant="subtle"
-                styles={({ white, colors: { gray }, other: { darkMode } }) => ({
-                  icon: { color: darkMode ? white : gray[8] },
+                styles={({ colors: { gray } }) => ({
+                  icon: { color: gray[8] },
                 })}
               >
                 <IconPencil size={20} />
@@ -92,8 +92,8 @@ const DiscoveryAdapterCard = (props: Props) => {
                     title="Delete"
                     className="cursor-pointer"
                     variant="subtle"
-                    styles={({ white, colors: { gray }, other: { darkMode } }) => ({
-                      icon: { color: darkMode ? white : gray[8] },
+                    styles={({ colors: { gray } }) => ({
+                      icon: { color: gray[8] },
                     })}
                   >
                     <IconX size={20} />

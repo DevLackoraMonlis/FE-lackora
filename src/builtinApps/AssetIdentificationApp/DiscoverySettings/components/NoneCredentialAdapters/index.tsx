@@ -12,19 +12,12 @@ const DiscoverySettingsNoneCredentialAdapters = () => {
   return (
     <Grid p="sm" pt="lg" gutter="lg">
       <Grid.Col span={{ xs: 12, lg: 9 }} offset={{ lg: 3 }}>
-        <Accordion
-          variant="separated"
-          styles={({ other }) => ({
-            chevron: {
-              fontWeight: other.fontWeights.bold,
-            },
-          })}
-        >
+        <Accordion variant="separated">
           <Accordion.Item
             value={NoneCredentialAdaptersSections.PortDetection}
-            style={({ colors: { gray }, white, black, other }) => ({
-              background: other.darkMode ? gray[7] : gray[2],
-              color: other.darkMode ? white : black,
+            style={({ colors: { gray }, black }) => ({
+              background: gray[2],
+              color: black,
             })}
           >
             <Accordion.Control>
@@ -63,9 +56,6 @@ const DiscoverySettingsNoneCredentialAdapters = () => {
               </Flex>
             </Accordion.Control>
             <Accordion.Panel
-              style={({ colors: { gray }, white, other }) => ({
-                background: other.darkMode ? gray[7] : white,
-              })}
               renderRoot={({ children, ...others }) =>
                 !others["aria-hidden"] && <section {...others}>{children}</section>
               }
@@ -75,9 +65,9 @@ const DiscoverySettingsNoneCredentialAdapters = () => {
           </Accordion.Item>
           <Accordion.Item
             value={NoneCredentialAdaptersSections.WebServiceDetection}
-            style={({ colors: { gray }, white, black, other }) => ({
-              background: other.darkMode ? gray[7] : gray[2],
-              color: other.darkMode ? white : black,
+            style={({ colors: { gray }, black }) => ({
+              background: gray[2],
+              color: black,
             })}
           >
             <Accordion.Control>
@@ -116,9 +106,6 @@ const DiscoverySettingsNoneCredentialAdapters = () => {
               </Flex>
             </Accordion.Control>
             <Accordion.Panel
-              style={({ colors: { gray }, white, other }) => ({
-                background: other.darkMode ? gray[7] : white,
-              })}
               renderRoot={({ children, ...others }) =>
                 !others["aria-hidden"] && <section {...others}>{children}</section>
               }

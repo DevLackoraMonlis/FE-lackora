@@ -157,7 +157,7 @@ export const getErrorMessage = (error: CustomError, context: MutationContext) =>
 	return error.response?.data?.detail || context?.errorMessage || "Unhandled Error";
 };
 export const getSuccessMessage = (response: CustomSuccess, context: MutationContext) => {
-	return response?.data?.message || context?.message || "The operation was successful.";
+	return response?.data?.message || context?.successMessage || "The operation was successful.";
 };
 
 export function isValidJson(str: string) {

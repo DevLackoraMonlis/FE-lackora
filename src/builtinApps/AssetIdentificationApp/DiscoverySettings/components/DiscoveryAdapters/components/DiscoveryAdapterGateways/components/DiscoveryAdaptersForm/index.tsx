@@ -5,17 +5,17 @@ import { TextInput, ActionIcon, Card, Flex, Select, LoadingOverlay, Box } from "
 
 import type { EachAdapterConfiguration } from "@/http/generated/models";
 
-type GatewayForm = EachAdapterConfiguration["config"];
+type FormValues = EachAdapterConfiguration["config"];
 
 type Props = {
-  config: GatewayForm;
+  config: FormValues;
   loading: boolean;
-  handleEditAdapterConfigurations: (configs: GatewayForm) => void;
+  handleEditAdapterConfigurations: (configs: FormValues) => void;
   onCancel: VoidFunction;
 };
 
 const DiscoveryAdaptersForm = ({ config, loading, onCancel, handleEditAdapterConfigurations }: Props) => {
-  const form = useForm<GatewayForm>({
+  const form = useForm<FormValues>({
     mode: "uncontrolled",
   });
 
@@ -24,7 +24,7 @@ const DiscoveryAdaptersForm = ({ config, loading, onCancel, handleEditAdapterCon
   };
 
   useEffect(() => {
-    form.initialize(config as GatewayForm);
+    form.initialize(config as FormValues);
   }, [config]);
 
   return (
@@ -56,9 +56,9 @@ const DiscoveryAdaptersForm = ({ config, loading, onCancel, handleEditAdapterCon
               size="input-sm"
               title="Save"
               type="submit"
-              styles={({ colors, other: { darkMode } }) => ({
-                root: { background: darkMode ? colors.primary[2] : colors.primary[9] },
-                icon: { color: darkMode ? colors.gray[7] : colors.gray[2] },
+              styles={({ colors }) => ({
+                root: { background: colors.primary[9] },
+                icon: { color: colors.gray[2] },
               })}
             >
               <IconCheck size={30} />
@@ -68,9 +68,9 @@ const DiscoveryAdaptersForm = ({ config, loading, onCancel, handleEditAdapterCon
               title="Cancel"
               type="reset"
               onClick={onCancel}
-              styles={({ colors, other: { darkMode } }) => ({
-                root: { background: darkMode ? colors.gray[6] : colors.gray[2] },
-                icon: { color: darkMode ? colors.gray[2] : colors.gray[7] },
+              styles={({ colors }) => ({
+                root: { background: colors.gray[2] },
+                icon: { color: colors.gray[7] },
               })}
             >
               <IconX size={30} />

@@ -33,7 +33,7 @@ export default function QueryClientProvider({ children }: { children: ReactNode 
               message: getSuccessMessage(response as CustomSuccess, mutationContext),
               color: "green",
               withBorder: true,
-              hidden: mutationContext.hideMessage,
+              hidden: mutationContext.hideSuccessMessage,
             });
           },
         },

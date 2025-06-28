@@ -1,4 +1,3 @@
-import { useQueryClient } from "@tanstack/react-query";
 import { Flex, LoadingOverlay } from "@mantine/core";
 
 import {
@@ -16,8 +15,8 @@ import DiscoveryAdaptersAddGateway from "./components/DiscoveryAdaptersAddGatewa
 type Props = {
   adapterId: string;
 };
+
 const DiscoveryAdapterGateways = ({ adapterId }: Props) => {
-  const queryClient = useQueryClient();
   const adapterConfigurations = useGetDiscoverySettingConfigurations(adapterId, {
     query: { enabled: !!adapterId, queryKey: [ADAPTER_CONFIGURATIONS_QUERY_KEY] },
   });
@@ -26,7 +25,7 @@ const DiscoveryAdapterGateways = ({ adapterId }: Props) => {
   const handleDeleteAdapterConfigurations = (configuration_id: string) => {
     deleteAdapterConfigurations.mutate(
       { adapterId, data: { configuration_id } },
-      { onSuccess: () => queryClient.refetchQueries({ queryKey: [ADAPTER_CONFIGURATIONS_QUERY_KEY] }) }
+      { onSuccess: () => adapterConfigurations.refetch() }
     );
   };
 
@@ -37,7 +36,7 @@ const DiscoveryAdapterGateways = ({ adapterId }: Props) => {
   ) => {
     editAdapterConfigurations.mutate(
       { adapterId, data: { configs, configuration_id } },
-      { onSuccess: () => queryClient.refetchQueries({ queryKey: [ADAPTER_CONFIGURATIONS_QUERY_KEY] }) }
+      { onSuccess: () => adapterConfigurations.refetch() }
     );
   };
 

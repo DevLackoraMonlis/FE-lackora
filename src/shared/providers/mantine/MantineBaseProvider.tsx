@@ -7,18 +7,16 @@ import type { PropsWithChildren } from "react";
 import nonce from "../../../../nonce";
 
 export default function MantineBaseProvider(props: PropsWithChildren) {
+  const { mantineBaseTheme } = useMantineBaseTheme();
+
   const defaultTheme = window.localStorage.getItem("mantine-color-scheme-value") as
     | MantineColorScheme
     | undefined;
 
-  const colorScheme = defaultTheme === "dark" ? "dark" : "light";
-
-  const { mantineBaseTheme } = useMantineBaseTheme({ colorScheme });
-
   return (
     <MantineProvider
       getStyleNonce={() => nonce.nonce}
-      defaultColorScheme={colorScheme}
+      defaultColorScheme={defaultTheme === "dark" ? "dark" : "light"}
       withCssVariables
       theme={mantineBaseTheme}
     >

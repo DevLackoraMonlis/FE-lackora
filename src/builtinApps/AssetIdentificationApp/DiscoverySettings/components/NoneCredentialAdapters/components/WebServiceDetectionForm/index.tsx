@@ -7,7 +7,6 @@ type GatewayForm = { ports: { name: string; protocol: string; portRange: string;
 
 const NoneCredentialAdaptersWebServiceDetectionForm = () => {
   const form = useForm<GatewayForm>({
-    mode: "uncontrolled",
     initialValues: {
       ports: [{ name: "", protocol: "", portRange: "", key: "string" }],
     },
@@ -17,7 +16,6 @@ const NoneCredentialAdaptersWebServiceDetectionForm = () => {
     <Card key={item.key} bg="gray.1" w="100%" pb="xs" pt="2xs">
       <Flex gap="xs">
         <Select
-          styles={({ other: { fontWeights } }) => ({ label: { fontWeight: fontWeights.bold } })}
           label={index ? "" : "Name"}
           pt={index ? "md" : ""}
           withAsterisk
@@ -27,7 +25,6 @@ const NoneCredentialAdaptersWebServiceDetectionForm = () => {
           {...form.getInputProps(`ports.${index}.name`)}
         />
         <Select
-          styles={({ other: { fontWeights } }) => ({ label: { fontWeight: fontWeights.bold } })}
           label={index ? "" : "Protocol"}
           pt={index ? "md" : ""}
           withAsterisk
@@ -38,7 +35,6 @@ const NoneCredentialAdaptersWebServiceDetectionForm = () => {
         />
         <Flex style={{ flex: 4 }} gap="xs" align="center">
           <TextInput
-            styles={({ other: { fontWeights } }) => ({ label: { fontWeight: fontWeights.bold } })}
             label={index ? "" : "Port Range"}
             pt={index ? "sm" : ""}
             w="100%"
@@ -52,9 +48,9 @@ const NoneCredentialAdaptersWebServiceDetectionForm = () => {
               size="input-sm"
               title="Save"
               onClick={() => form.removeListItem("ports", index)}
-              styles={({ colors, other: { darkMode } }) => ({
-                root: { background: darkMode ? colors.primary[2] : colors.primary[9] },
-                icon: { color: darkMode ? colors.gray[7] : colors.gray[2] },
+              styles={({ colors }) => ({
+                root: { background: colors.primary[9] },
+                icon: { color: colors.gray[2] },
               })}
             >
               <IconCheck size={30} />
@@ -63,9 +59,9 @@ const NoneCredentialAdaptersWebServiceDetectionForm = () => {
               size="input-sm"
               title="Cancel"
               onClick={() => form.removeListItem("ports", index)}
-              styles={({ colors, other: { darkMode } }) => ({
-                root: { background: darkMode ? colors.gray[6] : colors.gray[2] },
-                icon: { color: darkMode ? colors.gray[2] : colors.gray[7] },
+              styles={({ colors }) => ({
+                root: { background: colors.gray[2] },
+                icon: { color: colors.gray[7] },
               })}
             >
               <IconX size={30} />

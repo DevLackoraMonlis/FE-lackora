@@ -30,4 +30,4 @@ export type CustomError = AxiosError<{ detail: { msg: string }[] | string }>;
 
 export type CustomSuccess = AxiosResponse<{ message: string }>;
 
-export type MutationContext = { message?: string; errorMessage?:string; hideMessage?:boolean };
+export type MutationContext = { successMessage?: string; errorMessage?:string; hideSuccessMessage?:boolean };
