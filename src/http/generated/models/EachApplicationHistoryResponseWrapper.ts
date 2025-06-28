@@ -5,14 +5,15 @@
  * MonoWatch Security Asset Management - BackBone Structure
  * OpenAPI spec version: 1.0.0
  */
+import type { ApplicationHistoryStatus } from "./ApplicationHistoryStatus";
 
 export interface EachApplicationHistoryResponseWrapper {
-  id?: string;
-  application_id?: string;
-  application_name?: string;
-  action?: string;
-  message?: string;
-  status?: boolean;
-  creator?: string;
-  created_time?: string;
+	id: string;
+	application_id: string;
+	application_name: string;
+	action?: string;
+	message?: string;
+	status: ApplicationHistoryStatus;
+	creator?: string;
+	created_time: string;
 }

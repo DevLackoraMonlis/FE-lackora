@@ -99,13 +99,13 @@ export default function AppDetail() {
 					const data = response.data.results;
 					const results: ICAppManagerHistoryRs[] = data.map((item) => ({
 						//todo application_id,updater,updated_time,user
-						activationToken: item.application_id || "",
+						activationToken: item.application_id,
 						createdTime: item.created_time,
 						creator: item.creator || "",
 						id: item.id,
 						appId: item.application_id,
 						status: item.status,
-						user: item.creator,
+						user: item.creator || "",
 					}));
 
 					return {

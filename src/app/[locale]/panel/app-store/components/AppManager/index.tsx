@@ -20,7 +20,7 @@ import { useRouter } from "next/navigation";
 import classes from "./index.module.css";
 
 export default function AppManager() {
-	const t = useI18n();
+	const _t = useI18n();
 	const router = useRouter();
 
 	// const { supportData } = useLicensingDetails();
@@ -122,8 +122,8 @@ export default function AppManager() {
 				getAppsApi={async (variables, config) => {
 					const statusMap: Record<ICAppManagerRqFilterType, string> = {
 						All: "all",
-						MyApps: "my_plugins",
-						Featured: "featured_plugins",
+						MyApps: "my_applications",
+						Featured: "base",
 					};
 
 					return getApplications(
@@ -147,11 +147,12 @@ export default function AppManager() {
 							(item) => ({
 								//todo activationCode
 								activationCode: "",
+
 								active: item.is_active,
 								buildBy: item.creator || "",
 								category: item.category || "",
 								description: item.description || "",
-								expireDate: item.expiration_time,
+								expireDate: item.expiration_time || "",
 								hasConfig: item.is_configurable,
 								installingSteps:
 									item.installingsteps?.map((st) => ({
@@ -182,9 +183,9 @@ export default function AppManager() {
 								...response.data,
 								results,
 								info: {
-									ALL: response.data.metadata?.application_type.all || 0,
-									FEATURED: response.data.metadata?.application_type.base || 0,
-									MY_PLUGIN:
+									All: response.data.metadata?.application_type.all || 0,
+									Featured: response.data.metadata?.application_type.base || 0,
+									MyApps:
 										response.data.metadata?.application_type.my_applications ||
 										0,
 								},
