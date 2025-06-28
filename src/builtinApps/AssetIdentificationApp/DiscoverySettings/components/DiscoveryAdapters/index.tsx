@@ -14,7 +14,7 @@ type DiscoveryAdapterFilters = Pick<GetDiscoverySettingsParams, "method" | "vend
 const DiscoverySettingsDiscoveryAdapters = () => {
   const [queryParams, setQueryParams] = useState<GetDiscoverySettingsParams>({ type: "discovery" });
   const [debouncedParams] = useDebouncedValue(queryParams, 200);
-  const discoverySettingsUQ = useGetDiscoverySettings(debouncedParams, {
+  const discoverySettings = useGetDiscoverySettings(debouncedParams, {
     query: { select: (res) => res?.data },
   });
 
@@ -24,7 +24,7 @@ const DiscoverySettingsDiscoveryAdapters = () => {
 
   return (
     <Grid p="sm" pt="lg" gutter="lg">
-      <LoadingOverlay visible={discoverySettingsUQ.isFetching} />
+      <LoadingOverlay visible={discoverySettings.isFetching} />
       <Grid.Col span={{ xs: 12, lg: 3 }}>
         <Card withBorder shadow="sm" radius="md" bd="1px solid gray.4" h="80dvh">
           <Card.Section withBorder inheritPadding py="2xs" fw="bold" bg="gray.2">
@@ -58,7 +58,7 @@ const DiscoverySettingsDiscoveryAdapters = () => {
               size="md"
               onChange={(e) => handleUpdateQueryParams({ used: e.target.checked })}
             />
-            {discoverySettingsUQ?.data?.metadata?.filters?.map(({ label, param, items }) => {
+            {discoverySettings?.data?.metadata?.filters?.map(({ label, param, items }) => {
               const value = queryParams[param as keyof DiscoveryAdapterFilters] || [];
               return (
                 <Fragment key={param}>
@@ -103,7 +103,7 @@ const DiscoverySettingsDiscoveryAdapters = () => {
       </Grid.Col>
       <Grid.Col span={{ xs: 12, lg: 9 }}>
         <Accordion variant="separated">
-          {discoverySettingsUQ?.data?.results?.map((item) => (
+          {discoverySettings?.data?.results?.map((item) => (
             <Accordion.Item key={item.id} value={item.id}>
               <Accordion.Control>
                 <Flex align="center" justify="space-between" bg="transparent">
