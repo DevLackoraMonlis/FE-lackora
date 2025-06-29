@@ -28,7 +28,6 @@ export default function AppDetail() {
 		window.open("https://cp-uat.behinrahkar.com/", "_blank");
 	};
 
-	// biome-ignore lint: useExhaustiveDependencies
 	useEffect(() => {
 		if (pathname === AppRoutes.appDetailPage(appName)) {
 			setOpenSidePanel?.(false);

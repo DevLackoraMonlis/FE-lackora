@@ -5,10 +5,10 @@
  * MonoWatch Security Asset Management - BackBone Structure
  * OpenAPI spec version: 1.0.0
  */
-import type { EachApplicationHistoryResponseWrapper } from './EachApplicationHistoryResponseWrapper';
+import type { EachApplicationHistoryResponseWrapper } from "./EachApplicationHistoryResponseWrapper";
 
 export interface PaginatedBaseResponseEachApplicationHistoryResponseWrapperNoneType {
-  results: EachApplicationHistoryResponseWrapper[];
-  total: number;
-  metadata: null;
+	results: EachApplicationHistoryResponseWrapper[];
+	total: number;
+	metadata: null;
 }

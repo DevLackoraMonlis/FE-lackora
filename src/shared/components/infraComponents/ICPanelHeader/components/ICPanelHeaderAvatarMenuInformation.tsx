@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { Avatar, Badge, Flex, Text } from '@mantine/core';
+import { Avatar, Badge, Flex, Text } from "@mantine/core";
 
 type Props = {
 	profileSrc?: string;
@@ -11,8 +11,18 @@ type Props = {
 
 export default function ICPanelHeaderAvatarMenuInformation(props: Props) {
 	return (
-		<Flex direction="column" align="center" justify="center" className="gap-y-1 pb-4">
-			<Avatar size={64} alt={props.profileName} src={props.profileSrc} radius="xl" />
+		<Flex
+			direction="column"
+			align="center"
+			justify="center"
+			className="gap-y-1 pb-4"
+		>
+			<Avatar
+				size={64}
+				alt={props.profileName}
+				src={props.profileSrc}
+				radius="xl"
+			/>
 			<Text ta="center" size="md">
 				{props.profileName}
 			</Text>

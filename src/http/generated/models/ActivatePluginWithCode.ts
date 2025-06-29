@@ -7,5 +7,5 @@
  */
 
 export interface ActivatePluginWithCode {
-  activation_code: string;
+	activation_code: string;
 }

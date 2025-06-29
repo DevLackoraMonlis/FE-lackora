@@ -64,7 +64,6 @@ export function useTanStackDefault<T extends Record<string, unknown>>(
 	const privateSelectedRecords = useRef<Map<string, T>>(new Map());
 	const [rowSelection, setRowSelection] = useState<RowSelectionState>({}); //manage your own row selection state
 
-	// biome-ignore lint: useExhaustiveDependencies
 	useImperativeHandle(
 		props.ref,
 		() => {
@@ -145,7 +144,6 @@ export function useTanStackDefault<T extends Record<string, unknown>>(
 		}),
 	);
 
-	// biome-ignore lint: useExhaustiveDependencies
 	useEffect(() => {
 		if (props.pinLastColumn) {
 			// Pin the last column to the right column
@@ -162,7 +160,6 @@ export function useTanStackDefault<T extends Record<string, unknown>>(
 		}
 	}, [props.pinLastColumn, columns.length]);
 
-	// biome-ignore lint: useExhaustiveDependencies
 	useEffect(() => {
 		if (!isInitialRowSelection.current) {
 			const initRowSelection = props.selectedRecords?.reduce((prev, cur) => {
@@ -189,7 +186,6 @@ export function useTanStackDefault<T extends Record<string, unknown>>(
 		}
 	}, [props.selectedRecords]);
 
-	// biome-ignore lint: useExhaustiveDependencies
 	useEffect(() => {
 		convertRowSelectionToRecord();
 	}, [rowSelection]);

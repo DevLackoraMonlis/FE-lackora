@@ -1,115 +1,128 @@
-import { useStore } from "zustand";
-import { useQueryClient } from "@tanstack/react-query";
+import {
+	ActionIcon,
+	Box,
+	Button,
+	Fieldset,
+	Flex,
+	LoadingOverlay,
+} from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { randomId } from "@mantine/hooks";
 import { IconCheck, IconPlus, IconX } from "@tabler/icons-react";
-import { ActionIcon, Button, Flex, LoadingOverlay, Box, Fieldset } from "@mantine/core";
+import { useQueryClient } from "@tanstack/react-query";
+import { useStore } from "zustand";
 
 import { useCreateDiscoverySettingConfiguration } from "@/http/generated/asset-identification-discovery-settings";
 import { getDynamicField } from "@/shared/components/baseComponents/BCDynamicField";
 
-import { discoveryAdaptersStore } from "../../../../index.store";
 import { GET_DISCOVERY_SETTING_CONFIGURATIONS_QUERY_KEY } from "../../../../index.constants";
+import { discoveryAdaptersStore } from "../../../../index.store";
 
 type FormValues = { gateways: { [key: string]: string }[] };
 
 type Props = {
-  disabled: boolean;
-  adapterId: string;
+	disabled: boolean;
+	adapterId: string;
 };
 
 const DiscoveryAdaptersAddGateway = (props: Props) => {
-  const queryClient = useQueryClient();
-  const createDiscoverySettingConfiguration = useCreateDiscoverySettingConfiguration();
-  const discoveryAdapterFormFields = useStore(discoveryAdaptersStore, (state) => state.formFields);
-  const formFields = discoveryAdapterFormFields[props.adapterId];
+	const queryClient = useQueryClient();
+	const createDiscoverySettingConfiguration =
+		useCreateDiscoverySettingConfiguration();
+	const discoveryAdapterFormFields = useStore(
+		discoveryAdaptersStore,
+		(state) => state.formFields,
+	);
+	const formFields = discoveryAdapterFormFields[props.adapterId];
 
-  const insertListItem = formFields?.reduce(
-    (accumulator, { key }) => {
-      accumulator[key] = "";
-      return accumulator;
-    },
-    { key: randomId() } as Record<string, unknown>
-  );
+	const insertListItem = formFields?.reduce(
+		(accumulator, { key }) => {
+			accumulator[key] = "";
+			return accumulator;
+		},
+		{ key: randomId() } as Record<string, unknown>,
+	);
 
-  const form = useForm<FormValues>({
-    initialValues: {
-      gateways: [],
-    },
-  });
+	const form = useForm<FormValues>({
+		initialValues: {
+			gateways: [],
+		},
+	});
 
-  const handleCreateGateways = (index: number) => {
-    const { connection, ip } = form.getValues().gateways[index] || {};
-    if (!connection || !ip) {
-      return form.setErrors({
-        [`gateways.${index}.ip`]: ip ? "" : "Field is required",
-        [`gateways.${index}.connection`]: connection ? "" : "Field is required",
-      });
-    }
-    createDiscoverySettingConfiguration.mutate(
-      { adapterId: props.adapterId, data: { configs: { connection, ip } } },
-      {
-        onSuccess: () => {
-          queryClient.refetchQueries({ queryKey: [GET_DISCOVERY_SETTING_CONFIGURATIONS_QUERY_KEY] });
-          form.removeListItem("gateways", index);
-        },
-      }
-    );
-  };
+	const handleCreateGateways = (index: number) => {
+		const { connection, ip } = form.getValues().gateways[index] || {};
+		if (!connection || !ip) {
+			return form.setErrors({
+				[`gateways.${index}.ip`]: ip ? "" : "Field is required",
+				[`gateways.${index}.connection`]: connection ? "" : "Field is required",
+			});
+		}
+		createDiscoverySettingConfiguration.mutate(
+			{ adapterId: props.adapterId, data: { configs: { connection, ip } } },
+			{
+				onSuccess: () => {
+					queryClient.refetchQueries({
+						queryKey: [GET_DISCOVERY_SETTING_CONFIGURATIONS_QUERY_KEY],
+					});
+					form.removeListItem("gateways", index);
+				},
+			},
+		);
+	};
 
-  const fields = form.getValues().gateways.map((item, index) => (
-    <Flex key={item.key} gap="xs" mt="xs">
-      <Fieldset variant="filled" w="100%" pb="xs" pt="2xs">
-        <Flex gap="xs">
-          {formFields?.map((item) =>
-            getDynamicField({
-              otherElementOptions: { withAsterisk: true, style: { flex: 1 } },
-              formInputProps: {
-                key: form.key(`gateways.${index}.${item.key}`),
-                ...form.getInputProps(`gateways.${index}.${item.key}`),
-              },
-              ...item,
-            })
-          )}
-        </Flex>
-      </Fieldset>
-      <Flex direction="column" gap="xs" justify="space-between" align="center">
-        <ActionIcon
-          size="input-sm"
-          title="Save"
-          c="gray.2"
-          bg="primary.8"
-          onClick={() => handleCreateGateways(index)}
-        >
-          <IconCheck size={30} />
-        </ActionIcon>
-        <ActionIcon
-          size="input-sm"
-          title="Cancel"
-          c="gray.8"
-          bg="gray.2"
-          onClick={() => form.removeListItem("gateways", index)}
-        >
-          <IconX size={30} />
-        </ActionIcon>
-      </Flex>
-    </Flex>
-  ));
+	const fields = form.getValues().gateways.map((item, index) => (
+		<Flex key={item.key} gap="xs" mt="xs">
+			<Fieldset variant="filled" w="100%" pb="xs" pt="2xs">
+				<Flex gap="xs">
+					{formFields?.map((item) =>
+						getDynamicField({
+							otherElementOptions: { withAsterisk: true, style: { flex: 1 } },
+							formInputProps: {
+								key: form.key(`gateways.${index}.${item.key}`),
+								...form.getInputProps(`gateways.${index}.${item.key}`),
+							},
+							...item,
+						}),
+					)}
+				</Flex>
+			</Fieldset>
+			<Flex direction="column" gap="xs" justify="space-between" align="center">
+				<ActionIcon
+					size="input-sm"
+					title="Save"
+					c="gray.2"
+					bg="primary.8"
+					onClick={() => handleCreateGateways(index)}
+				>
+					<IconCheck size={30} />
+				</ActionIcon>
+				<ActionIcon
+					size="input-sm"
+					title="Cancel"
+					c="gray.8"
+					bg="gray.2"
+					onClick={() => form.removeListItem("gateways", index)}
+				>
+					<IconX size={30} />
+				</ActionIcon>
+			</Flex>
+		</Flex>
+	));
 
-  return (
-    <Box pos="relative">
-      <LoadingOverlay visible={createDiscoverySettingConfiguration.isPending} />
-      {fields}
-      <Button
-        mt="sm"
-        leftSection={<IconPlus size={20} />}
-        variant="transparent"
-        disabled={props.disabled}
-        onClick={() => form.insertListItem("gateways", insertListItem)}
-      >
-        Add Gateway
-      </Button>
-    </Box>
-  );
+	return (
+		<Box pos="relative">
+			<LoadingOverlay visible={createDiscoverySettingConfiguration.isPending} />
+			{fields}
+			<Button
+				mt="sm"
+				leftSection={<IconPlus size={20} />}
+				variant="transparent"
+				disabled={props.disabled}
+				onClick={() => form.insertListItem("gateways", insertListItem)}
+			>
+				Add Gateway
+			</Button>
+		</Box>
+	);
 };
 export default DiscoveryAdaptersAddGateway;

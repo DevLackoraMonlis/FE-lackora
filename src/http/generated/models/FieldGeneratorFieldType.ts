@@ -6,14 +6,14 @@
  * OpenAPI spec version: 1.0.0
  */
 
-export type FieldGeneratorFieldType = typeof FieldGeneratorFieldType[keyof typeof FieldGeneratorFieldType];
-
+export type FieldGeneratorFieldType =
+	(typeof FieldGeneratorFieldType)[keyof typeof FieldGeneratorFieldType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const FieldGeneratorFieldType = {
-  Int64: 'Int64',
-  String: 'String',
-  IP: 'IP',
-  Datetime: 'Datetime',
-  Boolean: 'Boolean',
+	Int64: "Int64",
+	String: "String",
+	IP: "IP",
+	Datetime: "Datetime",
+	Boolean: "Boolean",
 } as const;

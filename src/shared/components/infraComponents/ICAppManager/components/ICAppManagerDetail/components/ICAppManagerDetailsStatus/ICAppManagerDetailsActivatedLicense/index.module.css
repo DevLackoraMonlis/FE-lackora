@@ -3,15 +3,15 @@
 	border-radius: 4px;
 }
 
-[data-mantine-color-scheme='dark'] .cardBox{
+[data-mantine-color-scheme="dark"] .cardBox {
 	background-color: var(--mantine-color-gray-7) !important;
 }
 
 .icon {
-    color: var(--mantine-color-gray-7) !important;
+	color: var(--mantine-color-gray-7) !important;
 }
 
-[data-mantine-color-scheme='dark'] .icon{
+[data-mantine-color-scheme="dark"] .icon {
 	color: var(--mantine-color-gray-2) !important;
 }
 

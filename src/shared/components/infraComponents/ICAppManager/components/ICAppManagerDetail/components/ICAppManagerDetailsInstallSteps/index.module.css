@@ -2,6 +2,6 @@
 	background-color: var(--mantine-color-white);
 }
 
-[data-mantine-color-scheme='dark'] .progress {
+[data-mantine-color-scheme="dark"] .progress {
 	background-color: var(--mantine-color-black);
 }

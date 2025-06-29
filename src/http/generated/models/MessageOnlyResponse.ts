@@ -7,5 +7,5 @@
  */
 
 export interface MessageOnlyResponse {
-  message: string;
+	message: string;
 }

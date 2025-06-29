@@ -5,6 +5,6 @@
  * MonoWatch Security Asset Management - BackBone Structure
  * OpenAPI spec version: 1.0.0
  */
-import type { FieldGeneratorFieldType } from './FieldGeneratorFieldType';
+import type { FieldGeneratorFieldType } from "./FieldGeneratorFieldType";
 
 export type FieldGeneratorType = FieldGeneratorFieldType | null;

@@ -18,7 +18,7 @@ export default function PanelLayout(
 		status: "authenticated" | "loading" | "unauthenticated";
 	}>,
 ) {
-	const { black, white } = useMantineTheme();
+	const { white } = useMantineTheme();
 	const [opened, handlers] = useDisclosure(false);
 
 	useEffect(() => {

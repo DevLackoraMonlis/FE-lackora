@@ -1,76 +1,68 @@
 {
-  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
-  "assists": {
-    "enabled": true
-  },
-  "vcs": {
-    "enabled": false,
-    "clientKind": "git",
-    "useIgnoreFile": false
-  },
-  "files": {
-    "ignoreUnknown": false,
-    "ignore": [
-      "node_modules/",
-      ".next/",
-      "**/*.js"
-    ]
-  },
-  "formatter": {
-    "enabled": true,
-    "indentStyle": "tab"
-  },
-  "organizeImports": {
-    "enabled": true
-  },
-  "linter": {
-    "enabled": true,
-    "rules": {
-      "performance": {
-        "recommended": true
-      },
-      "recommended": true,
-      "complexity": {
-        "noUselessFragments": "error",
-        "noForEach": "off"
-      },
-      "a11y": {
-        "noSvgWithoutTitle": "off",
-        "recommended": true
-      },
-      "security": {
-        "noDangerouslySetInnerHtml": "off",
-        "recommended": true
-      },
-      "correctness": {
-        "noUnusedVariables": "error",
-        "noUnusedImports": "error",
-        "useExhaustiveDependencies": "warn",
-        "recommended": true
-      },
-      "style": {
-        "noNonNullAssertion": "error",
-        "useImportType": "error",
-        "recommended": true,
-        "noUnusedTemplateLiteral": {
-          "fix": "safe",
-          "level": "warn"
-        }
-      },
-      "suspicious": {
-        "noArrayIndexKey": "error",
-        "recommended": true
-      }
-    },
-    "ignore": [
-      "**/node_modules/",
-      ".next/",
-      "**/*.js"
-    ]
-  },
-  "javascript": {
-    "formatter": {
-      "quoteStyle": "double"
-    }
-  }
+	"$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+	"assists": {
+		"enabled": true
+	},
+	"vcs": {
+		"enabled": false,
+		"clientKind": "git",
+		"useIgnoreFile": false
+	},
+	"files": {
+		"ignoreUnknown": false,
+		"ignore": ["node_modules/", ".next/", "**/*.js"]
+	},
+	"formatter": {
+		"enabled": true,
+		"indentStyle": "tab"
+	},
+	"organizeImports": {
+		"enabled": true
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"performance": {
+				"recommended": true
+			},
+			"recommended": true,
+			"complexity": {
+				"noUselessFragments": "error",
+				"noForEach": "off"
+			},
+			"a11y": {
+				"noSvgWithoutTitle": "off",
+				"recommended": true
+			},
+			"security": {
+				"noDangerouslySetInnerHtml": "off",
+				"recommended": true
+			},
+			"correctness": {
+				"noUnusedVariables": "error",
+				"noUnusedImports": "error",
+				"useExhaustiveDependencies": "off",
+				"recommended": true
+			},
+			"style": {
+				"noNonNullAssertion": "error",
+				"useImportType": "error",
+				"recommended": true,
+				"noUnusedTemplateLiteral": {
+					"fix": "safe",
+					"level": "warn"
+				}
+			},
+			"suspicious": {
+				"noArrayIndexKey": "error",
+				"recommended": true
+			}
+		},
+		"ignore": ["**/node_modules/", ".next/", "**/*.js"]
+	},
+	"javascript": {
+		"formatter": {
+			"quoteStyle": "double"
+		}
+	}
 }

@@ -7,9 +7,9 @@
  */
 
 export interface EachApplicationMetadataResponse {
-  all: number;
-  commercial: number;
-  base: number;
-  free: number;
-  my_applications: number;
+	all: number;
+	commercial: number;
+	base: number;
+	free: number;
+	my_applications: number;
 }

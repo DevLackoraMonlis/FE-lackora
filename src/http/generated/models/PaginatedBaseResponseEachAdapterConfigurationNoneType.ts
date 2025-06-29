@@ -5,10 +5,10 @@
  * MonoWatch Security Asset Management - BackBone Structure
  * OpenAPI spec version: 1.0.0
  */
-import type { EachAdapterConfiguration } from './EachAdapterConfiguration';
+import type { EachAdapterConfiguration } from "./EachAdapterConfiguration";
 
 export interface PaginatedBaseResponseEachAdapterConfigurationNoneType {
-  results: EachAdapterConfiguration[];
-  total: number;
-  metadata: null;
+	results: EachAdapterConfiguration[];
+	total: number;
+	metadata: null;
 }

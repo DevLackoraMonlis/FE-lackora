@@ -7,7 +7,7 @@
  */
 
 export interface ActivatePluginWithCodeResponse {
-  message?: string;
-  activation_code?: string;
-  activation_time?: string;
+	message?: string;
+	activation_code?: string;
+	activation_time?: string;
 }

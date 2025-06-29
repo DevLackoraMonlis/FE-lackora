@@ -5,235 +5,301 @@
  * MonoWatch Security Asset Management - BackBone Structure
  * OpenAPI spec version: 1.0.0
  */
-import {
-  useMutation
-} from '@tanstack/react-query';
+import { useMutation } from "@tanstack/react-query";
 import type {
-  MutationFunction,
-  QueryClient,
-  UseMutationOptions,
-  UseMutationResult
-} from '@tanstack/react-query';
+	MutationFunction,
+	QueryClient,
+	UseMutationOptions,
+	UseMutationResult,
+} from "@tanstack/react-query";
 
 import type {
-  BodyGetAccessToken,
-  HTTPValidationError,
-  MessageOnlyResponse,
-  RefreshTokenRequest,
-  Token
-} from './models';
+	BodyGetAccessToken,
+	HTTPValidationError,
+	MessageOnlyResponse,
+	RefreshTokenRequest,
+	Token,
+} from "./models";
 
-import { orvalMutator } from '../orval-mutator';
-
-
-
-
+import { orvalMutator } from "../orval-mutator";
 
 /**
  * @summary Login For Access Token
  */
 export const getAccessToken = (
-    bodyGetAccessToken: BodyGetAccessToken,
- signal?: AbortSignal
+	bodyGetAccessToken: BodyGetAccessToken,
+	signal?: AbortSignal,
 ) => {
-      
-      const formUrlEncoded = new URLSearchParams();
-if(bodyGetAccessToken.grant_type !== undefined && bodyGetAccessToken.grant_type !== null) {
- formUrlEncoded.append(`grant_type`, bodyGetAccessToken.grant_type)
- }
-formUrlEncoded.append(`username`, bodyGetAccessToken.username)
-formUrlEncoded.append(`password`, bodyGetAccessToken.password)
-if(bodyGetAccessToken.scope !== undefined) {
- formUrlEncoded.append(`scope`, bodyGetAccessToken.scope)
- }
-if(bodyGetAccessToken.client_id !== undefined && bodyGetAccessToken.client_id !== null) {
- formUrlEncoded.append(`client_id`, bodyGetAccessToken.client_id)
- }
-if(bodyGetAccessToken.client_secret !== undefined && bodyGetAccessToken.client_secret !== null) {
- formUrlEncoded.append(`client_secret`, bodyGetAccessToken.client_secret)
- }
+	const formUrlEncoded = new URLSearchParams();
+	if (
+		bodyGetAccessToken.grant_type !== undefined &&
+		bodyGetAccessToken.grant_type !== null
+	) {
+		formUrlEncoded.append("grant_type", bodyGetAccessToken.grant_type);
+	}
+	formUrlEncoded.append("username", bodyGetAccessToken.username);
+	formUrlEncoded.append("password", bodyGetAccessToken.password);
+	if (bodyGetAccessToken.scope !== undefined) {
+		formUrlEncoded.append("scope", bodyGetAccessToken.scope);
+	}
+	if (
+		bodyGetAccessToken.client_id !== undefined &&
+		bodyGetAccessToken.client_id !== null
+	) {
+		formUrlEncoded.append("client_id", bodyGetAccessToken.client_id);
+	}
+	if (
+		bodyGetAccessToken.client_secret !== undefined &&
+		bodyGetAccessToken.client_secret !== null
+	) {
+		formUrlEncoded.append("client_secret", bodyGetAccessToken.client_secret);
+	}
 
-      return orvalMutator<Token>(
-      {url: `/api/user-management/token`, method: 'POST',
-      headers: {'Content-Type': 'application/x-www-form-urlencoded', },
-       data: formUrlEncoded, signal
-    },
-      );
-    }
-  
+	return orvalMutator<Token>({
+		url: "/api/user-management/token",
+		method: "POST",
+		headers: { "Content-Type": "application/x-www-form-urlencoded" },
+		data: formUrlEncoded,
+		signal,
+	});
+};
 
+export const getGetAccessTokenMutationOptions = <
+	TError = HTTPValidationError,
+	TContext = unknown,
+>(options?: {
+	mutation?: UseMutationOptions<
+		Awaited<ReturnType<typeof getAccessToken>>,
+		TError,
+		{ data: BodyGetAccessToken },
+		TContext
+	>;
+}): UseMutationOptions<
+	Awaited<ReturnType<typeof getAccessToken>>,
+	TError,
+	{ data: BodyGetAccessToken },
+	TContext
+> => {
+	const mutationKey = ["getAccessToken"];
+	const { mutation: mutationOptions } = options
+		? options.mutation &&
+			"mutationKey" in options.mutation &&
+			options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey } };
 
-export const getGetAccessTokenMutationOptions = <TError = HTTPValidationError,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof getAccessToken>>, TError,{data: BodyGetAccessToken}, TContext>, }
-): UseMutationOptions<Awaited<ReturnType<typeof getAccessToken>>, TError,{data: BodyGetAccessToken}, TContext> => {
+	const mutationFn: MutationFunction<
+		Awaited<ReturnType<typeof getAccessToken>>,
+		{ data: BodyGetAccessToken }
+	> = (props) => {
+		const { data } = props ?? {};
 
-const mutationKey = ['getAccessToken'];
-const {mutation: mutationOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }};
+		return getAccessToken(data);
+	};
 
-      
+	return { mutationFn, ...mutationOptions };
+};
 
+export type GetAccessTokenMutationResult = NonNullable<
+	Awaited<ReturnType<typeof getAccessToken>>
+>;
+export type GetAccessTokenMutationBody = BodyGetAccessToken;
+export type GetAccessTokenMutationError = HTTPValidationError;
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof getAccessToken>>, {data: BodyGetAccessToken}> = (props) => {
-          const {data} = props ?? {};
-
-          return  getAccessToken(data,)
-        }
-
-        
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type GetAccessTokenMutationResult = NonNullable<Awaited<ReturnType<typeof getAccessToken>>>
-    export type GetAccessTokenMutationBody = BodyGetAccessToken
-    export type GetAccessTokenMutationError = HTTPValidationError
-
-    /**
+/**
  * @summary Login For Access Token
  */
-export const useGetAccessToken = <TError = HTTPValidationError,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof getAccessToken>>, TError,{data: BodyGetAccessToken}, TContext>, }
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof getAccessToken>>,
-        TError,
-        {data: BodyGetAccessToken},
-        TContext
-      > => {
+export const useGetAccessToken = <
+	TError = HTTPValidationError,
+	TContext = unknown,
+>(
+	options?: {
+		mutation?: UseMutationOptions<
+			Awaited<ReturnType<typeof getAccessToken>>,
+			TError,
+			{ data: BodyGetAccessToken },
+			TContext
+		>;
+	},
+	queryClient?: QueryClient,
+): UseMutationResult<
+	Awaited<ReturnType<typeof getAccessToken>>,
+	TError,
+	{ data: BodyGetAccessToken },
+	TContext
+> => {
+	const mutationOptions = getGetAccessTokenMutationOptions(options);
 
-      const mutationOptions = getGetAccessTokenMutationOptions(options);
-
-      return useMutation(mutationOptions , queryClient);
-    }
-    /**
+	return useMutation(mutationOptions, queryClient);
+};
+/**
  * @summary Refresh Access Token
  */
 export const getRefreshToken = (
-    refreshTokenRequest: RefreshTokenRequest,
- signal?: AbortSignal
+	refreshTokenRequest: RefreshTokenRequest,
+	signal?: AbortSignal,
 ) => {
-      
-      
-      return orvalMutator<Token>(
-      {url: `/api/user-management/refresh`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: refreshTokenRequest, signal
-    },
-      );
-    }
-  
+	return orvalMutator<Token>({
+		url: "/api/user-management/refresh",
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		data: refreshTokenRequest,
+		signal,
+	});
+};
 
+export const getGetRefreshTokenMutationOptions = <
+	TError = HTTPValidationError,
+	TContext = unknown,
+>(options?: {
+	mutation?: UseMutationOptions<
+		Awaited<ReturnType<typeof getRefreshToken>>,
+		TError,
+		{ data: RefreshTokenRequest },
+		TContext
+	>;
+}): UseMutationOptions<
+	Awaited<ReturnType<typeof getRefreshToken>>,
+	TError,
+	{ data: RefreshTokenRequest },
+	TContext
+> => {
+	const mutationKey = ["getRefreshToken"];
+	const { mutation: mutationOptions } = options
+		? options.mutation &&
+			"mutationKey" in options.mutation &&
+			options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey } };
 
-export const getGetRefreshTokenMutationOptions = <TError = HTTPValidationError,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof getRefreshToken>>, TError,{data: RefreshTokenRequest}, TContext>, }
-): UseMutationOptions<Awaited<ReturnType<typeof getRefreshToken>>, TError,{data: RefreshTokenRequest}, TContext> => {
+	const mutationFn: MutationFunction<
+		Awaited<ReturnType<typeof getRefreshToken>>,
+		{ data: RefreshTokenRequest }
+	> = (props) => {
+		const { data } = props ?? {};
 
-const mutationKey = ['getRefreshToken'];
-const {mutation: mutationOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }};
+		return getRefreshToken(data);
+	};
 
-      
+	return { mutationFn, ...mutationOptions };
+};
 
+export type GetRefreshTokenMutationResult = NonNullable<
+	Awaited<ReturnType<typeof getRefreshToken>>
+>;
+export type GetRefreshTokenMutationBody = RefreshTokenRequest;
+export type GetRefreshTokenMutationError = HTTPValidationError;
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof getRefreshToken>>, {data: RefreshTokenRequest}> = (props) => {
-          const {data} = props ?? {};
-
-          return  getRefreshToken(data,)
-        }
-
-        
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type GetRefreshTokenMutationResult = NonNullable<Awaited<ReturnType<typeof getRefreshToken>>>
-    export type GetRefreshTokenMutationBody = RefreshTokenRequest
-    export type GetRefreshTokenMutationError = HTTPValidationError
-
-    /**
+/**
  * @summary Refresh Access Token
  */
-export const useGetRefreshToken = <TError = HTTPValidationError,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof getRefreshToken>>, TError,{data: RefreshTokenRequest}, TContext>, }
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof getRefreshToken>>,
-        TError,
-        {data: RefreshTokenRequest},
-        TContext
-      > => {
+export const useGetRefreshToken = <
+	TError = HTTPValidationError,
+	TContext = unknown,
+>(
+	options?: {
+		mutation?: UseMutationOptions<
+			Awaited<ReturnType<typeof getRefreshToken>>,
+			TError,
+			{ data: RefreshTokenRequest },
+			TContext
+		>;
+	},
+	queryClient?: QueryClient,
+): UseMutationResult<
+	Awaited<ReturnType<typeof getRefreshToken>>,
+	TError,
+	{ data: RefreshTokenRequest },
+	TContext
+> => {
+	const mutationOptions = getGetRefreshTokenMutationOptions(options);
 
-      const mutationOptions = getGetRefreshTokenMutationOptions(options);
-
-      return useMutation(mutationOptions , queryClient);
-    }
-    /**
+	return useMutation(mutationOptions, queryClient);
+};
+/**
  * @summary Logout
  */
 export const logoutSystem = (
-    refreshTokenRequest: RefreshTokenRequest,
- signal?: AbortSignal
+	refreshTokenRequest: RefreshTokenRequest,
+	signal?: AbortSignal,
 ) => {
-      
-      
-      return orvalMutator<MessageOnlyResponse>(
-      {url: `/api/user-management/logout`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: refreshTokenRequest, signal
-    },
-      );
-    }
-  
+	return orvalMutator<MessageOnlyResponse>({
+		url: "/api/user-management/logout",
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		data: refreshTokenRequest,
+		signal,
+	});
+};
 
+export const getLogoutSystemMutationOptions = <
+	TError = HTTPValidationError,
+	TContext = unknown,
+>(options?: {
+	mutation?: UseMutationOptions<
+		Awaited<ReturnType<typeof logoutSystem>>,
+		TError,
+		{ data: RefreshTokenRequest },
+		TContext
+	>;
+}): UseMutationOptions<
+	Awaited<ReturnType<typeof logoutSystem>>,
+	TError,
+	{ data: RefreshTokenRequest },
+	TContext
+> => {
+	const mutationKey = ["logoutSystem"];
+	const { mutation: mutationOptions } = options
+		? options.mutation &&
+			"mutationKey" in options.mutation &&
+			options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey } };
 
-export const getLogoutSystemMutationOptions = <TError = HTTPValidationError,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof logoutSystem>>, TError,{data: RefreshTokenRequest}, TContext>, }
-): UseMutationOptions<Awaited<ReturnType<typeof logoutSystem>>, TError,{data: RefreshTokenRequest}, TContext> => {
+	const mutationFn: MutationFunction<
+		Awaited<ReturnType<typeof logoutSystem>>,
+		{ data: RefreshTokenRequest }
+	> = (props) => {
+		const { data } = props ?? {};
 
-const mutationKey = ['logoutSystem'];
-const {mutation: mutationOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }};
+		return logoutSystem(data);
+	};
 
-      
+	return { mutationFn, ...mutationOptions };
+};
 
+export type LogoutSystemMutationResult = NonNullable<
+	Awaited<ReturnType<typeof logoutSystem>>
+>;
+export type LogoutSystemMutationBody = RefreshTokenRequest;
+export type LogoutSystemMutationError = HTTPValidationError;
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof logoutSystem>>, {data: RefreshTokenRequest}> = (props) => {
-          const {data} = props ?? {};
-
-          return  logoutSystem(data,)
-        }
-
-        
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type LogoutSystemMutationResult = NonNullable<Awaited<ReturnType<typeof logoutSystem>>>
-    export type LogoutSystemMutationBody = RefreshTokenRequest
-    export type LogoutSystemMutationError = HTTPValidationError
-
-    /**
+/**
  * @summary Logout
  */
-export const useLogoutSystem = <TError = HTTPValidationError,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof logoutSystem>>, TError,{data: RefreshTokenRequest}, TContext>, }
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof logoutSystem>>,
-        TError,
-        {data: RefreshTokenRequest},
-        TContext
-      > => {
+export const useLogoutSystem = <
+	TError = HTTPValidationError,
+	TContext = unknown,
+>(
+	options?: {
+		mutation?: UseMutationOptions<
+			Awaited<ReturnType<typeof logoutSystem>>,
+			TError,
+			{ data: RefreshTokenRequest },
+			TContext
+		>;
+	},
+	queryClient?: QueryClient,
+): UseMutationResult<
+	Awaited<ReturnType<typeof logoutSystem>>,
+	TError,
+	{ data: RefreshTokenRequest },
+	TContext
+> => {
+	const mutationOptions = getLogoutSystemMutationOptions(options);
 
-      const mutationOptions = getLogoutSystemMutationOptions(options);
-
-      return useMutation(mutationOptions , queryClient);
-    }
-    
+	return useMutation(mutationOptions, queryClient);
+};

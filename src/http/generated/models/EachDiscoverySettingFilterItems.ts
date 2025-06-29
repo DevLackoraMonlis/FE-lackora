@@ -5,10 +5,10 @@
  * MonoWatch Security Asset Management - BackBone Structure
  * OpenAPI spec version: 1.0.0
  */
-import type { EachDiscoverySettingFilter } from './EachDiscoverySettingFilter';
+import type { EachDiscoverySettingFilter } from "./EachDiscoverySettingFilter";
 
 export interface EachDiscoverySettingFilterItems {
-  label: string;
-  param: string;
-  items: EachDiscoverySettingFilter[];
+	label: string;
+	param: string;
+	items: EachDiscoverySettingFilter[];
 }

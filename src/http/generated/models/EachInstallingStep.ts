@@ -7,6 +7,6 @@
  */
 
 export interface EachInstallingStep {
-  name: string;
-  action: boolean;
+	name: string;
+	action: boolean;
 }

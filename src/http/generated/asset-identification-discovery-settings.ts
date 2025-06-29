@@ -5,476 +5,719 @@
  * MonoWatch Security Asset Management - BackBone Structure
  * OpenAPI spec version: 1.0.0
  */
-import {
-  useMutation,
-  useQuery
-} from '@tanstack/react-query';
+import { useMutation, useQuery } from "@tanstack/react-query";
 import type {
-  DataTag,
-  DefinedInitialDataOptions,
-  DefinedUseQueryResult,
-  MutationFunction,
-  QueryClient,
-  QueryFunction,
-  QueryKey,
-  UndefinedInitialDataOptions,
-  UseMutationOptions,
-  UseMutationResult,
-  UseQueryOptions,
-  UseQueryResult
-} from '@tanstack/react-query';
+	DataTag,
+	DefinedInitialDataOptions,
+	DefinedUseQueryResult,
+	MutationFunction,
+	QueryClient,
+	QueryFunction,
+	QueryKey,
+	UndefinedInitialDataOptions,
+	UseMutationOptions,
+	UseMutationResult,
+	UseQueryOptions,
+	UseQueryResult,
+} from "@tanstack/react-query";
 
 import type {
-  ChangeAdapterStatusRequest,
-  CreateAdapterConfigurationRequest,
-  CreateAdapterConfigurationResponse,
-  DeleteAdapterConfigurationRequest,
-  EachDiscoverySetting,
-  GetDiscoverySettingsParams,
-  HTTPValidationError,
-  MessageOnlyResponse,
-  PaginatedBaseResponseEachAdapterConfigurationNoneType,
-  PaginatedBaseResponseEachDiscoverySettingEachDiscoverySettingMetadataWrapper,
-  UpdateAdapterConfigurationRequest
-} from './models';
+	ChangeAdapterStatusRequest,
+	CreateAdapterConfigurationRequest,
+	CreateAdapterConfigurationResponse,
+	DeleteAdapterConfigurationRequest,
+	EachDiscoverySetting,
+	GetDiscoverySettingsParams,
+	HTTPValidationError,
+	MessageOnlyResponse,
+	PaginatedBaseResponseEachAdapterConfigurationNoneType,
+	PaginatedBaseResponseEachDiscoverySettingEachDiscoverySettingMetadataWrapper,
+	UpdateAdapterConfigurationRequest,
+} from "./models";
 
-import { orvalMutator } from '../orval-mutator';
-
-
-
-
+import { orvalMutator } from "../orval-mutator";
 
 /**
  * @summary List All Discovery Settings Adapters
  */
 export const getDiscoverySettings = (
-    params?: GetDiscoverySettingsParams,
- signal?: AbortSignal
+	params?: GetDiscoverySettingsParams,
+	signal?: AbortSignal,
 ) => {
-      
-      
-      return orvalMutator<PaginatedBaseResponseEachDiscoverySettingEachDiscoverySettingMetadataWrapper>(
-      {url: `/api/asset-identification/discovery-settings/`, method: 'GET',
-        params, signal
-    },
-      );
-    }
-  
+	return orvalMutator<PaginatedBaseResponseEachDiscoverySettingEachDiscoverySettingMetadataWrapper>(
+		{
+			url: "/api/asset-identification/discovery-settings/",
+			method: "GET",
+			params,
+			signal,
+		},
+	);
+};
 
-const getGetDiscoverySettingsQueryKey = (params?: GetDiscoverySettingsParams,) => {
-    return [`/api/asset-identification/discovery-settings/`, ...(params ? [params]: [])] as const;
-    }
-
-    
-export const getGetDiscoverySettingsQueryOptions = <TData = Awaited<ReturnType<typeof getDiscoverySettings>>, TError = HTTPValidationError>(params?: GetDiscoverySettingsParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getDiscoverySettings>>, TError, TData>>, }
+const getGetDiscoverySettingsQueryKey = (
+	params?: GetDiscoverySettingsParams,
 ) => {
+	return [
+		"/api/asset-identification/discovery-settings/",
+		...(params ? [params] : []),
+	] as const;
+};
 
-const {query: queryOptions} = options ?? {};
+export const getGetDiscoverySettingsQueryOptions = <
+	TData = Awaited<ReturnType<typeof getDiscoverySettings>>,
+	TError = HTTPValidationError,
+>(
+	params?: GetDiscoverySettingsParams,
+	options?: {
+		query?: Partial<
+			UseQueryOptions<
+				Awaited<ReturnType<typeof getDiscoverySettings>>,
+				TError,
+				TData
+			>
+		>;
+	},
+) => {
+	const { query: queryOptions } = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getGetDiscoverySettingsQueryKey(params);
+	const queryKey =
+		queryOptions?.queryKey ?? getGetDiscoverySettingsQueryKey(params);
 
-  
+	const queryFn: QueryFunction<
+		Awaited<ReturnType<typeof getDiscoverySettings>>
+	> = ({ signal }) => getDiscoverySettings(params, signal);
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getDiscoverySettings>>> = ({ signal }) => getDiscoverySettings(params, signal);
+	return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+		Awaited<ReturnType<typeof getDiscoverySettings>>,
+		TError,
+		TData
+	> & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
-      
+export type GetDiscoverySettingsQueryResult = NonNullable<
+	Awaited<ReturnType<typeof getDiscoverySettings>>
+>;
+export type GetDiscoverySettingsQueryError = HTTPValidationError;
 
-      
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getDiscoverySettings>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type GetDiscoverySettingsQueryResult = NonNullable<Awaited<ReturnType<typeof getDiscoverySettings>>>
-export type GetDiscoverySettingsQueryError = HTTPValidationError
-
-
-export function useGetDiscoverySettings<TData = Awaited<ReturnType<typeof getDiscoverySettings>>, TError = HTTPValidationError>(
- params: undefined |  GetDiscoverySettingsParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getDiscoverySettings>>, TError, TData>> & Pick<
-        DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getDiscoverySettings>>,
-          TError,
-          Awaited<ReturnType<typeof getDiscoverySettings>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetDiscoverySettings<TData = Awaited<ReturnType<typeof getDiscoverySettings>>, TError = HTTPValidationError>(
- params?: GetDiscoverySettingsParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getDiscoverySettings>>, TError, TData>> & Pick<
-        UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getDiscoverySettings>>,
-          TError,
-          Awaited<ReturnType<typeof getDiscoverySettings>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetDiscoverySettings<TData = Awaited<ReturnType<typeof getDiscoverySettings>>, TError = HTTPValidationError>(
- params?: GetDiscoverySettingsParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getDiscoverySettings>>, TError, TData>>, }
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetDiscoverySettings<
+	TData = Awaited<ReturnType<typeof getDiscoverySettings>>,
+	TError = HTTPValidationError,
+>(
+	params: undefined | GetDiscoverySettingsParams,
+	options: {
+		query: Partial<
+			UseQueryOptions<
+				Awaited<ReturnType<typeof getDiscoverySettings>>,
+				TError,
+				TData
+			>
+		> &
+			Pick<
+				DefinedInitialDataOptions<
+					Awaited<ReturnType<typeof getDiscoverySettings>>,
+					TError,
+					Awaited<ReturnType<typeof getDiscoverySettings>>
+				>,
+				"initialData"
+			>;
+	},
+	queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+	queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetDiscoverySettings<
+	TData = Awaited<ReturnType<typeof getDiscoverySettings>>,
+	TError = HTTPValidationError,
+>(
+	params?: GetDiscoverySettingsParams,
+	options?: {
+		query?: Partial<
+			UseQueryOptions<
+				Awaited<ReturnType<typeof getDiscoverySettings>>,
+				TError,
+				TData
+			>
+		> &
+			Pick<
+				UndefinedInitialDataOptions<
+					Awaited<ReturnType<typeof getDiscoverySettings>>,
+					TError,
+					Awaited<ReturnType<typeof getDiscoverySettings>>
+				>,
+				"initialData"
+			>;
+	},
+	queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+	queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetDiscoverySettings<
+	TData = Awaited<ReturnType<typeof getDiscoverySettings>>,
+	TError = HTTPValidationError,
+>(
+	params?: GetDiscoverySettingsParams,
+	options?: {
+		query?: Partial<
+			UseQueryOptions<
+				Awaited<ReturnType<typeof getDiscoverySettings>>,
+				TError,
+				TData
+			>
+		>;
+	},
+	queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+	queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary List All Discovery Settings Adapters
  */
 
-export function useGetDiscoverySettings<TData = Awaited<ReturnType<typeof getDiscoverySettings>>, TError = HTTPValidationError>(
- params?: GetDiscoverySettingsParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getDiscoverySettings>>, TError, TData>>, }
- , queryClient?: QueryClient 
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useGetDiscoverySettings<
+	TData = Awaited<ReturnType<typeof getDiscoverySettings>>,
+	TError = HTTPValidationError,
+>(
+	params?: GetDiscoverySettingsParams,
+	options?: {
+		query?: Partial<
+			UseQueryOptions<
+				Awaited<ReturnType<typeof getDiscoverySettings>>,
+				TError,
+				TData
+			>
+		>;
+	},
+	queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+	queryKey: DataTag<QueryKey, TData, TError>;
+} {
+	const queryOptions = getGetDiscoverySettingsQueryOptions(params, options);
 
-  const queryOptions = getGetDiscoverySettingsQueryOptions(params,options)
+	const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+		TData,
+		TError
+	> & { queryKey: DataTag<QueryKey, TData, TError> };
 
-  const query = useQuery(queryOptions , queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+	query.queryKey = queryOptions.queryKey;
 
-  query.queryKey = queryOptions.queryKey ;
-
-  return query;
+	return query;
 }
-
-
 
 /**
  * @summary List All Adapter Configurations
  */
 export const getDiscoverySettingConfigurations = (
-    adapterId: string,
- signal?: AbortSignal
+	adapterId: string,
+	signal?: AbortSignal,
 ) => {
-      
-      
-      return orvalMutator<PaginatedBaseResponseEachAdapterConfigurationNoneType>(
-      {url: `/api/asset-identification/discovery-settings/${adapterId}/configurations`, method: 'GET', signal
-    },
-      );
-    }
-  
+	return orvalMutator<PaginatedBaseResponseEachAdapterConfigurationNoneType>({
+		url: `/api/asset-identification/discovery-settings/${adapterId}/configurations`,
+		method: "GET",
+		signal,
+	});
+};
 
-const getGetDiscoverySettingConfigurationsQueryKey = (adapterId: string,) => {
-    return [`/api/asset-identification/discovery-settings/${adapterId}/configurations`] as const;
-    }
+const getGetDiscoverySettingConfigurationsQueryKey = (adapterId: string) => {
+	return [
+		`/api/asset-identification/discovery-settings/${adapterId}/configurations`,
+	] as const;
+};
 
-    
-export const getGetDiscoverySettingConfigurationsQueryOptions = <TData = Awaited<ReturnType<typeof getDiscoverySettingConfigurations>>, TError = HTTPValidationError>(adapterId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getDiscoverySettingConfigurations>>, TError, TData>>, }
+export const getGetDiscoverySettingConfigurationsQueryOptions = <
+	TData = Awaited<ReturnType<typeof getDiscoverySettingConfigurations>>,
+	TError = HTTPValidationError,
+>(
+	adapterId: string,
+	options?: {
+		query?: Partial<
+			UseQueryOptions<
+				Awaited<ReturnType<typeof getDiscoverySettingConfigurations>>,
+				TError,
+				TData
+			>
+		>;
+	},
 ) => {
+	const { query: queryOptions } = options ?? {};
 
-const {query: queryOptions} = options ?? {};
+	const queryKey =
+		queryOptions?.queryKey ??
+		getGetDiscoverySettingConfigurationsQueryKey(adapterId);
 
-  const queryKey =  queryOptions?.queryKey ?? getGetDiscoverySettingConfigurationsQueryKey(adapterId);
+	const queryFn: QueryFunction<
+		Awaited<ReturnType<typeof getDiscoverySettingConfigurations>>
+	> = ({ signal }) => getDiscoverySettingConfigurations(adapterId, signal);
 
-  
+	return {
+		queryKey,
+		queryFn,
+		enabled: !!adapterId,
+		...queryOptions,
+	} as UseQueryOptions<
+		Awaited<ReturnType<typeof getDiscoverySettingConfigurations>>,
+		TError,
+		TData
+	> & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getDiscoverySettingConfigurations>>> = ({ signal }) => getDiscoverySettingConfigurations(adapterId, signal);
+export type GetDiscoverySettingConfigurationsQueryResult = NonNullable<
+	Awaited<ReturnType<typeof getDiscoverySettingConfigurations>>
+>;
+export type GetDiscoverySettingConfigurationsQueryError = HTTPValidationError;
 
-      
-
-      
-
-   return  { queryKey, queryFn, enabled: !!(adapterId), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getDiscoverySettingConfigurations>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type GetDiscoverySettingConfigurationsQueryResult = NonNullable<Awaited<ReturnType<typeof getDiscoverySettingConfigurations>>>
-export type GetDiscoverySettingConfigurationsQueryError = HTTPValidationError
-
-
-export function useGetDiscoverySettingConfigurations<TData = Awaited<ReturnType<typeof getDiscoverySettingConfigurations>>, TError = HTTPValidationError>(
- adapterId: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getDiscoverySettingConfigurations>>, TError, TData>> & Pick<
-        DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getDiscoverySettingConfigurations>>,
-          TError,
-          Awaited<ReturnType<typeof getDiscoverySettingConfigurations>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetDiscoverySettingConfigurations<TData = Awaited<ReturnType<typeof getDiscoverySettingConfigurations>>, TError = HTTPValidationError>(
- adapterId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getDiscoverySettingConfigurations>>, TError, TData>> & Pick<
-        UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getDiscoverySettingConfigurations>>,
-          TError,
-          Awaited<ReturnType<typeof getDiscoverySettingConfigurations>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetDiscoverySettingConfigurations<TData = Awaited<ReturnType<typeof getDiscoverySettingConfigurations>>, TError = HTTPValidationError>(
- adapterId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getDiscoverySettingConfigurations>>, TError, TData>>, }
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetDiscoverySettingConfigurations<
+	TData = Awaited<ReturnType<typeof getDiscoverySettingConfigurations>>,
+	TError = HTTPValidationError,
+>(
+	adapterId: string,
+	options: {
+		query: Partial<
+			UseQueryOptions<
+				Awaited<ReturnType<typeof getDiscoverySettingConfigurations>>,
+				TError,
+				TData
+			>
+		> &
+			Pick<
+				DefinedInitialDataOptions<
+					Awaited<ReturnType<typeof getDiscoverySettingConfigurations>>,
+					TError,
+					Awaited<ReturnType<typeof getDiscoverySettingConfigurations>>
+				>,
+				"initialData"
+			>;
+	},
+	queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+	queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetDiscoverySettingConfigurations<
+	TData = Awaited<ReturnType<typeof getDiscoverySettingConfigurations>>,
+	TError = HTTPValidationError,
+>(
+	adapterId: string,
+	options?: {
+		query?: Partial<
+			UseQueryOptions<
+				Awaited<ReturnType<typeof getDiscoverySettingConfigurations>>,
+				TError,
+				TData
+			>
+		> &
+			Pick<
+				UndefinedInitialDataOptions<
+					Awaited<ReturnType<typeof getDiscoverySettingConfigurations>>,
+					TError,
+					Awaited<ReturnType<typeof getDiscoverySettingConfigurations>>
+				>,
+				"initialData"
+			>;
+	},
+	queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+	queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetDiscoverySettingConfigurations<
+	TData = Awaited<ReturnType<typeof getDiscoverySettingConfigurations>>,
+	TError = HTTPValidationError,
+>(
+	adapterId: string,
+	options?: {
+		query?: Partial<
+			UseQueryOptions<
+				Awaited<ReturnType<typeof getDiscoverySettingConfigurations>>,
+				TError,
+				TData
+			>
+		>;
+	},
+	queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+	queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary List All Adapter Configurations
  */
 
-export function useGetDiscoverySettingConfigurations<TData = Awaited<ReturnType<typeof getDiscoverySettingConfigurations>>, TError = HTTPValidationError>(
- adapterId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getDiscoverySettingConfigurations>>, TError, TData>>, }
- , queryClient?: QueryClient 
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useGetDiscoverySettingConfigurations<
+	TData = Awaited<ReturnType<typeof getDiscoverySettingConfigurations>>,
+	TError = HTTPValidationError,
+>(
+	adapterId: string,
+	options?: {
+		query?: Partial<
+			UseQueryOptions<
+				Awaited<ReturnType<typeof getDiscoverySettingConfigurations>>,
+				TError,
+				TData
+			>
+		>;
+	},
+	queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+	queryKey: DataTag<QueryKey, TData, TError>;
+} {
+	const queryOptions = getGetDiscoverySettingConfigurationsQueryOptions(
+		adapterId,
+		options,
+	);
 
-  const queryOptions = getGetDiscoverySettingConfigurationsQueryOptions(adapterId,options)
+	const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+		TData,
+		TError
+	> & { queryKey: DataTag<QueryKey, TData, TError> };
 
-  const query = useQuery(queryOptions , queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+	query.queryKey = queryOptions.queryKey;
 
-  query.queryKey = queryOptions.queryKey ;
-
-  return query;
+	return query;
 }
-
-
 
 /**
  * @summary Create Adapter Configurations
  */
 export const createDiscoverySettingConfiguration = (
-    adapterId: string,
-    createAdapterConfigurationRequest: CreateAdapterConfigurationRequest,
- signal?: AbortSignal
+	adapterId: string,
+	createAdapterConfigurationRequest: CreateAdapterConfigurationRequest,
+	signal?: AbortSignal,
 ) => {
-      
-      
-      return orvalMutator<CreateAdapterConfigurationResponse>(
-      {url: `/api/asset-identification/discovery-settings/${adapterId}/configurations`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: createAdapterConfigurationRequest, signal
-    },
-      );
-    }
-  
+	return orvalMutator<CreateAdapterConfigurationResponse>({
+		url: `/api/asset-identification/discovery-settings/${adapterId}/configurations`,
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		data: createAdapterConfigurationRequest,
+		signal,
+	});
+};
 
+export const getCreateDiscoverySettingConfigurationMutationOptions = <
+	TError = HTTPValidationError,
+	TContext = unknown,
+>(options?: {
+	mutation?: UseMutationOptions<
+		Awaited<ReturnType<typeof createDiscoverySettingConfiguration>>,
+		TError,
+		{ adapterId: string; data: CreateAdapterConfigurationRequest },
+		TContext
+	>;
+}): UseMutationOptions<
+	Awaited<ReturnType<typeof createDiscoverySettingConfiguration>>,
+	TError,
+	{ adapterId: string; data: CreateAdapterConfigurationRequest },
+	TContext
+> => {
+	const mutationKey = ["createDiscoverySettingConfiguration"];
+	const { mutation: mutationOptions } = options
+		? options.mutation &&
+			"mutationKey" in options.mutation &&
+			options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey } };
 
-export const getCreateDiscoverySettingConfigurationMutationOptions = <TError = HTTPValidationError,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createDiscoverySettingConfiguration>>, TError,{adapterId: string;data: CreateAdapterConfigurationRequest}, TContext>, }
-): UseMutationOptions<Awaited<ReturnType<typeof createDiscoverySettingConfiguration>>, TError,{adapterId: string;data: CreateAdapterConfigurationRequest}, TContext> => {
+	const mutationFn: MutationFunction<
+		Awaited<ReturnType<typeof createDiscoverySettingConfiguration>>,
+		{ adapterId: string; data: CreateAdapterConfigurationRequest }
+	> = (props) => {
+		const { adapterId, data } = props ?? {};
 
-const mutationKey = ['createDiscoverySettingConfiguration'];
-const {mutation: mutationOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }};
+		return createDiscoverySettingConfiguration(adapterId, data);
+	};
 
-      
+	return { mutationFn, ...mutationOptions };
+};
 
+export type CreateDiscoverySettingConfigurationMutationResult = NonNullable<
+	Awaited<ReturnType<typeof createDiscoverySettingConfiguration>>
+>;
+export type CreateDiscoverySettingConfigurationMutationBody =
+	CreateAdapterConfigurationRequest;
+export type CreateDiscoverySettingConfigurationMutationError =
+	HTTPValidationError;
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof createDiscoverySettingConfiguration>>, {adapterId: string;data: CreateAdapterConfigurationRequest}> = (props) => {
-          const {adapterId,data} = props ?? {};
-
-          return  createDiscoverySettingConfiguration(adapterId,data,)
-        }
-
-        
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type CreateDiscoverySettingConfigurationMutationResult = NonNullable<Awaited<ReturnType<typeof createDiscoverySettingConfiguration>>>
-    export type CreateDiscoverySettingConfigurationMutationBody = CreateAdapterConfigurationRequest
-    export type CreateDiscoverySettingConfigurationMutationError = HTTPValidationError
-
-    /**
+/**
  * @summary Create Adapter Configurations
  */
-export const useCreateDiscoverySettingConfiguration = <TError = HTTPValidationError,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createDiscoverySettingConfiguration>>, TError,{adapterId: string;data: CreateAdapterConfigurationRequest}, TContext>, }
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof createDiscoverySettingConfiguration>>,
-        TError,
-        {adapterId: string;data: CreateAdapterConfigurationRequest},
-        TContext
-      > => {
+export const useCreateDiscoverySettingConfiguration = <
+	TError = HTTPValidationError,
+	TContext = unknown,
+>(
+	options?: {
+		mutation?: UseMutationOptions<
+			Awaited<ReturnType<typeof createDiscoverySettingConfiguration>>,
+			TError,
+			{ adapterId: string; data: CreateAdapterConfigurationRequest },
+			TContext
+		>;
+	},
+	queryClient?: QueryClient,
+): UseMutationResult<
+	Awaited<ReturnType<typeof createDiscoverySettingConfiguration>>,
+	TError,
+	{ adapterId: string; data: CreateAdapterConfigurationRequest },
+	TContext
+> => {
+	const mutationOptions =
+		getCreateDiscoverySettingConfigurationMutationOptions(options);
 
-      const mutationOptions = getCreateDiscoverySettingConfigurationMutationOptions(options);
-
-      return useMutation(mutationOptions , queryClient);
-    }
-    /**
+	return useMutation(mutationOptions, queryClient);
+};
+/**
  * @summary Edit Adapter Configurations
  */
 export const editDiscoverySettingConfiguration = (
-    adapterId: string,
-    updateAdapterConfigurationRequest: UpdateAdapterConfigurationRequest,
- ) => {
-      
-      
-      return orvalMutator<CreateAdapterConfigurationResponse>(
-      {url: `/api/asset-identification/discovery-settings/${adapterId}/configurations`, method: 'PUT',
-      headers: {'Content-Type': 'application/json', },
-      data: updateAdapterConfigurationRequest
-    },
-      );
-    }
-  
+	adapterId: string,
+	updateAdapterConfigurationRequest: UpdateAdapterConfigurationRequest,
+) => {
+	return orvalMutator<CreateAdapterConfigurationResponse>({
+		url: `/api/asset-identification/discovery-settings/${adapterId}/configurations`,
+		method: "PUT",
+		headers: { "Content-Type": "application/json" },
+		data: updateAdapterConfigurationRequest,
+	});
+};
 
+export const getEditDiscoverySettingConfigurationMutationOptions = <
+	TError = HTTPValidationError,
+	TContext = unknown,
+>(options?: {
+	mutation?: UseMutationOptions<
+		Awaited<ReturnType<typeof editDiscoverySettingConfiguration>>,
+		TError,
+		{ adapterId: string; data: UpdateAdapterConfigurationRequest },
+		TContext
+	>;
+}): UseMutationOptions<
+	Awaited<ReturnType<typeof editDiscoverySettingConfiguration>>,
+	TError,
+	{ adapterId: string; data: UpdateAdapterConfigurationRequest },
+	TContext
+> => {
+	const mutationKey = ["editDiscoverySettingConfiguration"];
+	const { mutation: mutationOptions } = options
+		? options.mutation &&
+			"mutationKey" in options.mutation &&
+			options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey } };
 
-export const getEditDiscoverySettingConfigurationMutationOptions = <TError = HTTPValidationError,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof editDiscoverySettingConfiguration>>, TError,{adapterId: string;data: UpdateAdapterConfigurationRequest}, TContext>, }
-): UseMutationOptions<Awaited<ReturnType<typeof editDiscoverySettingConfiguration>>, TError,{adapterId: string;data: UpdateAdapterConfigurationRequest}, TContext> => {
+	const mutationFn: MutationFunction<
+		Awaited<ReturnType<typeof editDiscoverySettingConfiguration>>,
+		{ adapterId: string; data: UpdateAdapterConfigurationRequest }
+	> = (props) => {
+		const { adapterId, data } = props ?? {};
 
-const mutationKey = ['editDiscoverySettingConfiguration'];
-const {mutation: mutationOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }};
+		return editDiscoverySettingConfiguration(adapterId, data);
+	};
 
-      
+	return { mutationFn, ...mutationOptions };
+};
 
+export type EditDiscoverySettingConfigurationMutationResult = NonNullable<
+	Awaited<ReturnType<typeof editDiscoverySettingConfiguration>>
+>;
+export type EditDiscoverySettingConfigurationMutationBody =
+	UpdateAdapterConfigurationRequest;
+export type EditDiscoverySettingConfigurationMutationError =
+	HTTPValidationError;
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof editDiscoverySettingConfiguration>>, {adapterId: string;data: UpdateAdapterConfigurationRequest}> = (props) => {
-          const {adapterId,data} = props ?? {};
-
-          return  editDiscoverySettingConfiguration(adapterId,data,)
-        }
-
-        
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type EditDiscoverySettingConfigurationMutationResult = NonNullable<Awaited<ReturnType<typeof editDiscoverySettingConfiguration>>>
-    export type EditDiscoverySettingConfigurationMutationBody = UpdateAdapterConfigurationRequest
-    export type EditDiscoverySettingConfigurationMutationError = HTTPValidationError
-
-    /**
+/**
  * @summary Edit Adapter Configurations
  */
-export const useEditDiscoverySettingConfiguration = <TError = HTTPValidationError,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof editDiscoverySettingConfiguration>>, TError,{adapterId: string;data: UpdateAdapterConfigurationRequest}, TContext>, }
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof editDiscoverySettingConfiguration>>,
-        TError,
-        {adapterId: string;data: UpdateAdapterConfigurationRequest},
-        TContext
-      > => {
+export const useEditDiscoverySettingConfiguration = <
+	TError = HTTPValidationError,
+	TContext = unknown,
+>(
+	options?: {
+		mutation?: UseMutationOptions<
+			Awaited<ReturnType<typeof editDiscoverySettingConfiguration>>,
+			TError,
+			{ adapterId: string; data: UpdateAdapterConfigurationRequest },
+			TContext
+		>;
+	},
+	queryClient?: QueryClient,
+): UseMutationResult<
+	Awaited<ReturnType<typeof editDiscoverySettingConfiguration>>,
+	TError,
+	{ adapterId: string; data: UpdateAdapterConfigurationRequest },
+	TContext
+> => {
+	const mutationOptions =
+		getEditDiscoverySettingConfigurationMutationOptions(options);
 
-      const mutationOptions = getEditDiscoverySettingConfigurationMutationOptions(options);
-
-      return useMutation(mutationOptions , queryClient);
-    }
-    /**
+	return useMutation(mutationOptions, queryClient);
+};
+/**
  * @summary Delete Adapter Configurations
  */
 export const deleteDiscoverySettingConfiguration = (
-    adapterId: string,
-    deleteAdapterConfigurationRequest: DeleteAdapterConfigurationRequest,
- ) => {
-      
-      
-      return orvalMutator<MessageOnlyResponse>(
-      {url: `/api/asset-identification/discovery-settings/${adapterId}/configurations`, method: 'DELETE',
-      headers: {'Content-Type': 'application/json', },
-      data: deleteAdapterConfigurationRequest
-    },
-      );
-    }
-  
+	adapterId: string,
+	deleteAdapterConfigurationRequest: DeleteAdapterConfigurationRequest,
+) => {
+	return orvalMutator<MessageOnlyResponse>({
+		url: `/api/asset-identification/discovery-settings/${adapterId}/configurations`,
+		method: "DELETE",
+		headers: { "Content-Type": "application/json" },
+		data: deleteAdapterConfigurationRequest,
+	});
+};
 
+export const getDeleteDiscoverySettingConfigurationMutationOptions = <
+	TError = HTTPValidationError,
+	TContext = unknown,
+>(options?: {
+	mutation?: UseMutationOptions<
+		Awaited<ReturnType<typeof deleteDiscoverySettingConfiguration>>,
+		TError,
+		{ adapterId: string; data: DeleteAdapterConfigurationRequest },
+		TContext
+	>;
+}): UseMutationOptions<
+	Awaited<ReturnType<typeof deleteDiscoverySettingConfiguration>>,
+	TError,
+	{ adapterId: string; data: DeleteAdapterConfigurationRequest },
+	TContext
+> => {
+	const mutationKey = ["deleteDiscoverySettingConfiguration"];
+	const { mutation: mutationOptions } = options
+		? options.mutation &&
+			"mutationKey" in options.mutation &&
+			options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey } };
 
-export const getDeleteDiscoverySettingConfigurationMutationOptions = <TError = HTTPValidationError,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteDiscoverySettingConfiguration>>, TError,{adapterId: string;data: DeleteAdapterConfigurationRequest}, TContext>, }
-): UseMutationOptions<Awaited<ReturnType<typeof deleteDiscoverySettingConfiguration>>, TError,{adapterId: string;data: DeleteAdapterConfigurationRequest}, TContext> => {
+	const mutationFn: MutationFunction<
+		Awaited<ReturnType<typeof deleteDiscoverySettingConfiguration>>,
+		{ adapterId: string; data: DeleteAdapterConfigurationRequest }
+	> = (props) => {
+		const { adapterId, data } = props ?? {};
 
-const mutationKey = ['deleteDiscoverySettingConfiguration'];
-const {mutation: mutationOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }};
+		return deleteDiscoverySettingConfiguration(adapterId, data);
+	};
 
-      
+	return { mutationFn, ...mutationOptions };
+};
 
+export type DeleteDiscoverySettingConfigurationMutationResult = NonNullable<
+	Awaited<ReturnType<typeof deleteDiscoverySettingConfiguration>>
+>;
+export type DeleteDiscoverySettingConfigurationMutationBody =
+	DeleteAdapterConfigurationRequest;
+export type DeleteDiscoverySettingConfigurationMutationError =
+	HTTPValidationError;
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteDiscoverySettingConfiguration>>, {adapterId: string;data: DeleteAdapterConfigurationRequest}> = (props) => {
-          const {adapterId,data} = props ?? {};
-
-          return  deleteDiscoverySettingConfiguration(adapterId,data,)
-        }
-
-        
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type DeleteDiscoverySettingConfigurationMutationResult = NonNullable<Awaited<ReturnType<typeof deleteDiscoverySettingConfiguration>>>
-    export type DeleteDiscoverySettingConfigurationMutationBody = DeleteAdapterConfigurationRequest
-    export type DeleteDiscoverySettingConfigurationMutationError = HTTPValidationError
-
-    /**
+/**
  * @summary Delete Adapter Configurations
  */
-export const useDeleteDiscoverySettingConfiguration = <TError = HTTPValidationError,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteDiscoverySettingConfiguration>>, TError,{adapterId: string;data: DeleteAdapterConfigurationRequest}, TContext>, }
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof deleteDiscoverySettingConfiguration>>,
-        TError,
-        {adapterId: string;data: DeleteAdapterConfigurationRequest},
-        TContext
-      > => {
+export const useDeleteDiscoverySettingConfiguration = <
+	TError = HTTPValidationError,
+	TContext = unknown,
+>(
+	options?: {
+		mutation?: UseMutationOptions<
+			Awaited<ReturnType<typeof deleteDiscoverySettingConfiguration>>,
+			TError,
+			{ adapterId: string; data: DeleteAdapterConfigurationRequest },
+			TContext
+		>;
+	},
+	queryClient?: QueryClient,
+): UseMutationResult<
+	Awaited<ReturnType<typeof deleteDiscoverySettingConfiguration>>,
+	TError,
+	{ adapterId: string; data: DeleteAdapterConfigurationRequest },
+	TContext
+> => {
+	const mutationOptions =
+		getDeleteDiscoverySettingConfigurationMutationOptions(options);
 
-      const mutationOptions = getDeleteDiscoverySettingConfigurationMutationOptions(options);
-
-      return useMutation(mutationOptions , queryClient);
-    }
-    /**
+	return useMutation(mutationOptions, queryClient);
+};
+/**
  * @summary Change Adapter Active Status
  */
 export const editDiscoverySettingStatus = (
-    adapterId: string,
-    changeAdapterStatusRequest: ChangeAdapterStatusRequest,
- signal?: AbortSignal
+	adapterId: string,
+	changeAdapterStatusRequest: ChangeAdapterStatusRequest,
+	signal?: AbortSignal,
 ) => {
-      
-      
-      return orvalMutator<EachDiscoverySetting>(
-      {url: `/api/asset-identification/discovery-settings/${adapterId}/change-status`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: changeAdapterStatusRequest, signal
-    },
-      );
-    }
-  
+	return orvalMutator<EachDiscoverySetting>({
+		url: `/api/asset-identification/discovery-settings/${adapterId}/change-status`,
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		data: changeAdapterStatusRequest,
+		signal,
+	});
+};
 
+export const getEditDiscoverySettingStatusMutationOptions = <
+	TError = HTTPValidationError,
+	TContext = unknown,
+>(options?: {
+	mutation?: UseMutationOptions<
+		Awaited<ReturnType<typeof editDiscoverySettingStatus>>,
+		TError,
+		{ adapterId: string; data: ChangeAdapterStatusRequest },
+		TContext
+	>;
+}): UseMutationOptions<
+	Awaited<ReturnType<typeof editDiscoverySettingStatus>>,
+	TError,
+	{ adapterId: string; data: ChangeAdapterStatusRequest },
+	TContext
+> => {
+	const mutationKey = ["editDiscoverySettingStatus"];
+	const { mutation: mutationOptions } = options
+		? options.mutation &&
+			"mutationKey" in options.mutation &&
+			options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey } };
 
-export const getEditDiscoverySettingStatusMutationOptions = <TError = HTTPValidationError,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof editDiscoverySettingStatus>>, TError,{adapterId: string;data: ChangeAdapterStatusRequest}, TContext>, }
-): UseMutationOptions<Awaited<ReturnType<typeof editDiscoverySettingStatus>>, TError,{adapterId: string;data: ChangeAdapterStatusRequest}, TContext> => {
+	const mutationFn: MutationFunction<
+		Awaited<ReturnType<typeof editDiscoverySettingStatus>>,
+		{ adapterId: string; data: ChangeAdapterStatusRequest }
+	> = (props) => {
+		const { adapterId, data } = props ?? {};
 
-const mutationKey = ['editDiscoverySettingStatus'];
-const {mutation: mutationOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }};
+		return editDiscoverySettingStatus(adapterId, data);
+	};
 
-      
+	return { mutationFn, ...mutationOptions };
+};
 
+export type EditDiscoverySettingStatusMutationResult = NonNullable<
+	Awaited<ReturnType<typeof editDiscoverySettingStatus>>
+>;
+export type EditDiscoverySettingStatusMutationBody = ChangeAdapterStatusRequest;
+export type EditDiscoverySettingStatusMutationError = HTTPValidationError;
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof editDiscoverySettingStatus>>, {adapterId: string;data: ChangeAdapterStatusRequest}> = (props) => {
-          const {adapterId,data} = props ?? {};
-
-          return  editDiscoverySettingStatus(adapterId,data,)
-        }
-
-        
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type EditDiscoverySettingStatusMutationResult = NonNullable<Awaited<ReturnType<typeof editDiscoverySettingStatus>>>
-    export type EditDiscoverySettingStatusMutationBody = ChangeAdapterStatusRequest
-    export type EditDiscoverySettingStatusMutationError = HTTPValidationError
-
-    /**
+/**
  * @summary Change Adapter Active Status
  */
-export const useEditDiscoverySettingStatus = <TError = HTTPValidationError,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof editDiscoverySettingStatus>>, TError,{adapterId: string;data: ChangeAdapterStatusRequest}, TContext>, }
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof editDiscoverySettingStatus>>,
-        TError,
-        {adapterId: string;data: ChangeAdapterStatusRequest},
-        TContext
-      > => {
+export const useEditDiscoverySettingStatus = <
+	TError = HTTPValidationError,
+	TContext = unknown,
+>(
+	options?: {
+		mutation?: UseMutationOptions<
+			Awaited<ReturnType<typeof editDiscoverySettingStatus>>,
+			TError,
+			{ adapterId: string; data: ChangeAdapterStatusRequest },
+			TContext
+		>;
+	},
+	queryClient?: QueryClient,
+): UseMutationResult<
+	Awaited<ReturnType<typeof editDiscoverySettingStatus>>,
+	TError,
+	{ adapterId: string; data: ChangeAdapterStatusRequest },
+	TContext
+> => {
+	const mutationOptions = getEditDiscoverySettingStatusMutationOptions(options);
 
-      const mutationOptions = getEditDiscoverySettingStatusMutationOptions(options);
-
-      return useMutation(mutationOptions , queryClient);
-    }
-    
+	return useMutation(mutationOptions, queryClient);
+};

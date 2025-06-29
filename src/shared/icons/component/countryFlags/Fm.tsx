@@ -1,4 +1,3 @@
-import * as React from "react";
 import type { Ref, SVGProps } from "react";
 import { forwardRef, memo } from "react";
 const SvgFm = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (

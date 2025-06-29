@@ -7,8 +7,8 @@
  */
 
 export interface ApplicationPurchaseLinkResponse {
-  /** Requested Application name */
-  application?: string;
-  /** Link to application detail page within the customer portal. */
-  purchase_link?: string;
+	/** Requested Application name */
+	application?: string;
+	/** Link to application detail page within the customer portal. */
+	purchase_link?: string;
 }

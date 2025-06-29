@@ -7,6 +7,6 @@
  */
 
 export interface EachFieldGeneratorOption {
-  label: string;
-  value: string;
+	label: string;
+	value: string;
 }
