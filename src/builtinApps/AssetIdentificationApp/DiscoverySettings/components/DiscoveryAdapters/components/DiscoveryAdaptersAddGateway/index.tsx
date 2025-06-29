@@ -55,7 +55,7 @@ const DiscoveryAdaptersAddGateway = (props: Props) => {
             otherElementOptions: { withAsterisk: true, style: { flex: 1 } },
             name: `gateways.${index}.ip`,
             formInputProps: {
-              key: `gateways.${index}.ip`,
+              key: form.key(`gateways.${index}.ip`),
               ...form.getInputProps(`gateways.${index}.ip`),
             },
           })}
@@ -66,7 +66,7 @@ const DiscoveryAdaptersAddGateway = (props: Props) => {
             otherElementOptions: { withAsterisk: true, style: { flex: 1 } },
             name: `gateways.${index}.connection`,
             formInputProps: {
-              key: `gateways.${index}.connection`,
+              key: form.key(`gateways.${index}.connection`),
               ...form.getInputProps(`gateways.${index}.connection`),
             },
           })}

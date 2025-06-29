@@ -7,7 +7,6 @@ import type { EachAdapterConfiguration } from "@/http/generated/models";
 
 import { getDynamicField } from "@/shared/components/baseComponents/BCDynamicField";
 
-
 type FormValues = EachAdapterConfiguration["config"];
 
 type Props = {
@@ -41,7 +40,7 @@ const DiscoveryAdaptersForm = ({ config, loading, onCancel, handleEditAdapterCon
                 otherElementOptions: { withAsterisk: true, style: { flex: 1 } },
                 name: "ip",
                 formInputProps: {
-                  key: "ip",
+                  key: form.key("ip"),
                   ...form.getInputProps("ip"),
                 },
               })}
@@ -52,7 +51,7 @@ const DiscoveryAdaptersForm = ({ config, loading, onCancel, handleEditAdapterCon
                 otherElementOptions: { withAsterisk: true, style: { flex: 1 } },
                 name: "connection",
                 formInputProps: {
-                  key: "connection",
+                  key: form.key("connection"),
                   ...form.getInputProps("connection"),
                 },
               })}
