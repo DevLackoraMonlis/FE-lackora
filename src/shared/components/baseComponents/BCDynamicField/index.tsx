@@ -2,51 +2,44 @@ import { isNumber } from "lodash";
 
 import type { DynamicFiled } from "./index.types";
 
-import DFInputNumber from "./components/DFInputNumber";
-import DFInputText from "./components/DFInputText";
-import DFInputTextarea from "./components/DFInputTextarea";
-import DFSelect from "./components/DFSelect";
+import { Select, TextInput, Textarea, NumberInput } from "@mantine/core";
 
-export function getDynamicField<InputProps>({
+export function getDynamicField({
   objectType = "none",
-  type,
+  type = "String",
   paginate = false,
-  name,
-  label,
-  options,
-  required,
-  placeholder,
-  defaultValue,
+  label = "",
+  options = [],
+  required: fieldIsRequired,
+  placeholder = "",
+  defaultValue: defaultValueAsUnknown,
   formInputProps,
   otherElementOptions = {},
-}: DynamicFiled<InputProps>) {
+}: DynamicFiled) {
+  const required = !!fieldIsRequired;
+  const defaultValue = isNumber(defaultValueAsUnknown) ? `${defaultValueAsUnknown}` : defaultValueAsUnknown;
   switch (objectType) {
     case "connection":
-      const defaultValueAsString = isNumber(defaultValue) ? `${defaultValue}` : defaultValue;
       return (
-        <DFSelect
+        <Select
           {...{
             ...otherElementOptions,
-            name,
             label,
             data: options || [],
             required,
             placeholder,
-            defaultValue: defaultValueAsString,
+            defaultValue,
             ...(formInputProps || {}),
           }}
         />
       );
-    case "webService":
-      return null;
     default:
       switch (type) {
         case "Int64":
           return (
-            <DFInputNumber
+            <NumberInput
               {...{
                 ...otherElementOptions,
-                name,
                 label,
                 options,
                 required,
@@ -61,10 +54,9 @@ export function getDynamicField<InputProps>({
         case "Select":
           const defaultValueAsString = isNumber(defaultValue) ? `${defaultValue}` : defaultValue;
           return (
-            <DFSelect
+            <Select
               {...{
                 ...otherElementOptions,
-                name,
                 label,
                 data: options || [],
                 required,
@@ -78,10 +70,9 @@ export function getDynamicField<InputProps>({
           return "";
         case "Textarea":
           return (
-            <DFInputTextarea
+            <Textarea
               {...{
                 ...otherElementOptions,
-                name,
                 label,
                 options,
                 required,
@@ -93,10 +84,9 @@ export function getDynamicField<InputProps>({
           );
         case "IP":
           return (
-            <DFInputText
+            <TextInput
               {...{
                 ...otherElementOptions,
-                name,
                 label,
                 options,
                 required,
@@ -109,10 +99,9 @@ export function getDynamicField<InputProps>({
         case "String":
         default:
           return (
-            <DFInputText
+            <TextInput
               {...{
                 ...otherElementOptions,
-                name,
                 label,
                 options,
                 required,

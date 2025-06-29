@@ -1,12 +1,14 @@
 import { Fragment, useState } from "react";
+import { useStore } from "zustand";
 import { Badge, Card, Divider, Flex, Grid, LoadingOverlay, Switch, Text } from "@mantine/core";
 import { Accordion, Checkbox, TextInput } from "@mantine/core";
 import { useDebouncedValue } from "@mantine/hooks";
 import { IconSearch, IconX } from "@tabler/icons-react";
 
-import { useGetDiscoverySettings } from "@/http/generated/asset-identification-discovery-settings";
 import type { GetDiscoverySettingsParams } from "@/http/generated/models";
+import { useGetDiscoverySettings } from "@/http/generated/asset-identification-discovery-settings";
 
+import { discoveryAdaptersStore } from "../../index.store";
 import DiscoveryAdapterGateways from "./components/DiscoveryAdapterGateways";
 
 type DiscoveryAdapterFilters = Pick<GetDiscoverySettingsParams, "method" | "vendor">;
@@ -14,8 +16,14 @@ type DiscoveryAdapterFilters = Pick<GetDiscoverySettingsParams, "method" | "vend
 const DiscoverySettingsDiscoveryAdapters = () => {
   const [queryParams, setQueryParams] = useState<GetDiscoverySettingsParams>({ type: "discovery" });
   const [debouncedParams] = useDebouncedValue(queryParams, 200);
+  const setFormFields = useStore(discoveryAdaptersStore, (state) => state.setFormFields);
   const discoverySettings = useGetDiscoverySettings(debouncedParams, {
-    query: { select: (res) => res?.data },
+    query: {
+      select: (res) => {
+        setFormFields(res?.data?.results || []);
+        return res?.data;
+      },
+    },
   });
 
   const handleUpdateQueryParams = (params: Partial<GetDiscoverySettingsParams>) => {
@@ -106,7 +114,7 @@ const DiscoverySettingsDiscoveryAdapters = () => {
           {discoverySettings?.data?.results?.map((item) => (
             <Accordion.Item key={item.id} value={item.id}>
               <Accordion.Control>
-                <Flex align="center" justify="space-between" bg="transparent">
+                <Flex align="center" justify="space-between">
                   <Flex gap="sm">
                     <Card variant="light" p="xs">
                       <IconSearch size={30} />
@@ -130,16 +138,13 @@ const DiscoverySettingsDiscoveryAdapters = () => {
                   </Flex>
                 </Flex>
               </Accordion.Control>
-              <Accordion.Panel
-                renderRoot={({ children, ...others }) =>
-                  !others["aria-hidden"] && <section {...others}>{children}</section>
-                }
-              >
+              <Accordion.Panel>
                 <Text py="xs" c="gray.6">
                   Added Gateways
                 </Text>
                 {/* DiscoveryAdapterGateways */}
-                <DiscoveryAdapterGateways adapterId={item.id} formFields={item.fields} />
+                <DiscoveryAdapterGateways adapterId={item.id} />
+                {/* DiscoveryAdapterGateways */}
               </Accordion.Panel>
             </Accordion.Item>
           ))}

@@ -1,27 +1,36 @@
+import { useStore } from "zustand";
 import { useQueryClient } from "@tanstack/react-query";
 import { useForm } from "@mantine/form";
 import { randomId } from "@mantine/hooks";
 import { IconCheck, IconPlus, IconX } from "@tabler/icons-react";
 import { ActionIcon, Button, Flex, LoadingOverlay, Box, Fieldset } from "@mantine/core";
 
-import type { EachDiscoverySetting } from "@/http/generated/models";
 import { useCreateDiscoverySettingConfiguration } from "@/http/generated/asset-identification-discovery-settings";
-
 import { getDynamicField } from "@/shared/components/baseComponents/BCDynamicField";
 
+import { discoveryAdaptersStore } from "../../../../index.store";
 import { GET_DISCOVERY_SETTING_CONFIGURATIONS_QUERY_KEY } from "../../../../index.constants";
 
-type FormValues = { gateways: { ip: string; connection: string; key: string }[] };
+type FormValues = { gateways: { [key: string]: string }[] };
 
 type Props = {
   disabled: boolean;
   adapterId: string;
-  formFields: EachDiscoverySetting["fields"];
 };
 
 const DiscoveryAdaptersAddGateway = (props: Props) => {
   const queryClient = useQueryClient();
   const createDiscoverySettingConfiguration = useCreateDiscoverySettingConfiguration();
+  const discoveryAdapterFormFields = useStore(discoveryAdaptersStore, (state) => state.formFields);
+  const formFields = discoveryAdapterFormFields[props.adapterId];
+
+  const insertListItem = formFields?.reduce(
+    (accumulator, { key }) => {
+      accumulator[key] = "";
+      return accumulator;
+    },
+    { key: randomId() } as Record<string, unknown>
+  );
 
   const form = useForm<FormValues>({
     initialValues: {
@@ -52,21 +61,14 @@ const DiscoveryAdaptersAddGateway = (props: Props) => {
     <Flex key={item.key} gap="xs" mt="xs">
       <Fieldset variant="filled" w="100%" pb="xs" pt="2xs">
         <Flex gap="xs">
-          {props.formFields?.map(({ key, label, required, object_type, options, paginate, type }) =>
+          {formFields?.map((item) =>
             getDynamicField({
-              type,
-              objectType: object_type,
-              key,
-              label,
-              required,
-              options,
-              paginate,
               otherElementOptions: { withAsterisk: true, style: { flex: 1 } },
-              name: `gateways.${index}.${key}`,
               formInputProps: {
-                key: form.key(`gateways.${index}.${key}`),
-                ...form.getInputProps(`gateways.${index}.${key}`),
+                key: form.key(`gateways.${index}.${item.key}`),
+                ...form.getInputProps(`gateways.${index}.${item.key}`),
               },
+              ...item,
             })
           )}
         </Flex>
@@ -103,7 +105,7 @@ const DiscoveryAdaptersAddGateway = (props: Props) => {
         leftSection={<IconPlus size={20} />}
         variant="transparent"
         disabled={props.disabled}
-        onClick={() => form.insertListItem("gateways", { ip: "", connection: "", key: randomId() })}
+        onClick={() => form.insertListItem("gateways", insertListItem)}
       >
         Add Gateway
       </Button>

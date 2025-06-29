@@ -11,7 +11,6 @@ import DiscoverySettingsNoneCredentialAdapters from "./components/NoneCredential
 export default function AssetIdentificationDiscoverySettingsPage() {
   return (
     <Tabs
-      keepMounted={false}
       defaultValue={DiscoverySettingsTabs.DiscoveryAdapters}
       styles={({ headings }) => ({ tabLabel: headings })}
     >

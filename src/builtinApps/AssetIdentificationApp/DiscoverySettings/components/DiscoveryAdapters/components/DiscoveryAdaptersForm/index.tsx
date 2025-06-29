@@ -1,22 +1,33 @@
 import { useEffect } from "react";
+import { useStore } from "zustand";
 import { useForm } from "@mantine/form";
 import { IconCheck, IconX } from "@tabler/icons-react";
 import { ActionIcon, Flex, LoadingOverlay, Box, Fieldset } from "@mantine/core";
 
-import type { EachAdapterConfiguration } from "@/http/generated/models";
-
 import { getDynamicField } from "@/shared/components/baseComponents/BCDynamicField";
 
-type FormValues = EachAdapterConfiguration["config"];
+import { discoveryAdaptersStore } from "../../../../index.store";
+
+type FormValues = Record<string, unknown>;
 
 type Props = {
+  adapterId: string;
   config: FormValues;
   loading: boolean;
   handleEditAdapterConfigurations: (configs: FormValues) => void;
   onCancel: VoidFunction;
 };
 
-const DiscoveryAdaptersForm = ({ config, loading, onCancel, handleEditAdapterConfigurations }: Props) => {
+const DiscoveryAdaptersForm = ({
+  adapterId,
+  config,
+  loading,
+  onCancel,
+  handleEditAdapterConfigurations,
+}: Props) => {
+  const discoveryAdapterFormFields = useStore(discoveryAdaptersStore, (state) => state.formFields);
+  const formFields = discoveryAdapterFormFields[adapterId];
+
   const form = useForm<FormValues>({});
 
   const handleSubmit = (values: typeof form.values) => {
@@ -34,27 +45,16 @@ const DiscoveryAdaptersForm = ({ config, loading, onCancel, handleEditAdapterCon
         <Flex gap="xs" mt="xs">
           <Fieldset variant="filled" w="100%" pb="xs" pt="2xs">
             <Flex gap="xs">
-              {getDynamicField({
-                label: "IP",
-                type: "String",
-                otherElementOptions: { withAsterisk: true, style: { flex: 1 } },
-                name: "ip",
-                formInputProps: {
-                  key: form.key("ip"),
-                  ...form.getInputProps("ip"),
-                },
-              })}
-              {getDynamicField({
-                label: "Connection",
-                type: "Select",
-                options: [{ label: "React", value: "react" }],
-                otherElementOptions: { withAsterisk: true, style: { flex: 1 } },
-                name: "connection",
-                formInputProps: {
-                  key: form.key("connection"),
-                  ...form.getInputProps("connection"),
-                },
-              })}
+              {formFields?.map((item) =>
+                getDynamicField({
+                  otherElementOptions: { withAsterisk: true, style: { flex: 1 } },
+                  formInputProps: {
+                    key: form.key(item.key),
+                    ...form.getInputProps(item.key),
+                  },
+                  ...item,
+                })
+              )}
             </Flex>
           </Fieldset>
           <Flex direction="column" gap="xs" justify="space-between" align="center">

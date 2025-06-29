@@ -4,6 +4,11 @@ import type { MantineThemeOverride } from "@mantine/core";
 export default function useMantineBaseTheme() {
   const mantineBaseTheme: MantineThemeOverride = {
     components: {
+      Accordion: {
+        defaultProps: {
+          styles: ({ colors }: MantineThemeOverride) => ({ control: { backgroundColor: colors?.gray?.[2] } }),
+        },
+      },
       Loader: {
         defaultProps: {
           type: "dots",

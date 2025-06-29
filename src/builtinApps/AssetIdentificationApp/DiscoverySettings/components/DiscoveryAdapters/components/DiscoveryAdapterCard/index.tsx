@@ -3,15 +3,15 @@ import { ActionIcon, Badge, Card, Flex, Text } from "@mantine/core";
 import { IconListDetails, IconPencil, IconPlugConnected, IconX } from "@tabler/icons-react";
 
 import type { EachAdapterConfiguration } from "@/http/generated/models";
-
 import BCPopoverConfirm from "@/shared/components/baseComponents/BCPopoverConfirm";
 
 import DiscoveryAdaptersForm from "../DiscoveryAdaptersForm";
 
 type Props = EachAdapterConfiguration & {
   handleDeleteAdapterConfigurations: VoidFunction;
-  handleEditAdapterConfigurations: (configs: EachAdapterConfiguration["config"]) => void;
+  handleEditAdapterConfigurations: (configs: Record<string, unknown>) => void;
   loading: boolean;
+  adapterId: string;
 };
 
 const DiscoveryAdapterCard = (props: Props) => {
@@ -20,6 +20,7 @@ const DiscoveryAdapterCard = (props: Props) => {
     <>
       {editMode ? (
         <DiscoveryAdaptersForm
+          adapterId={props.adapterId}
           loading={props.loading}
           config={props.config}
           handleEditAdapterConfigurations={props.handleEditAdapterConfigurations}
