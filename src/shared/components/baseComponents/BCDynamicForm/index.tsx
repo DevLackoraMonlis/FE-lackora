@@ -57,11 +57,11 @@ const BCDynamicForm = ({
           <Flex {...flexProps}>
             {fields?.map((item) =>
               getDynamicField<DynamicFormValues>({
+                ...item,
                 formInputProps: {
                   key: form.key(item.name),
                   ...form.getInputProps(item.name),
                 },
-                ...item,
               })
             )}
           </Flex>

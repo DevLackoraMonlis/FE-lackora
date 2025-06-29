@@ -3,11 +3,11 @@ export type DynamicFiled<InputProps> = {
   objectType?: "connection" | "webService" | "none";
   name: string;
   label: string;
+  formInputProps: InputProps;
   placeholder?: string;
   defaultValue?: string | number;
   paginate?: boolean;
   required?: boolean;
   options?: { label: string; value: string }[];
-  formInputProps?: InputProps;
   otherElementOptions?: { [key: string]: unknown };
 };
