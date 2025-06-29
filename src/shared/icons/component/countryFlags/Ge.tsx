@@ -26,21 +26,9 @@ const SvgGe = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 		<path fill="#fff" d="M0 0h300v200H0z" />
 		<path fill="red" d="M130 0v80H0v40h130v80h40v-80h130V80H170V0h-40z" />
 		<use xlinkHref="#ge_svg__c" fill="red" transform="translate(64.45 39.45)" />
-		<use
-			xlinkHref="#ge_svg__c"
-			fill="red"
-			transform="translate(235.55 160.55)"
-		/>
-		<use
-			xlinkHref="#ge_svg__c"
-			fill="red"
-			transform="translate(235.55 39.45)"
-		/>
-		<use
-			xlinkHref="#ge_svg__c"
-			fill="red"
-			transform="translate(64.45 160.55)"
-		/>
+		<use xlinkHref="#ge_svg__c" fill="red" transform="translate(235.55 160.55)" />
+		<use xlinkHref="#ge_svg__c" fill="red" transform="translate(235.55 39.45)" />
+		<use xlinkHref="#ge_svg__c" fill="red" transform="translate(64.45 160.55)" />
 	</svg>
 );
 const ForwardRef = forwardRef(SvgGe);

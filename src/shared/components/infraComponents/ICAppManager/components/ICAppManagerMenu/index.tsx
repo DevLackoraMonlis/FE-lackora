@@ -1,10 +1,4 @@
-import {
-	Accordion,
-	Button,
-	Flex,
-	type MantineStyleProp,
-	Text,
-} from "@mantine/core";
+import { Accordion, Button, Flex, type MantineStyleProp, Text } from "@mantine/core";
 import React from "react";
 import type { ReactElement } from "react";
 import useAppModuleIcon from "../../hooks/useAppModuleIcon";
@@ -48,14 +42,7 @@ export default function ICAppManagerMenu(props: ICAppManagerMenuProps) {
 							{parent?.isNew ? (
 								<Flex justify="space-between" align="center" pr={10}>
 									{parent.name}
-									<Flex
-										w={35}
-										h={15}
-										bg="#8B54F7"
-										justify="center"
-										align="center"
-										className={classes.newBtn}
-									>
+									<Flex w={35} h={15} bg="#8B54F7" justify="center" align="center" className={classes.newBtn}>
 										<Text fw={400} c="#FAFAFA" className={classes.newText}>
 											New
 										</Text>
@@ -68,9 +55,7 @@ export default function ICAppManagerMenu(props: ICAppManagerMenuProps) {
 					)}
 					{/* items */}
 					{parent.modules.map((item) => {
-						const icon = PLUGIN_MODULE_ICON[
-							item?.name as string
-						] as ReactElement;
+						const icon = PLUGIN_MODULE_ICON[item?.name as string] as ReactElement;
 						return (
 							<Accordion.Panel
 								key={item.name}

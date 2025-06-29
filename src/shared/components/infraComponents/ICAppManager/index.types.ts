@@ -101,10 +101,7 @@ export type ICAppManagerRq = {
 	pageSize: number;
 };
 
-export type ICAppManagerRs = Omit<
-	ICAppManagerCardProps,
-	"onConfig" | "onClick" | "onShowNotification"
-> & {
+export type ICAppManagerRs = Omit<ICAppManagerCardProps, "onConfig" | "onClick" | "onShowNotification"> & {
 	buildBy: string;
 	category: string;
 	resources: string;
@@ -184,15 +181,9 @@ export type ICAppManagerHistoryRq = {
 
 export type ICAppManagerDetailsProps = {
 	getAppDetails: ICAppManagerProps["getAppApi"];
-	getAppHistory: ICAppManagerAxiosApiFn<
-		ICAppManagerHistoryRq,
-		PaginationRs<ICAppManagerHistoryRs>
-	>;
+	getAppHistory: ICAppManagerAxiosApiFn<ICAppManagerHistoryRq, PaginationRs<ICAppManagerHistoryRs>>;
 	name: string;
-} & Pick<
-	ICAppManagerProps,
-	"onRequestPurchase" | "submitActivateAppApi" | "onGotoLicenseManagement"
->;
+} & Pick<ICAppManagerProps, "onRequestPurchase" | "submitActivateAppApi" | "onGotoLicenseManagement">;
 
 export type ICAppManagerIconType = "test";
 

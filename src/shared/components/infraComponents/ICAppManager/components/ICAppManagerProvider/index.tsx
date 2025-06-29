@@ -23,9 +23,5 @@ const apps: ICAppManagerType[] = [
 ];
 
 export default function ICAppManagerProvider(props: PropsWithChildren) {
-	return (
-		<ICAppManagerContext.Provider value={{ apps: apps }}>
-			{props.children}
-		</ICAppManagerContext.Provider>
-	);
+	return <ICAppManagerContext.Provider value={{ apps: apps }}>{props.children}</ICAppManagerContext.Provider>;
 }

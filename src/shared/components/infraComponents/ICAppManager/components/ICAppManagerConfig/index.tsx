@@ -14,9 +14,7 @@ export default function ICAppManagerConfig(props: Props) {
 	const { apps } = useContext(ICAppManagerContext);
 
 	const getPlugin = apps.find((plugin) => plugin.name === props.pluginName);
-	const getUserPlugin = props.userPlugins.find(
-		(plugin) => plugin === props.pluginName,
-	);
+	const getUserPlugin = props.userPlugins.find((plugin) => plugin === props.pluginName);
 
 	if (props.loading) {
 		return (

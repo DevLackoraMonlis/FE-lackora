@@ -3,13 +3,12 @@ import { TAN_STACK_EXCLUDE_COLUMNS_FROM_STYLES } from "../index.constants";
 import { tanStackGetCommonPinningStyles } from "../index.helper";
 import type { TanStackColumnMeta } from "../index.types";
 
-export default function TanStackHeadRowItemCell<
-	T extends Record<string, unknown>,
->(props: { header: Header<T, unknown>; table: Table<T> }) {
+export default function TanStackHeadRowItemCell<T extends Record<string, unknown>>(props: {
+	header: Header<T, unknown>;
+	table: Table<T>;
+}) {
 	const { header, table } = props;
-	const meta = header?.column.columnDef.meta as
-		| TanStackColumnMeta<T>
-		| undefined;
+	const meta = header?.column.columnDef.meta as TanStackColumnMeta<T> | undefined;
 	const titleStyle = meta?.titleStyle;
 	return (
 		<th
@@ -17,9 +16,7 @@ export default function TanStackHeadRowItemCell<
 			style={{
 				display: "flex",
 				width: header.getSize(),
-				justifyContent: TAN_STACK_EXCLUDE_COLUMNS_FROM_STYLES.includes(
-					header.column.id,
-				)
+				justifyContent: TAN_STACK_EXCLUDE_COLUMNS_FROM_STYLES.includes(header.column.id)
 					? "center"
 					: "flex-start",
 				alignItems: "center",
@@ -29,16 +26,8 @@ export default function TanStackHeadRowItemCell<
 				...tanStackGetCommonPinningStyles<T>(header.column),
 			}}
 		>
-			<div
-				className={
-					TAN_STACK_EXCLUDE_COLUMNS_FROM_STYLES.includes(header.column.id)
-						? ""
-						: "ellipsis"
-				}
-			>
-				{props.header.isPlaceholder
-					? null
-					: flexRender(header.column.columnDef.header, header.getContext())}
+			<div className={TAN_STACK_EXCLUDE_COLUMNS_FROM_STYLES.includes(header.column.id) ? "" : "ellipsis"}>
+				{props.header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
 			</div>
 			<div
 				{...{

@@ -1,17 +1,10 @@
 import { useElementSize } from "@mantine/hooks";
-import {
-	type RowSelectionState,
-	type Table,
-	useReactTable,
-} from "@tanstack/react-table";
+import { type RowSelectionState, type Table, useReactTable } from "@tanstack/react-table";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import find from "lodash/find";
 import type React from "react";
 import { useEffect, useImperativeHandle, useRef, useState } from "react";
-import {
-	getTanStackTableOptions,
-	tanStackGenerateColumns,
-} from "./index.helper";
+import { getTanStackTableOptions, tanStackGenerateColumns } from "./index.helper";
 import type { TanStackGridProps } from "./index.types";
 
 export function useTanStack<T>(
@@ -26,8 +19,7 @@ export function useTanStack<T>(
 		estimateSize: () => params.rowHeight || 43, // Default height 43, adjusted based on expanded state
 		getScrollElement: () => params.tableContainerRef.current,
 		measureElement:
-			typeof window !== "undefined" &&
-			navigator.userAgent.indexOf("Firefox") === -1
+			typeof window !== "undefined" && navigator.userAgent.indexOf("Firefox") === -1
 				? (element) => element?.getBoundingClientRect().height
 				: undefined,
 		overscan: 5,
@@ -35,10 +27,7 @@ export function useTanStack<T>(
 	});
 
 	const visibleColumns = params.table.getVisibleLeafColumns();
-	const columnVirtualizer = useVirtualizer<
-		HTMLDivElement,
-		HTMLTableCellElement
-	>({
+	const columnVirtualizer = useVirtualizer<HTMLDivElement, HTMLTableCellElement>({
 		count: visibleColumns.length,
 		estimateSize: (index) => visibleColumns[index].getSize(), //estimate width of each column for accurate scrollbar dragging
 		getScrollElement: () => params.tableContainerRef.current,
@@ -54,9 +43,7 @@ export function useTanStack<T>(
 	};
 }
 
-export function useTanStackDefault<T extends Record<string, unknown>>(
-	params: TanStackGridProps<T>,
-) {
+export function useTanStackDefault<T extends Record<string, unknown>>(params: TanStackGridProps<T>) {
 	const props = params;
 	const tableContainerRef = useRef<HTMLDivElement>(null);
 	const tableRef = useRef<HTMLTableElement>(null);
@@ -129,9 +116,7 @@ export function useTanStackDefault<T extends Record<string, unknown>>(
 			setRowSelection: (value) => {
 				setRowSelection(value);
 				setTimeout(() => {
-					const newRecords = table
-						.getSelectedRowModel()
-						.rows.map((item) => item.original);
+					const newRecords = table.getSelectedRowModel().rows.map((item) => item.original);
 					for (let i = 0; i < newRecords.length; i++) {
 						const record = newRecords[i];
 						const id = record[props.idAccessor] as string;
@@ -148,11 +133,7 @@ export function useTanStackDefault<T extends Record<string, unknown>>(
 		if (props.pinLastColumn) {
 			// Pin the last column to the right column
 			const lastColumnId = table.getAllColumns().at(-1)?.id;
-			if (
-				lastColumnId &&
-				lastColumnId !== "selection-column" &&
-				lastColumnId !== "expander"
-			) {
+			if (lastColumnId && lastColumnId !== "selection-column" && lastColumnId !== "expander") {
 				table.setColumnPinning({
 					right: [lastColumnId],
 				});

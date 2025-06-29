@@ -9,9 +9,9 @@ import nonce from "../../../../nonce";
 export default function MantineBaseProvider(props: PropsWithChildren) {
 	const { mantineBaseTheme } = useMantineBaseTheme();
 
-	const defaultTheme = window.localStorage.getItem(
-		"mantine-color-scheme-value",
-	) as MantineColorScheme | undefined;
+	const defaultTheme = window.localStorage.getItem("mantine-color-scheme-value") as
+		| MantineColorScheme
+		| undefined;
 
 	return (
 		<MantineProvider

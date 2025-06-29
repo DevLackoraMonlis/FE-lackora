@@ -19,14 +19,7 @@ export default function ErrorComponent({
 	}, [error]);
 
 	return (
-		<Flex
-			direction="column"
-			justify="center"
-			align="center"
-			gap={20}
-			w={"100%"}
-			h={"90%"}
-		>
+		<Flex direction="column" justify="center" align="center" gap={20} w={"100%"} h={"90%"}>
 			<Box c="yellow.3">
 				<IconAlertTriangle size={100} />
 			</Box>
@@ -34,8 +27,8 @@ export default function ErrorComponent({
 				Something went wrong
 			</Text>
 			<Text c={"gray.4"}>
-				There was a problem processing the request. Please Wait a few moments,
-				then try again or return to last page.
+				There was a problem processing the request. Please Wait a few moments, then try again or return to
+				last page.
 			</Text>
 			<Button
 				variant="filled"

@@ -19,11 +19,7 @@ const SvgPh = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 				<g id="ph_svg__c">
 					<g id="ph_svg__b">
 						<path d="m-19 0 1.178 1.178L0 0l-17.822-1.178z" />
-						<path
-							id="ph_svg__a"
-							d="m-.884.116.05.05L0 0z"
-							transform="scale(19.2381)"
-						/>
+						<path id="ph_svg__a" d="m-.884.116.05.05L0 0z" transform="scale(19.2381)" />
 						<use xlinkHref="#ph_svg__a" transform="scale(1 -1)" />
 					</g>
 					<use xlinkHref="#ph_svg__b" transform="rotate(45)" />
@@ -33,10 +29,7 @@ const SvgPh = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 			<use xlinkHref="#ph_svg__d" transform="rotate(180)" />
 			<g transform="translate(-2.02)">
 				<g id="ph_svg__f" transform="translate(37.962)">
-					<path
-						id="ph_svg__e"
-						d="M5 0 1.618 1.176l-.073 3.58-2.163-2.854-3.427 1.037L-2 0z"
-					/>
+					<path id="ph_svg__e" d="M5 0 1.618 1.176l-.073 3.58-2.163-2.854-3.427 1.037L-2 0z" />
 					<use xlinkHref="#ph_svg__e" transform="scale(1 -1)" />
 				</g>
 				<use xlinkHref="#ph_svg__f" transform="rotate(120)" />

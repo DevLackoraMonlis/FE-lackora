@@ -25,10 +25,7 @@ const DiscoveryAdaptersForm = ({
 	onCancel,
 	handleEditAdapterConfigurations,
 }: Props) => {
-	const discoveryAdapterFormFields = useStore(
-		discoveryAdaptersStore,
-		(state) => state.formFields,
-	);
+	const discoveryAdapterFormFields = useStore(discoveryAdaptersStore, (state) => state.formFields);
 	const formFields = discoveryAdapterFormFields[adapterId];
 
 	const form = useForm<FormValues>({});
@@ -63,29 +60,11 @@ const DiscoveryAdaptersForm = ({
 							)}
 						</Flex>
 					</Fieldset>
-					<Flex
-						direction="column"
-						gap="xs"
-						justify="space-between"
-						align="center"
-					>
-						<ActionIcon
-							size="input-sm"
-							title="Save"
-							type="submit"
-							c="gray.2"
-							bg="primary.8"
-						>
+					<Flex direction="column" gap="xs" justify="space-between" align="center">
+						<ActionIcon size="input-sm" title="Save" type="submit" c="gray.2" bg="primary.8">
 							<IconCheck size={30} />
 						</ActionIcon>
-						<ActionIcon
-							size="input-sm"
-							title="Cancel"
-							type="reset"
-							c="gray.8"
-							bg="gray.2"
-							onClick={onCancel}
-						>
+						<ActionIcon size="input-sm" title="Cancel" type="reset" c="gray.8" bg="gray.2" onClick={onCancel}>
 							<IconX size={30} />
 						</ActionIcon>
 					</Flex>

@@ -26,15 +26,9 @@ import { orvalMutator } from "../orval-mutator";
 /**
  * @summary Login For Access Token
  */
-export const getAccessToken = (
-	bodyGetAccessToken: BodyGetAccessToken,
-	signal?: AbortSignal,
-) => {
+export const getAccessToken = (bodyGetAccessToken: BodyGetAccessToken, signal?: AbortSignal) => {
 	const formUrlEncoded = new URLSearchParams();
-	if (
-		bodyGetAccessToken.grant_type !== undefined &&
-		bodyGetAccessToken.grant_type !== null
-	) {
+	if (bodyGetAccessToken.grant_type !== undefined && bodyGetAccessToken.grant_type !== null) {
 		formUrlEncoded.append("grant_type", bodyGetAccessToken.grant_type);
 	}
 	formUrlEncoded.append("username", bodyGetAccessToken.username);
@@ -42,16 +36,10 @@ export const getAccessToken = (
 	if (bodyGetAccessToken.scope !== undefined) {
 		formUrlEncoded.append("scope", bodyGetAccessToken.scope);
 	}
-	if (
-		bodyGetAccessToken.client_id !== undefined &&
-		bodyGetAccessToken.client_id !== null
-	) {
+	if (bodyGetAccessToken.client_id !== undefined && bodyGetAccessToken.client_id !== null) {
 		formUrlEncoded.append("client_id", bodyGetAccessToken.client_id);
 	}
-	if (
-		bodyGetAccessToken.client_secret !== undefined &&
-		bodyGetAccessToken.client_secret !== null
-	) {
+	if (bodyGetAccessToken.client_secret !== undefined && bodyGetAccessToken.client_secret !== null) {
 		formUrlEncoded.append("client_secret", bodyGetAccessToken.client_secret);
 	}
 
@@ -64,10 +52,7 @@ export const getAccessToken = (
 	});
 };
 
-export const getGetAccessTokenMutationOptions = <
-	TError = HTTPValidationError,
-	TContext = unknown,
->(options?: {
+export const getGetAccessTokenMutationOptions = <TError = HTTPValidationError, TContext = unknown>(options?: {
 	mutation?: UseMutationOptions<
 		Awaited<ReturnType<typeof getAccessToken>>,
 		TError,
@@ -82,9 +67,7 @@ export const getGetAccessTokenMutationOptions = <
 > => {
 	const mutationKey = ["getAccessToken"];
 	const { mutation: mutationOptions } = options
-		? options.mutation &&
-			"mutationKey" in options.mutation &&
-			options.mutation.mutationKey
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
 			: { ...options, mutation: { ...options.mutation, mutationKey } }
 		: { mutation: { mutationKey } };
@@ -101,19 +84,14 @@ export const getGetAccessTokenMutationOptions = <
 	return { mutationFn, ...mutationOptions };
 };
 
-export type GetAccessTokenMutationResult = NonNullable<
-	Awaited<ReturnType<typeof getAccessToken>>
->;
+export type GetAccessTokenMutationResult = NonNullable<Awaited<ReturnType<typeof getAccessToken>>>;
 export type GetAccessTokenMutationBody = BodyGetAccessToken;
 export type GetAccessTokenMutationError = HTTPValidationError;
 
 /**
  * @summary Login For Access Token
  */
-export const useGetAccessToken = <
-	TError = HTTPValidationError,
-	TContext = unknown,
->(
+export const useGetAccessToken = <TError = HTTPValidationError, TContext = unknown>(
 	options?: {
 		mutation?: UseMutationOptions<
 			Awaited<ReturnType<typeof getAccessToken>>,
@@ -136,10 +114,7 @@ export const useGetAccessToken = <
 /**
  * @summary Refresh Access Token
  */
-export const getRefreshToken = (
-	refreshTokenRequest: RefreshTokenRequest,
-	signal?: AbortSignal,
-) => {
+export const getRefreshToken = (refreshTokenRequest: RefreshTokenRequest, signal?: AbortSignal) => {
 	return orvalMutator<Token>({
 		url: "/api/user-management/refresh",
 		method: "POST",
@@ -167,9 +142,7 @@ export const getGetRefreshTokenMutationOptions = <
 > => {
 	const mutationKey = ["getRefreshToken"];
 	const { mutation: mutationOptions } = options
-		? options.mutation &&
-			"mutationKey" in options.mutation &&
-			options.mutation.mutationKey
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
 			: { ...options, mutation: { ...options.mutation, mutationKey } }
 		: { mutation: { mutationKey } };
@@ -186,19 +159,14 @@ export const getGetRefreshTokenMutationOptions = <
 	return { mutationFn, ...mutationOptions };
 };
 
-export type GetRefreshTokenMutationResult = NonNullable<
-	Awaited<ReturnType<typeof getRefreshToken>>
->;
+export type GetRefreshTokenMutationResult = NonNullable<Awaited<ReturnType<typeof getRefreshToken>>>;
 export type GetRefreshTokenMutationBody = RefreshTokenRequest;
 export type GetRefreshTokenMutationError = HTTPValidationError;
 
 /**
  * @summary Refresh Access Token
  */
-export const useGetRefreshToken = <
-	TError = HTTPValidationError,
-	TContext = unknown,
->(
+export const useGetRefreshToken = <TError = HTTPValidationError, TContext = unknown>(
 	options?: {
 		mutation?: UseMutationOptions<
 			Awaited<ReturnType<typeof getRefreshToken>>,
@@ -221,10 +189,7 @@ export const useGetRefreshToken = <
 /**
  * @summary Logout
  */
-export const logoutSystem = (
-	refreshTokenRequest: RefreshTokenRequest,
-	signal?: AbortSignal,
-) => {
+export const logoutSystem = (refreshTokenRequest: RefreshTokenRequest, signal?: AbortSignal) => {
 	return orvalMutator<MessageOnlyResponse>({
 		url: "/api/user-management/logout",
 		method: "POST",
@@ -234,10 +199,7 @@ export const logoutSystem = (
 	});
 };
 
-export const getLogoutSystemMutationOptions = <
-	TError = HTTPValidationError,
-	TContext = unknown,
->(options?: {
+export const getLogoutSystemMutationOptions = <TError = HTTPValidationError, TContext = unknown>(options?: {
 	mutation?: UseMutationOptions<
 		Awaited<ReturnType<typeof logoutSystem>>,
 		TError,
@@ -252,9 +214,7 @@ export const getLogoutSystemMutationOptions = <
 > => {
 	const mutationKey = ["logoutSystem"];
 	const { mutation: mutationOptions } = options
-		? options.mutation &&
-			"mutationKey" in options.mutation &&
-			options.mutation.mutationKey
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
 			: { ...options, mutation: { ...options.mutation, mutationKey } }
 		: { mutation: { mutationKey } };
@@ -271,19 +231,14 @@ export const getLogoutSystemMutationOptions = <
 	return { mutationFn, ...mutationOptions };
 };
 
-export type LogoutSystemMutationResult = NonNullable<
-	Awaited<ReturnType<typeof logoutSystem>>
->;
+export type LogoutSystemMutationResult = NonNullable<Awaited<ReturnType<typeof logoutSystem>>>;
 export type LogoutSystemMutationBody = RefreshTokenRequest;
 export type LogoutSystemMutationError = HTTPValidationError;
 
 /**
  * @summary Logout
  */
-export const useLogoutSystem = <
-	TError = HTTPValidationError,
-	TContext = unknown,
->(
+export const useLogoutSystem = <TError = HTTPValidationError, TContext = unknown>(
 	options?: {
 		mutation?: UseMutationOptions<
 			Awaited<ReturnType<typeof logoutSystem>>,

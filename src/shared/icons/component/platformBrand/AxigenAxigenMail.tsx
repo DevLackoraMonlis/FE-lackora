@@ -1,9 +1,6 @@
 import type { Ref, SVGProps } from "react";
 import { forwardRef, memo } from "react";
-const SvgAxigenAxigenMail = (
-	props: SVGProps<SVGSVGElement>,
-	ref: Ref<SVGSVGElement>,
-) => (
+const SvgAxigenAxigenMail = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
 		width="1em"
@@ -77,12 +74,7 @@ const SvgAxigenAxigenMail = (
 					<path fill="#fff" d="M11.35 13.98h.875V15h-.874z" />
 				</mask>
 				<g mask="url(#Axigen-AxigenMail_svg__e)">
-					<path
-						fill="#F26531"
-						fillRule="evenodd"
-						d="M11.408 14.142h.744v.813h-.744z"
-						clipRule="evenodd"
-					/>
+					<path fill="#F26531" fillRule="evenodd" d="M11.408 14.142h.744v.813h-.744z" clipRule="evenodd" />
 				</g>
 				<mask
 					id="Axigen-AxigenMail_svg__f"

@@ -1,9 +1,6 @@
 import type { Ref, SVGProps } from "react";
 import { forwardRef, memo } from "react";
-const SvgCheckpointVsx = (
-	props: SVGProps<SVGSVGElement>,
-	ref: Ref<SVGSVGElement>,
-) => (
+const SvgCheckpointVsx = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
 		xmlnsXlink="http://www.w3.org/1999/xlink"
@@ -91,16 +88,10 @@ const SvgCheckpointVsx = (
 										maskType: "luminance",
 									}}
 								>
-									<path
-										fill="#fff"
-										d="M-3807.65-3977.39h7626.28v7993.62h-7626.28z"
-									/>
+									<path fill="#fff" d="M-3807.65-3977.39h7626.28v7993.62h-7626.28z" />
 								</mask>
 								<g mask="url(#Checkpoint-VSX_svg__g)">
-									<path
-										fill="url(#Checkpoint-VSX_svg__h)"
-										d="m9.495 8.92 4.827.73-.486 3.53-4.827-.73z"
-									/>
+									<path fill="url(#Checkpoint-VSX_svg__h)" d="m9.495 8.92 4.827.73-.486 3.53-4.827-.73z" />
 								</g>
 							</mask>
 							<g mask="url(#Checkpoint-VSX_svg__i)">
@@ -155,16 +146,10 @@ const SvgCheckpointVsx = (
 								maskType: "luminance",
 							}}
 						>
-							<path
-								fill="#fff"
-								d="M-3807.65-3977.39h7626.28v7993.62h-7626.28z"
-							/>
+							<path fill="#fff" d="M-3807.65-3977.39h7626.28v7993.62h-7626.28z" />
 						</mask>
 						<g mask="url(#Checkpoint-VSX_svg__l)">
-							<path
-								fill="url(#Checkpoint-VSX_svg__m)"
-								d="m9.661 7.263 3.674.614-.357 2.344-3.673-.614z"
-							/>
+							<path fill="url(#Checkpoint-VSX_svg__m)" d="m9.661 7.263 3.674.614-.357 2.344-3.673-.614z" />
 						</g>
 					</mask>
 					<g mask="url(#Checkpoint-VSX_svg__n)">
@@ -185,10 +170,7 @@ const SvgCheckpointVsx = (
 						maskType: "luminance",
 					}}
 				>
-					<path
-						fill="#fff"
-						d="M13.132 9.71a1.2 1.2 0 0 0 .453-.043.84.84 0 0 1-.34-.114z"
-					/>
+					<path fill="#fff" d="M13.132 9.71a1.2 1.2 0 0 0 .453-.043.84.84 0 0 1-.34-.114z" />
 				</mask>
 				<g mask="url(#Checkpoint-VSX_svg__p)">
 					<mask
@@ -213,16 +195,10 @@ const SvgCheckpointVsx = (
 								maskType: "luminance",
 							}}
 						>
-							<path
-								fill="#fff"
-								d="M-3807.65-3977.39h7626.28v7993.62h-7626.28z"
-							/>
+							<path fill="#fff" d="M-3807.65-3977.39h7626.28v7993.62h-7626.28z" />
 						</mask>
 						<g mask="url(#Checkpoint-VSX_svg__q)">
-							<path
-								fill="url(#Checkpoint-VSX_svg__r)"
-								d="m13.065 9.59.42-.234.168.33-.421.234z"
-							/>
+							<path fill="url(#Checkpoint-VSX_svg__r)" d="m13.065 9.59.42-.234.168.33-.421.234z" />
 						</g>
 					</mask>
 					<g mask="url(#Checkpoint-VSX_svg__s)">
@@ -271,16 +247,10 @@ const SvgCheckpointVsx = (
 								maskType: "luminance",
 							}}
 						>
-							<path
-								fill="#fff"
-								d="M-3807.65-3977.39h7626.28v7993.62h-7626.28z"
-							/>
+							<path fill="#fff" d="M-3807.65-3977.39h7626.28v7993.62h-7626.28z" />
 						</mask>
 						<g mask="url(#Checkpoint-VSX_svg__v)">
-							<path
-								fill="url(#Checkpoint-VSX_svg__w)"
-								d="m12.545 6.31 2.173 5.663-4.867 2.05L7.68 8.363z"
-							/>
+							<path fill="url(#Checkpoint-VSX_svg__w)" d="m12.545 6.31 2.173 5.663-4.867 2.05L7.68 8.363z" />
 						</g>
 					</mask>
 					<g mask="url(#Checkpoint-VSX_svg__x)">
@@ -309,11 +279,7 @@ const SvgCheckpointVsx = (
 						maskType: "luminance",
 					}}
 				>
-					<path
-						fill="#000"
-						fillOpacity={0.85}
-						d="M25.07 6H1.416v13.332H25.07z"
-					/>
+					<path fill="#000" fillOpacity={0.85} d="M25.07 6H1.416v13.332H25.07z" />
 				</mask>
 				<g mask="url(#Checkpoint-VSX_svg__z)">
 					<mask
@@ -372,10 +338,7 @@ const SvgCheckpointVsx = (
 										maskType: "luminance",
 									}}
 								>
-									<path
-										fill="#fff"
-										d="m9.538 9.402-.413 3.05 4.706.698.412-3.05z"
-									/>
+									<path fill="#fff" d="m9.538 9.402-.413 3.05 4.706.698.412-3.05z" />
 								</mask>
 								<g mask="url(#Checkpoint-VSX_svg__D)">
 									<mask
@@ -396,10 +359,7 @@ const SvgCheckpointVsx = (
 										/>
 									</mask>
 									<g mask="url(#Checkpoint-VSX_svg__F)">
-										<path
-											fill="url(#Checkpoint-VSX_svg__G)"
-											d="M13.955 10.027H9.442v2.515h4.512z"
-										/>
+										<path fill="url(#Checkpoint-VSX_svg__G)" d="M13.955 10.027H9.442v2.515h4.512z" />
 									</g>
 								</g>
 							</g>
@@ -417,11 +377,7 @@ const SvgCheckpointVsx = (
 						maskType: "luminance",
 					}}
 				>
-					<path
-						fill="#000"
-						fillOpacity={0.85}
-						d="M25.07 6H1.416v13.332H25.07z"
-					/>
+					<path fill="#000" fillOpacity={0.85} d="M25.07 6H1.416v13.332H25.07z" />
 				</mask>
 				<g mask="url(#Checkpoint-VSX_svg__H)">
 					<mask
@@ -480,10 +436,7 @@ const SvgCheckpointVsx = (
 										maskType: "luminance",
 									}}
 								>
-									<path
-										fill="#fff"
-										d="m9.538 9.402-.413 3.05 4.706.698.412-3.05z"
-									/>
+									<path fill="#fff" d="m9.538 9.402-.413 3.05 4.706.698.412-3.05z" />
 								</mask>
 								<g mask="url(#Checkpoint-VSX_svg__L)">
 									<mask
@@ -504,10 +457,7 @@ const SvgCheckpointVsx = (
 										/>
 									</mask>
 									<g mask="url(#Checkpoint-VSX_svg__N)">
-										<path
-											fill="url(#Checkpoint-VSX_svg__O)"
-											d="M13.955 10.027H9.442v2.515h4.512z"
-										/>
+										<path fill="url(#Checkpoint-VSX_svg__O)" d="M13.955 10.027H9.442v2.515h4.512z" />
 									</g>
 								</g>
 							</g>
@@ -525,11 +475,7 @@ const SvgCheckpointVsx = (
 						maskType: "luminance",
 					}}
 				>
-					<path
-						fill="#000"
-						fillOpacity={0.85}
-						d="M25.07 6H1.416v13.332H25.07z"
-					/>
+					<path fill="#000" fillOpacity={0.85} d="M25.07 6H1.416v13.332H25.07z" />
 				</mask>
 				<g mask="url(#Checkpoint-VSX_svg__P)">
 					<mask
@@ -588,10 +534,7 @@ const SvgCheckpointVsx = (
 										maskType: "luminance",
 									}}
 								>
-									<path
-										fill="#fff"
-										d="m9.538 9.402-.413 3.05 4.706.698.412-3.05z"
-									/>
+									<path fill="#fff" d="m9.538 9.402-.413 3.05 4.706.698.412-3.05z" />
 								</mask>
 								<g mask="url(#Checkpoint-VSX_svg__T)">
 									<mask
@@ -612,10 +555,7 @@ const SvgCheckpointVsx = (
 										/>
 									</mask>
 									<g mask="url(#Checkpoint-VSX_svg__V)">
-										<path
-											fill="url(#Checkpoint-VSX_svg__W)"
-											d="M13.955 10.027H9.442v2.515h4.512z"
-										/>
+										<path fill="url(#Checkpoint-VSX_svg__W)" d="M13.955 10.027H9.442v2.515h4.512z" />
 									</g>
 								</g>
 							</g>
@@ -1005,38 +945,14 @@ const SvgCheckpointVsx = (
 				<stop offset={0.75} stopColor="#B81E48" />
 				<stop offset={1} stopColor="#B81E47" />
 			</linearGradient>
-			<pattern
-				id="Checkpoint-VSX_svg__E"
-				width={1}
-				height={1}
-				patternContentUnits="objectBoundingBox"
-			>
-				<use
-					xlinkHref="#Checkpoint-VSX_svg__X"
-					transform="scale(.01266 .0238)"
-				/>
+			<pattern id="Checkpoint-VSX_svg__E" width={1} height={1} patternContentUnits="objectBoundingBox">
+				<use xlinkHref="#Checkpoint-VSX_svg__X" transform="scale(.01266 .0238)" />
 			</pattern>
-			<pattern
-				id="Checkpoint-VSX_svg__M"
-				width={1}
-				height={1}
-				patternContentUnits="objectBoundingBox"
-			>
-				<use
-					xlinkHref="#Checkpoint-VSX_svg__X"
-					transform="scale(.01266 .0238)"
-				/>
+			<pattern id="Checkpoint-VSX_svg__M" width={1} height={1} patternContentUnits="objectBoundingBox">
+				<use xlinkHref="#Checkpoint-VSX_svg__X" transform="scale(.01266 .0238)" />
 			</pattern>
-			<pattern
-				id="Checkpoint-VSX_svg__U"
-				width={1}
-				height={1}
-				patternContentUnits="objectBoundingBox"
-			>
-				<use
-					xlinkHref="#Checkpoint-VSX_svg__X"
-					transform="scale(.01266 .0238)"
-				/>
+			<pattern id="Checkpoint-VSX_svg__U" width={1} height={1} patternContentUnits="objectBoundingBox">
+				<use xlinkHref="#Checkpoint-VSX_svg__X" transform="scale(.01266 .0238)" />
 			</pattern>
 			<clipPath id="Checkpoint-VSX_svg__a">
 				<path fill="#fff" d="M0 0h24v24H0z" />

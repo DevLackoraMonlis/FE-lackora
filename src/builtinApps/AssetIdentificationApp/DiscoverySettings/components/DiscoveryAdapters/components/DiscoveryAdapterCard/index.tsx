@@ -1,10 +1,5 @@
 import { ActionIcon, Badge, Card, Flex, Text } from "@mantine/core";
-import {
-	IconListDetails,
-	IconPencil,
-	IconPlugConnected,
-	IconX,
-} from "@tabler/icons-react";
+import { IconListDetails, IconPencil, IconPlugConnected, IconX } from "@tabler/icons-react";
 import { useState } from "react";
 
 import type { EachAdapterConfiguration } from "@/http/generated/models";
@@ -28,9 +23,7 @@ const DiscoveryAdapterCard = (props: Props) => {
 					adapterId={props.adapterId}
 					loading={props.loading}
 					config={props.config}
-					handleEditAdapterConfigurations={
-						props.handleEditAdapterConfigurations
-					}
+					handleEditAdapterConfigurations={props.handleEditAdapterConfigurations}
 					onCancel={() => setEditMode(false)}
 				/>
 			) : (
@@ -40,11 +33,7 @@ const DiscoveryAdapterCard = (props: Props) => {
 							{`${props.config?.ip} - ${props.config?.connection}`}
 						</Text>
 						<Flex gap="2xs">
-							<Badge
-								variant="light"
-								color={props.is_active ? "green" : "red"}
-								p="sm"
-							>
+							<Badge variant="light" color={props.is_active ? "green" : "red"} p="sm">
 								<Text p="2xs" tt="capitalize">
 									{props.is_active ? "Connected" : "Disconnected"}
 								</Text>
@@ -80,12 +69,7 @@ const DiscoveryAdapterCard = (props: Props) => {
 								confirmBtnText="Delete"
 								message="Are you shure to delete gateway ?"
 								renderProps={(onToggle) => (
-									<ActionIcon
-										onClick={onToggle}
-										title="Delete"
-										variant="subtle"
-										c="gray.8"
-									>
+									<ActionIcon onClick={onToggle} title="Delete" variant="subtle" c="gray.8">
 										<IconX size={20} />
 									</ActionIcon>
 								)}

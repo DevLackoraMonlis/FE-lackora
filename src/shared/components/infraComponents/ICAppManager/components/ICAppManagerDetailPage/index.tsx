@@ -16,9 +16,7 @@ export default function ICAppManagerDetailPage(props: Props) {
 	const { apps } = useContext(ICAppManagerContext);
 
 	const getPlugin = apps.find((plugin) => plugin.name === props.appName);
-	const getUserPlugin = props.userApps.find(
-		(plugin) => plugin === props.appName,
-	);
+	const getUserPlugin = props.userApps.find((plugin) => plugin === props.appName);
 
 	if (props.loading) {
 		return (
@@ -37,12 +35,8 @@ export default function ICAppManagerDetailPage(props: Props) {
 		);
 	}
 
-	const getModule = getPlugin.modules.find(
-		(module) => module.name === props.moduleName,
-	);
-	const getUserPluginModule = props.userAppModules.find(
-		(module) => module === props.moduleName,
-	);
+	const getModule = getPlugin.modules.find((module) => module.name === props.moduleName);
+	const getUserPluginModule = props.userAppModules.find((module) => module === props.moduleName);
 
 	if (!getModule || !getUserPluginModule) {
 		return (

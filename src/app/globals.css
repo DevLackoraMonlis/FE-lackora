@@ -6,10 +6,7 @@ body {
 }
 
 input {
-	background-color: light-dark(
-		var(--mantine-color-white),
-		var(--mantine-color-black)
-	);
+	background-color: light-dark(var(--mantine-color-white), var(--mantine-color-black));
 }
 
 .rc-tree-checkbox {

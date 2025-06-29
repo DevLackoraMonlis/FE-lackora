@@ -46,12 +46,7 @@ const BCPopoverConfirm = ({
 				<Flex justify="center" align="center" direction="column" gap="md">
 					<Text>{message}</Text>
 					<Flex justify="space-between" align="center" w="100%">
-						<Button
-							type="button"
-							onClick={handleToggle}
-							variant="default"
-							disabled={loading}
-						>
+						<Button type="button" onClick={handleToggle} variant="default" disabled={loading}>
 							{cancelBtnText}
 						</Button>
 						<Button

@@ -1,8 +1,5 @@
 import { Button, Checkbox, type MantineSize } from "@mantine/core";
-import {
-	IconCircleChevronDown,
-	IconCircleChevronRight,
-} from "@tabler/icons-react";
+import { IconCircleChevronDown, IconCircleChevronRight } from "@tabler/icons-react";
 import {
 	type Column,
 	type ColumnDef,
@@ -27,14 +24,10 @@ type Props<T> = TanStackGridProps<T> & {
 	paginationSize?: MantineSize | string | number;
 };
 
-export function tanStackGetCommonPinningStyles<T>(
-	column: Column<T>,
-): CSSProperties {
+export function tanStackGetCommonPinningStyles<T>(column: Column<T>): CSSProperties {
 	const isPinned = column.getIsPinned();
-	const isLastLeftPinnedColumn =
-		isPinned === "left" && column.getIsLastColumn("left");
-	const isFirstRightPinnedColumn =
-		isPinned === "right" && column.getIsFirstColumn("right");
+	const isLastLeftPinnedColumn = isPinned === "left" && column.getIsLastColumn("left");
+	const isFirstRightPinnedColumn = isPinned === "right" && column.getIsFirstColumn("right");
 
 	return {
 		boxShadow: isLastLeftPinnedColumn
@@ -62,8 +55,7 @@ export function tanStackGetExtendedWidth<T>(
 	hasRowSelection?: boolean,
 ) {
 	if (viewportWidth > totalDefaultWidth) {
-		let remainWidth =
-			viewportWidth - totalDefaultWidth - (recordCount > 15 ? 18 : 0);
+		let remainWidth = viewportWidth - totalDefaultWidth - (recordCount > 15 ? 18 : 0);
 
 		if (hasRowExpansion) {
 			remainWidth -= 50;
@@ -85,9 +77,7 @@ export function tanStackGetExtendedWidth<T>(
 
 		return {
 			extendedWidth: Math.floor(remainWidth / emptyWidthColumCount),
-			getExtend:
-				!(pinLastColumn && index === columns.length - 1) &&
-				!columns[index].width,
+			getExtend: !(pinLastColumn && index === columns.length - 1) && !columns[index].width,
 		};
 	}
 }
@@ -98,12 +88,7 @@ export function tanStackGenerateColumns<T>(
 		recordCount: number;
 	} & Pick<
 		Props<T>,
-		| "columns"
-		| "pinLastColumn"
-		| "recordsPerPage"
-		| "page"
-		| "rowExpansion"
-		| "onSelectedRecordsChange"
+		"columns" | "pinLastColumn" | "recordsPerPage" | "page" | "rowExpansion" | "onSelectedRecordsChange"
 	>,
 ): ColumnDef<T>[] {
 	const { viewportWidth } = params;
@@ -115,14 +100,9 @@ export function tanStackGenerateColumns<T>(
 	);
 
 	const defaultColumns = filteredColumns.map(
-		(
-			{ cellsStyle, titleStyle, hidden: _hidden, wrap, accessor, ...column },
-			index,
-		) => {
+		({ cellsStyle, titleStyle, hidden: _hidden, wrap, accessor, ...column }, index) => {
 			const columnTitle =
-				typeof column.title === "function"
-					? (column.title as DataTableColumnTitleFn<T>)
-					: undefined;
+				typeof column.title === "function" ? (column.title as DataTableColumnTitleFn<T>) : undefined;
 			const header = columnTitle
 				? (info: HeaderContext<T, unknown>) => columnTitle?.(info.column)
 				: column.title;
@@ -151,8 +131,7 @@ export function tanStackGenerateColumns<T>(
 					(column.width || TAN_STACK_DEFAULT_COLUMN_SIZE) +
 					(extend?.getExtend ? extend.extendedWidth || 0 : 0),
 				id: accessor,
-				enablePinning:
-					index === filteredColumns.length - 1 && params.pinLastColumn,
+				enablePinning: index === filteredColumns.length - 1 && params.pinLastColumn,
 				meta: {
 					cellsStyle,
 					titleStyle,
@@ -163,10 +142,7 @@ export function tanStackGenerateColumns<T>(
 
 			if (column.render) {
 				mappedColumn.cell = (info) => {
-					const rowIndex =
-						info.row.index +
-						1 +
-						((params.page || 1) - 1) * (params.recordsPerPage || 0);
+					const rowIndex = info.row.index + 1 + ((params.page || 1) - 1) * (params.recordsPerPage || 0);
 					return column.render?.(info.row.original, info.row, rowIndex);
 				};
 			}
@@ -192,11 +168,7 @@ export function tanStackGenerateColumns<T>(
 					variant="transparent"
 					onClick={row.getToggleExpandedHandler()}
 				>
-					{!row.getIsExpanded() ? (
-						<IconCircleChevronDown />
-					) : (
-						<IconCircleChevronRight />
-					)}
+					{!row.getIsExpanded() ? <IconCircleChevronDown /> : <IconCircleChevronRight />}
 				</Button>
 			);
 		},
@@ -250,12 +222,7 @@ export function getTanStackTableOptions<T extends Record<string, unknown>>(
 		rowSelection: RowSelectionState;
 	} & Pick<
 		TanStackGridProps<T>,
-		| "records"
-		| "onSelectedRecordsChange"
-		| "rowExpansion"
-		| "page"
-		| "idAccessor"
-		| "pinLastColumn"
+		"records" | "onSelectedRecordsChange" | "rowExpansion" | "page" | "idAccessor" | "pinLastColumn"
 	>,
 ): TableOptions<T> {
 	const [expanded, setExpanded] = useState<ExpandedState>({});

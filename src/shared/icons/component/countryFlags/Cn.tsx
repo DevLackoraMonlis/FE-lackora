@@ -11,11 +11,7 @@ const SvgCn = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 		{...props}
 	>
 		<defs>
-			<path
-				id="cn_svg__a"
-				fill="#FF0"
-				d="M0-1 .588.809-.952-.309H.952L-.588.809z"
-			/>
+			<path id="cn_svg__a" fill="#FF0" d="M0-1 .588.809-.952-.309H.952L-.588.809z" />
 		</defs>
 		<path fill="#EE1C25" d="M0 0h30v20H0z" />
 		<use xlinkHref="#cn_svg__a" transform="matrix(3 0 0 3 5 5)" />

@@ -33,10 +33,7 @@ export default function AppManagerCard(props: Props) {
 	const [activateModalOpened, handlerActivateModalModal] = useDisclosure();
 	const previousValue = usePrevious(props.cardData.installingSteps);
 
-	const handelClickCard = (
-		e: React.MouseEvent<HTMLDivElement, MouseEvent>,
-		pliginName: string,
-	) => {
+	const handelClickCard = (e: React.MouseEvent<HTMLDivElement, MouseEvent>, pliginName: string) => {
 		e.stopPropagation();
 		if (!props.cardData.isInstalling) {
 			props.onClick(pliginName);
@@ -72,10 +69,7 @@ export default function AppManagerCard(props: Props) {
 			);
 		}
 
-		if (
-			props.cardData.isExpiredCommercial ||
-			props.cardData.isExpiredLicenseSupport
-		) {
+		if (props.cardData.isExpiredCommercial || props.cardData.isExpiredLicenseSupport) {
 			return (
 				<ICAppManagerCardExpiredApp
 					openLicenseModal={props.openLicenseModal}
@@ -92,17 +86,9 @@ export default function AppManagerCard(props: Props) {
 
 	useEffect(() => {
 		if (previousValue && !previousValue?.at(-1)?.active && isActiveLastStep) {
-			props.onShowNotification(
-				props.cardData.name,
-				props.cardData.module as string[],
-			);
+			props.onShowNotification(props.cardData.name, props.cardData.module as string[]);
 		}
-	}, [
-		isActiveLastStep,
-		props.onShowNotification,
-		previousValue,
-		props.cardData,
-	]);
+	}, [isActiveLastStep, props.onShowNotification, previousValue, props.cardData]);
 
 	return (
 		<>
@@ -124,9 +110,7 @@ export default function AppManagerCard(props: Props) {
 				h={160}
 				pos="relative"
 				className={
-					props.cardData.isInstalling
-						? classes.pluginManagerInstallCardRoot
-						: classes.pluginManagerCardRoot
+					props.cardData.isInstalling ? classes.pluginManagerInstallCardRoot : classes.pluginManagerCardRoot
 				}
 			>
 				{props.cardData.isInstalling && (

@@ -39,13 +39,13 @@ import { orvalMutator } from "../orval-mutator";
 /**
  * @summary List All Applications
  */
-export const getApplications = (
-	params?: GetApplicationsParams,
-	signal?: AbortSignal,
-) => {
-	return orvalMutator<PaginatedBaseResponseEachApplicationsResponseEachApplicationMetadataWrapper>(
-		{ url: "/api/application-management/", method: "GET", params, signal },
-	);
+export const getApplications = (params?: GetApplicationsParams, signal?: AbortSignal) => {
+	return orvalMutator<PaginatedBaseResponseEachApplicationsResponseEachApplicationMetadataWrapper>({
+		url: "/api/application-management/",
+		method: "GET",
+		params,
+		signal,
+	});
 };
 
 const getGetApplicationsQueryKey = (params?: GetApplicationsParams) => {
@@ -58,22 +58,15 @@ export const getGetApplicationsQueryOptions = <
 >(
 	params?: GetApplicationsParams,
 	options?: {
-		query?: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof getApplications>>,
-				TError,
-				TData
-			>
-		>;
+		query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getApplications>>, TError, TData>>;
 	},
 ) => {
 	const { query: queryOptions } = options ?? {};
 
 	const queryKey = queryOptions?.queryKey ?? getGetApplicationsQueryKey(params);
 
-	const queryFn: QueryFunction<Awaited<ReturnType<typeof getApplications>>> = ({
-		signal,
-	}) => getApplications(params, signal);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof getApplications>>> = ({ signal }) =>
+		getApplications(params, signal);
 
 	return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
 		Awaited<ReturnType<typeof getApplications>>,
@@ -82,9 +75,7 @@ export const getGetApplicationsQueryOptions = <
 	> & { queryKey: DataTag<QueryKey, TData, TError> };
 };
 
-export type GetApplicationsQueryResult = NonNullable<
-	Awaited<ReturnType<typeof getApplications>>
->;
+export type GetApplicationsQueryResult = NonNullable<Awaited<ReturnType<typeof getApplications>>>;
 export type GetApplicationsQueryError = HTTPValidationError;
 
 export function useGetApplications<
@@ -93,13 +84,7 @@ export function useGetApplications<
 >(
 	params: undefined | GetApplicationsParams,
 	options: {
-		query: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof getApplications>>,
-				TError,
-				TData
-			>
-		> &
+		query: Partial<UseQueryOptions<Awaited<ReturnType<typeof getApplications>>, TError, TData>> &
 			Pick<
 				DefinedInitialDataOptions<
 					Awaited<ReturnType<typeof getApplications>>,
@@ -119,13 +104,7 @@ export function useGetApplications<
 >(
 	params?: GetApplicationsParams,
 	options?: {
-		query?: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof getApplications>>,
-				TError,
-				TData
-			>
-		> &
+		query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getApplications>>, TError, TData>> &
 			Pick<
 				UndefinedInitialDataOptions<
 					Awaited<ReturnType<typeof getApplications>>,
@@ -145,13 +124,7 @@ export function useGetApplications<
 >(
 	params?: GetApplicationsParams,
 	options?: {
-		query?: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof getApplications>>,
-				TError,
-				TData
-			>
-		>;
+		query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getApplications>>, TError, TData>>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -167,13 +140,7 @@ export function useGetApplications<
 >(
 	params?: GetApplicationsParams,
 	options?: {
-		query?: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof getApplications>>,
-				TError,
-				TData
-			>
-		>;
+		query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getApplications>>, TError, TData>>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -181,10 +148,9 @@ export function useGetApplications<
 } {
 	const queryOptions = getGetApplicationsQueryOptions(params, options);
 
-	const query = useQuery(queryOptions, queryClient) as UseQueryResult<
-		TData,
-		TError
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+	const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
 	query.queryKey = queryOptions.queryKey;
 
@@ -210,21 +176,14 @@ export const getGetActiveApplicationsQueryOptions = <
 	TData = Awaited<ReturnType<typeof getActiveApplications>>,
 	TError = unknown,
 >(options?: {
-	query?: Partial<
-		UseQueryOptions<
-			Awaited<ReturnType<typeof getActiveApplications>>,
-			TError,
-			TData
-		>
-	>;
+	query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getActiveApplications>>, TError, TData>>;
 }) => {
 	const { query: queryOptions } = options ?? {};
 
 	const queryKey = queryOptions?.queryKey ?? getGetActiveApplicationsQueryKey();
 
-	const queryFn: QueryFunction<
-		Awaited<ReturnType<typeof getActiveApplications>>
-	> = ({ signal }) => getActiveApplications(signal);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof getActiveApplications>>> = ({ signal }) =>
+		getActiveApplications(signal);
 
 	return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
 		Awaited<ReturnType<typeof getActiveApplications>>,
@@ -233,9 +192,7 @@ export const getGetActiveApplicationsQueryOptions = <
 	> & { queryKey: DataTag<QueryKey, TData, TError> };
 };
 
-export type GetActiveApplicationsQueryResult = NonNullable<
-	Awaited<ReturnType<typeof getActiveApplications>>
->;
+export type GetActiveApplicationsQueryResult = NonNullable<Awaited<ReturnType<typeof getActiveApplications>>>;
 export type GetActiveApplicationsQueryError = unknown;
 
 export function useGetActiveApplications<
@@ -243,13 +200,7 @@ export function useGetActiveApplications<
 	TError = unknown,
 >(
 	options: {
-		query: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof getActiveApplications>>,
-				TError,
-				TData
-			>
-		> &
+		query: Partial<UseQueryOptions<Awaited<ReturnType<typeof getActiveApplications>>, TError, TData>> &
 			Pick<
 				DefinedInitialDataOptions<
 					Awaited<ReturnType<typeof getActiveApplications>>,
@@ -268,13 +219,7 @@ export function useGetActiveApplications<
 	TError = unknown,
 >(
 	options?: {
-		query?: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof getActiveApplications>>,
-				TError,
-				TData
-			>
-		> &
+		query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getActiveApplications>>, TError, TData>> &
 			Pick<
 				UndefinedInitialDataOptions<
 					Awaited<ReturnType<typeof getActiveApplications>>,
@@ -293,13 +238,7 @@ export function useGetActiveApplications<
 	TError = unknown,
 >(
 	options?: {
-		query?: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof getActiveApplications>>,
-				TError,
-				TData
-			>
-		>;
+		query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getActiveApplications>>, TError, TData>>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -314,13 +253,7 @@ export function useGetActiveApplications<
 	TError = unknown,
 >(
 	options?: {
-		query?: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof getActiveApplications>>,
-				TError,
-				TData
-			>
-		>;
+		query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getActiveApplications>>, TError, TData>>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -328,10 +261,9 @@ export function useGetActiveApplications<
 } {
 	const queryOptions = getGetActiveApplicationsQueryOptions(options);
 
-	const query = useQuery(queryOptions, queryClient) as UseQueryResult<
-		TData,
-		TError
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+	const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
 	query.queryKey = queryOptions.queryKey;
 
@@ -359,35 +291,27 @@ export const getGetApplicationQueryOptions = <
 >(
 	application: string,
 	options?: {
-		query?: Partial<
-			UseQueryOptions<Awaited<ReturnType<typeof getApplication>>, TError, TData>
-		>;
+		query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getApplication>>, TError, TData>>;
 	},
 ) => {
 	const { query: queryOptions } = options ?? {};
 
-	const queryKey =
-		queryOptions?.queryKey ?? getGetApplicationQueryKey(application);
+	const queryKey = queryOptions?.queryKey ?? getGetApplicationQueryKey(application);
 
-	const queryFn: QueryFunction<Awaited<ReturnType<typeof getApplication>>> = ({
-		signal,
-	}) => getApplication(application, signal);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof getApplication>>> = ({ signal }) =>
+		getApplication(application, signal);
 
 	return {
 		queryKey,
 		queryFn,
 		enabled: !!application,
 		...queryOptions,
-	} as UseQueryOptions<
-		Awaited<ReturnType<typeof getApplication>>,
-		TError,
-		TData
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+	} as UseQueryOptions<Awaited<ReturnType<typeof getApplication>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 };
 
-export type GetApplicationQueryResult = NonNullable<
-	Awaited<ReturnType<typeof getApplication>>
->;
+export type GetApplicationQueryResult = NonNullable<Awaited<ReturnType<typeof getApplication>>>;
 export type GetApplicationQueryError = HTTPValidationError;
 
 export function useGetApplication<
@@ -396,9 +320,7 @@ export function useGetApplication<
 >(
 	application: string,
 	options: {
-		query: Partial<
-			UseQueryOptions<Awaited<ReturnType<typeof getApplication>>, TError, TData>
-		> &
+		query: Partial<UseQueryOptions<Awaited<ReturnType<typeof getApplication>>, TError, TData>> &
 			Pick<
 				DefinedInitialDataOptions<
 					Awaited<ReturnType<typeof getApplication>>,
@@ -418,9 +340,7 @@ export function useGetApplication<
 >(
 	application: string,
 	options?: {
-		query?: Partial<
-			UseQueryOptions<Awaited<ReturnType<typeof getApplication>>, TError, TData>
-		> &
+		query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getApplication>>, TError, TData>> &
 			Pick<
 				UndefinedInitialDataOptions<
 					Awaited<ReturnType<typeof getApplication>>,
@@ -440,9 +360,7 @@ export function useGetApplication<
 >(
 	application: string,
 	options?: {
-		query?: Partial<
-			UseQueryOptions<Awaited<ReturnType<typeof getApplication>>, TError, TData>
-		>;
+		query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getApplication>>, TError, TData>>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -458,9 +376,7 @@ export function useGetApplication<
 >(
 	application: string,
 	options?: {
-		query?: Partial<
-			UseQueryOptions<Awaited<ReturnType<typeof getApplication>>, TError, TData>
-		>;
+		query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getApplication>>, TError, TData>>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -468,10 +384,9 @@ export function useGetApplication<
 } {
 	const queryOptions = getGetApplicationQueryOptions(application, options);
 
-	const query = useQuery(queryOptions, queryClient) as UseQueryResult<
-		TData,
-		TError
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+	const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
 	query.queryKey = queryOptions.queryKey;
 
@@ -486,24 +401,16 @@ export const getApplicationHistory = (
 	params?: GetApplicationHistoryParams,
 	signal?: AbortSignal,
 ) => {
-	return orvalMutator<PaginatedBaseResponseEachApplicationHistoryResponseWrapperNoneType>(
-		{
-			url: `/api/application-management/${application}/history`,
-			method: "GET",
-			params,
-			signal,
-		},
-	);
+	return orvalMutator<PaginatedBaseResponseEachApplicationHistoryResponseWrapperNoneType>({
+		url: `/api/application-management/${application}/history`,
+		method: "GET",
+		params,
+		signal,
+	});
 };
 
-const getGetApplicationHistoryQueryKey = (
-	application: string,
-	params?: GetApplicationHistoryParams,
-) => {
-	return [
-		`/api/application-management/${application}/history`,
-		...(params ? [params] : []),
-	] as const;
+const getGetApplicationHistoryQueryKey = (application: string, params?: GetApplicationHistoryParams) => {
+	return [`/api/application-management/${application}/history`, ...(params ? [params] : [])] as const;
 };
 
 export const getGetApplicationHistoryQueryOptions = <
@@ -513,40 +420,27 @@ export const getGetApplicationHistoryQueryOptions = <
 	application: string,
 	params?: GetApplicationHistoryParams,
 	options?: {
-		query?: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof getApplicationHistory>>,
-				TError,
-				TData
-			>
-		>;
+		query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getApplicationHistory>>, TError, TData>>;
 	},
 ) => {
 	const { query: queryOptions } = options ?? {};
 
-	const queryKey =
-		queryOptions?.queryKey ??
-		getGetApplicationHistoryQueryKey(application, params);
+	const queryKey = queryOptions?.queryKey ?? getGetApplicationHistoryQueryKey(application, params);
 
-	const queryFn: QueryFunction<
-		Awaited<ReturnType<typeof getApplicationHistory>>
-	> = ({ signal }) => getApplicationHistory(application, params, signal);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof getApplicationHistory>>> = ({ signal }) =>
+		getApplicationHistory(application, params, signal);
 
 	return {
 		queryKey,
 		queryFn,
 		enabled: !!application,
 		...queryOptions,
-	} as UseQueryOptions<
-		Awaited<ReturnType<typeof getApplicationHistory>>,
-		TError,
-		TData
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+	} as UseQueryOptions<Awaited<ReturnType<typeof getApplicationHistory>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 };
 
-export type GetApplicationHistoryQueryResult = NonNullable<
-	Awaited<ReturnType<typeof getApplicationHistory>>
->;
+export type GetApplicationHistoryQueryResult = NonNullable<Awaited<ReturnType<typeof getApplicationHistory>>>;
 export type GetApplicationHistoryQueryError = HTTPValidationError;
 
 export function useGetApplicationHistory<
@@ -556,13 +450,7 @@ export function useGetApplicationHistory<
 	application: string,
 	params: undefined | GetApplicationHistoryParams,
 	options: {
-		query: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof getApplicationHistory>>,
-				TError,
-				TData
-			>
-		> &
+		query: Partial<UseQueryOptions<Awaited<ReturnType<typeof getApplicationHistory>>, TError, TData>> &
 			Pick<
 				DefinedInitialDataOptions<
 					Awaited<ReturnType<typeof getApplicationHistory>>,
@@ -583,13 +471,7 @@ export function useGetApplicationHistory<
 	application: string,
 	params?: GetApplicationHistoryParams,
 	options?: {
-		query?: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof getApplicationHistory>>,
-				TError,
-				TData
-			>
-		> &
+		query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getApplicationHistory>>, TError, TData>> &
 			Pick<
 				UndefinedInitialDataOptions<
 					Awaited<ReturnType<typeof getApplicationHistory>>,
@@ -610,13 +492,7 @@ export function useGetApplicationHistory<
 	application: string,
 	params?: GetApplicationHistoryParams,
 	options?: {
-		query?: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof getApplicationHistory>>,
-				TError,
-				TData
-			>
-		>;
+		query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getApplicationHistory>>, TError, TData>>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -633,28 +509,17 @@ export function useGetApplicationHistory<
 	application: string,
 	params?: GetApplicationHistoryParams,
 	options?: {
-		query?: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof getApplicationHistory>>,
-				TError,
-				TData
-			>
-		>;
+		query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getApplicationHistory>>, TError, TData>>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
 	queryKey: DataTag<QueryKey, TData, TError>;
 } {
-	const queryOptions = getGetApplicationHistoryQueryOptions(
-		application,
-		params,
-		options,
-	);
+	const queryOptions = getGetApplicationHistoryQueryOptions(application, params, options);
 
-	const query = useQuery(queryOptions, queryClient) as UseQueryResult<
-		TData,
-		TError
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+	const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
 	query.queryKey = queryOptions.queryKey;
 
@@ -664,10 +529,7 @@ export function useGetApplicationHistory<
 /**
  * @summary Get Application Purchase Link
  */
-export const getApplicationPurchaseLink = (
-	application: string,
-	signal?: AbortSignal,
-) => {
+export const getApplicationPurchaseLink = (application: string, signal?: AbortSignal) => {
 	return orvalMutator<ApplicationPurchaseLinkResponse>({
 		url: `/api/application-management/${application}/purchase-link`,
 		method: "GET",
@@ -685,35 +547,24 @@ export const getGetApplicationPurchaseLinkQueryOptions = <
 >(
 	application: string,
 	options?: {
-		query?: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof getApplicationPurchaseLink>>,
-				TError,
-				TData
-			>
-		>;
+		query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getApplicationPurchaseLink>>, TError, TData>>;
 	},
 ) => {
 	const { query: queryOptions } = options ?? {};
 
-	const queryKey =
-		queryOptions?.queryKey ??
-		getGetApplicationPurchaseLinkQueryKey(application);
+	const queryKey = queryOptions?.queryKey ?? getGetApplicationPurchaseLinkQueryKey(application);
 
-	const queryFn: QueryFunction<
-		Awaited<ReturnType<typeof getApplicationPurchaseLink>>
-	> = ({ signal }) => getApplicationPurchaseLink(application, signal);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof getApplicationPurchaseLink>>> = ({ signal }) =>
+		getApplicationPurchaseLink(application, signal);
 
 	return {
 		queryKey,
 		queryFn,
 		enabled: !!application,
 		...queryOptions,
-	} as UseQueryOptions<
-		Awaited<ReturnType<typeof getApplicationPurchaseLink>>,
-		TError,
-		TData
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+	} as UseQueryOptions<Awaited<ReturnType<typeof getApplicationPurchaseLink>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 };
 
 export type GetApplicationPurchaseLinkQueryResult = NonNullable<
@@ -727,13 +578,7 @@ export function useGetApplicationPurchaseLink<
 >(
 	application: string,
 	options: {
-		query: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof getApplicationPurchaseLink>>,
-				TError,
-				TData
-			>
-		> &
+		query: Partial<UseQueryOptions<Awaited<ReturnType<typeof getApplicationPurchaseLink>>, TError, TData>> &
 			Pick<
 				DefinedInitialDataOptions<
 					Awaited<ReturnType<typeof getApplicationPurchaseLink>>,
@@ -753,13 +598,7 @@ export function useGetApplicationPurchaseLink<
 >(
 	application: string,
 	options?: {
-		query?: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof getApplicationPurchaseLink>>,
-				TError,
-				TData
-			>
-		> &
+		query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getApplicationPurchaseLink>>, TError, TData>> &
 			Pick<
 				UndefinedInitialDataOptions<
 					Awaited<ReturnType<typeof getApplicationPurchaseLink>>,
@@ -779,13 +618,7 @@ export function useGetApplicationPurchaseLink<
 >(
 	application: string,
 	options?: {
-		query?: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof getApplicationPurchaseLink>>,
-				TError,
-				TData
-			>
-		>;
+		query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getApplicationPurchaseLink>>, TError, TData>>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -801,27 +634,17 @@ export function useGetApplicationPurchaseLink<
 >(
 	application: string,
 	options?: {
-		query?: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof getApplicationPurchaseLink>>,
-				TError,
-				TData
-			>
-		>;
+		query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getApplicationPurchaseLink>>, TError, TData>>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
 	queryKey: DataTag<QueryKey, TData, TError>;
 } {
-	const queryOptions = getGetApplicationPurchaseLinkQueryOptions(
-		application,
-		options,
-	);
+	const queryOptions = getGetApplicationPurchaseLinkQueryOptions(application, options);
 
-	const query = useQuery(queryOptions, queryClient) as UseQueryResult<
-		TData,
-		TError
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+	const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
 	query.queryKey = queryOptions.queryKey;
 
@@ -863,9 +686,7 @@ export const getVerifyApplicationMutationOptions = <
 > => {
 	const mutationKey = ["verifyApplication"];
 	const { mutation: mutationOptions } = options
-		? options.mutation &&
-			"mutationKey" in options.mutation &&
-			options.mutation.mutationKey
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
 			: { ...options, mutation: { ...options.mutation, mutationKey } }
 		: { mutation: { mutationKey } };
@@ -882,19 +703,14 @@ export const getVerifyApplicationMutationOptions = <
 	return { mutationFn, ...mutationOptions };
 };
 
-export type VerifyApplicationMutationResult = NonNullable<
-	Awaited<ReturnType<typeof verifyApplication>>
->;
+export type VerifyApplicationMutationResult = NonNullable<Awaited<ReturnType<typeof verifyApplication>>>;
 export type VerifyApplicationMutationBody = ActivatePluginWithCode;
 export type VerifyApplicationMutationError = HTTPValidationError;
 
 /**
  * @summary Verify Application Activation Code
  */
-export const useVerifyApplication = <
-	TError = HTTPValidationError,
-	TContext = unknown,
->(
+export const useVerifyApplication = <TError = HTTPValidationError, TContext = unknown>(
 	options?: {
 		mutation?: UseMutationOptions<
 			Awaited<ReturnType<typeof verifyApplication>>,

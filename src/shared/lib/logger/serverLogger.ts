@@ -44,10 +44,7 @@ const rotateLogs = () => {
 					.sort();
 
 				if (allLogs.length > MAX_LOG_FILES) {
-					const filesToDelete = allLogs.slice(
-						0,
-						allLogs.length - MAX_LOG_FILES,
-					);
+					const filesToDelete = allLogs.slice(0, allLogs.length - MAX_LOG_FILES);
 					filesToDelete.forEach((file) => {
 						fs.unlinkSync(path.join(LOGS_DIR, file));
 					});
@@ -62,9 +59,7 @@ const rotateLogs = () => {
 const logToFile = (level: LogLevel, message: string, meta?: unknown) => {
 	rotateLogs(); // Check rotation before writing
 	const timestamp = dayjs();
-	const logEntry = `[${timestamp}] [${level}] ${message}${
-		meta ? JSON.stringify(meta) : ""
-	}\n`;
+	const logEntry = `[${timestamp}] [${level}] ${message}${meta ? JSON.stringify(meta) : ""}\n`;
 
 	try {
 		fs.appendFileSync(getCurrentLogFileName(), logEntry);
@@ -74,12 +69,8 @@ const logToFile = (level: LogLevel, message: string, meta?: unknown) => {
 };
 
 export const serverLogger = {
-	error: (message: string, meta?: unknown) =>
-		logToFile(LogLevel.ERROR, message, meta),
-	warn: (message: string, meta?: unknown) =>
-		logToFile(LogLevel.WARN, message, meta),
-	info: (message: string, meta?: unknown) =>
-		logToFile(LogLevel.INFO, message, meta),
-	debug: (message: string, meta?: unknown) =>
-		logToFile(LogLevel.DEBUG, message, meta),
+	error: (message: string, meta?: unknown) => logToFile(LogLevel.ERROR, message, meta),
+	warn: (message: string, meta?: unknown) => logToFile(LogLevel.WARN, message, meta),
+	info: (message: string, meta?: unknown) => logToFile(LogLevel.INFO, message, meta),
+	debug: (message: string, meta?: unknown) => logToFile(LogLevel.DEBUG, message, meta),
 };

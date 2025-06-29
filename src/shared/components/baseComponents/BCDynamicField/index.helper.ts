@@ -8,16 +8,11 @@ export const getDynamicFieldValidate = (fields: ApiFields[] = []) => {
 			switch (type) {
 				case "IP":
 					accumulator[key] = (value: string) => {
-						return value
-							? null
-							: required
-								? isNotEmpty("Filed is required")
-								: null;
+						return value ? null : required ? isNotEmpty("Filed is required") : null;
 					};
 					break;
 				default:
-					accumulator[key] = () =>
-						required ? isNotEmpty("Filed is required") : null;
+					accumulator[key] = () => (required ? isNotEmpty("Filed is required") : null);
 					break;
 			}
 			return accumulator;

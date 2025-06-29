@@ -1,8 +1,4 @@
-import type {
-	CustomError,
-	CustomSuccess,
-	MutationContext,
-} from "@/http/end-points/GeneralService.types";
+import type { CustomError, CustomSuccess, MutationContext } from "@/http/end-points/GeneralService.types";
 import dayjs from "dayjs";
 import jwt from "jsonwebtoken";
 import { isNumber } from "lodash";
@@ -32,10 +28,7 @@ type ValidationOptions = {
 	mustContainSpecialChars?: boolean;
 };
 
-export function validateInput(
-	value: unknown,
-	options: ValidationOptions = {},
-): string | null {
+export function validateInput(value: unknown, options: ValidationOptions = {}): string | null {
 	const {
 		required,
 		minLength,
@@ -132,10 +125,7 @@ export function normalizeForFlag(string?: string) {
 	return string.charAt(0).toUpperCase() + string.charAt(1).toLowerCase();
 }
 
-export function objectToSelectOptions<T>(
-	value: Record<string, string | number>,
-	fieldName = "value",
-) {
+export function objectToSelectOptions<T>(value: Record<string, string | number>, fieldName = "value") {
 	return Object.keys(value)
 		.filter((key) => Number.isNaN(Number(key)))
 		.map((key) => ({
@@ -178,30 +168,14 @@ export function basicBrowserDownload(url: string, fileName: string) {
 	a.remove();
 }
 
-export const getErrorMessage = (
-	error: CustomError,
-	context: MutationContext,
-) => {
+export const getErrorMessage = (error: CustomError, context: MutationContext) => {
 	if (Array.isArray(error.response?.data?.detail)) {
-		return (
-			error.response?.data?.detail?.[0]?.msg ||
-			context?.errorMessage ||
-			"Unhandled Error"
-		);
+		return error.response?.data?.detail?.[0]?.msg || context?.errorMessage || "Unhandled Error";
 	}
-	return (
-		error.response?.data?.detail || context?.errorMessage || "Unhandled Error"
-	);
+	return error.response?.data?.detail || context?.errorMessage || "Unhandled Error";
 };
-export const getSuccessMessage = (
-	response: CustomSuccess,
-	context: MutationContext,
-) => {
-	return (
-		response?.data?.message ||
-		context?.successMessage ||
-		"The operation was successful."
-	);
+export const getSuccessMessage = (response: CustomSuccess, context: MutationContext) => {
+	return response?.data?.message || context?.successMessage || "The operation was successful.";
 };
 
 export function isValidJson(str: string) {
@@ -223,10 +197,7 @@ export function enumToRecord(e: EnumRecord): EnumRecord {
 	}
 	return record;
 }
-export function getEnumKeyByValue(
-	value: string,
-	enumObject: EnumRecord,
-): string | undefined {
+export function getEnumKeyByValue(value: string, enumObject: EnumRecord): string | undefined {
 	const entries = Object.entries(enumObject);
 	for (const [key, val] of entries) {
 		if (val === value) {
@@ -258,8 +229,7 @@ export function validateIP(ipAddress: string) {
 }
 
 export function validateFQDN(FQDNAddress: string) {
-	const FQDNAdress =
-		/^(?=.{1,253}$)(([a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,})\.?$/;
+	const FQDNAdress = /^(?=.{1,253}$)(([a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,})\.?$/;
 	return FQDNAdress.test(FQDNAddress);
 }
 
@@ -269,8 +239,7 @@ export function validateWildCard(wildCard: string) {
 }
 
 export function validateAddress(address: string) {
-	const addressRegex =
-		/^(?=.{1,253}$)(([a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,})\.?$/;
+	const addressRegex = /^(?=.{1,253}$)(([a-zA-Z0-9]([a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,})\.?$/;
 
 	return addressRegex.test(address);
 }
@@ -286,9 +255,7 @@ export function validatePort(value: string | number) {
 	return null;
 }
 
-export function getValueType(
-	value: string,
-): "string" | "number" | "date" | "ip" {
+export function getValueType(value: string): "string" | "number" | "date" | "ip" {
 	if (validateIP(value)) {
 		return "ip";
 	}

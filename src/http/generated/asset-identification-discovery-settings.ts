@@ -40,27 +40,17 @@ import { orvalMutator } from "../orval-mutator";
 /**
  * @summary List All Discovery Settings Adapters
  */
-export const getDiscoverySettings = (
-	params?: GetDiscoverySettingsParams,
-	signal?: AbortSignal,
-) => {
-	return orvalMutator<PaginatedBaseResponseEachDiscoverySettingEachDiscoverySettingMetadataWrapper>(
-		{
-			url: "/api/asset-identification/discovery-settings/",
-			method: "GET",
-			params,
-			signal,
-		},
-	);
+export const getDiscoverySettings = (params?: GetDiscoverySettingsParams, signal?: AbortSignal) => {
+	return orvalMutator<PaginatedBaseResponseEachDiscoverySettingEachDiscoverySettingMetadataWrapper>({
+		url: "/api/asset-identification/discovery-settings/",
+		method: "GET",
+		params,
+		signal,
+	});
 };
 
-const getGetDiscoverySettingsQueryKey = (
-	params?: GetDiscoverySettingsParams,
-) => {
-	return [
-		"/api/asset-identification/discovery-settings/",
-		...(params ? [params] : []),
-	] as const;
+const getGetDiscoverySettingsQueryKey = (params?: GetDiscoverySettingsParams) => {
+	return ["/api/asset-identification/discovery-settings/", ...(params ? [params] : [])] as const;
 };
 
 export const getGetDiscoverySettingsQueryOptions = <
@@ -69,23 +59,15 @@ export const getGetDiscoverySettingsQueryOptions = <
 >(
 	params?: GetDiscoverySettingsParams,
 	options?: {
-		query?: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof getDiscoverySettings>>,
-				TError,
-				TData
-			>
-		>;
+		query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getDiscoverySettings>>, TError, TData>>;
 	},
 ) => {
 	const { query: queryOptions } = options ?? {};
 
-	const queryKey =
-		queryOptions?.queryKey ?? getGetDiscoverySettingsQueryKey(params);
+	const queryKey = queryOptions?.queryKey ?? getGetDiscoverySettingsQueryKey(params);
 
-	const queryFn: QueryFunction<
-		Awaited<ReturnType<typeof getDiscoverySettings>>
-	> = ({ signal }) => getDiscoverySettings(params, signal);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof getDiscoverySettings>>> = ({ signal }) =>
+		getDiscoverySettings(params, signal);
 
 	return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
 		Awaited<ReturnType<typeof getDiscoverySettings>>,
@@ -94,9 +76,7 @@ export const getGetDiscoverySettingsQueryOptions = <
 	> & { queryKey: DataTag<QueryKey, TData, TError> };
 };
 
-export type GetDiscoverySettingsQueryResult = NonNullable<
-	Awaited<ReturnType<typeof getDiscoverySettings>>
->;
+export type GetDiscoverySettingsQueryResult = NonNullable<Awaited<ReturnType<typeof getDiscoverySettings>>>;
 export type GetDiscoverySettingsQueryError = HTTPValidationError;
 
 export function useGetDiscoverySettings<
@@ -105,13 +85,7 @@ export function useGetDiscoverySettings<
 >(
 	params: undefined | GetDiscoverySettingsParams,
 	options: {
-		query: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof getDiscoverySettings>>,
-				TError,
-				TData
-			>
-		> &
+		query: Partial<UseQueryOptions<Awaited<ReturnType<typeof getDiscoverySettings>>, TError, TData>> &
 			Pick<
 				DefinedInitialDataOptions<
 					Awaited<ReturnType<typeof getDiscoverySettings>>,
@@ -131,13 +105,7 @@ export function useGetDiscoverySettings<
 >(
 	params?: GetDiscoverySettingsParams,
 	options?: {
-		query?: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof getDiscoverySettings>>,
-				TError,
-				TData
-			>
-		> &
+		query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getDiscoverySettings>>, TError, TData>> &
 			Pick<
 				UndefinedInitialDataOptions<
 					Awaited<ReturnType<typeof getDiscoverySettings>>,
@@ -157,13 +125,7 @@ export function useGetDiscoverySettings<
 >(
 	params?: GetDiscoverySettingsParams,
 	options?: {
-		query?: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof getDiscoverySettings>>,
-				TError,
-				TData
-			>
-		>;
+		query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getDiscoverySettings>>, TError, TData>>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -179,13 +141,7 @@ export function useGetDiscoverySettings<
 >(
 	params?: GetDiscoverySettingsParams,
 	options?: {
-		query?: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof getDiscoverySettings>>,
-				TError,
-				TData
-			>
-		>;
+		query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getDiscoverySettings>>, TError, TData>>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -193,10 +149,9 @@ export function useGetDiscoverySettings<
 } {
 	const queryOptions = getGetDiscoverySettingsQueryOptions(params, options);
 
-	const query = useQuery(queryOptions, queryClient) as UseQueryResult<
-		TData,
-		TError
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+	const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
 	query.queryKey = queryOptions.queryKey;
 
@@ -206,10 +161,7 @@ export function useGetDiscoverySettings<
 /**
  * @summary List All Adapter Configurations
  */
-export const getDiscoverySettingConfigurations = (
-	adapterId: string,
-	signal?: AbortSignal,
-) => {
+export const getDiscoverySettingConfigurations = (adapterId: string, signal?: AbortSignal) => {
 	return orvalMutator<PaginatedBaseResponseEachAdapterConfigurationNoneType>({
 		url: `/api/asset-identification/discovery-settings/${adapterId}/configurations`,
 		method: "GET",
@@ -218,9 +170,7 @@ export const getDiscoverySettingConfigurations = (
 };
 
 const getGetDiscoverySettingConfigurationsQueryKey = (adapterId: string) => {
-	return [
-		`/api/asset-identification/discovery-settings/${adapterId}/configurations`,
-	] as const;
+	return [`/api/asset-identification/discovery-settings/${adapterId}/configurations`] as const;
 };
 
 export const getGetDiscoverySettingConfigurationsQueryOptions = <
@@ -230,34 +180,26 @@ export const getGetDiscoverySettingConfigurationsQueryOptions = <
 	adapterId: string,
 	options?: {
 		query?: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof getDiscoverySettingConfigurations>>,
-				TError,
-				TData
-			>
+			UseQueryOptions<Awaited<ReturnType<typeof getDiscoverySettingConfigurations>>, TError, TData>
 		>;
 	},
 ) => {
 	const { query: queryOptions } = options ?? {};
 
-	const queryKey =
-		queryOptions?.queryKey ??
-		getGetDiscoverySettingConfigurationsQueryKey(adapterId);
+	const queryKey = queryOptions?.queryKey ?? getGetDiscoverySettingConfigurationsQueryKey(adapterId);
 
-	const queryFn: QueryFunction<
-		Awaited<ReturnType<typeof getDiscoverySettingConfigurations>>
-	> = ({ signal }) => getDiscoverySettingConfigurations(adapterId, signal);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof getDiscoverySettingConfigurations>>> = ({
+		signal,
+	}) => getDiscoverySettingConfigurations(adapterId, signal);
 
 	return {
 		queryKey,
 		queryFn,
 		enabled: !!adapterId,
 		...queryOptions,
-	} as UseQueryOptions<
-		Awaited<ReturnType<typeof getDiscoverySettingConfigurations>>,
-		TError,
-		TData
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+	} as UseQueryOptions<Awaited<ReturnType<typeof getDiscoverySettingConfigurations>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 };
 
 export type GetDiscoverySettingConfigurationsQueryResult = NonNullable<
@@ -272,11 +214,7 @@ export function useGetDiscoverySettingConfigurations<
 	adapterId: string,
 	options: {
 		query: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof getDiscoverySettingConfigurations>>,
-				TError,
-				TData
-			>
+			UseQueryOptions<Awaited<ReturnType<typeof getDiscoverySettingConfigurations>>, TError, TData>
 		> &
 			Pick<
 				DefinedInitialDataOptions<
@@ -298,11 +236,7 @@ export function useGetDiscoverySettingConfigurations<
 	adapterId: string,
 	options?: {
 		query?: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof getDiscoverySettingConfigurations>>,
-				TError,
-				TData
-			>
+			UseQueryOptions<Awaited<ReturnType<typeof getDiscoverySettingConfigurations>>, TError, TData>
 		> &
 			Pick<
 				UndefinedInitialDataOptions<
@@ -324,11 +258,7 @@ export function useGetDiscoverySettingConfigurations<
 	adapterId: string,
 	options?: {
 		query?: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof getDiscoverySettingConfigurations>>,
-				TError,
-				TData
-			>
+			UseQueryOptions<Awaited<ReturnType<typeof getDiscoverySettingConfigurations>>, TError, TData>
 		>;
 	},
 	queryClient?: QueryClient,
@@ -346,26 +276,18 @@ export function useGetDiscoverySettingConfigurations<
 	adapterId: string,
 	options?: {
 		query?: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof getDiscoverySettingConfigurations>>,
-				TError,
-				TData
-			>
+			UseQueryOptions<Awaited<ReturnType<typeof getDiscoverySettingConfigurations>>, TError, TData>
 		>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
 	queryKey: DataTag<QueryKey, TData, TError>;
 } {
-	const queryOptions = getGetDiscoverySettingConfigurationsQueryOptions(
-		adapterId,
-		options,
-	);
+	const queryOptions = getGetDiscoverySettingConfigurationsQueryOptions(adapterId, options);
 
-	const query = useQuery(queryOptions, queryClient) as UseQueryResult<
-		TData,
-		TError
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+	const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
 	query.queryKey = queryOptions.queryKey;
 
@@ -407,9 +329,7 @@ export const getCreateDiscoverySettingConfigurationMutationOptions = <
 > => {
 	const mutationKey = ["createDiscoverySettingConfiguration"];
 	const { mutation: mutationOptions } = options
-		? options.mutation &&
-			"mutationKey" in options.mutation &&
-			options.mutation.mutationKey
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
 			: { ...options, mutation: { ...options.mutation, mutationKey } }
 		: { mutation: { mutationKey } };
@@ -429,18 +349,13 @@ export const getCreateDiscoverySettingConfigurationMutationOptions = <
 export type CreateDiscoverySettingConfigurationMutationResult = NonNullable<
 	Awaited<ReturnType<typeof createDiscoverySettingConfiguration>>
 >;
-export type CreateDiscoverySettingConfigurationMutationBody =
-	CreateAdapterConfigurationRequest;
-export type CreateDiscoverySettingConfigurationMutationError =
-	HTTPValidationError;
+export type CreateDiscoverySettingConfigurationMutationBody = CreateAdapterConfigurationRequest;
+export type CreateDiscoverySettingConfigurationMutationError = HTTPValidationError;
 
 /**
  * @summary Create Adapter Configurations
  */
-export const useCreateDiscoverySettingConfiguration = <
-	TError = HTTPValidationError,
-	TContext = unknown,
->(
+export const useCreateDiscoverySettingConfiguration = <TError = HTTPValidationError, TContext = unknown>(
 	options?: {
 		mutation?: UseMutationOptions<
 			Awaited<ReturnType<typeof createDiscoverySettingConfiguration>>,
@@ -456,8 +371,7 @@ export const useCreateDiscoverySettingConfiguration = <
 	{ adapterId: string; data: CreateAdapterConfigurationRequest },
 	TContext
 > => {
-	const mutationOptions =
-		getCreateDiscoverySettingConfigurationMutationOptions(options);
+	const mutationOptions = getCreateDiscoverySettingConfigurationMutationOptions(options);
 
 	return useMutation(mutationOptions, queryClient);
 };
@@ -494,9 +408,7 @@ export const getEditDiscoverySettingConfigurationMutationOptions = <
 > => {
 	const mutationKey = ["editDiscoverySettingConfiguration"];
 	const { mutation: mutationOptions } = options
-		? options.mutation &&
-			"mutationKey" in options.mutation &&
-			options.mutation.mutationKey
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
 			: { ...options, mutation: { ...options.mutation, mutationKey } }
 		: { mutation: { mutationKey } };
@@ -516,18 +428,13 @@ export const getEditDiscoverySettingConfigurationMutationOptions = <
 export type EditDiscoverySettingConfigurationMutationResult = NonNullable<
 	Awaited<ReturnType<typeof editDiscoverySettingConfiguration>>
 >;
-export type EditDiscoverySettingConfigurationMutationBody =
-	UpdateAdapterConfigurationRequest;
-export type EditDiscoverySettingConfigurationMutationError =
-	HTTPValidationError;
+export type EditDiscoverySettingConfigurationMutationBody = UpdateAdapterConfigurationRequest;
+export type EditDiscoverySettingConfigurationMutationError = HTTPValidationError;
 
 /**
  * @summary Edit Adapter Configurations
  */
-export const useEditDiscoverySettingConfiguration = <
-	TError = HTTPValidationError,
-	TContext = unknown,
->(
+export const useEditDiscoverySettingConfiguration = <TError = HTTPValidationError, TContext = unknown>(
 	options?: {
 		mutation?: UseMutationOptions<
 			Awaited<ReturnType<typeof editDiscoverySettingConfiguration>>,
@@ -543,8 +450,7 @@ export const useEditDiscoverySettingConfiguration = <
 	{ adapterId: string; data: UpdateAdapterConfigurationRequest },
 	TContext
 > => {
-	const mutationOptions =
-		getEditDiscoverySettingConfigurationMutationOptions(options);
+	const mutationOptions = getEditDiscoverySettingConfigurationMutationOptions(options);
 
 	return useMutation(mutationOptions, queryClient);
 };
@@ -581,9 +487,7 @@ export const getDeleteDiscoverySettingConfigurationMutationOptions = <
 > => {
 	const mutationKey = ["deleteDiscoverySettingConfiguration"];
 	const { mutation: mutationOptions } = options
-		? options.mutation &&
-			"mutationKey" in options.mutation &&
-			options.mutation.mutationKey
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
 			: { ...options, mutation: { ...options.mutation, mutationKey } }
 		: { mutation: { mutationKey } };
@@ -603,18 +507,13 @@ export const getDeleteDiscoverySettingConfigurationMutationOptions = <
 export type DeleteDiscoverySettingConfigurationMutationResult = NonNullable<
 	Awaited<ReturnType<typeof deleteDiscoverySettingConfiguration>>
 >;
-export type DeleteDiscoverySettingConfigurationMutationBody =
-	DeleteAdapterConfigurationRequest;
-export type DeleteDiscoverySettingConfigurationMutationError =
-	HTTPValidationError;
+export type DeleteDiscoverySettingConfigurationMutationBody = DeleteAdapterConfigurationRequest;
+export type DeleteDiscoverySettingConfigurationMutationError = HTTPValidationError;
 
 /**
  * @summary Delete Adapter Configurations
  */
-export const useDeleteDiscoverySettingConfiguration = <
-	TError = HTTPValidationError,
-	TContext = unknown,
->(
+export const useDeleteDiscoverySettingConfiguration = <TError = HTTPValidationError, TContext = unknown>(
 	options?: {
 		mutation?: UseMutationOptions<
 			Awaited<ReturnType<typeof deleteDiscoverySettingConfiguration>>,
@@ -630,8 +529,7 @@ export const useDeleteDiscoverySettingConfiguration = <
 	{ adapterId: string; data: DeleteAdapterConfigurationRequest },
 	TContext
 > => {
-	const mutationOptions =
-		getDeleteDiscoverySettingConfigurationMutationOptions(options);
+	const mutationOptions = getDeleteDiscoverySettingConfigurationMutationOptions(options);
 
 	return useMutation(mutationOptions, queryClient);
 };
@@ -670,9 +568,7 @@ export const getEditDiscoverySettingStatusMutationOptions = <
 > => {
 	const mutationKey = ["editDiscoverySettingStatus"];
 	const { mutation: mutationOptions } = options
-		? options.mutation &&
-			"mutationKey" in options.mutation &&
-			options.mutation.mutationKey
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
 			: { ...options, mutation: { ...options.mutation, mutationKey } }
 		: { mutation: { mutationKey } };
@@ -698,10 +594,7 @@ export type EditDiscoverySettingStatusMutationError = HTTPValidationError;
 /**
  * @summary Change Adapter Active Status
  */
-export const useEditDiscoverySettingStatus = <
-	TError = HTTPValidationError,
-	TContext = unknown,
->(
+export const useEditDiscoverySettingStatus = <TError = HTTPValidationError, TContext = unknown>(
 	options?: {
 		mutation?: UseMutationOptions<
 			Awaited<ReturnType<typeof editDiscoverySettingStatus>>,

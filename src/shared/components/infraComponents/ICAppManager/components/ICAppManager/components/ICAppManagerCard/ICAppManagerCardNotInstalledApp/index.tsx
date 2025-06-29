@@ -1,10 +1,7 @@
 import { Button, Flex, Text } from "@mantine/core";
 import { IconArrowNarrowRight } from "@tabler/icons-react";
 import type React from "react";
-import type {
-	ICAppManagerBusinessTypeEnum,
-	ModulePermissionRs,
-} from "../../../../../index.types";
+import type { ICAppManagerBusinessTypeEnum, ModulePermissionRs } from "../../../../../index.types";
 import classes from "./index.module.css";
 
 type Props = {

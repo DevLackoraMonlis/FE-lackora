@@ -11,12 +11,7 @@ const SvgTf = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 		{...props}
 	>
 		<defs>
-			<path
-				id="tf_svg__a"
-				fill="#fff"
-				d="M0-1 .588.809-.952-.309H.952L-.588.809z"
-				transform="scale(21)"
-			/>
+			<path id="tf_svg__a" fill="#fff" d="M0-1 .588.809-.952-.309H.952L-.588.809z" transform="scale(21)" />
 		</defs>
 		<path fill="#002395" d="M0 0h600v400H0z" />
 		<path fill="#fff" d="M0 0h244v164H0z" />

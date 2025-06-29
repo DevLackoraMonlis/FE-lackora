@@ -30,12 +30,7 @@ const SvgTj = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 			/>
 			<use xlinkHref="#tj_svg__b" transform="rotate(9.37 700 804)" />
 			<use xlinkHref="#tj_svg__b" transform="rotate(18.74 700 804)" />
-			<path
-				fill="none"
-				stroke="#f8c300"
-				strokeWidth={16}
-				d="M603 478a340 340 0 0 1 194 0"
-			/>
+			<path fill="none" stroke="#f8c300" strokeWidth={16} d="M603 478a340 340 0 0 1 194 0" />
 			<g transform="translate(700 380)">
 				<g transform="translate(0 -140)">
 					<path

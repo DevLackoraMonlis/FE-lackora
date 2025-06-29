@@ -1,10 +1,6 @@
 "use client";
 
-import {
-	getApplication,
-	getApplications,
-	verifyApplication,
-} from "@/http/generated/application-management";
+import { getApplication, getApplications, verifyApplication } from "@/http/generated/application-management";
 import { useI18n } from "@/locales/client";
 import ICAppManager from "@/shared/components/infraComponents/ICAppManager/components/ICAppManager";
 import {
@@ -40,8 +36,7 @@ export default function AppManager() {
 						message: (
 							<Flex>
 								<p>
-									The plugin has been installed successfully. You can start
-									using it now!
+									The plugin has been installed successfully. You can start using it now!
 									<Link
 										href={`${AppRoutes.appModulePage(pluginName, moduleName[0])}`}
 										style={{
@@ -68,9 +63,7 @@ export default function AppManager() {
 								>
 									<CheckIcon size={20} style={{ color: "white" }} />
 								</Flex>
-								<span style={{ color: "teal", fontWeight: "bold" }}>
-									Successfully installed
-								</span>
+								<span style={{ color: "teal", fontWeight: "bold" }}>Successfully installed</span>
 							</div>
 						),
 						withBorder: true,
@@ -78,10 +71,7 @@ export default function AppManager() {
 				}}
 				onRequestPurchase={() => handleOpenInNewTab()}
 				getAppApi={async (variables, config) => {
-					return getApplication(
-						variables.name,
-						config?.signal as AbortSignal,
-					).then((response) => {
+					return getApplication(variables.name, config?.signal as AbortSignal).then((response) => {
 						const item = response.data;
 						const data: ICAppManagerRs = {
 							//todo
@@ -98,8 +88,7 @@ export default function AppManager() {
 									active: st.action,
 								})) || [],
 							isExpiredCommercial: item.status === "expired",
-							isExpiredLicenseSupport:
-								item.status === "support_licensed_expired",
+							isExpiredLicenseSupport: item.status === "support_licensed_expired",
 							isInstalled: item.status !== null,
 							isInstalling: item.is_installing,
 							isNew: item.is_new && item.status === null,
@@ -132,10 +121,7 @@ export default function AppManager() {
 							page: 1,
 							sort: variables.sortBy === "Name" ? "name" : "created_time",
 							search: variables.search,
-							order:
-								variables.sortBy === "Oldest" || variables.sortBy === "Name"
-									? "asc"
-									: "desc",
+							order: variables.sortBy === "Oldest" || variables.sortBy === "Name" ? "asc" : "desc",
 							...(variables.pricing !== ICAppManagerBusinessTypeEnum.ALL && {
 								is_paid: variables.pricing === "Commercial",
 							}),
@@ -143,39 +129,36 @@ export default function AppManager() {
 						},
 						config?.signal as AbortSignal,
 					).then((response) => {
-						const results: ICAppManagerRs[] = response.data.results.map(
-							(item) => ({
-								//todo activationCode
-								activationCode: "",
+						const results: ICAppManagerRs[] = response.data.results.map((item) => ({
+							//todo activationCode
+							activationCode: "",
 
-								active: item.is_active,
-								buildBy: item.creator || "",
-								category: item.category || "",
-								description: item.description || "",
-								expireDate: item.expiration_time || "",
-								hasConfig: item.is_configurable,
-								installingSteps:
-									item.installingsteps?.map((st) => ({
-										...st,
-										active: st.action,
-									})) || [],
-								isExpiredCommercial: item.status === "expired",
-								isExpiredLicenseSupport:
-									item.status === "support_licensed_expired",
-								isInstalled: item.status !== null,
-								isInstalling: item.is_installing,
-								isNew: item.is_new && item.status === null,
-								name: item.name,
-								//todo resources
-								resources: "",
-								summary: item.summary || "",
-								type:
-									item.type === "Commercial"
-										? ICAppManagerBusinessTypeEnum.COMMERCIAL
-										: ICAppManagerBusinessTypeEnum.FREE,
-								module: item.modules,
-							}),
-						);
+							active: item.is_active,
+							buildBy: item.creator || "",
+							category: item.category || "",
+							description: item.description || "",
+							expireDate: item.expiration_time || "",
+							hasConfig: item.is_configurable,
+							installingSteps:
+								item.installingsteps?.map((st) => ({
+									...st,
+									active: st.action,
+								})) || [],
+							isExpiredCommercial: item.status === "expired",
+							isExpiredLicenseSupport: item.status === "support_licensed_expired",
+							isInstalled: item.status !== null,
+							isInstalling: item.is_installing,
+							isNew: item.is_new && item.status === null,
+							name: item.name,
+							//todo resources
+							resources: "",
+							summary: item.summary || "",
+							type:
+								item.type === "Commercial"
+									? ICAppManagerBusinessTypeEnum.COMMERCIAL
+									: ICAppManagerBusinessTypeEnum.FREE,
+							module: item.modules,
+						}));
 
 						return {
 							...response,
@@ -185,9 +168,7 @@ export default function AppManager() {
 								info: {
 									All: response.data.metadata?.application_type.all || 0,
 									Featured: response.data.metadata?.application_type.base || 0,
-									MyApps:
-										response.data.metadata?.application_type.my_applications ||
-										0,
+									MyApps: response.data.metadata?.application_type.my_applications || 0,
 								},
 							},
 						};

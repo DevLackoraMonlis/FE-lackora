@@ -16,11 +16,7 @@ export default function TanStackRowItem<T extends Record<string, unknown>>(
 		table: Table<T>;
 	} & Pick<
 		TanStackGridProps<T>,
-		| "onSelectedRecordsChange"
-		| "onRowClick"
-		| "onRowDoubleClick"
-		| "rowHeight"
-		| "rowExpansion"
+		"onSelectedRecordsChange" | "onRowClick" | "onRowDoubleClick" | "rowHeight" | "rowExpansion"
 	>,
 ) {
 	const { row, virtualRow, rowVirtualizer } = props;
@@ -35,8 +31,7 @@ export default function TanStackRowItem<T extends Record<string, unknown>>(
 	if (props.columnVirtualizer && virtualColumns?.length) {
 		virtualPaddingLeft = virtualColumns[0]?.start ?? 0;
 		virtualPaddingRight =
-			props.columnVirtualizer.getTotalSize() -
-			(virtualColumns[virtualColumns.length - 1]?.end ?? 0);
+			props.columnVirtualizer.getTotalSize() - (virtualColumns[virtualColumns.length - 1]?.end ?? 0);
 	}
 
 	return (
@@ -52,9 +47,7 @@ export default function TanStackRowItem<T extends Record<string, unknown>>(
 					props.onRowClick?.({ record: row.original, index: row.index });
 				}
 			}}
-			onDoubleClick={() =>
-				props.onRowDoubleClick?.({ record: row.original, index: row.index })
-			}
+			onDoubleClick={() => props.onRowDoubleClick?.({ record: row.original, index: row.index })}
 			style={{
 				display: "flex",
 				position: "absolute",
@@ -63,28 +56,14 @@ export default function TanStackRowItem<T extends Record<string, unknown>>(
 				...(row.getIsExpanded() && { flexWrap: "wrap" }),
 			}}
 		>
-			{virtualPaddingLeft ? (
-				<td style={{ display: "flex", width: virtualPaddingLeft }} />
-			) : null}
+			{virtualPaddingLeft ? <td style={{ display: "flex", width: virtualPaddingLeft }} /> : null}
 			{virtualColumns.map((vc) => {
 				const cell = visibleCells[vc.index];
-				return (
-					<TanStackCellItem<T>
-						key={cell.id}
-						cell={cell}
-						rowHeight={props.rowHeight}
-					/>
-				);
+				return <TanStackCellItem<T> key={cell.id} cell={cell} rowHeight={props.rowHeight} />;
 			})}
-			{virtualPaddingRight ? (
-				<td style={{ display: "flex", width: virtualPaddingRight }} />
-			) : null}
+			{virtualPaddingRight ? <td style={{ display: "flex", width: virtualPaddingRight }} /> : null}
 			{row.getIsExpanded() && (
-				<TanStackExpandedRowItem<T>
-					index={virtualRow.index}
-					row={row}
-					rowExpansion={props.rowExpansion}
-				/>
+				<TanStackExpandedRowItem<T> index={virtualRow.index} row={row} rowExpansion={props.rowExpansion} />
 			)}
 		</tr>
 	);

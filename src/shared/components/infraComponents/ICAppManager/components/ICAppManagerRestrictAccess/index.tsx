@@ -3,9 +3,7 @@ import { IconAccessibleOff, IconArrowNarrowRight } from "@tabler/icons-react";
 import type { ICAppManagerRestrictProps } from "../../index.types";
 import classes from "./index.module.css";
 
-export default function ICAppManagerRestrictAccess(
-	props: ICAppManagerRestrictProps,
-) {
+export default function ICAppManagerRestrictAccess(props: ICAppManagerRestrictProps) {
 	return (
 		<Flex w="100%" align="center" justify="center">
 			<Flex w={733} direction="column" gap={15} align="center" justify="center">
@@ -14,9 +12,8 @@ export default function ICAppManagerRestrictAccess(
 					Access Denied!
 				</Text>
 				<Text fw={300} size="md" className={classes.description}>
-					It appears that you don’t have permission to view this page. If you
-					believe this is an error, please reach out to our support team or
-					click the link below to go back to the plugin list.
+					It appears that you don’t have permission to view this page. If you believe this is an error, please
+					reach out to our support team or click the link below to go back to the plugin list.
 				</Text>
 				<Button
 					onClick={props.onRedirectToAppStorePage}

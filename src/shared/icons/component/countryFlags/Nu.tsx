@@ -16,11 +16,7 @@ const SvgNu = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 		<path fill="#012169" d="M0 0h120v60H0z" />
 		<g stroke="#c8102e" strokeWidth={6}>
 			<path stroke="#fff" d="m0 0 60 30m0-30L0 30" />
-			<path
-				strokeWidth={4}
-				d="m0 0 60 30m0-30L0 30"
-				clipPath="url(#nu_svg__a)"
-			/>
+			<path strokeWidth={4} d="m0 0 60 30m0-30L0 30" clipPath="url(#nu_svg__a)" />
 			<path stroke="#fff" strokeWidth={10} d="M30 0v40M0 15h70" />
 			<path d="M30 0v40M0 15h70" />
 		</g>

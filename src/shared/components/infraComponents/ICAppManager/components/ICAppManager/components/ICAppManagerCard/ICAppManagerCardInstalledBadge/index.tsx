@@ -14,19 +14,11 @@ export default function ICAppManagerCardInstalledBadge(props: Props) {
 			h={props.large ? 52 : 16}
 			color={props.large ? "#424466" : "#FFFFF"}
 			classNames={{
-				label: props.large
-					? classes.LargeInstallBadgeLabel
-					: classes.installBadgeLabel,
-				root: props.large
-					? classes.LargeInstallBadgeRoot
-					: classes.installBadgeRoot,
+				label: props.large ? classes.LargeInstallBadgeLabel : classes.installBadgeLabel,
+				root: props.large ? classes.LargeInstallBadgeRoot : classes.installBadgeRoot,
 			}}
 		>
-			{props.large ? (
-				<IconDownload width={32} height={32} />
-			) : (
-				<IconDownloadOff color="#424466" />
-			)}
+			{props.large ? <IconDownload width={32} height={32} /> : <IconDownloadOff color="#424466" />}
 		</Badge>
 	);
 }

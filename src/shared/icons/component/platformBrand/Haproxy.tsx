@@ -1,9 +1,6 @@
 import type { Ref, SVGProps } from "react";
 import { forwardRef, memo } from "react";
-const SvgHaproxy = (
-	props: SVGProps<SVGSVGElement>,
-	ref: Ref<SVGSVGElement>,
-) => (
+const SvgHaproxy = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
 		width="1em"
@@ -205,12 +202,7 @@ const SvgHaproxy = (
 			d="m5.809 4.569-.367 3.094-2.77 1.627-.05-.087L5.23 7.67l-1.886-.146.008-.101 1.95.152-.926-1.6.087-.05.9 1.551.345-2.92z"
 			clipRule="evenodd"
 		/>
-		<path
-			fill="#24405D"
-			fillRule="evenodd"
-			d="m4.41 5.9 3.093-.568.018.1L4.43 6z"
-			clipRule="evenodd"
-		/>
+		<path fill="#24405D" fillRule="evenodd" d="m4.41 5.9 3.093-.568.018.1L4.43 6z" clipRule="evenodd" />
 		<path
 			fill="#256EA5"
 			d="m8.182 13.271.017-2.39 2.392.016-.017 2.39zm2.588-2.633.017-2.39 2.391.016-.016 2.39zm0 5.243.016-2.39 2.392.016-.017 2.39zm2.61-2.633.016-2.39 2.393.017-.017 2.39z"

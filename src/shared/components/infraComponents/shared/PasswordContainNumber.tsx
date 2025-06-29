@@ -7,9 +7,7 @@ export default function PasswordContainNumber(props: {
 
 	return (
 		<>
-			{props.checkingPasswordData && (
-				<CheckIcon size={18} color={theme.colors.green[5]} />
-			)}
+			{props.checkingPasswordData && <CheckIcon size={18} color={theme.colors.green[5]} />}
 			<Text size="sm">At least one number</Text>
 		</>
 	);

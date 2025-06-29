@@ -9,12 +9,7 @@ export async function POST(req: NextRequest) {
 	const cookieStore = await cookies();
 	const customCsrf = cookieStore.get("csrf-token");
 
-	if (
-		!validateSignedCsrfToken(
-			customCsrf?.value || "",
-			process.env.CSRF_SECRET || "",
-		)
-	) {
+	if (!validateSignedCsrfToken(customCsrf?.value || "", process.env.CSRF_SECRET || "")) {
 		return new NextResponse("Unauthorized", { status: 401 });
 	}
 

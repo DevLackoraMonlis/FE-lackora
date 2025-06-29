@@ -28,18 +28,8 @@ const SvgAq = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 				<circle cx={133.5} cy={133.5} r={92.5} />
 				<circle cx={133.5} cy={133.5} r={133} />
 				<path id="aq_svg__b" d="M-100 133.5h467M133.5-100v467" />
-				<use
-					xlinkHref="#aq_svg__b"
-					width={400}
-					height={267}
-					transform="rotate(30 133.5 133.5)"
-				/>
-				<use
-					xlinkHref="#aq_svg__b"
-					width={400}
-					height={267}
-					transform="rotate(60 133.5 133.5)"
-				/>
+				<use xlinkHref="#aq_svg__b" width={400} height={267} transform="rotate(30 133.5 133.5)" />
+				<use xlinkHref="#aq_svg__b" width={400} height={267} transform="rotate(60 133.5 133.5)" />
 			</g>
 		</defs>
 		<g clipPath="url(#aq_svg__c)" transform="matrix(2.25 0 0 2.25 83.125 -.75)">
@@ -49,25 +39,10 @@ const SvgAq = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 				<circle cx={133.5} cy={133.667} r={92.06} strokeWidth={1.99} />
 				<circle cx={133.5} cy={133.667} r={132.118} strokeWidth={1.987} />
 				<path d="M-100 133.5h467M133.5-100v467" />
-				<use
-					xlinkHref="#aq_svg__b"
-					width={400}
-					height={267}
-					transform="rotate(30 133.5 133.5)"
-				/>
-				<use
-					xlinkHref="#aq_svg__b"
-					width={400}
-					height={267}
-					transform="rotate(60 133.5 133.5)"
-				/>
+				<use xlinkHref="#aq_svg__b" width={400} height={267} transform="rotate(30 133.5 133.5)" />
+				<use xlinkHref="#aq_svg__b" width={400} height={267} transform="rotate(60 133.5 133.5)" />
 			</g>
-			<use
-				xlinkHref="#aq_svg__a"
-				width={400}
-				height={267}
-				transform="matrix(1 0 0 .99875 0 .333)"
-			/>
+			<use xlinkHref="#aq_svg__a" width={400} height={267} transform="matrix(1 0 0 .99875 0 .333)" />
 			<use
 				xlinkHref="#aq_svg__e"
 				width={400}

@@ -1,9 +1,6 @@
 import type { SVGProps } from "react";
 import { type Ref, forwardRef, memo } from "react";
-const SvgU2000OssCore = (
-	props: SVGProps<SVGSVGElement>,
-	ref: Ref<SVGSVGElement>,
-) => (
+const SvgU2000OssCore = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
 		width="1em"

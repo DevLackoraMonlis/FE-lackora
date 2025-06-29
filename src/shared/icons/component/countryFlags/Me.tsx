@@ -214,10 +214,7 @@ const SvgMe = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 				d="M310.19 75.14c-.71-.47-1.75-.28-2.33.43-.58.72-.47 1.68.24 2.16.71.48 1.76.29 2.34-.43.57-.7.46-1.68-.25-2.16z"
 			/>
 			<ellipse cx={307.04} cy={81.01} fill="#d4af3a" rx={1.03} ry={0.98} />
-			<path
-				fill="#d4af3a"
-				d="M309.45 75.34c-.46-.13-1.02.1-1.26.5s.01.83.62.96c1.12.22 1.66-1.18.64-1.46z"
-			/>
+			<path fill="#d4af3a" d="M309.45 75.34c-.46-.13-1.02.1-1.26.5s.01.83.62.96c1.12.22 1.66-1.18.64-1.46z" />
 		</g>
 		<path
 			fill="#D4AF3A"
@@ -255,12 +252,7 @@ const SvgMe = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 		<circle cx={388.16} cy={209.41} r={0.8} fill="#D4AF3A" />
 		<circle cx={389.32} cy={205.58} r={0.8} fill="#D4AF3A" />
 		<circle cx={390.44} cy={201.75} r={0.8} fill="#D4AF3A" />
-		<use
-			xlinkHref="#me_svg__a"
-			width={640}
-			height={320}
-			transform="matrix(-1 0 0 1 639.97 0)"
-		/>
+		<use xlinkHref="#me_svg__a" width={640} height={320} transform="matrix(-1 0 0 1 639.97 0)" />
 	</svg>
 );
 const ForwardRef = forwardRef(SvgMe);

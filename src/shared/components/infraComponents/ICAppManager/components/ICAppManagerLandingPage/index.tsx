@@ -14,9 +14,7 @@ export default function ICAppManagerLandingPage(props: Props) {
 	const { apps } = useContext(ICAppManagerContext);
 
 	const getApp = apps.find((app) => app.name === props.appName);
-	const getAvailableApp = props.userAvailableApps.find(
-		(plugin) => plugin === props.appName,
-	);
+	const getAvailableApp = props.userAvailableApps.find((plugin) => plugin === props.appName);
 
 	if (props.loading) {
 		return (

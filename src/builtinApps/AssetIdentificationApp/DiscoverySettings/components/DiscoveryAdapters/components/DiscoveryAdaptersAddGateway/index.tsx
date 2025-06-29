@@ -1,11 +1,4 @@
-import {
-	ActionIcon,
-	Box,
-	Button,
-	Fieldset,
-	Flex,
-	LoadingOverlay,
-} from "@mantine/core";
+import { ActionIcon, Box, Button, Fieldset, Flex, LoadingOverlay } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { randomId } from "@mantine/hooks";
 import { IconCheck, IconPlus, IconX } from "@tabler/icons-react";
@@ -27,12 +20,8 @@ type Props = {
 
 const DiscoveryAdaptersAddGateway = (props: Props) => {
 	const queryClient = useQueryClient();
-	const createDiscoverySettingConfiguration =
-		useCreateDiscoverySettingConfiguration();
-	const discoveryAdapterFormFields = useStore(
-		discoveryAdaptersStore,
-		(state) => state.formFields,
-	);
+	const createDiscoverySettingConfiguration = useCreateDiscoverySettingConfiguration();
+	const discoveryAdapterFormFields = useStore(discoveryAdaptersStore, (state) => state.formFields);
 	const formFields = discoveryAdapterFormFields[props.adapterId];
 
 	const insertListItem = formFields?.reduce(

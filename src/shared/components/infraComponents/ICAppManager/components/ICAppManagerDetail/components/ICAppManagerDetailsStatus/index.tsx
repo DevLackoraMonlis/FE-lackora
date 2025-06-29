@@ -39,17 +39,13 @@ export default function ICAppManagerDetailsStatus(props: Props) {
 			);
 		}
 		if (!active && isExpiredLicenseSupport) {
-			return (
-				<ICAppManagerDetailsExpiredLicenseSupport onGetPlugin={onGetPlugin} />
-			);
+			return <ICAppManagerDetailsExpiredLicenseSupport onGetPlugin={onGetPlugin} />;
 		}
 		if (!active && isExpiredCommercial) {
 			return <ICAppManagerDetailsExpiredCommercial onGetPlugin={onGetPlugin} />;
 		}
 		if (!active || !isInstalled || isNew) {
-			return (
-				<ICAppManagerDetailsNotInstalledLicense onGetPlugin={onGetPlugin} />
-			);
+			return <ICAppManagerDetailsNotInstalledLicense onGetPlugin={onGetPlugin} />;
 		}
 	};
 

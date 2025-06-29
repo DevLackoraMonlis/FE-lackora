@@ -9,8 +9,7 @@ type DefaultParams = {
 };
 
 export function useCheckingPassword(params?: DefaultParams) {
-	const [checkingPasswordData, setCheckingPasswordData] =
-		useState<ICAuthValidatePasswordRs>();
+	const [checkingPasswordData, setCheckingPasswordData] = useState<ICAuthValidatePasswordRs>();
 
 	const { mutate: validatePasswordMutate } = useMutation({
 		mutationKey: ["validate-password"],
@@ -30,10 +29,7 @@ export function useCheckingPassword(params?: DefaultParams) {
 	});
 
 	const handleValidatePassword = (password: string) => {
-		const debounceCallback = debounce(
-			() => validatePasswordMutate({ password }),
-			200,
-		);
+		const debounceCallback = debounce(() => validatePasswordMutate({ password }), 200);
 		debounceCallback();
 	};
 

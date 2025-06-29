@@ -15,26 +15,15 @@ const SvgZw = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 				<path fill="none" d="M0 0h1260v630H0z" />
 			</clipPath>
 			<style>
-				{
-					".zw_svg__cls-8{fill:#ffd200}.zw_svg__cls-4{fill:#d40000}.zw_svg__cls-8{fill-rule:evenodd}"
-				}
+				{".zw_svg__cls-8{fill:#ffd200}.zw_svg__cls-4{fill:#d40000}.zw_svg__cls-8{fill-rule:evenodd}"}
 			</style>
 		</defs>
 		<path id="zw_svg__path7" fill="#006400" d="M0 0h1260v630H0z" />
 		<path id="zw_svg__path9" fill="#ffd200" d="M0 90h1260v450H0z" />
-		<path
-			id="zw_svg__path11"
-			d="M0 180h1260v270H0z"
-			className="zw_svg__cls-4"
-		/>
+		<path id="zw_svg__path11" d="M0 180h1260v270H0z" className="zw_svg__cls-4" />
 		<path id="zw_svg__path13" d="M0 270h1260v90H0z" />
 		<g clipPath="url(#zw_svg__clip-path)">
-			<path
-				id="zw_svg__path15"
-				stroke="#000"
-				strokeWidth={30}
-				d="M0 0v630l420-315z"
-			/>
+			<path id="zw_svg__path15" stroke="#000" strokeWidth={30} d="M0 0v630l420-315z" />
 		</g>
 		<path id="zw_svg__path17" fill="#fff" d="M0 0v630l420-315z" />
 		<path
@@ -55,10 +44,7 @@ const SvgZw = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 			id="zw_svg__path870"
 			d="m152.69 280.72-1.81-.55v-.11l1.78.62zm0 0-.9-.29zm0 0a13 13 0 0 0-.41 1.5l-1.84-.38a13.42 13.42 0 0 1 .46-1.71zm-.41 1.5a12.05 12.05 0 0 0-.23 1.53l-1.87-.17a14.31 14.31 0 0 1 .26-1.74zm-.23 1.53a13.55 13.55 0 0 0 1.51 7.63l-1.67.88a15.56 15.56 0 0 1-1.71-8.68zm1.51 7.63-1.67.88 1.67-.88zm0 0a11.36 11.36 0 0 0 .81 1.34l-1.56 1.06a16.59 16.59 0 0 1-.92-1.52zm.81 1.34a14.26 14.26 0 0 0 .94 1.23l-1.42 1.22a14.37 14.37 0 0 1-1.08-1.39zm.94 1.23a13.65 13.65 0 0 0 6.6 4.19l-.51 1.82a15.45 15.45 0 0 1-7.51-4.79"
 		/>
-		<path
-			id="zw_svg__path872"
-			d="m161.24 256.57-28.52 19.49-1.07-1.55L160.18 255"
-		/>
+		<path id="zw_svg__path872" d="m161.24 256.57-28.52 19.49-1.07-1.55L160.18 255" />
 		<path
 			id="zw_svg__path874"
 			d="M145.54 225.66a3.74 3.74 0 1 0-3.74 3.74 3.74 3.74 0 0 0 3.74-3.74"
@@ -132,10 +118,7 @@ const SvgZw = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 		<path id="zw_svg__path936" d="m165.42 350 7 6.88-1.32 1.34-7-6.88" />
 		<path id="zw_svg__path938" d="m191.34 350.63-7 6.88-1.34-1.34 7-6.88" />
 		<path id="zw_svg__path940" d="m178.05 350 7 6.88-1.31 1.34-7-6.88" />
-		<path
-			id="zw_svg__path942"
-			d="m202.86 351.75-5.86 5.76-1.31-1.34 5.86-5.76"
-		/>
+		<path id="zw_svg__path942" d="m202.86 351.75-5.86 5.76-1.31-1.34 5.86-5.76" />
 		<path id="zw_svg__path944" d="m190.68 350 7 6.88-1.31 1.34-7-6.88" />
 		<path id="zw_svg__path946" d="m133.66 231.57-8.25.49-.11-1.89 8.25-.49" />
 		<path
@@ -160,15 +143,9 @@ const SvgZw = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 			d="m129.41 347.73 1.83-.42zm1.83-.45-.92.21.92-.21zm-1.84.43c-.11-.49-.23-.95-.33-1.34l1.82-.47c.13.5.25 1 .35 1.38zm-.33-1.34c-.1-.38-.22-.82-.37-1.33l1.82-.52c.11.39.23.85.37 1.38zm1.44-1.85-.91.26.9-.26zm-1.8.52a53.83 53.83 0 0 0-2.41-6.64v-.66l1.76-.1a54.18 54.18 0 0 1 2.49 6.88"
 		/>
 		<path id="zw_svg__path960" d="m138 381.66-2.73-14.05 1.85-.36 2.73 14.05" />
-		<path
-			id="zw_svg__path962"
-			d="m135.31 367.85-6.41-18.73 1.78-.6 6.41 18.73"
-		/>
+		<path id="zw_svg__path962" d="m135.31 367.85-6.41-18.73 1.78-.6 6.41 18.73" />
 		<path id="zw_svg__path964" d="m140.82 360.2-5 4.95-1.32-1.34 5-4.95" />
-		<path
-			id="zw_svg__path966"
-			d="m140.82 350.63-7.46 7.37-1.36-1.35 7.46-7.36"
-		/>
+		<path id="zw_svg__path966" d="m140.82 350.63-7.46 7.37-1.36-1.35 7.46-7.36" />
 	</svg>
 );
 const ForwardRef = forwardRef(SvgZw);

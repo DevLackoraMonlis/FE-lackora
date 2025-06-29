@@ -1,9 +1,6 @@
 import type { Ref, SVGProps } from "react";
 import { forwardRef, memo } from "react";
-const SvgMtnIrancellMtnMyIrancell = (
-	props: SVGProps<SVGSVGElement>,
-	ref: Ref<SVGSVGElement>,
-) => (
+const SvgMtnIrancellMtnMyIrancell = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
 		width="1em"

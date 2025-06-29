@@ -35,21 +35,14 @@ export const getOpenapiOpenapiJsonGetQueryOptions = <
 	TData = Awaited<ReturnType<typeof openapiOpenapiJsonGet>>,
 	TError = unknown,
 >(options?: {
-	query?: Partial<
-		UseQueryOptions<
-			Awaited<ReturnType<typeof openapiOpenapiJsonGet>>,
-			TError,
-			TData
-		>
-	>;
+	query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof openapiOpenapiJsonGet>>, TError, TData>>;
 }) => {
 	const { query: queryOptions } = options ?? {};
 
 	const queryKey = queryOptions?.queryKey ?? getOpenapiOpenapiJsonGetQueryKey();
 
-	const queryFn: QueryFunction<
-		Awaited<ReturnType<typeof openapiOpenapiJsonGet>>
-	> = ({ signal }) => openapiOpenapiJsonGet(signal);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof openapiOpenapiJsonGet>>> = ({ signal }) =>
+		openapiOpenapiJsonGet(signal);
 
 	return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
 		Awaited<ReturnType<typeof openapiOpenapiJsonGet>>,
@@ -58,9 +51,7 @@ export const getOpenapiOpenapiJsonGetQueryOptions = <
 	> & { queryKey: DataTag<QueryKey, TData, TError> };
 };
 
-export type OpenapiOpenapiJsonGetQueryResult = NonNullable<
-	Awaited<ReturnType<typeof openapiOpenapiJsonGet>>
->;
+export type OpenapiOpenapiJsonGetQueryResult = NonNullable<Awaited<ReturnType<typeof openapiOpenapiJsonGet>>>;
 export type OpenapiOpenapiJsonGetQueryError = unknown;
 
 export function useOpenapiOpenapiJsonGet<
@@ -68,13 +59,7 @@ export function useOpenapiOpenapiJsonGet<
 	TError = unknown,
 >(
 	options: {
-		query: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof openapiOpenapiJsonGet>>,
-				TError,
-				TData
-			>
-		> &
+		query: Partial<UseQueryOptions<Awaited<ReturnType<typeof openapiOpenapiJsonGet>>, TError, TData>> &
 			Pick<
 				DefinedInitialDataOptions<
 					Awaited<ReturnType<typeof openapiOpenapiJsonGet>>,
@@ -93,13 +78,7 @@ export function useOpenapiOpenapiJsonGet<
 	TError = unknown,
 >(
 	options?: {
-		query?: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof openapiOpenapiJsonGet>>,
-				TError,
-				TData
-			>
-		> &
+		query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof openapiOpenapiJsonGet>>, TError, TData>> &
 			Pick<
 				UndefinedInitialDataOptions<
 					Awaited<ReturnType<typeof openapiOpenapiJsonGet>>,
@@ -118,13 +97,7 @@ export function useOpenapiOpenapiJsonGet<
 	TError = unknown,
 >(
 	options?: {
-		query?: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof openapiOpenapiJsonGet>>,
-				TError,
-				TData
-			>
-		>;
+		query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof openapiOpenapiJsonGet>>, TError, TData>>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -139,13 +112,7 @@ export function useOpenapiOpenapiJsonGet<
 	TError = unknown,
 >(
 	options?: {
-		query?: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof openapiOpenapiJsonGet>>,
-				TError,
-				TData
-			>
-		>;
+		query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof openapiOpenapiJsonGet>>, TError, TData>>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -153,10 +120,9 @@ export function useOpenapiOpenapiJsonGet<
 } {
 	const queryOptions = getOpenapiOpenapiJsonGetQueryOptions(options);
 
-	const query = useQuery(queryOptions, queryClient) as UseQueryResult<
-		TData,
-		TError
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+	const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
 	query.queryKey = queryOptions.queryKey;
 

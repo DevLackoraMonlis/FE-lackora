@@ -1,7 +1,4 @@
-import type {
-	PaginationRq,
-	PaginationRs,
-} from "@/http/end-points/GeneralService.types";
+import type { PaginationRq, PaginationRs } from "@/http/end-points/GeneralService.types";
 import type {
 	ActivityRq,
 	ChangePasswordRq,
@@ -37,17 +34,11 @@ async function getProfile(signal?: AbortSignal) {
 	});
 }
 
-async function getAllUserActivity(
-	{ user_id, ...params }: ActivityRq,
-	signal?: AbortSignal,
-) {
-	return httpService.get<PaginationRs<UserActivityRs>>(
-		`${ControllerPath}/${user_id}/activity`,
-		{
-			signal,
-			params,
-		},
-	);
+async function getAllUserActivity({ user_id, ...params }: ActivityRq, signal?: AbortSignal) {
+	return httpService.get<PaginationRs<UserActivityRs>>(`${ControllerPath}/${user_id}/activity`, {
+		signal,
+		params,
+	});
 }
 
 async function getUsersList(params: PaginationRq, signal?: AbortSignal) {
@@ -61,13 +52,10 @@ async function getUserGroupList(
 	{ user_id, ...params }: PaginationRq & { user_id?: string },
 	signal?: AbortSignal,
 ) {
-	return httpService.get<PaginationRs<GroupPanelRs>>(
-		`${ControllerPath}/${user_id}/groups`,
-		{
-			signal,
-			params,
-		},
-	);
+	return httpService.get<PaginationRs<GroupPanelRs>>(`${ControllerPath}/${user_id}/groups`, {
+		signal,
+		params,
+	});
 }
 
 async function createNewUser(params: CreateNewUserRq) {
@@ -85,12 +73,9 @@ async function getUserDataById(payload: UserDetailsRq, signal?: AbortSignal) {
 }
 
 async function validatePassword(payload: ValidatePasswordRq) {
-	return httpService.get<ValidatePasswordRs>(
-		`${ControllerPath}/validate/password`,
-		{
-			params: { password: payload.password },
-		},
-	);
+	return httpService.get<ValidatePasswordRs>(`${ControllerPath}/validate/password`, {
+		params: { password: payload.password },
+	});
 }
 
 async function updatePassword(payload: UpdatePasswordRq) {
@@ -98,10 +83,7 @@ async function updatePassword(payload: UpdatePasswordRq) {
 }
 
 async function generatePassword(config?: AxiosRequestConfig) {
-	return httpService.get<GeneratePasswordRs>(
-		`${ControllerPath}/generatepassword`,
-		config,
-	);
+	return httpService.get<GeneratePasswordRs>(`${ControllerPath}/generatepassword`, config);
 }
 
 async function changeUserStatus(payload: ChangeUserStatusRq) {
@@ -109,10 +91,7 @@ async function changeUserStatus(payload: ChangeUserStatusRq) {
 }
 
 async function changeLoginAccess(payload: ChangeUserLoginAccessRq) {
-	return httpService.put<void>(
-		`${ControllerPath}/change-login-status`,
-		payload,
-	);
+	return httpService.put<void>(`${ControllerPath}/change-login-status`, payload);
 }
 
 async function deleteUser(params: string[]) {
@@ -122,10 +101,7 @@ async function deleteUser(params: string[]) {
 }
 
 function changePassword(params: ChangePasswordRq) {
-	return httpService.post<ResetPasswordRs>(
-		`${ControllerPath}/changepassword`,
-		params,
-	);
+	return httpService.post<ResetPasswordRs>(`${ControllerPath}/changepassword`, params);
 }
 
 async function getAllUsers(params: GetAllUsersRq, signal?: AbortSignal) {

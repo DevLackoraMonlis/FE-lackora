@@ -4,13 +4,7 @@ import { Flex, Text } from "@mantine/core";
 export default function ICLoginSlogan() {
 	return (
 		<Flex w={"100%"} h={"100%"} justify={"center"} align={"center"}>
-			<Flex
-				gap={"xs"}
-				direction={"column"}
-				w={"50%"}
-				justify={"flex-start"}
-				align={"flex-start"}
-			>
+			<Flex gap={"xs"} direction={"column"} w={"50%"} justify={"flex-start"} align={"flex-start"}>
 				<MonoWatchLogo width={54.4} height={54.4} />
 				<Text c={"white"} fz={"2xxl"} fw={"bold"}>
 					MonoWatch

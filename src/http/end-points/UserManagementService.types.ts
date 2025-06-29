@@ -166,10 +166,7 @@ export type RoleRs = {
 	abac: [];
 };
 
-export type UpdateAndCreateUserRs = Omit<
-	CreateNewUserRq & { id: string },
-	"roles" | "groups"
->;
+export type UpdateAndCreateUserRs = Omit<CreateNewUserRq & { id: string }, "roles" | "groups">;
 
 export type UpdatePasswordRq = {
 	password: string;

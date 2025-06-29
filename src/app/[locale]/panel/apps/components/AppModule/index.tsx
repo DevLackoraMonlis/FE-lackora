@@ -21,9 +21,7 @@ export default function AppModule() {
 		})),
 	);
 
-	const appModules = store.apps.find(
-		(item) => item.name === appName.replaceAll("%20", " "),
-	);
+	const appModules = store.apps.find((item) => item.name === appName.replaceAll("%20", " "));
 
 	return (
 		<Box style={{ position: "relative" }}>

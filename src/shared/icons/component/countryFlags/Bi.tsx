@@ -16,11 +16,7 @@ const SvgBi = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 				<g id="bi_svg__d">
 					<g id="bi_svg__c">
 						<g id="bi_svg__b">
-							<path
-								id="bi_svg__a"
-								d="M0-20V0h20"
-								transform="rotate(30 0 -20)"
-							/>
+							<path id="bi_svg__a" d="M0-20V0h20" transform="rotate(30 0 -20)" />
 							<use xlinkHref="#bi_svg__a" transform="scale(-1 1)" />
 						</g>
 						<use xlinkHref="#bi_svg__b" transform="rotate(120)" />

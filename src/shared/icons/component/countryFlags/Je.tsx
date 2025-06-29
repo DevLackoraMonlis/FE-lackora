@@ -16,12 +16,7 @@ const SvgJe = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 			</clipPath>
 		</defs>
 		<path fill="#fff" d="M0 0h30v18H0z" />
-		<path
-			stroke="#df112d"
-			strokeWidth={2}
-			d="m0 0 30 18M0 18 30 0"
-			clipPath="url(#je_svg__a)"
-		/>
+		<path stroke="#df112d" strokeWidth={2} d="m0 0 30 18M0 18 30 0" clipPath="url(#je_svg__a)" />
 		<g stroke="#000" strokeWidth={0.015}>
 			<path
 				fill="#e8112d"

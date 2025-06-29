@@ -1,22 +1,13 @@
 "use client";
 
 import { notifications } from "@mantine/notifications";
-import {
-	QueryClient,
-	QueryClientProvider as RQueryClientProvider,
-} from "@tanstack/react-query";
+import { QueryClient, QueryClientProvider as RQueryClientProvider } from "@tanstack/react-query";
 import { type ReactNode, useState } from "react";
 
-import type {
-	CustomError,
-	CustomSuccess,
-	MutationContext,
-} from "@/http/end-points/GeneralService.types";
+import type { CustomError, CustomSuccess, MutationContext } from "@/http/end-points/GeneralService.types";
 import { getErrorMessage, getSuccessMessage } from "@/shared/lib/utils";
 
-export default function QueryClientProvider({
-	children,
-}: { children: ReactNode }) {
+export default function QueryClientProvider({ children }: { children: ReactNode }) {
 	const [queryClient] = useState(
 		new QueryClient({
 			defaultOptions: {
@@ -39,10 +30,7 @@ export default function QueryClientProvider({
 						const mutationContext = context as MutationContext;
 						notifications.show({
 							title: "Success",
-							message: getSuccessMessage(
-								response as CustomSuccess,
-								mutationContext,
-							),
+							message: getSuccessMessage(response as CustomSuccess, mutationContext),
 							color: "green",
 							withBorder: true,
 							hidden: mutationContext.hideSuccessMessage,
@@ -53,7 +41,5 @@ export default function QueryClientProvider({
 		}),
 	);
 
-	return (
-		<RQueryClientProvider client={queryClient}>{children}</RQueryClientProvider>
-	);
+	return <RQueryClientProvider client={queryClient}>{children}</RQueryClientProvider>;
 }

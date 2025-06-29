@@ -35,14 +35,7 @@ const SvgAr = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 		<use xlinkHref="#ar_svg__c" transform="rotate(90 400 250)" />
 		<use xlinkHref="#ar_svg__c" transform="rotate(180 400 250)" />
 		<use xlinkHref="#ar_svg__c" transform="rotate(270 400 250)" />
-		<circle
-			cx={400}
-			cy={250}
-			r={27.778}
-			fill="#f6b40e"
-			stroke="#85340a"
-			strokeWidth={1.5}
-		/>
+		<circle cx={400} cy={250} r={27.778} fill="#f6b40e" stroke="#85340a" strokeWidth={1.5} />
 		<path
 			id="ar_svg__h"
 			fill="#843511"

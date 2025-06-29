@@ -24,8 +24,9 @@ type Props = ICAppManagerProps;
 
 export default function ICAppManager(props: Props) {
 	const [opened, handlerModal] = useDisclosure();
-	const [selectPricingValue, setSelectPricingValue] =
-		useState<ICAppManagerPricingType>("ALL" as ICAppManagerPricingType);
+	const [selectPricingValue, setSelectPricingValue] = useState<ICAppManagerPricingType>(
+		"ALL" as ICAppManagerPricingType,
+	);
 	const [selectedType, setSelectedType] = useState<ICAppManagerRqFilterType>(
 		PLUGIN_MANAGER_FILTER_SEGMENT_ITEM[0].value,
 	);
@@ -63,9 +64,7 @@ export default function ICAppManager(props: Props) {
 				<Flex direction="column" gap="md" p="md">
 					<ICAppManagerHeader />
 					{props.showSupportLicenseError && (
-						<ICAppManagerSupportLicenseExpiredAlert
-							onGotoLicenseManagement={props.onGotoLicenseManagement}
-						/>
+						<ICAppManagerSupportLicenseExpiredAlert onGotoLicenseManagement={props.onGotoLicenseManagement} />
 					)}
 					<Flex justify="space-between">
 						<ICAppManagerFilterSegmentControl
@@ -74,18 +73,12 @@ export default function ICAppManager(props: Props) {
 							setSelectedType={setSelectedType}
 						/>
 						<Flex gap={8}>
-							<ICAppManagerFilterSearchBox
-								search={search}
-								setSearch={setSearch}
-							/>
+							<ICAppManagerFilterSearchBox search={search} setSearch={setSearch} />
 							<ICAppManagerFilterPricing
 								selectValue={selectPricingValue}
 								setSelectValue={setSelectPricingValue}
 							/>
-							<ICAppManagerFilterSorting
-								selectValue={sortBy}
-								setSelectValue={setSortBy}
-							/>
+							<ICAppManagerFilterSorting selectValue={sortBy} setSelectValue={setSortBy} />
 						</Flex>
 					</Flex>
 					<LoadingOverlay visible={isLoading} />

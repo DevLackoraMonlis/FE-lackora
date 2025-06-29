@@ -1,10 +1,7 @@
 import { Button, Flex, Text } from "@mantine/core";
 import { IconArrowNarrowRight } from "@tabler/icons-react";
 import type React from "react";
-import type {
-	ICAppManagerBusinessTypeEnum,
-	ModulePermissionRs,
-} from "../../../../../index.types";
+import type { ICAppManagerBusinessTypeEnum, ModulePermissionRs } from "../../../../../index.types";
 import classes from "./index.module.css";
 
 type Props = {
@@ -16,9 +13,7 @@ type Props = {
 	permissions?: ModulePermissionRs;
 };
 export default function ICAppManagerCardExpiredApp(props: Props) {
-	const handelArrowButton = (
-		e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-	) => {
+	const handelArrowButton = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
 		e.stopPropagation();
 
 		if (props.type === "Commercial") {
@@ -29,14 +24,7 @@ export default function ICAppManagerCardExpiredApp(props: Props) {
 	};
 	return (
 		<Flex gap={8} align="center">
-			<Flex
-				px={8}
-				h={32}
-				bg="#E02D3C"
-				justify="center"
-				align="center"
-				className={classes.expiredRoot}
-			>
+			<Flex px={8} h={32} bg="#E02D3C" justify="center" align="center" className={classes.expiredRoot}>
 				<Text fw={400} fz={12} c="#FAFAFA">
 					{props.isExpiredCommercial ? "Expired" : "Support License Expired"}
 				</Text>

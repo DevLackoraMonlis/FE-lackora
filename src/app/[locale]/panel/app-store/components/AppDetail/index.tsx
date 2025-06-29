@@ -48,10 +48,7 @@ export default function AppDetail() {
 				});
 			}}
 			getAppDetails={async (variables, config) => {
-				return getApplication(
-					variables.name,
-					config?.signal as AbortSignal,
-				).then((response) => {
+				return getApplication(variables.name, config?.signal as AbortSignal).then((response) => {
 					const item = response.data;
 					const data: ICAppManagerRs = {
 						//todo

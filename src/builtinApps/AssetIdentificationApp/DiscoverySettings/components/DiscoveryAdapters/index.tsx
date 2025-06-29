@@ -1,13 +1,4 @@
-import {
-	Badge,
-	Card,
-	Divider,
-	Flex,
-	Grid,
-	LoadingOverlay,
-	Switch,
-	Text,
-} from "@mantine/core";
+import { Badge, Card, Divider, Flex, Grid, LoadingOverlay, Switch, Text } from "@mantine/core";
 import { Accordion, Checkbox, TextInput } from "@mantine/core";
 import { useDebouncedValue } from "@mantine/hooks";
 import { IconSearch, IconX } from "@tabler/icons-react";
@@ -20,16 +11,10 @@ import type { GetDiscoverySettingsParams } from "@/http/generated/models";
 import { discoveryAdaptersStore } from "../../index.store";
 import DiscoveryAdapterGateways from "./components/DiscoveryAdapterGateways";
 
-type DiscoveryAdapterFilters = Pick<
-	GetDiscoverySettingsParams,
-	"method" | "vendor"
->;
+type DiscoveryAdapterFilters = Pick<GetDiscoverySettingsParams, "method" | "vendor">;
 
 const DiscoverySettingsDiscoveryAdapters = () => {
-	const setFormFields = useStore(
-		discoveryAdaptersStore,
-		(state) => state.setFormFields,
-	);
+	const setFormFields = useStore(discoveryAdaptersStore, (state) => state.setFormFields);
 
 	const [queryParams, setQueryParams] = useState<GetDiscoverySettingsParams>({
 		type: "discovery",
@@ -44,9 +29,7 @@ const DiscoverySettingsDiscoveryAdapters = () => {
 		},
 	});
 
-	const handleUpdateQueryParams = (
-		params: Partial<GetDiscoverySettingsParams>,
-	) => {
+	const handleUpdateQueryParams = (params: Partial<GetDiscoverySettingsParams>) => {
 		setQueryParams((perParams) => ({ ...perParams, ...params }));
 	};
 
@@ -54,20 +37,8 @@ const DiscoverySettingsDiscoveryAdapters = () => {
 		<Grid p="sm" pt="lg" gutter="lg">
 			<LoadingOverlay visible={discoverySettings.isFetching} />
 			<Grid.Col span={{ xs: 12, lg: 3 }}>
-				<Card
-					withBorder
-					shadow="sm"
-					radius="md"
-					bd="1px solid gray.4"
-					h="80dvh"
-				>
-					<Card.Section
-						withBorder
-						inheritPadding
-						py="2xs"
-						fw="bold"
-						bg="gray.2"
-					>
+				<Card withBorder shadow="sm" radius="md" bd="1px solid gray.4" h="80dvh">
+					<Card.Section withBorder inheritPadding py="2xs" fw="bold" bg="gray.2">
 						Filter
 					</Card.Section>
 					<Card.Section withBorder inheritPadding py="2xs">
@@ -88,9 +59,7 @@ const DiscoverySettingsDiscoveryAdapters = () => {
 							radius="md"
 							value={queryParams.search || ""}
 							placeholder="Search by adapter Name"
-							onChange={(e) =>
-								handleUpdateQueryParams({ search: e.target.value })
-							}
+							onChange={(e) => handleUpdateQueryParams({ search: e.target.value })}
 						/>
 						<Divider />
 						<Switch
@@ -98,59 +67,52 @@ const DiscoverySettingsDiscoveryAdapters = () => {
 							labelPosition="left"
 							label="Show only used adapters"
 							size="md"
-							onChange={(e) =>
-								handleUpdateQueryParams({ used: e.target.checked })
-							}
+							onChange={(e) => handleUpdateQueryParams({ used: e.target.checked })}
 						/>
-						{discoverySettings?.data?.metadata?.filters?.map(
-							({ label, param, items }) => {
-								const value =
-									queryParams[param as keyof DiscoveryAdapterFilters] || [];
-								return (
-									<Fragment key={param}>
-										<Divider />
-										<Checkbox.Group
-											label={
-												<Flex align="center" justify="space-between">
-													<Text fw="normal">{label}</Text>
-													{!!value?.length && (
-														<Badge
-															className="cursor-pointer"
-															variant="light"
-															color="gray"
-															rightSection={<IconX size={10} />}
-															onClick={() =>
-																handleUpdateQueryParams({ [param]: null })
-															}
-														>
-															<Text fz="xs" tt="capitalize">
-																Clear Filter
-															</Text>
-														</Badge>
-													)}
-												</Flex>
-											}
-											value={value}
-											styles={() => ({
-												label: { width: "100%" },
-											})}
-											my="sm"
-											onChange={(value) =>
-												handleUpdateQueryParams({
-													[param]: value?.length ? value : null,
-												})
-											}
-										>
-											<Flex direction="column" gap="xs" py="xs">
-												{items?.map((item) => (
-													<Checkbox key={item.value} {...item} />
-												))}
+						{discoverySettings?.data?.metadata?.filters?.map(({ label, param, items }) => {
+							const value = queryParams[param as keyof DiscoveryAdapterFilters] || [];
+							return (
+								<Fragment key={param}>
+									<Divider />
+									<Checkbox.Group
+										label={
+											<Flex align="center" justify="space-between">
+												<Text fw="normal">{label}</Text>
+												{!!value?.length && (
+													<Badge
+														className="cursor-pointer"
+														variant="light"
+														color="gray"
+														rightSection={<IconX size={10} />}
+														onClick={() => handleUpdateQueryParams({ [param]: null })}
+													>
+														<Text fz="xs" tt="capitalize">
+															Clear Filter
+														</Text>
+													</Badge>
+												)}
 											</Flex>
-										</Checkbox.Group>
-									</Fragment>
-								);
-							},
-						)}
+										}
+										value={value}
+										styles={() => ({
+											label: { width: "100%" },
+										})}
+										my="sm"
+										onChange={(value) =>
+											handleUpdateQueryParams({
+												[param]: value?.length ? value : null,
+											})
+										}
+									>
+										<Flex direction="column" gap="xs" py="xs">
+											{items?.map((item) => (
+												<Checkbox key={item.value} {...item} />
+											))}
+										</Flex>
+									</Checkbox.Group>
+								</Fragment>
+							);
+						})}
 					</Card.Section>
 				</Card>
 			</Grid.Col>
@@ -172,11 +134,7 @@ const DiscoverySettingsDiscoveryAdapters = () => {
 										</Flex>
 									</Flex>
 									<Flex align="center" gap="xs" px="sm">
-										<Badge
-											variant="light"
-											color={item.is_used ? "green" : "gray"}
-											p="md"
-										>
+										<Badge variant="light" color={item.is_used ? "green" : "gray"} p="md">
 											<Text p="2xs">{item.is_used ? "USED" : "UNUSED"}</Text>
 										</Badge>
 										<Badge variant="light" radius="xs" p="lg">

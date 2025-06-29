@@ -16,10 +16,7 @@ export default function AssetIdentificationDiscoverySettingsPage() {
 		>
 			{/* TABS */}
 			<Tabs.List justify="center">
-				<Tabs.Tab
-					value={DiscoverySettingsTabs.DiscoveryAdapters}
-					leftSection={<IconRadar2 size={20} />}
-				>
+				<Tabs.Tab value={DiscoverySettingsTabs.DiscoveryAdapters} leftSection={<IconRadar2 size={20} />}>
 					{DiscoverySettingsTabs.DiscoveryAdapters}
 				</Tabs.Tab>
 				<Tabs.Tab

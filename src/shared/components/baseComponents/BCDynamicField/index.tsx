@@ -16,9 +16,7 @@ export function getDynamicField({
 	otherElementOptions = {},
 }: DynamicFiled) {
 	const required = !!fieldIsRequired;
-	const defaultValue = isNumber(defaultValueAsUnknown)
-		? `${defaultValueAsUnknown}`
-		: defaultValueAsUnknown;
+	const defaultValue = isNumber(defaultValueAsUnknown) ? `${defaultValueAsUnknown}` : defaultValueAsUnknown;
 	switch (objectType) {
 		case "connection":
 			return (
@@ -53,9 +51,7 @@ export function getDynamicField({
 				case "Boolean":
 					return "";
 				case "Select": {
-					const defaultValueAsString = isNumber(defaultValue)
-						? `${defaultValue}`
-						: defaultValue;
+					const defaultValueAsString = isNumber(defaultValue) ? `${defaultValue}` : defaultValue;
 					return (
 						<Select
 							{...{

@@ -16,15 +16,12 @@ type Props = {
 };
 
 const DiscoveryAdapterGateways = ({ adapterId }: Props) => {
-	const discoverySettingConfigurations = useGetDiscoverySettingConfigurations(
-		adapterId,
-		{
-			query: {
-				enabled: !!adapterId,
-				queryKey: [GET_DISCOVERY_SETTING_CONFIGURATIONS_QUERY_KEY],
-			},
+	const discoverySettingConfigurations = useGetDiscoverySettingConfigurations(adapterId, {
+		query: {
+			enabled: !!adapterId,
+			queryKey: [GET_DISCOVERY_SETTING_CONFIGURATIONS_QUERY_KEY],
 		},
-	);
+	});
 
 	const deleteDiscoverySetting = useDeleteDiscoverySettingConfiguration();
 	const handleDeleteAdapterConfigurations = (configuration_id: string) => {
@@ -52,12 +49,8 @@ const DiscoveryAdapterGateways = ({ adapterId }: Props) => {
 				{discoverySettingConfigurations?.data?.data?.results?.map((item) => (
 					<DiscoveryAdapterCard
 						key={item.id}
-						loading={
-							deleteDiscoverySetting.isPending || editDiscoverySetting.isPending
-						}
-						handleDeleteAdapterConfigurations={() =>
-							handleDeleteAdapterConfigurations(item.id)
-						}
+						loading={deleteDiscoverySetting.isPending || editDiscoverySetting.isPending}
+						handleDeleteAdapterConfigurations={() => handleDeleteAdapterConfigurations(item.id)}
 						handleEditAdapterConfigurations={(newConfigs) =>
 							handleEditAdapterConfigurations(item.id, newConfigs)
 						}

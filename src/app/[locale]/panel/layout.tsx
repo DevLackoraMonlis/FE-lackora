@@ -46,13 +46,8 @@ export default async function Layout(props: PropsWithChildren) {
 		const error = err as AxiosError;
 		if (error.response?.status === 401) {
 			try {
-				console.info(
-					"trying to get new new access token based on last refresh token ...",
-				);
-				const newTokenRes = await GlobalService.getRefreshToken(
-					refreshToken,
-					process.env.BASE_URL || "",
-				);
+				console.info("trying to get new new access token based on last refresh token ...");
+				const newTokenRes = await GlobalService.getRefreshToken(refreshToken, process.env.BASE_URL || "");
 				accessToken = newTokenRes.data.access_token;
 
 				console.info("trying to get new x-nonce with new token ...");
@@ -82,10 +77,7 @@ export default async function Layout(props: PropsWithChildren) {
 
 	return (
 		<ActiveAppsProvider apps={activeApps?.applications || []}>
-			<PanelLayout
-				sessionUser={sessionUser}
-				status={sessionUser ? "authenticated" : "unauthenticated"}
-			>
+			<PanelLayout sessionUser={sessionUser} status={sessionUser ? "authenticated" : "unauthenticated"}>
 				{props.children}
 			</PanelLayout>
 		</ActiveAppsProvider>

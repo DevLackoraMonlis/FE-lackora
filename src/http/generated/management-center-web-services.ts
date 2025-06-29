@@ -36,10 +36,7 @@ import { orvalMutator } from "../orval-mutator";
 /**
  * @summary List All Web Services
  */
-export const getWebServices = (
-	params?: GetWebServicesParams,
-	signal?: AbortSignal,
-) => {
+export const getWebServices = (params?: GetWebServicesParams, signal?: AbortSignal) => {
 	return orvalMutator<PaginatedBaseResponseEachWebServiceNoneType>({
 		url: "/api/management-center/webservices/",
 		method: "GET",
@@ -49,10 +46,7 @@ export const getWebServices = (
 };
 
 const getGetWebServicesQueryKey = (params?: GetWebServicesParams) => {
-	return [
-		"/api/management-center/webservices/",
-		...(params ? [params] : []),
-	] as const;
+	return ["/api/management-center/webservices/", ...(params ? [params] : [])] as const;
 };
 
 export const getGetWebServicesQueryOptions = <
@@ -61,18 +55,15 @@ export const getGetWebServicesQueryOptions = <
 >(
 	params?: GetWebServicesParams,
 	options?: {
-		query?: Partial<
-			UseQueryOptions<Awaited<ReturnType<typeof getWebServices>>, TError, TData>
-		>;
+		query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getWebServices>>, TError, TData>>;
 	},
 ) => {
 	const { query: queryOptions } = options ?? {};
 
 	const queryKey = queryOptions?.queryKey ?? getGetWebServicesQueryKey(params);
 
-	const queryFn: QueryFunction<Awaited<ReturnType<typeof getWebServices>>> = ({
-		signal,
-	}) => getWebServices(params, signal);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof getWebServices>>> = ({ signal }) =>
+		getWebServices(params, signal);
 
 	return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
 		Awaited<ReturnType<typeof getWebServices>>,
@@ -81,9 +72,7 @@ export const getGetWebServicesQueryOptions = <
 	> & { queryKey: DataTag<QueryKey, TData, TError> };
 };
 
-export type GetWebServicesQueryResult = NonNullable<
-	Awaited<ReturnType<typeof getWebServices>>
->;
+export type GetWebServicesQueryResult = NonNullable<Awaited<ReturnType<typeof getWebServices>>>;
 export type GetWebServicesQueryError = HTTPValidationError;
 
 export function useGetWebServices<
@@ -92,9 +81,7 @@ export function useGetWebServices<
 >(
 	params: undefined | GetWebServicesParams,
 	options: {
-		query: Partial<
-			UseQueryOptions<Awaited<ReturnType<typeof getWebServices>>, TError, TData>
-		> &
+		query: Partial<UseQueryOptions<Awaited<ReturnType<typeof getWebServices>>, TError, TData>> &
 			Pick<
 				DefinedInitialDataOptions<
 					Awaited<ReturnType<typeof getWebServices>>,
@@ -114,9 +101,7 @@ export function useGetWebServices<
 >(
 	params?: GetWebServicesParams,
 	options?: {
-		query?: Partial<
-			UseQueryOptions<Awaited<ReturnType<typeof getWebServices>>, TError, TData>
-		> &
+		query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getWebServices>>, TError, TData>> &
 			Pick<
 				UndefinedInitialDataOptions<
 					Awaited<ReturnType<typeof getWebServices>>,
@@ -136,9 +121,7 @@ export function useGetWebServices<
 >(
 	params?: GetWebServicesParams,
 	options?: {
-		query?: Partial<
-			UseQueryOptions<Awaited<ReturnType<typeof getWebServices>>, TError, TData>
-		>;
+		query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getWebServices>>, TError, TData>>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -154,9 +137,7 @@ export function useGetWebServices<
 >(
 	params?: GetWebServicesParams,
 	options?: {
-		query?: Partial<
-			UseQueryOptions<Awaited<ReturnType<typeof getWebServices>>, TError, TData>
-		>;
+		query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getWebServices>>, TError, TData>>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -164,10 +145,9 @@ export function useGetWebServices<
 } {
 	const queryOptions = getGetWebServicesQueryOptions(params, options);
 
-	const query = useQuery(queryOptions, queryClient) as UseQueryResult<
-		TData,
-		TError
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+	const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
 	query.queryKey = queryOptions.queryKey;
 
@@ -177,10 +157,7 @@ export function useGetWebServices<
 /**
  * @summary Create Web Service
  */
-export const createWebService = (
-	createWebServiceRequest: CreateWebServiceRequest,
-	signal?: AbortSignal,
-) => {
+export const createWebService = (createWebServiceRequest: CreateWebServiceRequest, signal?: AbortSignal) => {
 	return orvalMutator<EachWebService>({
 		url: "/api/management-center/webservices/",
 		method: "POST",
@@ -208,9 +185,7 @@ export const getCreateWebServiceMutationOptions = <
 > => {
 	const mutationKey = ["createWebService"];
 	const { mutation: mutationOptions } = options
-		? options.mutation &&
-			"mutationKey" in options.mutation &&
-			options.mutation.mutationKey
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
 			: { ...options, mutation: { ...options.mutation, mutationKey } }
 		: { mutation: { mutationKey } };
@@ -227,19 +202,14 @@ export const getCreateWebServiceMutationOptions = <
 	return { mutationFn, ...mutationOptions };
 };
 
-export type CreateWebServiceMutationResult = NonNullable<
-	Awaited<ReturnType<typeof createWebService>>
->;
+export type CreateWebServiceMutationResult = NonNullable<Awaited<ReturnType<typeof createWebService>>>;
 export type CreateWebServiceMutationBody = CreateWebServiceRequest;
 export type CreateWebServiceMutationError = HTTPValidationError;
 
 /**
  * @summary Create Web Service
  */
-export const useCreateWebService = <
-	TError = HTTPValidationError,
-	TContext = unknown,
->(
+export const useCreateWebService = <TError = HTTPValidationError, TContext = unknown>(
 	options?: {
 		mutation?: UseMutationOptions<
 			Awaited<ReturnType<typeof createWebService>>,
@@ -280,35 +250,27 @@ export const getGetWebServiceQueryOptions = <
 >(
 	webserviceId: string,
 	options?: {
-		query?: Partial<
-			UseQueryOptions<Awaited<ReturnType<typeof getWebService>>, TError, TData>
-		>;
+		query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getWebService>>, TError, TData>>;
 	},
 ) => {
 	const { query: queryOptions } = options ?? {};
 
-	const queryKey =
-		queryOptions?.queryKey ?? getGetWebServiceQueryKey(webserviceId);
+	const queryKey = queryOptions?.queryKey ?? getGetWebServiceQueryKey(webserviceId);
 
-	const queryFn: QueryFunction<Awaited<ReturnType<typeof getWebService>>> = ({
-		signal,
-	}) => getWebService(webserviceId, signal);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof getWebService>>> = ({ signal }) =>
+		getWebService(webserviceId, signal);
 
 	return {
 		queryKey,
 		queryFn,
 		enabled: !!webserviceId,
 		...queryOptions,
-	} as UseQueryOptions<
-		Awaited<ReturnType<typeof getWebService>>,
-		TError,
-		TData
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+	} as UseQueryOptions<Awaited<ReturnType<typeof getWebService>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 };
 
-export type GetWebServiceQueryResult = NonNullable<
-	Awaited<ReturnType<typeof getWebService>>
->;
+export type GetWebServiceQueryResult = NonNullable<Awaited<ReturnType<typeof getWebService>>>;
 export type GetWebServiceQueryError = HTTPValidationError;
 
 export function useGetWebService<
@@ -317,9 +279,7 @@ export function useGetWebService<
 >(
 	webserviceId: string,
 	options: {
-		query: Partial<
-			UseQueryOptions<Awaited<ReturnType<typeof getWebService>>, TError, TData>
-		> &
+		query: Partial<UseQueryOptions<Awaited<ReturnType<typeof getWebService>>, TError, TData>> &
 			Pick<
 				DefinedInitialDataOptions<
 					Awaited<ReturnType<typeof getWebService>>,
@@ -339,9 +299,7 @@ export function useGetWebService<
 >(
 	webserviceId: string,
 	options?: {
-		query?: Partial<
-			UseQueryOptions<Awaited<ReturnType<typeof getWebService>>, TError, TData>
-		> &
+		query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getWebService>>, TError, TData>> &
 			Pick<
 				UndefinedInitialDataOptions<
 					Awaited<ReturnType<typeof getWebService>>,
@@ -361,9 +319,7 @@ export function useGetWebService<
 >(
 	webserviceId: string,
 	options?: {
-		query?: Partial<
-			UseQueryOptions<Awaited<ReturnType<typeof getWebService>>, TError, TData>
-		>;
+		query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getWebService>>, TError, TData>>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -379,9 +335,7 @@ export function useGetWebService<
 >(
 	webserviceId: string,
 	options?: {
-		query?: Partial<
-			UseQueryOptions<Awaited<ReturnType<typeof getWebService>>, TError, TData>
-		>;
+		query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getWebService>>, TError, TData>>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -389,10 +343,9 @@ export function useGetWebService<
 } {
 	const queryOptions = getGetWebServiceQueryOptions(webserviceId, options);
 
-	const query = useQuery(queryOptions, queryClient) as UseQueryResult<
-		TData,
-		TError
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+	const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
 	query.queryKey = queryOptions.queryKey;
 
@@ -402,10 +355,7 @@ export function useGetWebService<
 /**
  * @summary Edit Web Service
  */
-export const editWebService = (
-	webserviceId: string,
-	editWebServiceRequest: EditWebServiceRequest,
-) => {
+export const editWebService = (webserviceId: string, editWebServiceRequest: EditWebServiceRequest) => {
 	return orvalMutator<EachWebService>({
 		url: `/api/management-center/webservices/${webserviceId}`,
 		method: "PUT",
@@ -414,10 +364,7 @@ export const editWebService = (
 	});
 };
 
-export const getEditWebServiceMutationOptions = <
-	TError = HTTPValidationError,
-	TContext = unknown,
->(options?: {
+export const getEditWebServiceMutationOptions = <TError = HTTPValidationError, TContext = unknown>(options?: {
 	mutation?: UseMutationOptions<
 		Awaited<ReturnType<typeof editWebService>>,
 		TError,
@@ -432,9 +379,7 @@ export const getEditWebServiceMutationOptions = <
 > => {
 	const mutationKey = ["editWebService"];
 	const { mutation: mutationOptions } = options
-		? options.mutation &&
-			"mutationKey" in options.mutation &&
-			options.mutation.mutationKey
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
 			: { ...options, mutation: { ...options.mutation, mutationKey } }
 		: { mutation: { mutationKey } };
@@ -451,19 +396,14 @@ export const getEditWebServiceMutationOptions = <
 	return { mutationFn, ...mutationOptions };
 };
 
-export type EditWebServiceMutationResult = NonNullable<
-	Awaited<ReturnType<typeof editWebService>>
->;
+export type EditWebServiceMutationResult = NonNullable<Awaited<ReturnType<typeof editWebService>>>;
 export type EditWebServiceMutationBody = EditWebServiceRequest;
 export type EditWebServiceMutationError = HTTPValidationError;
 
 /**
  * @summary Edit Web Service
  */
-export const useEditWebService = <
-	TError = HTTPValidationError,
-	TContext = unknown,
->(
+export const useEditWebService = <TError = HTTPValidationError, TContext = unknown>(
 	options?: {
 		mutation?: UseMutationOptions<
 			Awaited<ReturnType<typeof editWebService>>,
@@ -511,9 +451,7 @@ export const getDeleteWebServiceMutationOptions = <
 > => {
 	const mutationKey = ["deleteWebService"];
 	const { mutation: mutationOptions } = options
-		? options.mutation &&
-			"mutationKey" in options.mutation &&
-			options.mutation.mutationKey
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
 			: { ...options, mutation: { ...options.mutation, mutationKey } }
 		: { mutation: { mutationKey } };
@@ -530,19 +468,14 @@ export const getDeleteWebServiceMutationOptions = <
 	return { mutationFn, ...mutationOptions };
 };
 
-export type DeleteWebServiceMutationResult = NonNullable<
-	Awaited<ReturnType<typeof deleteWebService>>
->;
+export type DeleteWebServiceMutationResult = NonNullable<Awaited<ReturnType<typeof deleteWebService>>>;
 
 export type DeleteWebServiceMutationError = HTTPValidationError;
 
 /**
  * @summary Delete Web Service
  */
-export const useDeleteWebService = <
-	TError = HTTPValidationError,
-	TContext = unknown,
->(
+export const useDeleteWebService = <TError = HTTPValidationError, TContext = unknown>(
 	options?: {
 		mutation?: UseMutationOptions<
 			Awaited<ReturnType<typeof deleteWebService>>,

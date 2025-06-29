@@ -34,17 +34,13 @@ export default function TanStackMainTable<T extends Record<string, unknown>>(
 			style={{
 				display: "grid",
 				width: !props.columns.filter(
-					(item) =>
-						!TAN_STACK_EXCLUDE_COLUMNS_FROM_STYLES.includes(item.id as string),
+					(item) => !TAN_STACK_EXCLUDE_COLUMNS_FROM_STYLES.includes(item.id as string),
 				).length
 					? "100%"
 					: props.table.getCenterTotalSize(),
 			}}
 		>
-			<TanStackTHead<T>
-				table={props.table}
-				columnVirtualizer={props.columnVirtualizer}
-			/>
+			<TanStackTHead<T> table={props.table} columnVirtualizer={props.columnVirtualizer} />
 			<TanStackTBody<T>
 				rows={props.rows}
 				tableBodyRef={props.tableBodyRef}

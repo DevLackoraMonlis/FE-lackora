@@ -11,22 +11,14 @@ const SvgNp = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 		{...props}
 	>
 		<use xlinkHref="#np_svg__a" stroke="#003893" strokeWidth={5.165} />
-		<path
-			id="np_svg__a"
-			fill="#DC143C"
-			d="M-15 37.574h60L-15 0v80h60l-60-60z"
-		/>
+		<path id="np_svg__a" fill="#DC143C" d="M-15 37.574h60L-15 0v80h60l-60-60z" />
 		<g fill="#fff">
 			<path d="M-11.95 23.483a12.84 12.84 0 0 0 23.9 0 11.95 11.95 0 0 1-23.9 0" />
 			<g transform="translate(0 29.045) scale(5.56106)">
 				<circle r={1} />
 				<g id="np_svg__d">
 					<g id="np_svg__c">
-						<path
-							id="np_svg__b"
-							d="M.195-.98 0-1.39l-.195.408"
-							transform="rotate(11.25)"
-						/>
+						<path id="np_svg__b" d="M.195-.98 0-1.39l-.195.408" transform="rotate(11.25)" />
 						<use xlinkHref="#np_svg__b" transform="rotate(22.5)" />
 						<use xlinkHref="#np_svg__b" transform="rotate(45)" />
 					</g>

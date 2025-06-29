@@ -6,9 +6,7 @@ export default function PasswordContainCharacters(props: {
 	const theme = useMantineTheme();
 	return (
 		<>
-			{props.checkingPasswordData && (
-				<CheckIcon size={18} color={theme.colors.green[5]} />
-			)}
+			{props.checkingPasswordData && <CheckIcon size={18} color={theme.colors.green[5]} />}
 			<Text size="sm">At least 8 characters</Text>
 		</>
 	);

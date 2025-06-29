@@ -16,9 +16,7 @@ export type TanStackColumnDef<T> = Omit<ColumnDef<T>, "header">;
 
 export type DataTableColumnTextAlign = "left" | "center" | "right";
 
-export type TanStackColumnHeader<T> =
-	| ColumnDefTemplate<HeaderContext<T, unknown>>
-	| undefined;
+export type TanStackColumnHeader<T> = ColumnDefTemplate<HeaderContext<T, unknown>> | undefined;
 
 export type TanStackGridProps<T> = {
 	records: T[];
@@ -53,9 +51,7 @@ export type TanStackDataTableRef = {
 	getRowSelection: () => RowSelectionState;
 };
 
-export type DataTableColumnTitleFn<T> = (
-	values: Column<T, unknown>,
-) => ReactNode;
+export type DataTableColumnTitleFn<T> = (values: Column<T, unknown>) => ReactNode;
 
 export type TanStackColumnMeta<T> = ColumnMeta<T, unknown> & {
 	cellsStyle?: () => CSSProperties;

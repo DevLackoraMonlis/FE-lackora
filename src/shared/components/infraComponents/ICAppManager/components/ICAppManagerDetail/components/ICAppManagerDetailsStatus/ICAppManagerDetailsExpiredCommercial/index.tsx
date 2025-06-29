@@ -9,15 +9,7 @@ type Props = {
 export default function ICAppManagerDetailsExpiredCommercial(props: Props) {
 	return (
 		<Flex gap={15}>
-			<Flex
-				h={42}
-				bg="#E02D3C"
-				justify="center"
-				align="center"
-				className={classes.expiredBtn}
-				px={16}
-				py={8}
-			>
+			<Flex h={42} bg="#E02D3C" justify="center" align="center" className={classes.expiredBtn} px={16} py={8}>
 				<Text fw={400} size="md" c="#FAFAFA">
 					Expired
 				</Text>

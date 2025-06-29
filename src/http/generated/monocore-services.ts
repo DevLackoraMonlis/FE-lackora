@@ -41,9 +41,7 @@ export const getNonceApiCoreGetNonceGet = (
 	});
 };
 
-const getGetNonceApiCoreGetNonceGetQueryKey = (
-	params: GetNonceApiCoreGetNonceGetParams,
-) => {
+const getGetNonceApiCoreGetNonceGetQueryKey = (params: GetNonceApiCoreGetNonceGetParams) => {
 	return ["/api/core/get-nonce", ...(params ? [params] : [])] as const;
 };
 
@@ -53,23 +51,15 @@ export const getGetNonceApiCoreGetNonceGetQueryOptions = <
 >(
 	params: GetNonceApiCoreGetNonceGetParams,
 	options?: {
-		query?: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof getNonceApiCoreGetNonceGet>>,
-				TError,
-				TData
-			>
-		>;
+		query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getNonceApiCoreGetNonceGet>>, TError, TData>>;
 	},
 ) => {
 	const { query: queryOptions } = options ?? {};
 
-	const queryKey =
-		queryOptions?.queryKey ?? getGetNonceApiCoreGetNonceGetQueryKey(params);
+	const queryKey = queryOptions?.queryKey ?? getGetNonceApiCoreGetNonceGetQueryKey(params);
 
-	const queryFn: QueryFunction<
-		Awaited<ReturnType<typeof getNonceApiCoreGetNonceGet>>
-	> = ({ signal }) => getNonceApiCoreGetNonceGet(params, signal);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof getNonceApiCoreGetNonceGet>>> = ({ signal }) =>
+		getNonceApiCoreGetNonceGet(params, signal);
 
 	return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
 		Awaited<ReturnType<typeof getNonceApiCoreGetNonceGet>>,
@@ -89,13 +79,7 @@ export function useGetNonceApiCoreGetNonceGet<
 >(
 	params: GetNonceApiCoreGetNonceGetParams,
 	options: {
-		query: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof getNonceApiCoreGetNonceGet>>,
-				TError,
-				TData
-			>
-		> &
+		query: Partial<UseQueryOptions<Awaited<ReturnType<typeof getNonceApiCoreGetNonceGet>>, TError, TData>> &
 			Pick<
 				DefinedInitialDataOptions<
 					Awaited<ReturnType<typeof getNonceApiCoreGetNonceGet>>,
@@ -115,13 +99,7 @@ export function useGetNonceApiCoreGetNonceGet<
 >(
 	params: GetNonceApiCoreGetNonceGetParams,
 	options?: {
-		query?: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof getNonceApiCoreGetNonceGet>>,
-				TError,
-				TData
-			>
-		> &
+		query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getNonceApiCoreGetNonceGet>>, TError, TData>> &
 			Pick<
 				UndefinedInitialDataOptions<
 					Awaited<ReturnType<typeof getNonceApiCoreGetNonceGet>>,
@@ -141,13 +119,7 @@ export function useGetNonceApiCoreGetNonceGet<
 >(
 	params: GetNonceApiCoreGetNonceGetParams,
 	options?: {
-		query?: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof getNonceApiCoreGetNonceGet>>,
-				TError,
-				TData
-			>
-		>;
+		query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getNonceApiCoreGetNonceGet>>, TError, TData>>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
@@ -163,27 +135,17 @@ export function useGetNonceApiCoreGetNonceGet<
 >(
 	params: GetNonceApiCoreGetNonceGetParams,
 	options?: {
-		query?: Partial<
-			UseQueryOptions<
-				Awaited<ReturnType<typeof getNonceApiCoreGetNonceGet>>,
-				TError,
-				TData
-			>
-		>;
+		query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getNonceApiCoreGetNonceGet>>, TError, TData>>;
 	},
 	queryClient?: QueryClient,
 ): UseQueryResult<TData, TError> & {
 	queryKey: DataTag<QueryKey, TData, TError>;
 } {
-	const queryOptions = getGetNonceApiCoreGetNonceGetQueryOptions(
-		params,
-		options,
-	);
+	const queryOptions = getGetNonceApiCoreGetNonceGetQueryOptions(params, options);
 
-	const query = useQuery(queryOptions, queryClient) as UseQueryResult<
-		TData,
-		TError
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+	const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
 	query.queryKey = queryOptions.queryKey;
 
@@ -208,114 +170,63 @@ export const sampleNonceProtectedEndpointApiCoreNonceProtectedSampleGet = (
 const getSampleNonceProtectedEndpointApiCoreNonceProtectedSampleGetQueryKey = (
 	params?: SampleNonceProtectedEndpointApiCoreNonceProtectedSampleGetParams,
 ) => {
-	return [
-		"/api/core/nonce-protected-sample",
-		...(params ? [params] : []),
-	] as const;
+	return ["/api/core/nonce-protected-sample", ...(params ? [params] : [])] as const;
 };
 
-export const getSampleNonceProtectedEndpointApiCoreNonceProtectedSampleGetQueryOptions =
-	<
-		TData = Awaited<
-			ReturnType<
-				typeof sampleNonceProtectedEndpointApiCoreNonceProtectedSampleGet
-			>
-		>,
-		TError = HTTPValidationError,
-	>(
-		params?: SampleNonceProtectedEndpointApiCoreNonceProtectedSampleGetParams,
-		options?: {
-			query?: Partial<
-				UseQueryOptions<
-					Awaited<
-						ReturnType<
-							typeof sampleNonceProtectedEndpointApiCoreNonceProtectedSampleGet
-						>
-					>,
-					TError,
-					TData
-				>
-			>;
-		},
-	) => {
-		const { query: queryOptions } = options ?? {};
-
-		const queryKey =
-			queryOptions?.queryKey ??
-			getSampleNonceProtectedEndpointApiCoreNonceProtectedSampleGetQueryKey(
-				params,
-			);
-
-		const queryFn: QueryFunction<
-			Awaited<
-				ReturnType<
-					typeof sampleNonceProtectedEndpointApiCoreNonceProtectedSampleGet
-				>
-			>
-		> = ({ signal }) =>
-			sampleNonceProtectedEndpointApiCoreNonceProtectedSampleGet(
-				params,
-				signal,
-			);
-
-		return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
-			Awaited<
-				ReturnType<
-					typeof sampleNonceProtectedEndpointApiCoreNonceProtectedSampleGet
-				>
-			>,
-			TError,
-			TData
-		> & { queryKey: DataTag<QueryKey, TData, TError> };
-	};
-
-export type SampleNonceProtectedEndpointApiCoreNonceProtectedSampleGetQueryResult =
-	NonNullable<
-		Awaited<
-			ReturnType<
-				typeof sampleNonceProtectedEndpointApiCoreNonceProtectedSampleGet
-			>
-		>
-	>;
-export type SampleNonceProtectedEndpointApiCoreNonceProtectedSampleGetQueryError =
-	HTTPValidationError;
-
-export function useSampleNonceProtectedEndpointApiCoreNonceProtectedSampleGet<
-	TData = Awaited<
-		ReturnType<
-			typeof sampleNonceProtectedEndpointApiCoreNonceProtectedSampleGet
-		>
-	>,
+export const getSampleNonceProtectedEndpointApiCoreNonceProtectedSampleGetQueryOptions = <
+	TData = Awaited<ReturnType<typeof sampleNonceProtectedEndpointApiCoreNonceProtectedSampleGet>>,
 	TError = HTTPValidationError,
 >(
-	params:
-		| undefined
-		| SampleNonceProtectedEndpointApiCoreNonceProtectedSampleGetParams,
+	params?: SampleNonceProtectedEndpointApiCoreNonceProtectedSampleGetParams,
+	options?: {
+		query?: Partial<
+			UseQueryOptions<
+				Awaited<ReturnType<typeof sampleNonceProtectedEndpointApiCoreNonceProtectedSampleGet>>,
+				TError,
+				TData
+			>
+		>;
+	},
+) => {
+	const { query: queryOptions } = options ?? {};
+
+	const queryKey =
+		queryOptions?.queryKey ?? getSampleNonceProtectedEndpointApiCoreNonceProtectedSampleGetQueryKey(params);
+
+	const queryFn: QueryFunction<
+		Awaited<ReturnType<typeof sampleNonceProtectedEndpointApiCoreNonceProtectedSampleGet>>
+	> = ({ signal }) => sampleNonceProtectedEndpointApiCoreNonceProtectedSampleGet(params, signal);
+
+	return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+		Awaited<ReturnType<typeof sampleNonceProtectedEndpointApiCoreNonceProtectedSampleGet>>,
+		TError,
+		TData
+	> & { queryKey: DataTag<QueryKey, TData, TError> };
+};
+
+export type SampleNonceProtectedEndpointApiCoreNonceProtectedSampleGetQueryResult = NonNullable<
+	Awaited<ReturnType<typeof sampleNonceProtectedEndpointApiCoreNonceProtectedSampleGet>>
+>;
+export type SampleNonceProtectedEndpointApiCoreNonceProtectedSampleGetQueryError = HTTPValidationError;
+
+export function useSampleNonceProtectedEndpointApiCoreNonceProtectedSampleGet<
+	TData = Awaited<ReturnType<typeof sampleNonceProtectedEndpointApiCoreNonceProtectedSampleGet>>,
+	TError = HTTPValidationError,
+>(
+	params: undefined | SampleNonceProtectedEndpointApiCoreNonceProtectedSampleGetParams,
 	options: {
 		query: Partial<
 			UseQueryOptions<
-				Awaited<
-					ReturnType<
-						typeof sampleNonceProtectedEndpointApiCoreNonceProtectedSampleGet
-					>
-				>,
+				Awaited<ReturnType<typeof sampleNonceProtectedEndpointApiCoreNonceProtectedSampleGet>>,
 				TError,
 				TData
 			>
 		> &
 			Pick<
 				DefinedInitialDataOptions<
-					Awaited<
-						ReturnType<
-							typeof sampleNonceProtectedEndpointApiCoreNonceProtectedSampleGet
-						>
-					>,
+					Awaited<ReturnType<typeof sampleNonceProtectedEndpointApiCoreNonceProtectedSampleGet>>,
 					TError,
-					Awaited<
-						ReturnType<
-							typeof sampleNonceProtectedEndpointApiCoreNonceProtectedSampleGet
-						>
-					>
+					Awaited<ReturnType<typeof sampleNonceProtectedEndpointApiCoreNonceProtectedSampleGet>>
 				>,
 				"initialData"
 			>;
@@ -325,39 +236,23 @@ export function useSampleNonceProtectedEndpointApiCoreNonceProtectedSampleGet<
 	queryKey: DataTag<QueryKey, TData, TError>;
 };
 export function useSampleNonceProtectedEndpointApiCoreNonceProtectedSampleGet<
-	TData = Awaited<
-		ReturnType<
-			typeof sampleNonceProtectedEndpointApiCoreNonceProtectedSampleGet
-		>
-	>,
+	TData = Awaited<ReturnType<typeof sampleNonceProtectedEndpointApiCoreNonceProtectedSampleGet>>,
 	TError = HTTPValidationError,
 >(
 	params?: SampleNonceProtectedEndpointApiCoreNonceProtectedSampleGetParams,
 	options?: {
 		query?: Partial<
 			UseQueryOptions<
-				Awaited<
-					ReturnType<
-						typeof sampleNonceProtectedEndpointApiCoreNonceProtectedSampleGet
-					>
-				>,
+				Awaited<ReturnType<typeof sampleNonceProtectedEndpointApiCoreNonceProtectedSampleGet>>,
 				TError,
 				TData
 			>
 		> &
 			Pick<
 				UndefinedInitialDataOptions<
-					Awaited<
-						ReturnType<
-							typeof sampleNonceProtectedEndpointApiCoreNonceProtectedSampleGet
-						>
-					>,
+					Awaited<ReturnType<typeof sampleNonceProtectedEndpointApiCoreNonceProtectedSampleGet>>,
 					TError,
-					Awaited<
-						ReturnType<
-							typeof sampleNonceProtectedEndpointApiCoreNonceProtectedSampleGet
-						>
-					>
+					Awaited<ReturnType<typeof sampleNonceProtectedEndpointApiCoreNonceProtectedSampleGet>>
 				>,
 				"initialData"
 			>;
@@ -367,22 +262,14 @@ export function useSampleNonceProtectedEndpointApiCoreNonceProtectedSampleGet<
 	queryKey: DataTag<QueryKey, TData, TError>;
 };
 export function useSampleNonceProtectedEndpointApiCoreNonceProtectedSampleGet<
-	TData = Awaited<
-		ReturnType<
-			typeof sampleNonceProtectedEndpointApiCoreNonceProtectedSampleGet
-		>
-	>,
+	TData = Awaited<ReturnType<typeof sampleNonceProtectedEndpointApiCoreNonceProtectedSampleGet>>,
 	TError = HTTPValidationError,
 >(
 	params?: SampleNonceProtectedEndpointApiCoreNonceProtectedSampleGetParams,
 	options?: {
 		query?: Partial<
 			UseQueryOptions<
-				Awaited<
-					ReturnType<
-						typeof sampleNonceProtectedEndpointApiCoreNonceProtectedSampleGet
-					>
-				>,
+				Awaited<ReturnType<typeof sampleNonceProtectedEndpointApiCoreNonceProtectedSampleGet>>,
 				TError,
 				TData
 			>
@@ -397,22 +284,14 @@ export function useSampleNonceProtectedEndpointApiCoreNonceProtectedSampleGet<
  */
 
 export function useSampleNonceProtectedEndpointApiCoreNonceProtectedSampleGet<
-	TData = Awaited<
-		ReturnType<
-			typeof sampleNonceProtectedEndpointApiCoreNonceProtectedSampleGet
-		>
-	>,
+	TData = Awaited<ReturnType<typeof sampleNonceProtectedEndpointApiCoreNonceProtectedSampleGet>>,
 	TError = HTTPValidationError,
 >(
 	params?: SampleNonceProtectedEndpointApiCoreNonceProtectedSampleGetParams,
 	options?: {
 		query?: Partial<
 			UseQueryOptions<
-				Awaited<
-					ReturnType<
-						typeof sampleNonceProtectedEndpointApiCoreNonceProtectedSampleGet
-					>
-				>,
+				Awaited<ReturnType<typeof sampleNonceProtectedEndpointApiCoreNonceProtectedSampleGet>>,
 				TError,
 				TData
 			>
@@ -422,16 +301,14 @@ export function useSampleNonceProtectedEndpointApiCoreNonceProtectedSampleGet<
 ): UseQueryResult<TData, TError> & {
 	queryKey: DataTag<QueryKey, TData, TError>;
 } {
-	const queryOptions =
-		getSampleNonceProtectedEndpointApiCoreNonceProtectedSampleGetQueryOptions(
-			params,
-			options,
-		);
+	const queryOptions = getSampleNonceProtectedEndpointApiCoreNonceProtectedSampleGetQueryOptions(
+		params,
+		options,
+	);
 
-	const query = useQuery(queryOptions, queryClient) as UseQueryResult<
-		TData,
-		TError
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+	const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
 	query.queryKey = queryOptions.queryKey;
 

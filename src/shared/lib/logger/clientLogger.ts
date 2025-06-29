@@ -5,17 +5,12 @@ import { logClientEvent } from "@/app/actions/log";
 type LogLevel = "error" | "warn" | "info" | "debug";
 
 // Client-side log buffer for offline scenarios
-const logBuffer: Array<{ level: LogLevel; message: string; meta?: unknown }> =
-	[];
+const logBuffer: Array<{ level: LogLevel; message: string; meta?: unknown }> = [];
 const MAX_BUFFER_SIZE = 50;
 
 // Helper function to get browser metadata
 
-const sendLogToServer = async (
-	level: LogLevel,
-	message: string,
-	meta?: unknown,
-) => {
+const sendLogToServer = async (level: LogLevel, message: string, meta?: unknown) => {
 	try {
 		// First try to send unknown buffered logs
 		while (logBuffer.length > 0) {

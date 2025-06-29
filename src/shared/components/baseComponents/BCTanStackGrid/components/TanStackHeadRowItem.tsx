@@ -17,8 +17,7 @@ export function TanStackHeadRowItem<T extends Record<string, unknown>>(props: {
 	if (props.columnVirtualizer && virtualColumns?.length) {
 		virtualPaddingLeft = virtualColumns[0]?.start ?? 0;
 		virtualPaddingRight =
-			props.columnVirtualizer.getTotalSize() -
-			(virtualColumns[virtualColumns.length - 1]?.end ?? 0);
+			props.columnVirtualizer.getTotalSize() - (virtualColumns[virtualColumns.length - 1]?.end ?? 0);
 	}
 
 	return (
@@ -29,13 +28,7 @@ export function TanStackHeadRowItem<T extends Record<string, unknown>>(props: {
 			) : null}
 			{virtualColumns.map((virtualColumn) => {
 				const header = headerGroup.headers[virtualColumn.index];
-				return (
-					<TanStackHeadRowItemCell<T>
-						key={header.id}
-						table={props.table}
-						header={header}
-					/>
-				);
+				return <TanStackHeadRowItemCell<T> key={header.id} table={props.table} header={header} />;
 			})}
 			{virtualPaddingRight ? (
 				//fake empty column to the right for virtualization scroll padding

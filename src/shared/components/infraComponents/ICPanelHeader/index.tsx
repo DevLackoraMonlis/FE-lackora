@@ -7,13 +7,7 @@ import type { ICPanelHeaderProps } from "./index.types";
 
 export default function ICPanelHeader(props: ICPanelHeaderProps) {
 	return (
-		<Flex
-			w="100%"
-			h="48px"
-			style={props.style}
-			justify="space-between"
-			align="center"
-		>
+		<Flex w="100%" h="48px" style={props.style} justify="space-between" align="center">
 			<Flex px={"xs"} justify="center" align="center">
 				{props.applicationLogo}
 			</Flex>

@@ -23,12 +23,7 @@ class WsClient {
 	private onClose = () => {};
 	private onError = () => {};
 
-	private constructor(
-		wsUrl: string,
-		token: string,
-		onOpen: VoidFunction,
-		onCloseOrError: VoidFunction,
-	) {
+	private constructor(wsUrl: string, token: string, onOpen: VoidFunction, onCloseOrError: VoidFunction) {
 		this.onOpen = onOpen;
 		this.onError = onCloseOrError;
 		this.onClose = onCloseOrError;
@@ -36,9 +31,7 @@ class WsClient {
 	}
 
 	private createNewWebSocket(wsUrl: string, token: string) {
-		this.webSocket = new WebSocket(
-			`${wsUrl}/api/v1/data/event-investigation?token=${token}`,
-		);
+		this.webSocket = new WebSocket(`${wsUrl}/api/v1/data/event-investigation?token=${token}`);
 
 		this.webSocket.addEventListener("error", (err) => {
 			console.error(err);
@@ -73,9 +66,7 @@ class WsClient {
 	}
 
 	public addEventListener(newListener: WSListener) {
-		const findInLastListeners = this.listeners.find(
-			(item) => item.name === newListener.name,
-		);
+		const findInLastListeners = this.listeners.find((item) => item.name === newListener.name);
 
 		if (!findInLastListeners) {
 			this.listeners.push(newListener);

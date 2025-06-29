@@ -22,10 +22,7 @@ const DiscoverySettingsNoneCredentialAdapters = () => {
 										p="xs"
 										styles={(theme) => ({
 											root: {
-												background: getGradient(
-													{ deg: 180, from: "primary.4", to: "primary.9" },
-													theme,
-												),
+												background: getGradient({ deg: 180, from: "primary.4", to: "primary.9" }, theme),
 												color: theme.white,
 											},
 										})}
@@ -33,9 +30,7 @@ const DiscoverySettingsNoneCredentialAdapters = () => {
 										<IconCircleDot size={30} />
 									</Card>
 									<Flex direction="column" gap="2xs">
-										<Text fw="bold">
-											{NoneCredentialAdaptersSections.PortDetection}
-										</Text>
+										<Text fw="bold">{NoneCredentialAdaptersSections.PortDetection}</Text>
 										<Text fz="sm" c="gray.6">
 											{"4 open ports"}
 										</Text>
@@ -52,17 +47,13 @@ const DiscoverySettingsNoneCredentialAdapters = () => {
 						</Accordion.Control>
 						<Accordion.Panel
 							renderRoot={({ children, ...others }) =>
-								!others["aria-hidden"] && (
-									<section {...others}>{children}</section>
-								)
+								!others["aria-hidden"] && <section {...others}>{children}</section>
 							}
 						>
 							<NoneCredentialAdaptersPortDetectionForm />
 						</Accordion.Panel>
 					</Accordion.Item>
-					<Accordion.Item
-						value={NoneCredentialAdaptersSections.WebServiceDetection}
-					>
+					<Accordion.Item value={NoneCredentialAdaptersSections.WebServiceDetection}>
 						<Accordion.Control>
 							<Flex align="center" justify="space-between">
 								<Flex gap="sm">
@@ -71,10 +62,7 @@ const DiscoverySettingsNoneCredentialAdapters = () => {
 										p="xs"
 										styles={(theme) => ({
 											root: {
-												background: getGradient(
-													{ deg: 180, from: "primary.4", to: "primary.9" },
-													theme,
-												),
+												background: getGradient({ deg: 180, from: "primary.4", to: "primary.9" }, theme),
 												color: theme.white,
 											},
 										})}
@@ -82,9 +70,7 @@ const DiscoverySettingsNoneCredentialAdapters = () => {
 										<IconBrowserCheck size={30} />
 									</Card>
 									<Flex direction="column" gap="2xs">
-										<Text fw="bold">
-											{NoneCredentialAdaptersSections.WebServiceDetection}
-										</Text>
+										<Text fw="bold">{NoneCredentialAdaptersSections.WebServiceDetection}</Text>
 										<Text fz="sm" c="gray.6">
 											{"4 active web crawlers"}
 										</Text>
@@ -101,9 +87,7 @@ const DiscoverySettingsNoneCredentialAdapters = () => {
 						</Accordion.Control>
 						<Accordion.Panel
 							renderRoot={({ children, ...others }) =>
-								!others["aria-hidden"] && (
-									<section {...others}>{children}</section>
-								)
+								!others["aria-hidden"] && <section {...others}>{children}</section>
 							}
 						>
 							<NoneCredentialAdaptersWebServiceDetectionForm />

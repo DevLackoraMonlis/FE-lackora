@@ -35,9 +35,7 @@ export default function ICAppManagerFilterPricing(props: Props) {
 				withCheckIcon={true}
 				rightSection={<IconChevronDown width={20} />}
 				value={props.selectValue}
-				onChange={(value) =>
-					props.setSelectValue(value as ICAppManagerPricingType)
-				}
+				onChange={(value) => props.setSelectValue(value as ICAppManagerPricingType)}
 			/>
 		</Flex>
 	);

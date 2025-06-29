@@ -1,8 +1,6 @@
 "use client";
 
-import activeAppsStore, {
-	type ActiveAppsStoreType,
-} from "@/shared/stores/activeAppsStore";
+import activeAppsStore, { type ActiveAppsStoreType } from "@/shared/stores/activeAppsStore";
 import type { PropsWithChildren } from "react";
 import { useEffect } from "react";
 

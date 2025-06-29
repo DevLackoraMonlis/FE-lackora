@@ -1,12 +1,5 @@
 export type ApiFieldsObjectTypes = "connection" | "none";
-export type ApiFieldsTypes =
-	| "Int64"
-	| "String"
-	| "Boolean"
-	| "Datetime"
-	| "Textarea"
-	| "Select"
-	| "IP";
+export type ApiFieldsTypes = "Int64" | "String" | "Boolean" | "Datetime" | "Textarea" | "Select" | "IP";
 export type ApiFieldsOptions = { label: string; value: string };
 
 export type ApiFields = {

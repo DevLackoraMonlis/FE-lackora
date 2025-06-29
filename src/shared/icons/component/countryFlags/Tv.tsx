@@ -16,18 +16,8 @@ const SvgTv = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 			<path d="M0 0v150h650v150h-50zm0 300v50h300V0h300z" />
 		</clipPath>
 		<path fill="#012169" d="M0 0h1200v600H0z" />
-		<path
-			stroke="#fff"
-			strokeWidth={60}
-			d="m0 0 600 300m0-300L0 300"
-			clipPath="url(#tv_svg__a)"
-		/>
-		<path
-			stroke="#c8102e"
-			strokeWidth={40}
-			d="m0 0 600 300m0-300L0 300"
-			clipPath="url(#tv_svg__b)"
-		/>
+		<path stroke="#fff" strokeWidth={60} d="m0 0 600 300m0-300L0 300" clipPath="url(#tv_svg__a)" />
+		<path stroke="#c8102e" strokeWidth={40} d="m0 0 600 300m0-300L0 300" clipPath="url(#tv_svg__b)" />
 		<path stroke="#fff" strokeWidth={100} d="M0 150h650M300 0v350" />
 		<path stroke="#c8102e" strokeWidth={60} d="M0 150h650M300 0v350" />
 		<path fill="#009cde" d="M0 300h600V0h600v600H0z" />

@@ -12,9 +12,7 @@ const SvgKi = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 	>
 		<defs>
 			<style>
-				{
-					".ki_svg__str1{stroke:#000;stroke-width:.46;stroke-miterlimit:22.9256}.ki_svg__fil3{fill:none}"
-				}
+				{".ki_svg__str1{stroke:#000;stroke-width:.46;stroke-miterlimit:22.9256}.ki_svg__fil3{fill:none}"}
 			</style>
 		</defs>
 		<path fill="#c81010" d="M0 0h600v162H0z" />
@@ -48,12 +46,7 @@ const SvgKi = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 				className="ki_svg__fil3 ki_svg__str1"
 			/>
 		</g>
-		<g
-			fill="#f8d000"
-			stroke="#000"
-			strokeMiterlimit={22.926}
-			strokeWidth={0.46}
-		>
+		<g fill="#f8d000" stroke="#000" strokeMiterlimit={22.926} strokeWidth={0.46}>
 			<g id="ki_svg__rays_6">
 				<g id="ki_svg__rays_2" transform="rotate(-84.706 300 156)">
 					<path

@@ -1,11 +1,4 @@
-import {
-	ActionIcon,
-	Button,
-	Card,
-	Flex,
-	Select,
-	TextInput,
-} from "@mantine/core";
+import { ActionIcon, Button, Card, Flex, Select, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { randomId } from "@mantine/hooks";
 import { IconCheck, IconPlus, IconX } from "@tabler/icons-react";

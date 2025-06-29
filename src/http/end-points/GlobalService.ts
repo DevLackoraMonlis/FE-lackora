@@ -1,7 +1,4 @@
-import type {
-	GetTokenRq,
-	GetTokenRs,
-} from "@/http/end-points/UserManagementService.types";
+import type { GetTokenRq, GetTokenRs } from "@/http/end-points/UserManagementService.types";
 
 import type { GetNonceRq } from "@/http/end-points/AuthService.types";
 import type { ActiveApplicationsResponse } from "@/http/generated/models";
@@ -11,15 +8,11 @@ const ControllerPath = "/api/user-management";
 const CoreControllerPath = "/api/core";
 
 async function getAccessToken(params: GetTokenRq & { baseUrl?: string }) {
-	return axios.post<GetTokenRs>(
-		`${params.baseUrl}${ControllerPath}/token`,
-		params,
-		{
-			headers: {
-				"Content-Type": "application/x-www-form-urlencoded",
-			},
+	return axios.post<GetTokenRs>(`${params.baseUrl}${ControllerPath}/token`, params, {
+		headers: {
+			"Content-Type": "application/x-www-form-urlencoded",
 		},
-	);
+	});
 }
 
 async function getRefreshToken(refreshToken: string, baseUrl: string) {
@@ -34,36 +27,22 @@ async function logout(refreshToken: string, baseUrl?: string) {
 	});
 }
 
-export const getActiveApplications = (
-	baseUrl?: string,
-	accessToken?: string,
-	xNonce?: string,
-) => {
-	return axios.get<ActiveApplicationsResponse>(
-		`${baseUrl}/api/application-management/active-applications`,
-		{
-			headers: {
-				Authorization: `Bearer ${accessToken}`,
-				"x-nonce": xNonce,
-			},
+export const getActiveApplications = (baseUrl?: string, accessToken?: string, xNonce?: string) => {
+	return axios.get<ActiveApplicationsResponse>(`${baseUrl}/api/application-management/active-applications`, {
+		headers: {
+			Authorization: `Bearer ${accessToken}`,
+			"x-nonce": xNonce,
 		},
-	);
+	});
 };
 
-async function getNonce({
-	xNonceAuthenticate,
-	baseUrl,
-	...params
-}: GetNonceRq) {
-	return axios.get<{ nonce: string }>(
-		`${baseUrl}${CoreControllerPath}/get-nonce`,
-		{
-			params,
-			headers: {
-				"x-nonce-authenticate": xNonceAuthenticate,
-			},
+async function getNonce({ xNonceAuthenticate, baseUrl, ...params }: GetNonceRq) {
+	return axios.get<{ nonce: string }>(`${baseUrl}${CoreControllerPath}/get-nonce`, {
+		params,
+		headers: {
+			"x-nonce-authenticate": xNonceAuthenticate,
 		},
-	);
+	});
 }
 
 export const GlobalService = {

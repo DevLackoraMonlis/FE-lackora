@@ -25,9 +25,7 @@ export default function TanStackCellItem<T extends Record<string, unknown>>(
 				height: `${props.rowHeight || 43}px`,
 				display: "flex",
 				width: cell.column.getSize(),
-				justifyContent: TAN_STACK_EXCLUDE_COLUMNS_FROM_STYLES.includes(
-					cell.column.id,
-				)
+				justifyContent: TAN_STACK_EXCLUDE_COLUMNS_FROM_STYLES.includes(cell.column.id)
 					? "center"
 					: "flex-start",
 				alignItems: "center",
