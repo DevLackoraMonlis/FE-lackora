@@ -1,5 +1,10 @@
-import type { CustomError, CustomSuccess, MutationContext } from "@/http/end-points/GeneralService.types";
+import type {
+	CustomError,
+	CustomSuccess,
+	MutationContext,
+} from "@/http/end-points/GeneralService.types";
 import dayjs from "dayjs";
+import jwt from "jsonwebtoken";
 import { isNumber } from "lodash";
 
 export function capitalizeFirstLetter(string: string) {
@@ -81,7 +86,7 @@ export function validateInput(
 		return `Maximum length is ${maxLength} characters`;
 	}
 
-	if (mustBeNumber && isNaN(Number(value))) {
+	if (mustBeNumber && Number.isNaN(Number(value))) {
 		return "Value must be a valid number";
 	}
 
@@ -139,6 +144,29 @@ export function objectToSelectOptions<T>(
 		})) as T[];
 }
 
+// این تابع فقط JWT رو دیکد می‌کنه بدون بررسی امضا
+export function decodeJwt(token: string) {
+	try {
+		const decoded = jwt.decode(token) as jwt.JwtPayload;
+
+		if (!decoded || !decoded.exp) {
+			throw new Error("توکن exp نداره");
+		}
+
+		const expInMs = decoded.exp * 1000; // چون exp برحسب ثانیه است
+		const expiresAt = new Date(expInMs);
+
+		return {
+			exp: expInMs,
+			expiresAt,
+			expired: Date.now() > expInMs,
+		};
+	} catch (err) {
+		console.error("خطا در دیکد کردن JWT:", err);
+		return null;
+	}
+}
+
 export function basicBrowserDownload(url: string, fileName: string) {
 	const a = window.document.createElement("a");
 	a.style.setProperty("display", "none");
@@ -150,14 +178,30 @@ export function basicBrowserDownload(url: string, fileName: string) {
 	a.remove();
 }
 
-export const getErrorMessage = (error: CustomError, context: MutationContext) => {
+export const getErrorMessage = (
+	error: CustomError,
+	context: MutationContext,
+) => {
 	if (Array.isArray(error.response?.data?.detail)) {
-		return error.response?.data?.detail?.[0]?.msg || context?.errorMessage || "Unhandled Error";
+		return (
+			error.response?.data?.detail?.[0]?.msg ||
+			context?.errorMessage ||
+			"Unhandled Error"
+		);
 	}
-	return error.response?.data?.detail || context?.errorMessage || "Unhandled Error";
+	return (
+		error.response?.data?.detail || context?.errorMessage || "Unhandled Error"
+	);
 };
-export const getSuccessMessage = (response: CustomSuccess, context: MutationContext) => {
-	return response?.data?.message || context?.successMessage || "The operation was successful.";
+export const getSuccessMessage = (
+	response: CustomSuccess,
+	context: MutationContext,
+) => {
+	return (
+		response?.data?.message ||
+		context?.successMessage ||
+		"The operation was successful."
+	);
 };
 
 export function isValidJson(str: string) {

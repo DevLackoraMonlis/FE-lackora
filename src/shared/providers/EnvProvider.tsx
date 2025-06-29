@@ -21,6 +21,10 @@ export function EnvProvider(props: Props) {
 	);
 
 	useEffect(() => {
+		void fetch("/api/csrf", { method: "GET" });
+	}, []);
+
+	useEffect(() => {
 		envStore.getState().setEnvs(props.envs);
 	}, [props.envs]);
 

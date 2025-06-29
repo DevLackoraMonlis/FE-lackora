@@ -22,7 +22,7 @@ async function getAccessToken(params: GetTokenRq & { baseUrl?: string }) {
 	);
 }
 
-async function getRefreshToken(refreshToken: string, baseUrl?: string) {
+async function getRefreshToken(refreshToken: string, baseUrl: string) {
 	return axios.post<GetTokenRs>(`${baseUrl}${ControllerPath}/refresh`, {
 		refresh_token: refreshToken,
 	});
