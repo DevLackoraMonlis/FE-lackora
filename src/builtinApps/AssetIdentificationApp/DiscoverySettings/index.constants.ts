@@ -1,1 +1,1 @@
-export const ADAPTER_CONFIGURATIONS_QUERY_KEY= "adapter-configurations-query-key"
+export const GET_DISCOVERY_SETTING_CONFIGURATIONS_QUERY_KEY= "use-get-discovery-setting-configurations"

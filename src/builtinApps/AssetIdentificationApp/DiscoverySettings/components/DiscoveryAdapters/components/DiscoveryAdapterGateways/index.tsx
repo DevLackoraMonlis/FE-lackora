@@ -7,7 +7,7 @@ import {
 } from "@/http/generated/asset-identification-discovery-settings";
 import type { EachAdapterConfiguration } from "@/http/generated/models";
 
-import { ADAPTER_CONFIGURATIONS_QUERY_KEY } from "../../../../index.constants";
+import { GET_DISCOVERY_SETTING_CONFIGURATIONS_QUERY_KEY } from "../../../../index.constants";
 
 import DiscoveryAdapterCard from "../DiscoveryAdapterCard";
 import DiscoveryAdaptersAddGateway from "../DiscoveryAdaptersAddGateway";
@@ -18,7 +18,7 @@ type Props = {
 
 const DiscoveryAdapterGateways = ({ adapterId }: Props) => {
   const discoverySettingConfigurations = useGetDiscoverySettingConfigurations(adapterId, {
-    query: { enabled: !!adapterId, queryKey: [ADAPTER_CONFIGURATIONS_QUERY_KEY] },
+    query: { enabled: !!adapterId, queryKey: [GET_DISCOVERY_SETTING_CONFIGURATIONS_QUERY_KEY] },
   });
 
   const deleteDiscoverySetting = useDeleteDiscoverySettingConfiguration();

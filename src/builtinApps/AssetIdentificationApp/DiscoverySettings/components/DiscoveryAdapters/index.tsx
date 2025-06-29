@@ -138,6 +138,7 @@ const DiscoverySettingsDiscoveryAdapters = () => {
                 <Text py="xs" c="gray.6">
                   Added Gateways
                 </Text>
+                {/* DiscoveryAdapterGateways */}
                 <DiscoveryAdapterGateways adapterId={item.id} />
               </Accordion.Panel>
             </Accordion.Item>

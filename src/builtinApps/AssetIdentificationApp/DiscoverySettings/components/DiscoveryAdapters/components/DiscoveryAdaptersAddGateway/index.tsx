@@ -2,11 +2,12 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useForm } from "@mantine/form";
 import { randomId } from "@mantine/hooks";
 import { IconCheck, IconPlus, IconX } from "@tabler/icons-react";
-import { TextInput, ActionIcon, Button, Card, Flex, Select, LoadingOverlay, Box } from "@mantine/core";
+import { ActionIcon, Button, Flex, LoadingOverlay, Box, Fieldset } from "@mantine/core";
 
+import { getDynamicField } from "@/shared/components/baseComponents/BCDynamicField";
 import { useCreateDiscoverySettingConfiguration } from "@/http/generated/asset-identification-discovery-settings";
 
-import { ADAPTER_CONFIGURATIONS_QUERY_KEY } from "../../../../index.constants";
+import { GET_DISCOVERY_SETTING_CONFIGURATIONS_QUERY_KEY } from "../../../../index.constants";
 
 type FormValues = { gateways: { ip: string; connection: string; key: string }[] };
 
@@ -37,7 +38,7 @@ const DiscoveryAdaptersAddGateway = (props: Props) => {
       { adapterId: props.adapterId, data: { configs: { connection, ip } } },
       {
         onSuccess: () => {
-          queryClient.refetchQueries({ queryKey: [ADAPTER_CONFIGURATIONS_QUERY_KEY] });
+          queryClient.refetchQueries({ queryKey: [GET_DISCOVERY_SETTING_CONFIGURATIONS_QUERY_KEY] });
           form.removeListItem("gateways", index);
         },
       }
@@ -46,25 +47,31 @@ const DiscoveryAdaptersAddGateway = (props: Props) => {
 
   const fields = form.getValues().gateways.map((item, index) => (
     <Flex key={item.key} gap="xs" mt="xs">
-      <Card bg="gray.1" w="100%" pb="xs" pt="2xs">
+      <Fieldset variant="filled" w="100%" pb="xs" pt="2xs">
         <Flex gap="xs">
-          <TextInput
-            label="IP"
-            withAsterisk
-            style={{ flex: 1 }}
-            key={form.key(`gateways.${index}.ip`)}
-            {...form.getInputProps(`gateways.${index}.ip`)}
-          />
-          <Select
-            label="Connection"
-            withAsterisk
-            style={{ flex: 1 }}
-            data={["React", "Angular", "Vue", "Svelte"]}
-            key={form.key(`gateways.${index}.connection`)}
-            {...form.getInputProps(`gateways.${index}.connection`)}
-          />
+          {getDynamicField({
+            label: "IP",
+            type: "String",
+            otherElementOptions: { withAsterisk: true, style: { flex: 1 } },
+            name: `gateways.${index}.ip`,
+            formInputProps: {
+              key: `gateways.${index}.ip`,
+              ...form.getInputProps(`gateways.${index}.ip`),
+            },
+          })}
+          {getDynamicField({
+            label: "Connection",
+            type: "Select",
+            options: [{ label: "React", value: "react" }],
+            otherElementOptions: { withAsterisk: true, style: { flex: 1 } },
+            name: `gateways.${index}.connection`,
+            formInputProps: {
+              key: `gateways.${index}.connection`,
+              ...form.getInputProps(`gateways.${index}.connection`),
+            },
+          })}
         </Flex>
-      </Card>
+      </Fieldset>
       <Flex direction="column" gap="xs" justify="space-between" align="center">
         <ActionIcon
           size="input-sm"

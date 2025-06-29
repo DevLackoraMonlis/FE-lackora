@@ -1,9 +1,12 @@
 import { useEffect } from "react";
 import { useForm } from "@mantine/form";
 import { IconCheck, IconX } from "@tabler/icons-react";
-import { TextInput, ActionIcon, Card, Flex, Select, LoadingOverlay, Box } from "@mantine/core";
+import { ActionIcon, Flex, LoadingOverlay, Box, Fieldset } from "@mantine/core";
 
 import type { EachAdapterConfiguration } from "@/http/generated/models";
+
+import { getDynamicField } from "@/shared/components/baseComponents/BCDynamicField";
+
 
 type FormValues = EachAdapterConfiguration["config"];
 
@@ -30,25 +33,31 @@ const DiscoveryAdaptersForm = ({ config, loading, onCancel, handleEditAdapterCon
       <LoadingOverlay visible={loading} />
       <form onSubmit={form.onSubmit(handleSubmit)}>
         <Flex gap="xs" mt="xs">
-          <Card bg="gray.1" w="100%" pb="xs" pt="2xs">
+          <Fieldset variant="filled" w="100%" pb="xs" pt="2xs">
             <Flex gap="xs">
-              <TextInput
-                label="IP"
-                withAsterisk
-                style={{ flex: 1 }}
-                key={form.key("ip")}
-                {...form.getInputProps("ip")}
-              />
-              <Select
-                label="Connection"
-                withAsterisk
-                style={{ flex: 1 }}
-                data={["React", "Angular", "Vue", "Svelte"]}
-                key={form.key("connection")}
-                {...form.getInputProps("connection")}
-              />
+              {getDynamicField({
+                label: "IP",
+                type: "String",
+                otherElementOptions: { withAsterisk: true, style: { flex: 1 } },
+                name: "ip",
+                formInputProps: {
+                  key: "ip",
+                  ...form.getInputProps("ip"),
+                },
+              })}
+              {getDynamicField({
+                label: "Connection",
+                type: "Select",
+                options: [{ label: "React", value: "react" }],
+                otherElementOptions: { withAsterisk: true, style: { flex: 1 } },
+                name: "connection",
+                formInputProps: {
+                  key: "connection",
+                  ...form.getInputProps("connection"),
+                },
+              })}
             </Flex>
-          </Card>
+          </Fieldset>
           <Flex direction="column" gap="xs" justify="space-between" align="center">
             <ActionIcon size="input-sm" title="Save" type="submit" c="gray.2" bg="primary.8">
               <IconCheck size={30} />
