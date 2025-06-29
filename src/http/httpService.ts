@@ -29,7 +29,7 @@ class HttpService {
 		value: SessionType | null;
 		timestamp: number | null;
 	} = { value: null, timestamp: null };
-	private readonly CACHE_DURATION = 60 * 60 * 1000; // 60 minutes in milliseconds
+	private readonly CACHE_DURATION = 14 * 60 * 1000; // 60 minutes in milliseconds
 
 	constructor() {
 		this.axiosService = axios.create({
