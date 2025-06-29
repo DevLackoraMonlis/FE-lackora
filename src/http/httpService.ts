@@ -1,4 +1,3 @@
-"use client";
 import type { Token } from "@/http/generated/models";
 import { AppRoutes } from "@/shared/constants/app-routes";
 import envStore from "@/shared/stores/envStore";
