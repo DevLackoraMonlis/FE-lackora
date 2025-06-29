@@ -51,7 +51,7 @@ export default async function Layout(props: PropsWithChildren) {
 				);
 				const newTokenRes = await GlobalService.getRefreshToken(
 					refreshToken,
-					process.env.BASE_URL,
+					process.env.BASE_URL || "",
 				);
 				accessToken = newTokenRes.data.access_token;
 

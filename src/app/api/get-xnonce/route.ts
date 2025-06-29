@@ -1,17 +1,29 @@
 import { getHttpRequestXNonce } from "@/app/actions/get-http-request-x-nonce";
+import { validateSignedCsrfToken } from "@/shared/lib/csrf";
+import { getToken } from "next-auth/jwt";
 import { cookies } from "next/headers";
 // app/api/get-xnonce/route.ts
 import { type NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
 	const cookieStore = await cookies();
-	const token = cookieStore.get("next-auth.session-token");
-	const csrf = cookieStore.get("next-auth.csrf-token");
-	const callback = cookieStore.get("next-auth.callback-url");
+	const customCsrf = cookieStore.get("csrf-token");
 
-	if (!token || !csrf || !callback) {
+	if (
+		!validateSignedCsrfToken(
+			customCsrf?.value || "",
+			process.env.CSRF_SECRET || "",
+		)
+	) {
 		return new NextResponse("Unauthorized", { status: 401 });
 	}
+
+	// Validate session token
+	const token = await getToken({ req, secret: process.env.NEXT_AUTH });
+	if (!token) {
+		return new NextResponse("Unauthorized", { status: 401 });
+	}
+
 	const body = await req.json();
 	const xNonce = await getHttpRequestXNonce({
 		...body,

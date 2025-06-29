@@ -1,4 +1,6 @@
+import * as process from "node:process";
 import { GlobalService } from "@/http/end-points/GlobalService";
+import { decodeJwt } from "@/shared/lib/utils";
 import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
@@ -8,8 +10,6 @@ export const sessionOptions: NextAuthOptions = {
 		// This option can be used with or without a database for users/accounts.
 		// Note: `jwt` is automatically set to `true` if no database is specified.
 		strategy: "jwt",
-		// Set the session expiration time to 2 weeks (14 days)
-		maxAge: 14 * 24 * 60 * 60, // 14 days in seconds
 	},
 	providers: [
 		CredentialsProvider({
@@ -26,12 +26,15 @@ export const sessionOptions: NextAuthOptions = {
 					try {
 						const response = await GlobalService.getRefreshToken(
 							credentials?.refreshToken,
+							credentials?.baseUrl || "",
 						);
+
 						return {
 							id: "",
 							email: "",
 							name: credentials?.username,
 							data: response.data,
+							exp: decodeJwt(response.data.access_token),
 						};
 					} catch (e: unknown) {
 						console.error(e);
@@ -51,6 +54,7 @@ export const sessionOptions: NextAuthOptions = {
 							email: "",
 							name: "",
 							data: response.data,
+							exp: decodeJwt(response.data.access_token),
 						};
 					} catch (e: unknown) {
 						console.error(e);
@@ -71,12 +75,13 @@ export const sessionOptions: NextAuthOptions = {
 		},
 		async session({ session, token }) {
 			session.user = token;
+
 			return session;
 		},
 	},
 	secret: process.env.NEXT_AUTH,
 	pages: {
-		signOut: "/signoutsideb",
+		signOut: "/signout",
 		signIn: "/login",
 	},
 };

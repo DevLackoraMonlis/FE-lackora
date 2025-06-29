@@ -7,7 +7,7 @@ const I18nMiddleware = createI18nMiddleware({
 });
 import nonce from "../nonce";
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
 	// Generate a dynamic nonce
 
 	// Add the CSP header with the dynamic nonce
@@ -27,9 +27,6 @@ export function middleware(request: NextRequest) {
 			.replace(/\s{2,}/g, " ")
 			.trim(),
 	);
-
-	// Optionally, pass the nonce to the request (e.g., for server-side rendering)
-	request.headers.set("x-nonce", nonce.nonce);
 
 	return response;
 }

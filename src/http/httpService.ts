@@ -26,12 +26,6 @@ class HttpService {
 	private isRefreshing = false;
 	private failedQueue: QueueRequest[] = [];
 
-	private sessionCache: {
-		value: SessionType | null;
-		timestamp: number | null;
-	} = { value: null, timestamp: null };
-	private readonly CACHE_DURATION = 60 * 60 * 1000; // 60 minutes in milliseconds
-
 	constructor() {
 		this.axiosService = axios.create({
 			headers: {
@@ -44,7 +38,7 @@ class HttpService {
 			async (failedResponse) => {
 				const status = failedResponse?.response?.status;
 				const originalRequest = failedResponse?.config;
-				const session = await this.getCachedSession();
+				const session = (await getSession()) as SessionType;
 				const sessionToken = session?.user as SessionUserType;
 				const refreshToken = sessionToken?.data.refresh_token;
 				const name = sessionToken?.name;
@@ -59,6 +53,7 @@ class HttpService {
 								password: "",
 								refreshToken,
 								username: name,
+								baseUrl: envStore.getState().envs.baseUrl,
 							});
 
 							if (!response?.ok) {
@@ -96,7 +91,7 @@ class HttpService {
 		);
 
 		this.axiosService.interceptors.request.use(async (request) => {
-			const session = await this.getCachedSession();
+			const session = (await getSession()) as SessionType;
 			let xNonce = "";
 			try {
 				const xNonceRes = await axios.post<{ nonce: string }>(
@@ -132,26 +127,6 @@ class HttpService {
 			}
 		});
 		this.failedQueue = [];
-	}
-
-	private async getCachedSession() {
-		const now = Date.now();
-
-		if (
-			this.sessionCache.value?.user?.data?.access_token &&
-			this.sessionCache.timestamp &&
-			now - this.sessionCache.timestamp < this.CACHE_DURATION
-		) {
-			return this.sessionCache.value;
-		}
-
-		// Otherwise, fetch fresh session and cache it
-		const session = (await getSession()) as SessionType | null;
-		this.sessionCache = {
-			value: session,
-			timestamp: now,
-		};
-		return session;
 	}
 
 	async get<T>(
