@@ -139,7 +139,7 @@ const DiscoverySettingsDiscoveryAdapters = () => {
                   Added Gateways
                 </Text>
                 {/* DiscoveryAdapterGateways */}
-                <DiscoveryAdapterGateways adapterId={item.id} />
+                <DiscoveryAdapterGateways adapterId={item.id} formFields={item.fields} />
               </Accordion.Panel>
             </Accordion.Item>
           ))}

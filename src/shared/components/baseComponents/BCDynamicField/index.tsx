@@ -8,7 +8,7 @@ import DFInputTextarea from "./components/DFInputTextarea";
 import DFSelect from "./components/DFSelect";
 
 export function getDynamicField<InputProps>({
-  objectType,
+  objectType = "none",
   type,
   paginate = false,
   name,
@@ -22,7 +22,21 @@ export function getDynamicField<InputProps>({
 }: DynamicFiled<InputProps>) {
   switch (objectType) {
     case "connection":
-      return null;
+      const defaultValueAsString = isNumber(defaultValue) ? `${defaultValue}` : defaultValue;
+      return (
+        <DFSelect
+          {...{
+            ...otherElementOptions,
+            name,
+            label,
+            data: options || [],
+            required,
+            placeholder,
+            defaultValue: defaultValueAsString,
+            ...(formInputProps || {}),
+          }}
+        />
+      );
     case "webService":
       return null;
     default:
@@ -30,21 +44,6 @@ export function getDynamicField<InputProps>({
         case "Int64":
           return (
             <DFInputNumber
-              {...{
-                ...otherElementOptions,
-                name,
-                label,
-                options,
-                required,
-                placeholder,
-                defaultValue,
-                ...(formInputProps || {}),
-              }}
-            />
-          );
-        case "String":
-          return (
-            <DFInputText
               {...{
                 ...otherElementOptions,
                 name,
@@ -67,7 +66,7 @@ export function getDynamicField<InputProps>({
                 ...otherElementOptions,
                 name,
                 label,
-                data: options,
+                data: options || [],
                 required,
                 placeholder,
                 defaultValue: defaultValueAsString,
@@ -93,9 +92,36 @@ export function getDynamicField<InputProps>({
             />
           );
         case "IP":
-          return "";
+          return (
+            <DFInputText
+              {...{
+                ...otherElementOptions,
+                name,
+                label,
+                options,
+                required,
+                placeholder,
+                defaultValue,
+                ...(formInputProps || {}),
+              }}
+            />
+          );
+        case "String":
         default:
-          return null;
+          return (
+            <DFInputText
+              {...{
+                ...otherElementOptions,
+                name,
+                label,
+                options,
+                required,
+                placeholder,
+                defaultValue,
+                ...(formInputProps || {}),
+              }}
+            />
+          );
       }
   }
 }

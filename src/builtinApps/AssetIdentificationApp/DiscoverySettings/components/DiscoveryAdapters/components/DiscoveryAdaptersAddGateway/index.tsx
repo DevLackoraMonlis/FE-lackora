@@ -4,8 +4,10 @@ import { randomId } from "@mantine/hooks";
 import { IconCheck, IconPlus, IconX } from "@tabler/icons-react";
 import { ActionIcon, Button, Flex, LoadingOverlay, Box, Fieldset } from "@mantine/core";
 
-import { getDynamicField } from "@/shared/components/baseComponents/BCDynamicField";
+import type { EachDiscoverySetting } from "@/http/generated/models";
 import { useCreateDiscoverySettingConfiguration } from "@/http/generated/asset-identification-discovery-settings";
+
+import { getDynamicField } from "@/shared/components/baseComponents/BCDynamicField";
 
 import { GET_DISCOVERY_SETTING_CONFIGURATIONS_QUERY_KEY } from "../../../../index.constants";
 
@@ -14,6 +16,7 @@ type FormValues = { gateways: { ip: string; connection: string; key: string }[] 
 type Props = {
   disabled: boolean;
   adapterId: string;
+  formFields: EachDiscoverySetting["fields"];
 };
 
 const DiscoveryAdaptersAddGateway = (props: Props) => {
@@ -49,27 +52,23 @@ const DiscoveryAdaptersAddGateway = (props: Props) => {
     <Flex key={item.key} gap="xs" mt="xs">
       <Fieldset variant="filled" w="100%" pb="xs" pt="2xs">
         <Flex gap="xs">
-          {getDynamicField({
-            label: "IP",
-            type: "String",
-            otherElementOptions: { withAsterisk: true, style: { flex: 1 } },
-            name: `gateways.${index}.ip`,
-            formInputProps: {
-              key: form.key(`gateways.${index}.ip`),
-              ...form.getInputProps(`gateways.${index}.ip`),
-            },
-          })}
-          {getDynamicField({
-            label: "Connection",
-            type: "Select",
-            options: [{ label: "React", value: "react" }],
-            otherElementOptions: { withAsterisk: true, style: { flex: 1 } },
-            name: `gateways.${index}.connection`,
-            formInputProps: {
-              key: form.key(`gateways.${index}.connection`),
-              ...form.getInputProps(`gateways.${index}.connection`),
-            },
-          })}
+          {props.formFields?.map(({ key, label, required, object_type, options, paginate, type }) =>
+            getDynamicField({
+              type,
+              objectType: object_type,
+              key,
+              label,
+              required,
+              options,
+              paginate,
+              otherElementOptions: { withAsterisk: true, style: { flex: 1 } },
+              name: `gateways.${index}.${key}`,
+              formInputProps: {
+                key: form.key(`gateways.${index}.${key}`),
+                ...form.getInputProps(`gateways.${index}.${key}`),
+              },
+            })
+          )}
         </Flex>
       </Fieldset>
       <Flex direction="column" gap="xs" justify="space-between" align="center">

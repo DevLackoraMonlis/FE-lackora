@@ -6,11 +6,14 @@
  * OpenAPI spec version: 1.0.0
  */
 
-export type DiscoverySettingsType = typeof DiscoverySettingsType[keyof typeof DiscoverySettingsType];
+export type FieldGeneratorFieldType = typeof FieldGeneratorFieldType[keyof typeof FieldGeneratorFieldType];
 
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
-export const DiscoverySettingsType = {
-  discovery: 'discovery',
-  'none-credential': 'none-credential',
+export const FieldGeneratorFieldType = {
+  Int64: 'Int64',
+  String: 'String',
+  IP: 'IP',
+  Datetime: 'Datetime',
+  Boolean: 'Boolean',
 } as const;

@@ -6,13 +6,13 @@
  * OpenAPI spec version: 1.0.0
  */
 
-export type ApplicationHistoryStatus =
-	(typeof ApplicationHistoryStatus)[keyof typeof ApplicationHistoryStatus];
+export type ApplicationHistoryStatus = typeof ApplicationHistoryStatus[keyof typeof ApplicationHistoryStatus];
+
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const ApplicationHistoryStatus = {
-	active: "active",
-	expired: "expired",
-	support_licensed_expired: "support_licensed_expired",
-	installing: "installing",
+  active: 'active',
+  expired: 'expired',
+  support_licensed_expired: 'support_licensed_expired',
+  installing: 'installing',
 } as const;

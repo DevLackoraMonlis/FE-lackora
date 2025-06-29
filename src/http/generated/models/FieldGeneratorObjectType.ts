@@ -6,7 +6,4 @@
  * OpenAPI spec version: 1.0.0
  */
 
-export interface EachInstallingStep {
-  name: string;
-  action: boolean;
-}
+export type FieldGeneratorObjectType = string | null;

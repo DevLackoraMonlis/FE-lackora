@@ -5,7 +5,7 @@ import {
   useEditDiscoverySettingConfiguration,
   useGetDiscoverySettingConfigurations,
 } from "@/http/generated/asset-identification-discovery-settings";
-import type { EachAdapterConfiguration } from "@/http/generated/models";
+import type { EachAdapterConfiguration, EachDiscoverySetting } from "@/http/generated/models";
 
 import { GET_DISCOVERY_SETTING_CONFIGURATIONS_QUERY_KEY } from "../../../../index.constants";
 
@@ -14,9 +14,10 @@ import DiscoveryAdaptersAddGateway from "../DiscoveryAdaptersAddGateway";
 
 type Props = {
   adapterId: string;
+  formFields: EachDiscoverySetting["fields"];
 };
 
-const DiscoveryAdapterGateways = ({ adapterId }: Props) => {
+const DiscoveryAdapterGateways = ({ adapterId, formFields }: Props) => {
   const discoverySettingConfigurations = useGetDiscoverySettingConfigurations(adapterId, {
     query: { enabled: !!adapterId, queryKey: [GET_DISCOVERY_SETTING_CONFIGURATIONS_QUERY_KEY] },
   });
@@ -59,6 +60,7 @@ const DiscoveryAdapterGateways = ({ adapterId }: Props) => {
       <DiscoveryAdaptersAddGateway
         disabled={discoverySettingConfigurations.isFetching}
         adapterId={adapterId}
+        formFields={formFields}
       />
     </>
   );
