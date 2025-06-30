@@ -1,0 +1,22 @@
+stages:
+  - install
+  - deploy
+
+dev_pipeline:
+  stage: install
+  only:
+    - develop
+  tags:
+    - dev
+  script:
+    - npm install
+    - npm run build
+
+dev_deploy:
+  stage: deploy
+  only:
+    - develop
+  tags:
+    - dev
+  script:
+    - systemctl restart front-dev
