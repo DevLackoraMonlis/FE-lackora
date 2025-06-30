@@ -5,28 +5,28 @@
  * MonoWatch Security Asset Management - BackBone Structure
  * OpenAPI spec version: 1.0.0
  */
-import type { UserProfileCreatedTime } from "./UserProfileCreatedTime";
-import type { UserProfileDepartment } from "./UserProfileDepartment";
-import type { UserProfileLastIp } from "./UserProfileLastIp";
-import type { UserProfileLastLogin } from "./UserProfileLastLogin";
-import type { UserProfileOrganization } from "./UserProfileOrganization";
-import type { UserProfileValidUntil } from "./UserProfileValidUntil";
+import type { UserProfileCreatedTime } from './UserProfileCreatedTime';
+import type { UserProfileLastLogin } from './UserProfileLastLogin';
+import type { UserProfileValidUntil } from './UserProfileValidUntil';
+import type { UserProfileOrganization } from './UserProfileOrganization';
+import type { UserProfileDepartment } from './UserProfileDepartment';
+import type { UserProfileLastIp } from './UserProfileLastIp';
 
 export interface UserProfile {
-	id: string;
-	username: string;
-	created_time?: UserProfileCreatedTime;
-	email: string;
-	last_login?: UserProfileLastLogin;
-	valid_until?: UserProfileValidUntil;
-	login_count: number;
-	organization?: UserProfileOrganization;
-	name: string;
-	familyname: string;
-	department?: UserProfileDepartment;
-	last_ip?: UserProfileLastIp;
-	password_change: boolean;
-	disabled: boolean;
-	status: string;
-	login_enabled: boolean;
+  id: string;
+  username: string;
+  created_time?: UserProfileCreatedTime;
+  email: string;
+  last_login?: UserProfileLastLogin;
+  valid_until?: UserProfileValidUntil;
+  login_count: number;
+  organization?: UserProfileOrganization;
+  name: string;
+  familyname: string;
+  department?: UserProfileDepartment;
+  last_ip?: UserProfileLastIp;
+  password_change: boolean;
+  disabled: boolean;
+  status: string;
+  login_enabled: boolean;
 }

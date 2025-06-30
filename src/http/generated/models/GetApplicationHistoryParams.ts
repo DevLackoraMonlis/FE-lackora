@@ -7,20 +7,20 @@
  */
 
 export type GetApplicationHistoryParams = {
-	/**
-	 * @minimum 1
-	 */
-	page?: number;
-	/**
-	 * @minimum 1
-	 * @maximum 100
-	 */
-	limit?: number;
-	/**
-	 * @pattern ^[\d\w]+$
-	 */
-	sort?: string;
-	order?: string;
-	condition?: string | null;
-	search?: string | null;
+/**
+ * @minimum 1
+ */
+page?: number;
+/**
+ * @minimum 1
+ * @maximum 100
+ */
+limit?: number;
+/**
+ * @pattern ^[\d\w]+$
+ */
+sort?: string;
+order?: string;
+condition?: string | null;
+search?: string | null;
 };

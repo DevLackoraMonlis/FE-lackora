@@ -6,6 +6,4 @@
  * OpenAPI spec version: 1.0.0
  */
 
-export type CreateAdapterConfigurationResponseConfig = {
-	[key: string]: unknown;
-};
+export type CreateAdapterConfigurationResponseConfig = { [key: string]: unknown };

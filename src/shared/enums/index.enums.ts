@@ -6,4 +6,10 @@ export const AllApplications = {
 			PROFILING_SETTINGS: "Profiling Settings",
 		},
 	},
+	OBJECTS: {
+		name: "object_management",
+		modules: {
+			CONNECTIONS: "Connections",
+		},
+	},
 } as const;

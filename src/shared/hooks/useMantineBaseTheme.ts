@@ -18,7 +18,7 @@ export default function useMantineBaseTheme() {
 				},
 			},
 		},
-		fontFamily: "var(--open-sans) !important",
+		fontFamily: "var(--manrope) !important",
 		white: "#FAFAFA",
 		black: "#11121F",
 		spacing: {

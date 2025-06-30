@@ -5,8 +5,8 @@
  * MonoWatch Security Asset Management - BackBone Structure
  * OpenAPI spec version: 1.0.0
  */
-import type { EachActiveApplications } from "./EachActiveApplications";
+import type { EachActiveApplications } from './EachActiveApplications';
 
 export interface ActiveApplicationsResponse {
-	applications?: EachActiveApplications[];
+  applications?: EachActiveApplications[];
 }

@@ -7,5 +7,5 @@
  */
 
 export interface DeleteAdapterConfigurationRequest {
-	configuration_id: string;
+  configuration_id: string;
 }

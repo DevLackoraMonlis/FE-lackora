@@ -1,5 +1,5 @@
 "use client";
-import ICAppManagerPluginPage from "@/shared/components/infraComponents/ICAppManager/components/ICAppManagerPluginPage";
+import ICAppManagerPage from "@/shared/components/infraComponents/ICAppManager/components/ICAppManagerPage";
 import { AppRoutes } from "@/shared/constants/app-routes";
 import activeAppsStore from "@/shared/stores/activeAppsStore";
 import { Box } from "@mantine/core";
@@ -25,7 +25,7 @@ export default function AppModule() {
 
 	return (
 		<Box style={{ position: "relative" }}>
-			<ICAppManagerPluginPage
+			<ICAppManagerPage
 				loading={false}
 				appName={appName.replaceAll("%20", " ")}
 				//todo modules type

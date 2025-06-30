@@ -1,6 +1,7 @@
 "use client";
 import AssetIdentificationDiscoverySettingsPage from "@/builtinApps/AssetIdentificationApp/DiscoverySettings";
 import AssetIdentificationProfilingSettingsPage from "@/builtinApps/AssetIdentificationApp/ProfillngSettings";
+import ObjectsConnectionsPage from "@/builtinApps/ObjectsApp/Connections";
 import { AllApplications } from "@/shared/enums/index.enums";
 import type { PropsWithChildren } from "react";
 import type { ICAppManagerType } from "../../index.types";
@@ -17,6 +18,15 @@ const apps: ICAppManagerType[] = [
 			{
 				name: AllApplications.ASSET_IDENTIFICATION.modules.PROFILING_SETTINGS,
 				page: AssetIdentificationProfilingSettingsPage,
+			},
+		],
+	},
+	{
+		name: AllApplications.OBJECTS.name,
+		modules: [
+			{
+				name: AllApplications.OBJECTS.modules.CONNECTIONS,
+				page: ObjectsConnectionsPage,
 			},
 		],
 	},

@@ -5,8 +5,8 @@
  * MonoWatch Security Asset Management - BackBone Structure
  * OpenAPI spec version: 1.0.0
  */
-import type { EachApplicationMetadataResponse } from "./EachApplicationMetadataResponse";
+import type { EachApplicationMetadataResponse } from './EachApplicationMetadataResponse';
 
 export interface EachApplicationMetadataWrapper {
-	application_type: EachApplicationMetadataResponse;
+  application_type: EachApplicationMetadataResponse;
 }

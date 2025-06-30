@@ -12,7 +12,7 @@ type Props = {
 	loading?: boolean;
 };
 
-export default function ICAppManagerPluginPage(props: Props) {
+export default function ICAppManagerPage(props: Props) {
 	const { apps } = useContext(ICAppManagerContext);
 
 	const app = apps.find((app) => app.name === props.appName);

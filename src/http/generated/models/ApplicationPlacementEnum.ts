@@ -6,12 +6,12 @@
  * OpenAPI spec version: 1.0.0
  */
 
-export type ApplicationPlacementEnum =
-	(typeof ApplicationPlacementEnum)[keyof typeof ApplicationPlacementEnum];
+export type ApplicationPlacementEnum = typeof ApplicationPlacementEnum[keyof typeof ApplicationPlacementEnum];
+
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const ApplicationPlacementEnum = {
-	application: "application",
-	management_center: "management_center",
-	sidebar: "sidebar",
+  application: 'application',
+  management_center: 'management_center',
+  sidebar: 'sidebar',
 } as const;

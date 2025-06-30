@@ -5,126 +5,111 @@
  * MonoWatch Security Asset Management - BackBone Structure
  * OpenAPI spec version: 1.0.0
  */
-import { useQuery } from "@tanstack/react-query";
+import {
+  useQuery
+} from '@tanstack/react-query';
 import type {
-	DataTag,
-	DefinedInitialDataOptions,
-	DefinedUseQueryResult,
-	QueryClient,
-	QueryFunction,
-	QueryKey,
-	UndefinedInitialDataOptions,
-	UseQueryOptions,
-	UseQueryResult,
-} from "@tanstack/react-query";
+  DataTag,
+  DefinedInitialDataOptions,
+  DefinedUseQueryResult,
+  QueryClient,
+  QueryFunction,
+  QueryKey,
+  UndefinedInitialDataOptions,
+  UseQueryOptions,
+  UseQueryResult
+} from '@tanstack/react-query';
 
-import { orvalMutator } from "../orval-mutator";
+import { orvalMutator } from '../orval-mutator';
+
+
+
+
 
 /**
  * @summary Openapi
  */
-export const openapiOpenapiJsonGet = (signal?: AbortSignal) => {
-	return orvalMutator<unknown>({ url: "/openapi.json", method: "GET", signal });
-};
+export const openapiOpenapiJsonGet = (
+    
+ signal?: AbortSignal
+) => {
+      
+      
+      return orvalMutator<unknown>(
+      {url: `/openapi.json`, method: 'GET', signal
+    },
+      );
+    }
+  
 
 const getOpenapiOpenapiJsonGetQueryKey = () => {
-	return ["/openapi.json"] as const;
-};
+    return [`/openapi.json`] as const;
+    }
 
-export const getOpenapiOpenapiJsonGetQueryOptions = <
-	TData = Awaited<ReturnType<typeof openapiOpenapiJsonGet>>,
-	TError = unknown,
->(options?: {
-	query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof openapiOpenapiJsonGet>>, TError, TData>>;
-}) => {
-	const { query: queryOptions } = options ?? {};
+    
+export const getOpenapiOpenapiJsonGetQueryOptions = <TData = Awaited<ReturnType<typeof openapiOpenapiJsonGet>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof openapiOpenapiJsonGet>>, TError, TData>>, }
+) => {
 
-	const queryKey = queryOptions?.queryKey ?? getOpenapiOpenapiJsonGetQueryKey();
+const {query: queryOptions} = options ?? {};
 
-	const queryFn: QueryFunction<Awaited<ReturnType<typeof openapiOpenapiJsonGet>>> = ({ signal }) =>
-		openapiOpenapiJsonGet(signal);
+  const queryKey =  queryOptions?.queryKey ?? getOpenapiOpenapiJsonGetQueryKey();
 
-	return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
-		Awaited<ReturnType<typeof openapiOpenapiJsonGet>>,
-		TError,
-		TData
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
-};
+  
 
-export type OpenapiOpenapiJsonGetQueryResult = NonNullable<Awaited<ReturnType<typeof openapiOpenapiJsonGet>>>;
-export type OpenapiOpenapiJsonGetQueryError = unknown;
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof openapiOpenapiJsonGet>>> = ({ signal }) => openapiOpenapiJsonGet(signal);
 
-export function useOpenapiOpenapiJsonGet<
-	TData = Awaited<ReturnType<typeof openapiOpenapiJsonGet>>,
-	TError = unknown,
->(
-	options: {
-		query: Partial<UseQueryOptions<Awaited<ReturnType<typeof openapiOpenapiJsonGet>>, TError, TData>> &
-			Pick<
-				DefinedInitialDataOptions<
-					Awaited<ReturnType<typeof openapiOpenapiJsonGet>>,
-					TError,
-					Awaited<ReturnType<typeof openapiOpenapiJsonGet>>
-				>,
-				"initialData"
-			>;
-	},
-	queryClient?: QueryClient,
-): DefinedUseQueryResult<TData, TError> & {
-	queryKey: DataTag<QueryKey, TData, TError>;
-};
-export function useOpenapiOpenapiJsonGet<
-	TData = Awaited<ReturnType<typeof openapiOpenapiJsonGet>>,
-	TError = unknown,
->(
-	options?: {
-		query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof openapiOpenapiJsonGet>>, TError, TData>> &
-			Pick<
-				UndefinedInitialDataOptions<
-					Awaited<ReturnType<typeof openapiOpenapiJsonGet>>,
-					TError,
-					Awaited<ReturnType<typeof openapiOpenapiJsonGet>>
-				>,
-				"initialData"
-			>;
-	},
-	queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & {
-	queryKey: DataTag<QueryKey, TData, TError>;
-};
-export function useOpenapiOpenapiJsonGet<
-	TData = Awaited<ReturnType<typeof openapiOpenapiJsonGet>>,
-	TError = unknown,
->(
-	options?: {
-		query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof openapiOpenapiJsonGet>>, TError, TData>>;
-	},
-	queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & {
-	queryKey: DataTag<QueryKey, TData, TError>;
-};
+      
+
+      
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof openapiOpenapiJsonGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type OpenapiOpenapiJsonGetQueryResult = NonNullable<Awaited<ReturnType<typeof openapiOpenapiJsonGet>>>
+export type OpenapiOpenapiJsonGetQueryError = unknown
+
+
+export function useOpenapiOpenapiJsonGet<TData = Awaited<ReturnType<typeof openapiOpenapiJsonGet>>, TError = unknown>(
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof openapiOpenapiJsonGet>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof openapiOpenapiJsonGet>>,
+          TError,
+          Awaited<ReturnType<typeof openapiOpenapiJsonGet>>
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useOpenapiOpenapiJsonGet<TData = Awaited<ReturnType<typeof openapiOpenapiJsonGet>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof openapiOpenapiJsonGet>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof openapiOpenapiJsonGet>>,
+          TError,
+          Awaited<ReturnType<typeof openapiOpenapiJsonGet>>
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useOpenapiOpenapiJsonGet<TData = Awaited<ReturnType<typeof openapiOpenapiJsonGet>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof openapiOpenapiJsonGet>>, TError, TData>>, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 /**
  * @summary Openapi
  */
 
-export function useOpenapiOpenapiJsonGet<
-	TData = Awaited<ReturnType<typeof openapiOpenapiJsonGet>>,
-	TError = unknown,
->(
-	options?: {
-		query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof openapiOpenapiJsonGet>>, TError, TData>>;
-	},
-	queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & {
-	queryKey: DataTag<QueryKey, TData, TError>;
-} {
-	const queryOptions = getOpenapiOpenapiJsonGetQueryOptions(options);
+export function useOpenapiOpenapiJsonGet<TData = Awaited<ReturnType<typeof openapiOpenapiJsonGet>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof openapiOpenapiJsonGet>>, TError, TData>>, }
+ , queryClient?: QueryClient 
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
-	const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
-		queryKey: DataTag<QueryKey, TData, TError>;
-	};
+  const queryOptions = getOpenapiOpenapiJsonGetQueryOptions(options)
 
-	query.queryKey = queryOptions.queryKey;
+  const query = useQuery(queryOptions , queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 
-	return query;
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
 }
+
+
+

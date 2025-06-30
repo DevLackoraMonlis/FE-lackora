@@ -5,268 +5,206 @@
  * MonoWatch Security Asset Management - BackBone Structure
  * OpenAPI spec version: 1.0.0
  */
-import { useQuery } from "@tanstack/react-query";
+import {
+  useQuery
+} from '@tanstack/react-query';
 import type {
-	DataTag,
-	DefinedInitialDataOptions,
-	DefinedUseQueryResult,
-	QueryClient,
-	QueryFunction,
-	QueryKey,
-	UndefinedInitialDataOptions,
-	UseQueryOptions,
-	UseQueryResult,
-} from "@tanstack/react-query";
+  DataTag,
+  DefinedInitialDataOptions,
+  DefinedUseQueryResult,
+  QueryClient,
+  QueryFunction,
+  QueryKey,
+  UndefinedInitialDataOptions,
+  UseQueryOptions,
+  UseQueryResult
+} from '@tanstack/react-query';
 
 import type {
-	EachConnection,
-	GetConnectionsParams,
-	HTTPValidationError,
-	PaginatedBaseResponseEachConnectionNoneType,
-} from "./models";
+  EachConnection,
+  GetConnectionsParams,
+  HTTPValidationError,
+  PaginatedBaseResponseEachConnectionNoneType
+} from './models';
 
-import { orvalMutator } from "../orval-mutator";
+import { orvalMutator } from '../orval-mutator';
+
+
+
+
 
 /**
  * @summary List All Connections
  */
-export const getConnections = (params?: GetConnectionsParams, signal?: AbortSignal) => {
-	return orvalMutator<PaginatedBaseResponseEachConnectionNoneType>({
-		url: "/api/management-center/connections/",
-		method: "GET",
-		params,
-		signal,
-	});
-};
-
-const getGetConnectionsQueryKey = (params?: GetConnectionsParams) => {
-	return ["/api/management-center/connections/", ...(params ? [params] : [])] as const;
-};
-
-export const getGetConnectionsQueryOptions = <
-	TData = Awaited<ReturnType<typeof getConnections>>,
-	TError = HTTPValidationError,
->(
-	params?: GetConnectionsParams,
-	options?: {
-		query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getConnections>>, TError, TData>>;
-	},
+export const getConnections = (
+    params?: GetConnectionsParams,
+ signal?: AbortSignal
 ) => {
-	const { query: queryOptions } = options ?? {};
+      
+      
+      return orvalMutator<PaginatedBaseResponseEachConnectionNoneType>(
+      {url: `/api/management-center/connections/`, method: 'GET',
+        params, signal
+    },
+      );
+    }
+  
 
-	const queryKey = queryOptions?.queryKey ?? getGetConnectionsQueryKey(params);
+const getGetConnectionsQueryKey = (params?: GetConnectionsParams,) => {
+    return [`/api/management-center/connections/`, ...(params ? [params]: [])] as const;
+    }
 
-	const queryFn: QueryFunction<Awaited<ReturnType<typeof getConnections>>> = ({ signal }) =>
-		getConnections(params, signal);
+    
+export const getGetConnectionsQueryOptions = <TData = Awaited<ReturnType<typeof getConnections>>, TError = HTTPValidationError>(params?: GetConnectionsParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getConnections>>, TError, TData>>, }
+) => {
 
-	return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
-		Awaited<ReturnType<typeof getConnections>>,
-		TError,
-		TData
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
-};
+const {query: queryOptions} = options ?? {};
 
-export type GetConnectionsQueryResult = NonNullable<Awaited<ReturnType<typeof getConnections>>>;
-export type GetConnectionsQueryError = HTTPValidationError;
+  const queryKey =  queryOptions?.queryKey ?? getGetConnectionsQueryKey(params);
 
-export function useGetConnections<
-	TData = Awaited<ReturnType<typeof getConnections>>,
-	TError = HTTPValidationError,
->(
-	params: undefined | GetConnectionsParams,
-	options: {
-		query: Partial<UseQueryOptions<Awaited<ReturnType<typeof getConnections>>, TError, TData>> &
-			Pick<
-				DefinedInitialDataOptions<
-					Awaited<ReturnType<typeof getConnections>>,
-					TError,
-					Awaited<ReturnType<typeof getConnections>>
-				>,
-				"initialData"
-			>;
-	},
-	queryClient?: QueryClient,
-): DefinedUseQueryResult<TData, TError> & {
-	queryKey: DataTag<QueryKey, TData, TError>;
-};
-export function useGetConnections<
-	TData = Awaited<ReturnType<typeof getConnections>>,
-	TError = HTTPValidationError,
->(
-	params?: GetConnectionsParams,
-	options?: {
-		query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getConnections>>, TError, TData>> &
-			Pick<
-				UndefinedInitialDataOptions<
-					Awaited<ReturnType<typeof getConnections>>,
-					TError,
-					Awaited<ReturnType<typeof getConnections>>
-				>,
-				"initialData"
-			>;
-	},
-	queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & {
-	queryKey: DataTag<QueryKey, TData, TError>;
-};
-export function useGetConnections<
-	TData = Awaited<ReturnType<typeof getConnections>>,
-	TError = HTTPValidationError,
->(
-	params?: GetConnectionsParams,
-	options?: {
-		query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getConnections>>, TError, TData>>;
-	},
-	queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & {
-	queryKey: DataTag<QueryKey, TData, TError>;
-};
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getConnections>>> = ({ signal }) => getConnections(params, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getConnections>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetConnectionsQueryResult = NonNullable<Awaited<ReturnType<typeof getConnections>>>
+export type GetConnectionsQueryError = HTTPValidationError
+
+
+export function useGetConnections<TData = Awaited<ReturnType<typeof getConnections>>, TError = HTTPValidationError>(
+ params: undefined |  GetConnectionsParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getConnections>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getConnections>>,
+          TError,
+          Awaited<ReturnType<typeof getConnections>>
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetConnections<TData = Awaited<ReturnType<typeof getConnections>>, TError = HTTPValidationError>(
+ params?: GetConnectionsParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getConnections>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getConnections>>,
+          TError,
+          Awaited<ReturnType<typeof getConnections>>
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetConnections<TData = Awaited<ReturnType<typeof getConnections>>, TError = HTTPValidationError>(
+ params?: GetConnectionsParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getConnections>>, TError, TData>>, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 /**
  * @summary List All Connections
  */
 
-export function useGetConnections<
-	TData = Awaited<ReturnType<typeof getConnections>>,
-	TError = HTTPValidationError,
->(
-	params?: GetConnectionsParams,
-	options?: {
-		query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getConnections>>, TError, TData>>;
-	},
-	queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & {
-	queryKey: DataTag<QueryKey, TData, TError>;
-} {
-	const queryOptions = getGetConnectionsQueryOptions(params, options);
+export function useGetConnections<TData = Awaited<ReturnType<typeof getConnections>>, TError = HTTPValidationError>(
+ params?: GetConnectionsParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getConnections>>, TError, TData>>, }
+ , queryClient?: QueryClient 
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
-	const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
-		queryKey: DataTag<QueryKey, TData, TError>;
-	};
+  const queryOptions = getGetConnectionsQueryOptions(params,options)
 
-	query.queryKey = queryOptions.queryKey;
+  const query = useQuery(queryOptions , queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 
-	return query;
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
 }
+
+
 
 /**
  * @summary List Single Connections
  */
-export const getConnection = (connectionId: string, signal?: AbortSignal) => {
-	return orvalMutator<EachConnection>({
-		url: `/api/management-center/connections/${connectionId}`,
-		method: "GET",
-		signal,
-	});
-};
-
-const getGetConnectionQueryKey = (connectionId: string) => {
-	return [`/api/management-center/connections/${connectionId}`] as const;
-};
-
-export const getGetConnectionQueryOptions = <
-	TData = Awaited<ReturnType<typeof getConnection>>,
-	TError = HTTPValidationError,
->(
-	connectionId: string,
-	options?: {
-		query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getConnection>>, TError, TData>>;
-	},
+export const getConnection = (
+    connectionId: string,
+ signal?: AbortSignal
 ) => {
-	const { query: queryOptions } = options ?? {};
+      
+      
+      return orvalMutator<EachConnection>(
+      {url: `/api/management-center/connections/${connectionId}`, method: 'GET', signal
+    },
+      );
+    }
+  
 
-	const queryKey = queryOptions?.queryKey ?? getGetConnectionQueryKey(connectionId);
+const getGetConnectionQueryKey = (connectionId: string,) => {
+    return [`/api/management-center/connections/${connectionId}`] as const;
+    }
 
-	const queryFn: QueryFunction<Awaited<ReturnType<typeof getConnection>>> = ({ signal }) =>
-		getConnection(connectionId, signal);
+    
+export const getGetConnectionQueryOptions = <TData = Awaited<ReturnType<typeof getConnection>>, TError = HTTPValidationError>(connectionId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getConnection>>, TError, TData>>, }
+) => {
 
-	return {
-		queryKey,
-		queryFn,
-		enabled: !!connectionId,
-		...queryOptions,
-	} as UseQueryOptions<Awaited<ReturnType<typeof getConnection>>, TError, TData> & {
-		queryKey: DataTag<QueryKey, TData, TError>;
-	};
-};
+const {query: queryOptions} = options ?? {};
 
-export type GetConnectionQueryResult = NonNullable<Awaited<ReturnType<typeof getConnection>>>;
-export type GetConnectionQueryError = HTTPValidationError;
+  const queryKey =  queryOptions?.queryKey ?? getGetConnectionQueryKey(connectionId);
 
-export function useGetConnection<
-	TData = Awaited<ReturnType<typeof getConnection>>,
-	TError = HTTPValidationError,
->(
-	connectionId: string,
-	options: {
-		query: Partial<UseQueryOptions<Awaited<ReturnType<typeof getConnection>>, TError, TData>> &
-			Pick<
-				DefinedInitialDataOptions<
-					Awaited<ReturnType<typeof getConnection>>,
-					TError,
-					Awaited<ReturnType<typeof getConnection>>
-				>,
-				"initialData"
-			>;
-	},
-	queryClient?: QueryClient,
-): DefinedUseQueryResult<TData, TError> & {
-	queryKey: DataTag<QueryKey, TData, TError>;
-};
-export function useGetConnection<
-	TData = Awaited<ReturnType<typeof getConnection>>,
-	TError = HTTPValidationError,
->(
-	connectionId: string,
-	options?: {
-		query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getConnection>>, TError, TData>> &
-			Pick<
-				UndefinedInitialDataOptions<
-					Awaited<ReturnType<typeof getConnection>>,
-					TError,
-					Awaited<ReturnType<typeof getConnection>>
-				>,
-				"initialData"
-			>;
-	},
-	queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & {
-	queryKey: DataTag<QueryKey, TData, TError>;
-};
-export function useGetConnection<
-	TData = Awaited<ReturnType<typeof getConnection>>,
-	TError = HTTPValidationError,
->(
-	connectionId: string,
-	options?: {
-		query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getConnection>>, TError, TData>>;
-	},
-	queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & {
-	queryKey: DataTag<QueryKey, TData, TError>;
-};
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getConnection>>> = ({ signal }) => getConnection(connectionId, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, enabled: !!(connectionId), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getConnection>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetConnectionQueryResult = NonNullable<Awaited<ReturnType<typeof getConnection>>>
+export type GetConnectionQueryError = HTTPValidationError
+
+
+export function useGetConnection<TData = Awaited<ReturnType<typeof getConnection>>, TError = HTTPValidationError>(
+ connectionId: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getConnection>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getConnection>>,
+          TError,
+          Awaited<ReturnType<typeof getConnection>>
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetConnection<TData = Awaited<ReturnType<typeof getConnection>>, TError = HTTPValidationError>(
+ connectionId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getConnection>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getConnection>>,
+          TError,
+          Awaited<ReturnType<typeof getConnection>>
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetConnection<TData = Awaited<ReturnType<typeof getConnection>>, TError = HTTPValidationError>(
+ connectionId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getConnection>>, TError, TData>>, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 /**
  * @summary List Single Connections
  */
 
-export function useGetConnection<
-	TData = Awaited<ReturnType<typeof getConnection>>,
-	TError = HTTPValidationError,
->(
-	connectionId: string,
-	options?: {
-		query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getConnection>>, TError, TData>>;
-	},
-	queryClient?: QueryClient,
-): UseQueryResult<TData, TError> & {
-	queryKey: DataTag<QueryKey, TData, TError>;
-} {
-	const queryOptions = getGetConnectionQueryOptions(connectionId, options);
+export function useGetConnection<TData = Awaited<ReturnType<typeof getConnection>>, TError = HTTPValidationError>(
+ connectionId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getConnection>>, TError, TData>>, }
+ , queryClient?: QueryClient 
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
-	const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
-		queryKey: DataTag<QueryKey, TData, TError>;
-	};
+  const queryOptions = getGetConnectionQueryOptions(connectionId,options)
 
-	query.queryKey = queryOptions.queryKey;
+  const query = useQuery(queryOptions , queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 
-	return query;
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
 }
+
+
+

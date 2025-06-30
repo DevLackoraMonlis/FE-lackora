@@ -5,12 +5,12 @@
  * MonoWatch Security Asset Management - BackBone Structure
  * OpenAPI spec version: 1.0.0
  */
-import type { CreateWebServiceRequestDescription } from "./CreateWebServiceRequestDescription";
+import type { CreateWebServiceRequestDescription } from './CreateWebServiceRequestDescription';
 
 export interface CreateWebServiceRequest {
-	name: string;
-	description?: CreateWebServiceRequestDescription;
-	uri_query: string;
-	response_matcher: string;
-	response_code: number;
+  name: string;
+  description?: CreateWebServiceRequestDescription;
+  uri_query: string;
+  response_matcher: string;
+  response_code: number;
 }

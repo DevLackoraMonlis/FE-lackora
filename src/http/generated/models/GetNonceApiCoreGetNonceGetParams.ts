@@ -7,6 +7,6 @@
  */
 
 export type GetNonceApiCoreGetNonceGetParams = {
-	route: string;
-	method: string;
+route: string;
+method: string;
 };

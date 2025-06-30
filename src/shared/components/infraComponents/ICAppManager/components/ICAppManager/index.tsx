@@ -44,7 +44,7 @@ export default function ICAppManager(props: Props) {
 			search,
 			sortBy,
 		},
-		getPluginsApi: props.getAppsApi,
+		getAppsApi: props.getAppsApi,
 	});
 
 	useEffect(() => {

@@ -5,8 +5,8 @@
  * MonoWatch Security Asset Management - BackBone Structure
  * OpenAPI spec version: 1.0.0
  */
-import type { ValidationError } from "./ValidationError";
+import type { ValidationError } from './ValidationError';
 
 export interface HTTPValidationError {
-	detail?: ValidationError[];
+  detail?: ValidationError[];
 }
