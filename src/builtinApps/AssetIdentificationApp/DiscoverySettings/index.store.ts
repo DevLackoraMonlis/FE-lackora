@@ -1,10 +1,13 @@
 import { createStore } from "zustand";
 
 import type { EachDiscoverySetting } from "@/http/generated/models";
-import type { ApiFields, ApiFieldsObjectTypes } from "@/shared/types/index.types";
+import type {
+	BCDynamicFieldObjectType,
+	BCDynamicFieldProps,
+} from "@/shared/components/baseComponents/BCDynamicField/index.types";
 
 type Store = {
-	formFields: { [key: string]: ApiFields[] };
+	formFields: { [key: string]: BCDynamicFieldProps[] };
 	setFormFields: (results: EachDiscoverySetting[]) => void;
 };
 
@@ -20,11 +23,11 @@ export const discoveryAdaptersStore = createStore<Store>((set) => ({
 					options,
 					paginate,
 					type,
-					objectType: object_type as ApiFieldsObjectTypes,
+					objectType: object_type as BCDynamicFieldObjectType,
 				}));
 				return accumulator;
 			},
-			{} as Record<string, ApiFields[]>,
+			{} as Record<string, BCDynamicFieldProps[]>,
 		);
 
 		set({ formFields });

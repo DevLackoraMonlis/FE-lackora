@@ -1,6 +1,6 @@
 import { isNumber } from "lodash";
 
-import type { DynamicFiled } from "./index.types";
+import type { BCDynamicFieldProps } from "./index.types";
 
 import { NumberInput, Select, TextInput, Textarea } from "@mantine/core";
 
@@ -14,7 +14,7 @@ export function getDynamicField({
 	defaultValue: defaultValueAsUnknown,
 	formInputProps,
 	otherElementOptions = {},
-}: DynamicFiled) {
+}: BCDynamicFieldProps) {
 	const required = !!fieldIsRequired;
 	const defaultValue = isNumber(defaultValueAsUnknown) ? `${defaultValueAsUnknown}` : defaultValueAsUnknown;
 	switch (objectType) {

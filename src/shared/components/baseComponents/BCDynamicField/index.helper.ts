@@ -1,9 +1,10 @@
+import type { BCDynamicFieldProps } from "@/shared/components/baseComponents/BCDynamicField/index.types";
 import { isNotEmpty } from "@mantine/form";
 
-import type { ApiFields } from "@/shared/types/index.types";
-
-export const getDynamicFieldValidate = (fields: ApiFields[] = []) => {
-	const validateFormObject = fields.reduce(
+export const getDynamicFieldValidate = (
+	fields: Pick<BCDynamicFieldProps, "key" | "type" | "required">[] = [],
+) => {
+	return fields.reduce(
 		(accumulator, { key, type, required }) => {
 			switch (type) {
 				case "IP":
@@ -19,6 +20,4 @@ export const getDynamicFieldValidate = (fields: ApiFields[] = []) => {
 		},
 		{} as Record<string, unknown>,
 	);
-
-	return validateFormObject;
 };
