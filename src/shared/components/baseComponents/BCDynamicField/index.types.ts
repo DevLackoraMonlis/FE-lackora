@@ -1,4 +1,6 @@
+import type { PaginationRq, PaginationRs } from "@/http/end-points/GeneralService.types";
 import type { LabelValueType } from "@/shared/lib/general-types";
+import type { AxiosResponse } from "axios";
 export type BCDynamicFieldType =
 	| "Int64"
 	| "String"
@@ -21,4 +23,8 @@ export type BCDynamicFieldProps<T extends string> = {
 	objectType?: T;
 	type?: BCDynamicFieldType | null;
 	options?: LabelValueType[] | null;
+	api: (
+		variables: PaginationRq<{ type: string }>,
+		signal?: AbortSignal,
+	) => Promise<AxiosResponse<PaginationRs<LabelValueType>>>;
 };

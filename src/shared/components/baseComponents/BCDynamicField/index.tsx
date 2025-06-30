@@ -2,7 +2,10 @@ import { isNumber } from "lodash";
 
 import type { BCDynamicFieldProps } from "./index.types";
 
+import { useTablePagination } from "@/shared/hooks/useTablePagination";
 import { NumberInput, Select, TextInput, Textarea } from "@mantine/core";
+import { useQuery } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
 
 export function getDynamicField<T extends string>({
 	type = "String",
@@ -13,17 +16,39 @@ export function getDynamicField<T extends string>({
 	defaultValue: defaultValueAsUnknown,
 	formInputProps,
 	otherElementOptions = {},
-}: Omit<BCDynamicFieldProps<T>, "objectType">) {
+	objectType,
+	api,
+}: BCDynamicFieldProps<T>) {
 	const required = !!fieldIsRequired;
+	const { setTotalRecords, tablePagination } = useTablePagination();
+	const [search, setSearch] = useState("");
 	const defaultValue = isNumber(defaultValueAsUnknown) ? `${defaultValueAsUnknown}` : defaultValueAsUnknown;
+
+	const getObjectQuery = useQuery({
+		enabled: type === "List" && !!objectType,
+		queryKey: ["get-object-data", objectType, tablePagination.page, tablePagination.recordsPerPage],
+		queryFn: ({ signal }) =>
+			api?.(
+				{ limit: tablePagination.recordsPerPage, page: tablePagination.page, search, type: objectType || "" },
+				signal,
+			),
+	});
+
+	useEffect(() => {
+		if (getObjectQuery.data?.data.total) {
+			setTotalRecords(getObjectQuery.data?.data.total);
+		}
+	}, [getObjectQuery.data?.data.total]);
+
 	switch (type) {
 		case "List":
 			return (
 				<Select
+					onSearchChange={setSearch}
+					data={options?.length ? options : getObjectQuery.data?.data.results || []}
 					{...{
 						...otherElementOptions,
 						label,
-						data: options || [],
 						required,
 						placeholder,
 						defaultValue,
