@@ -4,19 +4,11 @@ import TanStackMainTable from "./components/TanStackMainTable";
 import { useTanStack, useTanStackDefault } from "./index.hooks";
 import type { TanStackGridProps } from "./index.types";
 
-export default function TanStackGridComponent<
-	T extends Record<string, unknown>,
->(props: TanStackGridProps<T>) {
-	const {
-		table,
-		ref,
-		tableBodyRef,
-		tableContainerRef,
-		tableRef,
-		bodyHeight,
-		viewportWidth,
-		columns,
-	} = useTanStackDefault(props);
+export default function TanStackGridComponent<T extends Record<string, unknown>>(
+	props: TanStackGridProps<T>,
+) {
+	const { table, ref, tableBodyRef, tableContainerRef, tableRef, bodyHeight, viewportWidth, columns } =
+		useTanStackDefault(props);
 
 	const { columnVirtualizer, rowVirtualizer, rows } = useTanStack({
 		idAccessor: props.idAccessor,

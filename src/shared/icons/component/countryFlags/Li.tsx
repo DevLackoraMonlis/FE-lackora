@@ -1,4 +1,3 @@
-import * as React from "react";
 import type { Ref, SVGProps } from "react";
 import { forwardRef, memo } from "react";
 const SvgLi = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
@@ -13,13 +12,7 @@ const SvgLi = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 	>
 		<path fill="#002b7f" d="M0 0h1000v600H0z" />
 		<path fill="#ce1126" d="M0 300h1000v300H0z" />
-		<g
-			fill="#ffd83d"
-			stroke="#000"
-			strokeLinecap="round"
-			strokeLinejoin="round"
-			strokeWidth={2}
-		>
+		<g fill="#ffd83d" stroke="#000" strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}>
 			<g id="li_svg__a">
 				<path
 					stroke="none"

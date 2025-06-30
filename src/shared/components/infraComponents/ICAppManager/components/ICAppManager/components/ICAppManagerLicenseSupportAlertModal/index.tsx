@@ -26,11 +26,9 @@ export default function ICAppManagerLicenseSupportAlertModal(props: Props) {
 					Support License Expired
 				</Text>
 				<Text c="#121721" fw="400" fz={14}>
-					Your support license has expired, which means you are unable to
-					request new plugin activations at this time. To proceed with plugin
-					activation, please renew your support license. If you need assistance
-					with renewing your license or have any questions, feel free to contact
-					our support team.
+					Your support license has expired, which means you are unable to request new plugin activations at
+					this time. To proceed with plugin activation, please renew your support license. If you need
+					assistance with renewing your license or have any questions, feel free to contact our support team.
 				</Text>
 				<Flex justify="center" align="center">
 					<Button

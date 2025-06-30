@@ -13,7 +13,6 @@ export type Props = {
 function BCChart(props: Props) {
 	const [ref, rect] = useResizeObserver();
 
-	// biome-ignore lint: useExhaustiveDependencies
 	useEffect(() => {
 		props.chart?.resize();
 	}, [props.chart, rect, props.isFullScreen]);

@@ -1,15 +1,7 @@
-import * as React from "react";
 import type { Ref, SVGProps } from "react";
 import { forwardRef, memo } from "react";
 const SvgNr = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
-	<svg
-		xmlns="http://www.w3.org/2000/svg"
-		viewBox="0 0 600 300"
-		width="1em"
-		height="1em"
-		ref={ref}
-		{...props}
-	>
+	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 300" width="1em" height="1em" ref={ref} {...props}>
 		<path fill="#002b7f" d="M0 0h600v300H0z" />
 		<path fill="#ffc61e" d="M0 137.5h600v25H0z" />
 		<path

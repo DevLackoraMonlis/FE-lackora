@@ -5,11 +5,11 @@
  * MonoWatch Security Asset Management - BackBone Structure
  * OpenAPI spec version: 1.0.0
  */
-import type { EachDiscoverySetting } from './EachDiscoverySetting';
-import type { EachDiscoverySettingMetadataWrapper } from './EachDiscoverySettingMetadataWrapper';
+import type { EachDiscoverySetting } from "./EachDiscoverySetting";
+import type { EachDiscoverySettingMetadataWrapper } from "./EachDiscoverySettingMetadataWrapper";
 
 export interface PaginatedBaseResponseEachDiscoverySettingEachDiscoverySettingMetadataWrapper {
-  results: EachDiscoverySetting[];
-  total: number;
-  metadata: EachDiscoverySettingMetadataWrapper;
+	results: EachDiscoverySetting[];
+	total: number;
+	metadata: EachDiscoverySettingMetadataWrapper;
 }

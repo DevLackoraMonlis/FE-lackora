@@ -1,8 +1,8 @@
 .bg {
-    background-color: var(--mantine-color-gray-2);
+	background-color: var(--mantine-color-gray-2);
 }
 
-[data-mantine-color-scheme='dark'] .bg {
+[data-mantine-color-scheme="dark"] .bg {
 	background-color: var(--mantine-color-gray-7);
 }
 
@@ -14,8 +14,8 @@
 	color: var(--mantine-color-primary-4);
 }
 
-[data-mantine-color-scheme='dark'] .btnText {
-    color: var(--mantine-color-primary-5);
+[data-mantine-color-scheme="dark"] .btnText {
+	color: var(--mantine-color-primary-5);
 }
 
 .text {
@@ -23,8 +23,8 @@
 	justify-content: center;
 }
 
-[data-mantine-color-scheme='dark'] .text {
-    color: var(--mantine-color-gray-3);
+[data-mantine-color-scheme="dark"] .text {
+	color: var(--mantine-color-gray-3);
 }
 
 .cardBox {
@@ -33,8 +33,8 @@
 	border-radius: 4px;
 }
 
-[data-mantine-color-scheme='dark'] .cardBox {
-    background-color: var(--mantine-color-black) !important;
+[data-mantine-color-scheme="dark"] .cardBox {
+	background-color: var(--mantine-color-black) !important;
 }
 
 .notifCardBox {
@@ -44,7 +44,7 @@
 	border: 1px solid var(--mantine-color-gray-2) !important;
 }
 
-[data-mantine-color-scheme='dark'] .notifCardBox {
+[data-mantine-color-scheme="dark"] .notifCardBox {
 	background-color: var(--mantine-color-gray-9) !important;
-    border: 1px solid var(--mantine-color-gray-7) !important;
+	border: 1px solid var(--mantine-color-gray-7) !important;
 }

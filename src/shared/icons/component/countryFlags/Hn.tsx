@@ -1,4 +1,3 @@
-import * as React from "react";
 import type { Ref, SVGProps } from "react";
 import { forwardRef, memo } from "react";
 const SvgHn = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
@@ -13,11 +12,7 @@ const SvgHn = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 	>
 		<path fill="#0d3b99" d="M1260 0H0v630h1260z" />
 		<path fill="#fff" d="M1260 210H0v210h1260z" />
-		<path
-			id="hn_svg__a"
-			fill="#0d3b99"
-			d="m630 280 20.572 63.315-53.859-39.131h66.573l-53.859 39.131z"
-		/>
+		<path id="hn_svg__a" fill="#0d3b99" d="m630 280 20.572 63.315-53.859-39.131h66.573l-53.859 39.131z" />
 		<g id="hn_svg__b">
 			<use xlinkHref="#hn_svg__a" transform="translate(-175 -52.465)" />
 			<use xlinkHref="#hn_svg__a" transform="translate(-175 52.534)" />

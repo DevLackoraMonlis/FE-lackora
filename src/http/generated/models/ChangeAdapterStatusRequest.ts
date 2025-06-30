@@ -7,5 +7,5 @@
  */
 
 export interface ChangeAdapterStatusRequest {
-  is_active: boolean;
+	is_active: boolean;
 }

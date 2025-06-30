@@ -1,4 +1,3 @@
-import * as React from "react";
 import type { Ref, SVGProps } from "react";
 import { forwardRef, memo } from "react";
 const SvgDm = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
@@ -26,37 +25,12 @@ const SvgDm = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 					stroke="#000"
 					d="M-4.81-118.41 0-132.13l4.37 13.5 14.65.22-11.59 8.85 5.25 15.05L0-103.8l-12.46 8.85 4.81-14.61-11.37-8.63z"
 				/>
-				<use
-					xlinkHref="#dm_svg__a"
-					width="100%"
-					height="100%"
-					transform="scale(-1)"
-				/>
+				<use xlinkHref="#dm_svg__a" width="100%" height="100%" transform="scale(-1)" />
 			</g>
-			<use
-				xlinkHref="#dm_svg__b"
-				width="100%"
-				height="100%"
-				transform="rotate(36)"
-			/>
-			<use
-				xlinkHref="#dm_svg__b"
-				width="100%"
-				height="100%"
-				transform="rotate(72)"
-			/>
-			<use
-				xlinkHref="#dm_svg__b"
-				width="100%"
-				height="100%"
-				transform="rotate(108)"
-			/>
-			<use
-				xlinkHref="#dm_svg__b"
-				width="100%"
-				height="100%"
-				transform="rotate(144)"
-			/>
+			<use xlinkHref="#dm_svg__b" width="100%" height="100%" transform="rotate(36)" />
+			<use xlinkHref="#dm_svg__b" width="100%" height="100%" transform="rotate(72)" />
+			<use xlinkHref="#dm_svg__b" width="100%" height="100%" transform="rotate(108)" />
+			<use xlinkHref="#dm_svg__b" width="100%" height="100%" transform="rotate(144)" />
 			<g stroke="#000" strokeWidth={2.5}>
 				<ellipse
 					cx={680.21}

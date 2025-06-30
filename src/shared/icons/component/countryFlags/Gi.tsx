@@ -1,4 +1,3 @@
-import * as React from "react";
 import type { Ref, SVGProps } from "react";
 import { forwardRef, memo } from "react";
 const SvgGi = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
@@ -17,11 +16,7 @@ const SvgGi = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 			<g id="gi_svg__a" fill="#da000c" strokeLinecap="square">
 				<path fill="#000" stroke="none" d="M196.571 116.303h64v43.993h-64z" />
 				<path d="M229.819 153.865H190.75l-8.66 5.7v6.04h47.729M213.469 128.594c5.625 0 10.219 4.689 10.219 10.469v14.78h7.343v-56H190.75v56h12.5v-14.78c0-5.554 4.515-10.47 10.219-10.47z" />
-				<path
-					fill="#000"
-					stroke="none"
-					d="M204.528 59.962h18.523v33.959h-18.523z"
-				/>
+				<path fill="#000" stroke="none" d="M204.528 59.962h18.523v33.959h-18.523z" />
 				<path d="M223 88.656h-16.209v-5.75h-11.885v5.75h-8.062v-5.75h-4.813v10.438H223m-36.156-.038h34.97v4.538h-34.97z" />
 				<path d="M200.719 47.625v35.281h6.072V73.22c0-3.63 2.562-6.6 6.147-6.781.115-.006.226 0 .343 0a6.78 6.78 0 0 1 6.781 6.78v9.688h5.782V47.625zM198.531 42.844v4.781h29.25v-4.781zM194.781 33.688v9.156h35.094v-9.157h-5.406v4.657h-6.531v-4.657h-9.97v4.657h-6.53v-4.657zM182.09 159.564H230M261 156.813h-32.438l-9.78 4.718v7.031H261" />
 				<path strokeLinecap="butt" d="M218.771 161.52H262" />
@@ -53,11 +48,7 @@ const SvgGi = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 				/>
 			</g>
 			<g fill="#da000c">
-				<path
-					fill="#000"
-					stroke="none"
-					d="M240.803 38.351h29.329v53.255h-29.329z"
-				/>
+				<path fill="#000" stroke="none" d="M240.803 38.351h29.329v53.255h-29.329z" />
 				<path d="M238.75 38.375v44.563h9.313v-13.22c0-3.048 1.952-7.28 7.937-7.28s7.938 4.232 7.938 7.28v13.22h9.312V38.374zm15.813 5h2.875v15.25h-2.875zm-8.25 3h2.906v11.156h-2.906zm16.468 0h2.906v11.156h-2.906zM235.594 31.969v6.343h40.812V31.97zM231.75 24.594v7.375h48.5v-7.375h-6.094v4.062h-6.875v-4.062h-7.844v4.062h-6.875v-4.062h-7.843v4.062h-6.875v-4.062zM222.75 97.844v4.594h66.5v-4.594z" />
 				<path d="M220.031 82.906v14.938h71.938V82.906h-6.813v5.75h-9.062v-5.75h-12.156v5.75h-15.875v-5.75h-12.157v5.75h-9.062v-5.75z" />
 				<path

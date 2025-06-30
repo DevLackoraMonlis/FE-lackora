@@ -4,21 +4,9 @@ import { IconBell } from "@tabler/icons-react";
 export default function ICPanelHeaderNotificationsMenu() {
 	const theme = useMantineTheme();
 	return (
-		<Menu
-			zIndex={1500}
-			width={412}
-			radius="md"
-			closeOnClickOutside
-			closeOnEscape
-			position="bottom-end"
-		>
+		<Menu zIndex={1500} width={412} radius="md" closeOnClickOutside closeOnEscape position="bottom-end">
 			<Menu.Target>
-				<Flex
-					mt={6}
-					align="center"
-					justify="center"
-					style={{ cursor: "pointer" }}
-				>
+				<Flex mt={6} align="center" justify="center" style={{ cursor: "pointer" }}>
 					<Indicator
 						fz="xs"
 						label={0}

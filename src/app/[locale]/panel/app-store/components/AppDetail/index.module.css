@@ -3,17 +3,11 @@
 }
 
 .linkClass:visited {
-	color: light-dark(
-		var(--mantine-color-primary-6),
-		var(--mantine-color-primary-3)
-	);
+	color: light-dark(var(--mantine-color-primary-6), var(--mantine-color-primary-3));
 }
 
 .link {
-	color: light-dark(
-		var(--mantine-color-primary-4),
-		var(--mantine-color-primary-2)
-	);
+	color: light-dark(var(--mantine-color-primary-4), var(--mantine-color-primary-2));
 }
 
 .title {

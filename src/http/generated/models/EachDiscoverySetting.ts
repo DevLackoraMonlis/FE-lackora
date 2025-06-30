@@ -12,6 +12,7 @@ import type { EachDiscoverySettingIcon } from "./EachDiscoverySettingIcon";
 import type { EachDiscoverySettingOutput } from "./EachDiscoverySettingOutput";
 import type { EachDiscoverySettingSchema } from "./EachDiscoverySettingSchema";
 import type { EachDiscoverySettingTags } from "./EachDiscoverySettingTags";
+import type { FieldGenerator } from "./FieldGenerator";
 
 export interface EachDiscoverySetting {
 	id: string;
@@ -27,6 +28,7 @@ export interface EachDiscoverySetting {
 	is_active: boolean;
 	is_used: boolean;
 	has_config: boolean;
+	fields: FieldGenerator[];
 	is_manageable: boolean;
 	caption?: EachDiscoverySettingCaption;
 	job_type: string;

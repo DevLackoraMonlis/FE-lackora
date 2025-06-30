@@ -7,36 +7,36 @@
  */
 
 export type GetDiscoverySettingsParams = {
-/**
- * Type of discovery setting: [discovery | none-credential]
- */
-type?: string | null;
-/**
- * Filter based on adapter usage. Do NOT send this parameter if filter is not applied.
- */
-used?: boolean | null;
-/**
- * MultiParam to filter based on adapter used 'method'.
- */
-method?: string[] | null;
-/**
- * MultiParam to filter based on adapter used 'vendor'.
- */
-vendor?: string[] | null;
-/**
- * @minimum 1
- */
-page?: number;
-/**
- * @minimum 1
- * @maximum 100
- */
-limit?: number;
-/**
- * @pattern ^[\d\w]+$
- */
-sort?: string;
-order?: string;
-condition?: string | null;
-search?: string | null;
+	/**
+	 * Type of discovery setting: [discovery | none-credential]
+	 */
+	type?: string | null;
+	/**
+	 * Filter based on adapter usage. Do NOT send this parameter if filter is not applied.
+	 */
+	used?: boolean | null;
+	/**
+	 * MultiParam to filter based on adapter used 'method'.
+	 */
+	method?: string[] | null;
+	/**
+	 * MultiParam to filter based on adapter used 'vendor'.
+	 */
+	vendor?: string[] | null;
+	/**
+	 * @minimum 1
+	 */
+	page?: number;
+	/**
+	 * @minimum 1
+	 * @maximum 100
+	 */
+	limit?: number;
+	/**
+	 * @pattern ^[\d\w]+$
+	 */
+	sort?: string;
+	order?: string;
+	condition?: string | null;
+	search?: string | null;
 };

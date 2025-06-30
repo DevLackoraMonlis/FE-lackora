@@ -5,9 +5,7 @@ import type { TanStackGridProps } from "../index.types";
 import { TanStackTBodyNonVirtual } from "./TanStackTBodyNonVirtual";
 import { TanStackTHeadNonVirtual } from "./TanStackTHeadNonVirtual";
 
-export default function TanStackMainTableNonVirtual<
-	T extends Record<string, unknown>,
->(
+export default function TanStackMainTableNonVirtual<T extends Record<string, unknown>>(
 	props: {
 		rows: Row<T>[];
 		tableRef: React.RefObject<HTMLTableElement | null>;
@@ -33,8 +31,7 @@ export default function TanStackMainTableNonVirtual<
 			style={{
 				display: "grid",
 				width: !props.columns.filter(
-					(item) =>
-						!TAN_STACK_EXCLUDE_COLUMNS_FROM_STYLES.includes(item.id as string),
+					(item) => !TAN_STACK_EXCLUDE_COLUMNS_FROM_STYLES.includes(item.id as string),
 				).length
 					? "100%"
 					: props.table.getCenterTotalSize(),

@@ -1,4 +1,3 @@
-import * as React from "react";
 import type { Ref, SVGProps } from "react";
 import { forwardRef, memo } from "react";
 const SvgNz = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
@@ -30,74 +29,22 @@ const SvgNz = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 			</g>
 		</defs>
 		<path fill="#012169" d="M0 0h1200v600H0z" />
-		<path
-			stroke="#FFF"
-			strokeWidth={60}
-			d="m0 0 600 300M0 300 600 0"
-			clipPath="url(#nz_svg__b)"
-		/>
-		<path
-			stroke="#C8102E"
-			strokeWidth={40}
-			d="m0 0 600 300M0 300 600 0"
-			clipPath="url(#nz_svg__c)"
-		/>
-		<path
-			stroke="#FFF"
-			strokeWidth={100}
-			d="M300 0v300M0 150h600"
-			clipPath="url(#nz_svg__b)"
-		/>
-		<path
-			stroke="#C8102E"
-			strokeWidth={60}
-			d="M300 0v300M0 150h600"
-			clipPath="url(#nz_svg__b)"
-		/>
-		<use
-			xlinkHref="#nz_svg__d"
-			fill="#FFF"
-			transform="matrix(45.4 0 0 45.4 900 120)"
-		/>
-		<use
-			xlinkHref="#nz_svg__d"
-			fill="#C8102E"
-			transform="matrix(30 0 0 30 900 120)"
-		/>
+		<path stroke="#FFF" strokeWidth={60} d="m0 0 600 300M0 300 600 0" clipPath="url(#nz_svg__b)" />
+		<path stroke="#C8102E" strokeWidth={40} d="m0 0 600 300M0 300 600 0" clipPath="url(#nz_svg__c)" />
+		<path stroke="#FFF" strokeWidth={100} d="M300 0v300M0 150h600" clipPath="url(#nz_svg__b)" />
+		<path stroke="#C8102E" strokeWidth={60} d="M300 0v300M0 150h600" clipPath="url(#nz_svg__b)" />
+		<use xlinkHref="#nz_svg__d" fill="#FFF" transform="matrix(45.4 0 0 45.4 900 120)" />
+		<use xlinkHref="#nz_svg__d" fill="#C8102E" transform="matrix(30 0 0 30 900 120)" />
 		<g transform="rotate(82 900 240)">
-			<use
-				xlinkHref="#nz_svg__d"
-				fill="#FFF"
-				transform="rotate(-82 519.022 -457.666) scale(40.4)"
-			/>
-			<use
-				xlinkHref="#nz_svg__d"
-				fill="#C8102E"
-				transform="rotate(-82 519.022 -457.666) scale(25)"
-			/>
+			<use xlinkHref="#nz_svg__d" fill="#FFF" transform="rotate(-82 519.022 -457.666) scale(40.4)" />
+			<use xlinkHref="#nz_svg__d" fill="#C8102E" transform="rotate(-82 519.022 -457.666) scale(25)" />
 		</g>
 		<g transform="rotate(82 900 240)">
-			<use
-				xlinkHref="#nz_svg__d"
-				fill="#FFF"
-				transform="rotate(-82 668.57 -327.666) scale(45.4)"
-			/>
-			<use
-				xlinkHref="#nz_svg__d"
-				fill="#C8102E"
-				transform="rotate(-82 668.57 -327.666) scale(30)"
-			/>
+			<use xlinkHref="#nz_svg__d" fill="#FFF" transform="rotate(-82 668.57 -327.666) scale(45.4)" />
+			<use xlinkHref="#nz_svg__d" fill="#C8102E" transform="rotate(-82 668.57 -327.666) scale(30)" />
 		</g>
-		<use
-			xlinkHref="#nz_svg__d"
-			fill="#FFF"
-			transform="matrix(50.4 0 0 50.4 900 480)"
-		/>
-		<use
-			xlinkHref="#nz_svg__d"
-			fill="#C8102E"
-			transform="matrix(35 0 0 35 900 480)"
-		/>
+		<use xlinkHref="#nz_svg__d" fill="#FFF" transform="matrix(50.4 0 0 50.4 900 480)" />
+		<use xlinkHref="#nz_svg__d" fill="#C8102E" transform="matrix(35 0 0 35 900 480)" />
 	</svg>
 );
 const ForwardRef = forwardRef(SvgNz);

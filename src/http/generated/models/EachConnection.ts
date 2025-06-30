@@ -5,16 +5,16 @@
  * MonoWatch Security Asset Management - BackBone Structure
  * OpenAPI spec version: 1.0.0
  */
-import type { EachConnectionDescription } from './EachConnectionDescription';
-import type { EachConnectionUpdater } from './EachConnectionUpdater';
-import type { EachConnectionUpdatedTime } from './EachConnectionUpdatedTime';
+import type { EachConnectionDescription } from "./EachConnectionDescription";
+import type { EachConnectionUpdatedTime } from "./EachConnectionUpdatedTime";
+import type { EachConnectionUpdater } from "./EachConnectionUpdater";
 
 export interface EachConnection {
-  id: string;
-  name: string;
-  description?: EachConnectionDescription;
-  creator: string;
-  created_time: string;
-  updater?: EachConnectionUpdater;
-  updated_time?: EachConnectionUpdatedTime;
+	id: string;
+	name: string;
+	description?: EachConnectionDescription;
+	creator: string;
+	created_time: string;
+	updater?: EachConnectionUpdater;
+	updated_time?: EachConnectionUpdatedTime;
 }

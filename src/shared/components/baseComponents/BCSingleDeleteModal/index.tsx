@@ -1,5 +1,5 @@
-import BCModal from "@/shared/components/baseComponents/BCModal";
 import { useI18n } from "@/locales/client";
+import BCModal from "@/shared/components/baseComponents/BCModal";
 import { Box, Highlight, useMantineColorScheme } from "@mantine/core";
 import classes from "./index.module.css";
 

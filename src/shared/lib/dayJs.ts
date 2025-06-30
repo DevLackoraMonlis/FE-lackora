@@ -24,15 +24,9 @@ export function toFormattedDate(
 ): string | undefined {
 	if (!date) return undefined;
 	const dateIsValid = dayjs(date, dateFormats, true).isValid();
-	const dateIsMatch =
-		dateIsValid || dateRegex.some((regex) => regex.test(date as string));
+	const dateIsMatch = dateIsValid || dateRegex.some((regex) => regex.test(date as string));
 	if (dateIsMatch || dateIsValid || (date as Date)?.getTime) {
-		return dayjs(
-			date,
-			options?.format,
-			options?.locale,
-			options?.strict,
-		).format(format);
+		return dayjs(date, options?.format, options?.locale, options?.strict).format(format);
 	}
 	return undefined;
 }
@@ -41,11 +35,7 @@ export function getUserTimeZoneCountry(): string {
 	return dayjs.tz.guess();
 }
 
-export function subtractDate(
-	date: string | Date,
-	value: number,
-	type: ManipulateType,
-): Dayjs | undefined {
+export function subtractDate(date: string | Date, value: number, type: ManipulateType): Dayjs | undefined {
 	if (!dayjs(date).isValid()) return undefined;
 	return dayjs(date).subtract(value, type);
 }
@@ -54,24 +44,17 @@ export const getTimeZoneGmt = () => {
 	return dayjs().tz(dayjs.tz.guess()).format("z");
 };
 
-export function setTimeToStartOfDay(
-	date?: string | Date | null,
-): Dayjs | undefined {
+export function setTimeToStartOfDay(date?: string | Date | null): Dayjs | undefined {
 	if (!dayjs(date).isValid()) return undefined;
 	return dayjs(date).set("hour", 0).set("minute", 0).set("second", 0);
 }
 
-export function setTimeToEndOfDay(
-	date?: string | Date | null,
-): Dayjs | undefined {
+export function setTimeToEndOfDay(date?: string | Date | null): Dayjs | undefined {
 	if (!dayjs(date).isValid()) return undefined;
 	return dayjs(date).set("hour", 23).set("minute", 59).set("second", 59);
 }
 
-export function calculateDuration(
-	startTime: Date | string,
-	endTime: Date | string,
-) {
+export function calculateDuration(startTime: Date | string, endTime: Date | string) {
 	const totalSeconds = dayjs(endTime).diff(startTime, "seconds");
 	const days = Math.floor(totalSeconds / (3600 * 24));
 	const secondsAfterDays = totalSeconds % (3600 * 24);

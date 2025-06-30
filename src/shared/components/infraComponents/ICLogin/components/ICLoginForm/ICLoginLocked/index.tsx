@@ -8,12 +8,7 @@ type Props = {
 
 export default function ICLoginLocked(props: Props) {
 	return (
-		<Flex
-			gap={"xl"}
-			direction={"column"}
-			h={"fit-content"}
-			align={"flex-start"}
-		>
+		<Flex gap={"xl"} direction={"column"} h={"fit-content"} align={"flex-start"}>
 			<Highlight
 				styles={{
 					root: {
@@ -36,20 +31,15 @@ export default function ICLoginLocked(props: Props) {
 				<Text fz={"md"}>you can:</Text>
 				<List>
 					<List.Item>
-						<Text fw={"bold"}>Wait 60 minutes</Text> until your account is
-						automatically unlocked.
+						<Text fw={"bold"}>Wait 60 minutes</Text> until your account is automatically unlocked.
 					</List.Item>
 					<List.Item>
-						Or{" "}
-						<Text fw={"bold"}>contact your local security administrator</Text>{" "}
-						to unlock it manually.
+						Or <Text fw={"bold"}>contact your local security administrator</Text> to unlock it manually.
 					</List.Item>
 				</List>
 			</Flex>
 			<Flex mt={100} w={"100%"} justify={"center"}>
-				<FlipClockCountdown
-					to={new Date().getTime() + props.remainTimeMinutes * 60 * 1000}
-				/>
+				<FlipClockCountdown to={new Date().getTime() + props.remainTimeMinutes * 60 * 1000} />
 			</Flex>
 		</Flex>
 	);

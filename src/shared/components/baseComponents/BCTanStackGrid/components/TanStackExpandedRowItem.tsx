@@ -1,9 +1,7 @@
 import type { Row } from "@tanstack/react-table";
 import type { TanStackGridProps } from "../index.types";
 
-export default function TanStackExpandedRowItem<
-	T extends Record<string, unknown>,
->(
+export default function TanStackExpandedRowItem<T extends Record<string, unknown>>(
 	props: {
 		row: Row<T>;
 		index: number;

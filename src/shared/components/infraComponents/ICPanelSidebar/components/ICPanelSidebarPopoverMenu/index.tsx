@@ -8,13 +8,9 @@ import { IconArrowsLeftRight } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
 import classes from "./index.module.css";
 
-export default function ICPanelSidebarPopoverMenu(
-	props: ICPanelSidebarPopoverMenuGroupProps,
-) {
+export default function ICPanelSidebarPopoverMenu(props: ICPanelSidebarPopoverMenuGroupProps) {
 	const router = useRouter();
-	const generateMenuGroup = (
-		groupMenu?: ICPanelSidebarPopoverMenuGroupItem[],
-	) => {
+	const generateMenuGroup = (groupMenu?: ICPanelSidebarPopoverMenuGroupItem[]) => {
 		return groupMenu?.map((item) => {
 			if (item.childrenItems?.length) {
 				return (
@@ -32,9 +28,7 @@ export default function ICPanelSidebarPopoverMenu(
 							</Text>
 						}
 						key={item.label}
-						leftSection={
-							item.icon || <IconArrowsLeftRight color={"white"} size={12} />
-						}
+						leftSection={item.icon || <IconArrowsLeftRight color={"white"} size={12} />}
 					>
 						{item.childrenItems.map((subMenu) => (
 							<BCNavLink
@@ -55,9 +49,7 @@ export default function ICPanelSidebarPopoverMenu(
 					label={item.label}
 					key={item.label}
 					href={item.href}
-					leftSection={
-						item.icon || <IconArrowsLeftRight color={"white"} size={12} />
-					}
+					leftSection={item.icon || <IconArrowsLeftRight color={"white"} size={12} />}
 				/>
 			);
 		});
@@ -89,9 +81,7 @@ export default function ICPanelSidebarPopoverMenu(
 				</Text>
 				<Flex direction={"column"}>
 					{generateMenuGroup(props.staticMenuGroup)}
-					{props.staticMenuGroup?.length && props.dynamicMenuGroup?.length && (
-						<Divider color={"gray.7"} />
-					)}
+					{props.staticMenuGroup?.length && props.dynamicMenuGroup?.length && <Divider color={"gray.7"} />}
 					{generateMenuGroup(props.dynamicMenuGroup)}
 				</Flex>
 			</Menu.Dropdown>

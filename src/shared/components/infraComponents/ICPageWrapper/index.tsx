@@ -25,11 +25,7 @@ export default function ICPageWrapper(props: Props) {
 							arrowPosition={"center"}
 							{...props.menuGroup}
 							target={
-								<Flex
-									style={{ cursor: "pointer" }}
-									justify={"center"}
-									align={"center"}
-								>
+								<Flex style={{ cursor: "pointer" }} justify={"center"} align={"center"}>
 									<IconChevronDown height={24} color={"black"} />
 								</Flex>
 							}

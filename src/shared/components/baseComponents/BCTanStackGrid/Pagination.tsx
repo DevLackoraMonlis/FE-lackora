@@ -1,10 +1,4 @@
-import {
-	Flex,
-	type MantineSize,
-	Pagination,
-	Select,
-	Text,
-} from "@mantine/core";
+import { Flex, type MantineSize, Pagination, Select, Text } from "@mantine/core";
 import type { FC } from "react";
 
 export type AgPaginationProps = {

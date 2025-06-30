@@ -5,10 +5,10 @@
  * MonoWatch Security Asset Management - BackBone Structure
  * OpenAPI spec version: 1.0.0
  */
-import type { EachWebService } from './EachWebService';
+import type { EachWebService } from "./EachWebService";
 
 export interface PaginatedBaseResponseEachWebServiceNoneType {
-  results: EachWebService[];
-  total: number;
-  metadata: null;
+	results: EachWebService[];
+	total: number;
+	metadata: null;
 }

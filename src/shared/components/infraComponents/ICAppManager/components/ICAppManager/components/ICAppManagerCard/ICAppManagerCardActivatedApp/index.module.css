@@ -1,7 +1,8 @@
 .activeButtonRoot {
-    border: none;
+	border: none;
 }
 
-.validRoot, .activeRoot {
-    border-radius: 0.25rem;
+.validRoot,
+.activeRoot {
+	border-radius: 0.25rem;
 }

@@ -15,9 +15,7 @@ export async function middleware(request: NextRequest) {
 	response.headers.set(
 		"Content-Security-Policy",
 		`
-      default-src 'self' ${process.env.BASE_URL || ""} ${
-				process.env.WS_URL || ""
-			};
+      default-src 'self' ${process.env.BASE_URL || ""} ${process.env.WS_URL || ""};
       script-src 'self' 'unsafe-eval' 'nonce-${nonce.nonce}';
       style-src 'self' 'unsafe-inline';
       font-src 'self';

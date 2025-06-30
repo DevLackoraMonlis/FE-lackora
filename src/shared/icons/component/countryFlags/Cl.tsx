@@ -1,4 +1,3 @@
-import * as React from "react";
 import type { Ref, SVGProps } from "react";
 import { forwardRef, memo } from "react";
 const SvgCl = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
@@ -16,12 +15,7 @@ const SvgCl = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 		<path fill="#0039a6" d="M4 4h-8v-8h8z" />
 		<g id="cl_svg__c">
 			<g id="cl_svg__b">
-				<path
-					id="cl_svg__a"
-					fill="#fff"
-					d="M0-2v2h1z"
-					transform="rotate(18 0 -2)"
-				/>
+				<path id="cl_svg__a" fill="#fff" d="M0-2v2h1z" transform="rotate(18 0 -2)" />
 				<use xlinkHref="#cl_svg__a" transform="scale(-1 1)" />
 			</g>
 			<use xlinkHref="#cl_svg__b" transform="rotate(72)" />

@@ -10,12 +10,7 @@ import { AppRoutes } from "@/shared/constants/app-routes";
 import activeAppsStore from "@/shared/stores/activeAppsStore";
 import { ActionIcon, Divider, Flex, ScrollArea } from "@mantine/core";
 import { useViewportSize } from "@mantine/hooks";
-import {
-	IconArrowLeft,
-	IconArrowRight,
-	IconChevronRight,
-	IconSettings,
-} from "@tabler/icons-react";
+import { IconArrowLeft, IconArrowRight, IconChevronRight, IconSettings } from "@tabler/icons-react";
 import type { ReactNode } from "react";
 import { useStore } from "zustand";
 import { useShallow } from "zustand/react/shallow";
@@ -41,10 +36,7 @@ const generateMenuItem = (params: {
 		const navLink = (
 			<BCNavLink
 				leftSection={link.icon}
-				rightSection={
-					params.opened &&
-					link.menuGroupProps && <IconChevronRight color={"white"} size={16} />
-				}
+				rightSection={params.opened && link.menuGroupProps && <IconChevronRight color={"white"} size={16} />}
 				key={link.label}
 				label={params.opened ? link.label : ""}
 				href={link.href}
@@ -76,11 +68,7 @@ function generatePopoverMenuGroup(params: {
 		title: params.title,
 		dynamicMenuGroup: params.modules.map((item) => ({
 			href: AppRoutes.appModulePage(params.name, item),
-			icon: (
-				<ICPanelSidebarIconWrapper>
-					{getSidePanelAppModuleIcon(12, item)}
-				</ICPanelSidebarIconWrapper>
-			),
+			icon: <ICPanelSidebarIconWrapper>{getSidePanelAppModuleIcon(12, item)}</ICPanelSidebarIconWrapper>,
 			label: item,
 		})),
 	};
@@ -99,9 +87,7 @@ export default function ICPanelSidebar(props: Props) {
 	const topMenuItems = generateMenuItem({
 		items:
 			store.apps
-				.filter(
-					(item) => item.priority && item.placement !== "management_center",
-				)
+				.filter((item) => item.priority && item.placement !== "management_center")
 				.sort()
 				.map((item) => ({
 					href: AppRoutes.appLandingPage(item.name),
@@ -160,35 +146,23 @@ export default function ICPanelSidebar(props: Props) {
 	});
 
 	return (
-		<nav
-			className={`${classes.navbar} ${props.opened ? classes.openedNavbar : classes.closedNavbar}`}
-		>
+		<nav className={`${classes.navbar} ${props.opened ? classes.openedNavbar : classes.closedNavbar}`}>
 			<Flex h={"100%"} pb={"md"} direction={"column"} justify={"space-between"}>
 				<ScrollArea h={height - 48}>
 					<Flex direction={"column"} gap={"sm"}>
 						{topMenuItems}
-						{!!topMenuItems.length && (
-							<Divider color={"var(--mantine-color-gray-7)"} />
-						)}
+						{!!topMenuItems.length && <Divider color={"var(--mantine-color-gray-7)"} />}
 						{applicationMenuItems}
-						{!!applicationMenuItems.length && (
-							<Divider color={"var(--mantine-color-gray-7)"} />
-						)}
+						{!!applicationMenuItems.length && <Divider color={"var(--mantine-color-gray-7)"} />}
 						{sidebarMenuItems}
-						{!!sidebarMenuItems.length && (
-							<Divider color={"var(--mantine-color-gray-7)"} />
-						)}
+						{!!sidebarMenuItems.length && <Divider color={"var(--mantine-color-gray-7)"} />}
 						<ICPanelSidebarPopoverMenu
 							width={300}
 							withoutOffset={!props.opened}
 							target={
 								<BCNavLink
 									leftSection={<IconSettings color={"white"} />}
-									rightSection={
-										props.opened && (
-											<IconChevronRight color={"white"} size={16} />
-										)
-									}
+									rightSection={props.opened && <IconChevronRight color={"white"} size={16} />}
 									key={"management-center"}
 									label={props.opened && "Management Center"}
 								/>

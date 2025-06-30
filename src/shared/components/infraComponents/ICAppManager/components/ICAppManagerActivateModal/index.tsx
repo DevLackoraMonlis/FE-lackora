@@ -1,21 +1,9 @@
-import {
-	Alert,
-	Button,
-	Flex,
-	Modal,
-	Text,
-	TextInput,
-	Title,
-	useMantineTheme,
-} from "@mantine/core";
+import { Alert, Button, Flex, Modal, Text, TextInput, Title, useMantineTheme } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useState } from "react";
 import { useAppManagerActivateModal } from "../../hooks/useAppManagerActivateModal";
 import useAppManagerIcon from "../../hooks/useAppManagerIcon";
-import type {
-	ICAppManagerActivateProps,
-	ICAppManagerIconType,
-} from "../../index.types";
+import type { ICAppManagerActivateProps, ICAppManagerIconType } from "../../index.types";
 import classes from "./index.module.css";
 
 type Props = ICAppManagerActivateProps;
@@ -90,9 +78,8 @@ export function ICAppManagerActivateModal(props: Props) {
 				<Flex>
 					{!modalCondition && (
 						<Text mt={10} style={{ textAlign: "justify" }} fz={12}>
-							To install this plugin, please enter your activation code or
-							submit a purchase request. If you have already purchased the
-							plugin, enter the code in the field below. If you haven&apos;t
+							To install this plugin, please enter your activation code or submit a purchase request. If you
+							have already purchased the plugin, enter the code in the field below. If you haven&apos;t
 							purchased it yet, you can request to buy the plugin
 						</Text>
 					)}
@@ -123,10 +110,7 @@ export function ICAppManagerActivateModal(props: Props) {
 												placeholder="Activation code"
 												flex={1}
 											/>
-											<Button
-												type="submit"
-												disabled={!activationForm.isValid()}
-											>
+											<Button type="submit" disabled={!activationForm.isValid()}>
 												Submit
 											</Button>
 										</Flex>
@@ -148,18 +132,14 @@ export function ICAppManagerActivateModal(props: Props) {
 													placeholder="Plugin key"
 													flex={1}
 												/>
-												<Button
-													type="submit"
-													disabled={!activationForm.isValid()}
-												>
+												<Button type="submit" disabled={!activationForm.isValid()}>
 													Submit
 												</Button>
 											</Flex>
 											<Alert color={theme.colors.red[4]}>
 												<p style={{ color: theme.colors.red[8] }}>
-													The activation code you entered is invalid. Please
-													check the code and try again, or contact support if
-													the issue persists.{" "}
+													The activation code you entered is invalid. Please check the code and try again, or
+													contact support if the issue persists.{" "}
 												</p>
 											</Alert>
 										</Flex>
@@ -169,8 +149,7 @@ export function ICAppManagerActivateModal(props: Props) {
 						) : (
 							<Alert color={theme.colors.green[4]}>
 								<p style={{ color: theme.colors.green[8] }}>
-									Your activation code has been verified. You can now continue
-									with the plugin installation.
+									Your activation code has been verified. You can now continue with the plugin installation.
 								</p>
 							</Alert>
 						)}
@@ -188,20 +167,16 @@ export function ICAppManagerActivateModal(props: Props) {
 							w="100%"
 						>
 							<Text fz={14} fw={700}>
-								If you don&#39;t have an activation code, click &#39;Request
-								Purchase&#39; to start the purchase process.
+								If you don&#39;t have an activation code, click &#39;Request Purchase&#39; to start the
+								purchase process.
 							</Text>
 							<Text fz={12}>
-								Clicking the &#39;Request Purchase&#39; button will redirect you
-								to the customer portal, where our sales team will reach out to
-								guide you through the purchase process. Once the purchase is
-								complete, you’ll receive an activation code to enter on the
-								plugin installation page.
+								Clicking the &#39;Request Purchase&#39; button will redirect you to the customer portal, where
+								our sales team will reach out to guide you through the purchase process. Once the purchase is
+								complete, you’ll receive an activation code to enter on the plugin installation page.
 							</Text>
 							<Flex justify="start">
-								<Button onClick={requestPurchaseHandler}>
-									Request Purchase
-								</Button>
+								<Button onClick={requestPurchaseHandler}>Request Purchase</Button>
 							</Flex>
 						</Flex>
 					)}

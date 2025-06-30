@@ -1,4 +1,4 @@
 export enum pluginDetailsEnum {
-  SUMMERY = 'Summary',
-  HISTORY = 'History'
+	SUMMERY = "Summary",
+	HISTORY = "History",
 }

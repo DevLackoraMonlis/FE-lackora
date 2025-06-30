@@ -28,7 +28,6 @@ export default function AppDetail() {
 		window.open("https://cp-uat.behinrahkar.com/", "_blank");
 	};
 
-	// biome-ignore lint: useExhaustiveDependencies
 	useEffect(() => {
 		if (pathname === AppRoutes.appDetailPage(appName)) {
 			setOpenSidePanel?.(false);
@@ -49,10 +48,7 @@ export default function AppDetail() {
 				});
 			}}
 			getAppDetails={async (variables, config) => {
-				return getApplication(
-					variables.name,
-					config?.signal as AbortSignal,
-				).then((response) => {
+				return getApplication(variables.name, config?.signal as AbortSignal).then((response) => {
 					const item = response.data;
 					const data: ICAppManagerRs = {
 						//todo

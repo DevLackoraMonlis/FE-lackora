@@ -9,12 +9,7 @@ type Props = ModalProps & {
 	closeClassName?: string;
 };
 
-function BCModal({
-	classNames,
-	closeClassName,
-	headerClassName,
-	...props
-}: Props) {
+function BCModal({ classNames, closeClassName, headerClassName, ...props }: Props) {
 	return (
 		<Modal
 			{...props}
@@ -29,14 +24,8 @@ function BCModal({
 	);
 }
 
-BCModal.EmptyFooter = function Footer(
-	props: PropsWithChildren<{ wrapperClass?: string }>,
-) {
-	return (
-		<div className={`${classes.footer} ${props.wrapperClass}`}>
-			{props.children}
-		</div>
-	);
+BCModal.EmptyFooter = function Footer(props: PropsWithChildren<{ wrapperClass?: string }>) {
+	return <div className={`${classes.footer} ${props.wrapperClass}`}>{props.children}</div>;
 };
 
 BCModal.Footer = function Footer(props: {
@@ -49,11 +38,7 @@ BCModal.Footer = function Footer(props: {
 			<Button id="data-test-modal-apply" onClick={props.onApply}>
 				{props.applyLabel || "Apply"}
 			</Button>
-			<Button
-				id="data-test-modal-cancel"
-				onClick={props.onCancel}
-				variant="default"
-			>
+			<Button id="data-test-modal-cancel" onClick={props.onCancel} variant="default">
 				Cancel
 			</Button>
 		</Flex>
@@ -82,20 +67,10 @@ BCModal.FooterTwoButton = function Footer(props: {
 }) {
 	return (
 		<Flex p={16} gap="sm" justify="flex-end" className={classes.footer}>
-			<Button
-				id="data-test-modal-ok"
-				loading={props.loading}
-				{...props.okButtonProps}
-				onClick={props.onOk}
-			>
+			<Button id="data-test-modal-ok" loading={props.loading} {...props.okButtonProps} onClick={props.onOk}>
 				{props.okLabel || "Ok"}
 			</Button>
-			<Button
-				id="data-test-modal-cencel"
-				loading={props.loading}
-				onClick={props.onCancel}
-				variant="default"
-			>
+			<Button id="data-test-modal-cencel" loading={props.loading} onClick={props.onCancel} variant="default">
 				Cancel
 			</Button>
 		</Flex>

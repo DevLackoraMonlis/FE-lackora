@@ -5,18 +5,18 @@
  * MonoWatch Security Asset Management - BackBone Structure
  * OpenAPI spec version: 1.0.0
  */
-import type { CreateAdapterConfigurationResponseConfig } from './CreateAdapterConfigurationResponseConfig';
-import type { CreateAdapterConfigurationResponseIsActive } from './CreateAdapterConfigurationResponseIsActive';
-import type { CreateAdapterConfigurationResponseUpdater } from './CreateAdapterConfigurationResponseUpdater';
-import type { CreateAdapterConfigurationResponseUpdatedTime } from './CreateAdapterConfigurationResponseUpdatedTime';
+import type { CreateAdapterConfigurationResponseConfig } from "./CreateAdapterConfigurationResponseConfig";
+import type { CreateAdapterConfigurationResponseIsActive } from "./CreateAdapterConfigurationResponseIsActive";
+import type { CreateAdapterConfigurationResponseUpdatedTime } from "./CreateAdapterConfigurationResponseUpdatedTime";
+import type { CreateAdapterConfigurationResponseUpdater } from "./CreateAdapterConfigurationResponseUpdater";
 
 export interface CreateAdapterConfigurationResponse {
-  id: string;
-  adapter_id: string;
-  config: CreateAdapterConfigurationResponseConfig;
-  is_active?: CreateAdapterConfigurationResponseIsActive;
-  creator: string;
-  created_time: string;
-  updater?: CreateAdapterConfigurationResponseUpdater;
-  updated_time?: CreateAdapterConfigurationResponseUpdatedTime;
+	id: string;
+	adapter_id: string;
+	config: CreateAdapterConfigurationResponseConfig;
+	is_active?: CreateAdapterConfigurationResponseIsActive;
+	creator: string;
+	created_time: string;
+	updater?: CreateAdapterConfigurationResponseUpdater;
+	updated_time?: CreateAdapterConfigurationResponseUpdatedTime;
 }

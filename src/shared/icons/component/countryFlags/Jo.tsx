@@ -1,15 +1,7 @@
-import * as React from "react";
 import type { Ref, SVGProps } from "react";
 import { forwardRef, memo } from "react";
 const SvgJo = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
-	<svg
-		xmlns="http://www.w3.org/2000/svg"
-		viewBox="0 0 840 420"
-		width="1em"
-		height="1em"
-		ref={ref}
-		{...props}
-	>
+	<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 420" width="1em" height="1em" ref={ref} {...props}>
 		<path fill="#007a3d" d="M0 0h840v420H0z" />
 		<path fill="#fff" d="M0 0h840v280H0z" />
 		<path d="M0 0h840v140H0z" />

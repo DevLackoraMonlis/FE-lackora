@@ -1,6 +1,8 @@
-import { CheckIcon, Text, useMantineTheme } from '@mantine/core';
+import { CheckIcon, Text, useMantineTheme } from "@mantine/core";
 
-export default function PasswordContainSpecial(props: { checkingPasswordData?: boolean }) {
+export default function PasswordContainSpecial(props: {
+	checkingPasswordData?: boolean;
+}) {
 	const theme = useMantineTheme();
 
 	return (

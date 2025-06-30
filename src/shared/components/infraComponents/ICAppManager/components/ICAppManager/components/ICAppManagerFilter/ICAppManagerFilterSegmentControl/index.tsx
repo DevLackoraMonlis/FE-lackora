@@ -14,9 +14,7 @@ export default function ICAppManagerFilterSegmentControl(props: Props) {
 			display="flex"
 			color="primary"
 			value={props.selectedType}
-			onChange={(value) =>
-				props.setSelectedType(value as ICAppManagerRqFilterType)
-			}
+			onChange={(value) => props.setSelectedType(value as ICAppManagerRqFilterType)}
 			data={PLUGIN_MANAGER_FILTER_SEGMENT_ITEM.map((item) => {
 				return {
 					label: `${item?.label} (${props.info[item.value] || 0})`,

@@ -1,9 +1,8 @@
-
 .input::placeholder {
 	color: var(--mantine-color-gray-2);
 }
 
-[data-mantine-color-scheme='dark'] .input::placeholder{
+[data-mantine-color-scheme="dark"] .input::placeholder {
 	color: var(--mantine-color-gray-7);
 }
 
@@ -12,5 +11,5 @@
 }
 
 .newText {
-    font-size: 10px;
+	font-size: 10px;
 }

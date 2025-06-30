@@ -26,15 +26,13 @@ export default function ICAppManagerDetail(props: {
 	onRequestPurchase?: ICAppManagerProps["onRequestPurchase"];
 	onGotoLicenseManagement: ICAppManagerProps["onGotoLicenseManagement"];
 }) {
-	const [pluginActivateModal, handlerEnableActivateModal] =
-		useDisclosure(false);
+	const [pluginActivateModal, handlerEnableActivateModal] = useDisclosure(false);
 	const [pluginAlertModal, handlerEnableAlertModal] = useDisclosure(false);
 
-	const { pluginDetails, pluginDetailsLoading, pluginDetailsRefetch } =
-		useGetPluginDetails({
-			getPluginDetails: props.getAppDetails,
-			name: props.name,
-		});
+	const { pluginDetails, pluginDetailsLoading, pluginDetailsRefetch } = useGetPluginDetails({
+		getPluginDetails: props.getAppDetails,
+		name: props.name,
+	});
 
 	const onRequestPurchase = () => {
 		props.onRequestPurchase?.(props.name || "");
@@ -71,9 +69,7 @@ export default function ICAppManagerDetail(props: {
 							<ICAppManagerDetailsStatus
 								active={!!pluginDetails?.active}
 								expireDate={pluginDetails?.expireDate || ""}
-								isExpiredLicenseSupport={
-									!!pluginDetails?.isExpiredLicenseSupport
-								}
+								isExpiredLicenseSupport={!!pluginDetails?.isExpiredLicenseSupport}
 								isExpiredCommercial={!!pluginDetails?.isExpiredCommercial}
 								isInstalled={!!pluginDetails?.isInstalled}
 								isNew={!!pluginDetails?.isNew}
@@ -101,8 +97,8 @@ export default function ICAppManagerDetail(props: {
 					>
 						<IconInfoCircle width={24} height={24} />
 						<Text fw={600} size="sm">
-							The services provided by this plugin are dependent on your support
-							service license and are valid until the license expires.
+							The services provided by this plugin are dependent on your support service license and are valid
+							until the license expires.
 						</Text>
 					</Flex>
 				)}
@@ -111,10 +107,7 @@ export default function ICAppManagerDetail(props: {
 						{pluginDetails?.description || "-"}
 					</Text>
 				</Skeleton>
-				<ICAppManagerDetailsCards
-					data={pluginDetails}
-					loading={pluginDetailsLoading}
-				/>
+				<ICAppManagerDetailsCards data={pluginDetails} loading={pluginDetailsLoading} />
 				{pluginDetails?.isInstalled ? (
 					<ICAppManagerDetailsTabs
 						name={pluginDetails?.name || ""}
@@ -134,13 +127,12 @@ export default function ICAppManagerDetail(props: {
 						</Skeleton>
 					</Card>
 				)}
-				{pluginDetails?.isInstalling &&
-					pluginDetails?.installingSteps.length > 0 && (
-						<ICAppManagerDetailsInstallSteps
-							name={pluginDetails?.name}
-							installingSteps={pluginDetails?.installingSteps}
-						/>
-					)}
+				{pluginDetails?.isInstalling && pluginDetails?.installingSteps.length > 0 && (
+					<ICAppManagerDetailsInstallSteps
+						name={pluginDetails?.name}
+						installingSteps={pluginDetails?.installingSteps}
+					/>
+				)}
 				<ICAppManagerActivateModal
 					opened={pluginActivateModal}
 					onClose={handlerEnableActivateModal.close}

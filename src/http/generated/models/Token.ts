@@ -5,11 +5,11 @@
  * MonoWatch Security Asset Management - BackBone Structure
  * OpenAPI spec version: 1.0.0
  */
-import type { UserProfile } from './UserProfile';
+import type { UserProfile } from "./UserProfile";
 
 export interface Token {
-  access_token: string;
-  refresh_token: string;
-  token_type: string;
-  profile: UserProfile;
+	access_token: string;
+	refresh_token: string;
+	token_type: string;
+	profile: UserProfile;
 }

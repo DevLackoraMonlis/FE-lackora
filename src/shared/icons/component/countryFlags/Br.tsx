@@ -1,4 +1,3 @@
-import * as React from "react";
 import type { Ref, SVGProps } from "react";
 import { forwardRef, memo } from "react";
 const SvgBr = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
@@ -21,14 +20,8 @@ const SvgBr = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 				id="br_svg__n"
 				d="M-15.75-22C-15.75-15-9-11.5 1-11.5s14.74-3.25 14.75-7.75c0-14.25-46.75-5.25-46.5-30.25C-30.5-71-6-70 3-70s26 4 25.75 21.25H13.5c0-7.5-7-10.25-15-10.25-7.75 0-13.25 1.25-13.25 8.5-.25 11.75 46.25 4 46.25 28.75C31.5-3.5 13.5 0 0 0c-11.5 0-31.55-4.5-31.5-22z"
 			/>
-			<path
-				id="br_svg__l"
-				d="M-26.25 0h52.5v-12h-40.5v-16h33v-12h-33v-11H25v-12h-51.25z"
-			/>
-			<path
-				id="br_svg__k"
-				d="M-31.5 0h12v-48l14 48h11l14-48V0h12v-70H14L0-22l-14-48h-17.5z"
-			/>
+			<path id="br_svg__l" d="M-26.25 0h52.5v-12h-40.5v-16h33v-12h-33v-11H25v-12h-51.25z" />
+			<path id="br_svg__k" d="M-31.5 0h12v-48l14 48h11l14-48V0h12v-70H14L0-22l-14-48h-17.5z" />
 			<path
 				id="br_svg__d"
 				fillRule="evenodd"
@@ -39,11 +32,7 @@ const SvgBr = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 				fillRule="evenodd"
 				d="M-31.5 0h13v-26h28a22 22 0 0 0 0-44h-40zm13-39h27a9 9 0 0 0 0-18h-27z"
 			/>
-			<path
-				id="br_svg__j"
-				d="M0 0h63v-13H12v-18h40v-12H12v-14h48v-13H0z"
-				transform="translate(-31.5)"
-			/>
+			<path id="br_svg__j" d="M0 0h63v-13H12v-18h40v-12H12v-14h48v-13H0z" transform="translate(-31.5)" />
 			<use xlinkHref="#br_svg__a" id="br_svg__q" transform="scale(15)" />
 			<use xlinkHref="#br_svg__a" id="br_svg__s" transform="scale(10.5)" />
 			<use xlinkHref="#br_svg__a" id="br_svg__r" transform="scale(21)" />

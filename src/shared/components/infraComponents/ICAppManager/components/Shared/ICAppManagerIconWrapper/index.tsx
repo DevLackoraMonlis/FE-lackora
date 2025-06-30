@@ -39,11 +39,7 @@ export default function ICAppManagerIconWrapper(props: Props) {
 			})}
 		>
 			{props?.isNew && (
-				<Flex
-					w={props.badgeIconSize || 16}
-					h={props.badgeIconSize || 16}
-					className={classes.newBadge}
-				>
+				<Flex w={props.badgeIconSize || 16} h={props.badgeIconSize || 16} className={classes.newBadge}>
 					<Tooltip
 						withinPortal
 						arrowOffset={15}
@@ -60,11 +56,7 @@ export default function ICAppManagerIconWrapper(props: Props) {
 				</Flex>
 			)}
 			{props?.isInstalled && (
-				<Flex
-					w={props.badgeIconSize || 16}
-					h={props.badgeIconSize || 16}
-					className={classes.installBadge}
-				>
+				<Flex w={props.badgeIconSize || 16} h={props.badgeIconSize || 16} className={classes.installBadge}>
 					<Tooltip
 						arrowOffset={15}
 						arrowSize={7}

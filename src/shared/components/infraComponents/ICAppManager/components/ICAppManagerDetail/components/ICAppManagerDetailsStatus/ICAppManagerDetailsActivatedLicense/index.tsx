@@ -12,15 +12,7 @@ type Props = {
 export default function ICAppManagerDetailsActivatedLicense(props: Props) {
 	return (
 		<Flex gap={15}>
-			<Flex
-				h={42}
-				bg="#08875D"
-				justify="center"
-				align="center"
-				className={classes.activeBtn}
-				px={16}
-				py={8}
-			>
+			<Flex h={42} bg="#08875D" justify="center" align="center" className={classes.activeBtn} px={16} py={8}>
 				<Text fw={400} size="md" c="#FAFAFA">
 					Active
 				</Text>

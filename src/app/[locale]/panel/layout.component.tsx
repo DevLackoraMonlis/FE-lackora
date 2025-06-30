@@ -18,7 +18,7 @@ export default function PanelLayout(
 		status: "authenticated" | "loading" | "unauthenticated";
 	}>,
 ) {
-	const { black, white } = useMantineTheme();
+	const { white } = useMantineTheme();
 	const [opened, handlers] = useDisclosure(false);
 
 	useEffect(() => {
@@ -44,9 +44,7 @@ export default function PanelLayout(
 						backgroundColor: "#1e2e4f",
 					}}
 					applicationLogo={<IconBox color={white} />}
-					onLogout={() =>
-						signOut({ redirect: true, callbackUrl: AppRoutes.login })
-					}
+					onLogout={() => signOut({ redirect: true, callbackUrl: AppRoutes.login })}
 					sessionUser={props.sessionUser}
 					notification={<IconBell color={white} />}
 				/>

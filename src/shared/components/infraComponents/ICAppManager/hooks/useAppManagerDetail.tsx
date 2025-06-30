@@ -16,8 +16,7 @@ export const useGetPluginDetails = (params: {
 		refetch: pluginDetailsRefetch,
 	} = useQuery({
 		queryKey: ["get-plugin-details", params?.name],
-		queryFn: ({ signal }) =>
-			params.getPluginDetails({ name: params.name || "" }, { signal }),
+		queryFn: ({ signal }) => params.getPluginDetails({ name: params.name || "" }, { signal }),
 		select: (res) => res.data,
 		refetchOnMount: true,
 	});
@@ -38,11 +37,7 @@ export const useGetPluginHistory = (params: {
 		isFetching: pluginHistoryLoading,
 		refetch: pluginHistoryRefetch,
 	} = useQuery({
-		queryKey: [
-			"get-plugin-history",
-			params?.payload?.name,
-			params?.payload?.pagination,
-		],
+		queryKey: ["get-plugin-history", params?.payload?.name, params?.payload?.pagination],
 		queryFn: () =>
 			params.getPluginHistory({
 				name: params?.payload?.name,

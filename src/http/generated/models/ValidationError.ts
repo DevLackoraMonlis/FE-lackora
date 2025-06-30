@@ -5,10 +5,10 @@
  * MonoWatch Security Asset Management - BackBone Structure
  * OpenAPI spec version: 1.0.0
  */
-import type { ValidationErrorLocItem } from './ValidationErrorLocItem';
+import type { ValidationErrorLocItem } from "./ValidationErrorLocItem";
 
 export interface ValidationError {
-  loc: ValidationErrorLocItem[];
-  msg: string;
-  type: string;
+	loc: ValidationErrorLocItem[];
+	msg: string;
+	type: string;
 }

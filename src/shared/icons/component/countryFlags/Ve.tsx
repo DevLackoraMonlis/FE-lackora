@@ -1,4 +1,3 @@
-import * as React from "react";
 import type { Ref, SVGProps } from "react";
 import { forwardRef, memo } from "react";
 const SvgVe = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
@@ -15,12 +14,7 @@ const SvgVe = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 			<g id="ve_svg__d" transform="translate(0 -36)">
 				<g id="ve_svg__c">
 					<g id="ve_svg__b">
-						<path
-							id="ve_svg__a"
-							fill="#fff"
-							d="M0-5v5h3z"
-							transform="rotate(18 0 -5)"
-						/>
+						<path id="ve_svg__a" fill="#fff" d="M0-5v5h3z" transform="rotate(18 0 -5)" />
 						<use xlinkHref="#ve_svg__a" transform="scale(-1 1)" />
 					</g>
 					<use xlinkHref="#ve_svg__b" transform="rotate(72)" />

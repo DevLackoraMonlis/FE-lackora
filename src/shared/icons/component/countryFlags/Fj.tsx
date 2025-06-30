@@ -1,4 +1,3 @@
-import * as React from "react";
 import type { Ref, SVGProps } from "react";
 import { forwardRef, memo } from "react";
 const SvgFj = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
@@ -17,18 +16,8 @@ const SvgFj = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 			<path d="M0 0h650v350H0z" />
 		</clipPath>
 		<path fill="#012169" d="M0 0h1200v600H0z" />
-		<path
-			stroke="#fff"
-			strokeWidth={60}
-			d="m0 0 600 300M0 300 600 0"
-			clipPath="url(#fj_svg__a)"
-		/>
-		<path
-			stroke="#c8102e"
-			strokeWidth={40}
-			d="m0 0 600 300M0 300 600 0"
-			clipPath="url(#fj_svg__b)"
-		/>
+		<path stroke="#fff" strokeWidth={60} d="m0 0 600 300M0 300 600 0" clipPath="url(#fj_svg__a)" />
+		<path stroke="#c8102e" strokeWidth={40} d="m0 0 600 300M0 300 600 0" clipPath="url(#fj_svg__b)" />
 		<path stroke="#fff" strokeWidth={100} d="M300 0v400M0 150h700" />
 		<path stroke="#c8102e" strokeWidth={60} d="M300 0v400M0 150h700" />
 		<path fill="#69b3e7" d="M0 300h600V0h600v600H0z" />
@@ -44,13 +33,7 @@ const SvgFj = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 			<path fill="#c8102e" d="M778.8 143.94h242.4v79.2H778.8z" />
 			<g strokeMiterlimit={3}>
 				<g fill="#fff" stroke="#000" strokeWidth={0.805}>
-					<ellipse
-						cx={798.23}
-						cy={192.212}
-						strokeWidth={0.803}
-						rx={13.623}
-						ry={10.962}
-					/>
+					<ellipse cx={798.23} cy={192.212} strokeWidth={0.803} rx={13.623} ry={10.962} />
 					<ellipse cx={798.23} cy={186.525} rx={12.114} ry={6.123} />
 					<ellipse cx={798.23} cy={198.769} rx={12.114} ry={6.123} />
 					<ellipse cx={798.23} cy={192.213} rx={12.114} ry={6.123} />

@@ -21,10 +21,9 @@ export default function ICAppManagerAlertModal(props: ICAppManagerAlertProps) {
 					Your support license has expired
 				</Text>
 				<Text c="#121721" fw="400" size="sm">
-					Which means you cannot activate or use free plugins. However, you can
-					still activate and use commercial plugins. To restore access to all
-					plugin activations, please renew your support license. For help with
-					renewal or any questions, contact our support team.
+					Which means you cannot activate or use free plugins. However, you can still activate and use
+					commercial plugins. To restore access to all plugin activations, please renew your support license.
+					For help with renewal or any questions, contact our support team.
 				</Text>
 				<Flex justify="center" align="center">
 					<Button

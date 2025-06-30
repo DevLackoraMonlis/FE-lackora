@@ -1,4 +1,3 @@
-import * as React from "react";
 import type { Ref, SVGProps } from "react";
 import { forwardRef, memo } from "react";
 const SvgFk = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
@@ -547,10 +546,7 @@ const SvgFk = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 						d="m405.267 325.302 4.657.522m-3.587-4.396 4.132.654m-3.056-4.452 3.513.634m-2.536-4.414 3.092.579"
 						transform="matrix(1 0 0 1.006 1.916 -3.19)"
 					/>
-					<path
-						d="m420.23 447.36 2.48.553"
-						transform="matrix(1 0 0 1.006 -8.772 -141.32)"
-					/>
+					<path d="m420.23 447.36 2.48.553" transform="matrix(1 0 0 1.006 -8.772 -141.32)" />
 					<path
 						d="m405.637 323.398 4.518.589m-3.398-4.463 4.132.654m-3.08-4.452 3.512.634m-2.61-4.415 3.092.58"
 						transform="matrix(1 0 0 1.006 1.916 -3.19)"
@@ -576,10 +572,7 @@ const SvgFk = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 						d="m405.267 325.302 4.657.522m-3.587-4.396 4.132.654m-3.056-4.452 3.513.634m-2.536-4.414 3.092.579"
 						transform="matrix(1.2162 0 0 1.2235 -112.57 -69.046)"
 					/>
-					<path
-						d="m420.23 447.36 2.48.553"
-						transform="matrix(1.2162 0 0 1.2235 -125.57 -237.03)"
-					/>
+					<path d="m420.23 447.36 2.48.553" transform="matrix(1.2162 0 0 1.2235 -125.57 -237.03)" />
 					<path
 						d="m405.637 323.398 4.518.589m-3.398-4.463 4.132.654m-3.08-4.452 3.512.634m-2.61-4.415 3.092.58m-7.231 14.685 4.963.514m-5.517 1.395 5.303.504"
 						transform="matrix(1.2162 0 0 1.2235 -112.57 -69.046)"
@@ -654,13 +647,7 @@ const SvgFk = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 				d="m323.84 304.7 10.787-2.11 16.432 14.763-13.114 2.075z"
 			/>
 			<path fill="#efc9b2" d="M413.9 265.67h.762v72.984h-.762z" />
-			<g
-				fill="none"
-				stroke="#512007"
-				strokeOpacity={0.996}
-				strokeWidth={0.484}
-				fontSize={12}
-			>
+			<g fill="none" stroke="#512007" strokeOpacity={0.996} strokeWidth={0.484} fontSize={12}>
 				<path
 					strokeWidth={0.474}
 					d="m413.635 471.006 7.58-27.036 2.013-3.776m-7.036 31.609 6.163-27.544.873-4.065m-4.396 31.175 4.788-26.855-.392-4.32m-9.302 27.033 6.102.863"
@@ -680,12 +667,7 @@ const SvgFk = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 					transform="matrix(-.84711 0 0 .75482 743.04 73.543)"
 				/>
 			</g>
-			<g
-				fillRule="evenodd"
-				stroke="#512007"
-				strokeOpacity={0.996}
-				strokeWidth={0.541}
-			>
+			<g fillRule="evenodd" stroke="#512007" strokeOpacity={0.996} strokeWidth={0.541}>
 				<path
 					fill="#e98e01"
 					d="M445.08 320.351c-.29-.872-.463-2.436-.556-3.669-.088-1.16-.175-2.337 0-3.488.195-1.283 1.158-3.729 1.158-3.729s-25.289 3.623-25.289 3.914c0-.335-.156 6.885-.156 6.885z"
@@ -730,10 +712,7 @@ const SvgFk = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 				fill="#fedf82"
 				d="m398.794 282.927-21.901 4.737c-.147.594-.35 1.167-.353 1.65-.004.942-.256 2.091.054 3.285l21.381-4.745c-.12-.618-.178-1.209-.128-1.73.084-.87.458-2.007.947-3.197z"
 			/>
-			<g
-				strokeWidth={0.541}
-				transform="matrix(.9935 -.1088 .11896 .9935 -31.642 44.095)"
-			>
+			<g strokeWidth={0.541} transform="matrix(.9935 -.1088 .11896 .9935 -31.642 44.095)">
 				<use
 					xlinkHref="#fk_svg__a"
 					id="fk_svg__b"
@@ -742,18 +721,8 @@ const SvgFk = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 					strokeWidth={0.541}
 					transform="matrix(.99572 .08841 -.09667 .99572 28.306 -28.34)"
 				/>
-				<use
-					xlinkHref="#fk_svg__b"
-					width="100%"
-					height="100%"
-					transform="translate(5.666 -.532)"
-				/>
-				<use
-					xlinkHref="#fk_svg__b"
-					width="100%"
-					height="100%"
-					transform="translate(-5.708 .577)"
-				/>
+				<use xlinkHref="#fk_svg__b" width="100%" height="100%" transform="translate(5.666 -.532)" />
+				<use xlinkHref="#fk_svg__b" width="100%" height="100%" transform="translate(-5.708 .577)" />
 			</g>
 			<g fill="none" stroke="#512007" strokeOpacity={0.996} strokeWidth={0.271}>
 				<path d="M405.63 303.32s2.99 9.099 6.181 12.586c1.973 2.156 7.557 4.651 7.557 4.651m-39.65-17.555s4.047 17.915 11.024 22.275a952.1 952.1 0 0 1 12.789 8.139" />
@@ -861,10 +830,7 @@ const SvgFk = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 						d="M288.02 366.22h25.51v1.269h-25.51zm19.341 28.401h19.723v.981h-19.723z"
 						transform="matrix(.96841 -.24935 .271 .96258 0 0)"
 					/>
-					<path
-						d="M307.37 394.62h19.723v.981H307.37z"
-						transform="matrix(.96841 -.24935 .271 .96258 0 0)"
-					/>
+					<path d="M307.37 394.62h19.723v.981H307.37z" transform="matrix(.96841 -.24935 .271 .96258 0 0)" />
 				</g>
 				<path
 					fillRule="evenodd"
@@ -887,10 +853,7 @@ const SvgFk = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 						d="m405.267 325.156 4.657.523m-3.587-4.454 4.132.655m-3.056-4.368 3.513.634m-2.536-4.347 3.092.579"
 						transform="matrix(-1 0 0 1.006 776.58 -3.718)"
 					/>
-					<path
-						d="m420.23 447.36 2.48.553"
-						transform="matrix(-1 0 0 1.006 787.26 -141.85)"
-					/>
+					<path d="m420.23 447.36 2.48.553" transform="matrix(-1 0 0 1.006 787.26 -141.85)" />
 					<path
 						d="m405.637 323.277 4.657.523m-3.537-4.36 4.132.654m-3.08-4.391 3.512.634m-2.61-4.371 3.092.58"
 						transform="matrix(-1 0 0 1.006 776.58 -3.718)"
@@ -943,10 +906,7 @@ const SvgFk = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 						d="m405.267 325.302 4.657.522m-3.587-4.396 4.132.654m-3.056-4.452 3.513.634m-2.536-4.414 3.092.579"
 						transform="matrix(-1.2162 0 0 1.2235 890.72 -68.932)"
 					/>
-					<path
-						d="m420.23 447.36 2.48.553"
-						transform="matrix(-1.2162 0 0 1.2235 903.72 -236.92)"
-					/>
+					<path d="m420.23 447.36 2.48.553" transform="matrix(-1.2162 0 0 1.2235 903.72 -236.92)" />
 					<path
 						d="m405.637 323.398 4.518.589m-3.398-4.463 4.132.654m-3.08-4.452 3.512.634m-2.61-4.415 3.092.58m-7.231 14.685 4.963.514m-5.517 1.395 5.303.504"
 						transform="matrix(-1.2162 0 0 1.2235 890.72 -68.932)"
@@ -987,70 +947,22 @@ const SvgFk = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 					/>
 				</g>
 			</g>
-			<path
-				fill="#e6ab87"
-				d="m352.252 304.395 23.967-6.164.18.642-23.983 6.163z"
-			/>
-			<path
-				fill="#efc9b2"
-				d="m352.468 304.475 23.38-6.041.123.46-23.433 5.977z"
-			/>
-			<path
-				fill="#e6ab87"
-				d="m352.388 285.97 23.966-6.164.181.642-23.983 6.163z"
-			/>
-			<path
-				fill="#efc9b2"
-				d="m352.603 286.05 23.38-6.041.124.46-23.433 5.977z"
-			/>
-			<path
-				fill="#e6ab87"
-				d="m355.17 277.17 18.096-4.654.137.485-18.109 4.653z"
-			/>
-			<path
-				fill="#efc9b2"
-				d="m355.333 277.23 17.654-4.56.092.347-17.692 4.512z"
-			/>
-			<path
-				fill="#e6ab87"
-				d="m379.983 272.725 18.096-4.654.137.485-18.109 4.653z"
-			/>
-			<path
-				fill="#efc9b2"
-				d="m380.146 272.786 17.653-4.562.093.348-17.693 4.512z"
-			/>
-			<path
-				fill="#e6ab87"
-				d="m405.076 274.964 18.095-4.654.137.485-18.109 4.654z"
-			/>
-			<path
-				fill="#efc9b2"
-				d="m405.238 275.025 17.654-4.562.092.348-17.692 4.512z"
-			/>
-			<path
-				fill="#e6ab87"
-				d="m378.634 280.856 23.966-6.163.18.642-23.983 6.163z"
-			/>
-			<path
-				fill="#efc9b2"
-				d="m378.849 280.937 23.38-6.042.123.46-23.433 5.977z"
-			/>
-			<path
-				fill="#e6ab87"
-				d="m402.328 283.93 23.966-6.162.181.641-23.983 6.164z"
-			/>
-			<path
-				fill="#efc9b2"
-				d="m402.543 284.012 23.38-6.042.124.46-23.433 5.977z"
-			/>
-			<path
-				fill="#e6ab87"
-				d="m378.04 303.436 23.967-6.164.18.642-23.983 6.163z"
-			/>
-			<path
-				fill="#efc9b2"
-				d="m378.256 303.516 23.38-6.041.123.46-23.433 5.977z"
-			/>
+			<path fill="#e6ab87" d="m352.252 304.395 23.967-6.164.18.642-23.983 6.163z" />
+			<path fill="#efc9b2" d="m352.468 304.475 23.38-6.041.123.46-23.433 5.977z" />
+			<path fill="#e6ab87" d="m352.388 285.97 23.966-6.164.181.642-23.983 6.163z" />
+			<path fill="#efc9b2" d="m352.603 286.05 23.38-6.041.124.46-23.433 5.977z" />
+			<path fill="#e6ab87" d="m355.17 277.17 18.096-4.654.137.485-18.109 4.653z" />
+			<path fill="#efc9b2" d="m355.333 277.23 17.654-4.56.092.347-17.692 4.512z" />
+			<path fill="#e6ab87" d="m379.983 272.725 18.096-4.654.137.485-18.109 4.653z" />
+			<path fill="#efc9b2" d="m380.146 272.786 17.653-4.562.093.348-17.693 4.512z" />
+			<path fill="#e6ab87" d="m405.076 274.964 18.095-4.654.137.485-18.109 4.654z" />
+			<path fill="#efc9b2" d="m405.238 275.025 17.654-4.562.092.348-17.692 4.512z" />
+			<path fill="#e6ab87" d="m378.634 280.856 23.966-6.163.18.642-23.983 6.163z" />
+			<path fill="#efc9b2" d="m378.849 280.937 23.38-6.042.123.46-23.433 5.977z" />
+			<path fill="#e6ab87" d="m402.328 283.93 23.966-6.162.181.641-23.983 6.164z" />
+			<path fill="#efc9b2" d="m402.543 284.012 23.38-6.042.124.46-23.433 5.977z" />
+			<path fill="#e6ab87" d="m378.04 303.436 23.967-6.164.18.642-23.983 6.163z" />
+			<path fill="#efc9b2" d="m378.256 303.516 23.38-6.041.123.46-23.433 5.977z" />
 			<path
 				fill="#fed65b"
 				d="M373.268 285.873c-4.355 1.079-14.551 3.595-21.916 5.347a8.711 8.711 0 0 0-.06 3.294 13.259 13.259 0 0 0 1.33 3.945l20.436-4.759c-.673-1.468-1.114-3.166-.781-4.828.21-1.05.569-2.064.991-2.999z"
@@ -1067,14 +979,8 @@ const SvgFk = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 				fill="#fedf82"
 				d="m423.003 285.302-20.504 4.737c-.138.594-.24 1.167-.243 1.65-.004.942.186 2.091.48 3.284l19.495-4.744c-.113-.619-.168-1.21-.12-1.73.078-.87.432-2.007.892-3.197z"
 			/>
-			<path
-				fill="#e6ab87"
-				d="m402.205 303.892 23.966-6.163.18.642-23.983 6.163z"
-			/>
-			<path
-				fill="#efc9b2"
-				d="m402.42 303.973 23.38-6.041.123.46-23.432 5.976z"
-			/>
+			<path fill="#e6ab87" d="m402.205 303.892 23.966-6.163.18.642-23.983 6.163z" />
+			<path fill="#efc9b2" d="m402.42 303.973 23.38-6.041.123.46-23.432 5.976z" />
 			<g fill="#520" stroke="#2b1100">
 				<use
 					xlinkHref="#fk_svg__c"
@@ -1098,12 +1004,7 @@ const SvgFk = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 						rx={0.955}
 						ry={0.913}
 					/>
-					<use
-						xlinkHref="#fk_svg__d"
-						width="100%"
-						height="100%"
-						transform="translate(23.503 -8.526)"
-					/>
+					<use xlinkHref="#fk_svg__d" width="100%" height="100%" transform="translate(23.503 -8.526)" />
 				</g>
 				<g transform="translate(-.101)">
 					<use
@@ -1115,12 +1016,7 @@ const SvgFk = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 						stroke="#2b1100"
 						transform="translate(8.712 5.555)"
 					/>
-					<use
-						xlinkHref="#fk_svg__c"
-						width="100%"
-						height="100%"
-						transform="translate(29.243)"
-					/>
+					<use xlinkHref="#fk_svg__c" width="100%" height="100%" transform="translate(29.243)" />
 				</g>
 			</g>
 		</g>

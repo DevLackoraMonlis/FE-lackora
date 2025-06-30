@@ -1,4 +1,3 @@
-import * as React from "react";
 import type { Ref, SVGProps } from "react";
 import { forwardRef, memo } from "react";
 const SvgSb = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
@@ -24,11 +23,7 @@ const SvgSb = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 				<g id="sb_svg__e" fill="#fff">
 					<g id="sb_svg__d">
 						<g id="sb_svg__c">
-							<path
-								id="sb_svg__b"
-								d="M0-40V0h20z"
-								transform="rotate(18 0 -40)"
-							/>
+							<path id="sb_svg__b" d="M0-40V0h20z" transform="rotate(18 0 -40)" />
 							<use xlinkHref="#sb_svg__b" transform="scale(-1 1)" />
 						</g>
 						<use xlinkHref="#sb_svg__c" transform="rotate(72)" />
@@ -37,12 +32,7 @@ const SvgSb = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 					<use xlinkHref="#sb_svg__d" transform="rotate(144)" />
 				</g>
 				<g id="sb_svg__g" transform="rotate(40.6)">
-					<use
-						xlinkHref="#sb_svg__e"
-						id="sb_svg__f"
-						x={-104}
-						transform="rotate(-40.6 -104 0)"
-					/>
+					<use xlinkHref="#sb_svg__e" id="sb_svg__f" x={-104} transform="rotate(-40.6 -104 0)" />
 					<use xlinkHref="#sb_svg__f" x={208} />
 				</g>
 				<use xlinkHref="#sb_svg__g" transform="scale(-1 1)" />

@@ -14,10 +14,7 @@ type Props = {
 	summary: string | null;
 	loading: boolean;
 	name?: string;
-	getPluginHistory: ICAppManagerAxiosApiFn<
-		ICAppManagerHistoryRq,
-		PaginationRs<ICAppManagerHistoryRs>
-	>;
+	getPluginHistory: ICAppManagerAxiosApiFn<ICAppManagerHistoryRq, PaginationRs<ICAppManagerHistoryRs>>;
 };
 
 export default function ICAppManagerDetailsTabs(props: Props) {
@@ -37,10 +34,7 @@ export default function ICAppManagerDetailsTabs(props: Props) {
 				</Tabs.Tab>
 			</Tabs.List>
 			<Tabs.Panel value={pluginDetailsEnum.SUMMERY} pt={20}>
-				<ICAppManagerDetailsSummaryTab
-					summary={props.summary}
-					loading={props.loading}
-				/>
+				<ICAppManagerDetailsSummaryTab summary={props.summary} loading={props.loading} />
 			</Tabs.Panel>
 			<Tabs.Panel value={pluginDetailsEnum.HISTORY} pt={20}>
 				<ICAppManagerDetailsHistoryTab

@@ -1,13 +1,5 @@
 import type { ICPanelHeaderProps } from "@/shared/components/infraComponents/ICPanelHeader/index.types";
-import {
-	ActionIcon,
-	Avatar,
-	Box,
-	Flex,
-	Menu,
-	Text,
-	useMantineTheme,
-} from "@mantine/core";
+import { ActionIcon, Avatar, Box, Flex, Menu, Text, useMantineTheme } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { IconChevronDown, IconX } from "@tabler/icons-react";
 import dayjs from "dayjs";
@@ -36,11 +28,7 @@ export default function ICPanelHeaderAvatarMenu(props: ICPanelHeaderProps) {
 				onClose={aboutMenuHandler.close}
 			>
 				<Menu.Target>
-					<Flex
-						id="data-test-profile-menu-button"
-						style={{ cursor: "pointer" }}
-						align="center"
-					>
+					<Flex id="data-test-profile-menu-button" style={{ cursor: "pointer" }} align="center">
 						<Box p="8px">
 							<Avatar
 								styles={{
@@ -75,10 +63,7 @@ export default function ICPanelHeaderAvatarMenu(props: ICPanelHeaderProps) {
 								profileName={`${userSession?.data?.profile?.name} ${userSession?.data?.profile?.familyname}`}
 							/>
 						</Menu.Label>
-						<Menu.Item
-							id="data-test-profile-menu-logout"
-							onClick={props.onLogout}
-						>
+						<Menu.Item id="data-test-profile-menu-logout" onClick={props.onLogout}>
 							<Text c="red.4" size="sm">
 								Logout
 							</Text>
@@ -90,12 +75,7 @@ export default function ICPanelHeaderAvatarMenu(props: ICPanelHeaderProps) {
 							<Text size="lg" fw="bold">
 								About
 							</Text>
-							<ActionIcon
-								size="md"
-								variant="subtle"
-								color="white"
-								onClick={aboutMenuHandler.close}
-							>
+							<ActionIcon size="md" variant="subtle" color="white" onClick={aboutMenuHandler.close}>
 								<IconX />
 							</ActionIcon>
 						</Flex>

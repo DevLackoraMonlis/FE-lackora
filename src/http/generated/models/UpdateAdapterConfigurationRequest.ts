@@ -5,9 +5,9 @@
  * MonoWatch Security Asset Management - BackBone Structure
  * OpenAPI spec version: 1.0.0
  */
-import type { UpdateAdapterConfigurationRequestConfigs } from './UpdateAdapterConfigurationRequestConfigs';
+import type { UpdateAdapterConfigurationRequestConfigs } from "./UpdateAdapterConfigurationRequestConfigs";
 
 export interface UpdateAdapterConfigurationRequest {
-  configuration_id: string;
-  configs: UpdateAdapterConfigurationRequestConfigs;
+	configuration_id: string;
+	configs: UpdateAdapterConfigurationRequestConfigs;
 }

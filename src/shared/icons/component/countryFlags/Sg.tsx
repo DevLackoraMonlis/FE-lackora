@@ -1,4 +1,3 @@
-import * as React from "react";
 import type { Ref, SVGProps } from "react";
 import { forwardRef, memo } from "react";
 const SvgSg = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
@@ -16,10 +15,7 @@ const SvgSg = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 			fill="#fff"
 			d="M0 1440h4320v1440H0zM1481.678 720a541.5 541.5 0 1 1-1083 0 541.5 541.5 0 1 1 1083 0z"
 		/>
-		<path
-			fill="#ed2939"
-			d="M1651.835 720a511.735 511.735 0 1 1-1023.47 0 511.735 511.735 0 1 1 1023.47 0z"
-		/>
+		<path fill="#ed2939" d="M1651.835 720a511.735 511.735 0 1 1-1023.47 0 511.735 511.735 0 1 1 1023.47 0z" />
 		<path
 			id="sg_svg__a"
 			fill="#fff"

@@ -1,4 +1,3 @@
-import * as React from "react";
 import type { Ref, SVGProps } from "react";
 import { forwardRef, memo } from "react";
 const SvgEt = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
@@ -17,15 +16,8 @@ const SvgEt = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 		<g transform="translate(360 180)">
 			<circle r={120} fill="#0f47af" />
 			<g id="et_svg__a">
-				<path
-					fill="#fcdd09"
-					d="m0-96-4.206 12.944 17.348 53.39h-23.13l-2.599 8h74.163l11.011-8H21.553z"
-				/>
-				<path
-					stroke="#fcdd09"
-					strokeWidth={4}
-					d="m25.863-35.597 30.564-42.069"
-				/>
+				<path fill="#fcdd09" d="m0-96-4.206 12.944 17.348 53.39h-23.13l-2.599 8h74.163l11.011-8H21.553z" />
+				<path stroke="#fcdd09" strokeWidth={4} d="m25.863-35.597 30.564-42.069" />
 			</g>
 			<use xlinkHref="#et_svg__a" transform="rotate(72)" />
 			<use xlinkHref="#et_svg__a" transform="rotate(144)" />

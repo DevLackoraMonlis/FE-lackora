@@ -1,11 +1,5 @@
 import BCModal from "@/shared/components/baseComponents/BCModal";
-import {
-	Button,
-	type Direction,
-	Flex,
-	Text,
-	useMantineTheme,
-} from "@mantine/core";
+import { Button, type Direction, Flex, Text, useMantineTheme } from "@mantine/core";
 import { IconWorld } from "@tabler/icons-react";
 import { useState } from "react";
 import ICLicenseAgreementEnContent from "../../../ICLicenseAgreement/components/ICLicenseAgreementEnContent";
@@ -33,22 +27,12 @@ export default function ICPanelHeaderAvatarMenuLicenseAgreement(props: Props) {
 			title={
 				<Flex align="center" justify="space-between" dir={direction}>
 					<Text size="xl" fw="bolder">
-						{direction === "rtl"
-							? "توافق نامه استفاده از سامانه CoreLog"
-							: "CoreLog License Agreement"}
+						{direction === "rtl" ? "توافق نامه استفاده از سامانه CoreLog" : "CoreLog License Agreement"}
 					</Text>
 					<Button
-						onClick={() =>
-							setDirection((prevState) => (prevState === "rtl" ? "ltr" : "rtl"))
-						}
+						onClick={() => setDirection((prevState) => (prevState === "rtl" ? "ltr" : "rtl"))}
 						variant="outline"
-						leftSection={
-							<IconWorld
-								width={20}
-								height={20}
-								color={theme.colors.primary[6]}
-							/>
-						}
+						leftSection={<IconWorld width={20} height={20} color={theme.colors.primary[6]} />}
 					>
 						{direction === "rtl" ? "English" : "فارسی"}
 					</Button>
@@ -56,11 +40,7 @@ export default function ICPanelHeaderAvatarMenuLicenseAgreement(props: Props) {
 			}
 		>
 			<Flex dir={direction}>
-				{direction === "rtl" ? (
-					<ICLicenseAgreementFaContent />
-				) : (
-					<ICLicenseAgreementEnContent />
-				)}
+				{direction === "rtl" ? <ICLicenseAgreementFaContent /> : <ICLicenseAgreementEnContent />}
 			</Flex>
 		</BCModal>
 	);

@@ -1,4 +1,3 @@
-import * as React from "react";
 import type { Ref, SVGProps } from "react";
 import { forwardRef, memo } from "react";
 const SvgUy = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
@@ -11,10 +10,7 @@ const SvgUy = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 		{...props}
 	>
 		<path fill="#fff" d="M-5-5h945v630H-5z" />
-		<path
-			fill="#0038a8"
-			d="M345 65h595v70H345zm0 140h595v70H345zM-5 345h945v70H-5zm0 140h945v70H-5z"
-		/>
+		<path fill="#0038a8" d="M345 65h595v70H345zm0 140h595v70H345zM-5 345h945v70H-5zm0 140h945v70H-5z" />
 		<g transform="translate(234.285 -392.52) scale(3.77953)">
 			<g stroke="#7b3f00" strokeMiterlimit={20}>
 				<g fill="#fcd116">
@@ -62,15 +58,8 @@ const SvgUy = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 							strokeWidth={0.611}
 							d="M-27.361 144.545c-11.455-6.95-17.753-2.392-20.704-8.576"
 						/>
-						<path
-							strokeWidth={0.611}
-							d="M-17.009 148.833v-6.112l-33.615 6.112 33.615 6.112v-6.112h-33.615"
-						/>
-						<path
-							fill="#7b3f00"
-							stroke="none"
-							d="M-17.009 148.833v6.112-6.112h-33.615l33.615 6.112"
-						/>
+						<path strokeWidth={0.611} d="M-17.009 148.833v-6.112l-33.615 6.112 33.615 6.112v-6.112h-33.615" />
+						<path fill="#7b3f00" stroke="none" d="M-17.009 148.833v6.112-6.112h-33.615l33.615 6.112" />
 						<path
 							strokeLinecap="square"
 							strokeWidth={0.611}
@@ -112,15 +101,8 @@ const SvgUy = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 							strokeWidth={0.611}
 							d="M-12.72 138.481c6.949-11.455 2.391-17.753 8.575-20.704"
 						/>
-						<path
-							strokeWidth={0.611}
-							d="M-17.009 148.833h6.112l-6.112-33.615-6.112 33.615h6.112v-33.615"
-						/>
-						<path
-							fill="#7b3f00"
-							stroke="none"
-							d="M-17.009 148.833h-6.112 6.112v-33.615l-6.112 33.615"
-						/>
+						<path strokeWidth={0.611} d="M-17.009 148.833h6.112l-6.112-33.615-6.112 33.615h6.112v-33.615" />
+						<path fill="#7b3f00" stroke="none" d="M-17.009 148.833h-6.112 6.112v-33.615l-6.112 33.615" />
 						<path
 							strokeLinecap="square"
 							strokeWidth={0.611}
@@ -157,20 +139,9 @@ const SvgUy = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 							strokeWidth={0.278}
 							d="m-7.954 150.93 1.402 2.018.053-.089c5.682 3.445 10.051 4.031 13.43 4.534 1.689.252 3.138.479 4.377 1.056a5.763 5.763 0 0 1 2.112 1.658c-3.037-6.384-8.297-.501-16.796-12.244z"
 						/>
-						<path
-							fill="none"
-							strokeWidth={0.611}
-							d="M-6.657 153.121c11.455 6.95 17.753 2.392 20.705 8.576"
-						/>
-						<path
-							strokeWidth={0.611}
-							d="M-17.009 148.833v6.112l33.615-6.112-33.615-6.112v6.112h33.615"
-						/>
-						<path
-							fill="#7b3f00"
-							stroke="none"
-							d="M-17.009 148.833v-6.112 6.112h33.615l-33.615-6.112"
-						/>
+						<path fill="none" strokeWidth={0.611} d="M-6.657 153.121c11.455 6.95 17.753 2.392 20.705 8.576" />
+						<path strokeWidth={0.611} d="M-17.009 148.833v6.112l33.615-6.112-33.615-6.112v6.112h33.615" />
+						<path fill="#7b3f00" stroke="none" d="M-17.009 148.833v-6.112 6.112h33.615l-33.615-6.112" />
 						<path
 							strokeLinecap="square"
 							strokeWidth={0.611}
@@ -182,11 +153,7 @@ const SvgUy = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 							strokeWidth={0.278}
 							d="m-12.088 156.718-.436 2.419.1-.025c1.582 6.453 4.257 9.957 6.29 12.702 1.016 1.373 1.88 2.557 2.349 3.842a5.763 5.763 0 0 1 .321 2.665c2.367-6.662-5.513-6.22-3.219-20.534z"
 						/>
-						<path
-							fill="none"
-							strokeWidth={0.611}
-							d="M-12.72 159.186C-9.536 172.2-1.86 173.43-4.146 179.89"
-						/>
+						<path fill="none" strokeWidth={0.611} d="M-12.72 159.186C-9.536 172.2-1.86 173.43-4.146 179.89" />
 						<path
 							strokeWidth={0.611}
 							d="m-17.009 148.833-4.322 4.322 28.092 19.448-19.448-28.091-4.322 4.321 23.77 23.77"
@@ -205,24 +172,12 @@ const SvgUy = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 					d="m-19.105 157.888-2.018 1.403.088.053c-3.445 5.681-4.03 10.05-4.534 13.429-.252 1.69-.478 3.138-1.056 4.377a5.763 5.763 0 0 1-1.657 2.112c6.384-3.037.5-8.297 12.244-16.796z"
 				/>
 				<g strokeWidth={0.611}>
-					<path
-						fill="none"
-						d="M-21.297 159.186c-6.95 11.454-2.392 17.752-8.576 20.704"
-					/>
-					<path
-						fill="#fcd116"
-						d="M-17.009 148.833h-6.112l6.112 33.616 6.112-33.616h-6.112v33.616"
-					/>
+					<path fill="none" d="M-21.297 159.186c-6.95 11.454-2.392 17.752-8.576 20.704" />
+					<path fill="#fcd116" d="M-17.009 148.833h-6.112l6.112 33.616 6.112-33.616h-6.112v33.616" />
 				</g>
 			</g>
-			<path
-				fill="#7b3f00"
-				d="M-17.009 148.833h6.112-6.112v33.616l6.112-33.616"
-			/>
-			<path
-				fill="#7b3f00"
-				d="m-17.009 148.833 4.322 4.322-4.322-4.322-23.77 23.77 28.092-19.448"
-			/>
+			<path fill="#7b3f00" d="M-17.009 148.833h6.112-6.112v33.616l6.112-33.616" />
+			<path fill="#7b3f00" d="m-17.009 148.833 4.322 4.322-4.322-4.322-23.77 23.77 28.092-19.448" />
 			<circle
 				cx={-17.009}
 				cy={148.833}

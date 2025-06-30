@@ -1,4 +1,3 @@
-import * as React from "react";
 import type { Ref, SVGProps } from "react";
 import { forwardRef, memo } from "react";
 const SvgSz = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
@@ -16,36 +15,12 @@ const SvgSz = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 		<path fill="#b10c0c" d="M0 150h900v300H0z" />
 		<g fill="#ffd900" stroke="#000" strokeWidth={1.008} transform="scale(1.5)">
 			<g id="sz_svg__a">
-				<path
-					fill="#fff"
-					d="m492.85 154.28-24.285 8.571 24.285 8.571 24.285-8.571z"
-				/>
-				<rect
-					width={357.13}
-					height={5.714}
-					x={122.85}
-					y={160}
-					rx={3.106}
-					ry={2.857}
-				/>
+				<path fill="#fff" d="m492.85 154.28-24.285 8.571 24.285 8.571 24.285-8.571z" />
+				<rect width={357.13} height={5.714} x={122.85} y={160} rx={3.106} ry={2.857} />
 				<path d="M471.44 165.71c1.427 0 2.859-1.429 2.859-2.857 0-1.428-1.431-2.857-2.858-2.857m-2.861 5.714c1.427 0 2.859-1.429 2.859-2.857 0-1.428-1.431-2.857-2.858-2.857m-2.861 5.714c1.427 0 2.859-1.429 2.859-2.857 0-1.428-1.431-2.857-2.858-2.857" />
 			</g>
-			<use
-				xlinkHref="#sz_svg__a"
-				width="100%"
-				height="100%"
-				x={-23.27}
-				y={17.15}
-			/>
-			<rect
-				width={485.7}
-				height={8.571}
-				x={59.812}
-				y={195.72}
-				strokeWidth={1.08}
-				rx={4.224}
-				ry={4.286}
-			/>
+			<use xlinkHref="#sz_svg__a" width="100%" height="100%" x={-23.27} y={17.15} />
+			<rect width={485.7} height={8.571} x={59.812} y={195.72} strokeWidth={1.08} rx={4.224} ry={4.286} />
 		</g>
 		<path
 			fill="#fff"
@@ -57,23 +32,13 @@ const SvgSz = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 		<g stroke="#fff" transform="scale(1.5)">
 			<g id="sz_svg__d" strokeWidth={6.927}>
 				<g id="sz_svg__c">
-					<path
-						id="sz_svg__b"
-						d="M213.933 192.377V169.52m13.85 0v22.857m13.86-22.857v22.857"
-					/>
+					<path id="sz_svg__b" d="M213.933 192.377V169.52m13.85 0v22.857m13.86-22.857v22.857" />
 					<use xlinkHref="#sz_svg__b" width="100%" height="100%" y={38.1} />
 				</g>
 				<use xlinkHref="#sz_svg__c" width="100%" height="100%" x={41.56} />
 			</g>
 		</g>
-		<use
-			xlinkHref="#sz_svg__d"
-			width="100%"
-			height="100%"
-			x={104.76}
-			stroke="#000"
-			transform="scale(1.5)"
-		/>
+		<use xlinkHref="#sz_svg__d" width="100%" height="100%" x={104.76} stroke="#000" transform="scale(1.5)" />
 		<g fill="#a70000">
 			<path
 				fill="#3d5da7"

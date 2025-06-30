@@ -4,9 +4,7 @@ import type { TanStackGridProps } from "../index.types";
 import TanStackCellItem from "./TanStackCellItem";
 import TanStackExpandedRowItem from "./TanStackExpandedRowItem";
 
-export default function TanStackRowItemNonVirtual<
-	T extends Record<string, unknown>,
->(
+export default function TanStackRowItemNonVirtual<T extends Record<string, unknown>>(
 	props: {
 		row: Row<T>;
 		index: number;
@@ -14,11 +12,7 @@ export default function TanStackRowItemNonVirtual<
 		table: Table<T>;
 	} & Pick<
 		TanStackGridProps<T>,
-		| "onSelectedRecordsChange"
-		| "onRowClick"
-		| "onRowDoubleClick"
-		| "rowHeight"
-		| "rowExpansion"
+		"onSelectedRecordsChange" | "onRowClick" | "onRowDoubleClick" | "rowHeight" | "rowExpansion"
 	>,
 ) {
 	const { row, index } = props;
@@ -35,9 +29,7 @@ export default function TanStackRowItemNonVirtual<
 					props.onRowClick?.({ record: row.original, index: row.index });
 				}
 			}}
-			onDoubleClick={() =>
-				props.onRowDoubleClick?.({ record: row.original, index: row.index })
-			}
+			onDoubleClick={() => props.onRowDoubleClick?.({ record: row.original, index: row.index })}
 			data-index={row?.index} //needed for dynamic row height measurement
 			style={{
 				display: "flex",
@@ -47,21 +39,11 @@ export default function TanStackRowItemNonVirtual<
 			}}
 		>
 			{visibleCells.map((cell) => {
-				return (
-					<TanStackCellItem<T>
-						key={cell.id}
-						cell={cell}
-						rowHeight={props.rowHeight}
-					/>
-				);
+				return <TanStackCellItem<T> key={cell.id} cell={cell} rowHeight={props.rowHeight} />;
 			})}
 
 			{row.getIsExpanded() && (
-				<TanStackExpandedRowItem<T>
-					index={index}
-					row={row}
-					rowExpansion={props.rowExpansion}
-				/>
+				<TanStackExpandedRowItem<T> index={index} row={row} rowExpansion={props.rowExpansion} />
 			)}
 		</tr>
 	);

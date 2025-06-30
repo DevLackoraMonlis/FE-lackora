@@ -1,10 +1,6 @@
-import * as React from "react";
 import type { Ref, SVGProps } from "react";
 import { forwardRef, memo } from "react";
-const SvgCiscoCucm = (
-	props: SVGProps<SVGSVGElement>,
-	ref: Ref<SVGSVGElement>,
-) => (
+const SvgCiscoCucm = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
 		width="1em"
@@ -21,12 +17,7 @@ const SvgCiscoCucm = (
 				strokeWidth={0.4}
 				d="m18.875 18.664.014-9.72H2.335l-.014 9.72zM21.666 6.316H5.11L2.335 8.944h16.554z"
 			/>
-			<path
-				fill="#007EBA"
-				stroke="#fff"
-				strokeWidth={0.4}
-				d="m21.645 16.076.02-9.76-2.75 2.608-.013 9.76z"
-			/>
+			<path fill="#007EBA" stroke="#fff" strokeWidth={0.4} d="m21.645 16.076.02-9.76-2.75 2.608-.013 9.76z" />
 			<path
 				fill="#fff"
 				stroke="#fff"
@@ -39,11 +30,7 @@ const SvgCiscoCucm = (
 				d="M16.239 11.982h-1.124M16.627 14.98h1.398M4.616 14.98H3.131M4.683 12.077h1.399"
 			/>
 			<path fill="#fff" d="m13.89 12.144-.006 5.612H7.406L7.4 12.144z" />
-			<path
-				stroke="#030303"
-				strokeWidth={0.15}
-				d="M13.194 12.48H8.11v4.739h5.085z"
-			/>
+			<path stroke="#030303" strokeWidth={0.15} d="M13.194 12.48H8.11v4.739h5.085z" />
 			<path
 				fill="#fff"
 				d="M11.977 10.147s.32-.033.394.29l.074 1.035 2.134.356.215-.464-.536-1.29c-2.743-.68-3.7-.464-3.7-.464h.107s-.963-.215-3.7.463l-.535 1.291.214.464 2.134-.356.074-1.036c.073-.322.395-.289.395-.289h2.743z"

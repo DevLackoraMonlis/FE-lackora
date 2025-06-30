@@ -1,10 +1,6 @@
-import * as React from "react";
 import type { Ref, SVGProps } from "react";
 import { forwardRef, memo } from "react";
-const SvgVMwareEsxServer = (
-	props: SVGProps<SVGSVGElement>,
-	ref: Ref<SVGSVGElement>,
-) => (
+const SvgVMwareEsxServer = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
 		width="1em"
@@ -14,11 +10,7 @@ const SvgVMwareEsxServer = (
 		ref={ref}
 		{...props}
 	>
-		<g
-			fillRule="evenodd"
-			clipPath="url(#VMware-ESXServer_svg__a)"
-			clipRule="evenodd"
-		>
+		<g fillRule="evenodd" clipPath="url(#VMware-ESXServer_svg__a)" clipRule="evenodd">
 			<path
 				fill="#00C1D5"
 				d="M4.775 1.975h6.65a16 16 0 0 1-.75.775l-5.3.05Q3.013 3.013 2.8 5.375q-.05 6.6 0 13.2.135 2.01 2.075 2.525 2.873.108 5.75.075v.8h-5.85q-2.225-.575-2.8-2.8v-14.4q.575-2.225 2.8-2.8"
@@ -49,11 +41,7 @@ const SvgVMwareEsxServer = (
 				d="M21.975 12.175v4.45h-4.45v-4.45zm-3.65.85h2.8v2.75h-2.8zM21.975 19.625v.25q-.225 1.626-1.8 2.1h-1.15q-1.859-.7-1.675-2.7.624-2.124 2.825-1.825 1.277.327 1.675 1.575.063.31.125.6m-2.55-1.4q1.848.073 1.625 1.9-.462 1.175-1.725 1.025-1.31-.407-1.125-1.775.29-.928 1.225-1.15"
 				opacity={0.943}
 			/>
-			<path
-				fill="#1D418A"
-				d="M12.075 17.475h4.45v4.45h-4.45zm.85.85h2.75v2.8h-2.75z"
-				opacity={0.955}
-			/>
+			<path fill="#1D418A" d="M12.075 17.475h4.45v4.45h-4.45zm.85.85h2.75v2.8h-2.75z" opacity={0.955} />
 		</g>
 		<defs>
 			<clipPath id="VMware-ESXServer_svg__a">

@@ -16,10 +16,7 @@ import classes from "./index.module.css";
 
 type Props = {
 	name?: string;
-	getPluginHistory: ICAppManagerAxiosApiFn<
-		ICAppManagerHistoryRq,
-		PaginationRs<ICAppManagerHistoryRs>
-	>;
+	getPluginHistory: ICAppManagerAxiosApiFn<ICAppManagerHistoryRq, PaginationRs<ICAppManagerHistoryRs>>;
 };
 
 export default function ICAppManagerDetailsHistoryTab(props: Props) {
@@ -61,15 +58,9 @@ export default function ICAppManagerDetailsHistoryTab(props: Props) {
 					id="data-test-input-search"
 					value={searchName}
 					onChange={(e) => setSearchName(e.target.value)}
-					onKeyDown={getHotkeyHandler([
-						["Enter", () => handleSetSearch(searchName)],
-					])}
+					onKeyDown={getHotkeyHandler([["Enter", () => handleSetSearch(searchName)]])}
 				/>
-				<ActionIcon
-					size="lg"
-					onClick={() => handleSetSearch(searchName)}
-					loading={pluginHistoryLoading}
-				>
+				<ActionIcon size="lg" onClick={() => handleSetSearch(searchName)} loading={pluginHistoryLoading}>
 					<IconSearch size={16} />
 				</ActionIcon>
 			</Flex>

@@ -1,4 +1,3 @@
-import * as React from "react";
 import type { Ref, SVGProps } from "react";
 import { forwardRef, memo } from "react";
 const SvgVa = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
@@ -263,10 +262,7 @@ const SvgVa = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 				<use xlinkHref="#va_svg__u" x={0.31} y={224.37} />
 				<use xlinkHref="#va_svg__u" x={0.31} y={245.37} />
 			</g>
-			<path
-				fill="#fa0204"
-				d="M1849.64 1848.26c19.902 5.524 31.76 5.236 48.22.43l-17.437-27.984"
-			/>
+			<path fill="#fa0204" d="M1849.64 1848.26c19.902 5.524 31.76 5.236 48.22.43l-17.437-27.984" />
 			<path
 				fill="#ce9d09"
 				d="m1888.31 1776.16-31.708-8.141s.366-35.184 20.389-32.116c16.62 2.547 11.985 40.341 11.319 40.257z"
@@ -276,10 +272,7 @@ const SvgVa = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 				fill="#fa0204"
 				d="M1885.37 1791.86c7.048 17.864 11.37 33.241 4.736 53.386m7.597 3.412c-10.226-8.255-36.582-5.832-47.981-.347-4.453 0-16.446-83.24 25.722-81.183 38.72 1.89 24.949 81.915 22.259 81.53z"
 			/>
-			<path
-				fill="#fa0204"
-				d="M1815.2 1866.34c19.292 12.239 37.25 11.14 54.247.43l-40.255-41.976"
-			/>
+			<path fill="#fa0204" d="M1815.2 1866.34c19.292 12.239 37.25 11.14 54.247.43l-40.255-41.976" />
 			<circle cx={1843.396} cy={1738.255} r={12.916} fill="#ce9d09" />
 			<path
 				fill="#ce9d09"

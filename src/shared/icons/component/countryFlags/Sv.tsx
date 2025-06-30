@@ -1,4 +1,3 @@
-import * as React from "react";
 import type { Ref, SVGProps } from "react";
 import { forwardRef, memo } from "react";
 const SvgSv = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
@@ -11,11 +10,7 @@ const SvgSv = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 		{...props}
 	>
 		<path fill="#fff" fillRule="evenodd" d="M0 0h1005v567H0z" />
-		<path
-			fill="#0047ab"
-			fillRule="evenodd"
-			d="M0 378h1005v189H0zM0 0h1005v189H0z"
-		/>
+		<path fill="#0047ab" fillRule="evenodd" d="M0 378h1005v189H0zM0 0h1005v189H0z" />
 		<path
 			fill="#fc0"
 			d="m463.041 354.917-.035.035.8 5.406a2.833 2.833 0 0 0-3.418 1.5c-1 2.032-.148 3.565 1.813 4.57l2.617 1.29 4.812-9.417-1.917-1.012-1.884 3.837h-.069l-.419-5.058-2.3-1.15zm.453 7.22a2.492 2.492 0 0 1 1.29.28l.28.139-1.36 2.581-.279-.14c-.873-.5-1.444-1.027-.942-2.092a1.356 1.356 0 0 1 1.011-.768zm-8.872-2.3 1.286-1.875-2.9-1.943 1-1.434 2.811 1.875 1.592-2.376-2.965-1.943 1-1.5 4.773 3.18-5.928 8.852-4.71-3.18 1-1.44 2.964 1.874m-1.91-12.444v.035l-2.617 2.965-.766-.628c-1.723-1.524-3.41-1.449-4.849.21-1.592 1.874-1.007 3.48.8 4.987l2.163 1.883 6.871-8.056zM447 350.974a1.782 1.782 0 0 1 1.464.594l.314.279-1.883 2.163-.35-.176c-.763-.652-1.168-1.328-.383-2.266a1.6 1.6 0 0 1 .838-.594zm-7.4-.921-1.438-1.59 4.425-3.99c.937-.871 2.245-2.244 1-3.556-1.222-1.373-2.682-.195-3.684.637l-4.34 3.99-1.438-1.6 4.71-4.27c1.874-1.724 4.12-2.159 6.082 0 2.026 2.16 1.286 4.336-.633 6.083l-4.622 4.27m-4.146-20.019a2.467 2.467 0 0 0-.454.035 3.267 3.267 0 0 0-1.29.523 2.437 2.437 0 0 0-1.047 3.035 2.36 2.36 0 0 0-2.267.454c-1.722 1.155-1.643 2.606-.488 4.325l1.5 2.163 8.685-6-1.884-2.72a3.585 3.585 0 0 0-2.755-1.815zm.14 2.268c.642-.053 1.109.445 1.534 1.081l.28.35v.068l-2.269 1.5-.174-.28c-.48-.808-1.071-1.76-.069-2.475a1.468 1.468 0 0 1 .7-.244zm-3.105 3.069a1.389 1.389 0 0 1 1.046.732l.105.21-2.023 1.43-.174-.175c-.436-.652-.571-1.314.28-1.883a1.282 1.282 0 0 1 .766-.313zm-.148-9.818-1.438-2.684 1.5-.848 2.535 4.558-9.352 5.056-1.068-1.87 7.826-4.208m-1.591-7.545.785 2.026-9.7 4.275-.85-2.026 9.79-4.275m-10.988-7.322a3.4 3.4 0 0 0-.349 2.68 3.512 3.512 0 0 0 4.556 1.874 3.264 3.264 0 0 0 .5-6.15l2.31-.714a5.348 5.348 0 0 1 1.438 2.154 5.6 5.6 0 0 1-10.659 3.427 5.814 5.814 0 0 1-.2-2.534l2.377-.721m5.087-14.222-9.94 6 .314 1.674 11.44 2.3-.419-2.232-2.3-.523h-.07l-.7-3.767 2.093-1.221zm-3.14 4.395.42 2.511-3.977-.487zm-2.964-24.206a5.038 5.038 0 0 0-4.639 4.848L414 284.53l10.463.871.28-3.034a5.124 5.124 0 0 0-4.813-5.72 6.129 6.129 0 0 0-1.117 0zm.176 2.372a4.816 4.816 0 0 1 .731 0c1.9.152 3.091 1.18 2.895 3.557v.35l-6.348-.524.07-.349c.133-1.907 1.026-2.9 2.65-3.034zm-1.513-8.272 2.245.414.72-3.335 1.721.348-.633 3.336 2.814.632.719-3.466 1.743.283-1.155 5.647-10.345-2.159 1.068-5.58 1.81.348-.72 3.467m4.077-13.933 2.18.854 1.221-3.188 1.656.638-1.22 3.18 2.681 1 1.286-3.247 1.656.63-2.091 5.274-9.941-3.834 2.18-5.273 1.657.563-1.286 3.337m10.115-5.385 1.371-2.681 1.656.787-2.376 4.62-9.482-4.837 1-1.875 7.827 3.99m2.964-16.614a1.854 1.854 0 0 0-1.656.787 1.38 1.38 0 0 0 .065 1.808c1.439 1 3.466-2.964 6.365-.781a3.455 3.455 0 0 1 .72 5.055 4.022 4.022 0 0 1-3.685 1.5l-.195-1.936a2.144 2.144 0 0 0 2.376-.637 1.388 1.388 0 0 0-.349-2.026c-.85-.63-1.722 0-2.53.5-1.22.787-2.462 1.223-3.77.2a3.074 3.074 0 0 1-.633-4.425 4.542 4.542 0 0 1 2.747-1.719l.566 1.651m4.713-9.361-1.15 1.22 4.847 10.676 1.57-1.64-1.012-2.162.035-.07 2.685-2.721 2.163.907 1.57-1.64zm1.64 3.068h.07v.036l3.313 1.5-1.64 1.744zm11.262-2.468 2.377-1.876 1.068 1.352-4.056 3.27-6.67-8.26 1.723-1.374 5.494 6.888m6.735-6.825.065-.062-1.809-7.327 2.027-1.217L461.336 222l-1.067.63-9.418-6.953 1.962-1.223 6.082 4.622m7.773-12.54-1.5.732.559 11.65 2.022-.942-.069-2.372h.035L471.2 214l1.64 1.64 2.162-.838zm.419 3.487 2.581 2.652-2.162.94zm10.882-7.115a6.53 6.53 0 0 0-1.15.243l-2.9.769 2.964 10.219 2.93-.837a5.193 5.193 0 0 0 3.663-6.592 5.053 5.053 0 0 0-5.512-3.8zm.523 2.162a2.708 2.708 0 0 1 2.582 2.338c.588 1.83.01 3.38-2.3 4.01l-.28.105-1.814-6.14.35-.138a4.763 4.763 0 0 1 1.464-.175zm12.767-5.3c-.2 0-.39.01-.594.035A5.6 5.6 0 0 0 492.2 210.9a5.6 5.6 0 0 0-.942-11.127zm-.244 2.372a3.164 3.164 0 0 1 3.348 2.755c.13 1.434-.886 3.378-2.477 3.663-1.666.215-3.169-1.428-3.383-2.86a3.13 3.13 0 0 1 2.511-3.558zm9.138-2.86-.14 10.673h2.163v-4.291h.07l2.616 4.29 2.581.069v-.034l-3.035-4.569a2.771 2.771 0 0 0 2.268-2.9c.065-2.249-1.448-3.182-3.628-3.244zm2.092 1.883h.28c1.025 0 1.814.243 1.814 1.465 0 1.155-.78 1.43-1.85 1.43h-.209l-.035.035zm20.415 2.391-.567 2.25 3.333.781-.413 1.808-3.334-.847-.633 2.745 3.4.937-.419 1.724-5.49-1.44 2.528-10.29 5.58 1.373-.435 1.814-3.466-.855m7.98 0 1.435.57 2.617 9.069h.068l2.678-6.586 1.964.787L535.5 217.4l-1.44-.569-2.679-9.07-2.661 6.737-2.026-.781 4.058-10.14m14.186 16.893 2.533 1.595-.937 1.5-4.426-2.68 5.642-9.068 1.814 1.156-4.627 7.456m12.873-2-10.22 5.825 1.71 1.36 2.093-1.15.034.034 2.965 2.442-.732 2.232 1.813 1.43 3.627-11.092zm-1.64 3.14-1.22 3.453-1.779-1.43zm17.616 13.5-11.372 2.965 1.291 1.814 2.372-.593h.035l2.232 3.138-1.29 2.024 1.29 1.813 6.384-9.8zm-2.372 2.616-2.093 3.035-1.36-1.884zm7.555 14.642-7.172.715-.284-.63 4.839-5.146v-.061l-6.3 2.092-1-1.941 10.57-3.25.72 1.374-4.99 5.58 7.39-.786.72 1.373-9.07 6.368-.937-1.943 5.492-3.683m5.19 6.976-2.183.787 1.072 3.18-1.725.569-1.065-3.186-2.684.855 1.133 3.4-1.72.565-1.808-5.428 10.007-3.4 1.87 5.424-1.72.57-1.155-3.4m4 6.844-10.36 2.163.42 2.162 4.115-.942h.07l-3.628 3.558.488 2.511.07.035 3.768-3.907a2.759 2.759 0 0 0 3.313 1.5c2.243-.435 2.84-2.1 2.337-4.255zm-1.36 2.582v.173c.224 1.025.21 1.9-1.012 2.093-1.178.218-1.619-.432-1.813-1.5v-.21zm-7.084 11.15-.194-2.092 10.507-1.221.28 2.092-10.57 1.222m8.236 10.311a3.1 3.1 0 0 0 1.072-2.464 3.626 3.626 0 1 0-6.083 2.53l-2.461.065a6.616 6.616 0 0 1-.637-2.529 5.436 5.436 0 0 1 5.43-5.494 5.5 5.5 0 0 1 5.71 5.363 4.828 4.828 0 0 1-.564 2.463l-2.467.066m-7.838 1.976-.208 2.233 2.057 1.15-.487 3.837-2.3.489-.278 2.337 11.3-2.826.21-1.639zm3.559 4.36 3.348 1.5v.1l-3.628.766zm-3.193 26.1a3.129 3.129 0 0 0 1.936-1.808 3.443 3.443 0 0 0-2.16-4.426 3.527 3.527 0 0 0-4.553 1.658 3.828 3.828 0 0 0 .195 2.746l-2.31-.848a6.433 6.433 0 0 1 .285-2.6 5.371 5.371 0 0 1 7.1-2.963 5.485 5.485 0 0 1 3.338 7.1 6.1 6.1 0 0 1-1.5 2.094l-2.317-.939m-1.764 5.71-2.026-1.067-1.656 2.964-1.507-.782 1.573-3.03-2.528-1.373-1.724 3.182-1.507-.849 2.684-5.061 9.353 5.061-2.684 4.99-1.59-.849 1.657-3.12m-2.07 7.763-.855 1.223-9.414.278-.067.068 5.8 4.208-1.283 1.724-8.7-6.368.854-1.222 9.414-.346h.069l-5.867-4.275 1.284-1.724 8.768 6.457m-18.947 6.016 1.506-1.59 6.363 6.143 1.507-1.657 1.283 1.223-4.554 4.776-1.288-1.212 1.5-1.591-6.368-6.083m-3.1 3.131-1.675 1.29 2.76 3.353v.07l-4.85-1.605-1.953 1.64.035.07 5.2 1.43a2.762 2.762 0 0 0 .209 3.7c1.373 1.719 3.19 1.408 4.847.035l2.163-1.848-6.731-8.128zm2.058 5.929 1.883 2.268-.21.1c-.808.7-1.52 1.007-2.3.07-.72-.87-.36-1.582.488-2.3zm-8.615-.42-1.954 1.187.42 2.372h-.036l-3.244 2.023-1.884-1.43-1.953 1.22 9.383 7.011 1.36-.837-2.092-11.544zm-1.257 5.582.943 3.487h-.07l-2.895-2.267zm-10.45 3.173-2.813 1.222-.721-1.59 4.71-2.249 4.56 9.637-1.964.848-3.773-7.89m50.076-101.154 2.125 2.785h1.687l-1.466-2.785zm-154.113 88.7 3.477-.429 1.18 1.2-3.016.9z"
@@ -320,10 +315,7 @@ const SvgSv = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 			strokeWidth={0.347}
 			d="M553.787 254.572a24.071 24.071 0 0 1-2.745-2.16c-.938-.847-.413-2.026-.938-2.595-.346-.564-1.44-1.936-1.155-2.812.285-.849.854-3.332.854-3.332s1.066.937 1.808 1.719a4.639 4.639 0 0 1 1.155 2.182 19.31 19.31 0 0 0 1.156 2.243 7.509 7.509 0 0 1-.135 3.03 6.7 6.7 0 0 0 0 1.724"
 		/>
-		<path
-			fill="#e60000"
-			d="M530.878 337.278a.851.851 0 1 1 .85-.848.808.808 0 0 1-.85.848"
-		/>
+		<path fill="#e60000" d="M530.878 337.278a.851.851 0 1 1 .85-.848.808.808 0 0 1-.85.848" />
 		<path
 			fill="none"
 			stroke="#000"
@@ -410,10 +402,7 @@ const SvgSv = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 			strokeWidth={0.173}
 			d="M557.431 272.337a.959.959 0 0 1-.937-1 .944.944 0 0 1 .937-.938.959.959 0 0 1 1 .938.972.972 0 0 1-1 1"
 		/>
-		<path
-			fill="#e60000"
-			d="M550.673 257.468a.94.94 0 1 1 0-1.875.938.938 0 0 1 0 1.875"
-		/>
+		<path fill="#e60000" d="M550.673 257.468a.94.94 0 1 1 0-1.875.938.938 0 0 1 0 1.875" />
 		<path
 			fill="none"
 			stroke="#000"
@@ -430,10 +419,7 @@ const SvgSv = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 			strokeWidth={0.173}
 			d="M555.82 253.417a.922.922 0 0 1-.939-1 .9.9 0 0 1 .938-.939.972.972 0 0 1 0 1.943"
 		/>
-		<path
-			fill="#e60000"
-			d="M545.528 243.41a.971.971 0 0 1 0-1.941.971.971 0 1 1 0 1.941"
-		/>
+		<path fill="#e60000" d="M545.528 243.41a.971.971 0 0 1 0-1.941.971.971 0 1 1 0 1.941" />
 		<path
 			fill="none"
 			stroke="#000"
@@ -492,10 +478,7 @@ const SvgSv = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 			strokeWidth={0.173}
 			d="M455.908 324.091a.9.9 0 0 0 .85-.853.852.852 0 0 0-.85-.849.887.887 0 0 0-.937.848.931.931 0 0 0 .937.854"
 		/>
-		<path
-			fill="#e60000"
-			d="M448.737 327.708a.969.969 0 1 0-1-1 .985.985 0 0 0 1 1"
-		/>
+		<path fill="#e60000" d="M448.737 327.708a.969.969 0 1 0-1-1 .985.985 0 0 0 1 1" />
 		<path
 			fill="none"
 			stroke="#000"
@@ -562,20 +545,14 @@ const SvgSv = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 			strokeWidth={0.173}
 			d="M452.66 257.468a.94.94 0 1 0 0-1.875.948.948 0 0 0-.939.938.96.96 0 0 0 .939.937"
 		/>
-		<path
-			fill="#e60000"
-			d="M447.494 253.417a.973.973 0 0 0 1-1 .971.971 0 1 0-1 1"
-		/>
+		<path fill="#e60000" d="M447.494 253.417a.973.973 0 0 0 1-1 .971.971 0 1 0-1 1" />
 		<path
 			fill="none"
 			stroke="#000"
 			strokeWidth={0.173}
 			d="M447.494 253.417a.973.973 0 0 0 1-1 .971.971 0 1 0-1 1"
 		/>
-		<path
-			fill="#e60000"
-			d="M457.805 243.41a.971.971 0 1 0-.937-.938.9.9 0 0 0 .937.938"
-		/>
+		<path fill="#e60000" d="M457.805 243.41a.971.971 0 1 0-.937-.938.9.9 0 0 0 .937.938" />
 		<path
 			fill="none"
 			stroke="#000"
@@ -1080,22 +1057,14 @@ const SvgSv = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 			fill="#004bb3"
 			d="M522.53 266.975a27.289 27.289 0 0 0 1-4.991 28.241 28.241 0 0 0 0-5.274l-4.428 4.838 3.4 5.427m18.228 6.671c.129-1.591.195-3.335.195-4.12 0-4.992.564-7.76 0-13.056-.35-4.125-1.44-9.638-1.221-14.064.066-1.283-.129-2.528-.129-3.773l-8.918 9.857c.63 7.1.564 9.2.848 16.087.067 1.657-1.44 9.07-2.9 12.622l1.875 3.183 10.224-6.736"
 		/>
-		<path
-			fill="#fc0"
-			d="m518.452 260.9 20.82-23.066.346.5-20.512 23.194-.632-.63"
-		/>
+		<path fill="#fc0" d="m518.452 260.9 20.82-23.066.346.5-20.512 23.194-.632-.63" />
 		<path
 			fill="none"
 			stroke="#000"
 			strokeWidth={0.173}
 			d="m518.452 260.9 20.82-23.066.346.5-20.512 23.194-.632-.63z"
 		/>
-		<path
-			fill="none"
-			stroke="#006"
-			strokeWidth={0.232}
-			d="M539.076 244.259s-1.657 14.565-7.327 14"
-		/>
+		<path fill="none" stroke="#006" strokeWidth={0.232} d="M539.076 244.259s-1.657 14.565-7.327 14" />
 		<path
 			fill="none"
 			stroke="#00056b"
@@ -1174,12 +1143,7 @@ const SvgSv = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 			strokeWidth={0.232}
 			d="M538.988 243.606a39.676 39.676 0 0 1-2.16 6.67c-.436.785-2.372 5.211-5.274 7.237"
 		/>
-		<path
-			fill="none"
-			stroke="#006"
-			strokeWidth={0.232}
-			d="M538.86 240.927s-4.711 11.6-7.7 10.285"
-		/>
+		<path fill="none" stroke="#006" strokeWidth={0.232} d="M538.86 240.927s-4.711 11.6-7.7 10.285" />
 		<path
 			fill="none"
 			stroke="#00066d"
@@ -1234,120 +1198,25 @@ const SvgSv = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 			strokeWidth={0.232}
 			d="M538.7 240.576s-.938 1.373-3.181 5.49a12.5 12.5 0 0 1-4.493 4.93m-7.494 8-3.993 2.16m3.708 1.612-3.686-.636"
 		/>
-		<path
-			fill="none"
-			stroke="#0045ab"
-			strokeWidth={0.232}
-			d="m523.617 259.215-4.053 1.943"
-		/>
-		<path
-			fill="none"
-			stroke="#003ca2"
-			strokeWidth={0.232}
-			d="m523.534 259.366-4.057 1.875"
-		/>
-		<path
-			fill="none"
-			stroke="#00359c"
-			strokeWidth={0.232}
-			d="m523.534 259.583-4.057 1.658"
-		/>
-		<path
-			fill="none"
-			stroke="#002d93"
-			strokeWidth={0.232}
-			d="m523.534 259.718-4.123 1.59"
-		/>
-		<path
-			fill="none"
-			stroke="#00258b"
-			strokeWidth={0.232}
-			d="m523.534 259.868-4.123 1.44"
-		/>
-		<path
-			fill="none"
-			stroke="#001e85"
-			strokeWidth={0.232}
-			d="m523.534 260.086-4.123 1.223"
-		/>
-		<path
-			fill="none"
-			stroke="#00167c"
-			strokeWidth={0.232}
-			d="m523.534 260.237-4.21 1.154"
-		/>
-		<path
-			fill="none"
-			stroke="#000f75"
-			strokeWidth={0.232}
-			d="m523.534 260.46-4.275.931"
-		/>
-		<path
-			fill="none"
-			stroke="#00066d"
-			strokeWidth={0.232}
-			d="m523.534 260.589-4.275.847"
-		/>
-		<path
-			fill="none"
-			stroke="#0045ab"
-			strokeWidth={0.232}
-			d="m523.31 262.615-3.833-.565"
-		/>
-		<path
-			fill="none"
-			stroke="#003ca2"
-			strokeWidth={0.232}
-			d="m523.31 262.4-3.833-.413"
-		/>
-		<path
-			fill="none"
-			stroke="#00359c"
-			strokeWidth={0.232}
-			d="m523.31 262.178-3.9-.284"
-		/>
-		<path
-			fill="none"
-			stroke="#002d93"
-			strokeWidth={0.232}
-			d="m523.31 262.05-3.9-.134"
-		/>
-		<path
-			fill="none"
-			stroke="#00258b"
-			strokeWidth={0.232}
-			d="M523.31 261.833h-3.986"
-		/>
-		<path
-			fill="none"
-			stroke="#001e85"
-			strokeWidth={0.232}
-			d="m523.4 261.615-4.12.128"
-		/>
-		<path
-			fill="none"
-			stroke="#00167c"
-			strokeWidth={0.232}
-			d="m523.4 261.391-4.12.286"
-		/>
-		<path
-			fill="none"
-			stroke="#000f75"
-			strokeWidth={0.232}
-			d="m523.467 261.241-4.273.351"
-		/>
-		<path
-			fill="none"
-			stroke="#00066d"
-			strokeWidth={0.232}
-			d="m523.467 261.023-4.273.57"
-		/>
-		<path
-			fill="none"
-			stroke="#006"
-			strokeWidth={0.232}
-			d="m523.467 260.806-4.339.72"
-		/>
+		<path fill="none" stroke="#0045ab" strokeWidth={0.232} d="m523.617 259.215-4.053 1.943" />
+		<path fill="none" stroke="#003ca2" strokeWidth={0.232} d="m523.534 259.366-4.057 1.875" />
+		<path fill="none" stroke="#00359c" strokeWidth={0.232} d="m523.534 259.583-4.057 1.658" />
+		<path fill="none" stroke="#002d93" strokeWidth={0.232} d="m523.534 259.718-4.123 1.59" />
+		<path fill="none" stroke="#00258b" strokeWidth={0.232} d="m523.534 259.868-4.123 1.44" />
+		<path fill="none" stroke="#001e85" strokeWidth={0.232} d="m523.534 260.086-4.123 1.223" />
+		<path fill="none" stroke="#00167c" strokeWidth={0.232} d="m523.534 260.237-4.21 1.154" />
+		<path fill="none" stroke="#000f75" strokeWidth={0.232} d="m523.534 260.46-4.275.931" />
+		<path fill="none" stroke="#00066d" strokeWidth={0.232} d="m523.534 260.589-4.275.847" />
+		<path fill="none" stroke="#0045ab" strokeWidth={0.232} d="m523.31 262.615-3.833-.565" />
+		<path fill="none" stroke="#003ca2" strokeWidth={0.232} d="m523.31 262.4-3.833-.413" />
+		<path fill="none" stroke="#00359c" strokeWidth={0.232} d="m523.31 262.178-3.9-.284" />
+		<path fill="none" stroke="#002d93" strokeWidth={0.232} d="m523.31 262.05-3.9-.134" />
+		<path fill="none" stroke="#00258b" strokeWidth={0.232} d="M523.31 261.833h-3.986" />
+		<path fill="none" stroke="#001e85" strokeWidth={0.232} d="m523.4 261.615-4.12.128" />
+		<path fill="none" stroke="#00167c" strokeWidth={0.232} d="m523.4 261.391-4.12.286" />
+		<path fill="none" stroke="#000f75" strokeWidth={0.232} d="m523.467 261.241-4.273.351" />
+		<path fill="none" stroke="#00066d" strokeWidth={0.232} d="m523.467 261.023-4.273.57" />
+		<path fill="none" stroke="#006" strokeWidth={0.232} d="m523.467 260.806-4.339.72" />
 		<path
 			fill="none"
 			stroke="#000"
@@ -1850,10 +1719,7 @@ const SvgSv = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 			fill="#004bb3"
 			d="M534.5 287.075a23.218 23.218 0 0 0 1.222-4.274 18.423 18.423 0 0 0 .2-4.84l-4.927 3.184 3.47 5.93"
 		/>
-		<path
-			fill="#fc0"
-			d="m530.51 280.4 23.277-15.216.419.567-23.2 15.434-.5-.785"
-		/>
+		<path fill="#fc0" d="m530.51 280.4 23.277-15.216.419.567-23.2 15.434-.5-.785" />
 		<path
 			fill="none"
 			stroke="#000"
@@ -2188,12 +2054,7 @@ const SvgSv = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 			strokeWidth={0.232}
 			d="M553.57 275.674s-2.026 7.324-2.68 8.393c-.568 1.068-1.07 2.747-5.646 7.106"
 		/>
-		<path
-			fill="none"
-			stroke="#006"
-			strokeWidth={0.232}
-			d="M553.291 271.03s-1.005 11.162-8.985 14.214"
-		/>
+		<path fill="none" stroke="#006" strokeWidth={0.232} d="M553.291 271.03s-1.005 11.162-8.985 14.214" />
 		<path
 			fill="none"
 			stroke="#00066d"
@@ -2266,12 +2127,7 @@ const SvgSv = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 			strokeWidth={0.232}
 			d="M553.073 270.964a33.861 33.861 0 0 1-2.9 6.453c-.413.633-2.377 4.993-5.864 7.543"
 		/>
-		<path
-			fill="none"
-			stroke="#006"
-			strokeWidth={0.232}
-			d="M553.224 267.913s-2.31 8.981-8.762 11.161"
-		/>
+		<path fill="none" stroke="#006" strokeWidth={0.232} d="M553.224 267.913s-2.31 8.981-8.762 11.161" />
 		<path
 			fill="none"
 			stroke="#00056b"
@@ -2356,120 +2212,25 @@ const SvgSv = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 			strokeWidth={0.232}
 			d="M553.073 267.476a31.911 31.911 0 0 1-3.84 5.712c-2.025 2.6-4.927 5.647-4.927 5.647m-8.439 1.35-4.425.786m3.99 2.55-3.99-1.656"
 		/>
-		<path
-			fill="none"
-			stroke="#0045ab"
-			strokeWidth={0.232}
-			d="m535.935 280.251-4.426.72"
-		/>
-		<path
-			fill="none"
-			stroke="#003ca2"
-			strokeWidth={0.232}
-			d="m535.867 280.47-4.425.5"
-		/>
-		<path
-			fill="none"
-			stroke="#00359c"
-			strokeWidth={0.232}
-			d="m535.867 280.622-4.425.349"
-		/>
-		<path
-			fill="none"
-			stroke="#002d93"
-			strokeWidth={0.232}
-			d="m535.867 280.753-4.487.282"
-		/>
-		<path
-			fill="none"
-			stroke="#00258b"
-			strokeWidth={0.232}
-			d="m535.867 280.971-4.487.065"
-		/>
-		<path
-			fill="none"
-			stroke="#001e85"
-			strokeWidth={0.232}
-			d="m535.867 281.124-4.553-.066"
-		/>
-		<path
-			fill="none"
-			stroke="#00167c"
-			strokeWidth={0.232}
-			d="m535.867 281.276-4.62-.2"
-		/>
-		<path
-			fill="none"
-			stroke="#000f75"
-			strokeWidth={0.232}
-			d="m535.807 281.406-4.56-.282"
-		/>
-		<path
-			fill="none"
-			stroke="#00066d"
-			strokeWidth={0.232}
-			d="m535.807 281.56-4.621-.415"
-		/>
-		<path
-			fill="none"
-			stroke="#0045ab"
-			strokeWidth={0.232}
-			d="m535.522 283.3-4.058-1.5"
-		/>
-		<path
-			fill="none"
-			stroke="#003ca2"
-			strokeWidth={0.232}
-			d="m535.522 283.15-4.12-1.438"
-		/>
-		<path
-			fill="none"
-			stroke="#00359c"
-			strokeWidth={0.232}
-			d="m535.522 283.02-4.12-1.374"
-		/>
-		<path
-			fill="none"
-			stroke="#002d93"
-			strokeWidth={0.232}
-			d="m535.589 282.8-4.275-1.22"
-		/>
-		<path
-			fill="none"
-			stroke="#00258b"
-			strokeWidth={0.232}
-			d="m535.589 282.65-4.342-1.156"
-		/>
-		<path
-			fill="none"
-			stroke="#001e85"
-			strokeWidth={0.232}
-			d="m535.589 282.5-4.342-1.07"
-		/>
-		<path
-			fill="none"
-			stroke="#00167c"
-			strokeWidth={0.232}
-			d="m535.65 282.28-4.487-.851"
-		/>
-		<path
-			fill="none"
-			stroke="#000f75"
-			strokeWidth={0.232}
-			d="m535.717 282.061-4.554-.785"
-		/>
-		<path
-			fill="none"
-			stroke="#00066d"
-			strokeWidth={0.232}
-			d="m535.717 281.93-4.621-.654"
-		/>
-		<path
-			fill="none"
-			stroke="#006"
-			strokeWidth={0.232}
-			d="m535.717 281.777-4.71-.565"
-		/>
+		<path fill="none" stroke="#0045ab" strokeWidth={0.232} d="m535.935 280.251-4.426.72" />
+		<path fill="none" stroke="#003ca2" strokeWidth={0.232} d="m535.867 280.47-4.425.5" />
+		<path fill="none" stroke="#00359c" strokeWidth={0.232} d="m535.867 280.622-4.425.349" />
+		<path fill="none" stroke="#002d93" strokeWidth={0.232} d="m535.867 280.753-4.487.282" />
+		<path fill="none" stroke="#00258b" strokeWidth={0.232} d="m535.867 280.971-4.487.065" />
+		<path fill="none" stroke="#001e85" strokeWidth={0.232} d="m535.867 281.124-4.553-.066" />
+		<path fill="none" stroke="#00167c" strokeWidth={0.232} d="m535.867 281.276-4.62-.2" />
+		<path fill="none" stroke="#000f75" strokeWidth={0.232} d="m535.807 281.406-4.56-.282" />
+		<path fill="none" stroke="#00066d" strokeWidth={0.232} d="m535.807 281.56-4.621-.415" />
+		<path fill="none" stroke="#0045ab" strokeWidth={0.232} d="m535.522 283.3-4.058-1.5" />
+		<path fill="none" stroke="#003ca2" strokeWidth={0.232} d="m535.522 283.15-4.12-1.438" />
+		<path fill="none" stroke="#00359c" strokeWidth={0.232} d="m535.522 283.02-4.12-1.374" />
+		<path fill="none" stroke="#002d93" strokeWidth={0.232} d="m535.589 282.8-4.275-1.22" />
+		<path fill="none" stroke="#00258b" strokeWidth={0.232} d="m535.589 282.65-4.342-1.156" />
+		<path fill="none" stroke="#001e85" strokeWidth={0.232} d="m535.589 282.5-4.342-1.07" />
+		<path fill="none" stroke="#00167c" strokeWidth={0.232} d="m535.65 282.28-4.487-.851" />
+		<path fill="none" stroke="#000f75" strokeWidth={0.232} d="m535.717 282.061-4.554-.785" />
+		<path fill="none" stroke="#00066d" strokeWidth={0.232} d="m535.717 281.93-4.621-.654" />
+		<path fill="none" stroke="#006" strokeWidth={0.232} d="m535.717 281.777-4.71-.565" />
 		<path
 			fill="none"
 			stroke="#000"
@@ -2616,12 +2377,7 @@ const SvgSv = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 			strokeWidth={0.232}
 			d="M531.531 314.649a16.306 16.306 0 0 0 3.181 1c1.29.285 8.483-.937 8.483-.937"
 		/>
-		<path
-			fill="none"
-			stroke="#006"
-			strokeWidth={0.232}
-			d="M544 314.213h-12.334"
-		/>
+		<path fill="none" stroke="#006" strokeWidth={0.232} d="M544 314.213h-12.334" />
 		<path
 			fill="none"
 			stroke="#004bb3"
@@ -2676,12 +2432,7 @@ const SvgSv = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 			strokeWidth={0.232}
 			d="M531.666 318.923s-5.213 1.066-6.52.787a14 14 0 0 0-2.248-.194 7.5 7.5 0 0 0-1-.069"
 		/>
-		<path
-			fill="none"
-			stroke="#006"
-			strokeWidth={0.232}
-			d="m529.634 319.794-4.336.57-2.66-.134-2.311-.564"
-		/>
+		<path fill="none" stroke="#006" strokeWidth={0.232} d="m529.634 319.794-4.336.57-2.66-.134-2.311-.564" />
 		<path
 			fill="none"
 			stroke="#004bb3"
@@ -2808,12 +2559,7 @@ const SvgSv = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 			strokeWidth={0.232}
 			d="M505.177 314.649a15.46 15.46 0 0 0 3.247 1c1.374.285 8.917-.937 8.917-.937"
 		/>
-		<path
-			fill="none"
-			stroke="#006"
-			strokeWidth={0.232}
-			d="M518.169 314.213h-12.754"
-		/>
+		<path fill="none" stroke="#006" strokeWidth={0.232} d="M518.169 314.213h-12.754" />
 		<path
 			fill="none"
 			stroke="#004bb3"
@@ -2834,22 +2580,14 @@ const SvgSv = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 			fill="#004bb3"
 			d="M480.8 266.975a28.277 28.277 0 0 1-.938-4.991 23.413 23.413 0 0 1 0-5.274l4.339 4.838-3.4 5.427m-18.2 6.671c-.065-1.591-.2-3.335-.2-4.12 0-4.992-.567-7.76 0-13.056.414-4.125 1.439-9.638 1.22-14.064a36.124 36.124 0 0 1 .2-3.773l8.85 9.857c-.63 7.1-.5 9.2-.849 16.087-.065 1.657 1.44 9.07 2.9 12.622l-1.875 3.183-10.224-6.736"
 		/>
-		<path
-			fill="#fc0"
-			d="m484.858 260.9-20.817-23.07-.415.5 20.6 23.194.632-.63"
-		/>
+		<path fill="#fc0" d="m484.858 260.9-20.817-23.07-.415.5 20.6 23.194.632-.63" />
 		<path
 			fill="none"
 			stroke="#000"
 			strokeWidth={0.173}
 			d="m484.858 260.9-20.817-23.07-.415.5 20.6 23.194.632-.63"
 		/>
-		<path
-			fill="none"
-			stroke="#006"
-			strokeWidth={0.232}
-			d="M464.258 244.259s1.656 14.565 7.325 14"
-		/>
+		<path fill="none" stroke="#006" strokeWidth={0.232} d="M464.258 244.259s1.656 14.565 7.325 14" />
 		<path
 			fill="none"
 			stroke="#00056b"
@@ -2928,12 +2666,7 @@ const SvgSv = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 			strokeWidth={0.232}
 			d="M464.346 243.606a39.674 39.674 0 0 0 2.157 6.67c.35.785 2.377 5.211 5.275 7.237"
 		/>
-		<path
-			fill="none"
-			stroke="#006"
-			strokeWidth={0.232}
-			d="M464.476 240.927s4.708 11.6 7.76 10.285"
-		/>
+		<path fill="none" stroke="#006" strokeWidth={0.232} d="M464.476 240.927s4.708 11.6 7.76 10.285" />
 		<path
 			fill="none"
 			stroke="#00066d"
@@ -2988,120 +2721,25 @@ const SvgSv = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 			strokeWidth={0.232}
 			d="M464.628 240.576a47.8 47.8 0 0 1 3.117 5.49 13.028 13.028 0 0 0 4.491 4.93m7.63 8 3.9 2.16m-3.684 1.612 3.684-.636"
 		/>
-		<path
-			fill="none"
-			stroke="#0045ab"
-			strokeWidth={0.232}
-			d="m479.715 259.215 4.053 1.943"
-		/>
-		<path
-			fill="none"
-			stroke="#003ca2"
-			strokeWidth={0.232}
-			d="m479.715 259.366 4.119 1.875"
-		/>
-		<path
-			fill="none"
-			stroke="#00359c"
-			strokeWidth={0.232}
-			d="m479.715 259.583 4.119 1.658"
-		/>
-		<path
-			fill="none"
-			stroke="#002d93"
-			strokeWidth={0.232}
-			d="m479.78 259.718 4.12 1.59"
-		/>
-		<path
-			fill="none"
-			stroke="#00258b"
-			strokeWidth={0.232}
-			d="m479.78 259.868 4.12 1.44"
-		/>
-		<path
-			fill="none"
-			stroke="#001e85"
-			strokeWidth={0.232}
-			d="m479.78 260.086 4.207 1.223"
-		/>
-		<path
-			fill="none"
-			stroke="#00167c"
-			strokeWidth={0.232}
-			d="m479.78 260.237 4.207 1.154"
-		/>
-		<path
-			fill="none"
-			stroke="#000f75"
-			strokeWidth={0.232}
-			d="m479.78 260.46 4.272.931"
-		/>
-		<path
-			fill="none"
-			stroke="#00066d"
-			strokeWidth={0.232}
-			d="m479.78 260.589 4.272.847"
-		/>
-		<path
-			fill="none"
-			stroke="#0045ab"
-			strokeWidth={0.232}
-			d="m480.085 262.615 3.683-.565"
-		/>
-		<path
-			fill="none"
-			stroke="#003ca2"
-			strokeWidth={0.232}
-			d="m480.085 262.4 3.771-.413"
-		/>
-		<path
-			fill="none"
-			stroke="#00359c"
-			strokeWidth={0.232}
-			d="m480 262.178 3.9-.284"
-		/>
-		<path
-			fill="none"
-			stroke="#002d93"
-			strokeWidth={0.232}
-			d="m480 262.05 3.9-.134"
-		/>
-		<path
-			fill="none"
-			stroke="#00258b"
-			strokeWidth={0.232}
-			d="M479.931 261.833h4.056"
-		/>
-		<path
-			fill="none"
-			stroke="#001e85"
-			strokeWidth={0.232}
-			d="m479.931 261.615 4.056.128"
-		/>
-		<path
-			fill="none"
-			stroke="#00167c"
-			strokeWidth={0.232}
-			d="m479.931 261.391 4.12.286"
-		/>
-		<path
-			fill="none"
-			stroke="#000f75"
-			strokeWidth={0.232}
-			d="m479.931 261.241 4.209.351"
-		/>
-		<path
-			fill="none"
-			stroke="#00066d"
-			strokeWidth={0.232}
-			d="m479.931 261.023 4.274.57"
-		/>
-		<path
-			fill="none"
-			stroke="#006"
-			strokeWidth={0.232}
-			d="m479.866 260.806 4.339.72"
-		/>
+		<path fill="none" stroke="#0045ab" strokeWidth={0.232} d="m479.715 259.215 4.053 1.943" />
+		<path fill="none" stroke="#003ca2" strokeWidth={0.232} d="m479.715 259.366 4.119 1.875" />
+		<path fill="none" stroke="#00359c" strokeWidth={0.232} d="m479.715 259.583 4.119 1.658" />
+		<path fill="none" stroke="#002d93" strokeWidth={0.232} d="m479.78 259.718 4.12 1.59" />
+		<path fill="none" stroke="#00258b" strokeWidth={0.232} d="m479.78 259.868 4.12 1.44" />
+		<path fill="none" stroke="#001e85" strokeWidth={0.232} d="m479.78 260.086 4.207 1.223" />
+		<path fill="none" stroke="#00167c" strokeWidth={0.232} d="m479.78 260.237 4.207 1.154" />
+		<path fill="none" stroke="#000f75" strokeWidth={0.232} d="m479.78 260.46 4.272.931" />
+		<path fill="none" stroke="#00066d" strokeWidth={0.232} d="m479.78 260.589 4.272.847" />
+		<path fill="none" stroke="#0045ab" strokeWidth={0.232} d="m480.085 262.615 3.683-.565" />
+		<path fill="none" stroke="#003ca2" strokeWidth={0.232} d="m480.085 262.4 3.771-.413" />
+		<path fill="none" stroke="#00359c" strokeWidth={0.232} d="m480 262.178 3.9-.284" />
+		<path fill="none" stroke="#002d93" strokeWidth={0.232} d="m480 262.05 3.9-.134" />
+		<path fill="none" stroke="#00258b" strokeWidth={0.232} d="M479.931 261.833h4.056" />
+		<path fill="none" stroke="#001e85" strokeWidth={0.232} d="m479.931 261.615 4.056.128" />
+		<path fill="none" stroke="#00167c" strokeWidth={0.232} d="m479.931 261.391 4.12.286" />
+		<path fill="none" stroke="#000f75" strokeWidth={0.232} d="m479.931 261.241 4.209.351" />
+		<path fill="none" stroke="#00066d" strokeWidth={0.232} d="m479.931 261.023 4.274.57" />
+		<path fill="none" stroke="#006" strokeWidth={0.232} d="m479.866 260.806 4.339.72" />
 		<path
 			fill="none"
 			stroke="#000"
@@ -3604,10 +3242,7 @@ const SvgSv = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 			fill="#004bb3"
 			d="M468.836 287.075a23.365 23.365 0 0 1-1.221-4.274 18.582 18.582 0 0 1-.2-4.84l4.927 3.184-3.466 5.93"
 		/>
-		<path
-			fill="#fc0"
-			d="m472.825 280.4-23.283-15.216-.414.567 23.217 15.434.5-.785"
-		/>
+		<path fill="#fc0" d="m472.825 280.4-23.283-15.216-.414.567 23.217 15.434.5-.785" />
 		<path
 			fill="none"
 			stroke="#000"
@@ -3942,12 +3577,7 @@ const SvgSv = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 			strokeWidth={0.232}
 			d="M449.761 275.674s2.093 7.324 2.594 8.393c.567 1.068 1.156 2.747 5.776 7.106"
 		/>
-		<path
-			fill="none"
-			stroke="#006"
-			strokeWidth={0.232}
-			d="M450.045 271.03s1 11.162 8.98 14.214"
-		/>
+		<path fill="none" stroke="#006" strokeWidth={0.232} d="M450.045 271.03s1 11.162 8.98 14.214" />
 		<path
 			fill="none"
 			stroke="#00066d"
@@ -4020,12 +3650,7 @@ const SvgSv = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 			strokeWidth={0.232}
 			d="M450.262 270.964a30.066 30.066 0 0 0 2.9 6.453c.414.633 2.375 4.993 5.864 7.543"
 		/>
-		<path
-			fill="none"
-			stroke="#006"
-			strokeWidth={0.232}
-			d="M450.11 267.913s2.31 8.981 8.85 11.161"
-		/>
+		<path fill="none" stroke="#006" strokeWidth={0.232} d="M450.11 267.913s2.31 8.981 8.85 11.161" />
 		<path
 			fill="none"
 			stroke="#00056b"
@@ -4110,120 +3735,25 @@ const SvgSv = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 			strokeWidth={0.232}
 			d="M450.262 267.476a37.055 37.055 0 0 0 3.837 5.712c2.027 2.6 4.927 5.647 4.927 5.647m8.436 1.35 4.426.786m-3.99 2.55 3.99-1.656"
 		/>
-		<path
-			fill="none"
-			stroke="#0045ab"
-			strokeWidth={0.232}
-			d="m467.4 280.251 4.425.72"
-		/>
-		<path
-			fill="none"
-			stroke="#003ca2"
-			strokeWidth={0.232}
-			d="m467.4 280.47 4.49.5"
-		/>
-		<path
-			fill="none"
-			stroke="#00359c"
-			strokeWidth={0.232}
-			d="m467.463 280.622 4.49.349"
-		/>
-		<path
-			fill="none"
-			stroke="#002d93"
-			strokeWidth={0.232}
-			d="m467.463 280.753 4.49.282"
-		/>
-		<path
-			fill="none"
-			stroke="#00258b"
-			strokeWidth={0.232}
-			d="m467.463 280.971 4.556.065"
-		/>
-		<path
-			fill="none"
-			stroke="#001e85"
-			strokeWidth={0.232}
-			d="m467.463 281.124 4.556-.066"
-		/>
-		<path
-			fill="none"
-			stroke="#00167c"
-			strokeWidth={0.232}
-			d="m467.463 281.276 4.621-.2"
-		/>
-		<path
-			fill="none"
-			stroke="#000f75"
-			strokeWidth={0.232}
-			d="m467.463 281.406 4.708-.282"
-		/>
-		<path
-			fill="none"
-			stroke="#00066d"
-			strokeWidth={0.232}
-			d="m467.528 281.56 4.622-.415"
-		/>
-		<path
-			fill="none"
-			stroke="#0045ab"
-			strokeWidth={0.232}
-			d="m467.9 283.3 4.055-1.5"
-		/>
-		<path
-			fill="none"
-			stroke="#003ca2"
-			strokeWidth={0.232}
-			d="m467.81 283.15 4.121-1.438"
-		/>
-		<path
-			fill="none"
-			stroke="#00359c"
-			strokeWidth={0.232}
-			d="m467.81 283.02 4.209-1.374"
-		/>
-		<path
-			fill="none"
-			stroke="#002d93"
-			strokeWidth={0.232}
-			d="m467.745 282.8 4.274-1.22"
-		/>
-		<path
-			fill="none"
-			stroke="#00258b"
-			strokeWidth={0.232}
-			d="m467.745 282.65 4.34-1.156"
-		/>
-		<path
-			fill="none"
-			stroke="#001e85"
-			strokeWidth={0.232}
-			d="m467.745 282.5 4.426-1.07"
-		/>
-		<path
-			fill="none"
-			stroke="#00167c"
-			strokeWidth={0.232}
-			d="m467.68 282.28 4.491-.851"
-		/>
-		<path
-			fill="none"
-			stroke="#000f75"
-			strokeWidth={0.232}
-			d="m467.68 282.061 4.556-.785"
-		/>
-		<path
-			fill="none"
-			stroke="#00066d"
-			strokeWidth={0.232}
-			d="m467.68 281.93 4.556-.654"
-		/>
-		<path
-			fill="none"
-			stroke="#006"
-			strokeWidth={0.232}
-			d="m467.616 281.777 4.708-.565"
-		/>
+		<path fill="none" stroke="#0045ab" strokeWidth={0.232} d="m467.4 280.251 4.425.72" />
+		<path fill="none" stroke="#003ca2" strokeWidth={0.232} d="m467.4 280.47 4.49.5" />
+		<path fill="none" stroke="#00359c" strokeWidth={0.232} d="m467.463 280.622 4.49.349" />
+		<path fill="none" stroke="#002d93" strokeWidth={0.232} d="m467.463 280.753 4.49.282" />
+		<path fill="none" stroke="#00258b" strokeWidth={0.232} d="m467.463 280.971 4.556.065" />
+		<path fill="none" stroke="#001e85" strokeWidth={0.232} d="m467.463 281.124 4.556-.066" />
+		<path fill="none" stroke="#00167c" strokeWidth={0.232} d="m467.463 281.276 4.621-.2" />
+		<path fill="none" stroke="#000f75" strokeWidth={0.232} d="m467.463 281.406 4.708-.282" />
+		<path fill="none" stroke="#00066d" strokeWidth={0.232} d="m467.528 281.56 4.622-.415" />
+		<path fill="none" stroke="#0045ab" strokeWidth={0.232} d="m467.9 283.3 4.055-1.5" />
+		<path fill="none" stroke="#003ca2" strokeWidth={0.232} d="m467.81 283.15 4.121-1.438" />
+		<path fill="none" stroke="#00359c" strokeWidth={0.232} d="m467.81 283.02 4.209-1.374" />
+		<path fill="none" stroke="#002d93" strokeWidth={0.232} d="m467.745 282.8 4.274-1.22" />
+		<path fill="none" stroke="#00258b" strokeWidth={0.232} d="m467.745 282.65 4.34-1.156" />
+		<path fill="none" stroke="#001e85" strokeWidth={0.232} d="m467.745 282.5 4.426-1.07" />
+		<path fill="none" stroke="#00167c" strokeWidth={0.232} d="m467.68 282.28 4.491-.851" />
+		<path fill="none" stroke="#000f75" strokeWidth={0.232} d="m467.68 282.061 4.556-.785" />
+		<path fill="none" stroke="#00066d" strokeWidth={0.232} d="m467.68 281.93 4.556-.654" />
+		<path fill="none" stroke="#006" strokeWidth={0.232} d="m467.616 281.777 4.708-.565" />
 		<path
 			fill="none"
 			stroke="#000"
@@ -4370,12 +3900,7 @@ const SvgSv = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 			strokeWidth={0.232}
 			d="M471.8 314.649a16.8 16.8 0 0 1-3.116 1c-1.374.285-8.546-.937-8.546-.937"
 		/>
-		<path
-			fill="none"
-			stroke="#006"
-			strokeWidth={0.232}
-			d="M459.33 314.213h12.34"
-		/>
+		<path fill="none" stroke="#006" strokeWidth={0.232} d="M459.33 314.213h12.34" />
 		<path
 			fill="none"
 			stroke="#004bb3"
@@ -4430,12 +3955,7 @@ const SvgSv = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 			strokeWidth={0.232}
 			d="M471.67 318.923s5.21 1.066 6.517.787a14.413 14.413 0 0 1 2.224-.194 7.546 7.546 0 0 1 1-.069"
 		/>
-		<path
-			fill="none"
-			stroke="#006"
-			strokeWidth={0.232}
-			d="m473.7 319.794 4.338.57 2.682-.134 2.31-.564"
-		/>
+		<path fill="none" stroke="#006" strokeWidth={0.232} d="m473.7 319.794 4.338.57 2.682-.134 2.31-.564" />
 		<path
 			fill="none"
 			stroke="#004bb3"
@@ -4562,12 +4082,7 @@ const SvgSv = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 			strokeWidth={0.232}
 			d="M498.222 314.649a18.954 18.954 0 0 1-3.336 1c-1.373.285-8.85-.937-8.85-.937"
 		/>
-		<path
-			fill="none"
-			stroke="#006"
-			strokeWidth={0.232}
-			d="M485.163 314.213H498"
-		/>
+		<path fill="none" stroke="#006" strokeWidth={0.232} d="M485.163 314.213H498" />
 		<path
 			fill="none"
 			stroke="#004bb3"
@@ -4750,12 +4265,7 @@ const SvgSv = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 			strokeWidth={0.232}
 			d="M496.324 246.525a8.761 8.761 0 0 1 5.276-1.434 10.243 10.243 0 0 1 5.364 1.372"
 		/>
-		<path
-			fill="none"
-			stroke="#fff500"
-			strokeWidth={0.232}
-			d="M495.235 248.467a11.8 11.8 0 0 1 12.97 0"
-		/>
+		<path fill="none" stroke="#fff500" strokeWidth={0.232} d="M495.235 248.467a11.8 11.8 0 0 1 12.97 0" />
 		<path
 			fill="none"
 			stroke="#ffeb00"
@@ -4768,18 +4278,8 @@ const SvgSv = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 			strokeWidth={0.232}
 			d="M495.388 248.249a11.631 11.631 0 0 1 12.665 0"
 		/>
-		<path
-			fill="none"
-			stroke="#ffd600"
-			strokeWidth={0.232}
-			d="M495.453 248.12a11.74 11.74 0 0 1 12.535 0"
-		/>
-		<path
-			fill="none"
-			stroke="#ffcf00"
-			strokeWidth={0.232}
-			d="M495.453 248.054a11.655 11.655 0 0 1 12.47 0"
-		/>
+		<path fill="none" stroke="#ffd600" strokeWidth={0.232} d="M495.453 248.12a11.74 11.74 0 0 1 12.535 0" />
+		<path fill="none" stroke="#ffcf00" strokeWidth={0.232} d="M495.453 248.054a11.655 11.655 0 0 1 12.47 0" />
 		<path
 			fill="none"
 			stroke="#ffc500"
@@ -4792,12 +4292,7 @@ const SvgSv = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 			strokeWidth={0.232}
 			d="M495.605 247.837a10.265 10.265 0 0 1 6.083-1.81 10.163 10.163 0 0 1 6.082 1.809"
 		/>
-		<path
-			fill="none"
-			stroke="#ffaf00"
-			strokeWidth={0.232}
-			d="M495.672 247.68a11.381 11.381 0 0 1 12.032 0"
-		/>
+		<path fill="none" stroke="#ffaf00" strokeWidth={0.232} d="M495.672 247.68a11.381 11.381 0 0 1 12.032 0" />
 		<path
 			fill="none"
 			stroke="#ffa600"
@@ -4828,12 +4323,7 @@ const SvgSv = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 			strokeWidth={0.232}
 			d="M495.954 247.183a9.7 9.7 0 0 1 5.734-1.657 10.325 10.325 0 0 1 5.712 1.59"
 		/>
-		<path
-			fill="none"
-			stroke="#ff7500"
-			strokeWidth={0.232}
-			d="M496.042 247.027a10.7 10.7 0 0 1 11.227 0"
-		/>
+		<path fill="none" stroke="#ff7500" strokeWidth={0.232} d="M496.042 247.027a10.7 10.7 0 0 1 11.227 0" />
 		<path
 			fill="none"
 			stroke="#ff6b00"
@@ -4996,10 +4486,7 @@ const SvgSv = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 			strokeWidth={0.232}
 			d="M508.881 249.644a11.65 11.65 0 0 0-7.237-2.377 9.981 9.981 0 0 0-7.172 2.528"
 		/>
-		<path
-			fill="#0088e8"
-			d="m470.514 289.539-13.058 21.974h88.507l-13.188-21.974h-62.239"
-		/>
+		<path fill="#0088e8" d="m470.514 289.539-13.058 21.974h88.507l-13.188-21.974h-62.239" />
 		<path
 			fill="none"
 			stroke="#00ccb3"
@@ -5342,10 +4829,7 @@ const SvgSv = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 			strokeWidth={0.173}
 			d="M501.624 274.736a5.93 5.93 0 1 0-5.931-5.93 5.982 5.982 0 0 0 5.931 5.93"
 		/>
-		<path
-			fill="#fff"
-			d="M501.624 274.736a5.93 5.93 0 1 0-5.931-5.93 5.982 5.982 0 0 0 5.931 5.93"
-		/>
+		<path fill="#fff" d="M501.624 274.736a5.93 5.93 0 1 0-5.931-5.93 5.982 5.982 0 0 0 5.931 5.93" />
 		<path
 			fill="none"
 			stroke="#000"
@@ -5538,10 +5022,7 @@ const SvgSv = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 			strokeWidth={0.406}
 			d="M527.675 329.74c-.72-.352.128-1.6.128-1.6l-2.679-.563a8.115 8.115 0 0 1 3.25-.413c.5.413.412.937.5 1.283a1.733 1.733 0 0 1-.2 1.29c-.28.194-1 0-1 0"
 		/>
-		<path
-			fill="#fff"
-			d="m525.147 327.557 2.679.563s-.848 1.223-.129 1.6l-4.71-.854s.721-.5 2.16-1.283"
-		/>
+		<path fill="#fff" d="m525.147 327.557 2.679.563s-.848 1.223-.129 1.6l-4.71-.854s.721-.5 2.16-1.283" />
 		<path
 			fill="none"
 			stroke="#000"

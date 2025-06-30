@@ -4,19 +4,11 @@ import TanStackMainTableNonVirtual from "./components/TanStackMainTableNonVirtua
 import { useTanStackDefault } from "./index.hooks";
 import type { TanStackGridProps } from "./index.types";
 
-export default function TanStackGridNonVirtual<
-	T extends Record<string, unknown>,
->(props: TanStackGridProps<T>) {
-	const {
-		table,
-		ref,
-		tableBodyRef,
-		tableContainerRef,
-		tableRef,
-		bodyHeight,
-		viewportWidth,
-		columns,
-	} = useTanStackDefault(props);
+export default function TanStackGridNonVirtual<T extends Record<string, unknown>>(
+	props: TanStackGridProps<T>,
+) {
+	const { table, ref, tableBodyRef, tableContainerRef, tableRef, bodyHeight, viewportWidth, columns } =
+		useTanStackDefault(props);
 
 	const { rows } = table.getCoreRowModel();
 

@@ -3,23 +3,11 @@ import PasswordContainCharacters from "@/shared/components/infraComponents/share
 import PasswordContainNumber from "@/shared/components/infraComponents/shared/PasswordContainNumber";
 import PasswordContainSpecial from "@/shared/components/infraComponents/shared/PasswordContainSpecial";
 import { AppRoutes } from "@/shared/constants/app-routes";
-import {
-	Button,
-	Card,
-	CheckIcon,
-	Flex,
-	Modal,
-	PasswordInput,
-	Text,
-} from "@mantine/core";
+import { Button, Card, CheckIcon, Flex, Modal, PasswordInput, Text } from "@mantine/core";
 import { hasLength, useForm } from "@mantine/form";
 import { signOut } from "next-auth/react";
 import PasswordContainUpperCase from "../../../shared/PasswordContainUpperCase";
-import {
-	useChangePassword,
-	useCheckingPassword,
-	useGetGeneratePasswordQuery,
-} from "../../index.hooks";
+import { useChangePassword, useCheckingPassword, useGetGeneratePasswordQuery } from "../../index.hooks";
 import classes from "../../index.module.css";
 
 type Props = ICPanelHeaderProps & {
@@ -34,8 +22,7 @@ type FormValues = {
 };
 
 export default function ICPanelHeaderAvatarMenuResetPassword(props: Props) {
-	const { checkingPasswordData, handleValidatePassword, isValidPassword } =
-		useCheckingPassword();
+	const { checkingPasswordData, handleValidatePassword, isValidPassword } = useCheckingPassword();
 
 	const { changePassword } = useChangePassword({
 		onSuccess: () => signOut({ redirect: true, callbackUrl: AppRoutes.login }),
@@ -57,8 +44,7 @@ export default function ICPanelHeaderAvatarMenuResetPassword(props: Props) {
 				}
 				return isValidPassword ? null : "New password is required";
 			},
-			confirmPassword: (value, values) =>
-				value !== values.newPassword ? "Password doesn't match" : null,
+			confirmPassword: (value, values) => (value !== values.newPassword ? "Password doesn't match" : null),
 		},
 		onValuesChange: (values) => {
 			handleValidatePassword(values.newPassword);
@@ -135,40 +121,27 @@ export default function ICPanelHeaderAvatarMenuResetPassword(props: Props) {
 									onClick={handleGeneratePassword}
 									loading={false}
 								>
-									<Text
-										fw={600}
-										size="xs"
-										className={classes.generatePasswordBtnText}
-									>
+									<Text fw={600} size="xs" className={classes.generatePasswordBtnText}>
 										Generate Password
 									</Text>
 								</Button>
 							</Flex>
 							<Flex direction="column" gap={5}>
 								<Flex columnGap={5}>
-									<PasswordContainCharacters
-										checkingPasswordData={checkingPasswordData?.lengthCheck}
-									/>
+									<PasswordContainCharacters checkingPasswordData={checkingPasswordData?.lengthCheck} />
 								</Flex>
 								<Flex columnGap={5}>
 									<PasswordContainUpperCase
 										checkingPasswordData={
-											checkingPasswordData?.uppercaseCheck &&
-											checkingPasswordData?.lowercaseCheck
+											checkingPasswordData?.uppercaseCheck && checkingPasswordData?.lowercaseCheck
 										}
 									/>
 								</Flex>
 								<Flex columnGap={5}>
-									<PasswordContainSpecial
-										checkingPasswordData={
-											checkingPasswordData?.specialCharCheck
-										}
-									/>
+									<PasswordContainSpecial checkingPasswordData={checkingPasswordData?.specialCharCheck} />
 								</Flex>
 								<Flex columnGap={5}>
-									<PasswordContainNumber
-										checkingPasswordData={checkingPasswordData?.numericCheck}
-									/>
+									<PasswordContainNumber checkingPasswordData={checkingPasswordData?.numericCheck} />
 								</Flex>
 							</Flex>
 						</Flex>

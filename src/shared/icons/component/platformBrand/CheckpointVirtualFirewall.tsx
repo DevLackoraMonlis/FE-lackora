@@ -1,10 +1,6 @@
-import * as React from "react";
 import type { Ref, SVGProps } from "react";
 import { forwardRef, memo } from "react";
-const SvgCheckpointVirtualFirewall = (
-	props: SVGProps<SVGSVGElement>,
-	ref: Ref<SVGSVGElement>,
-) => (
+const SvgCheckpointVirtualFirewall = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
 		xmlnsXlink="http://www.w3.org/1999/xlink"
@@ -92,10 +88,7 @@ const SvgCheckpointVirtualFirewall = (
 										maskType: "luminance",
 									}}
 								>
-									<path
-										fill="#fff"
-										d="M-3807.65-3977.39h7626.28v7993.62h-7626.28z"
-									/>
+									<path fill="#fff" d="M-3807.65-3977.39h7626.28v7993.62h-7626.28z" />
 								</mask>
 								<g mask="url(#Checkpoint-VirtualFirewall_svg__g)">
 									<path
@@ -156,10 +149,7 @@ const SvgCheckpointVirtualFirewall = (
 								maskType: "luminance",
 							}}
 						>
-							<path
-								fill="#fff"
-								d="M-3807.65-3977.39h7626.28v7993.62h-7626.28z"
-							/>
+							<path fill="#fff" d="M-3807.65-3977.39h7626.28v7993.62h-7626.28z" />
 						</mask>
 						<g mask="url(#Checkpoint-VirtualFirewall_svg__l)">
 							<path
@@ -186,10 +176,7 @@ const SvgCheckpointVirtualFirewall = (
 						maskType: "luminance",
 					}}
 				>
-					<path
-						fill="#fff"
-						d="M13.132 9.71a1.2 1.2 0 0 0 .453-.043.84.84 0 0 1-.34-.114z"
-					/>
+					<path fill="#fff" d="M13.132 9.71a1.2 1.2 0 0 0 .453-.043.84.84 0 0 1-.34-.114z" />
 				</mask>
 				<g mask="url(#Checkpoint-VirtualFirewall_svg__p)">
 					<mask
@@ -214,10 +201,7 @@ const SvgCheckpointVirtualFirewall = (
 								maskType: "luminance",
 							}}
 						>
-							<path
-								fill="#fff"
-								d="M-3807.65-3977.39h7626.28v7993.62h-7626.28z"
-							/>
+							<path fill="#fff" d="M-3807.65-3977.39h7626.28v7993.62h-7626.28z" />
 						</mask>
 						<g mask="url(#Checkpoint-VirtualFirewall_svg__q)">
 							<path
@@ -272,10 +256,7 @@ const SvgCheckpointVirtualFirewall = (
 								maskType: "luminance",
 							}}
 						>
-							<path
-								fill="#fff"
-								d="M-3807.65-3977.39h7626.28v7993.62h-7626.28z"
-							/>
+							<path fill="#fff" d="M-3807.65-3977.39h7626.28v7993.62h-7626.28z" />
 						</mask>
 						<g mask="url(#Checkpoint-VirtualFirewall_svg__v)">
 							<path
@@ -310,11 +291,7 @@ const SvgCheckpointVirtualFirewall = (
 						maskType: "luminance",
 					}}
 				>
-					<path
-						fill="#000"
-						fillOpacity={0.85}
-						d="M25.07 6H1.416v13.332H25.07z"
-					/>
+					<path fill="#000" fillOpacity={0.85} d="M25.07 6H1.416v13.332H25.07z" />
 				</mask>
 				<g mask="url(#Checkpoint-VirtualFirewall_svg__z)">
 					<mask
@@ -373,10 +350,7 @@ const SvgCheckpointVirtualFirewall = (
 										maskType: "luminance",
 									}}
 								>
-									<path
-										fill="#fff"
-										d="m9.538 9.402-.413 3.05 4.706.698.412-3.05z"
-									/>
+									<path fill="#fff" d="m9.538 9.402-.413 3.05 4.706.698.412-3.05z" />
 								</mask>
 								<g mask="url(#Checkpoint-VirtualFirewall_svg__D)">
 									<mask
@@ -418,11 +392,7 @@ const SvgCheckpointVirtualFirewall = (
 						maskType: "luminance",
 					}}
 				>
-					<path
-						fill="#000"
-						fillOpacity={0.85}
-						d="M25.07 6H1.416v13.332H25.07z"
-					/>
+					<path fill="#000" fillOpacity={0.85} d="M25.07 6H1.416v13.332H25.07z" />
 				</mask>
 				<g mask="url(#Checkpoint-VirtualFirewall_svg__H)">
 					<mask
@@ -481,10 +451,7 @@ const SvgCheckpointVirtualFirewall = (
 										maskType: "luminance",
 									}}
 								>
-									<path
-										fill="#fff"
-										d="m9.538 9.402-.413 3.05 4.706.698.412-3.05z"
-									/>
+									<path fill="#fff" d="m9.538 9.402-.413 3.05 4.706.698.412-3.05z" />
 								</mask>
 								<g mask="url(#Checkpoint-VirtualFirewall_svg__L)">
 									<mask
@@ -526,11 +493,7 @@ const SvgCheckpointVirtualFirewall = (
 						maskType: "luminance",
 					}}
 				>
-					<path
-						fill="#000"
-						fillOpacity={0.85}
-						d="M25.07 6H1.416v13.332H25.07z"
-					/>
+					<path fill="#000" fillOpacity={0.85} d="M25.07 6H1.416v13.332H25.07z" />
 				</mask>
 				<g mask="url(#Checkpoint-VirtualFirewall_svg__P)">
 					<mask
@@ -589,10 +552,7 @@ const SvgCheckpointVirtualFirewall = (
 										maskType: "luminance",
 									}}
 								>
-									<path
-										fill="#fff"
-										d="m9.538 9.402-.413 3.05 4.706.698.412-3.05z"
-									/>
+									<path fill="#fff" d="m9.538 9.402-.413 3.05 4.706.698.412-3.05z" />
 								</mask>
 								<g mask="url(#Checkpoint-VirtualFirewall_svg__T)">
 									<mask
@@ -1012,10 +972,7 @@ const SvgCheckpointVirtualFirewall = (
 				height={1}
 				patternContentUnits="objectBoundingBox"
 			>
-				<use
-					xlinkHref="#Checkpoint-VirtualFirewall_svg__X"
-					transform="scale(.01266 .0238)"
-				/>
+				<use xlinkHref="#Checkpoint-VirtualFirewall_svg__X" transform="scale(.01266 .0238)" />
 			</pattern>
 			<pattern
 				id="Checkpoint-VirtualFirewall_svg__M"
@@ -1023,10 +980,7 @@ const SvgCheckpointVirtualFirewall = (
 				height={1}
 				patternContentUnits="objectBoundingBox"
 			>
-				<use
-					xlinkHref="#Checkpoint-VirtualFirewall_svg__X"
-					transform="scale(.01266 .0238)"
-				/>
+				<use xlinkHref="#Checkpoint-VirtualFirewall_svg__X" transform="scale(.01266 .0238)" />
 			</pattern>
 			<pattern
 				id="Checkpoint-VirtualFirewall_svg__U"
@@ -1034,10 +988,7 @@ const SvgCheckpointVirtualFirewall = (
 				height={1}
 				patternContentUnits="objectBoundingBox"
 			>
-				<use
-					xlinkHref="#Checkpoint-VirtualFirewall_svg__X"
-					transform="scale(.01266 .0238)"
-				/>
+				<use xlinkHref="#Checkpoint-VirtualFirewall_svg__X" transform="scale(.01266 .0238)" />
 			</pattern>
 			<clipPath id="Checkpoint-VirtualFirewall_svg__a">
 				<path fill="#fff" d="M0 0h24v24H0z" />

@@ -4,6 +4,6 @@
 	border-radius: 4px;
 }
 
-[data-mantine-color-scheme='dark'] .cardBox {
+[data-mantine-color-scheme="dark"] .cardBox {
 	background-color: var(--mantine-color-black) !important;
 }

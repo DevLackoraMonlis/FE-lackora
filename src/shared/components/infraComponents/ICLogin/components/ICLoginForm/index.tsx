@@ -3,23 +3,9 @@ import ICLoginLocked from "@/shared/components/infraComponents/ICLogin/component
 import { AppRoutes } from "@/shared/constants/app-routes";
 import { validateInput } from "@/shared/lib/utils";
 import envStore from "@/shared/stores/envStore";
-import {
-	Alert,
-	Button,
-	Card,
-	Checkbox,
-	Flex,
-	PasswordInput,
-	Text,
-	TextInput,
-	Title,
-} from "@mantine/core";
+import { Alert, Button, Card, Checkbox, Flex, PasswordInput, Text, TextInput, Title } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import {
-	IconAlertOctagon,
-	IconLock,
-	IconUserCircle,
-} from "@tabler/icons-react";
+import { IconAlertOctagon, IconLock, IconUserCircle } from "@tabler/icons-react";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -44,8 +30,7 @@ export default function ICLoginForm() {
 			password: "",
 		},
 		validate: {
-			username: (value) =>
-				validateInput(value, { onlyEnglishChars: true, required: true }),
+			username: (value) => validateInput(value, { onlyEnglishChars: true, required: true }),
 			password: (value) =>
 				validateInput(value, {
 					required: true,
@@ -87,23 +72,14 @@ export default function ICLoginForm() {
 		<Flex w={"100%"} h={"100%"} justify={"center"} align={"center"}>
 			<Card h={600} w={"100%"} p={"xxl"} radius={"lg"}>
 				{/* <AppLogoDark width={161} height={37} /> */}
-				<Flex
-					direction={"column"}
-					h={"100%"}
-					justify={"center"}
-					align={"flex-start"}
-					gap={"xs"}
-				>
+				<Flex direction={"column"} h={"100%"} justify={"center"} align={"flex-start"} gap={"xs"}>
 					{error !== "locked" ? (
 						<>
 							<Title order={3}>Welcome back</Title>
 							<Text c={"#868E96"} fz={"md"}>
 								Please enter your login details below
 							</Text>
-							<form
-								style={{ height: "fit-content", width: "100%" }}
-								onSubmit={form.onSubmit(onSubmit)}
-							>
+							<form style={{ height: "fit-content", width: "100%" }} onSubmit={form.onSubmit(onSubmit)}>
 								<Flex mt={"xl"} gap={"xl"} direction={"column"} w={"100%"}>
 									<TextInput
 										required
@@ -121,11 +97,7 @@ export default function ICLoginForm() {
 										label={"Password"}
 									/>
 									<Checkbox label={"Remember me"} />
-									<Button
-										disabled={!form.isValid()}
-										type={"submit"}
-										loading={isLoading}
-									>
+									<Button disabled={!form.isValid()} type={"submit"} loading={isLoading}>
 										Sign in
 									</Button>
 									{error === "credentials" && (
@@ -137,16 +109,11 @@ export default function ICLoginForm() {
 											title="Incorrect credentials!"
 											icon={<IconAlertOctagon />}
 										>
-											Incorrect username or password. Please try again. You have
-											2 attempts left before your account is locked.
+											Incorrect username or password. Please try again. You have 2 attempts left before your
+											account is locked.
 										</Alert>
 									)}
-									<Flex
-										gap={"xs"}
-										w={"100%"}
-										align={"center"}
-										justify={"center"}
-									>
+									<Flex gap={"xs"} w={"100%"} align={"center"} justify={"center"}>
 										<Text c={"primary.1"}>Need access?</Text>
 										<Text>Contact admin</Text>
 									</Flex>
@@ -154,10 +121,7 @@ export default function ICLoginForm() {
 							</form>
 						</>
 					) : (
-						<ICLoginLocked
-							onCompleteRemainingTime={() => setError(undefined)}
-							remainTimeMinutes={60}
-						/>
+						<ICLoginLocked onCompleteRemainingTime={() => setError(undefined)} remainTimeMinutes={60} />
 					)}
 				</Flex>
 			</Card>

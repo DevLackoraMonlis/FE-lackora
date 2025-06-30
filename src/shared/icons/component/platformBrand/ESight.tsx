@@ -1,4 +1,3 @@
-import * as React from "react";
 import type { Ref, SVGProps } from "react";
 import { forwardRef, memo } from "react";
 const SvgESight = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
@@ -20,10 +19,7 @@ const SvgESight = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 				fill="#F82734"
 				d="M10.206 10.542a.42.42 0 0 1 .465.187.425.425 0 0 1-.234.624.423.423 0 1 1-.231-.812"
 			/>
-			<path
-				fill="#1FCD8A"
-				d="M10.238 11.924a.424.424 0 0 1 .431.64.422.422 0 1 1-.431-.64"
-			/>
+			<path fill="#1FCD8A" d="M10.238 11.924a.424.424 0 0 1 .431.64.422.422 0 1 1-.431-.64" />
 			<path
 				fill="#1C6BF7"
 				d="M10.218 13.317a.42.42 0 0 1 .36.085.424.424 0 0 1-.082.706.426.426 0 0 1-.583-.239.424.424 0 0 1 .305-.552"

@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { Avatar, Badge, Flex, Text } from '@mantine/core';
+import { Avatar, Badge, Flex, Text } from "@mantine/core";
 
 type Props = {
 	profileSrc?: string;

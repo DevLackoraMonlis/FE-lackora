@@ -1,4 +1,3 @@
-import * as React from "react";
 import type { Ref, SVGProps } from "react";
 import { forwardRef, memo } from "react";
 const SvgKe = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
@@ -31,10 +30,7 @@ const SvgKe = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 			fill="#b00"
 			d="M-120-24v48h101c3 8 13 24 19 24s16-16 19-24h101v-48H19C16-32 6-48 0-48s-16 16-19 24z"
 		/>
-		<path
-			id="ke_svg__c"
-			d="M19 24c3-8 5-16 5-24s-2-16-5-24c-3 8-5 16-5 24s2 16 5 24"
-		/>
+		<path id="ke_svg__c" d="M19 24c3-8 5-16 5-24s-2-16-5-24c-3 8-5 16-5 24s2 16 5 24" />
 		<use xlinkHref="#ke_svg__c" transform="scale(-1 1)" />
 		<g fill="#fff">
 			<ellipse rx={4} ry={6} />

@@ -9,8 +9,7 @@ type DefaultParams = {
 };
 
 export function useCheckingPassword(params?: DefaultParams) {
-	const [checkingPasswordData, setCheckingPasswordData] =
-		useState<ICAuthValidatePasswordRs>();
+	const [checkingPasswordData, setCheckingPasswordData] = useState<ICAuthValidatePasswordRs>();
 
 	const { mutate: validatePasswordMutate } = useMutation({
 		mutationKey: ["validate-password"],
@@ -30,10 +29,7 @@ export function useCheckingPassword(params?: DefaultParams) {
 	});
 
 	const handleValidatePassword = (password: string) => {
-		const debounceCallback = debounce(
-			() => validatePasswordMutate({ password }),
-			200,
-		);
+		const debounceCallback = debounce(() => validatePasswordMutate({ password }), 200);
 		debounceCallback();
 	};
 
@@ -53,7 +49,7 @@ export function useChangePassword(params?: DefaultParams) {
 		mutationKey: ["reset-password"],
 		mutationFn: UserManagementService.changePassword,
 		onSuccess: () => params?.onSuccess?.(),
-		onMutate: () => ({ successMessage: "Reset Password Successfully" }), 
+		onMutate: () => ({ successMessage: "Reset Password Successfully" }),
 	});
 	return {
 		changePassword,
@@ -65,7 +61,7 @@ export const useGetGeneratePasswordQuery = (params?: DefaultParams) => {
 		mutationKey: ["generate-password"],
 		mutationFn: UserManagementService.generatePassword,
 		onSuccess: () => params?.onSuccess?.(),
-		onMutate: () => ({ errorMessage: "Failed to generate password"}), 
+		onMutate: () => ({ errorMessage: "Failed to generate password" }),
 	});
 	return { getGeneratePassword };
 };

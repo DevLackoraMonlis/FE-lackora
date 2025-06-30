@@ -34,9 +34,7 @@ export default function ICAppManagerFilterSorting(props: Props) {
 				defaultValue="Name"
 				rightSection={<IconChevronDown width={20} />}
 				value={props.selectValue}
-				onChange={(value) =>
-					props.setSelectValue(value as ICAppManagerRqSortByType)
-				}
+				onChange={(value) => props.setSelectValue(value as ICAppManagerRqSortByType)}
 			/>
 		</Flex>
 	);

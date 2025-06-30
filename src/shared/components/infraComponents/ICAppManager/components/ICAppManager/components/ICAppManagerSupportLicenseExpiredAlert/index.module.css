@@ -1,54 +1,53 @@
-
 .alertRoot {
-    background-color: #FEF1F2;
-    border-radius: 0.25rem;
-    border: 1px solid #E1E2F0;
-    display: flex;
-    align-items: center;
+	background-color: #fef1f2;
+	border-radius: 0.25rem;
+	border: 1px solid #e1e2f0;
+	display: flex;
+	align-items: center;
 }
 
 .alertText {
-    color: #121721;
-    font-size: 0.875rem;
-    font-weight: 600;
-    margin-bottom: 0;
-    margin-top: 0;
-    width: 90%;
+	color: #121721;
+	font-size: 0.875rem;
+	font-weight: 600;
+	margin-bottom: 0;
+	margin-top: 0;
+	width: 90%;
 }
 
 .alertDescriptionText {
-    color: #121721;
-    font-size: 0.875rem;
-    font-weight: 40;
-    margin-left: 4px;
+	color: #121721;
+	font-size: 0.875rem;
+	font-weight: 40;
+	margin-left: 4px;
 }
 
 .wrapperRoot {
-    width: 100%;
+	width: 100%;
 }
 
 .iconRoot {
-    margin-right: 0.25rem;
+	margin-right: 0.25rem;
 }
 
 .goLicense {
-    background-color: transparent;
-    color: #121721;
-    font-size: 0.75rem;
-    font-weight: 600;
-    padding: 0 0 0 1rem;
-    display: inline;
-    height: 1.5rem;
-    text-decoration: underline;
+	background-color: transparent;
+	color: #121721;
+	font-size: 0.75rem;
+	font-weight: 600;
+	padding: 0 0 0 1rem;
+	display: inline;
+	height: 1.5rem;
+	text-decoration: underline;
 }
 
 .goLicense:hover {
-    background-color: transparent;
-    color: #121721;
+	background-color: transparent;
+	color: #121721;
 }
 
 .textRoot {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
 }

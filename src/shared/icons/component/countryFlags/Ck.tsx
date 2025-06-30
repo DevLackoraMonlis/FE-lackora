@@ -1,4 +1,3 @@
-import * as React from "react";
 import type { Ref, SVGProps } from "react";
 import { forwardRef, memo } from "react";
 const SvgCk = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
@@ -19,20 +18,10 @@ const SvgCk = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 				<path d="M0 0v1.5h8V4zm6 0H3v4h-5z" />
 			</clipPath>
 		</defs>
-		<g
-			fill="#012169"
-			strokeWidth={0.6}
-			clipPath="url(#ck_svg__a)"
-			transform="scale(800)"
-		>
+		<g fill="#012169" strokeWidth={0.6} clipPath="url(#ck_svg__a)" transform="scale(800)">
 			<path d="M0 0h12v6H0z" />
 			<path stroke="#fff" d="m0 0 6 3M0 3l6-3" />
-			<path
-				stroke="#c8102e"
-				strokeWidth={0.4}
-				d="m0 0 6 3M0 3l6-3"
-				clipPath="url(#ck_svg__b)"
-			/>
+			<path stroke="#c8102e" strokeWidth={0.4} d="m0 0 6 3M0 3l6-3" clipPath="url(#ck_svg__b)" />
 			<path stroke="#fff" strokeWidth={1} d="M3 0v4M0 1.5h7" />
 			<path stroke="#c8102e" d="M3 0v4M0 1.5h7" />
 			<path d="M0 3h6V0h6v6H0z" />

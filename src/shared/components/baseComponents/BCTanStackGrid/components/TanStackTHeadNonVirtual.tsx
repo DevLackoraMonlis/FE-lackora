@@ -1,9 +1,7 @@
 import type { Table } from "@tanstack/react-table";
 import { TanStackHeadRowItemNonVirtual } from "./TanStackHeadRowItemNonVirtual";
 
-export function TanStackTHeadNonVirtual<
-	T extends Record<string, unknown>,
->(props: { table: Table<T> }) {
+export function TanStackTHeadNonVirtual<T extends Record<string, unknown>>(props: { table: Table<T> }) {
 	return (
 		<thead
 			style={{

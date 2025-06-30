@@ -94,15 +94,12 @@ class HttpService {
 			const session = (await getSession()) as SessionType;
 			let xNonce = "";
 			try {
-				const xNonceRes = await axios.post<{ nonce: string }>(
-					"/api/get-xnonce",
-					{
-						method: request.method || "GET",
-						route: request.url || "",
-						accessToken: session?.user.data.access_token || "",
-						baseUrl: envStore.getState().envs.baseUrl,
-					},
-				);
+				const xNonceRes = await axios.post<{ nonce: string }>("/api/get-xnonce", {
+					method: request.method || "GET",
+					route: request.url || "",
+					accessToken: session?.user.data.access_token || "",
+					baseUrl: envStore.getState().envs.baseUrl,
+				});
 				xNonce = xNonceRes.data.nonce;
 			} catch (err) {
 				console.error("Failed to refresh token:", err);
@@ -129,48 +126,20 @@ class HttpService {
 		this.failedQueue = [];
 	}
 
-	async get<T>(
-		url: string,
-		config?: AxiosRequestConfig,
-	): Promise<AxiosResponse<T>> {
-		return this.axiosService.get(
-			`${envStore.getState().envs.baseUrl}${url}`,
-			config,
-		);
+	async get<T>(url: string, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> {
+		return this.axiosService.get(`${envStore.getState().envs.baseUrl}${url}`, config);
 	}
 
-	async post<T>(
-		url: string,
-		data?: unknown,
-		config?: AxiosRequestConfig,
-	): Promise<AxiosResponse<T>> {
-		return this.axiosService.post(
-			`${envStore.getState().envs.baseUrl}${url}`,
-			data,
-			config,
-		);
+	async post<T>(url: string, data?: unknown, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> {
+		return this.axiosService.post(`${envStore.getState().envs.baseUrl}${url}`, data, config);
 	}
 
-	async put<T>(
-		url: string,
-		data?: unknown,
-		config?: AxiosRequestConfig,
-	): Promise<AxiosResponse<T>> {
-		return this.axiosService.put(
-			`${envStore.getState().envs.baseUrl}${url}`,
-			data,
-			config,
-		);
+	async put<T>(url: string, data?: unknown, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> {
+		return this.axiosService.put(`${envStore.getState().envs.baseUrl}${url}`, data, config);
 	}
 
-	async delete<T>(
-		url: string,
-		config?: AxiosRequestConfig,
-	): Promise<AxiosResponse<T>> {
-		return this.axiosService.delete(
-			`${envStore.getState().envs.baseUrl}${url}`,
-			config,
-		);
+	async delete<T>(url: string, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> {
+		return this.axiosService.delete(`${envStore.getState().envs.baseUrl}${url}`, config);
 	}
 }
 

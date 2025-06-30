@@ -1,4 +1,3 @@
-import * as React from "react";
 import type { Ref, SVGProps } from "react";
 import { forwardRef, memo } from "react";
 const SvgIo = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
@@ -32,12 +31,7 @@ const SvgIo = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 		<g clipPath="url(#io_svg__b)">
 			<path fill="#012169" d="M0 0h300v150H0z" />
 			<path stroke="#fff" strokeWidth={30} d="m0 0 300 150m0-150L0 150" />
-			<path
-				stroke="#c8102e"
-				strokeWidth={20}
-				d="m0 0 300 150m0-150L0 150"
-				clipPath="url(#io_svg__c)"
-			/>
+			<path stroke="#c8102e" strokeWidth={20} d="m0 0 300 150m0-150L0 150" clipPath="url(#io_svg__c)" />
 			<path stroke="#fff" strokeWidth={50} d="M150 0v200M0 75h350" />
 			<path stroke="#c8102e" strokeWidth={30} d="M150 0v200M0 75h350" />
 		</g>
@@ -63,22 +57,10 @@ const SvgIo = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 					<path d="m620.08 342.88 53.15 106.3 53.15-106.3" />
 				</g>
 			</g>
-			<use
-				xlinkHref="#io_svg__d"
-				transform="matrix(.23652 -.28186 .29496 .22762 354.57 204.65)"
-			/>
-			<use
-				xlinkHref="#io_svg__d"
-				transform="matrix(.15164 .33524 -.3329 .16731 907.54 -153.47)"
-			/>
-			<use
-				xlinkHref="#io_svg__d"
-				transform="matrix(-.20952 .30246 -.3147 -.19945 1141.4 167.58)"
-			/>
-			<use
-				xlinkHref="#io_svg__d"
-				transform="matrix(-.20772 -.25838 .23618 -.23515 689.99 567.28)"
-			/>
+			<use xlinkHref="#io_svg__d" transform="matrix(.23652 -.28186 .29496 .22762 354.57 204.65)" />
+			<use xlinkHref="#io_svg__d" transform="matrix(.15164 .33524 -.3329 .16731 907.54 -153.47)" />
+			<use xlinkHref="#io_svg__d" transform="matrix(-.20952 .30246 -.3147 -.19945 1141.4 167.58)" />
+			<use xlinkHref="#io_svg__d" transform="matrix(-.20772 -.25838 .23618 -.23515 689.99 567.28)" />
 			<g transform="matrix(-.36218 -.09947 -.20981 .31773 1222.4 -24.229)">
 				<g id="io_svg__e" fill="none" stroke="#000">
 					<path
@@ -95,10 +77,7 @@ const SvgIo = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 					<path d="m719.58 469.22 53.15 86.886 35.327-95.478" />
 				</g>
 			</g>
-			<use
-				xlinkHref="#io_svg__e"
-				transform="matrix(.36088 .10411 .01321 .38052 452.76 -239.27)"
-			/>
+			<use xlinkHref="#io_svg__e" transform="matrix(.36088 .10411 .01321 .38052 452.76 -239.27)" />
 			<g fill="none" stroke="#000">
 				<path
 					fill="#006d00"
@@ -368,10 +347,7 @@ const SvgIo = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 				transform="matrix(.1889 0 0 .20348 -58.471 2.87)"
 			/>
 			<g strokeWidth={0.675}>
-				<path
-					fill="#fed100"
-					d="M454.172 172.733a4.497 4.844 0 1 1-8.995 0 4.497 4.844 0 1 1 8.995 0z"
-				/>
+				<path fill="#fed100" d="M454.172 172.733a4.497 4.844 0 1 1-8.995 0 4.497 4.844 0 1 1 8.995 0z" />
 				<path
 					fill="none"
 					stroke="#000"
@@ -381,10 +357,7 @@ const SvgIo = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 				/>
 			</g>
 			<g strokeWidth={1.247}>
-				<path
-					fill="#fed100"
-					d="M448.659 167.51v4.066h-3.775v2.07h9.472v-2.07h-3.782v-4.066z"
-				/>
+				<path fill="#fed100" d="M448.659 167.51v4.066h-3.775v2.07h9.472v-2.07h-3.782v-4.066z" />
 				<path
 					fill="none"
 					stroke="#000"
@@ -402,15 +375,7 @@ const SvgIo = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 					fillRule="evenodd"
 					ry={6.386}
 				/>
-				<rect
-					width={25.322}
-					height={71.72}
-					x={182.33}
-					y={34.934}
-					fill="none"
-					stroke="#000"
-					ry={6.386}
-				/>
+				<rect width={25.322} height={71.72} x={182.33} y={34.934} fill="none" stroke="#000" ry={6.386} />
 			</g>
 			<g strokeWidth={1.154}>
 				<g transform="matrix(.26907 0 0 .22912 385.925 -39.102)">
@@ -439,15 +404,7 @@ const SvgIo = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 						fillRule="evenodd"
 						ry={3.8}
 					/>
-					<rect
-						width={7.041}
-						height={79.256}
-						x={240.49}
-						y={941.22}
-						fill="none"
-						stroke="#000"
-						ry={3.8}
-					/>
+					<rect width={7.041} height={79.256} x={240.49} y={941.22} fill="none" stroke="#000" ry={3.8} />
 				</g>
 			</g>
 			<g strokeWidth={0.884}>
@@ -535,20 +492,14 @@ const SvgIo = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 					transform="matrix(-.17173 0 0 .18498 940.02 58.235)"
 				/>
 			</g>
-			<path
-				fill="#fed100"
-				d="m432.273 203.638 3.959-.231.563.93-.466.99-3.96.232-.682-.924z"
-			/>
+			<path fill="#fed100" d="m432.273 203.638 3.959-.231.563.93-.466.99-3.96.232-.682-.924z" />
 			<path
 				fill="none"
 				stroke="#000"
 				d="M-346.46 1090.7h16.902l2.2 3.807-2.2 3.806h-16.902l-2.707-3.807z"
 				transform="matrix(.23424 -.0137 .01271 .25232 499.564 -76.307)"
 			/>
-			<path
-				fill="#f6e078"
-				d="m466.967 203.638-3.96-.232-.563.93.467.991 3.959.232.682-.924z"
-			/>
+			<path fill="#f6e078" d="m466.967 203.638-3.96-.232-.563.93.467.991 3.959.232.682-.924z" />
 			<path
 				fill="#fed100"
 				stroke="#000"
@@ -623,15 +574,7 @@ const SvgIo = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 						<path d="M2918.5 832.84a5.161 5.161 0 0 1 1.513 3.664v33.282a5.161 5.161 0 0 1-1.513 3.664 5.16 5.16 0 0 1-3.664 1.514h-59.908a5.16 5.16 0 0 1-3.664-1.514c-.936-.935 66.3-41.547 67.237-40.61z" />
 						<path d="M2918.5 873.46a5.16 5.16 0 0 1-3.664 1.513h-59.908a5.16 5.16 0 0 1-3.664-1.513c-.475-.475 16.6-11.163 33.66-21.457 0 0 34.513 20.521 33.577 21.457z" />
 					</g>
-					<rect
-						width={70.263}
-						height={43.637}
-						x={2849.7}
-						y={831.33}
-						fill="none"
-						stroke="#000"
-						ry={5.177}
-					/>
+					<rect width={70.263} height={43.637} x={2849.7} y={831.33} fill="none" stroke="#000" ry={5.177} />
 					<rect
 						width={39.367}
 						height={22.304}
@@ -644,10 +587,7 @@ const SvgIo = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 					/>
 				</g>
 			</g>
-			<g
-				strokeWidth={1.428}
-				transform="matrix(.20308 -.0215 .0319 .19463 320.52 157.944)"
-			>
+			<g strokeWidth={1.428} transform="matrix(.20308 -.0215 .0319 .19463 320.52 157.944)">
 				<rect
 					width={35.829}
 					height={22.674}
@@ -667,15 +607,7 @@ const SvgIo = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 					fillRule="evenodd"
 					ry={8.271}
 				/>
-				<rect
-					width={29.954}
-					height={16.542}
-					x={497.57}
-					y={343.28}
-					fill="none"
-					stroke="#000"
-					ry={8.271}
-				/>
+				<rect width={29.954} height={16.542} x={497.57} y={343.28} fill="none" stroke="#000" ry={8.271} />
 			</g>
 			<g strokeWidth={1.361}>
 				<path
@@ -684,10 +616,7 @@ const SvgIo = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 					d="m626.17 310.88-23.701-12.771 23.701-12.082 2.881 13.147z"
 					transform="matrix(-.19192 .03609 .03628 .22389 532.876 127.027)"
 				/>
-				<path
-					fill="#c8102e"
-					d="m423.854 218.463 2.962-2.693-3.615-1.34-.775 2.124z"
-				/>
+				<path fill="#c8102e" d="m423.854 218.463 2.962-2.693-3.615-1.34-.775 2.124z" />
 				<path fill="#c8102e" d="m423.854 218.463 2.962-2.693-4.355.778z" />
 				<path
 					fill="none"
@@ -732,10 +661,7 @@ const SvgIo = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 					transform="matrix(.0855 0 0 .0921 199.876 145.028)"
 				/>
 			</g>
-			<g
-				strokeWidth={1.428}
-				transform="matrix(-.20308 -.0215 -.0319 .19463 578.719 157.944)"
-			>
+			<g strokeWidth={1.428} transform="matrix(-.20308 -.0215 -.0319 .19463 578.719 157.944)">
 				<rect
 					width={35.829}
 					height={22.674}
@@ -755,15 +681,7 @@ const SvgIo = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 					fillRule="evenodd"
 					ry={8.271}
 				/>
-				<rect
-					width={29.954}
-					height={16.542}
-					x={497.57}
-					y={343.28}
-					fill="none"
-					stroke="#000"
-					ry={8.271}
-				/>
+				<rect width={29.954} height={16.542} x={497.57} y={343.28} fill="none" stroke="#000" ry={8.271} />
 			</g>
 			<g strokeWidth={1.361}>
 				<path
@@ -772,10 +690,7 @@ const SvgIo = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 					d="m626.17 310.88-23.701-12.771 23.701-12.082 2.881 13.147z"
 					transform="matrix(.19192 .03609 -.03628 .22389 366.364 127.027)"
 				/>
-				<path
-					fill="#c8102e"
-					d="m475.385 218.463-2.962-2.693 3.616-1.34.774 2.124z"
-				/>
+				<path fill="#c8102e" d="m475.385 218.463-2.962-2.693 3.616-1.34.774 2.124z" />
 				<path fill="#c8102e" d="m475.385 218.463-2.962-2.693 4.356.778z" />
 				<path
 					fill="none"

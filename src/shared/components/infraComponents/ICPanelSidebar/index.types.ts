@@ -16,7 +16,4 @@ export type ICPanelSidebarPopoverMenuGroupProps = {
 	withoutOffset?: boolean;
 } & Pick<MenuProps, "position" | "arrowPosition" | "trigger" | "width">;
 
-export type ICPanelSidebarPlacement =
-	| "management-center"
-	| "sidebar"
-	| "applications";
+export type ICPanelSidebarPlacement = "management-center" | "sidebar" | "applications";

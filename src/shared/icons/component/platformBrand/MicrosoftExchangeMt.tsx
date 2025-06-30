@@ -1,10 +1,6 @@
-import * as React from "react";
 import type { Ref, SVGProps } from "react";
 import { forwardRef, memo } from "react";
-const SvgMicrosoftExchangeMt = (
-	props: SVGProps<SVGSVGElement>,
-	ref: Ref<SVGSVGElement>,
-) => (
+const SvgMicrosoftExchangeMt = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
 		width="1em"
@@ -50,10 +46,7 @@ const SvgMicrosoftExchangeMt = (
 			fill="#0078D4"
 			d="M11.625 6.75h-8.75A.875.875 0 0 0 2 7.625v8.75c0 .483.392.875.875.875h8.75a.875.875 0 0 0 .875-.875v-8.75a.875.875 0 0 0-.875-.875"
 		/>
-		<path
-			fill="#fff"
-			d="M8.97 10.08H6.513v1.436H8.82v.92H6.514v1.492H9.1v.916H5.4V9.156h3.57z"
-		/>
+		<path fill="#fff" d="M8.97 10.08H6.513v1.436H8.82v.92H6.514v1.492H9.1v.916H5.4V9.156h3.57z" />
 	</svg>
 );
 const ForwardRef = forwardRef(SvgMicrosoftExchangeMt);

@@ -1,4 +1,3 @@
-import * as React from "react";
 import type { Ref, SVGProps } from "react";
 import { forwardRef, memo } from "react";
 const SvgGs = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
@@ -88,10 +87,7 @@ const SvgGs = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 			fill="#FFF"
 			d="M0 0v20.963L333.073 187.5h41.925v-20.963L41.925.001H0zm374.998 0v20.962L41.925 187.5H0v-20.962L333.073 0h41.925z"
 		/>
-		<path
-			fill="#FFF"
-			d="M156.25 0v187.499h62.499V0h-62.5zM0 62.5V125h374.998V62.5H0z"
-		/>
+		<path fill="#FFF" d="M156.25 0v187.499h62.499V0h-62.5zM0 62.5V125h374.998V62.5H0z" />
 		<path
 			fill="#c8102e"
 			d="M0 75v37.5h374.998V75H0zM168.75 0v187.499h37.499V0h-37.5zM0 187.499l125-62.5h27.95l-125 62.5H0zM0 0l125 62.5H97.05L0 13.976V0zm222.049 62.5 125-62.5h27.95l-125 62.5h-27.95zm152.95 124.999-125-62.5h27.95l97.05 48.525V187.5z"
@@ -267,10 +263,7 @@ const SvgGs = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 			d="M480.64 125.6c-1.41 1.58 1.74 5.01 5.04 4.51.83-3.72-4.21-5.66-5.04-4.51z"
 			transform="matrix(.3316 0 0 .35352 391.45 150.228)"
 		/>
-		<path
-			fill="none"
-			d="M550.815 192.088c-.229.619.68 1.489 1.207 1.245.213-.637-.968-1.736-1.207-1.245z"
-		/>
+		<path fill="none" d="M550.815 192.088c-.229.619.68 1.489 1.207 1.245.213-.637-.968-1.736-1.207-1.245z" />
 		<path
 			fill="#e80000"
 			stroke="#006b00"
@@ -325,227 +318,127 @@ const SvgGs = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 			/>
 		</g>
 		<g fontFamily="Timmons" fontSize={14} fontWeight="bold">
-			<text
-				x={-328.344}
-				y={362.397}
-				transform="matrix(.403 -.473 .473 .403 461.4 21.482)"
-			>
+			<text x={-328.344} y={362.397} transform="matrix(.403 -.473 .473 .403 461.4 21.482)">
 				<tspan x={-328.344} y={362.397}>
 					L
 				</tspan>
 			</text>
-			<text
-				x={-292.335}
-				y={384.266}
-				transform="matrix(.436 -.442 .442 .436 461.4 21.482)"
-			>
+			<text x={-292.335} y={384.266} transform="matrix(.436 -.442 .442 .436 461.4 21.482)">
 				<tspan x={-292.335} y={384.266}>
 					E
 				</tspan>
 			</text>
-			<text
-				x={-239.78}
-				y={451.681}
-				transform="matrix(.4737 -.33822 .35254 .46837 461.4 21.482)"
-			>
+			<text x={-239.78} y={451.681} transform="matrix(.4737 -.33822 .35254 .46837 461.4 21.482)">
 				<tspan x={-239.78} y={451.681}>
 					O
 				</tspan>
 			</text>
-			<text
-				x={-188.526}
-				y={429.958}
-				transform="matrix(.51446 -.3478 .3478 .51446 461.4 21.482)"
-			>
+			<text x={-188.526} y={429.958} transform="matrix(.51446 -.3478 .3478 .51446 461.4 21.482)">
 				<tspan x={-188.526} y={429.958}>
 					T
 				</tspan>
 			</text>
-			<text
-				x={-115.426}
-				y={451.479}
-				transform="matrix(.56 -.268 .268 .56 461.4 21.482)"
-			>
+			<text x={-115.426} y={451.479} transform="matrix(.56 -.268 .268 .56 461.4 21.482)">
 				<tspan x={-115.426} y={451.479}>
 					E
 				</tspan>
 			</text>
-			<text
-				x={-94.111}
-				y={453.046}
-				transform="matrix(.567 -.252 .252 .567 461.4 21.482)"
-			>
+			<text x={-94.111} y={453.046} transform="matrix(.567 -.252 .252 .567 461.4 21.482)">
 				<tspan x={-94.111} y={453.046}>
 					R
 				</tspan>
 			</text>
-			<text
-				x={-68.371}
-				y={454.982}
-				transform="matrix(.576 -.232 .232 .576 461.4 21.482)"
-			>
+			<text x={-68.371} y={454.982} transform="matrix(.576 -.232 .232 .576 461.4 21.482)">
 				<tspan x={-68.371} y={454.982}>
 					R
 				</tspan>
 			</text>
-			<text
-				x={112.016}
-				y={445.666}
-				transform="rotate(-4.6 467.783 -5492.19) scale(.621)"
-			>
+			<text x={112.016} y={445.666} transform="rotate(-4.6 467.783 -5492.19) scale(.621)">
 				<tspan x={112.016} y={445.666}>
 					R
 				</tspan>
 			</text>
-			<text
-				x={180.225}
-				y={430.793}
-				transform="matrix(.62 0 0 .62 461.4 21.482)"
-			>
+			<text x={180.225} y={430.793} transform="matrix(.62 0 0 .62 461.4 21.482)">
 				<tspan x={180.225} y={430.793}>
 					R
 				</tspan>
 			</text>
-			<text
-				x={414.759}
-				y={275.217}
-				transform="matrix(.54 .307 -.307 .54 461.4 21.482)"
-			>
+			<text x={414.759} y={275.217} transform="matrix(.54 .307 -.307 .54 461.4 21.482)">
 				<tspan x={414.759} y={275.217}>
 					R
 				</tspan>
 			</text>
-			<text
-				x={483.878}
-				y={193.05}
-				transform="rotate(39.8 201.03 648.008) scale(.621)"
-			>
+			<text x={483.878} y={193.05} transform="rotate(39.8 201.03 648.008) scale(.621)">
 				<tspan x={483.878} y={193.05}>
 					E
 				</tspan>
 			</text>
-			<text
-				x={309.116}
-				y={414.028}
-				transform="matrix(.59837 .11248 -.09645 .5911 461.4 21.482)"
-			>
+			<text x={309.116} y={414.028} transform="matrix(.59837 .11248 -.09645 .5911 461.4 21.482)">
 				<tspan x={309.116} y={414.028}>
 					O
 				</tspan>
 			</text>
-			<text
-				x={105.058}
-				y={459.272}
-				transform="matrix(.56007 -.08172 .08475 .60547 461.4 21.482)"
-			>
+			<text x={105.058} y={459.272} transform="matrix(.56007 -.08172 .08475 .60547 461.4 21.482)">
 				<tspan x={105.058} y={459.272}>
 					O
 				</tspan>
 			</text>
-			<text
-				x={-45.708}
-				y={455.835}
-				transform="matrix(.582 -.215 .215 .582 461.4 21.482)"
-			>
+			<text x={-45.708} y={455.835} transform="matrix(.582 -.215 .215 .582 461.4 21.482)">
 				<tspan x={-45.708} y={455.835}>
 					A
 				</tspan>
 			</text>
-			<text
-				x={518.35}
-				y={144.724}
-				transform="rotate(45.196 204.897 565.016) scale(.621)"
-			>
+			<text x={518.35} y={144.724} transform="rotate(45.196 204.897 565.016) scale(.621)">
 				<tspan x={518.35} y={144.724}>
 					A
 				</tspan>
 			</text>
-			<text
-				x={271.188}
-				y={388.298}
-				transform="rotate(11.357 122.69 2331.003) scale(.621)"
-			>
+			<text x={271.188} y={388.298} transform="rotate(11.357 122.69 2331.003) scale(.621)">
 				<tspan x={271.188} y={388.298}>
 					A
 				</tspan>
 			</text>
-			<text
-				x={40.322}
-				y={455.168}
-				transform="matrix(.61 -.115 .115 .61 461.4 21.482)"
-			>
+			<text x={40.322} y={455.168} transform="matrix(.61 -.115 .115 .61 461.4 21.482)">
 				<tspan x={40.322} y={455.168}>
 					M
 				</tspan>
 			</text>
-			<text
-				x={94.429}
-				y={448.079}
-				transform="matrix(.618 -.064 .064 .618 461.4 21.482)"
-			>
+			<text x={94.429} y={448.079} transform="matrix(.618 -.064 .064 .618 461.4 21.482)">
 				<tspan x={94.429} y={448.079}>
 					P
 				</tspan>
 			</text>
-			<text
-				x={155.088}
-				y={437.607}
-				transform="matrix(.62 0 0 .62 461.4 21.482)"
-			>
+			<text x={155.088} y={437.607} transform="matrix(.62 0 0 .62 461.4 21.482)">
 				<tspan x={155.088} y={437.607}>
 					P
 				</tspan>
 			</text>
-			<text
-				x={405.134}
-				y={276.665}
-				transform="matrix(.54 .306 -.306 .54 461.4 21.482)"
-			>
+			<text x={405.134} y={276.665} transform="matrix(.54 .306 -.306 .54 461.4 21.482)">
 				<tspan x={405.134} y={276.665}>
 					P
 				</tspan>
 			</text>
-			<text
-				x={232.095}
-				y={409.793}
-				transform="rotate(6.586 44.083 4020.832) scale(.621)"
-			>
+			<text x={232.095} y={409.793} transform="rotate(6.586 44.083 4020.832) scale(.621)">
 				<tspan x={232.095} y={409.793}>
 					I
 				</tspan>
 			</text>
-			<text
-				x={530.392}
-				y={132.089}
-				transform="rotate(46.59 205.751 546.6) scale(.621)"
-			>
+			<text x={530.392} y={132.089} transform="rotate(46.59 205.751 546.6) scale(.621)">
 				<tspan x={530.392} y={132.089}>
 					T
 				</tspan>
 			</text>
-			<text
-				x={464.158}
-				y={218.519}
-				transform="rotate(36.82 198.426 703.928) scale(.621)"
-			>
+			<text x={464.158} y={218.519} transform="rotate(36.82 198.426 703.928) scale(.621)">
 				<tspan x={464.158} y={218.519}>
 					T
 				</tspan>
 			</text>
-			<text
-				x={313.725}
-				y={361.961}
-				transform="matrix(.596 .175 -.175 .596 461.4 21.482)"
-			>
+			<text x={313.725} y={361.961} transform="matrix(.596 .175 -.175 .596 461.4 21.482)">
 				<tspan x={313.725} y={361.961}>
 					M
 				</tspan>
 			</text>
-			<text
-				x={513.704}
-				y={123.248}
-				transform="rotate(47.66 206.381 533.067) scale(.621)"
-			>
+			<text x={513.704} y={123.248} transform="rotate(47.66 206.381 533.067) scale(.621)">
 				<tspan x={513.704} y={123.248}>
 					G
 				</tspan>
@@ -610,12 +503,7 @@ const SvgGs = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 			strokeWidth={0.828}
 			d="M599.796 108.894c4.608-2.956 6.26-2.956 10.048-2.366-2.72.354-2.72.472-2.72.472s-.236.354 1.416 1.894c-1.888-.478-3.546-1.54-8.744 0z"
 		/>
-		<path
-			fill="none"
-			stroke="#000"
-			strokeWidth={0.828}
-			d="M598.02 107s9.104-4.844 14.184-8.154"
-		/>
+		<path fill="none" stroke="#000" strokeWidth={0.828} d="M598.02 107s9.104-4.844 14.184-8.154" />
 		<path
 			fill="#00F"
 			stroke="#000"
@@ -770,12 +658,7 @@ const SvgGs = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 			d="M161.8 129.74s4.89 6.67 4.33 8.56c2 1.56 4.23 7.79 4.23 7.79"
 			transform="matrix(.621 0 0 .621 461.4 21.482)"
 		/>
-		<path
-			fill="none"
-			stroke="#000"
-			strokeWidth={0.828}
-			d="M573.615 101.361s-6.558 9.253-6.353 9.942"
-		/>
+		<path fill="none" stroke="#000" strokeWidth={0.828} d="M573.615 101.361s-6.558 9.253-6.353 9.942" />
 		<path d="M540.013 57.364c-.149.517-.985.717-1.867.447s-1.478-.909-1.33-1.426c.15-.518.985-.718 1.868-.448s1.477.91 1.329 1.427zm2.651-.183c.148.517.984.718 1.867.447s1.477-.908 1.329-1.426c-.149-.517-.985-.718-1.867-.447s-1.478.909-1.33 1.426z" />
 		<path
 			fill="#ff7000"
@@ -830,30 +713,10 @@ const SvgGs = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 			strokeWidth={0.388}
 			d="M516.03 155.618s2.18 9.737-.427 16.456m1.097-20.716s4.255 5.626 3.706 12.625m-3.294-13.861c.138 0 3.568 3.018 3.43 5.074m-2.606-6.31s2.333 1.646 2.881 3.292"
 		/>
-		<path
-			fill="none"
-			stroke="#000"
-			strokeWidth={0.828}
-			d="M516.838 147.924s-8.37 13.587-7.273 22.095"
-		/>
-		<path
-			fill="none"
-			stroke="#2b2b2b"
-			strokeWidth={0.388}
-			d="M517.387 147.514s-11.115 6.589-13.173 28.131"
-		/>
-		<path
-			fill="none"
-			stroke="#000"
-			strokeWidth={0.828}
-			d="m516.152 151.495-4.391 3.29"
-		/>
-		<path
-			fill="none"
-			stroke="#2b2b2b"
-			strokeWidth={0.388}
-			d="M500.097 176.881s6.175-25.66 17.153-29.367"
-		/>
+		<path fill="none" stroke="#000" strokeWidth={0.828} d="M516.838 147.924s-8.37 13.587-7.273 22.095" />
+		<path fill="none" stroke="#2b2b2b" strokeWidth={0.388} d="M517.387 147.514s-11.115 6.589-13.173 28.131" />
+		<path fill="none" stroke="#000" strokeWidth={0.828} d="m516.152 151.495-4.391 3.29" />
+		<path fill="none" stroke="#2b2b2b" strokeWidth={0.388} d="M500.097 176.881s6.175-25.66 17.153-29.367" />
 		<path
 			fill="#2b2b2b"
 			stroke="#2b2b2b"
@@ -926,16 +789,8 @@ const SvgGs = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 			d="M486.373 250.302s3.56.428 4.53 2.267c.971 1.831 1.403 4.638 1.403 4.638.593-1.186.862-2.21 2.05-3.074s2.05-.975 1.995-1.62-3.776-4.583-5.663-4.8-5.178 2.049-5.178 2.049-.593.863.863.54z"
 		/>
 		<g fill="none" strokeLinecap="round" strokeWidth={1.25}>
-			<path
-				stroke="#8a9396"
-				strokeWidth={0.776}
-				d="M494.504 259.58s9.225 4.204 24.42 4.477"
-			/>
-			<path
-				stroke="#2b2b2b"
-				strokeWidth={0.776}
-				d="M525.3 216.755s-.788 7.744-6.744 23.02"
-			/>
+			<path stroke="#8a9396" strokeWidth={0.776} d="M494.504 259.58s9.225 4.204 24.42 4.477" />
+			<path stroke="#2b2b2b" strokeWidth={0.776} d="M525.3 216.755s-.788 7.744-6.744 23.02" />
 			<path
 				stroke="#2b2b2b"
 				strokeLinecap="butt"
