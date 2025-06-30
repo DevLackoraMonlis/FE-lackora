@@ -7,7 +7,7 @@ import { NumberInput, Select, TextInput, Textarea } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 
-export function getDynamicField<T extends string>({
+export function getDynamicField<TObjectType extends string>({
 	type = "String",
 	label = "",
 	options = [],
@@ -18,7 +18,7 @@ export function getDynamicField<T extends string>({
 	otherElementOptions = {},
 	objectType,
 	api,
-}: BCDynamicFieldProps<T>) {
+}: BCDynamicFieldProps<TObjectType>) {
 	const required = !!fieldIsRequired;
 	const { setTotalRecords, tablePagination } = useTablePagination();
 	const [search, setSearch] = useState("");
