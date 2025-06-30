@@ -1,7 +1,7 @@
 import type { PaginationRq } from "@/http/end-points/GeneralService.types";
 import type {
-  BCDynamicFieldGenerator,
-  BCDynamicFieldProps,
+	BCDynamicFieldGenerator,
+	BCDynamicFieldProps,
 } from "@/shared/components/baseComponents/BCDynamicField/index.types";
 
 export type DiscoveryAdapterFieldObjectType = "connection" | "none";
@@ -13,14 +13,14 @@ export type DiscoveryAdapterApiField = BCDynamicFieldGenerator<DiscoveryAdapterF
 export type DiscoveryAdapterFilters = PaginationRq<Record<string, unknown>>;
 
 export type DiscoveryAdapterConfiguration = {
-  key: string;
-  value: string;
-  id?: string;
-  type?: string;
+	key: string;
+	value: string;
+	id?: string;
+	type?: string;
 };
 
 export type DiscoveryAdapterConfigurationRs = {
-  id: string;
-  configs: DiscoveryAdapterConfiguration[];
-  isActive: boolean;
+	id: string;
+	configs: DiscoveryAdapterConfiguration[];
+	isActive: boolean;
 };
