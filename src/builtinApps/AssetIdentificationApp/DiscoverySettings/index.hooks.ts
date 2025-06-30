@@ -33,12 +33,11 @@ export function useDiscoveryAdapters({ type, ...clientSideParams }: DiscoveryAda
 			},
 		},
 	);
-
+	// client side filtering
 	const data = discoveryAdaptersUQ?.data;
 	const filters = discoveryAdaptersUQ?.data?.metadata?.filters;
 	const groupByType = groupBy(data?.results, "type");
 	let results = groupByType[type];
-
 	const { search, used } = clientSideParams;
 	results = filter(results, ({ display_name }) => !search || display_name?.includes(search));
 	results = filter(results, ({ is_used }) => is_used === !!used);
@@ -50,7 +49,7 @@ export function useDiscoveryAdapters({ type, ...clientSideParams }: DiscoveryAda
 				!filtered || (Array.isArray(filtered) && filtered?.includes(`${item[param as keyof typeof item]}`)),
 		);
 	});
-
+	// update result
 	const discoveryAdapters = { ...discoveryAdaptersUQ, data: { ...data, results } };
 	return { discoveryAdapters };
 }
