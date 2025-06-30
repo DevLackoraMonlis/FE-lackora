@@ -22,7 +22,7 @@ const DiscoveryAdaptersAddGateway = (props: Props) => {
 	const queryClient = useQueryClient();
 	const createDiscoverySettingConfiguration = useCreateDiscoverySettingConfiguration();
 
-	const insertListItem = props.fields?.reduce(
+	const insertListItem = props.fields.reduce(
 		(accumulator, { key }) => {
 			accumulator[key] = "";
 			return accumulator;
@@ -61,7 +61,7 @@ const DiscoveryAdaptersAddGateway = (props: Props) => {
 		<Flex key={item.key} gap="xs" mt="xs">
 			<Fieldset variant="filled" w="100%" pb="xs" pt="2xs">
 				<Flex gap="xs">
-					{props.fields?.map((item) =>
+					{props.fields.map((item) =>
 						getDynamicField({
 							otherElementOptions: { withAsterisk: true, style: { flex: 1 } },
 							formInputProps: {

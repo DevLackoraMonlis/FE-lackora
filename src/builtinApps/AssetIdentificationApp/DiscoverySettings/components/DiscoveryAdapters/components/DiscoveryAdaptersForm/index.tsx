@@ -40,7 +40,7 @@ const DiscoveryAdaptersForm = ({
 				<Flex gap="xs" mt="xs">
 					<Fieldset variant="filled" w="100%" pb="xs" pt="2xs">
 						<Flex gap="xs">
-							{fields?.map((item) =>
+							{fields.map((item) =>
 								getDynamicField({
 									otherElementOptions: {
 										withAsterisk: true,
