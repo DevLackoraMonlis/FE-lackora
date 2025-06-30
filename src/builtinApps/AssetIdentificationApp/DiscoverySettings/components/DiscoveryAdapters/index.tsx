@@ -3,19 +3,15 @@ import { Accordion, Checkbox, TextInput } from "@mantine/core";
 import { useDebouncedValue } from "@mantine/hooks";
 import { IconSearch, IconX } from "@tabler/icons-react";
 import { Fragment, useState } from "react";
-import { useStore } from "zustand";
 
 import { useGetDiscoverySettings } from "@/http/generated/asset-identification-discovery-settings";
 import type { GetDiscoverySettingsParams } from "@/http/generated/models";
 
-import { discoveryAdaptersStore } from "../../index.store";
 import DiscoveryAdapterGateways from "./components/DiscoveryAdapterGateways";
 
 type DiscoveryAdapterFilters = Pick<GetDiscoverySettingsParams, "method" | "vendor">;
 
 const DiscoverySettingsDiscoveryAdapters = () => {
-	const setFormFields = useStore(discoveryAdaptersStore, (state) => state.setFormFields);
-
 	const [queryParams, setQueryParams] = useState<GetDiscoverySettingsParams>({
 		type: "discovery",
 	});
@@ -23,7 +19,6 @@ const DiscoverySettingsDiscoveryAdapters = () => {
 	const discoverySettings = useGetDiscoverySettings(debouncedParams, {
 		query: {
 			select: (res) => {
-				setFormFields(res?.data?.results || []);
 				return res?.data;
 			},
 		},

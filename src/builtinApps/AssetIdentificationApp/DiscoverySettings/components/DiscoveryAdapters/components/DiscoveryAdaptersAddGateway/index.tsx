@@ -3,28 +3,26 @@ import { useForm } from "@mantine/form";
 import { randomId } from "@mantine/hooks";
 import { IconCheck, IconPlus, IconX } from "@tabler/icons-react";
 import { useQueryClient } from "@tanstack/react-query";
-import { useStore } from "zustand";
 
 import { useCreateDiscoverySettingConfiguration } from "@/http/generated/asset-identification-discovery-settings";
 import { getDynamicField } from "@/shared/components/baseComponents/BCDynamicField";
 
+import type { DiscoveryField } from "@/builtinApps/AssetIdentificationApp/DiscoverySettings/index.types";
 import { GET_DISCOVERY_SETTING_CONFIGURATIONS_QUERY_KEY } from "../../../../index.constants";
-import { discoveryAdaptersStore } from "../../../../index.store";
 
 type FormValues = { gateways: { [key: string]: string }[] };
 
 type Props = {
 	disabled: boolean;
 	adapterId: string;
+	fields: DiscoveryField;
 };
 
 const DiscoveryAdaptersAddGateway = (props: Props) => {
 	const queryClient = useQueryClient();
 	const createDiscoverySettingConfiguration = useCreateDiscoverySettingConfiguration();
-	const discoveryAdapterFormFields = useStore(discoveryAdaptersStore, (state) => state.formFields);
-	const formFields = discoveryAdapterFormFields[props.adapterId];
 
-	const insertListItem = formFields?.reduce(
+	const insertListItem = props.fields?.reduce(
 		(accumulator, { key }) => {
 			accumulator[key] = "";
 			return accumulator;
@@ -63,7 +61,7 @@ const DiscoveryAdaptersAddGateway = (props: Props) => {
 		<Flex key={item.key} gap="xs" mt="xs">
 			<Fieldset variant="filled" w="100%" pb="xs" pt="2xs">
 				<Flex gap="xs">
-					{formFields?.map((item) =>
+					{props.fields?.map((item) =>
 						getDynamicField({
 							otherElementOptions: { withAsterisk: true, style: { flex: 1 } },
 							formInputProps: {

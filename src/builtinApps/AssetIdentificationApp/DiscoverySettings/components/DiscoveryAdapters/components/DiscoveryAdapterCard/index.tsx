@@ -1,17 +1,18 @@
+import BCPopoverConfirm from "@/shared/components/baseComponents/BCPopoverConfirm";
 import { ActionIcon, Badge, Card, Flex, Text } from "@mantine/core";
 import { IconListDetails, IconPencil, IconPlugConnected, IconX } from "@tabler/icons-react";
 import { useState } from "react";
 
-import type { EachAdapterConfiguration } from "@/http/generated/models";
-import BCPopoverConfirm from "@/shared/components/baseComponents/BCPopoverConfirm";
-
+import type { DiscoveryField } from "@/builtinApps/AssetIdentificationApp/DiscoverySettings/index.types";
 import DiscoveryAdaptersForm from "../DiscoveryAdaptersForm";
 
-type Props = EachAdapterConfiguration & {
+type Props = {
 	handleDeleteAdapterConfigurations: VoidFunction;
 	handleEditAdapterConfigurations: (configs: Record<string, unknown>) => void;
 	loading: boolean;
-	adapterId: string;
+	config: Record<string, unknown>;
+	isActive: boolean;
+	fields: DiscoveryField;
 };
 
 const DiscoveryAdapterCard = (props: Props) => {
@@ -20,9 +21,9 @@ const DiscoveryAdapterCard = (props: Props) => {
 	if (editMode) {
 		return (
 			<DiscoveryAdaptersForm
-				adapterId={props.adapterId}
+				fields={props.fields}
 				loading={props.loading}
-				config={props.config}
+				formInitialValues={props.config}
 				handleEditAdapterConfigurations={props.handleEditAdapterConfigurations}
 				onCancel={() => setEditMode(false)}
 			/>
@@ -35,9 +36,9 @@ const DiscoveryAdapterCard = (props: Props) => {
 					{`${props.config?.ip} - ${props.config?.connection}`}
 				</Text>
 				<Flex gap="2xs">
-					<Badge variant="light" color={props.is_active ? "green" : "red"} p="sm">
+					<Badge variant="light" color={props.isActive ? "green" : "red"} p="sm">
 						<Text p="2xs" tt="capitalize">
-							{props.is_active ? "Connected" : "Disconnected"}
+							{props.isActive ? "Connected" : "Disconnected"}
 						</Text>
 					</Badge>
 					<ActionIcon

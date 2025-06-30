@@ -1,8 +1,15 @@
 import type { LabelValueType } from "@/shared/lib/general-types";
-export type BCDynamicFieldObjectType = "connection" | "none";
-export type BCDynamicFieldType = "Int64" | "String" | "Boolean" | "Datetime" | "Textarea" | "Select" | "IP";
+export type BCDynamicFieldType =
+	| "Int64"
+	| "String"
+	| "Boolean"
+	| "Datetime"
+	| "Textarea"
+	| "Select"
+	| "IP"
+	| "List";
 
-export type BCDynamicFieldProps = {
+export type BCDynamicFieldProps<T extends string> = {
 	formInputProps?: unknown;
 	placeholder?: string;
 	defaultValue?: string | number;
@@ -11,7 +18,7 @@ export type BCDynamicFieldProps = {
 	key: string;
 	required?: boolean | null;
 	paginate?: boolean | null;
-	objectType?: BCDynamicFieldObjectType | null;
+	objectType?: T;
 	type?: BCDynamicFieldType | null;
 	options?: LabelValueType[] | null;
 };

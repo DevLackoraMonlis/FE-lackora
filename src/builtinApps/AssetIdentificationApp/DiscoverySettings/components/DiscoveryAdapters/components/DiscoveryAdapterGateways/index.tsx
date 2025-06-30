@@ -48,18 +48,20 @@ const DiscoveryAdapterGateways = ({ adapterId }: Props) => {
 				<LoadingOverlay visible={discoverySettingConfigurations.isFetching} />
 				{discoverySettingConfigurations?.data?.data?.results?.map((item) => (
 					<DiscoveryAdapterCard
+						isActive={!!item.is_active}
+						fields={[]}
 						key={item.id}
 						loading={deleteDiscoverySetting.isPending || editDiscoverySetting.isPending}
 						handleDeleteAdapterConfigurations={() => handleDeleteAdapterConfigurations(item.id)}
 						handleEditAdapterConfigurations={(newConfigs) =>
 							handleEditAdapterConfigurations(item.id, newConfigs)
 						}
-						adapterId={adapterId}
 						{...item}
 					/>
 				))}
 			</Flex>
 			<DiscoveryAdaptersAddGateway
+				fields={[]}
 				disabled={discoverySettingConfigurations.isFetching}
 				adapterId={adapterId}
 			/>

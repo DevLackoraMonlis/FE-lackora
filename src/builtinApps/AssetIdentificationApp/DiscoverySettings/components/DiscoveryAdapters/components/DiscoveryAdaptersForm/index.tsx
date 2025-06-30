@@ -2,32 +2,27 @@ import { ActionIcon, Box, Fieldset, Flex, LoadingOverlay } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { IconCheck, IconX } from "@tabler/icons-react";
 import { useEffect } from "react";
-import { useStore } from "zustand";
 
+import type { DiscoveryField } from "@/builtinApps/AssetIdentificationApp/DiscoverySettings/index.types";
 import { getDynamicField } from "@/shared/components/baseComponents/BCDynamicField";
-
-import { discoveryAdaptersStore } from "../../../../index.store";
 
 type FormValues = Record<string, unknown>;
 
 type Props = {
-	adapterId: string;
-	config: FormValues;
+	formInitialValues: FormValues;
 	loading: boolean;
 	handleEditAdapterConfigurations: (configs: FormValues) => void;
 	onCancel: VoidFunction;
+	fields: DiscoveryField;
 };
 
 const DiscoveryAdaptersForm = ({
-	adapterId,
-	config,
+	formInitialValues,
 	loading,
 	onCancel,
 	handleEditAdapterConfigurations,
+	fields,
 }: Props) => {
-	const discoveryAdapterFormFields = useStore(discoveryAdaptersStore, (state) => state.formFields);
-	const formFields = discoveryAdapterFormFields[adapterId];
-
 	const form = useForm<FormValues>({});
 
 	const handleSubmit = (values: typeof form.values) => {
@@ -35,8 +30,8 @@ const DiscoveryAdaptersForm = ({
 	};
 
 	useEffect(() => {
-		form.initialize(config as FormValues);
-	}, [config]);
+		form.initialize(formInitialValues as FormValues);
+	}, [formInitialValues]);
 
 	return (
 		<Box pos="relative">
@@ -45,7 +40,7 @@ const DiscoveryAdaptersForm = ({
 				<Flex gap="xs" mt="xs">
 					<Fieldset variant="filled" w="100%" pb="xs" pt="2xs">
 						<Flex gap="xs">
-							{formFields?.map((item) =>
+							{fields?.map((item) =>
 								getDynamicField({
 									otherElementOptions: {
 										withAsterisk: true,

@@ -4,8 +4,7 @@ import type { BCDynamicFieldProps } from "./index.types";
 
 import { NumberInput, Select, TextInput, Textarea } from "@mantine/core";
 
-export function getDynamicField({
-	objectType = "none",
+export function getDynamicField<T extends string>({
 	type = "String",
 	label = "",
 	options = [],
@@ -14,11 +13,11 @@ export function getDynamicField({
 	defaultValue: defaultValueAsUnknown,
 	formInputProps,
 	otherElementOptions = {},
-}: BCDynamicFieldProps) {
+}: Omit<BCDynamicFieldProps<T>, "objectType">) {
 	const required = !!fieldIsRequired;
 	const defaultValue = isNumber(defaultValueAsUnknown) ? `${defaultValueAsUnknown}` : defaultValueAsUnknown;
-	switch (objectType) {
-		case "connection":
+	switch (type) {
+		case "List":
 			return (
 				<Select
 					{...{
@@ -32,84 +31,81 @@ export function getDynamicField({
 					}}
 				/>
 			);
+		case "Int64":
+			return (
+				<NumberInput
+					{...{
+						...otherElementOptions,
+						label,
+						options,
+						required,
+						placeholder,
+						defaultValue,
+						...(formInputProps || {}),
+					}}
+				/>
+			);
+		case "Boolean":
+			return "";
+		case "Select": {
+			const defaultValueAsString = isNumber(defaultValue) ? `${defaultValue}` : defaultValue;
+			return (
+				<Select
+					{...{
+						...otherElementOptions,
+						label,
+						data: options || [],
+						required,
+						placeholder,
+						defaultValue: defaultValueAsString,
+						...(formInputProps || {}),
+					}}
+				/>
+			);
+		}
+		case "Datetime":
+			return "";
+		case "Textarea":
+			return (
+				<Textarea
+					{...{
+						...otherElementOptions,
+						label,
+						options,
+						required,
+						placeholder,
+						defaultValue,
+						...(formInputProps || {}),
+					}}
+				/>
+			);
+		case "IP":
+			return (
+				<TextInput
+					{...{
+						...otherElementOptions,
+						label,
+						options,
+						required,
+						placeholder,
+						defaultValue,
+						...(formInputProps || {}),
+					}}
+				/>
+			);
 		default:
-			switch (type) {
-				case "Int64":
-					return (
-						<NumberInput
-							{...{
-								...otherElementOptions,
-								label,
-								options,
-								required,
-								placeholder,
-								defaultValue,
-								...(formInputProps || {}),
-							}}
-						/>
-					);
-				case "Boolean":
-					return "";
-				case "Select": {
-					const defaultValueAsString = isNumber(defaultValue) ? `${defaultValue}` : defaultValue;
-					return (
-						<Select
-							{...{
-								...otherElementOptions,
-								label,
-								data: options || [],
-								required,
-								placeholder,
-								defaultValue: defaultValueAsString,
-								...(formInputProps || {}),
-							}}
-						/>
-					);
-				}
-				case "Datetime":
-					return "";
-				case "Textarea":
-					return (
-						<Textarea
-							{...{
-								...otherElementOptions,
-								label,
-								options,
-								required,
-								placeholder,
-								defaultValue,
-								...(formInputProps || {}),
-							}}
-						/>
-					);
-				case "IP":
-					return (
-						<TextInput
-							{...{
-								...otherElementOptions,
-								label,
-								options,
-								required,
-								placeholder,
-								defaultValue,
-								...(formInputProps || {}),
-							}}
-						/>
-					);
-				default:
-					return (
-						<TextInput
-							{...{
-								...otherElementOptions,
-								label,
-								options,
-								required,
-								placeholder,
-								defaultValue,
-								...(formInputProps || {}),
-							}}
-						/>
-					);
-			}
+			return (
+				<TextInput
+					{...{
+						...otherElementOptions,
+						label,
+						options,
+						required,
+						placeholder,
+						defaultValue,
+						...(formInputProps || {}),
+					}}
+				/>
+			);
 	}
 }
