@@ -1,6 +1,5 @@
 import { Badge, Card, Divider, Flex, Grid, LoadingOverlay, Switch, Text } from "@mantine/core";
 import { Accordion, Checkbox, TextInput } from "@mantine/core";
-import { useDebouncedValue } from "@mantine/hooks";
 import { IconSearch, IconX } from "@tabler/icons-react";
 import { Fragment, useState } from "react";
 
@@ -9,16 +8,9 @@ import type { DiscoveryAdapterFilters } from "../../index.types";
 
 import DiscoveryAdapterGateways from "./components/DiscoveryAdapterGateways";
 
-const defaultQueryParams = {
-	page: 1,
-	limit: 999,
-	type: "discovery",
-};
-
 export default function DiscoverySettingsDiscoveryAdapters() {
-	const [queryParams, setQueryParams] = useState<DiscoveryAdapterFilters>(defaultQueryParams);
-	const [debouncedParams] = useDebouncedValue(queryParams, 200);
-	const { discoveryAdapters } = useDiscoveryAdapters(debouncedParams);
+	const [queryParams, setQueryParams] = useState<DiscoveryAdapterFilters>({ type: "discovery" });
+	const { discoveryAdapters } = useDiscoveryAdapters(queryParams);
 
 	const handleUpdateQueryParams = (params: Partial<DiscoveryAdapterFilters>) => {
 		setQueryParams((perParams) => ({ ...perParams, ...params }));
@@ -39,7 +31,7 @@ export default function DiscoverySettingsDiscoveryAdapters() {
 								queryParams.search ? (
 									<IconX
 										size={15}
-										onClick={() => handleUpdateQueryParams({ search: "" })}
+										onClick={() => handleUpdateQueryParams({ search: null })}
 										className="cursor-pointer"
 									/>
 								) : (
@@ -141,13 +133,7 @@ export default function DiscoverySettingsDiscoveryAdapters() {
 									Added Gateways
 								</Text>
 								{/* DiscoveryAdapterGateways */}
-								<DiscoveryAdapterGateways
-									adapterId={item.id}
-									adapterGateways={item.configurations}
-									fields={item.fields}
-									isFetching={discoveryAdapters.isFetching}
-									refetchDiscoveryAdapters={discoveryAdapters.refetch}
-								/>
+								<DiscoveryAdapterGateways adapterId={item.id} fields={item.fields} />
 								{/* DiscoveryAdapterGateways */}
 							</Accordion.Panel>
 						</Accordion.Item>

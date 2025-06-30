@@ -9,7 +9,7 @@ import type {
 	DiscoveryAdapterConfiguration,
 	DiscoveryAdapterConfigurationRs,
 } from "../../../../index.types";
-import DiscoveryAdaptersForm from "../DiscoveryAdaptersForm";
+import DiscoveryAdaptersForm from "../DiscoveryAdaptersEditGateway";
 
 type Props = DiscoveryAdapterConfigurationRs & {
 	handleDeleteAdapterConfigurations: VoidFunction;
@@ -31,7 +31,7 @@ const DiscoveryAdapterCard = ({ id, configs, isActive, ...props }: Props) => {
 		<Card bg="gray.1" w="100%" padding="xs">
 			<Flex align="center" justify="space-between">
 				<Text fw="bold" fz="sm">
-					{configs?.map(({ value }) => value || "-").join(" - ")}
+					{configs?.map(({ value }) => value || "").join(" - ")}
 				</Text>
 				<Flex gap="2xs">
 					<Badge variant="light" color={isActive ? "green" : "red"} p="sm">

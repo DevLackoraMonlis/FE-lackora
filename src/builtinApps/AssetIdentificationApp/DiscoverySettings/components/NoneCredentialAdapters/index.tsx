@@ -3,12 +3,13 @@ import { Accordion } from "@mantine/core";
 import { IconBrowserCheck, IconCircleDot } from "@tabler/icons-react";
 
 import { NoneCredentialAdaptersSections } from "../../index.enum";
+// import { useDiscoveryAdapters } from "../../index.hooks";
 
 import NoneCredentialAdaptersPortDetectionForm from "./components/PortDetectionForm";
 import NoneCredentialAdaptersWebServiceDetectionForm from "./components/WebServiceDetectionForm";
 
 const DiscoverySettingsNoneCredentialAdapters = () => {
-	// const { discoverySettingsUQ } = useDiscoverySettings({ type: "none-credential" });
+	// const { discoveryAdapters } = useDiscoveryAdapters({ type: "none-credential" });
 	return (
 		<Grid p="sm" pt="lg" gutter="lg">
 			<Grid.Col span={{ xs: 12, lg: 9 }} offset={{ lg: 3 }}>

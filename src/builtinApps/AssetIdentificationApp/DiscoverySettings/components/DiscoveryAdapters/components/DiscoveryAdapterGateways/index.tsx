@@ -1,47 +1,46 @@
 import { Flex } from "@mantine/core";
 
-import { useDeleteDiscoverySetting, useEditDiscoverySetting } from "../../../../index.hooks";
-import type {
-	DiscoveryAdapterApiField,
-	DiscoveryAdapterConfiguration,
-	DiscoveryAdapterConfigurationRs,
-} from "../../../../index.types";
+import {
+	useDeleteDiscoverySetting,
+	useDiscoveryAdapterById,
+	useEditDiscoverySetting,
+} from "../../../../index.hooks";
+import type { DiscoveryAdapterApiField, DiscoveryAdapterConfiguration } from "../../../../index.types";
 
 import DiscoveryAdapterCard from "../DiscoveryAdapterCard";
-import DiscoveryAdaptersAddGateway from "../DiscoveryAdaptersAddGateway";
+import DiscoveryAdaptersAddGateway from "../DiscoveryAdaptersCreateGateway";
 
 type Props = {
-	isFetching: boolean;
-	refetchDiscoveryAdapters: VoidFunction;
 	adapterId: string;
-	adapterGateways: DiscoveryAdapterConfigurationRs[];
 	fields: DiscoveryAdapterApiField[];
 };
 
 const DiscoveryAdapterGateways = ({ adapterId, ...props }: Props) => {
-	const deleteDiscoverySetting = useDeleteDiscoverySetting();
+	const { discoverySettingConfigurations } = useDiscoveryAdapterById(adapterId);
+
+	const { deleteDiscoverySetting } = useDeleteDiscoverySetting();
 	const handleDeleteAdapterConfigurations = (configuration_id: string) => {
 		deleteDiscoverySetting.mutate(
 			{ adapterId, data: { configuration_id } },
-			{ onSuccess: () => props.refetchDiscoveryAdapters() },
+			{ onSuccess: () => discoverySettingConfigurations.refetch() },
 		);
 	};
 
-	const editDiscoverySetting = useEditDiscoverySetting();
+	const { editDiscoverySetting } = useEditDiscoverySetting();
 	const handleEditAdapterConfigurations = (
 		configuration_id: string,
 		configs: DiscoveryAdapterConfiguration[],
 	) => {
 		editDiscoverySetting.mutate(
 			{ adapterId, data: { configs, configuration_id } },
-			{ onSuccess: () => props.refetchDiscoveryAdapters() },
+			{ onSuccess: () => discoverySettingConfigurations.refetch() },
 		);
 	};
 
 	return (
 		<>
 			<Flex gap="xs" direction="column" pos="relative" mih="50px">
-				{props.adapterGateways?.map(({ configs, id, isActive }) => (
+				{discoverySettingConfigurations.data?.results?.map(({ configs, id, isActive }) => (
 					<DiscoveryAdapterCard
 						loading={deleteDiscoverySetting.isPending || editDiscoverySetting.isPending}
 						handleDeleteAdapterConfigurations={() => handleDeleteAdapterConfigurations(id)}
@@ -54,9 +53,9 @@ const DiscoveryAdapterGateways = ({ adapterId, ...props }: Props) => {
 			</Flex>
 			<DiscoveryAdaptersAddGateway
 				fields={props.fields}
-				disabled={props.isFetching}
 				adapterId={adapterId}
-				refetchDiscoveryAdapters={props.refetchDiscoveryAdapters}
+				disabled={discoverySettingConfigurations.isFetching}
+				refetchDiscoveryAdapters={discoverySettingConfigurations.refetch}
 			/>
 		</>
 	);

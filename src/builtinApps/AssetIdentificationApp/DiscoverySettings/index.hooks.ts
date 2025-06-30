@@ -2,8 +2,10 @@ import {
 	useCreateDiscoverySettingConfiguration,
 	useDeleteDiscoverySettingConfiguration,
 	useEditDiscoverySettingConfiguration,
+	useGetDiscoverySettingConfigurations,
 	useGetDiscoverySettings,
 } from "@/http/generated/asset-identification-discovery-settings";
+import { filter, groupBy } from "lodash";
 
 import type {
 	DiscoveryAdapterConfiguration,
@@ -11,69 +13,76 @@ import type {
 	DiscoveryAdapterFilters,
 } from "./index.types";
 
-const mockRecordData = [
-	{
-		id: "36b59a8c-f00c-4058-9cb2-6584fef8e0bc",
-		adapter_id: "e6c0a1fc-489a-4979-b02a-506bddc525b6",
-		config: [
-			{
-				key: "ip",
-				value: "1.1.1.1",
-				id: null,
-				type: null,
+export function useDiscoveryAdapters({ type, ...clientSideParams }: DiscoveryAdapterFilters) {
+	const discoveryAdaptersUQ = useGetDiscoverySettings(
+		{ page: 1, limit: 99 },
+		{
+			query: {
+				select: (res) => {
+					const results = res?.data?.results?.map(({ name, fields, is_used, ...item }) => ({
+						...item,
+						is_used: !!is_used,
+						fields:
+							fields.map(({ object_type, ...item }) => ({
+								...item,
+								objectType: object_type as DiscoveryAdapterFieldObjectType,
+							})) || [],
+					}));
+					return { ...res?.data, results };
+				},
 			},
-			{
-				key: "connection",
-				value: null,
-				id: "2246da6f-ca9d-4e52-9b24-a0149ddf9314",
-				type: "connection",
-			},
-		],
-		is_active: null,
-		creator: "SYSTEM",
-		created_time: "2025-06-29 17:44:55",
-		updater: null,
-		updated_time: null,
-	},
-];
+		},
+	);
 
-export function useDiscoveryAdapters(params: DiscoveryAdapterFilters) {
-	const discoveryAdapters = useGetDiscoverySettings(params, {
+	const data = discoveryAdaptersUQ?.data;
+	const filters = discoveryAdaptersUQ?.data?.metadata?.filters;
+	const groupByType = groupBy(data?.results, "type");
+	let results = groupByType[type];
+
+	const { search, used } = clientSideParams;
+	results = filter(results, ({ display_name }) => !search || display_name?.includes(search));
+	results = filter(results, ({ is_used }) => is_used === !!used);
+	filters?.forEach(({ param }) => {
+		const filtered = clientSideParams[param];
+		results = filter(
+			results,
+			(item) =>
+				!filtered || (Array.isArray(filtered) && filtered?.includes(`${item[param as keyof typeof item]}`)),
+		);
+	});
+
+	const discoveryAdapters = { ...discoveryAdaptersUQ, data: { ...data, results } };
+	return { discoveryAdapters };
+}
+
+export function useDiscoveryAdapterById(adapterId: string) {
+	const discoverySettingConfigurations = useGetDiscoverySettingConfigurations(adapterId, {
 		query: {
+			enabled: !!adapterId,
 			select: (res) => {
-				const results = res?.data?.results?.map(({ fields, ...item }) => ({
-					...item,
-					fields:
-						fields.map(({ object_type, ...item }) => ({
-							...item,
-							objectType: object_type as DiscoveryAdapterFieldObjectType,
-						})) || [],
-					configurations:
-						mockRecordData.map(({ id, is_active, config }) => ({
-							id,
-							configs: config as unknown as DiscoveryAdapterConfiguration[],
-							isActive: !!is_active,
-						})) || [],
+				const results = res?.data?.results?.map(({ id, is_active, config }) => ({
+					id,
+					configs: config as unknown as DiscoveryAdapterConfiguration[],
+					isActive: !!is_active,
 				}));
 				return { ...res?.data, results };
 			},
 		},
 	});
-
-	return { discoveryAdapters };
+	return { discoverySettingConfigurations };
 }
 
 export function useDeleteDiscoverySetting() {
 	const deleteDiscoverySetting = useDeleteDiscoverySettingConfiguration();
-	return deleteDiscoverySetting;
+	return { deleteDiscoverySetting };
 }
 
 export function useEditDiscoverySetting() {
 	const editDiscoverySetting = useEditDiscoverySettingConfiguration();
-	return editDiscoverySetting;
+	return { editDiscoverySetting };
 }
 
 export function useCreateDiscoverySetting() {
-	const createDiscoverySettingConfiguration = useCreateDiscoverySettingConfiguration();
-	return createDiscoverySettingConfiguration;
+	const createDiscoverySetting = useCreateDiscoverySettingConfiguration();
+	return { createDiscoverySetting };
 }

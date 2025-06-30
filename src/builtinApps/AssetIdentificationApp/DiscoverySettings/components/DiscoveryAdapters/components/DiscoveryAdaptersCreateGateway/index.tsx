@@ -18,7 +18,7 @@ type Props = {
 };
 
 const DiscoveryAdaptersAddGateway = (props: Props) => {
-	const createDiscoverySettingConfiguration = useCreateDiscoverySetting();
+	const { createDiscoverySetting } = useCreateDiscoverySetting();
 
 	const insertListItem = props.fields.reduce(
 		(accumulator, { key }) => {
@@ -46,7 +46,7 @@ const DiscoveryAdaptersAddGateway = (props: Props) => {
 			key,
 			value,
 		}));
-		createDiscoverySettingConfiguration.mutate(
+		createDiscoverySetting.mutate(
 			{ adapterId: props.adapterId, data: { configs } },
 			{
 				onSuccess: () => {
@@ -98,7 +98,7 @@ const DiscoveryAdaptersAddGateway = (props: Props) => {
 
 	return (
 		<Box pos="relative">
-			<LoadingOverlay visible={createDiscoverySettingConfiguration.isPending} />
+			<LoadingOverlay visible={createDiscoverySetting.isPending} />
 			{fields}
 			<Button
 				mt="sm"

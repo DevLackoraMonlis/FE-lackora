@@ -1,4 +1,3 @@
-import type { PaginationRq } from "@/http/end-points/GeneralService.types";
 import type {
 	BCDynamicFieldGenerator,
 	BCDynamicFieldProps,
@@ -10,7 +9,11 @@ export type DiscoveryAdaptersField = BCDynamicFieldProps<DiscoveryAdapterFieldOb
 
 export type DiscoveryAdapterApiField = BCDynamicFieldGenerator<DiscoveryAdapterFieldObjectType>;
 
-export type DiscoveryAdapterFilters = PaginationRq<Record<string, unknown>>;
+export type DiscoveryAdapterFilters = Record<string, unknown> & {
+	type: "none-credential" | "discovery";
+	search?: string | null;
+	used?: boolean | null;
+};
 
 export type DiscoveryAdapterConfiguration = {
 	key: string;
