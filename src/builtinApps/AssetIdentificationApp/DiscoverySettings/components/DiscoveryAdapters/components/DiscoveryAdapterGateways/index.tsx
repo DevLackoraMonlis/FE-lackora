@@ -8,7 +8,7 @@ import {
 import type { DiscoveryAdapterApiField, DiscoveryAdapterConfiguration } from "../../../../index.types";
 
 import DiscoveryAdapterCard from "../DiscoveryAdapterCard";
-import DiscoveryAdaptersAddGateway from "../DiscoveryAdaptersCreateGateway";
+import DiscoveryAdaptersCreateGateway from "../DiscoveryAdaptersCreateGateway";
 
 type Props = {
 	adapterId: string;
@@ -51,7 +51,7 @@ const DiscoveryAdapterGateways = ({ adapterId, ...props }: Props) => {
 					/>
 				))}
 			</Flex>
-			<DiscoveryAdaptersAddGateway
+			<DiscoveryAdaptersCreateGateway
 				fields={props.fields}
 				adapterId={adapterId}
 				disabled={discoverySettingConfigurations.isFetching}

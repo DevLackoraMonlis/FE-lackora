@@ -1,0 +1,49 @@
+stages:
+  - install
+  - deploy
+
+variables:
+  DEPLOY_DIR: "/sources/app/dev/front"
+
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - node_modules/
+
+dev_pipeline:
+  stage: install
+  variables:
+    NODE_ENV: "development"
+  only:
+    - develop
+  tags:
+    - dev
+  script:
+    - npm config set registry http://172.31.100.53/repository/npm-proxy/
+    - npm install --force
+    - npm run build
+  artifacts:
+    paths:
+      - .next
+      - public
+      - package.json
+      - next.config.js
+      - node_modules/
+    expire_in: 1 hour
+
+dev_deploy:
+  stage: deploy
+  variables:
+    NODE_ENV: "production"
+  only:
+    - develop
+  tags:
+    - dev
+  script:
+    - echo "Deploying with NODE_ENV=$NODE_ENV..."
+    - mkdir -p $DEPLOY_DIR
+    - cp -r .next/standalone/* $DEPLOY_DIR/
+    - cp -r .next/static $DEPLOY_DIR/.next/static
+    - cp -r public $DEPLOY_DIR/public
+    - cp next.config.js package.json $DEPLOY_DIR/
+    - systemctl restart front-dev

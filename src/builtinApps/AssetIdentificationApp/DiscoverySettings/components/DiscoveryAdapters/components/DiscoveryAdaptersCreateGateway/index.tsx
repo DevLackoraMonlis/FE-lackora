@@ -17,7 +17,7 @@ type Props = {
 	fields: DiscoveryAdapterApiField[];
 };
 
-const DiscoveryAdaptersAddGateway = (props: Props) => {
+const DiscoveryAdaptersCreateGateway = (props: Props) => {
 	const { createDiscoverySetting } = useCreateDiscoverySetting();
 
 	const insertListItem = props.fields.reduce(
@@ -112,4 +112,4 @@ const DiscoveryAdaptersAddGateway = (props: Props) => {
 		</Box>
 	);
 };
-export default DiscoveryAdaptersAddGateway;
+export default DiscoveryAdaptersCreateGateway;
