@@ -19,7 +19,7 @@ dev_pipeline:
   tags:
     - dev
   script:
-    - npm config set registry ttp://172.31.100.53/repository/npm-proxy/
+    - npm config set registry http://172.31.100.53/repository/npm-proxy/
     - npm install --force
     - npm run build
   artifacts:
