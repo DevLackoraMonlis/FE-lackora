@@ -1,95 +1,89 @@
 import { filter, groupBy } from "lodash";
 
-import type { BCDynamicFieldProps } from "@/shared/components/baseComponents/BCDynamicField/index.types";
 import {
-  useCreateDiscoverySettingConfiguration,
-  useDeleteDiscoverySettingConfiguration,
-  useEditDiscoverySettingConfiguration,
-  useGetDiscoverySettingConfigurations,
-  useGetDiscoverySettings,
+	useCreateDiscoverySettingConfiguration,
+	useDeleteDiscoverySettingConfiguration,
+	useEditDiscoverySettingConfiguration,
+	useGetDiscoverySettingConfigurations,
+	useGetDiscoverySettings,
 } from "@/http/generated/asset-identification-discovery-settings";
+import { getObjectManagement } from "@/http/generated/object-management";
 
 import type {
-  DiscoveryAdapterConfiguration,
-  DiscoveryAdapterFieldObjectType as ObjectType,
-  DiscoveryAdapterFilters,
+	DiscoveryAdapterConfiguration,
+	DiscoveryAdapterFilters,
+	DiscoveryAdaptersField,
 } from "./index.types";
 
-const apiListByObjectType: Record<ObjectType, BCDynamicFieldProps<ObjectType>["api"]> = {
-  connection: () => {},
-  none: undefined,
-};
-
 export function useDiscoveryAdapters({ type, ...clientSideParams }: DiscoveryAdapterFilters) {
-  const discoveryAdaptersUQ = useGetDiscoverySettings(
-    { page: 1, limit: 99 },
-    {
-      query: {
-        select: (res) => {
-          const results = res?.data?.results?.map(({ name, fields, is_used, ...item }) => ({
-            ...item,
-            is_used: !!is_used,
-            fields:
-              fields.map(({ object_type, ...item }) => ({
-                ...item,
-                api: apiListByObjectType[object_type as ObjectType],
-                objectType: object_type as ObjectType,
-              })) || [],
-          }));
-          return { ...res?.data, results };
-        },
-      },
-    }
-  );
-  // client side filtering
-  const data = discoveryAdaptersUQ?.data;
-  const filters = discoveryAdaptersUQ?.data?.metadata?.filters;
-  const groupByType = groupBy(data?.results, "type");
-  let results = groupByType[type];
-  const { search, used } = clientSideParams;
-  results = filter(results, ({ display_name }) => !search || display_name?.includes(search));
-  results = filter(results, ({ is_used }) => type === "none-credential" || is_used === !!used);
-  filters?.forEach(({ param }) => {
-    const filtered = clientSideParams[param];
-    results = filter(
-      results,
-      (item) =>
-        !filtered || (Array.isArray(filtered) && filtered?.includes(`${item[param as keyof typeof item]}`))
-    );
-  });
-  // update result
-  const discoveryAdapters = { ...discoveryAdaptersUQ, data: { ...data, results } };
-  return { discoveryAdapters };
+	const discoveryAdaptersUQ = useGetDiscoverySettings(
+		{ page: 1, limit: 99 },
+		{
+			query: {
+				select: (res) => {
+					const results = res?.data?.results?.map(({ name, fields, is_used, ...item }) => ({
+						...item,
+						is_used: !!is_used,
+						fields: fields.map(({ object_type, ...item }) => ({
+							...item,
+							api: getObjectManagement,
+							objectType: object_type,
+						})) as unknown as DiscoveryAdaptersField[],
+					}));
+					return { ...res?.data, results };
+				},
+			},
+		},
+	);
+	// client side filtering
+	const data = discoveryAdaptersUQ?.data;
+	const filters = discoveryAdaptersUQ?.data?.metadata?.filters;
+	const groupByType = groupBy(data?.results, "type");
+	let results = groupByType[type];
+	const { search, used } = clientSideParams;
+	results = filter(results, ({ display_name }) => !search || display_name?.includes(search));
+	results = filter(results, ({ is_used }) => type === "none-credential" || is_used === !!used);
+	filters?.forEach(({ param }) => {
+		const filtered = clientSideParams[param];
+		results = filter(
+			results,
+			(item) =>
+				!filtered || (Array.isArray(filtered) && filtered?.includes(`${item[param as keyof typeof item]}`)),
+		);
+	});
+	// update result
+	const discoveryAdapters = { ...discoveryAdaptersUQ, data: { ...data, results } };
+	return { discoveryAdapters };
 }
 
 export function useDiscoveryAdapterById(adapterId: string) {
-  const discoverySettingConfigurations = useGetDiscoverySettingConfigurations(adapterId, {
-    query: {
-      enabled: !!adapterId,
-      select: (res) => {
-        const results = res?.data?.results?.map(({ id, is_active, config }) => ({
-          id,
-          configs: config as unknown as DiscoveryAdapterConfiguration[],
-          isActive: !!is_active,
-        }));
-        return { ...res?.data, results };
-      },
-    },
-  });
-  return { discoverySettingConfigurations };
+	const discoverySettingConfigurations = useGetDiscoverySettingConfigurations(adapterId, {
+		query: {
+			enabled: !!adapterId,
+			select: (res) => {
+				const results = res?.data?.results?.map(({ id, is_active, config }) => ({
+					id,
+					configs: config as unknown as DiscoveryAdapterConfiguration[],
+					isActive: !!is_active,
+				}));
+				return { ...res?.data, results };
+			},
+		},
+	});
+	return { discoverySettingConfigurations };
 }
 
 export function useDeleteDiscoverySetting() {
-  const deleteDiscoverySetting = useDeleteDiscoverySettingConfiguration();
-  return { deleteDiscoverySetting };
+	const deleteDiscoverySetting = useDeleteDiscoverySettingConfiguration();
+	return { deleteDiscoverySetting };
 }
 
 export function useEditDiscoverySetting() {
-  const editDiscoverySetting = useEditDiscoverySettingConfiguration();
-  return { editDiscoverySetting };
+	const editDiscoverySetting = useEditDiscoverySettingConfiguration();
+	return { editDiscoverySetting };
 }
 
 export function useCreateDiscoverySetting() {
-  const createDiscoverySetting = useCreateDiscoverySettingConfiguration();
-  return { createDiscoverySetting };
+	const createDiscoverySetting = useCreateDiscoverySettingConfiguration();
+	return { createDiscoverySetting };
 }

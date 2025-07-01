@@ -24,17 +24,7 @@ export type BCDynamicFieldProps<T extends string> = {
 	type?: BCDynamicFieldType | null;
 	options?: LabelValueType[] | null;
 	api?: (
-		variables: PaginationRq,
+		variables: PaginationRq<{ object_type?: string | null }>,
 		signal?: AbortSignal,
 	) => Promise<AxiosResponse<PaginationRs<LabelValueType>>>;
-};
-
-export type BCDynamicFieldGenerator<T extends string> = {
-	label: string;
-	key: string;
-	type?: BCDynamicFieldType | null;
-	options?: LabelValueType[] | null;
-	required?: boolean | null;
-	paginate?: boolean | null;
-	objectType?: T;
 };

@@ -6,9 +6,9 @@ import { useEffect } from "react";
 import { getDynamicField } from "@/shared/components/baseComponents/BCDynamicField";
 
 import type {
-	DiscoveryAdapterApiField,
 	DiscoveryAdapterConfiguration,
 	DiscoveryAdapterConfigurationRs,
+	DiscoveryAdaptersField,
 } from "../../../../index.types";
 
 type FormValues = Record<string, unknown>;
@@ -16,7 +16,7 @@ type FormValues = Record<string, unknown>;
 type Props = DiscoveryAdapterConfigurationRs & {
 	handleDeleteAdapterConfigurations: VoidFunction;
 	handleEditAdapterConfigurations: (configs: DiscoveryAdapterConfiguration[]) => void;
-	fields: DiscoveryAdapterApiField[];
+	fields: DiscoveryAdaptersField[];
 	loading: boolean;
 	onCancel: VoidFunction;
 };

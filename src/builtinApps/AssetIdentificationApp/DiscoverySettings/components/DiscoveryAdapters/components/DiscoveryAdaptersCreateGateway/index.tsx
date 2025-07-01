@@ -6,7 +6,7 @@ import { IconCheck, IconPlus, IconX } from "@tabler/icons-react";
 import { getDynamicField } from "@/shared/components/baseComponents/BCDynamicField";
 
 import { useCreateDiscoverySetting } from "../../../../index.hooks";
-import type { DiscoveryAdapterApiField } from "../../../../index.types";
+import type { DiscoveryAdaptersField } from "../../../../index.types";
 
 type FormValues = { gateways: { [key: string]: string }[] };
 
@@ -14,7 +14,7 @@ type Props = {
 	refetchDiscoveryAdapters: VoidFunction;
 	disabled: boolean;
 	adapterId: string;
-	fields: DiscoveryAdapterApiField[];
+	fields: DiscoveryAdaptersField[];
 };
 
 const DiscoveryAdaptersCreateGateway = (props: Props) => {

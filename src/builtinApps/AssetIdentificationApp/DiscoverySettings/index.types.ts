@@ -1,13 +1,8 @@
-import type {
-	BCDynamicFieldGenerator,
-	BCDynamicFieldProps,
-} from "@/shared/components/baseComponents/BCDynamicField/index.types";
+import type { BCDynamicFieldProps } from "@/shared/components/baseComponents/BCDynamicField/index.types";
 
-export type DiscoveryAdapterFieldObjectType = "connection" | "none";
+export type DiscoveryAdapterFieldObjectType = string;
 
 export type DiscoveryAdaptersField = BCDynamicFieldProps<DiscoveryAdapterFieldObjectType>;
-
-export type DiscoveryAdapterApiField = BCDynamicFieldGenerator<DiscoveryAdapterFieldObjectType>;
 
 export type DiscoveryAdapterFilters = Record<string, unknown> & {
 	type: "none-credential" | "discovery";

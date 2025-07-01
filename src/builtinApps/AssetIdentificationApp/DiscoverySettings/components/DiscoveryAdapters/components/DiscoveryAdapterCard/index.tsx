@@ -5,16 +5,16 @@ import { useState } from "react";
 import BCPopoverConfirm from "@/shared/components/baseComponents/BCPopoverConfirm";
 
 import type {
-	DiscoveryAdapterApiField,
 	DiscoveryAdapterConfiguration,
 	DiscoveryAdapterConfigurationRs,
+	DiscoveryAdaptersField,
 } from "../../../../index.types";
 import DiscoveryAdaptersForm from "../DiscoveryAdaptersEditGateway";
 
 type Props = DiscoveryAdapterConfigurationRs & {
 	handleDeleteAdapterConfigurations: VoidFunction;
 	handleEditAdapterConfigurations: (configs: DiscoveryAdapterConfiguration[]) => void;
-	fields: DiscoveryAdapterApiField[];
+	fields: DiscoveryAdaptersField[];
 	loading: boolean;
 };
 

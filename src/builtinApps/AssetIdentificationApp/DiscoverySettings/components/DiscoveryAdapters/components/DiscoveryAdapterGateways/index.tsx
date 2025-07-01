@@ -5,14 +5,14 @@ import {
 	useDiscoveryAdapterById,
 	useEditDiscoverySetting,
 } from "../../../../index.hooks";
-import type { DiscoveryAdapterApiField, DiscoveryAdapterConfiguration } from "../../../../index.types";
+import type { DiscoveryAdapterConfiguration, DiscoveryAdaptersField } from "../../../../index.types";
 
 import DiscoveryAdapterCard from "../DiscoveryAdapterCard";
 import DiscoveryAdaptersCreateGateway from "../DiscoveryAdaptersCreateGateway";
 
 type Props = {
 	adapterId: string;
-	fields: DiscoveryAdapterApiField[];
+	fields: DiscoveryAdaptersField[];
 };
 
 const DiscoveryAdapterGateways = ({ adapterId, ...props }: Props) => {
