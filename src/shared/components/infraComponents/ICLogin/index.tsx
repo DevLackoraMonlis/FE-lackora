@@ -17,7 +17,7 @@ export default function ICLogin() {
 					backgroundImage: `url(${BG.src})`,
 					backgroundRepeat: "no-repeat",
 					backgroundSize: "cover",
-					backgroundPosition: "70% 30%",
+					backgroundPosition: "right",
 				}}
 				h={"100%"}
 			>

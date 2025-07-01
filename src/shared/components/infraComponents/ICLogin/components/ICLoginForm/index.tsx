@@ -70,7 +70,7 @@ export default function ICLoginForm() {
 
 	return (
 		<Flex w={"100%"} h={"100%"} justify={"center"} align={"center"}>
-			<Card h={600} w={"100%"} p={"xxl"} radius={"lg"}>
+			<Card h={700} w={"100%"} p={"xxl"} radius={"lg"}>
 				{/* <AppLogoDark width={161} height={37} /> */}
 				<Flex direction={"column"} h={"100%"} justify={"center"} align={"flex-start"} gap={"xs"}>
 					{error !== "locked" ? (
