@@ -7,15 +7,14 @@ import {
 } from "../../../../index.hooks";
 import type { DiscoveryAdapterConfiguration, DiscoveryAdaptersField } from "../../../../index.types";
 
-import DiscoveryAdapterCard from "../DiscoveryAdapterCard";
-import DiscoveryAdaptersCreateGateway from "../DiscoveryAdaptersCreate";
+import NoneCredentialAdaptersCard from "../NoneCredentialCard";
 
 type Props = {
 	adapterId: string;
 	fields: DiscoveryAdaptersField[];
 };
 
-const DiscoveryAdapterGateways = ({ adapterId, ...props }: Props) => {
+const NoneCredentialServices = ({ adapterId, ...props }: Props) => {
 	const { discoverySettingConfigurations } = useDiscoveryAdapterById(adapterId);
 
 	const { deleteDiscoverySetting } = useDeleteDiscoverySetting();
@@ -41,7 +40,7 @@ const DiscoveryAdapterGateways = ({ adapterId, ...props }: Props) => {
 		<>
 			<Flex gap="xs" direction="column" pos="relative" mih="50px">
 				{discoverySettingConfigurations.data?.results?.map(({ configs, id, isActive }) => (
-					<DiscoveryAdapterCard
+					<NoneCredentialAdaptersCard
 						loading={deleteDiscoverySetting.isPending || editDiscoverySetting.isPending}
 						handleDeleteAdapterConfigurations={() => handleDeleteAdapterConfigurations(id)}
 						handleEditAdapterConfigurations={(newConfigs) => handleEditAdapterConfigurations(id, newConfigs)}
@@ -51,14 +50,14 @@ const DiscoveryAdapterGateways = ({ adapterId, ...props }: Props) => {
 					/>
 				))}
 			</Flex>
-			<DiscoveryAdaptersCreateGateway
+			{/* <DiscoveryAdaptersCreateGateway
 				fields={props.fields}
 				adapterId={adapterId}
 				disabled={discoverySettingConfigurations.isFetching}
 				refetchDiscoveryAdapters={discoverySettingConfigurations.refetch}
-			/>
+			/> */}
 		</>
 	);
 };
 
-export default DiscoveryAdapterGateways;
+export default NoneCredentialServices;

@@ -9,7 +9,7 @@ import type {
 	DiscoveryAdapterConfigurationRs,
 	DiscoveryAdaptersField,
 } from "../../../../index.types";
-import DiscoveryAdaptersForm from "../DiscoveryAdaptersEditGateway";
+import DiscoveryAdaptersEditGateway from "../DiscoveryAdaptersEdit";
 
 type Props = DiscoveryAdapterConfigurationRs & {
 	handleDeleteAdapterConfigurations: VoidFunction;
@@ -23,7 +23,10 @@ const DiscoveryAdapterCard = ({ id, configs, isActive, ...props }: Props) => {
 
 	if (editMode) {
 		return (
-			<DiscoveryAdaptersForm {...{ id, configs, isActive, ...props }} onCancel={() => setEditMode(false)} />
+			<DiscoveryAdaptersEditGateway
+				{...{ id, configs, isActive, ...props }}
+				onCancel={() => setEditMode(false)}
+			/>
 		);
 	}
 

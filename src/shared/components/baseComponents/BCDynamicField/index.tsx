@@ -40,17 +40,6 @@ export function getDynamicField<TObjectType extends string>({
 					}}
 				/>
 			);
-		case "Int64":
-			return (
-				<NumberInput
-					{...{
-						options,
-						...commonOptions,
-					}}
-				/>
-			);
-		case "Boolean":
-			return "";
 		case "Select": {
 			const defaultValueAsString = isNumber(defaultValue) ? `${defaultValue}` : defaultValue;
 			return (
@@ -63,34 +52,17 @@ export function getDynamicField<TObjectType extends string>({
 				/>
 			);
 		}
+		case "Int64":
+			return <NumberInput {...commonOptions} />;
+		case "Boolean":
+			return "";
 		case "Datetime":
 			return "";
 		case "Textarea":
-			return (
-				<Textarea
-					{...{
-						options,
-						...commonOptions,
-					}}
-				/>
-			);
+			return <Textarea {...commonOptions} />;
 		case "IP":
-			return (
-				<TextInput
-					{...{
-						options,
-						...commonOptions,
-					}}
-				/>
-			);
+			return <TextInput {...commonOptions} />;
 		default:
-			return (
-				<TextInput
-					{...{
-						options,
-						...commonOptions,
-					}}
-				/>
-			);
+			return <TextInput {...commonOptions} />;
 	}
 }

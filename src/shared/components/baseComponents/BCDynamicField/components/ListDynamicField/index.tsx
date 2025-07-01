@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 
 import { useTablePagination } from "@/shared/hooks/useTablePagination";
+import type { LabelValueType } from "@/shared/lib/general-types";
 
 import type { BCDynamicFieldProps } from "../../index.types";
 
@@ -15,14 +16,14 @@ export default function ListDynamicField<TObject extends string>({
 	paginate,
 	...props
 }: Props<TObject>) {
-	const [value, setValue] = useState<string | null>(null);
+	const [selected, setSelectedValue] = useState<LabelValueType | null>(null);
 	const [search, setSearch] = useState("");
 	const { setTotalRecords, tablePagination, page, pageSize, totalRecords } = useTablePagination({
 		defaultPageSize: 10,
 	});
 
 	const getObjectQuery = useQuery({
-		enabled: !!api,
+		enabled: !!objectType,
 		queryKey: ["get-object-data", objectType, tablePagination.page, tablePagination.recordsPerPage],
 		queryFn: ({ signal }) =>
 			api?.(
@@ -65,22 +66,22 @@ export default function ListDynamicField<TObject extends string>({
 		<Combobox
 			store={combobox}
 			withinPortal={false}
-			onOptionSubmit={(_, { children }) => {
-				setValue(children as string);
+			onOptionSubmit={(_, { children, value }) => {
+				setSelectedValue({ label: children as string, value });
 				combobox.closeDropdown();
 			}}
 		>
 			<Combobox.Target>
 				<InputBase
 					{...props}
-					component="button"
-					type="button"
+					component="select"
 					pointer
 					rightSection={getObjectQuery.isFetching ? <Loader size="xs" /> : <Combobox.Chevron />}
 					onClick={() => combobox.toggleDropdown()}
 					rightSectionPointerEvents="none"
+					value={selected?.value}
 				>
-					{value || <Input.Placeholder>Pick value</Input.Placeholder>}
+					{selected?.label || <Input.Placeholder>Pick value</Input.Placeholder>}
 				</InputBase>
 			</Combobox.Target>
 			<Combobox.Dropdown>

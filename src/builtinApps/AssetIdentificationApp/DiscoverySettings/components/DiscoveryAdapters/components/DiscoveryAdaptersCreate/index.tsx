@@ -8,7 +8,7 @@ import { getDynamicField } from "@/shared/components/baseComponents/BCDynamicFie
 import { useCreateDiscoverySetting } from "../../../../index.hooks";
 import type { DiscoveryAdaptersField } from "../../../../index.types";
 
-type FormValues = { gateways: { [key: string]: string }[] };
+type FormValues = { list: { [key: string]: string }[] };
 
 type Props = {
 	refetchDiscoveryAdapters: VoidFunction;
@@ -30,19 +30,13 @@ const DiscoveryAdaptersCreateGateway = (props: Props) => {
 
 	const form = useForm<FormValues>({
 		initialValues: {
-			gateways: [],
+			list: [],
 		},
 	});
 
-	const handleCreateGateways = (index: number) => {
-		const { connection, ip } = form.getValues().gateways[index] || {};
-		if (!connection || !ip) {
-			return form.setErrors({
-				[`gateways.${index}.ip`]: ip ? "" : "Field is required",
-				[`gateways.${index}.connection`]: connection ? "" : "Field is required",
-			});
-		}
-		const configs = Object.entries({ connection, ip }).map(([key, value]) => ({
+	const handleCreate = (index: number) => {
+		const values = form.getValues().list[index] || {};
+		const configs = Object.entries(values).map(([key, value]) => ({
 			key,
 			value,
 		}));
@@ -51,13 +45,13 @@ const DiscoveryAdaptersCreateGateway = (props: Props) => {
 			{
 				onSuccess: () => {
 					props.refetchDiscoveryAdapters();
-					form.removeListItem("gateways", index);
+					form.removeListItem("list", index);
 				},
 			},
 		);
 	};
 
-	const fields = form.getValues().gateways.map((item, index) => (
+	const fields = form.getValues().list.map((item, index) => (
 		<Flex key={item.key} gap="xs" mt="xs">
 			<Fieldset variant="filled" w="100%" pb="xs" pt="2xs">
 				<Flex gap="xs">
@@ -65,8 +59,8 @@ const DiscoveryAdaptersCreateGateway = (props: Props) => {
 						getDynamicField({
 							otherElementOptions: { withAsterisk: true, style: { flex: 1 } },
 							formInputProps: {
-								key: form.key(`gateways.${index}.${item.key}`),
-								...form.getInputProps(`gateways.${index}.${item.key}`),
+								key: form.key(`list.${index}.${item.key}`),
+								...form.getInputProps(`list.${index}.${item.key}`),
 							},
 							...item,
 						}),
@@ -79,7 +73,7 @@ const DiscoveryAdaptersCreateGateway = (props: Props) => {
 					title="Save"
 					c="gray.2"
 					bg="primary.8"
-					onClick={() => handleCreateGateways(index)}
+					onClick={() => handleCreate(index)}
 				>
 					<IconCheck size={30} />
 				</ActionIcon>
@@ -88,7 +82,7 @@ const DiscoveryAdaptersCreateGateway = (props: Props) => {
 					title="Cancel"
 					c="gray.8"
 					bg="gray.2"
-					onClick={() => form.removeListItem("gateways", index)}
+					onClick={() => form.removeListItem("list", index)}
 				>
 					<IconX size={30} />
 				</ActionIcon>
@@ -105,7 +99,7 @@ const DiscoveryAdaptersCreateGateway = (props: Props) => {
 				leftSection={<IconPlus size={20} />}
 				variant="transparent"
 				disabled={props.disabled}
-				onClick={() => form.insertListItem("gateways", insertListItem)}
+				onClick={() => form.insertListItem("list", insertListItem)}
 			>
 				Add Gateway
 			</Button>
