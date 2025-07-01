@@ -9,7 +9,7 @@ dev_pipeline:
   tags:
     - dev
   script:
-    - npm install
+    - npm install --force
     - npm run build
 
 dev_deploy:
