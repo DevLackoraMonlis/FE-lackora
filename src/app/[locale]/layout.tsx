@@ -27,6 +27,7 @@ export const metadata: Metadata = {
 const manrope = Manrope({
 	variable: "--manrope",
 	display: "swap",
+	preload: false,
 });
 
 export default async function RootLayout({
