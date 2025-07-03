@@ -5,7 +5,7 @@ import { useState } from "react";
 import BCPopoverConfirm from "@/shared/components/baseComponents/BCPopoverConfirm";
 
 import type {
-	DiscoveryAdapterConfiguration,
+	DiscoveryAdapterConfigsRq,
 	DiscoveryAdapterConfigurationRs,
 	DiscoveryAdaptersField,
 } from "../../../../index.types";
@@ -13,7 +13,7 @@ import DiscoveryAdaptersEditGateway from "../DiscoveryAdaptersEdit";
 
 type Props = DiscoveryAdapterConfigurationRs & {
 	handleDeleteAdapterConfigurations: VoidFunction;
-	handleEditAdapterConfigurations: (configs: DiscoveryAdapterConfiguration[]) => void;
+	handleEditAdapterConfigurations: (configs: DiscoveryAdapterConfigsRq[]) => void;
 	fields: DiscoveryAdaptersField[];
 	loading: boolean;
 };
@@ -35,7 +35,7 @@ const DiscoveryAdapterCard = ({ id, configs, isActive, loading, ...props }: Prop
 			<LoadingOverlay visible={loading} />
 			<Flex align="center" justify="space-between">
 				<Text fw="bold" fz="sm">
-					{configs?.map(({ value }) => value || "").join(" - ")}
+					{configs?.map(({ value }) => value?.label || "").join(" - ")}
 				</Text>
 				<Flex gap="2xs">
 					<Badge variant="light" color={isActive ? "green" : "red"} p="sm">

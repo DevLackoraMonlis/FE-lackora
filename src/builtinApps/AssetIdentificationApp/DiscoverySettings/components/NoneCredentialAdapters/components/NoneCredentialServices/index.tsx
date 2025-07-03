@@ -5,7 +5,7 @@ import {
 	useDiscoveryAdapterById,
 	useEditDiscoverySetting,
 } from "../../../../index.hooks";
-import type { DiscoveryAdapterConfiguration, DiscoveryAdaptersField } from "../../../../index.types";
+import type { DiscoveryAdapterConfigsRq, DiscoveryAdaptersField } from "../../../../index.types";
 
 import NoneCredentialAdaptersCard from "../NoneCredentialCard";
 import NoneCredentialCreate from "../NoneCredentialCreate";
@@ -30,7 +30,7 @@ const NoneCredentialServices = ({ enabled, adapterId, fields }: Props) => {
 	const { editDiscoverySetting } = useEditDiscoverySetting();
 	const handleEditAdapterConfigurations = (
 		configuration_id: string,
-		configs: DiscoveryAdapterConfiguration[],
+		configs: DiscoveryAdapterConfigsRq[],
 	) => {
 		editDiscoverySetting.mutate(
 			{ adapterId, data: { configs, configuration_id } },

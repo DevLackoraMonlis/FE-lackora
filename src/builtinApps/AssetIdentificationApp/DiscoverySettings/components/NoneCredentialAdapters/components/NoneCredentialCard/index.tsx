@@ -6,7 +6,7 @@ import { getDynamicField } from "@/shared/components/baseComponents/BCDynamicFie
 import BCPopoverConfirm from "@/shared/components/baseComponents/BCPopoverConfirm";
 
 import type {
-	DiscoveryAdapterConfiguration,
+	DiscoveryAdapterConfigsRq,
 	DiscoveryAdapterConfigurationRs,
 	DiscoveryAdaptersField,
 } from "../../../../index.types";
@@ -15,7 +15,7 @@ import NoneCredentialEditForm from "../NoneCredentialEdit";
 
 type Props = DiscoveryAdapterConfigurationRs & {
 	handleDeleteAdapterConfigurations: VoidFunction;
-	handleEditAdapterConfigurations: (configs: DiscoveryAdapterConfiguration[]) => void;
+	handleEditAdapterConfigurations: (configs: DiscoveryAdapterConfigsRq[]) => void;
 	fields: DiscoveryAdaptersField[];
 	loading: boolean;
 	showLabel: boolean;
@@ -35,7 +35,7 @@ const NoneCredentialAdaptersCard = ({ showLabel, id, configs, isActive, ...props
 			<Flex align="center" gap="xs" w="100%">
 				{props.fields.map((item) => {
 					const { label, key, ...field } = item;
-					const defaultValue = configs?.find(({ key: valueKey }) => key === valueKey)?.value;
+					const defaultValue = configs?.find(({ key: valueKey }) => key === valueKey)?.value?.value;
 					return getDynamicField({
 						otherElementOptions: { withAsterisk: true, style: { flex: 1 } },
 						...field,

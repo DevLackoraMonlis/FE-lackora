@@ -10,7 +10,7 @@ import {
 import { getObjectRelatedRecords } from "@/http/generated/object-management";
 
 import type {
-	DiscoveryAdapterConfiguration,
+	DiscoveryAdapterConfigsRs,
 	DiscoveryAdapterFilters,
 	DiscoveryAdaptersField,
 } from "./index.types";
@@ -63,7 +63,10 @@ export function useDiscoveryAdapterById(adapterId: string, enabled: boolean) {
 			select: (res) => {
 				const results = res?.data?.results?.map(({ id, is_active, config, creator }) => ({
 					id,
-					configs: config as unknown as DiscoveryAdapterConfiguration[],
+					configs: config?.map(({ value, ...item }) => ({
+						...item,
+						value: typeof value === "string" ? { label: value, value: value } : value,
+					})) as unknown as DiscoveryAdapterConfigsRs[],
 					isActive: !!is_active,
 					editable: creator !== "SYSTEM",
 				}));
