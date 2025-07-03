@@ -20,6 +20,7 @@ export type BCDynamicFieldProps<T extends string> = {
 	otherElementOptions?: { [key: string]: unknown };
 	required?: boolean | null;
 	paginate?: boolean | null;
+	disabled?: boolean | null;
 	objectType?: T;
 	type?: BCDynamicFieldType | null;
 	options?: LabelValueType[] | null;

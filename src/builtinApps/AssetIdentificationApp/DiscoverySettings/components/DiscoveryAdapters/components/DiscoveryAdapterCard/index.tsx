@@ -1,5 +1,5 @@
-import { ActionIcon, Badge, Card, Flex, Text } from "@mantine/core";
-import { IconListDetails, IconPencil, IconPlugConnected, IconX } from "@tabler/icons-react";
+import { ActionIcon, Badge, Card, Flex, LoadingOverlay, Text } from "@mantine/core";
+import { IconPencil, IconPlugConnected, IconX } from "@tabler/icons-react";
 import { useState } from "react";
 
 import BCPopoverConfirm from "@/shared/components/baseComponents/BCPopoverConfirm";
@@ -18,13 +18,13 @@ type Props = DiscoveryAdapterConfigurationRs & {
 	loading: boolean;
 };
 
-const DiscoveryAdapterCard = ({ id, configs, isActive, ...props }: Props) => {
+const DiscoveryAdapterCard = ({ id, configs, isActive, loading, ...props }: Props) => {
 	const [editMode, setEditMode] = useState(false);
 
 	if (editMode) {
 		return (
 			<DiscoveryAdaptersEditGateway
-				{...{ id, configs, isActive, ...props }}
+				{...{ id, configs, isActive, loading, ...props }}
 				onCancel={() => setEditMode(false)}
 			/>
 		);
@@ -32,6 +32,7 @@ const DiscoveryAdapterCard = ({ id, configs, isActive, ...props }: Props) => {
 
 	return (
 		<Card bg="gray.1" w="100%" padding="xs">
+			<LoadingOverlay visible={loading} />
 			<Flex align="center" justify="space-between">
 				<Text fw="bold" fz="sm">
 					{configs?.map(({ value }) => value || "").join(" - ")}
@@ -50,14 +51,14 @@ const DiscoveryAdapterCard = ({ id, configs, isActive, ...props }: Props) => {
 					>
 						<IconPlugConnected size={20} />
 					</ActionIcon>
-					<ActionIcon
-						// onClick={() => form.removeListItem("gateways", index)}
+					{/* <ActionIcon
+						onClick={() => form.removeListItem("gateways", index)}
 						title="View Results"
 						variant="subtle"
 						c="gray.8"
 					>
 						<IconListDetails size={20} />
-					</ActionIcon>
+					</ActionIcon> */}
 					<ActionIcon
 						onClick={() => setEditMode((perValue) => !perValue)}
 						title="Edit"
@@ -67,11 +68,11 @@ const DiscoveryAdapterCard = ({ id, configs, isActive, ...props }: Props) => {
 						<IconPencil size={20} />
 					</ActionIcon>
 					<BCPopoverConfirm
-						loading={props.loading}
+						loading={loading}
 						onConfirm={props.handleDeleteAdapterConfigurations}
 						confirmBtnColor="red"
 						confirmBtnText="Delete"
-						message="Are you shure to delete gateway ?"
+						message="Are you sure to delete gateway ?"
 						renderProps={(onToggle) => (
 							<ActionIcon onClick={onToggle} title="Delete" variant="subtle" c="gray.8">
 								<IconX size={20} />

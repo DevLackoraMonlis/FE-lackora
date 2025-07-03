@@ -16,6 +16,7 @@ export function getDynamicField<TObjectType extends string>({
 	api,
 	objectType,
 	paginate,
+	disabled,
 }: BCDynamicFieldProps<TObjectType>) {
 	if (objectType) type = "List";
 
@@ -24,6 +25,7 @@ export function getDynamicField<TObjectType extends string>({
 		required: !!fieldIsRequired,
 		placeholder,
 		defaultValue,
+		disabled: !!disabled,
 		...otherElementOptions,
 		...(formInputProps || {}),
 	};

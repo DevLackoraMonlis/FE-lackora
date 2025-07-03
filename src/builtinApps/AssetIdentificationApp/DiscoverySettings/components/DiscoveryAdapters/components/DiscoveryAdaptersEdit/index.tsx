@@ -71,11 +71,11 @@ const DiscoveryAdaptersForm = ({
 						</Flex>
 					</Fieldset>
 					<Flex direction="column" gap="xs" justify="space-between" align="center">
-						<ActionIcon size="input-sm" title="Save" type="submit" c="gray.2" bg="primary.8">
-							<IconCheck size={30} />
+						<ActionIcon size="lg" title="Save" type="submit" c="gray.2" bg="primary.8">
+							<IconCheck size={20} />
 						</ActionIcon>
-						<ActionIcon size="input-sm" title="Cancel" type="reset" c="gray.8" bg="gray.2" onClick={onCancel}>
-							<IconX size={30} />
+						<ActionIcon size="lg" title="Cancel" type="reset" c="gray.8" bg="gray.2" onClick={onCancel}>
+							<IconX size={20} />
 						</ActionIcon>
 					</Flex>
 				</Flex>

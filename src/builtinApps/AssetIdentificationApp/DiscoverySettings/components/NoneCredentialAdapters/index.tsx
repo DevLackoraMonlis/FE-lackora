@@ -1,18 +1,20 @@
 import { Badge, Card, Flex, Grid, Text, getGradient } from "@mantine/core";
 import { Accordion } from "@mantine/core";
 import { IconCircleDot } from "@tabler/icons-react";
+import { useState } from "react";
 
 import { useDiscoveryAdapters } from "../../index.hooks";
 
 import NoneCredentialServices from "./components/NoneCredentialServices";
 
 const DiscoverySettingsNoneCredentialAdapters = () => {
+	const [activeAccordion, setActiveAccordion] = useState<string | null>(null);
 	const { discoveryAdapters } = useDiscoveryAdapters({ type: "none-credential" });
 	return (
 		<Grid p="sm" pt="lg" gutter="lg">
 			<Grid.Col span={{ xs: 12, lg: 9 }} offset={{ lg: 3 }}>
-				<Accordion variant="separated">
-					{discoveryAdapters.data?.results?.map(({ id, fields, display_name }) => {
+				<Accordion variant="separated" onChange={setActiveAccordion}>
+					{discoveryAdapters.data?.results?.map(({ id, fields, display_name, caption }) => {
 						return (
 							<Accordion.Item key={id} value={id}>
 								<Accordion.Control>
@@ -33,7 +35,7 @@ const DiscoverySettingsNoneCredentialAdapters = () => {
 											<Flex direction="column" gap="2xs">
 												<Text fw="bold">{display_name}</Text>
 												<Text fz="sm" c="gray.6">
-													{"4 open ports"}
+													{caption}
 												</Text>
 											</Flex>
 										</Flex>
@@ -47,7 +49,7 @@ const DiscoverySettingsNoneCredentialAdapters = () => {
 									</Flex>
 								</Accordion.Control>
 								<Accordion.Panel>
-									<NoneCredentialServices adapterId={id} fields={fields} />
+									<NoneCredentialServices enabled={activeAccordion === id} adapterId={id} fields={fields} />
 								</Accordion.Panel>
 							</Accordion.Item>
 						);

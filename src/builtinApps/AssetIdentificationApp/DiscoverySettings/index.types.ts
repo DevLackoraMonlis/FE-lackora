@@ -21,4 +21,5 @@ export type DiscoveryAdapterConfigurationRs = {
 	id: string;
 	configs: DiscoveryAdapterConfiguration[];
 	isActive: boolean;
+	editable: boolean;
 };

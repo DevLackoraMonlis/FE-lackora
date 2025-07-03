@@ -56,15 +56,16 @@ export function useDiscoveryAdapters({ type, ...clientSideParams }: DiscoveryAda
 	return { discoveryAdapters };
 }
 
-export function useDiscoveryAdapterById(adapterId: string) {
+export function useDiscoveryAdapterById(adapterId: string, enabled: boolean) {
 	const discoverySettingConfigurations = useGetDiscoverySettingConfigurations(adapterId, {
 		query: {
-			enabled: !!adapterId,
+			enabled: !!adapterId && enabled,
 			select: (res) => {
-				const results = res?.data?.results?.map(({ id, is_active, config }) => ({
+				const results = res?.data?.results?.map(({ id, is_active, config, creator }) => ({
 					id,
 					configs: config as unknown as DiscoveryAdapterConfiguration[],
 					isActive: !!is_active,
+					editable: creator !== "SYSTEM",
 				}));
 				return { ...res?.data, results };
 			},

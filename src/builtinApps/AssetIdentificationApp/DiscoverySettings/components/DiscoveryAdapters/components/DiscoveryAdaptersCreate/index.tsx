@@ -68,17 +68,11 @@ const DiscoveryAdaptersCreateGateway = (props: Props) => {
 				</Flex>
 			</Fieldset>
 			<Flex direction="column" gap="xs" justify="space-between" align="center">
-				<ActionIcon
-					size="input-sm"
-					title="Save"
-					c="gray.2"
-					bg="primary.8"
-					onClick={() => handleCreate(index)}
-				>
+				<ActionIcon size="lg" title="Save" c="gray.2" bg="primary.8" onClick={() => handleCreate(index)}>
 					<IconCheck size={30} />
 				</ActionIcon>
 				<ActionIcon
-					size="input-sm"
+					size="lg"
 					title="Cancel"
 					c="gray.8"
 					bg="gray.2"

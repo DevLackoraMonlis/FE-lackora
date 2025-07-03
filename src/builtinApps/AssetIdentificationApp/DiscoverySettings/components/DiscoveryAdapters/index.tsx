@@ -9,6 +9,7 @@ import type { DiscoveryAdapterFilters } from "../../index.types";
 import DiscoveryAdapterGateways from "./components/DiscoveryAdapterGateways";
 
 export default function DiscoverySettingsDiscoveryAdapters() {
+	const [activeAccordion, setActiveAccordion] = useState<string | null>(null);
 	const [queryParams, setQueryParams] = useState<DiscoveryAdapterFilters>({ type: "discovery" });
 	const { discoveryAdapters } = useDiscoveryAdapters(queryParams);
 
@@ -100,7 +101,7 @@ export default function DiscoverySettingsDiscoveryAdapters() {
 				</Card>
 			</Grid.Col>
 			<Grid.Col span={{ xs: 12, lg: 9 }}>
-				<Accordion variant="separated">
+				<Accordion variant="separated" onChange={setActiveAccordion}>
 					{discoveryAdapters?.data?.results?.map((item) => (
 						<Accordion.Item key={item.id} value={item.id}>
 							<Accordion.Control>
@@ -132,9 +133,11 @@ export default function DiscoverySettingsDiscoveryAdapters() {
 								<Text py="xs" c="gray.6">
 									Added Gateways
 								</Text>
-								{/* DiscoveryAdapterGateways */}
-								<DiscoveryAdapterGateways adapterId={item.id} fields={item.fields} />
-								{/* DiscoveryAdapterGateways */}
+								<DiscoveryAdapterGateways
+									enabled={activeAccordion === item.id}
+									adapterId={item.id}
+									fields={item.fields}
+								/>
 							</Accordion.Panel>
 						</Accordion.Item>
 					))}

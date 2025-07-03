@@ -1,4 +1,4 @@
-import { Flex } from "@mantine/core";
+import { Flex, LoadingOverlay } from "@mantine/core";
 
 import {
 	useDeleteDiscoverySetting,
@@ -8,14 +8,16 @@ import {
 import type { DiscoveryAdapterConfiguration, DiscoveryAdaptersField } from "../../../../index.types";
 
 import NoneCredentialAdaptersCard from "../NoneCredentialCard";
+import NoneCredentialCreate from "../NoneCredentialCreate";
 
 type Props = {
+	enabled: boolean;
 	adapterId: string;
 	fields: DiscoveryAdaptersField[];
 };
 
-const NoneCredentialServices = ({ adapterId, ...props }: Props) => {
-	const { discoverySettingConfigurations } = useDiscoveryAdapterById(adapterId);
+const NoneCredentialServices = ({ enabled, adapterId, fields }: Props) => {
+	const { discoverySettingConfigurations } = useDiscoveryAdapterById(adapterId, enabled);
 
 	const { deleteDiscoverySetting } = useDeleteDiscoverySetting();
 	const handleDeleteAdapterConfigurations = (configuration_id: string) => {
@@ -39,23 +41,23 @@ const NoneCredentialServices = ({ adapterId, ...props }: Props) => {
 	return (
 		<>
 			<Flex gap="xs" direction="column" pos="relative" mih="50px">
-				{discoverySettingConfigurations.data?.results?.map(({ configs, id, isActive }) => (
+				<LoadingOverlay visible={discoverySettingConfigurations?.isFetching} />
+				{discoverySettingConfigurations.data?.results?.map(({ configs, id, isActive, editable }, idx) => (
 					<NoneCredentialAdaptersCard
+						key={id}
 						loading={deleteDiscoverySetting.isPending || editDiscoverySetting.isPending}
 						handleDeleteAdapterConfigurations={() => handleDeleteAdapterConfigurations(id)}
 						handleEditAdapterConfigurations={(newConfigs) => handleEditAdapterConfigurations(id, newConfigs)}
-						key={id}
-						fields={props.fields}
-						{...{ configs, id, isActive }}
+						{...{ configs, id, isActive, fields, showLabel: !idx, editable }}
 					/>
 				))}
 			</Flex>
-			{/* <DiscoveryAdaptersCreateGateway
-				fields={props.fields}
+			<NoneCredentialCreate
+				fields={fields}
 				adapterId={adapterId}
 				disabled={discoverySettingConfigurations.isFetching}
 				refetchDiscoveryAdapters={discoverySettingConfigurations.refetch}
-			/> */}
+			/>
 		</>
 	);
 };
