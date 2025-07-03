@@ -1,1 +1,0 @@
-export const GET_DISCOVERY_SETTING_CONFIGURATIONS_QUERY_KEY = "use-get-discovery-setting-configurations";

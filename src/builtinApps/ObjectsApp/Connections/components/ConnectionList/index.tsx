@@ -4,7 +4,7 @@ import { useGetConnections } from "@/http/generated/management-center-connection
 import { useDisclosure } from "@mantine/hooks";
 
 export default function ConnectionList() {
-	const [openedCreateModal, createModalHandlers] = useDisclosure(false);
+	const [_openedCreateModal, createModalHandlers] = useDisclosure(false);
 
 	const getConnectionsQuery = useGetConnections(undefined, {
 		query: {

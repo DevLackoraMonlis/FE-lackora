@@ -1,44 +1,45 @@
-import BCPopoverConfirm from "@/shared/components/baseComponents/BCPopoverConfirm";
 import { ActionIcon, Badge, Card, Flex, Text } from "@mantine/core";
 import { IconListDetails, IconPencil, IconPlugConnected, IconX } from "@tabler/icons-react";
 import { useState } from "react";
 
-import type { DiscoveryField } from "@/builtinApps/AssetIdentificationApp/DiscoverySettings/index.types";
-import DiscoveryAdaptersForm from "../DiscoveryAdaptersForm";
+import BCPopoverConfirm from "@/shared/components/baseComponents/BCPopoverConfirm";
 
-type Props = {
+import type {
+	DiscoveryAdapterConfiguration,
+	DiscoveryAdapterConfigurationRs,
+	DiscoveryAdaptersField,
+} from "../../../../index.types";
+import DiscoveryAdaptersEditGateway from "../DiscoveryAdaptersEdit";
+
+type Props = DiscoveryAdapterConfigurationRs & {
 	handleDeleteAdapterConfigurations: VoidFunction;
-	handleEditAdapterConfigurations: (configs: Record<string, unknown>) => void;
+	handleEditAdapterConfigurations: (configs: DiscoveryAdapterConfiguration[]) => void;
+	fields: DiscoveryAdaptersField[];
 	loading: boolean;
-	config: Record<string, unknown>;
-	isActive: boolean;
-	fields: DiscoveryField;
 };
 
-const DiscoveryAdapterCard = (props: Props) => {
+const DiscoveryAdapterCard = ({ id, configs, isActive, ...props }: Props) => {
 	const [editMode, setEditMode] = useState(false);
 
 	if (editMode) {
 		return (
-			<DiscoveryAdaptersForm
-				fields={props.fields}
-				loading={props.loading}
-				formInitialValues={props.config}
-				handleEditAdapterConfigurations={props.handleEditAdapterConfigurations}
+			<DiscoveryAdaptersEditGateway
+				{...{ id, configs, isActive, ...props }}
 				onCancel={() => setEditMode(false)}
 			/>
 		);
 	}
+
 	return (
 		<Card bg="gray.1" w="100%" padding="xs">
 			<Flex align="center" justify="space-between">
 				<Text fw="bold" fz="sm">
-					{`${props.config?.ip} - ${props.config?.connection}`}
+					{configs?.map(({ value }) => value || "").join(" - ")}
 				</Text>
 				<Flex gap="2xs">
-					<Badge variant="light" color={props.isActive ? "green" : "red"} p="sm">
+					<Badge variant="light" color={isActive ? "green" : "red"} p="sm">
 						<Text p="2xs" tt="capitalize">
-							{props.isActive ? "Connected" : "Disconnected"}
+							{isActive ? "Connected" : "Disconnected"}
 						</Text>
 					</Badge>
 					<ActionIcon

@@ -6,9 +6,9 @@
  * OpenAPI spec version: 1.0.0
  */
 import type { FieldGeneratorObjectType } from './FieldGeneratorObjectType';
-import type { FieldGeneratorType } from './FieldGeneratorType';
-import type { FieldGeneratorPaginate } from './FieldGeneratorPaginate';
 import type { FieldGeneratorOptions } from './FieldGeneratorOptions';
+import type { FieldGeneratorPaginate } from './FieldGeneratorPaginate';
+import type { FieldGeneratorType } from './FieldGeneratorType';
 
 export interface FieldGenerator {
   label: string;

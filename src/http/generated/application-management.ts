@@ -53,7 +53,7 @@ export const getApplications = (
       
       
       return orvalMutator<PaginatedBaseResponseEachApplicationsResponseEachApplicationMetadataWrapper>(
-      {url: `/api/application-management/`, method: 'GET',
+      {url: "/api/application-management/", method: 'GET',
         params, signal
     },
       );
@@ -61,7 +61,7 @@ export const getApplications = (
   
 
 const getGetApplicationsQueryKey = (params?: GetApplicationsParams,) => {
-    return [`/api/application-management/`, ...(params ? [params]: [])] as const;
+    return ["/api/application-management/", ...(params ? [params]: [])] as const;
     }
 
     
@@ -141,14 +141,14 @@ export const getActiveApplications = (
       
       
       return orvalMutator<ActiveApplicationsResponse>(
-      {url: `/api/application-management/active-applications`, method: 'GET', signal
+      {url: "/api/application-management/active-applications", method: 'GET', signal
     },
       );
     }
   
 
 const getGetActiveApplicationsQueryKey = () => {
-    return [`/api/application-management/active-applications`] as const;
+    return ["/api/application-management/active-applications"] as const;
     }
 
     

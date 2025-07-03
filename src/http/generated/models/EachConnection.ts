@@ -6,8 +6,8 @@
  * OpenAPI spec version: 1.0.0
  */
 import type { EachConnectionDescription } from './EachConnectionDescription';
-import type { EachConnectionUpdater } from './EachConnectionUpdater';
 import type { EachConnectionUpdatedTime } from './EachConnectionUpdatedTime';
+import type { EachConnectionUpdater } from './EachConnectionUpdater';
 
 export interface EachConnection {
   id: string;

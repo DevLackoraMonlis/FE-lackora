@@ -1,36 +1,24 @@
 import { Badge, Card, Divider, Flex, Grid, LoadingOverlay, Switch, Text } from "@mantine/core";
 import { Accordion, Checkbox, TextInput } from "@mantine/core";
-import { useDebouncedValue } from "@mantine/hooks";
 import { IconSearch, IconX } from "@tabler/icons-react";
 import { Fragment, useState } from "react";
 
-import { useGetDiscoverySettings } from "@/http/generated/asset-identification-discovery-settings";
-import type { GetDiscoverySettingsParams } from "@/http/generated/models";
+import { useDiscoveryAdapters } from "../../index.hooks";
+import type { DiscoveryAdapterFilters } from "../../index.types";
 
 import DiscoveryAdapterGateways from "./components/DiscoveryAdapterGateways";
 
-type DiscoveryAdapterFilters = Pick<GetDiscoverySettingsParams, "method" | "vendor">;
+export default function DiscoverySettingsDiscoveryAdapters() {
+	const [queryParams, setQueryParams] = useState<DiscoveryAdapterFilters>({ type: "discovery" });
+	const { discoveryAdapters } = useDiscoveryAdapters(queryParams);
 
-const DiscoverySettingsDiscoveryAdapters = () => {
-	const [queryParams, setQueryParams] = useState<GetDiscoverySettingsParams>({
-		type: "discovery",
-	});
-	const [debouncedParams] = useDebouncedValue(queryParams, 200);
-	const discoverySettings = useGetDiscoverySettings(debouncedParams, {
-		query: {
-			select: (res) => {
-				return res?.data;
-			},
-		},
-	});
-
-	const handleUpdateQueryParams = (params: Partial<GetDiscoverySettingsParams>) => {
+	const handleUpdateQueryParams = (params: Partial<DiscoveryAdapterFilters>) => {
 		setQueryParams((perParams) => ({ ...perParams, ...params }));
 	};
 
 	return (
 		<Grid p="sm" pt="lg" gutter="lg">
-			<LoadingOverlay visible={discoverySettings.isFetching} />
+			<LoadingOverlay visible={discoveryAdapters.isLoading} />
 			<Grid.Col span={{ xs: 12, lg: 3 }}>
 				<Card withBorder shadow="sm" radius="md" bd="1px solid gray.4" h="80dvh">
 					<Card.Section withBorder inheritPadding py="2xs" fw="bold" bg="gray.2">
@@ -64,8 +52,8 @@ const DiscoverySettingsDiscoveryAdapters = () => {
 							size="md"
 							onChange={(e) => handleUpdateQueryParams({ used: e.target.checked })}
 						/>
-						{discoverySettings?.data?.metadata?.filters?.map(({ label, param, items }) => {
-							const value = queryParams[param as keyof DiscoveryAdapterFilters] || [];
+						{discoveryAdapters?.data?.metadata?.filters?.map(({ label, param, items }) => {
+							const value = (queryParams[param] || []) as string[];
 							return (
 								<Fragment key={param}>
 									<Divider />
@@ -113,7 +101,7 @@ const DiscoverySettingsDiscoveryAdapters = () => {
 			</Grid.Col>
 			<Grid.Col span={{ xs: 12, lg: 9 }}>
 				<Accordion variant="separated">
-					{discoverySettings?.data?.results?.map((item) => (
+					{discoveryAdapters?.data?.results?.map((item) => (
 						<Accordion.Item key={item.id} value={item.id}>
 							<Accordion.Control>
 								<Flex align="center" justify="space-between">
@@ -145,7 +133,7 @@ const DiscoverySettingsDiscoveryAdapters = () => {
 									Added Gateways
 								</Text>
 								{/* DiscoveryAdapterGateways */}
-								<DiscoveryAdapterGateways adapterId={item.id} />
+								<DiscoveryAdapterGateways adapterId={item.id} fields={item.fields} />
 								{/* DiscoveryAdapterGateways */}
 							</Accordion.Panel>
 						</Accordion.Item>
@@ -154,6 +142,4 @@ const DiscoverySettingsDiscoveryAdapters = () => {
 			</Grid.Col>
 		</Grid>
 	);
-};
-
-export default DiscoverySettingsDiscoveryAdapters;
+}
