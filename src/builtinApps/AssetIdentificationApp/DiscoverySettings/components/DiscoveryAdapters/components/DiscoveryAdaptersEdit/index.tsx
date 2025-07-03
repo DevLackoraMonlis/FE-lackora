@@ -3,21 +3,26 @@ import { useForm } from "@mantine/form";
 import { IconCheck, IconX } from "@tabler/icons-react";
 import { useEffect } from "react";
 
-import type { DiscoveryField } from "@/builtinApps/AssetIdentificationApp/DiscoverySettings/index.types";
 import { getDynamicField } from "@/shared/components/baseComponents/BCDynamicField";
+
+import type {
+	DiscoveryAdapterConfiguration,
+	DiscoveryAdapterConfigurationRs,
+	DiscoveryAdaptersField,
+} from "../../../../index.types";
 
 type FormValues = Record<string, unknown>;
 
-type Props = {
-	formInitialValues: FormValues;
+type Props = DiscoveryAdapterConfigurationRs & {
+	handleDeleteAdapterConfigurations: VoidFunction;
+	handleEditAdapterConfigurations: (configs: DiscoveryAdapterConfiguration[]) => void;
+	fields: DiscoveryAdaptersField[];
 	loading: boolean;
-	handleEditAdapterConfigurations: (configs: FormValues) => void;
 	onCancel: VoidFunction;
-	fields: DiscoveryField;
 };
 
 const DiscoveryAdaptersForm = ({
-	formInitialValues,
+	configs = [],
 	loading,
 	onCancel,
 	handleEditAdapterConfigurations,
@@ -26,12 +31,22 @@ const DiscoveryAdaptersForm = ({
 	const form = useForm<FormValues>({});
 
 	const handleSubmit = (values: typeof form.values) => {
-		handleEditAdapterConfigurations(values);
+		const updateValues = configs.map(({ value, key, ...item }) => ({
+			...item,
+			key,
+			value: values[key] as string,
+		}));
+		handleEditAdapterConfigurations(updateValues);
 	};
 
 	useEffect(() => {
-		form.initialize(formInitialValues as FormValues);
-	}, [formInitialValues]);
+		const formInitialValues = configs.reduce((acc, { value, key }) => {
+			acc[key] = value;
+			return acc;
+		}, {} as FormValues);
+
+		form.initialize(formInitialValues);
+	}, [configs]);
 
 	return (
 		<Box pos="relative">

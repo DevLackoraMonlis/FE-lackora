@@ -12,19 +12,19 @@ export type BCDynamicFieldType =
 	| "List";
 
 export type BCDynamicFieldProps<T extends string> = {
+	label: string;
+	key: string;
 	formInputProps?: unknown;
 	placeholder?: string;
 	defaultValue?: string | number;
 	otherElementOptions?: { [key: string]: unknown };
-	label: string;
-	key: string;
 	required?: boolean | null;
 	paginate?: boolean | null;
 	objectType?: T;
 	type?: BCDynamicFieldType | null;
 	options?: LabelValueType[] | null;
-	api: (
-		variables: PaginationRq<{ type: string }>,
+	api?: (
+		variables: PaginationRq<{ object_type?: string | null }>,
 		signal?: AbortSignal,
 	) => Promise<AxiosResponse<PaginationRs<LabelValueType>>>;
 };

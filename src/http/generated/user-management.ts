@@ -39,22 +39,22 @@ export const getAccessToken = (
       
       const formUrlEncoded = new URLSearchParams();
 if(bodyGetAccessToken.grant_type !== undefined && bodyGetAccessToken.grant_type !== null) {
- formUrlEncoded.append(`grant_type`, bodyGetAccessToken.grant_type)
+ formUrlEncoded.append("grant_type", bodyGetAccessToken.grant_type)
  }
-formUrlEncoded.append(`username`, bodyGetAccessToken.username)
-formUrlEncoded.append(`password`, bodyGetAccessToken.password)
+formUrlEncoded.append("username", bodyGetAccessToken.username)
+formUrlEncoded.append("password", bodyGetAccessToken.password)
 if(bodyGetAccessToken.scope !== undefined) {
- formUrlEncoded.append(`scope`, bodyGetAccessToken.scope)
+ formUrlEncoded.append("scope", bodyGetAccessToken.scope)
  }
 if(bodyGetAccessToken.client_id !== undefined && bodyGetAccessToken.client_id !== null) {
- formUrlEncoded.append(`client_id`, bodyGetAccessToken.client_id)
+ formUrlEncoded.append("client_id", bodyGetAccessToken.client_id)
  }
 if(bodyGetAccessToken.client_secret !== undefined && bodyGetAccessToken.client_secret !== null) {
- formUrlEncoded.append(`client_secret`, bodyGetAccessToken.client_secret)
+ formUrlEncoded.append("client_secret", bodyGetAccessToken.client_secret)
  }
 
       return orvalMutator<Token>(
-      {url: `/api/user-management/token`, method: 'POST',
+      {url: "/api/user-management/token", method: 'POST',
       headers: {'Content-Type': 'application/x-www-form-urlencoded', },
        data: formUrlEncoded, signal
     },
@@ -118,7 +118,7 @@ export const getRefreshToken = (
       
       
       return orvalMutator<Token>(
-      {url: `/api/user-management/refresh`, method: 'POST',
+      {url: "/api/user-management/refresh", method: 'POST',
       headers: {'Content-Type': 'application/json', },
       data: refreshTokenRequest, signal
     },
@@ -182,7 +182,7 @@ export const logoutSystem = (
       
       
       return orvalMutator<MessageOnlyResponse>(
-      {url: `/api/user-management/logout`, method: 'POST',
+      {url: "/api/user-management/logout", method: 'POST',
       headers: {'Content-Type': 'application/json', },
       data: refreshTokenRequest, signal
     },
