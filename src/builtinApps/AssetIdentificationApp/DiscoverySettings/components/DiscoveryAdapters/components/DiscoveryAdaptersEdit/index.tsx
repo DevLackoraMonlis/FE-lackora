@@ -55,19 +55,22 @@ const DiscoveryAdaptersForm = ({
 				<Flex gap="xs" mt="xs">
 					<Fieldset variant="filled" w="100%" pb="xs" pt="2xs">
 						<Flex gap="xs">
-							{fields.map((item) =>
-								getDynamicField({
+							{fields.map(({ key, ...item }) => {
+								const defaultValue = configs?.find(({ key: configKey }) => key === configKey)?.value;
+								return getDynamicField({
 									otherElementOptions: {
 										withAsterisk: true,
 										style: { flex: 1 },
 									},
 									formInputProps: {
-										key: form.key(item.key),
-										...form.getInputProps(item.key),
+										key: form.key(key),
+										...form.getInputProps(key),
 									},
+									defaultValue,
+									key,
 									...item,
-								}),
-							)}
+								});
+							})}
 						</Flex>
 					</Fieldset>
 					<Flex direction="column" gap="xs" justify="space-between" align="center">

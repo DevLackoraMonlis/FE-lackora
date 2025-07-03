@@ -16,7 +16,7 @@ export type BCDynamicFieldProps<T extends string> = {
 	key: string;
 	formInputProps?: unknown;
 	placeholder?: string;
-	defaultValue?: string | number;
+	defaultValue?: LabelValueType | null;
 	otherElementOptions?: { [key: string]: unknown };
 	required?: boolean | null;
 	paginate?: boolean | null;

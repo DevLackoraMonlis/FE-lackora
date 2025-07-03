@@ -8,12 +8,15 @@ import type { LabelValueType } from "@/shared/lib/general-types";
 
 import type { BCDynamicFieldProps } from "../../index.types";
 
-type Props<TObject extends string> = InputBaseProps & Omit<BCDynamicFieldProps<TObject>, "key">;
+type Props<TObject extends string> = InputBaseProps &
+	Omit<BCDynamicFieldProps<TObject>, "key"> & { onChange?: (value: string) => void };
 
 export default function ListDynamicField<TObject extends string>({
 	api,
 	objectType,
 	paginate,
+	defaultValue,
+	onChange,
 	...props
 }: Props<TObject>) {
 	const [selected, setSelectedValue] = useState<LabelValueType | null>(null);
@@ -40,8 +43,9 @@ export default function ListDynamicField<TObject extends string>({
 	useEffect(() => {
 		if (getObjectQuery.data?.data.total) {
 			setTotalRecords(getObjectQuery.data?.data?.total);
+			defaultValue && setSelectedValue(defaultValue);
 		}
-	}, [getObjectQuery.data?.data.total]);
+	}, [getObjectQuery.data?.data.total, defaultValue]);
 
 	// combobox configs
 	const combobox = useCombobox({
@@ -67,6 +71,7 @@ export default function ListDynamicField<TObject extends string>({
 			store={combobox}
 			withinPortal={false}
 			onOptionSubmit={(_, { children, value }) => {
+				onChange?.(value);
 				setSelectedValue({ label: children as string, value });
 				combobox.closeDropdown();
 			}}
@@ -74,12 +79,12 @@ export default function ListDynamicField<TObject extends string>({
 			<Combobox.Target>
 				<InputBase
 					{...props}
-					component="select"
+					component="button"
+					type="button"
 					pointer
 					rightSection={getObjectQuery.isFetching ? <Loader size="xs" /> : <Combobox.Chevron />}
 					onClick={() => combobox.toggleDropdown()}
 					rightSectionPointerEvents="none"
-					value={selected?.value}
 				>
 					{selected?.label || <Input.Placeholder>Pick value</Input.Placeholder>}
 				</InputBase>

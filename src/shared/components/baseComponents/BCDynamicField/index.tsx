@@ -1,5 +1,4 @@
 import { NumberInput, Select, TextInput, Textarea } from "@mantine/core";
-import { isNumber } from "lodash";
 
 import ListDynamicField from "./components/ListDynamicField";
 import type { BCDynamicFieldProps } from "./index.types";
@@ -24,7 +23,7 @@ export function getDynamicField<TObjectType extends string>({
 		label,
 		required: !!fieldIsRequired,
 		placeholder,
-		defaultValue,
+		defaultValue: defaultValue?.value,
 		disabled: !!disabled,
 		...otherElementOptions,
 		...(formInputProps || {}),
@@ -39,17 +38,16 @@ export function getDynamicField<TObjectType extends string>({
 						objectType,
 						paginate,
 						...commonOptions,
+						defaultValue,
 					}}
 				/>
 			);
 		case "Select": {
-			const defaultValueAsString = isNumber(defaultValue) ? `${defaultValue}` : defaultValue;
 			return (
 				<Select
 					{...{
 						...commonOptions,
 						data: options || [],
-						defaultValue: defaultValueAsString,
 					}}
 				/>
 			);
