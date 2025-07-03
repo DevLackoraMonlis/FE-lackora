@@ -2,7 +2,7 @@
 
 export default {
 	api: {
-		input: "http://193.151.146.46/openapi.json",
+		input: "http://172.31.100.57:8080/openapi.json",
 		biome: true,
 		prettier: true,
 		clean: true,

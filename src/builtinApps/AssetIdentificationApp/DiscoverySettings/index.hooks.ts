@@ -7,7 +7,7 @@ import {
 	useGetDiscoverySettingConfigurations,
 	useGetDiscoverySettings,
 } from "@/http/generated/asset-identification-discovery-settings";
-import { getObjectManagement } from "@/http/generated/object-management";
+import { getObjectRelatedRecords } from "@/http/generated/object-management";
 
 import type {
 	DiscoveryAdapterConfiguration,
@@ -26,7 +26,7 @@ export function useDiscoveryAdapters({ type, ...clientSideParams }: DiscoveryAda
 						is_used: !!is_used,
 						fields: fields.map(({ object_type, ...item }) => ({
 							...item,
-							api: getObjectManagement,
+							api: getObjectRelatedRecords,
 							objectType: object_type,
 						})) as unknown as DiscoveryAdaptersField[],
 					}));
