@@ -46,7 +46,7 @@ const NoneCredentialAdaptersCard = ({ showLabel, id, configs, isActive, ...props
 					});
 				})}
 			</Flex>
-			<Flex gap="xs" align="center" mt={showLabel ? "lg" : ""}>
+			<Flex gap="xs" align="center" mt={showLabel ? "2lg" : ""}>
 				{props.editable && (
 					<ActionIcon
 						onClick={() => setEditMode((perValue) => !perValue)}

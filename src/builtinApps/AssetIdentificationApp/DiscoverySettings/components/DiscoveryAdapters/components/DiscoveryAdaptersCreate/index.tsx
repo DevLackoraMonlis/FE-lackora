@@ -35,7 +35,7 @@ const DiscoveryAdaptersCreateGateway = (props: Props) => {
 	});
 
 	const handleCreate = (index: number) => {
-		const values = form.getValues().list[index] || {};
+		const { key, ...values } = form.getValues().list[index] || {};
 		const configs = Object.entries(values).map(([key, value]) => ({
 			key,
 			value,
@@ -69,7 +69,7 @@ const DiscoveryAdaptersCreateGateway = (props: Props) => {
 			</Fieldset>
 			<Flex direction="column" gap="xs" justify="space-between" align="center">
 				<ActionIcon size="lg" title="Save" c="gray.2" bg="primary.8" onClick={() => handleCreate(index)}>
-					<IconCheck size={30} />
+					<IconCheck size={20} />
 				</ActionIcon>
 				<ActionIcon
 					size="lg"
@@ -78,7 +78,7 @@ const DiscoveryAdaptersCreateGateway = (props: Props) => {
 					bg="gray.2"
 					onClick={() => form.removeListItem("list", index)}
 				>
-					<IconX size={30} />
+					<IconX size={20} />
 				</ActionIcon>
 			</Flex>
 		</Flex>

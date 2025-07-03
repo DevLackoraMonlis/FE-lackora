@@ -35,7 +35,7 @@ const NoneCredentialCreate = (props: Props) => {
 	});
 
 	const handleCreate = (index: number) => {
-		const values = form.getValues().list[index] || {};
+		const { key, ...values } = form.getValues().list[index] || {};
 		const configs = Object.entries(values).map(([key, value]) => ({
 			key,
 			value,
