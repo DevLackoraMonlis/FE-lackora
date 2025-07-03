@@ -14,10 +14,12 @@ const apps: ICAppManagerType[] = [
 			{
 				name: AllApplications.ASSET_IDENTIFICATION.modules.DISCOVERY_SETTINGS,
 				page: AssetIdentificationDiscoverySettingsPage,
+				headerTitle: "Discovery Settings",
 			},
 			{
 				name: AllApplications.ASSET_IDENTIFICATION.modules.PROFILING_SETTINGS,
 				page: AssetIdentificationProfilingSettingsPage,
+				headerTitle: "Profiling Settings",
 			},
 		],
 	},
@@ -27,6 +29,7 @@ const apps: ICAppManagerType[] = [
 			{
 				name: AllApplications.OBJECTS.modules.CONNECTIONS,
 				page: ObjectsConnectionsPage,
+				headerTitle: "Connections",
 			},
 		],
 	},

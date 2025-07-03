@@ -2,6 +2,7 @@ import ICAppManagerContext from "@/shared/components/infraComponents/ICAppManage
 import ICAppManagerRestrictAccess from "@/shared/components/infraComponents/ICAppManager/components/ICAppManagerRestrictAccess";
 import { Flex, Loader } from "@mantine/core";
 import { useContext } from "react";
+import ICPageWrapper from "../../../ICPageWrapper";
 
 type Props = {
 	appName: string;
@@ -35,7 +36,11 @@ export default function ICAppManagerLandingPage(props: Props) {
 
 	if (getApp.landing) {
 		const LandingPlugin = getApp.landing;
-		return <LandingPlugin />;
+		return (
+			<ICPageWrapper title={getApp.headerTitle}>
+				<LandingPlugin />
+			</ICPageWrapper>
+		);
 	}
 
 	return null;

@@ -2,6 +2,7 @@ import ICAppManagerContext from "@/shared/components/infraComponents/ICAppManage
 import ICAppManagerRestrictAccess from "@/shared/components/infraComponents/ICAppManager/components/ICAppManagerRestrictAccess";
 import { Flex, Loader } from "@mantine/core";
 import { useContext } from "react";
+import ICPageWrapper from "../../../ICPageWrapper";
 
 type Props = {
 	appName: string;
@@ -12,7 +13,7 @@ type Props = {
 	loading?: boolean;
 };
 
-export default function ICAppManagerPage(props: Props) {
+export default function ICAppManagerModulePage(props: Props) {
 	const { apps } = useContext(ICAppManagerContext);
 
 	const app = apps.find((app) => app.name === props.appName);
@@ -48,5 +49,9 @@ export default function ICAppManagerPage(props: Props) {
 	}
 
 	const ModulePlugin = getModule.page;
-	return <ModulePlugin />;
+	return (
+		<ICPageWrapper title={getModule.headerTitle}>
+			<ModulePlugin />
+		</ICPageWrapper>
+	);
 }

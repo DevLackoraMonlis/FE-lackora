@@ -1,6 +1,6 @@
 import type { CSSProperties, MantineStyleProp } from "@mantine/core";
 import type { AxiosRequestConfig, AxiosResponse } from "axios";
-import type { FC, ReactElement } from "react";
+import type { FC, ReactElement, ReactNode } from "react";
 
 export type ICAppManagerInfo = {
 	name: string;
@@ -74,6 +74,8 @@ export type ICAppManagerModuleType = {
 	name: string;
 	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 	page: FC<any>;
+	headerType?: "basic";
+	headerTitle?: ReactNode;
 	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 	detailPage?: FC<any>;
 };
@@ -82,6 +84,8 @@ export type ICAppManagerType = {
 	name: string;
 	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 	config?: FC<any>;
+	headerType?: "basic";
+	headerTitle?: ReactNode;
 	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 	landing?: FC<any>;
 	modules: ICAppManagerModuleType[];

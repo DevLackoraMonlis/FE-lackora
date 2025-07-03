@@ -35,13 +35,12 @@ export default function PanelLayout(
 					style={{
 						width: 1440,
 						height: 48,
-						borderBottomWidth: "0.5px",
 						justifyContent: "space-between",
 						paddingTop: "4px",
 						paddingRight: "14px",
 						paddingBottom: "4px",
 						paddingLeft: "14px",
-						backgroundColor: "#1e2e4f",
+						backgroundColor: "var(--mantine-color-main-6)",
 					}}
 					applicationLogo={<IconBox color={white} />}
 					onLogout={() => signOut({ redirect: true, callbackUrl: AppRoutes.login })}

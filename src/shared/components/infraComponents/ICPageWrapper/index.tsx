@@ -1,12 +1,10 @@
 "use client";
-import ICPanelSidebarPopoverMenu from "@/shared/components/infraComponents/ICPanelSidebar/components/ICPanelSidebarPopoverMenu";
 import type { ICPanelSidebarPopoverMenuGroupProps } from "@/shared/components/infraComponents/ICPanelSidebar/index.types";
-import { Flex, Text, Tooltip } from "@mantine/core";
-import { IconChevronDown, IconInfoCircle } from "@tabler/icons-react";
-import type { PropsWithChildren } from "react";
+import { Flex, Text } from "@mantine/core";
+import type { PropsWithChildren, ReactNode } from "react";
 
 type Props = PropsWithChildren<{
-	title: string;
+	title: ReactNode;
 	menuGroup?: Omit<ICPanelSidebarPopoverMenuGroupProps, "target">;
 	description?: string;
 	prevHref?: string;
@@ -15,30 +13,11 @@ type Props = PropsWithChildren<{
 export default function ICPageWrapper(props: Props) {
 	return (
 		<Flex direction={"column"}>
-			<Flex justify={"flex-start"} align={"center"} gap={"xs"}>
-				<Text size={"md"}>{props.title}</Text>
-				<Flex gap={"xs"} align={"center"} justify={"center"}>
-					{props.menuGroup && (
-						<ICPanelSidebarPopoverMenu
-							trigger={"click"}
-							position={"bottom-start"}
-							arrowPosition={"center"}
-							{...props.menuGroup}
-							target={
-								<Flex style={{ cursor: "pointer" }} justify={"center"} align={"center"}>
-									<IconChevronDown height={24} color={"black"} />
-								</Flex>
-							}
-						/>
-					)}
-					{props.description && (
-						<Tooltip position={"bottom-start"} label={props.description}>
-							<IconInfoCircle color={"black"} size={14} />
-						</Tooltip>
-					)}
-				</Flex>
+			<Flex pl={"xs"} align={"center"} bg={"gray.2"} h={48}>
+				<Text fz={"lg"} fw={"bolder"}>
+					{props.title}
+				</Text>
 			</Flex>
-
 			{props.children}
 		</Flex>
 	);
