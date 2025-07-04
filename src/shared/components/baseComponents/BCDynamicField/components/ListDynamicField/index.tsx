@@ -1,6 +1,7 @@
 import { Center, InputBase, type InputBaseProps } from "@mantine/core";
 import { Combobox, Loader, Pagination, useCombobox } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
+import { isObject } from "lodash";
 import { useEffect, useState } from "react";
 
 import { useTablePagination } from "@/shared/hooks/useTablePagination";
@@ -19,7 +20,9 @@ export default function ListDynamicField<TObject extends string>({
 	onChange,
 	...props
 }: Props<TObject>) {
-	const [selected, setSelectedValue] = useState<LabelValueType | null>(defaultValue);
+	const [selected, setSelectedValue] = useState<LabelValueType | null>(
+		isObject(defaultValue) ? defaultValue : null,
+	);
 	const [search, setSearch] = useState("");
 	const { setTotalRecords, tablePagination, page, pageSize, totalRecords } = useTablePagination({
 		defaultPageSize: 10,

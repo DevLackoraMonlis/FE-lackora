@@ -1,20 +1,21 @@
 import { ActionIcon, Badge, Card, Flex, LoadingOverlay, Text } from "@mantine/core";
 import { IconPencil, IconPlugConnected, IconX } from "@tabler/icons-react";
+import { isObject } from "lodash";
 import { useState } from "react";
 
+import type {
+	BCDynamicConfigRq,
+	BCDynamicFieldRs,
+} from "@/shared/components/baseComponents/BCDynamicField/index.types";
 import BCPopoverConfirm from "@/shared/components/baseComponents/BCPopoverConfirm";
 
-import type {
-	DiscoveryAdapterConfigsRq,
-	DiscoveryAdapterConfigurationRs,
-	DiscoveryAdaptersField,
-} from "../../../../index.types";
+import type { DiscoveryAdapterConfigurationRs } from "../../../../index.types";
 import DiscoveryAdaptersEditGateway from "../DiscoveryAdaptersEdit";
 
 type Props = DiscoveryAdapterConfigurationRs & {
 	handleDeleteAdapterConfigurations: VoidFunction;
-	handleEditAdapterConfigurations: (configs: DiscoveryAdapterConfigsRq[]) => void;
-	fields: DiscoveryAdaptersField[];
+	handleEditAdapterConfigurations: (configs: BCDynamicConfigRq[]) => void;
+	fields: BCDynamicFieldRs[];
 	loading: boolean;
 };
 
@@ -35,7 +36,7 @@ const DiscoveryAdapterCard = ({ id, configs, isActive, loading, ...props }: Prop
 			<LoadingOverlay visible={loading} />
 			<Flex align="center" justify="space-between">
 				<Text fw="bold" fz="sm">
-					{configs?.map(({ value }) => value?.label || "").join(" - ")}
+					{configs?.map(({ value }) => (isObject(value) ? value?.label : "")).join(" - ")}
 				</Text>
 				<Flex gap="2xs">
 					<Badge variant="light" color={isActive ? "green" : "red"} p="sm">
