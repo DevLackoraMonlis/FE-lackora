@@ -7,11 +7,12 @@ import type { EachConnectionFilterItems } from "@/http/generated/models";
 import BCSideFilter, { type BCSideFilterItem } from "@/shared/components/baseComponents/BCSideFilter";
 import { useConnectionIcon } from "@/shared/hooks/useConnectionIcon";
 import { useStableData } from "@/shared/hooks/useStableData";
-import { Accordion, Badge, Button, Flex, Grid, ScrollArea, Text } from "@mantine/core";
+import { Accordion, Badge, Button, Flex, Grid, ScrollArea, Skeleton, Text } from "@mantine/core";
 import { useDisclosure, useViewportSize } from "@mantine/hooks";
 import { IconPencil, IconTrash } from "@tabler/icons-react";
 import { omit } from "lodash";
 import { useState } from "react";
+import { v4 } from "uuid";
 
 export default function ConnectionList() {
 	const { height } = useViewportSize();
@@ -93,6 +94,18 @@ export default function ConnectionList() {
 								</Accordion.Panel>
 							</Accordion.Item>
 						))}
+						{getConnectionsQuery.isFetching &&
+							Array(3)
+								.fill(0)
+								.map(() => (
+									<Flex key={v4()} gap={"md"} align={"center"} h={100} w={"100%"} justify={"space-between"}>
+										<Skeleton animate height={50} circle />
+										<Flex w={"100%"} direction={"column"} gap={"sm"}>
+											<Skeleton animate width={"100%"} height={8} radius="xl" />
+											<Skeleton animate width={"100%"} height={8} radius="xl" />
+										</Flex>
+									</Flex>
+								))}
 					</ScrollArea>
 				</Accordion>
 			</Grid.Col>
