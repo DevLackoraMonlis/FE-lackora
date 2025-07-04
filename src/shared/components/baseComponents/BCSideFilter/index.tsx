@@ -1,5 +1,5 @@
 import type { LabelValueType } from "@/shared/lib/general-types";
-import { Badge, Card, Checkbox, Divider, Flex, Switch, Text, TextInput } from "@mantine/core";
+import { Badge, Card, Checkbox, Divider, Flex, ScrollArea, Switch, Text, TextInput } from "@mantine/core";
 import { DatePickerInput, DateTimePicker } from "@mantine/dates";
 import { useForm } from "@mantine/form";
 import { IconSearch, IconX } from "@tabler/icons-react";
@@ -7,7 +7,7 @@ import { Fragment, type ReactNode } from "react";
 
 type FilterType = "Text" | "Date" | "DateTime" | "Switch" | "CheckedList";
 
-type FilterItem = {
+export type BCSideFilterItem = {
 	type: FilterType;
 	label: string;
 	placeholder?: string;
@@ -22,8 +22,9 @@ type FormValues = {
 
 type Props = {
 	onChange: (values: FormValues) => void;
-	filterItems: FilterItem[];
+	filterItems: BCSideFilterItem[];
 	searchPlaceholder: string;
+	height?: number;
 };
 
 export default function BCSideFilter(props: Props) {
@@ -32,11 +33,12 @@ export default function BCSideFilter(props: Props) {
 			search: "",
 		},
 		onValuesChange: (values) => {
+			console.log(values);
 			props.onChange(values);
 		},
 	});
 
-	const filterItemMap: (filterItem: FilterItem) => ReactNode = (filterItem) => {
+	const filterItemMap: (filterItem: BCSideFilterItem) => ReactNode = (filterItem) => {
 		const itemMap: Record<FilterType, ReactNode> = {
 			Date: (
 				<DatePickerInput
@@ -56,6 +58,7 @@ export default function BCSideFilter(props: Props) {
 			),
 			Switch: (
 				<Switch
+					labelPosition={"left"}
 					key={filterItem.name}
 					{...form.getInputProps(filterItem.name, { type: "checkbox" })}
 					placeholder={filterItem.placeholder}
@@ -72,7 +75,6 @@ export default function BCSideFilter(props: Props) {
 			),
 			CheckedList: (
 				<Fragment key={filterItem.name}>
-					<Divider />
 					<Checkbox.Group
 						label={
 							<Flex align="center" justify="space-between">
@@ -83,7 +85,7 @@ export default function BCSideFilter(props: Props) {
 										variant="light"
 										color="gray"
 										rightSection={<IconX size={10} />}
-										onClick={() => form.setFieldValue(filterItem.name, undefined)}
+										onClick={() => form.setFieldValue(filterItem.name, [])}
 									>
 										<Text fz="xs" tt="capitalize">
 											Clear Filter
@@ -116,7 +118,7 @@ export default function BCSideFilter(props: Props) {
 	};
 
 	return (
-		<Card withBorder shadow="sm" radius="md" bd="1px solid gray.4" h="80dvh">
+		<Card withBorder shadow="sm" radius="md" bd="1px solid gray.4" className={"h-full"}>
 			<form className={"h-full w-full"}>
 				<Card.Section withBorder inheritPadding py="2xs" fw="bold" bg="gray.2">
 					Filter
@@ -140,18 +142,19 @@ export default function BCSideFilter(props: Props) {
 						{...form.getInputProps("search")}
 						placeholder={props.searchPlaceholder}
 					/>
-					<Divider />
-					{props.filterItems.map((filterItem) => {
-						if (filterItem.type === "CheckedList") {
-							return (
-								<>
-									<Divider />
-									{filterItemMap(filterItem)}
-								</>
-							);
-						}
-						return filterItemMap(filterItem);
-					})}
+					<ScrollArea h={props.height || "fit-content"}>
+						{props.filterItems.map((filterItem, index) => {
+							if (filterItem.type === "CheckedList") {
+								return (
+									<>
+										{filterItemMap(filterItem)}
+										{index !== props.filterItems.length - 1 && <Divider />}
+									</>
+								);
+							}
+							return filterItemMap(filterItem);
+						})}
+					</ScrollArea>
 				</Card.Section>
 			</form>
 		</Card>

@@ -1,11 +1,13 @@
-import { Badge, Card, Divider, Flex, Grid, LoadingOverlay, Switch, Text } from "@mantine/core";
-import { Accordion, Checkbox, TextInput } from "@mantine/core";
-import { IconSearch, IconX } from "@tabler/icons-react";
-import { Fragment, useState } from "react";
+import { Badge, Card, Flex, Grid, LoadingOverlay, Text } from "@mantine/core";
+import { Accordion } from "@mantine/core";
+import { IconSearch } from "@tabler/icons-react";
+import { useState } from "react";
 
 import { useDiscoveryAdapters } from "../../index.hooks";
 import type { DiscoveryAdapterFilters } from "../../index.types";
 
+import BCSideFilter, { type BCSideFilterItem } from "@/shared/components/baseComponents/BCSideFilter";
+import { useViewportSize } from "@mantine/hooks";
 import DiscoveryAdapterGateways from "./components/DiscoveryAdapterGateways";
 
 export default function DiscoverySettingsDiscoveryAdapters() {
@@ -13,92 +15,42 @@ export default function DiscoverySettingsDiscoveryAdapters() {
 	const [queryParams, setQueryParams] = useState<DiscoveryAdapterFilters>({ type: "discovery" });
 	const { discoveryAdapters } = useDiscoveryAdapters(queryParams);
 
+	const { height } = useViewportSize();
+
 	const handleUpdateQueryParams = (params: Partial<DiscoveryAdapterFilters>) => {
 		setQueryParams((perParams) => ({ ...perParams, ...params }));
 	};
+
+	const dynamicFilters: BCSideFilterItem[] =
+		discoveryAdapters?.data?.metadata?.filters?.map((filter) => {
+			const filterItem: BCSideFilterItem = {
+				items: filter.items,
+				label: filter.label,
+				name: filter.param,
+				type: "CheckedList",
+			};
+
+			return filterItem;
+		}) || [];
 
 	return (
 		<Grid p="sm" pt="lg" gutter="lg">
 			<LoadingOverlay visible={discoveryAdapters.isLoading} />
 			<Grid.Col span={{ xs: 12, lg: 3 }}>
-				<Card withBorder shadow="sm" radius="md" bd="1px solid gray.4" h="80dvh">
-					<Card.Section withBorder inheritPadding py="2xs" fw="bold" bg="gray.2">
-						Filter
-					</Card.Section>
-					<Card.Section withBorder inheritPadding py="2xs">
-						<TextInput
-							my="sm"
-							leftSection={
-								queryParams.search ? (
-									<IconX
-										size={15}
-										onClick={() => handleUpdateQueryParams({ search: null })}
-										className="cursor-pointer"
-									/>
-								) : (
-									<IconSearch size={15} />
-								)
-							}
-							variant="filled"
-							radius="md"
-							value={queryParams.search || ""}
-							placeholder="Search by adapter Name"
-							onChange={(e) => handleUpdateQueryParams({ search: e.target.value })}
-						/>
-						<Divider />
-						<Switch
-							my="sm"
-							labelPosition="left"
-							label="Show only used adapters"
-							size="md"
-							onChange={(e) => handleUpdateQueryParams({ used: e.target.checked })}
-						/>
-						{discoveryAdapters?.data?.metadata?.filters?.map(({ label, param, items }) => {
-							const value = (queryParams[param] || []) as string[];
-							return (
-								<Fragment key={param}>
-									<Divider />
-									<Checkbox.Group
-										label={
-											<Flex align="center" justify="space-between">
-												<Text fw="normal">{label}</Text>
-												{!!value?.length && (
-													<Badge
-														className="cursor-pointer"
-														variant="light"
-														color="gray"
-														rightSection={<IconX size={10} />}
-														onClick={() => handleUpdateQueryParams({ [param]: null })}
-													>
-														<Text fz="xs" tt="capitalize">
-															Clear Filter
-														</Text>
-													</Badge>
-												)}
-											</Flex>
-										}
-										value={value}
-										styles={() => ({
-											label: { width: "100%" },
-										})}
-										my="sm"
-										onChange={(value) =>
-											handleUpdateQueryParams({
-												[param]: value?.length ? value : null,
-											})
-										}
-									>
-										<Flex direction="column" gap="xs" py="xs">
-											{items?.map((item) => (
-												<Checkbox key={item.value} {...item} />
-											))}
-										</Flex>
-									</Checkbox.Group>
-								</Fragment>
-							);
-						})}
-					</Card.Section>
-				</Card>
+				<BCSideFilter
+					height={height - 300}
+					onChange={handleUpdateQueryParams}
+					filterItems={[
+						{
+							name: "used",
+							type: "Switch",
+							label: "Show only used adapters",
+						},
+
+						...dynamicFilters,
+					]}
+					searchPlaceholder={"Search by adapter Name"}
+				/>
 			</Grid.Col>
 			<Grid.Col span={{ xs: 12, lg: 9 }}>
 				<Accordion variant="separated" onChange={setActiveAccordion}>
