@@ -1,22 +1,23 @@
 import { ActionIcon, Box, Fieldset, Flex, LoadingOverlay } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { IconCheck, IconX } from "@tabler/icons-react";
+import { isObject } from "lodash";
 import { useEffect } from "react";
 
-import { getDynamicField } from "@/shared/components/baseComponents/BCDynamicField";
-
+import { configsUpdateTransformRq, getDynamicField } from "@/shared/components/baseComponents/BCDynamicField";
 import type {
-	DiscoveryAdapterConfigsRq,
-	DiscoveryAdapterConfigurationRs,
-	DiscoveryAdaptersField,
-} from "../../../../index.types";
+	BCDynamicConfigRq,
+	BCDynamicFieldRs,
+} from "@/shared/components/baseComponents/BCDynamicField/index.types";
+
+import type { DiscoveryAdapterConfigurationRs } from "../../../../index.types";
 
 type FormValues = Record<string, unknown>;
 
 type Props = DiscoveryAdapterConfigurationRs & {
 	handleDeleteAdapterConfigurations: VoidFunction;
-	handleEditAdapterConfigurations: (configs: DiscoveryAdapterConfigsRq[]) => void;
-	fields: DiscoveryAdaptersField[];
+	handleEditAdapterConfigurations: (configs: BCDynamicConfigRq[]) => void;
+	fields: BCDynamicFieldRs[];
 	loading: boolean;
 	onCancel: VoidFunction;
 };
@@ -31,17 +32,13 @@ const DiscoveryAdaptersForm = ({
 	const form = useForm<FormValues>({});
 
 	const handleSubmit = (values: typeof form.values) => {
-		const updateValues = configs.map(({ value, key, ...item }) => ({
-			...item,
-			key,
-			value: values[key] as string,
-		}));
+		const updateValues = configsUpdateTransformRq(configs, values);
 		handleEditAdapterConfigurations(updateValues);
 	};
 
 	useEffect(() => {
 		const formInitialValues = configs.reduce((acc, { value, key }) => {
-			acc[key] = value?.value;
+			acc[key] = isObject(value) ? value?.value : null;
 			return acc;
 		}, {} as FormValues);
 		// initialize

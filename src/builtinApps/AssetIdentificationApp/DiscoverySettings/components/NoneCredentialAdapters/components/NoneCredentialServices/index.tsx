@@ -1,19 +1,22 @@
 import { Flex, LoadingOverlay } from "@mantine/core";
 
+import type {
+	BCDynamicConfigRq,
+	BCDynamicFieldRs,
+} from "@/shared/components/baseComponents/BCDynamicField/index.types";
+
 import {
 	useDeleteDiscoverySetting,
 	useDiscoveryAdapterById,
 	useEditDiscoverySetting,
 } from "../../../../index.hooks";
-import type { DiscoveryAdapterConfigsRq, DiscoveryAdaptersField } from "../../../../index.types";
-
 import NoneCredentialAdaptersCard from "../NoneCredentialCard";
 import NoneCredentialCreate from "../NoneCredentialCreate";
 
 type Props = {
 	enabled: boolean;
 	adapterId: string;
-	fields: DiscoveryAdaptersField[];
+	fields: BCDynamicFieldRs[];
 };
 
 const NoneCredentialServices = ({ enabled, adapterId, fields }: Props) => {
@@ -28,10 +31,7 @@ const NoneCredentialServices = ({ enabled, adapterId, fields }: Props) => {
 	};
 
 	const { editDiscoverySetting } = useEditDiscoverySetting();
-	const handleEditAdapterConfigurations = (
-		configuration_id: string,
-		configs: DiscoveryAdapterConfigsRq[],
-	) => {
+	const handleEditAdapterConfigurations = (configuration_id: string, configs: BCDynamicConfigRq[]) => {
 		editDiscoverySetting.mutate(
 			{ adapterId, data: { configs, configuration_id } },
 			{ onSuccess: () => discoverySettingConfigurations.refetch() },
