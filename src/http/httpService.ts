@@ -6,6 +6,7 @@ import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 import axios from "axios";
 import type { Session } from "next-auth";
 import { getSession, signIn, signOut } from "next-auth/react";
+import qs from "qs";
 
 export type SessionUserType = {
 	data: Token;
@@ -30,6 +31,11 @@ class HttpService {
 		this.axiosService = axios.create({
 			headers: {
 				"Content-Type": "application/json",
+			},
+			paramsSerializer: {
+				serialize: (params) => {
+					return qs.stringify(params, { indices: false });
+				},
 			},
 		});
 

@@ -146,10 +146,10 @@ export default function BCSideFilter(props: Props) {
 						{props.filterItems.map((filterItem, index) => {
 							if (filterItem.type === "CheckedList") {
 								return (
-									<>
+									<Fragment key={filterItem.name}>
 										{filterItemMap(filterItem)}
 										{index !== props.filterItems.length - 1 && <Divider />}
-									</>
+									</Fragment>
 								);
 							}
 							return filterItemMap(filterItem);
