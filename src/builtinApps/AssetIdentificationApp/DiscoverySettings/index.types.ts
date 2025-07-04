@@ -1,4 +1,5 @@
 import type { BCDynamicFieldProps } from "@/shared/components/baseComponents/BCDynamicField/index.types";
+import type { LabelValueType } from "@/shared/lib/general-types";
 
 export type DiscoveryAdapterFieldObjectType = string;
 
@@ -10,7 +11,13 @@ export type DiscoveryAdapterFilters = Record<string, unknown> & {
 	used?: boolean | null;
 };
 
-export type DiscoveryAdapterConfiguration = {
+export type DiscoveryAdapterConfigsRs = {
+	key: string;
+	value?: LabelValueType | null;
+	id?: string;
+	type?: string;
+};
+export type DiscoveryAdapterConfigsRq = {
 	key: string;
 	value: string;
 	id?: string;
@@ -19,6 +26,7 @@ export type DiscoveryAdapterConfiguration = {
 
 export type DiscoveryAdapterConfigurationRs = {
 	id: string;
-	configs: DiscoveryAdapterConfiguration[];
+	configs: DiscoveryAdapterConfigsRs[];
 	isActive: boolean;
+	editable: boolean;
 };

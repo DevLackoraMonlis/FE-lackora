@@ -23,13 +23,14 @@ export default function useMantineBaseTheme() {
 		black: "#11121F",
 		spacing: {
 			...DEFAULT_THEME.spacing,
-			xxl: "40px",
 			"2xs": "4px",
+			"2lg": "26px",
+			"2xl": "40px",
 		},
 		fontSizes: {
 			...DEFAULT_THEME.fontSizes,
-			xxl: "26px",
-			"2xxl": "32px",
+			"2xl": "26px",
+			"3xl": "32px",
 		},
 		primaryColor: "primary",
 		colors: {

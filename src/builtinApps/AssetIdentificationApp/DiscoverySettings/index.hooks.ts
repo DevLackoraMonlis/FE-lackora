@@ -7,10 +7,10 @@ import {
 	useGetDiscoverySettingConfigurations,
 	useGetDiscoverySettings,
 } from "@/http/generated/asset-identification-discovery-settings";
-import { getObjectManagement } from "@/http/generated/object-management";
+import { getObjectRelatedRecords } from "@/http/generated/object-management";
 
 import type {
-	DiscoveryAdapterConfiguration,
+	DiscoveryAdapterConfigsRs,
 	DiscoveryAdapterFilters,
 	DiscoveryAdaptersField,
 } from "./index.types";
@@ -26,7 +26,7 @@ export function useDiscoveryAdapters({ type, ...clientSideParams }: DiscoveryAda
 						is_used: !!is_used,
 						fields: fields.map(({ object_type, ...item }) => ({
 							...item,
-							api: getObjectManagement,
+							api: getObjectRelatedRecords,
 							objectType: object_type,
 						})) as unknown as DiscoveryAdaptersField[],
 					}));
@@ -56,15 +56,20 @@ export function useDiscoveryAdapters({ type, ...clientSideParams }: DiscoveryAda
 	return { discoveryAdapters };
 }
 
-export function useDiscoveryAdapterById(adapterId: string) {
+export function useDiscoveryAdapterById(adapterId: string, enabled: boolean) {
 	const discoverySettingConfigurations = useGetDiscoverySettingConfigurations(adapterId, {
 		query: {
-			enabled: !!adapterId,
+			enabled: !!adapterId && enabled,
+			refetchOnMount: false,
 			select: (res) => {
-				const results = res?.data?.results?.map(({ id, is_active, config }) => ({
+				const results = res?.data?.results?.map(({ id, is_active, config, creator }) => ({
 					id,
-					configs: config as unknown as DiscoveryAdapterConfiguration[],
+					configs: config?.map(({ value, ...item }) => ({
+						...item,
+						value: typeof value === "string" ? { label: value, value: value } : value,
+					})) as unknown as DiscoveryAdapterConfigsRs[],
 					isActive: !!is_active,
+					editable: creator !== "SYSTEM",
 				}));
 				return { ...res?.data, results };
 			},

@@ -1,4 +1,4 @@
-import { ActionIcon, Box, Button, Fieldset, Flex, LoadingOverlay } from "@mantine/core";
+import { ActionIcon, Box, Button, Flex, LoadingOverlay } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { randomId } from "@mantine/hooks";
 import { IconCheck, IconPlus, IconX } from "@tabler/icons-react";
@@ -35,7 +35,7 @@ const NoneCredentialCreate = (props: Props) => {
 	});
 
 	const handleCreate = (index: number) => {
-		const values = form.getValues().list[index] || {};
+		const { key, ...values } = form.getValues().list[index] || {};
 		const configs = Object.entries(values).map(([key, value]) => ({
 			key,
 			value,
@@ -53,38 +53,31 @@ const NoneCredentialCreate = (props: Props) => {
 
 	const fields = form.getValues().list.map((item, index) => (
 		<Flex key={item.key} gap="xs" mt="xs">
-			<Fieldset variant="filled" w="100%" pb="xs" pt="2xs">
-				<Flex gap="xs">
-					{props.fields.map((item) =>
-						getDynamicField({
-							otherElementOptions: { withAsterisk: true, style: { flex: 1 } },
-							formInputProps: {
-								key: form.key(`list.${index}.${item.key}`),
-								...form.getInputProps(`list.${index}.${item.key}`),
-							},
-							...item,
-						}),
-					)}
-				</Flex>
-			</Fieldset>
-			<Flex direction="column" gap="xs" justify="space-between" align="center">
-				<ActionIcon
-					size="input-sm"
-					title="Save"
-					c="gray.2"
-					bg="primary.8"
-					onClick={() => handleCreate(index)}
-				>
-					<IconCheck size={30} />
+			<Flex gap="xs" w="100%">
+				{props.fields.map(({ label, ...item }) => {
+					return getDynamicField({
+						otherElementOptions: { withAsterisk: true, style: { flex: 1 } },
+						formInputProps: {
+							key: form.key(`list.${index}.${item.key}`),
+							...form.getInputProps(`list.${index}.${item.key}`),
+						},
+						label: "",
+						...item,
+					});
+				})}
+			</Flex>
+			<Flex gap="xs" align="center">
+				<ActionIcon size="lg" title="Save" c="gray.2" bg="primary.8" onClick={() => handleCreate(index)}>
+					<IconCheck size={20} />
 				</ActionIcon>
 				<ActionIcon
-					size="input-sm"
+					size="lg"
 					title="Cancel"
 					c="gray.8"
 					bg="gray.2"
 					onClick={() => form.removeListItem("list", index)}
 				>
-					<IconX size={30} />
+					<IconX size={20} />
 				</ActionIcon>
 			</Flex>
 		</Flex>
@@ -101,7 +94,7 @@ const NoneCredentialCreate = (props: Props) => {
 				disabled={props.disabled}
 				onClick={() => form.insertListItem("list", insertListItem)}
 			>
-				Add Gateway
+				Add Another
 			</Button>
 		</Box>
 	);

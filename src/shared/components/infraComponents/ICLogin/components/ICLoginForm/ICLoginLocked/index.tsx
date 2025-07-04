@@ -12,7 +12,7 @@ export default function ICLoginLocked(props: Props) {
 			<Highlight
 				styles={{
 					root: {
-						fontSize: "var(--mantine-font-size-2xxl)",
+						fontSize: "var(--mantine-font-size-3xl)",
 						fontWeight: "bold",
 						textAlign: "start",
 						width: "80%",
