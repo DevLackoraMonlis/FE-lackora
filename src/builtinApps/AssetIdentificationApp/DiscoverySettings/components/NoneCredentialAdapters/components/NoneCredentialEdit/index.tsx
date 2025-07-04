@@ -4,7 +4,7 @@ import { IconCheck, IconX } from "@tabler/icons-react";
 import { isObject } from "lodash";
 import { useEffect } from "react";
 
-import { configsTransformRq, getDynamicField } from "@/shared/components/baseComponents/BCDynamicField";
+import { configsUpdateTransformRq, getDynamicField } from "@/shared/components/baseComponents/BCDynamicField";
 import type {
 	BCDynamicConfigRq,
 	BCDynamicFieldRs,
@@ -32,7 +32,7 @@ const NoneCredentialEditForm = ({
 	const form = useForm<FormValues>({});
 
 	const handleSubmit = (values: typeof form.values) => {
-		const updateValues = configsTransformRq(configs, values);
+		const updateValues = configsUpdateTransformRq(configs, values);
 		handleEditAdapterConfigurations(updateValues);
 	};
 

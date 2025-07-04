@@ -102,7 +102,7 @@ export const configsTransformRs = (configs: BCDynamicConfigRs[]) => {
 	);
 };
 
-export const configsTransformRq = (configs: BCDynamicConfigRs[], values: Record<string, unknown>) => {
+export const configsUpdateTransformRq = (configs: BCDynamicConfigRs[], values: Record<string, unknown>) => {
 	return (
 		configs?.map(({ value, key, id, type, idAsValue }) => {
 			const customValue = values[key] as string;
