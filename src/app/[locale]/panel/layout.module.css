@@ -6,7 +6,7 @@
 .layoutBodyContainer {
 	background-color: var(--mantine-color-white);
 	overflow: auto;
-	border-radius: 16px 0;
+	border-radius: 16px 0 0 0;
 }
 
 .aboutHeader {
