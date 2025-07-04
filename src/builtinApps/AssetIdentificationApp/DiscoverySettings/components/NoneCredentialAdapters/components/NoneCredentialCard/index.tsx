@@ -3,20 +3,19 @@ import { IconPencil, IconX } from "@tabler/icons-react";
 import { useState } from "react";
 
 import { getDynamicField } from "@/shared/components/baseComponents/BCDynamicField";
+import type {
+	BCDynamicConfigRq,
+	BCDynamicFieldRs,
+} from "@/shared/components/baseComponents/BCDynamicField/index.types";
 import BCPopoverConfirm from "@/shared/components/baseComponents/BCPopoverConfirm";
 
-import type {
-	DiscoveryAdapterConfigsRq,
-	DiscoveryAdapterConfigurationRs,
-	DiscoveryAdaptersField,
-} from "../../../../index.types";
-
+import type { DiscoveryAdapterConfigurationRs } from "../../../../index.types";
 import NoneCredentialEditForm from "../NoneCredentialEdit";
 
 type Props = DiscoveryAdapterConfigurationRs & {
 	handleDeleteAdapterConfigurations: VoidFunction;
-	handleEditAdapterConfigurations: (configs: DiscoveryAdapterConfigsRq[]) => void;
-	fields: DiscoveryAdaptersField[];
+	handleEditAdapterConfigurations: (configs: BCDynamicConfigRq[]) => void;
+	fields: BCDynamicFieldRs[];
 	loading: boolean;
 	showLabel: boolean;
 };

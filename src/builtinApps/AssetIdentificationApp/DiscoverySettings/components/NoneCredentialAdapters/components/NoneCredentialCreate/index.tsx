@@ -3,10 +3,10 @@ import { useForm } from "@mantine/form";
 import { randomId } from "@mantine/hooks";
 import { IconCheck, IconPlus, IconX } from "@tabler/icons-react";
 
-import { getDynamicField } from "@/shared/components/baseComponents/BCDynamicField";
+import { configsCreateTransformRq, getDynamicField } from "@/shared/components/baseComponents/BCDynamicField";
+import type { BCDynamicFieldRs } from "@/shared/components/baseComponents/BCDynamicField/index.types";
 
 import { useCreateDiscoverySetting } from "../../../../index.hooks";
-import type { DiscoveryAdaptersField } from "../../../../index.types";
 
 type FormValues = { list: { [key: string]: string }[] };
 
@@ -14,7 +14,7 @@ type Props = {
 	refetchDiscoveryAdapters: VoidFunction;
 	disabled: boolean;
 	adapterId: string;
-	fields: DiscoveryAdaptersField[];
+	fields: BCDynamicFieldRs[];
 };
 
 const NoneCredentialCreate = (props: Props) => {
@@ -36,10 +36,7 @@ const NoneCredentialCreate = (props: Props) => {
 
 	const handleCreate = (index: number) => {
 		const { key, ...values } = form.getValues().list[index] || {};
-		const configs = Object.entries(values).map(([key, value]) => ({
-			key,
-			value,
-		}));
+		const configs = configsCreateTransformRq(props.fields, values);
 		createDiscoverySetting.mutate(
 			{ adapterId: props.adapterId, data: { configs } },
 			{
