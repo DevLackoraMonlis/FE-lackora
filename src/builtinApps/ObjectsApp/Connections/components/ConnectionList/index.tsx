@@ -12,7 +12,7 @@ export default function ConnectionList() {
 		},
 	});
 
-	if (!getConnectionsQuery.data?.data.results.length) {
+	if (!getConnectionsQuery.data?.data.results.length && getConnectionsQuery.isFetched) {
 		return <ConnectionEmpty onCreate={createModalHandlers.open} />;
 	}
 

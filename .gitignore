@@ -3,6 +3,10 @@
 /allure-results
 # dependencies
 /node_modules
+/node_modules_main
+
+package-lock-main.json
+
 /.pnp
 .pnp.js
 .lh

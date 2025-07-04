@@ -34,15 +34,22 @@ export function useDiscoveryAdapters({ type, ...clientSideParams }: DiscoveryAda
 	const groupByType = groupBy(data?.results, "type");
 	let results = groupByType[type];
 	const { search, used } = clientSideParams;
-	results = filter(results, ({ display_name }) => !search || display_name?.includes(search));
+	if (search) {
+		results = filter(results, ({ display_name }) =>
+			display_name?.toLowerCase()?.includes(search.toLowerCase()),
+		);
+	}
+
 	results = filter(results, ({ is_used }) => type === "none-credential" || is_used === !!used);
 	filters?.forEach(({ param }) => {
-		const filtered = clientSideParams[param];
-		results = filter(
-			results,
-			(item) =>
-				!filtered || (Array.isArray(filtered) && filtered?.includes(`${item[param as keyof typeof item]}`)),
-		);
+		const filtered = clientSideParams[param] as unknown[];
+		if (filtered?.length) {
+			results = filter(
+				results,
+				(item) =>
+					!filtered || (Array.isArray(filtered) && filtered?.includes(`${item[param as keyof typeof item]}`)),
+			);
+		}
 	});
 	// update result
 	const discoveryAdapters = { ...discoveryAdaptersUQ, data: { ...data, results } };
