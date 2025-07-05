@@ -1,52 +1,24 @@
 import ConnectionCreateDefaultModal from "@/builtinApps/ObjectsApp/Connections/components/ConnectionCreateDefaultModal";
 import ConnectionCreateFormChangeTypeWrapper from "@/builtinApps/ObjectsApp/Connections/components/ConnectionCreateFormChangeTypeWrapper";
 import ConnectionCreateFormFooter from "@/builtinApps/ObjectsApp/Connections/components/ConnectionCreateFormFooter";
-import ConnectionCreateFormSections from "@/builtinApps/ObjectsApp/Connections/components/ConnectionCreateFormSections";
-import type {
-	CreateConnectionDefaultFormValues,
-	CreateConnectionModalProps,
-} from "@/builtinApps/ObjectsApp/Connections/components/index.types";
+import ConnectionCreateSSHFormSettings from "@/builtinApps/ObjectsApp/Connections/components/ConnectionCreateSSHModal/ConnectionCreateSSHFormSettings";
+import {
+	CreateConnectionSSHFormProvider,
+	type CreateConnectionSSHFormValues,
+	useCreateConnectionSSHForm,
+} from "@/builtinApps/ObjectsApp/Connections/components/ConnectionCreateSSHModal/index.form";
+import type { CreateConnectionModalProps } from "@/builtinApps/ObjectsApp/Connections/components/index.types";
+import { CreateConnectionSSHAuthenticationType } from "@/builtinApps/ObjectsApp/Connections/index.enum";
 import { useCreateConnection } from "@/http/generated/management-center-connections";
 import type { CreateConnection } from "@/http/generated/models";
 import { validateInput } from "@/shared/lib/utils";
-import {
-	Button,
-	Checkbox,
-	Flex,
-	Grid,
-	Group,
-	NumberInput,
-	PasswordInput,
-	Radio,
-	RadioGroup,
-	TextInput,
-	Textarea,
-	Tooltip,
-} from "@mantine/core";
-import { useForm } from "@mantine/form";
+import { Flex } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
-import { IconInfoCircle } from "@tabler/icons-react";
-
-enum AuthenticationType {
-	USER_PASSWORD = "User/Password",
-	PUBLIC_PRIVATE_KEY = "Public/Private key",
-}
-
-type FormValues = CreateConnectionDefaultFormValues<{
-	sshPort: number;
-	authenticationType: AuthenticationType;
-	sshKey?: string;
-	passphrase?: string;
-	enablePrivilegedMode: boolean;
-	username?: string;
-	password?: string;
-	privilegedPassword?: string;
-}>;
 
 export default function ConnectionCreateSSHModal(props: CreateConnectionModalProps) {
-	const form = useForm<FormValues>({
+	const form = useCreateConnectionSSHForm({
 		initialValues: {
-			authenticationType: AuthenticationType.USER_PASSWORD,
+			authenticationType: CreateConnectionSSHAuthenticationType.USER_PASSWORD,
 			description: "",
 			name: "",
 			sshPort: 22,
@@ -112,20 +84,25 @@ export default function ConnectionCreateSSHModal(props: CreateConnectionModalPro
 		},
 	});
 
-	const handleSubmit = (formValues: FormValues) => {
+	const handleSubmit = (formValues: CreateConnectionSSHFormValues) => {
 		const payload: CreateConnection = {
 			authenticate_required: false,
 			description: formValues.description,
 			authentication_type:
-				formValues.authenticationType === AuthenticationType.USER_PASSWORD
+				formValues.authenticationType === CreateConnectionSSHAuthenticationType.USER_PASSWORD
 					? "username_password"
 					: "public_private_key",
 			password:
-				formValues.authenticationType === AuthenticationType.USER_PASSWORD ? formValues.password : null,
+				formValues.authenticationType === CreateConnectionSSHAuthenticationType.USER_PASSWORD
+					? formValues.password
+					: null,
 			name: formValues.name,
 			port: formValues.sshPort,
 			type: "ssh",
-			username: formValues.authenticationType === AuthenticationType.USER_PASSWORD ? formValues.username : "",
+			username:
+				formValues.authenticationType === CreateConnectionSSHAuthenticationType.USER_PASSWORD
+					? formValues.username
+					: "",
 			privileged_password: formValues.privilegedPassword,
 			privileged_authentication: formValues.enablePrivilegedMode,
 		};
@@ -141,128 +118,26 @@ export default function ConnectionCreateSSHModal(props: CreateConnectionModalPro
 					props.onChangeType("SSH");
 				}}
 			>
-				<form className={"h-full w-full"} onSubmit={form.onSubmit(handleSubmit)}>
-					<Flex
-						h={form.values.authenticationType === AuthenticationType.USER_PASSWORD ? 600 : 700}
-						p={"lg"}
-						gap={"xs"}
-						direction={"column"}
-					>
-						<ConnectionCreateFormSections
-							connectionNameInputProps={{
-								...form.getInputProps("name"),
-							}}
-							connectionDescriptionInputProps={{
-								...form.getInputProps("description"),
-							}}
-							connectionSettingSection={
-								<Flex direction={"column"} gap={"xs"}>
-									<Flex justify={"space-between"}>
-										<NumberInput
-											hideControls
-											allowDecimal={false}
-											allowNegative={false}
-											allowLeadingZeros={false}
-											required
-											label={"SSH Port"}
-											{...form.getInputProps("sshPort")}
-										/>
-										<RadioGroup
-											defaultValue={AuthenticationType.USER_PASSWORD}
-											{...form.getInputProps("authenticationType", { type: "checkbox" })}
-											label={"Authentication Type"}
-										>
-											<Group mt="xs">
-												<Radio
-													label={AuthenticationType.USER_PASSWORD}
-													value={AuthenticationType.USER_PASSWORD}
-												/>
-												<Radio
-													label={AuthenticationType.PUBLIC_PRIVATE_KEY}
-													value={AuthenticationType.PUBLIC_PRIVATE_KEY}
-												/>
-											</Group>
-										</RadioGroup>
-									</Flex>
-									{form.values.authenticationType === AuthenticationType.USER_PASSWORD && (
-										<Flex direction={"column"} gap={"sm"}>
-											<Grid>
-												<Grid.Col span={6}>
-													<TextInput w={"100%"} required label={"User"} {...form.getInputProps("username")} />
-												</Grid.Col>
-												<Grid.Col span={6}>
-													<PasswordInput
-														w={"100%"}
-														required
-														label={"Password"}
-														{...form.getInputProps("password")}
-													/>
-												</Grid.Col>
-											</Grid>
-											<Grid align={"center"}>
-												<Grid.Col span={6}>
-													<Flex align={"center"} gap={"xs"}>
-														<Checkbox
-															label={"Enable privileged mode"}
-															{...form.getInputProps("enablePrivilegedMode")}
-														/>
-														<Tooltip label={"Description about this section"}>
-															<IconInfoCircle color={"blue"} size={14} />
-														</Tooltip>
-													</Flex>
-												</Grid.Col>
-												{form.values.enablePrivilegedMode && (
-													<Grid.Col span={6}>
-														<PasswordInput
-															w={"100%"}
-															required
-															{...form.getInputProps("privilegedPassword")}
-														/>
-													</Grid.Col>
-												)}
-											</Grid>
-										</Flex>
-									)}
-									{form.values.authenticationType === AuthenticationType.PUBLIC_PRIVATE_KEY && (
-										<Flex direction={"column"} gap={"sm"}>
-											<Textarea rows={3} label={"SSH Key"} {...form.getInputProps("sshKey")} />
-											<PasswordInput required label={"Passphrase"} {...form.getInputProps("passphrase")} />
-											<Grid align={"center"}>
-												<Grid.Col span={6}>
-													<Flex align={"center"} gap={"xs"}>
-														<Checkbox
-															label={"Enable privileged mode"}
-															{...form.getInputProps("enablePrivilegedMode")}
-														/>
-														<Tooltip label={"Description about this section"}>
-															<IconInfoCircle color={"blue"} size={14} />
-														</Tooltip>
-													</Flex>
-												</Grid.Col>
-												{form.values.enablePrivilegedMode && (
-													<Grid.Col span={6}>
-														<PasswordInput
-															w={"100%"}
-															required
-															{...form.getInputProps("privilegedPassword")}
-														/>
-													</Grid.Col>
-												)}
-											</Grid>
-										</Flex>
-									)}
-									<Button w={200} variant={"light"} onClick={() => props.onTestConnection("SSH")}>
-										Test Connection
-									</Button>
-								</Flex>
+				<CreateConnectionSSHFormProvider form={form}>
+					<form className={"h-full w-full"} onSubmit={form.onSubmit(handleSubmit)}>
+						<Flex
+							h={
+								form.values.authenticationType === CreateConnectionSSHAuthenticationType.USER_PASSWORD
+									? 600
+									: 700
 							}
+							p={"lg"}
+							gap={"xs"}
+							direction={"column"}
+						>
+							<ConnectionCreateSSHFormSettings onTestConnection={props.onTestConnection} />
+						</Flex>
+						<ConnectionCreateFormFooter
+							loading={createSSHConnectionMutation.isPending}
+							onCancel={handleClose}
 						/>
-					</Flex>
-					<ConnectionCreateFormFooter
-						loading={createSSHConnectionMutation.isPending}
-						onCancel={handleClose}
-					/>
-				</form>
+					</form>
+				</CreateConnectionSSHFormProvider>
 			</ConnectionCreateFormChangeTypeWrapper>
 		</ConnectionCreateDefaultModal>
 	);
