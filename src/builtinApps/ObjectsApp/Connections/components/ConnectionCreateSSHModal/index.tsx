@@ -23,6 +23,7 @@ import {
 	Tooltip,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
+import { notifications } from "@mantine/notifications";
 import { IconInfoCircle } from "@tabler/icons-react";
 
 type Props = {
@@ -107,8 +108,13 @@ export default function ConnectionCreateSSHModal(props: Props) {
 
 	const createSSHConnectionMutation = useCreateConnection({
 		mutation: {
-			onMutate: () => ({ successMessage: "SSH Connection Created Successfully" }),
 			onSuccess: () => {
+				notifications.show({
+					title: "Success",
+					message: "SSH Connection Created Successfully",
+					color: "green",
+					withBorder: true,
+				});
 				props.onSuccessCreate();
 				handleClose();
 			},

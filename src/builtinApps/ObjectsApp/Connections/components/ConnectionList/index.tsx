@@ -109,7 +109,7 @@ export default function ConnectionList() {
 					</Button>
 				</Flex>
 				<Accordion variant="separated">
-					<ScrollArea h={height - 130}>
+					<ScrollArea h={height - 195}>
 						{getConnectionsQuery.data?.data.results.map((item) => (
 							<Accordion.Item key={item.id} value={item.id}>
 								<Accordion.Control>
