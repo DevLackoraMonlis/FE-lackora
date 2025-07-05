@@ -1,7 +1,7 @@
 import ConnectionCreateFormSections from "@/builtinApps/ObjectsApp/Connections/components/ConnectionCreateFormSections";
 import { useCreateConnectionSSHFormContext } from "@/builtinApps/ObjectsApp/Connections/components/ConnectionCreateSSHModal/index.form";
-import type { CreateConnectionModalProps } from "@/builtinApps/ObjectsApp/Connections/components/index.types";
 import { CreateConnectionSSHAuthenticationType } from "@/builtinApps/ObjectsApp/Connections/index.enum";
+import type { CreateConnectionModalProps } from "@/builtinApps/ObjectsApp/Connections/index.types";
 import {
 	Button,
 	Checkbox,
@@ -74,7 +74,7 @@ export default function ConnectionCreateSSHFormSettings(
 									<Flex align={"center"} gap={"xs"}>
 										<Checkbox
 											label={"Enable privileged mode"}
-											{...form.getInputProps("enablePrivilegedMode")}
+											{...form.getInputProps("enablePrivilegedMode", { type: "checkbox" })}
 										/>
 										<Tooltip label={"Description about this section"}>
 											<IconInfoCircle color={"blue"} size={14} />
@@ -83,7 +83,12 @@ export default function ConnectionCreateSSHFormSettings(
 								</Grid.Col>
 								{form.values.enablePrivilegedMode && (
 									<Grid.Col span={6}>
-										<PasswordInput w={"100%"} required {...form.getInputProps("privilegedPassword")} />
+										<PasswordInput
+											placeholder={"Privileged Password"}
+											w={"100%"}
+											required
+											{...form.getInputProps("privilegedPassword")}
+										/>
 									</Grid.Col>
 								)}
 							</Grid>
@@ -98,7 +103,7 @@ export default function ConnectionCreateSSHFormSettings(
 									<Flex align={"center"} gap={"xs"}>
 										<Checkbox
 											label={"Enable privileged mode"}
-											{...form.getInputProps("enablePrivilegedMode")}
+											{...form.getInputProps("enablePrivilegedMode", { type: "checkbox" })}
 										/>
 										<Tooltip label={"Description about this section"}>
 											<IconInfoCircle color={"blue"} size={14} />
@@ -107,7 +112,12 @@ export default function ConnectionCreateSSHFormSettings(
 								</Grid.Col>
 								{form.values.enablePrivilegedMode && (
 									<Grid.Col span={6}>
-										<PasswordInput w={"100%"} required {...form.getInputProps("privilegedPassword")} />
+										<PasswordInput
+											placeholder={"Privileged Password"}
+											w={"100%"}
+											required
+											{...form.getInputProps("privilegedPassword")}
+										/>
 									</Grid.Col>
 								)}
 							</Grid>

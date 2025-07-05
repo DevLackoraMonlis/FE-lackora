@@ -1,90 +1,99 @@
 import ConnectionCreateDefaultModal from "@/builtinApps/ObjectsApp/Connections/components/ConnectionCreateDefaultModal";
 import ConnectionCreateFormChangeTypeWrapper from "@/builtinApps/ObjectsApp/Connections/components/ConnectionCreateFormChangeTypeWrapper";
 import ConnectionCreateFormFooter from "@/builtinApps/ObjectsApp/Connections/components/ConnectionCreateFormFooter";
-import ConnectionCreateFormSections from "@/builtinApps/ObjectsApp/Connections/components/ConnectionCreateFormSections";
-import type {
-	CreateConnectionDefaultFormValues,
-	CreateConnectionModalProps,
-} from "@/builtinApps/ObjectsApp/Connections/components/index.types";
+import ConnectionCreateSNMPFormSettings from "@/builtinApps/ObjectsApp/Connections/components/ConnectionCreateSNMPModal/ConnectionCreateSNMPFormSettings";
+import {
+	CreateConnectionSNMPFormProvider,
+	type CreateConnectionSNMPFormValues,
+	useCreateConnectionSNMPForm,
+} from "@/builtinApps/ObjectsApp/Connections/components/ConnectionCreateSNMPModal/index.form";
+import {
+	CreateConnectionSNMPAuthenticationProtocolType,
+	CreateConnectionSNMPPrivacyProtocolType,
+	CreateConnectionSNMPSecurityLdLevelType,
+	CreateConnectionSNMPVersionType,
+} from "@/builtinApps/ObjectsApp/Connections/index.enum";
+import type { CreateConnectionModalProps } from "@/builtinApps/ObjectsApp/Connections/index.types";
 import { useCreateConnection } from "@/http/generated/management-center-connections";
 import type { CreateConnection } from "@/http/generated/models";
 import { validateInput } from "@/shared/lib/utils";
-import {
-	Button,
-	Checkbox,
-	Flex,
-	Grid,
-	Group,
-	NumberInput,
-	PasswordInput,
-	Radio,
-	RadioGroup,
-	TextInput,
-	Textarea,
-	Tooltip,
-} from "@mantine/core";
-import { useForm } from "@mantine/form";
+import { Flex } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
-import { IconInfoCircle } from "@tabler/icons-react";
-
-enum AuthenticationType {
-	USER_PASSWORD = "User/Password",
-	PUBLIC_PRIVATE_KEY = "Public/Private key",
-}
-
-type FormValues = CreateConnectionDefaultFormValues<{
-	sshPort: number;
-	authenticationType: AuthenticationType;
-	sshKey?: string;
-	passphrase?: string;
-	enablePrivilegedMode: boolean;
-	username?: string;
-	password?: string;
-	privilegedPassword?: string;
-}>;
 
 export default function ConnectionCreateSNMPModal(props: CreateConnectionModalProps) {
-	const form = useForm<FormValues>({
+	const form = useCreateConnectionSNMPForm({
 		initialValues: {
-			authenticationType: AuthenticationType.USER_PASSWORD,
 			description: "",
 			name: "",
-			sshPort: 22,
-			enablePrivilegedMode: false,
+			snmpPort: 22,
+			snmpVersion: CreateConnectionSNMPVersionType.SNMP_V_2_C,
+			securityLevel: CreateConnectionSNMPSecurityLdLevelType.NO_SECURITY,
+			privacyProtocol: CreateConnectionSNMPPrivacyProtocolType.AES,
+			authenticationProtocol: CreateConnectionSNMPAuthenticationProtocolType.MD5,
 		},
 		validate: {
 			name: (value) =>
 				validateInput(value, {
 					required: true,
+					onlyEnglishWithSpaces: true,
 				}),
-			sshPort: (value) =>
+			snmpPort: (value) =>
 				validateInput(value, {
 					required: true,
 					mustBeNumber: true,
 				}),
-			password: (value, values) => {
-				if (values.authenticationType === "User/Password") {
+			community: (value, values) => {
+				if (values.snmpVersion === CreateConnectionSNMPVersionType.SNMP_V_2_C) {
 					return validateInput(value, { required: true });
 				}
 				return null;
 			},
-			privilegedPassword: (value, values) => {
-				if (values.enablePrivilegedMode) {
+			securityLevel: (value, values) => {
+				if (values.snmpVersion === CreateConnectionSNMPVersionType.SNMP_V_3) {
 					return validateInput(value, {
 						required: true,
 					});
 				}
 				return null;
 			},
-			passphrase: (value, values) => {
-				if (values.authenticationType === "Public/Private key") {
+			user: (value, values) => {
+				if (values.snmpVersion === CreateConnectionSNMPVersionType.SNMP_V_3) {
+					return validateInput(value, { required: true, onlyEnglishWithSpaces: true });
+				}
+				return null;
+			},
+			password: (value, values) => {
+				if (
+					values.snmpVersion === CreateConnectionSNMPVersionType.SNMP_V_3 &&
+					values.securityLevel === CreateConnectionSNMPSecurityLdLevelType.AUTHENTICATION_ONLY
+				) {
+					return validateInput(value, { required: true, onlyEnglishChars: true });
+				}
+				return null;
+			},
+			authenticationProtocol: (value, values) => {
+				if (
+					values.snmpVersion === CreateConnectionSNMPVersionType.SNMP_V_3 &&
+					values.securityLevel === CreateConnectionSNMPSecurityLdLevelType.AUTHENTICATION_ONLY
+				) {
 					return validateInput(value, { required: true });
 				}
 				return null;
 			},
-
-			username: (value, values) => {
-				if (values.authenticationType === "User/Password") {
+			privacyProtocol: (value, values) => {
+				if (
+					values.snmpVersion === CreateConnectionSNMPVersionType.SNMP_V_3 &&
+					values.securityLevel === CreateConnectionSNMPSecurityLdLevelType.AUTHENTICATION_PRIVACY
+				) {
+					return validateInput(value, { required: true });
+				}
+				return null;
+			},
+			privacyPassphrase: (value, values) => {
+				if (
+					values.snmpVersion === CreateConnectionSNMPVersionType.SNMP_V_3 &&
+					values.securityLevel === CreateConnectionSNMPSecurityLdLevelType.AUTHENTICATION_PRIVACY
+				) {
 					return validateInput(value, { required: true });
 				}
 				return null;
@@ -97,12 +106,12 @@ export default function ConnectionCreateSNMPModal(props: CreateConnectionModalPr
 		form.reset();
 	};
 
-	const createSSHConnectionMutation = useCreateConnection({
+	const createSNMPConnectionMutation = useCreateConnection({
 		mutation: {
 			onSuccess: () => {
 				notifications.show({
 					title: "Success",
-					message: "SSH Connection Created Successfully",
+					message: "SNMP Connection Created Successfully",
 					color: "green",
 					withBorder: true,
 				});
@@ -112,157 +121,58 @@ export default function ConnectionCreateSNMPModal(props: CreateConnectionModalPr
 		},
 	});
 
-	const handleSubmit = (formValues: FormValues) => {
+	const handleSubmit = (formValues: CreateConnectionSNMPFormValues) => {
 		const payload: CreateConnection = {
-			authenticate_required: false,
 			description: formValues.description,
-			authentication_type:
-				formValues.authenticationType === AuthenticationType.USER_PASSWORD
-					? "username_password"
-					: "public_private_key",
 			password:
-				formValues.authenticationType === AuthenticationType.USER_PASSWORD ? formValues.password : null,
+				formValues.snmpVersion === CreateConnectionSNMPVersionType.SNMP_V_2_C
+					? formValues.community
+					: formValues.password,
 			name: formValues.name,
-			port: formValues.sshPort,
-			type: "ssh",
-			username: formValues.authenticationType === AuthenticationType.USER_PASSWORD ? formValues.username : "",
-			privileged_password: formValues.privilegedPassword,
-			privileged_authentication: formValues.enablePrivilegedMode,
+			port: formValues.snmpPort,
+			type: "snmp",
+			authentication_type:
+				formValues.snmpVersion === CreateConnectionSNMPVersionType.SNMP_V_2_C ? "snmpv2c" : "snmpv3",
+			username: formValues.snmpVersion === CreateConnectionSNMPVersionType.SNMP_V_3 ? formValues.user : null,
+			authentication_protocol:
+				formValues.snmpVersion === CreateConnectionSNMPVersionType.SNMP_V_3 &&
+				formValues.securityLevel === CreateConnectionSNMPSecurityLdLevelType.AUTHENTICATION_ONLY
+					? formValues.authenticationProtocol
+					: null,
+			privacy_protocol:
+				formValues.snmpVersion === CreateConnectionSNMPVersionType.SNMP_V_3 &&
+				formValues.securityLevel === CreateConnectionSNMPSecurityLdLevelType.AUTHENTICATION_ONLY
+					? formValues.privacyProtocol
+					: null,
+			privacy_passphrase:
+				formValues.snmpVersion === CreateConnectionSNMPVersionType.SNMP_V_3 &&
+				formValues.securityLevel === CreateConnectionSNMPSecurityLdLevelType.AUTHENTICATION_ONLY
+					? formValues.privacyPassphrase
+					: null,
 		};
-		createSSHConnectionMutation.mutate({ data: payload });
+		createSNMPConnectionMutation.mutate({ data: payload });
 	};
 
 	return (
 		<ConnectionCreateDefaultModal opened={props.opened} onClose={handleClose}>
 			<ConnectionCreateFormChangeTypeWrapper
-				type={"SSH"}
+				type={"SNMP"}
 				onChangeType={() => {
 					form.reset();
-					props.onChangeType("SSH");
+					props.onChangeType("SNMP");
 				}}
 			>
-				<form className={"h-full w-full"} onSubmit={form.onSubmit(handleSubmit)}>
-					<Flex
-						h={form.values.authenticationType === AuthenticationType.USER_PASSWORD ? 600 : 700}
-						p={"lg"}
-						gap={"xs"}
-						direction={"column"}
-					>
-						<ConnectionCreateFormSections
-							connectionNameInputProps={{
-								...form.getInputProps("name"),
-							}}
-							connectionDescriptionInputProps={{
-								...form.getInputProps("description"),
-							}}
-							connectionSettingSection={
-								<Flex direction={"column"} gap={"xs"}>
-									<Flex justify={"space-between"}>
-										<NumberInput
-											hideControls
-											allowDecimal={false}
-											allowNegative={false}
-											allowLeadingZeros={false}
-											required
-											label={"SSH Port"}
-											{...form.getInputProps("sshPort")}
-										/>
-										<RadioGroup
-											defaultValue={AuthenticationType.USER_PASSWORD}
-											{...form.getInputProps("authenticationType", { type: "checkbox" })}
-											label={"Authentication Type"}
-										>
-											<Group mt="xs">
-												<Radio
-													label={AuthenticationType.USER_PASSWORD}
-													value={AuthenticationType.USER_PASSWORD}
-												/>
-												<Radio
-													label={AuthenticationType.PUBLIC_PRIVATE_KEY}
-													value={AuthenticationType.PUBLIC_PRIVATE_KEY}
-												/>
-											</Group>
-										</RadioGroup>
-									</Flex>
-									{form.values.authenticationType === AuthenticationType.USER_PASSWORD && (
-										<Flex direction={"column"} gap={"sm"}>
-											<Grid>
-												<Grid.Col span={6}>
-													<TextInput w={"100%"} required label={"User"} {...form.getInputProps("username")} />
-												</Grid.Col>
-												<Grid.Col span={6}>
-													<PasswordInput
-														w={"100%"}
-														required
-														label={"Password"}
-														{...form.getInputProps("password")}
-													/>
-												</Grid.Col>
-											</Grid>
-											<Grid align={"center"}>
-												<Grid.Col span={6}>
-													<Flex align={"center"} gap={"xs"}>
-														<Checkbox
-															label={"Enable privileged mode"}
-															{...form.getInputProps("enablePrivilegedMode")}
-														/>
-														<Tooltip label={"Description about this section"}>
-															<IconInfoCircle color={"blue"} size={14} />
-														</Tooltip>
-													</Flex>
-												</Grid.Col>
-												{form.values.enablePrivilegedMode && (
-													<Grid.Col span={6}>
-														<PasswordInput
-															w={"100%"}
-															required
-															{...form.getInputProps("privilegedPassword")}
-														/>
-													</Grid.Col>
-												)}
-											</Grid>
-										</Flex>
-									)}
-									{form.values.authenticationType === AuthenticationType.PUBLIC_PRIVATE_KEY && (
-										<Flex direction={"column"} gap={"sm"}>
-											<Textarea rows={3} label={"SSH Key"} {...form.getInputProps("sshKey")} />
-											<PasswordInput required label={"Passphrase"} {...form.getInputProps("passphrase")} />
-											<Grid align={"center"}>
-												<Grid.Col span={6}>
-													<Flex align={"center"} gap={"xs"}>
-														<Checkbox
-															label={"Enable privileged mode"}
-															{...form.getInputProps("enablePrivilegedMode")}
-														/>
-														<Tooltip label={"Description about this section"}>
-															<IconInfoCircle color={"blue"} size={14} />
-														</Tooltip>
-													</Flex>
-												</Grid.Col>
-												{form.values.enablePrivilegedMode && (
-													<Grid.Col span={6}>
-														<PasswordInput
-															w={"100%"}
-															required
-															{...form.getInputProps("privilegedPassword")}
-														/>
-													</Grid.Col>
-												)}
-											</Grid>
-										</Flex>
-									)}
-									<Button w={200} variant={"light"} onClick={() => props.onTestConnection("SSH")}>
-										Test Connection
-									</Button>
-								</Flex>
-							}
+				<CreateConnectionSNMPFormProvider form={form}>
+					<form className={"h-full w-full"} onSubmit={form.onSubmit(handleSubmit)}>
+						<Flex h={700} p={"lg"} gap={"xs"} direction={"column"}>
+							<ConnectionCreateSNMPFormSettings onTestConnection={props.onTestConnection} />
+						</Flex>
+						<ConnectionCreateFormFooter
+							loading={createSNMPConnectionMutation.isPending}
+							onCancel={handleClose}
 						/>
-					</Flex>
-					<ConnectionCreateFormFooter
-						loading={createSSHConnectionMutation.isPending}
-						onCancel={handleClose}
-					/>
-				</form>
+					</form>
+				</CreateConnectionSNMPFormProvider>
 			</ConnectionCreateFormChangeTypeWrapper>
 		</ConnectionCreateDefaultModal>
 	);

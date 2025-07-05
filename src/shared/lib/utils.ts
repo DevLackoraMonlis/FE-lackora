@@ -28,9 +28,10 @@ type ValidationOptions = {
 	mustContainSpecialChars?: boolean;
 	equalityFieldValue?: string;
 	equalityFieldName?: string;
+	mustBeURI?: boolean;
 };
 
-export function validateInput(value: unknown, options: ValidationOptions = {}): string | null {
+export function validateInput(valueInput: unknown, options: ValidationOptions = {}): string | null {
 	const {
 		required,
 		minLength,
@@ -44,42 +45,57 @@ export function validateInput(value: unknown, options: ValidationOptions = {}): 
 		mustContainSpecialChars,
 		equalityFieldValue,
 		equalityFieldName,
+		mustBeURI,
 	} = options;
 
 	// Array validation
 	if (mustBeNonEmptyArray) {
-		if (!Array.isArray(value)) {
+		if (!Array.isArray(valueInput)) {
 			return "Value must be an array";
 		}
-		if (value.length === 0) {
+		if (valueInput.length === 0) {
 			return "Array must not be empty";
 		}
 		return null;
 	}
 
+	if (mustBeNumber && Number.isNaN(Number(valueInput))) {
+		return "Value must be a valid number";
+	}
+
+	const value = valueInput?.toString();
+
 	// Required check
-	if (required && !mustBeNumber) {
+	if (required) {
 		if (typeof value !== "string" || value.trim() === "") {
 			return "Value is required";
 		}
 	}
 
-	if (typeof value !== "string" && !mustBeNumber) {
+	if (typeof value !== "string") {
 		return "Value must be a string";
 	}
 
-	if (mustBeEmail && !mustBeNumber) {
+	if (mustBeEmail) {
 		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 		if (!emailRegex.test(value as string)) {
 			return "Value must be a valid email address";
 		}
 	}
 
-	if (minLength !== undefined && !mustBeNumber && (value as string).length < minLength) {
+	if (mustBeURI) {
+		try {
+			new URL(value); // throws if invalid
+		} catch {
+			return "Value must be a valid URI";
+		}
+	}
+
+	if (minLength !== undefined && (value as string).length < minLength) {
 		return `Minimum length is ${minLength} characters`;
 	}
 
-	if (maxLength !== undefined && !mustBeNumber && (value as string).length > maxLength) {
+	if (maxLength !== undefined && (value as string).length > maxLength) {
 		return `Maximum length is ${maxLength} characters`;
 	}
 

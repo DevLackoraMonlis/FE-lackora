@@ -7,8 +7,8 @@ import {
 	type CreateConnectionSSHFormValues,
 	useCreateConnectionSSHForm,
 } from "@/builtinApps/ObjectsApp/Connections/components/ConnectionCreateSSHModal/index.form";
-import type { CreateConnectionModalProps } from "@/builtinApps/ObjectsApp/Connections/components/index.types";
 import { CreateConnectionSSHAuthenticationType } from "@/builtinApps/ObjectsApp/Connections/index.enum";
+import type { CreateConnectionModalProps } from "@/builtinApps/ObjectsApp/Connections/index.types";
 import { useCreateConnection } from "@/http/generated/management-center-connections";
 import type { CreateConnection } from "@/http/generated/models";
 import { validateInput } from "@/shared/lib/utils";
@@ -28,6 +28,7 @@ export default function ConnectionCreateSSHModal(props: CreateConnectionModalPro
 			name: (value) =>
 				validateInput(value, {
 					required: true,
+					onlyEnglishWithSpaces: true,
 				}),
 			sshPort: (value) =>
 				validateInput(value, {
@@ -57,7 +58,7 @@ export default function ConnectionCreateSSHModal(props: CreateConnectionModalPro
 
 			username: (value, values) => {
 				if (values.authenticationType === "User/Password") {
-					return validateInput(value, { required: true });
+					return validateInput(value, { required: true, onlyEnglishWithSpaces: true });
 				}
 				return null;
 			},

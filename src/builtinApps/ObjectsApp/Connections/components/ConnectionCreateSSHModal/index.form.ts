@@ -1,5 +1,5 @@
-import type { CreateConnectionDefaultFormValues } from "@/builtinApps/ObjectsApp/Connections/components/index.types";
 import type { CreateConnectionSSHAuthenticationType } from "@/builtinApps/ObjectsApp/Connections/index.enum";
+import type { CreateConnectionDefaultFormValues } from "@/builtinApps/ObjectsApp/Connections/index.types";
 import { createFormContext } from "@mantine/form";
 
 export type CreateConnectionSSHFormValues = CreateConnectionDefaultFormValues<{

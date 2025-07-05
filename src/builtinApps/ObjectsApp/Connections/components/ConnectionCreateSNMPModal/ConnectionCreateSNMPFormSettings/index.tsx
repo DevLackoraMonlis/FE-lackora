@@ -1,0 +1,195 @@
+import ConnectionCreateFormSections from "@/builtinApps/ObjectsApp/Connections/components/ConnectionCreateFormSections";
+import { useCreateConnectionSNMPFormContext } from "@/builtinApps/ObjectsApp/Connections/components/ConnectionCreateSNMPModal/index.form";
+import {
+	CreateConnectionSNMPAuthenticationProtocolType,
+	CreateConnectionSNMPPrivacyProtocolType,
+	CreateConnectionSNMPSecurityLdLevelType,
+	CreateConnectionSNMPVersionType,
+} from "@/builtinApps/ObjectsApp/Connections/index.enum";
+import type { CreateConnectionModalProps } from "@/builtinApps/ObjectsApp/Connections/index.types";
+import {
+	Button,
+	Flex,
+	Grid,
+	Group,
+	NumberInput,
+	PasswordInput,
+	Radio,
+	RadioGroup,
+	Select,
+	TextInput,
+} from "@mantine/core";
+import { Fragment } from "react";
+
+export default function ConnectionCreateSNMPFormSettings(
+	props: Pick<CreateConnectionModalProps, "onTestConnection">,
+) {
+	const form = useCreateConnectionSNMPFormContext();
+
+	const userInput = (
+		<TextInput w={"100%"} key={"user"} required label={"User"} {...form.getInputProps("user")} />
+	);
+	const passwordInput = (
+		<PasswordInput
+			w={"100%"}
+			key={"password"}
+			required
+			label={"Password"}
+			{...form.getInputProps("password")}
+		/>
+	);
+	const authenticationProtocolInput = (
+		<Select
+			key={"authenticationProtocol"}
+			data={Object.values(CreateConnectionSNMPAuthenticationProtocolType).map((value) => ({
+				label: value,
+				value,
+			}))}
+			allowDeselect={false}
+			defaultValue={CreateConnectionSNMPAuthenticationProtocolType.MD5}
+			w={"100%"}
+			required
+			label={"Authentication Protocol"}
+			{...form.getInputProps("authenticationProtocol")}
+		/>
+	);
+
+	return (
+		<ConnectionCreateFormSections
+			connectionNameInputProps={{
+				...form.getInputProps("name"),
+			}}
+			connectionDescriptionInputProps={{
+				...form.getInputProps("description"),
+			}}
+			connectionSettingSection={
+				<Flex direction={"column"} gap={"xs"}>
+					<Grid align={"center"}>
+						<Grid.Col span={6}>
+							<NumberInput
+								key={"snmpPort"}
+								w={"100%"}
+								hideControls
+								allowDecimal={false}
+								allowNegative={false}
+								allowLeadingZeros={false}
+								required
+								label={"SNMP Port"}
+								{...form.getInputProps("snmpPort")}
+							/>
+						</Grid.Col>
+						<Grid.Col span={6}>
+							<RadioGroup
+								key={"snmpVersion"}
+								w={"100%"}
+								defaultValue={CreateConnectionSNMPVersionType.SNMP_V_2_C}
+								{...form.getInputProps("snmpVersion", { type: "checkbox" })}
+								label={"SNMP Version"}
+							>
+								<Group mt="xs">
+									<Radio
+										label={CreateConnectionSNMPVersionType.SNMP_V_2_C}
+										value={CreateConnectionSNMPVersionType.SNMP_V_2_C}
+									/>
+									<Radio
+										label={CreateConnectionSNMPVersionType.SNMP_V_3}
+										value={CreateConnectionSNMPVersionType.SNMP_V_3}
+									/>
+								</Group>
+							</RadioGroup>
+						</Grid.Col>
+					</Grid>
+
+					<TextInput
+						lightHidden={form.values.snmpVersion !== CreateConnectionSNMPVersionType.SNMP_V_2_C}
+						darkHidden={form.values.snmpVersion !== CreateConnectionSNMPVersionType.SNMP_V_2_C}
+						key={"Community"}
+						w={"100%"}
+						placeholder={"Enter Community"}
+						label={"Community"}
+						{...form.getInputProps("community")}
+					/>
+
+					<Flex
+						direction={"column"}
+						gap={"sm"}
+						lightHidden={form.values.snmpVersion !== CreateConnectionSNMPVersionType.SNMP_V_3}
+						darkHidden={form.values.snmpVersion !== CreateConnectionSNMPVersionType.SNMP_V_3}
+					>
+						<Grid>
+							<Grid.Col span={12}>
+								<RadioGroup
+									defaultValue={CreateConnectionSNMPSecurityLdLevelType.NO_SECURITY}
+									{...form.getInputProps("securityLevel", { type: "checkbox" })}
+									label={"Security Level"}
+								>
+									<Group mt="xs">
+										<Radio
+											label={CreateConnectionSNMPSecurityLdLevelType.NO_SECURITY}
+											value={CreateConnectionSNMPSecurityLdLevelType.NO_SECURITY}
+										/>
+										<Radio
+											label={CreateConnectionSNMPSecurityLdLevelType.AUTHENTICATION_ONLY}
+											value={CreateConnectionSNMPSecurityLdLevelType.AUTHENTICATION_ONLY}
+										/>
+										<Radio
+											label={CreateConnectionSNMPSecurityLdLevelType.AUTHENTICATION_PRIVACY}
+											value={CreateConnectionSNMPSecurityLdLevelType.AUTHENTICATION_PRIVACY}
+										/>
+									</Group>
+								</RadioGroup>
+							</Grid.Col>
+
+							{form.values.securityLevel === CreateConnectionSNMPSecurityLdLevelType.NO_SECURITY && (
+								<Grid.Col span={6}>{userInput}</Grid.Col>
+							)}
+							{form.values.securityLevel === CreateConnectionSNMPSecurityLdLevelType.AUTHENTICATION_ONLY && (
+								<Fragment>
+									<Grid.Col span={4}>{userInput}</Grid.Col>
+									<Grid.Col span={4}>{passwordInput}</Grid.Col>
+									<Grid.Col span={4}>{authenticationProtocolInput}</Grid.Col>
+								</Fragment>
+							)}
+							{form.values.securityLevel ===
+								CreateConnectionSNMPSecurityLdLevelType.AUTHENTICATION_PRIVACY && (
+								<Fragment>
+									<Grid.Col span={4}>{userInput}</Grid.Col>
+									<Grid.Col span={4}>{passwordInput}</Grid.Col>
+									<Grid.Col span={4}>{authenticationProtocolInput}</Grid.Col>
+									<Grid.Col span={6}>
+										<Select
+											data={Object.values(CreateConnectionSNMPPrivacyProtocolType).map((value) => ({
+												label: value,
+												value,
+											}))}
+											allowDeselect={false}
+											defaultValue={CreateConnectionSNMPPrivacyProtocolType.AES}
+											w={"100%"}
+											required
+											key={"privacyProtocol"}
+											label={"Privacy Protocol"}
+											{...form.getInputProps("privacyProtocol")}
+										/>
+									</Grid.Col>
+									<Grid.Col span={6}>
+										<PasswordInput
+											w={"100%"}
+											required
+											key={"privacyPassphrase"}
+											label={"Privacy Passphrase"}
+											{...form.getInputProps("privacyPassphrase")}
+										/>
+									</Grid.Col>
+								</Fragment>
+							)}
+						</Grid>
+					</Flex>
+
+					<Button w={200} variant={"light"} onClick={() => props.onTestConnection("SSH")}>
+						Test Connection
+					</Button>
+				</Flex>
+			}
+		/>
+	);
+}
