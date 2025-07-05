@@ -1,3 +1,4 @@
+import ConnectionCreateHTTPModal from "@/builtinApps/ObjectsApp/Connections/components/ConnectionCreateHTTPModal";
 import ConnectionCreateSNMPModal from "@/builtinApps/ObjectsApp/Connections/components/ConnectionCreateSNMPModal";
 import ConnectionCreateSSHModal from "@/builtinApps/ObjectsApp/Connections/components/ConnectionCreateSSHModal";
 import ConnectionCreateSelectionTypeModal from "@/builtinApps/ObjectsApp/Connections/components/ConnectionCreateSelectionTypeModal";
@@ -23,7 +24,7 @@ export default function ConnectionList() {
 	const [openedCreateSelectionTypeModal, createSelectionTypeModalHandlers] = useDisclosure(false);
 	const [openedCreateSSHModal, createSSHModalHandlers] = useDisclosure(false);
 	const [openedCreateSNMPModal, createSNMPModalHandlers] = useDisclosure(false);
-	const [_openedCreateHTTPModal, createHTTPModalHandlers] = useDisclosure(false);
+	const [openedCreateHTTPModal, createHTTPModalHandlers] = useDisclosure(false);
 
 	const [filters, setFilters] = useState<Record<string, unknown>>();
 
@@ -105,6 +106,18 @@ export default function ConnectionList() {
 				}}
 				opened={openedCreateSNMPModal}
 				onClose={createSNMPModalHandlers.close}
+			/>
+			<ConnectionCreateHTTPModal
+				onTestConnection={(type) => {
+					console.log(`Test connection ${type}`);
+				}}
+				onSuccessCreate={getConnectionsQuery.refetch}
+				onChangeType={() => {
+					createHTTPModalHandlers.close();
+					createSelectionTypeModalHandlers.open();
+				}}
+				opened={openedCreateHTTPModal}
+				onClose={createHTTPModalHandlers.close}
 			/>
 			<Grid.Col span={{ xs: 12, lg: 3 }}>
 				<BCSideFilter

@@ -131,6 +131,8 @@ export default function ConnectionCreateSNMPModal(props: CreateConnectionModalPr
 			name: formValues.name,
 			port: formValues.snmpPort,
 			type: "snmp",
+			authentication_type:
+				formValues.snmpVersion === CreateConnectionSNMPVersionType.SNMP_V_2_C ? "snmpv2c" : "snmpv3",
 			username: formValues.snmpVersion === CreateConnectionSNMPVersionType.SNMP_V_3 ? formValues.user : null,
 			authentication_protocol:
 				formValues.snmpVersion === CreateConnectionSNMPVersionType.SNMP_V_3 &&

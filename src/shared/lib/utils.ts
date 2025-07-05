@@ -28,6 +28,7 @@ type ValidationOptions = {
 	mustContainSpecialChars?: boolean;
 	equalityFieldValue?: string;
 	equalityFieldName?: string;
+	mustBeURI?: boolean;
 };
 
 export function validateInput(valueInput: unknown, options: ValidationOptions = {}): string | null {
@@ -44,6 +45,7 @@ export function validateInput(valueInput: unknown, options: ValidationOptions = 
 		mustContainSpecialChars,
 		equalityFieldValue,
 		equalityFieldName,
+		mustBeURI,
 	} = options;
 
 	// Array validation
@@ -78,6 +80,14 @@ export function validateInput(valueInput: unknown, options: ValidationOptions = 
 		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 		if (!emailRegex.test(value as string)) {
 			return "Value must be a valid email address";
+		}
+	}
+
+	if (mustBeURI) {
+		try {
+			new URL(value); // throws if invalid
+		} catch {
+			return "Value must be a valid URI";
 		}
 	}
 

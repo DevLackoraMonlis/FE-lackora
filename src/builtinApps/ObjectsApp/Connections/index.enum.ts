@@ -8,6 +8,11 @@ export enum CreateConnectionSNMPVersionType {
 	SNMP_V_3 = "SNMP v3",
 }
 
+export enum CreateConnectionHTTPProtocolType {
+	HTTP = "HTTP",
+	HTTPS = "HTTPS",
+}
+
 export enum CreateConnectionSNMPSecurityLdLevelType {
 	NO_SECURITY = "No Security",
 	AUTHENTICATION_ONLY = "Authentication Only",

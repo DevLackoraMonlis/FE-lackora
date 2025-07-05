@@ -12,7 +12,7 @@ type Props = PropsWithChildren<{
 
 export default function ConnectionCreateFormChangeTypeWrapper(props: Props) {
 	return (
-		<Flex direction={"column"} p={"sm"} bg={"white"}>
+		<Flex direction={"column"} p={"md"} bg={"white"}>
 			<Flex align={"center"}>
 				<Text fz={"md"} fw={"bold"}>{`${props.type} Connection`}</Text>
 				<Button onClick={() => props.onChangeType(props.type)} variant={"transparent"}>

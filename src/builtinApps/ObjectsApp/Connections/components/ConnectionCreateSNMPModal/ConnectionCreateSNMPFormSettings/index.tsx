@@ -54,7 +54,6 @@ export default function ConnectionCreateSNMPFormSettings(
 		/>
 	);
 
-	console.log(form.errors);
 	return (
 		<ConnectionCreateFormSections
 			connectionNameInputProps={{
