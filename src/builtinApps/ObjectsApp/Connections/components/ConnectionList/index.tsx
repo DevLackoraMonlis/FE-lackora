@@ -351,9 +351,9 @@ export default function ConnectionList() {
 									</Flex>
 								</Accordion.Control>
 								<Accordion.Panel px={"3xl"} py={"xs"}>
-									<Flex direction={"column"} w={"50%"}>
+									<Flex direction={"column"} gap={"2xs"} w={"50%"}>
 										{Object.entries(omit(item, ["id"])).map(([key, value]) => (
-											<ConnectionLabelValue key={key} label={key} value={value as string} />
+											<ConnectionLabelValue key={key} label={key.toUpperCase()} value={value as string} />
 										))}
 									</Flex>
 								</Accordion.Panel>
