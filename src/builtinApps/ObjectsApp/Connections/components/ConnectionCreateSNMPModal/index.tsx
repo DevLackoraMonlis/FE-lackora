@@ -43,7 +43,7 @@ type FormValues = CreateConnectionDefaultFormValues<{
 	privilegedPassword?: string;
 }>;
 
-export default function ConnectionCreateSSHModal(props: CreateConnectionModalProps) {
+export default function ConnectionCreateSNMPModal(props: CreateConnectionModalProps) {
 	const form = useForm<FormValues>({
 		initialValues: {
 			authenticationType: AuthenticationType.USER_PASSWORD,
