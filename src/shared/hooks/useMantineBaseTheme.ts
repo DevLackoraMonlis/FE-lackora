@@ -17,6 +17,11 @@ export default function useMantineBaseTheme() {
 					size: "lg",
 				},
 			},
+			Highlight: {
+				defaultProps: {
+					highlightStyles: { background: "transparent", fontWeight: "bold" },
+				},
+			},
 		},
 		fontFamily: "var(--manrope) !important",
 		white: "#FAFAFA",

@@ -1,7 +1,7 @@
 "use client";
 
 import { Button, Center, Flex, Grid, LoadingOverlay, Pagination, Text } from "@mantine/core";
-import { useViewportSize } from "@mantine/hooks";
+import { useDisclosure, useViewportSize } from "@mantine/hooks";
 import { IconPlus } from "@tabler/icons-react";
 import { useState } from "react";
 
@@ -15,6 +15,7 @@ import type { AdaptersFilters } from "./index.types";
 
 export default function AdapterManagementLandingPage() {
 	const { height } = useViewportSize();
+	const [openedImport, handleOpenedImport] = useDisclosure();
 	const { getAdapterAndVendorIcon } = useAdapterAndVendorIcons();
 	const { tablePagination, page, pageSize, totalRecords } = useTablePagination({
 		defaultPageSize: 12,
@@ -45,7 +46,7 @@ export default function AdapterManagementLandingPage() {
 	// }) ||
 	return (
 		<>
-			<ImportAdapter onClose={() => {}} />
+			<ImportAdapter onClose={handleOpenedImport.close} opened={openedImport} />
 			{/* UI section */}
 			<Grid p="sm" pt="lg" gutter="lg" pos="relative">
 				<LoadingOverlay visible={false} />
@@ -68,7 +69,9 @@ export default function AdapterManagementLandingPage() {
 					<Flex direction="column">
 						<Flex justify="space-between" align="center">
 							<Text fw="bold" fz="h4">{`Adapters ( ${totalRecords ?? "-"} )`}</Text>
-							<Button leftSection={<IconPlus size={20} />}>Import/Update Adapter</Button>
+							<Button onClick={handleOpenedImport.open} leftSection={<IconPlus size={20} />}>
+								Import/Update Adapter
+							</Button>
 						</Flex>
 						<Grid
 							gutter="sm"
