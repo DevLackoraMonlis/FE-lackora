@@ -10,8 +10,8 @@ import type { CreateConnectionTypeItem } from "@/builtinApps/ObjectsApp/Connecti
 import { useGetConnections } from "@/http/generated/management-center-connections";
 import type { EachConnectionFilterItems } from "@/http/generated/models";
 import BCSideFilter, { type BCSideFilterItem } from "@/shared/components/baseComponents/BCSideFilter";
-import { useConnectionIcon } from "@/shared/hooks/useConnectionIcon";
 import { useStableData } from "@/shared/hooks/useStableData";
+import { useConnectionIcon } from "@/shared/icons/hooks/useConnectionIcon";
 import { Accordion, Badge, Button, Flex, Grid, ScrollArea, Skeleton, Text } from "@mantine/core";
 import { useDisclosure, useViewportSize } from "@mantine/hooks";
 import { IconPencil, IconPlus, IconTrash } from "@tabler/icons-react";
