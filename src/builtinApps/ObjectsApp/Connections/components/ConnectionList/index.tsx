@@ -3,8 +3,8 @@ import ConnectionCreateSelectionTypeModal from "@/builtinApps/ObjectsApp/Connect
 import ConnectionEmpty from "@/builtinApps/ObjectsApp/Connections/components/ConnectionEmpty";
 import ConnectionIconWrapper from "@/builtinApps/ObjectsApp/Connections/components/ConnectionIconWrapper";
 import ConnectionLabelValue from "@/builtinApps/ObjectsApp/Connections/components/ConnectionLabelValue";
-import { GET_OBJECTS_CONNECTIONS_QUERY_KEY } from "@/builtinApps/ObjectsApp/Connections/components/index.constants";
-import type { CreateConnectionTypeItem } from "@/builtinApps/ObjectsApp/Connections/components/index.types";
+import { GET_OBJECTS_CONNECTIONS_QUERY_KEY } from "@/builtinApps/ObjectsApp/Connections/index.constants";
+import type { CreateConnectionTypeItem } from "@/builtinApps/ObjectsApp/Connections/index.types";
 import { useGetConnections } from "@/http/generated/management-center-connections";
 import type { EachConnectionFilterItems } from "@/http/generated/models";
 import BCSideFilter, { type BCSideFilterItem } from "@/shared/components/baseComponents/BCSideFilter";

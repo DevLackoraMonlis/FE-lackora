@@ -7,8 +7,8 @@ import {
 	type CreateConnectionSSHFormValues,
 	useCreateConnectionSSHForm,
 } from "@/builtinApps/ObjectsApp/Connections/components/ConnectionCreateSSHModal/index.form";
-import type { CreateConnectionModalProps } from "@/builtinApps/ObjectsApp/Connections/components/index.types";
 import { CreateConnectionSSHAuthenticationType } from "@/builtinApps/ObjectsApp/Connections/index.enum";
+import type { CreateConnectionModalProps } from "@/builtinApps/ObjectsApp/Connections/index.types";
 import { useCreateConnection } from "@/http/generated/management-center-connections";
 import type { CreateConnection } from "@/http/generated/models";
 import { validateInput } from "@/shared/lib/utils";

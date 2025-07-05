@@ -1,7 +1,7 @@
 import type {
 	CreateConnectionChangeTypeFn,
 	CreateConnectionType,
-} from "@/builtinApps/ObjectsApp/Connections/components/index.types";
+} from "@/builtinApps/ObjectsApp/Connections/index.types";
 import { Box, Button, Flex, Text } from "@mantine/core";
 import type { PropsWithChildren } from "react";
 

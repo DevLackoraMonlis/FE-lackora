@@ -2,7 +2,7 @@ import type { CreateConnectionSSHAuthenticationType } from "@/builtinApps/Object
 import type { CreateConnectionDefaultFormValues } from "@/builtinApps/ObjectsApp/Connections/index.types";
 import { createFormContext } from "@mantine/form";
 
-export type CreateConnectionSSHFormValues = CreateConnectionDefaultFormValues<{
+export type CreateConnectionSNMPFormValues = CreateConnectionDefaultFormValues<{
 	sshPort: number;
 	authenticationType: CreateConnectionSSHAuthenticationType;
 	sshKey?: string;
@@ -14,7 +14,7 @@ export type CreateConnectionSSHFormValues = CreateConnectionDefaultFormValues<{
 }>;
 
 export const [
-	CreateConnectionSSHFormProvider,
-	useCreateConnectionSSHFormContext,
-	useCreateConnectionSSHForm,
-] = createFormContext<CreateConnectionSSHFormValues>();
+	CreateConnectionSNMPFormProvider,
+	useCreateConnectionSNMPFormContext,
+	useCreateConnectionSNMPForm,
+] = createFormContext<CreateConnectionSNMPFormValues>();

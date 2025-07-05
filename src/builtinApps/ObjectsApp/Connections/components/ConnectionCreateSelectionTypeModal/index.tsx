@@ -1,5 +1,5 @@
 import ConnectionIconWrapper from "@/builtinApps/ObjectsApp/Connections/components/ConnectionIconWrapper";
-import type { CreateConnectionTypeItem } from "@/builtinApps/ObjectsApp/Connections/components/index.types";
+import type { CreateConnectionTypeItem } from "@/builtinApps/ObjectsApp/Connections/index.types";
 import BCModal from "@/shared/components/baseComponents/BCModal";
 import { useConnectionIcon } from "@/shared/hooks/useConnectionIcon";
 import { Flex, NavLink, Text } from "@mantine/core";

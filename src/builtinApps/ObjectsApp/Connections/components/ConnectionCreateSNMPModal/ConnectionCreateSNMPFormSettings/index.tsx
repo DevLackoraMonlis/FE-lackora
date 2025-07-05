@@ -1,5 +1,5 @@
 import ConnectionCreateFormSections from "@/builtinApps/ObjectsApp/Connections/components/ConnectionCreateFormSections";
-import { useCreateConnectionSSHFormContext } from "@/builtinApps/ObjectsApp/Connections/components/ConnectionCreateSSHModal/index.form";
+import { useCreateConnectionSNMPFormContext } from "@/builtinApps/ObjectsApp/Connections/components/ConnectionCreateSNMPModal/index.form";
 import { CreateConnectionSSHAuthenticationType } from "@/builtinApps/ObjectsApp/Connections/index.enum";
 import type { CreateConnectionModalProps } from "@/builtinApps/ObjectsApp/Connections/index.types";
 import {
@@ -18,10 +18,10 @@ import {
 } from "@mantine/core";
 import { IconInfoCircle } from "@tabler/icons-react";
 
-export default function ConnectionCreateSSHFormSettings(
+export default function ConnectionCreateSNMPFormSettings(
 	props: Pick<CreateConnectionModalProps, "onTestConnection">,
 ) {
-	const form = useCreateConnectionSSHFormContext();
+	const form = useCreateConnectionSNMPFormContext();
 	return (
 		<ConnectionCreateFormSections
 			connectionNameInputProps={{
