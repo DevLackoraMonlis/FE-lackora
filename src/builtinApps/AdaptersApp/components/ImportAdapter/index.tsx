@@ -6,11 +6,10 @@ import BCDropzone from "@/shared/components/baseComponents/BCDropzone";
 import BCModal from "@/shared/components/baseComponents/BCModal";
 
 type Props = {
-	opened: boolean;
 	onClose: VoidFunction;
 };
 
-export default function ImportAdapter({ opened, onClose }: Props) {
+export default function ImportAdapter({ onClose }: Props) {
 	const [disabledImport, setDisabledImport] = useState(true);
 	const fileRef = useRef<FileWithPath[] | null>(null);
 	const onApply = () => {
@@ -18,7 +17,7 @@ export default function ImportAdapter({ opened, onClose }: Props) {
 	};
 
 	return (
-		<BCModal size="50%" centered title="Import/Update Adapters" onClose={onClose} opened={opened}>
+		<>
 			<Flex pb="3xl" direction="column" gap="md" px="md">
 				<Card bg="gray.1">
 					<BCDropzone
@@ -33,6 +32,6 @@ export default function ImportAdapter({ opened, onClose }: Props) {
 				<Text>Uploaded Adapter</Text>
 			</Flex>
 			<BCModal.Footer disabled={disabledImport} onApply={onApply} onCancel={onClose} applyLabel="Import" />
-		</BCModal>
+		</>
 	);
 }

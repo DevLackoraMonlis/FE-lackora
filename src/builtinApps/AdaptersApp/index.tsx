@@ -9,6 +9,7 @@ import BCSideFilter, { type BCSideFilterItem } from "@/shared/components/baseCom
 import { useTablePagination } from "@/shared/hooks/useTablePagination";
 import { useAdapterAndVendorIcons } from "@/shared/icons/hooks/useAdapterIcons";
 
+import BCModal from "@/shared/components/baseComponents/BCModal";
 import AdapterSingleCard from "./components/AdapterSingleCard";
 import ImportAdapter from "./components/ImportAdapter";
 import type { AdaptersFilters } from "./index.types";
@@ -46,7 +47,15 @@ export default function AdapterManagementLandingPage() {
 	// }) ||
 	return (
 		<>
-			<ImportAdapter onClose={handleOpenedImport.close} opened={openedImport} />
+			<BCModal
+				size="50%"
+				centered
+				title="Import/Update Adapters"
+				onClose={handleOpenedImport.close}
+				opened={openedImport}
+			>
+				<ImportAdapter onClose={handleOpenedImport.close} />
+			</BCModal>
 			{/* UI section */}
 			<Grid p="sm" pt="lg" gutter="lg" pos="relative">
 				<LoadingOverlay visible={false} />
