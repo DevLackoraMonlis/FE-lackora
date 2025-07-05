@@ -403,4 +403,90 @@ export const useDeleteConnection = <TError = HTTPValidationError,
 
       return useMutation(mutationOptions , queryClient);
     }
+    /**
+ * @summary Get Single Connection Used In
+ */
+export const getConnectionUsedInObjects = (
+    connectionId: string,
+ signal?: AbortSignal
+) => {
+      
+      
+      return orvalMutator<MessageOnlyResponse>(
+      {url: `/api/management-center/connections/${connectionId}/used-in`, method: 'GET', signal
+    },
+      );
+    }
+  
+
+const getGetConnectionUsedInObjectsQueryKey = (connectionId: string,) => {
+    return [`/api/management-center/connections/${connectionId}/used-in`] as const;
+    }
+
     
+export const getGetConnectionUsedInObjectsQueryOptions = <TData = Awaited<ReturnType<typeof getConnectionUsedInObjects>>, TError = HTTPValidationError>(connectionId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getConnectionUsedInObjects>>, TError, TData>>, }
+) => {
+
+const {query: queryOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetConnectionUsedInObjectsQueryKey(connectionId);
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getConnectionUsedInObjects>>> = ({ signal }) => getConnectionUsedInObjects(connectionId, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, enabled: !!(connectionId), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getConnectionUsedInObjects>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetConnectionUsedInObjectsQueryResult = NonNullable<Awaited<ReturnType<typeof getConnectionUsedInObjects>>>
+export type GetConnectionUsedInObjectsQueryError = HTTPValidationError
+
+
+export function useGetConnectionUsedInObjects<TData = Awaited<ReturnType<typeof getConnectionUsedInObjects>>, TError = HTTPValidationError>(
+ connectionId: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getConnectionUsedInObjects>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getConnectionUsedInObjects>>,
+          TError,
+          Awaited<ReturnType<typeof getConnectionUsedInObjects>>
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetConnectionUsedInObjects<TData = Awaited<ReturnType<typeof getConnectionUsedInObjects>>, TError = HTTPValidationError>(
+ connectionId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getConnectionUsedInObjects>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getConnectionUsedInObjects>>,
+          TError,
+          Awaited<ReturnType<typeof getConnectionUsedInObjects>>
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetConnectionUsedInObjects<TData = Awaited<ReturnType<typeof getConnectionUsedInObjects>>, TError = HTTPValidationError>(
+ connectionId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getConnectionUsedInObjects>>, TError, TData>>, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary Get Single Connection Used In
+ */
+
+export function useGetConnectionUsedInObjects<TData = Awaited<ReturnType<typeof getConnectionUsedInObjects>>, TError = HTTPValidationError>(
+ connectionId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getConnectionUsedInObjects>>, TError, TData>>, }
+ , queryClient?: QueryClient 
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetConnectionUsedInObjectsQueryOptions(connectionId,options)
+
+  const query = useQuery(queryOptions , queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+

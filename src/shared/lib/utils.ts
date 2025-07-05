@@ -192,11 +192,11 @@ export function basicBrowserDownload(url: string, fileName: string) {
 	a.remove();
 }
 
-export const getErrorMessage = (error: CustomError, context: MutationContext) => {
-	if (Array.isArray(error.response?.data?.detail)) {
-		return error.response?.data?.detail?.[0]?.msg || context?.errorMessage || "Unhandled Error";
+export const getErrorMessage = (error: CustomError, context?: MutationContext) => {
+	if (Array.isArray(error?.response?.data?.detail)) {
+		return error?.response?.data?.detail?.[0]?.msg || context?.errorMessage || "Unhandled Error";
 	}
-	return error.response?.data?.detail || context?.errorMessage || "Unhandled Error";
+	return error?.response?.data?.detail || context?.errorMessage || "Unhandled Error";
 };
 export const getSuccessMessage = (response: CustomSuccess, context: MutationContext) => {
 	return response?.data?.message || context?.successMessage || "The operation was successful.";

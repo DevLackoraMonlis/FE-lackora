@@ -19,8 +19,11 @@ import type { CreateConnection } from "@/http/generated/models";
 import { validateInput } from "@/shared/lib/utils";
 import { Flex } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
+import { useEffect } from "react";
 
-export default function ConnectionCreateSNMPModal(props: CreateConnectionModalProps) {
+export default function ConnectionCreateSNMPModal(
+	props: CreateConnectionModalProps<CreateConnectionSNMPFormValues>,
+) {
 	const form = useCreateConnectionSNMPForm({
 		initialValues: {
 			description: "",
@@ -153,9 +156,16 @@ export default function ConnectionCreateSNMPModal(props: CreateConnectionModalPr
 		createSNMPConnectionMutation.mutate({ data: payload });
 	};
 
+	useEffect(() => {
+		if (props.initialFormValues) {
+			form.setValues(props.initialFormValues);
+		}
+	}, [props.initialFormValues, form.setValues]);
+
 	return (
 		<ConnectionCreateDefaultModal opened={props.opened} onClose={handleClose}>
 			<ConnectionCreateFormChangeTypeWrapper
+				loading={props.loading}
 				type={"SNMP"}
 				onChangeType={() => {
 					form.reset();

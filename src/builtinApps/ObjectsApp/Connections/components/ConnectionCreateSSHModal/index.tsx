@@ -14,8 +14,11 @@ import type { CreateConnection } from "@/http/generated/models";
 import { validateInput } from "@/shared/lib/utils";
 import { Flex } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
+import { useEffect } from "react";
 
-export default function ConnectionCreateSSHModal(props: CreateConnectionModalProps) {
+export default function ConnectionCreateSSHModal(
+	props: CreateConnectionModalProps<CreateConnectionSSHFormValues>,
+) {
 	const form = useCreateConnectionSSHForm({
 		initialValues: {
 			authenticationType: CreateConnectionSSHAuthenticationType.USER_PASSWORD,
@@ -89,6 +92,7 @@ export default function ConnectionCreateSSHModal(props: CreateConnectionModalPro
 		const payload: CreateConnection = {
 			authenticate_required: false,
 			description: formValues.description,
+			privacy_passphrase: formValues.passphrase,
 			authentication_type:
 				formValues.authenticationType === CreateConnectionSSHAuthenticationType.USER_PASSWORD
 					? "username_password"
@@ -96,7 +100,7 @@ export default function ConnectionCreateSSHModal(props: CreateConnectionModalPro
 			password:
 				formValues.authenticationType === CreateConnectionSSHAuthenticationType.USER_PASSWORD
 					? formValues.password
-					: null,
+					: formValues.sshKey,
 			name: formValues.name,
 			port: formValues.sshPort,
 			type: "ssh",
@@ -110,9 +114,16 @@ export default function ConnectionCreateSSHModal(props: CreateConnectionModalPro
 		createSSHConnectionMutation.mutate({ data: payload });
 	};
 
+	useEffect(() => {
+		if (props.initialFormValues) {
+			form.setValues(props.initialFormValues);
+		}
+	}, [props.initialFormValues, form.setValues]);
+
 	return (
 		<ConnectionCreateDefaultModal opened={props.opened} onClose={handleClose}>
 			<ConnectionCreateFormChangeTypeWrapper
+				loading={props.loading}
 				type={"SSH"}
 				onChangeType={() => {
 					form.reset();

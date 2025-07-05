@@ -1,5 +1,8 @@
 import ConnectionCreateFormSections from "@/builtinApps/ObjectsApp/Connections/components/ConnectionCreateFormSections";
-import { useCreateConnectionHTTPFormContext } from "@/builtinApps/ObjectsApp/Connections/components/ConnectionCreateHTTPModal/index.form";
+import {
+	type CreateConnectionHTTPFormValues,
+	useCreateConnectionHTTPFormContext,
+} from "@/builtinApps/ObjectsApp/Connections/components/ConnectionCreateHTTPModal/index.form";
 import { CreateConnectionHTTPProtocolType } from "@/builtinApps/ObjectsApp/Connections/index.enum";
 import type { CreateConnectionModalProps } from "@/builtinApps/ObjectsApp/Connections/index.types";
 import {
@@ -16,7 +19,7 @@ import {
 } from "@mantine/core";
 
 export default function ConnectionCreateHTTPFormSettings(
-	props: Pick<CreateConnectionModalProps, "onTestConnection">,
+	props: Pick<CreateConnectionModalProps<CreateConnectionHTTPFormValues>, "onTestConnection">,
 ) {
 	const form = useCreateConnectionHTTPFormContext();
 

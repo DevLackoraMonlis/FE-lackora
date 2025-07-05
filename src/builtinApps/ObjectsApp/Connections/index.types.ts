@@ -9,12 +9,15 @@ export type CreateConnectionType = "SSH" | "SNMP" | "HTTP(HTTPS)";
 
 export type CreateConnectionChangeTypeFn = (type: CreateConnectionType) => void;
 
-export type CreateConnectionModalProps = {
+export type CreateConnectionModalProps<INITIAL_FROM_VALUES> = {
 	opened: boolean;
+	id?: string;
 	onClose: VoidFunction;
 	onChangeType: CreateConnectionChangeTypeFn;
 	onTestConnection: (type: CreateConnectionType) => void;
 	onSuccessCreate: VoidFunction;
+	initialFormValues?: INITIAL_FROM_VALUES;
+	loading: boolean;
 };
 
 export type CreateConnectionDefaultFormValues<T> = {

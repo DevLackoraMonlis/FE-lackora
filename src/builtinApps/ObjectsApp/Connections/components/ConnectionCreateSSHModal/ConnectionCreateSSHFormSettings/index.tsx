@@ -1,5 +1,8 @@
 import ConnectionCreateFormSections from "@/builtinApps/ObjectsApp/Connections/components/ConnectionCreateFormSections";
-import { useCreateConnectionSSHFormContext } from "@/builtinApps/ObjectsApp/Connections/components/ConnectionCreateSSHModal/index.form";
+import {
+	type CreateConnectionSSHFormValues,
+	useCreateConnectionSSHFormContext,
+} from "@/builtinApps/ObjectsApp/Connections/components/ConnectionCreateSSHModal/index.form";
 import { CreateConnectionSSHAuthenticationType } from "@/builtinApps/ObjectsApp/Connections/index.enum";
 import type { CreateConnectionModalProps } from "@/builtinApps/ObjectsApp/Connections/index.types";
 import {
@@ -19,9 +22,10 @@ import {
 import { IconInfoCircle } from "@tabler/icons-react";
 
 export default function ConnectionCreateSSHFormSettings(
-	props: Pick<CreateConnectionModalProps, "onTestConnection">,
+	props: Pick<CreateConnectionModalProps<CreateConnectionSSHFormValues>, "onTestConnection">,
 ) {
 	const form = useCreateConnectionSSHFormContext();
+
 	return (
 		<ConnectionCreateFormSections
 			connectionNameInputProps={{
