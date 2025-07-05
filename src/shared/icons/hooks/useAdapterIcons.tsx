@@ -46,7 +46,13 @@ export const useAdapterAndVendorIcons = () => {
 		const findIconKey = adaptersIconsKeys.find((key) => iconName?.toLowerCase().includes(key)) || "none";
 		const Icon = adaptersIcons[findIconKey as keyof typeof adaptersIcons];
 		return (
-			<ActionIcon variant="transparent" size="xl" aria-label={iconName} {...(actionIconProps || {})}>
+			<ActionIcon
+				variant="transparent"
+				size="xl"
+				component="span"
+				aria-label={iconName}
+				{...(actionIconProps || {})}
+			>
 				<Icon width={actionIconProps?.size} height={actionIconProps?.size} />
 			</ActionIcon>
 		);
