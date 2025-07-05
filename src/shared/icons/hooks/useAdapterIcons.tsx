@@ -1,4 +1,3 @@
-import { ActionIcon, type ActionIconProps } from "@mantine/core";
 import {
 	IconBox,
 	IconBriefcase,
@@ -39,23 +38,10 @@ const adaptersIcons = {
 const adaptersIconsKeys = Object.keys(adaptersIcons);
 
 export const useAdapterAndVendorIcons = () => {
-	const getAdapterAndVendorIcon = (
-		iconName: string,
-		actionIconProps?: ActionIconProps & { size?: number },
-	): ReactNode => {
+	const getAdapterAndVendorIcon = (iconName: string, iconProps?: { size?: number }): ReactNode => {
 		const findIconKey = adaptersIconsKeys.find((key) => iconName?.toLowerCase().includes(key)) || "none";
 		const Icon = adaptersIcons[findIconKey as keyof typeof adaptersIcons];
-		return (
-			<ActionIcon
-				variant="transparent"
-				size="xl"
-				component="span"
-				aria-label={iconName}
-				{...(actionIconProps || {})}
-			>
-				<Icon width={actionIconProps?.size} height={actionIconProps?.size} />
-			</ActionIcon>
-		);
+		return <Icon width={iconProps?.size} height={iconProps?.size} />;
 	};
 
 	return { getAdapterAndVendorIcon };

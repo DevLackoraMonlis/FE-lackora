@@ -10,6 +10,7 @@ import { useTablePagination } from "@/shared/hooks/useTablePagination";
 import { useAdapterAndVendorIcons } from "@/shared/icons/hooks/useAdapterIcons";
 
 import AdapterSingleCard from "./components/AdapterSingleCard";
+import ImportAdapter from "./components/ImportAdapter";
 import type { AdaptersFilters } from "./index.types";
 
 export default function AdapterManagementLandingPage() {
@@ -43,60 +44,64 @@ export default function AdapterManagementLandingPage() {
 	//   return filterItem;
 	// }) ||
 	return (
-		<Grid p="sm" pt="lg" gutter="lg" pos="relative">
-			<LoadingOverlay visible={false} />
-			<Grid.Col span={{ xs: 12, lg: 2.5 }}>
-				<BCSideFilter
-					height={height - 250}
-					onChange={handleUpdateQueryParams}
-					searchPlaceholder="Search by adapter Name"
-					filterItems={[
-						...dynamicFilters,
-						// {
-						//   name: "used",
-						//   type: "Switch",
-						//   label: "Show only used adapters",
-						// },
-					]}
-				/>
-			</Grid.Col>
-			<Grid.Col span={{ xs: 12, lg: 9.5 }}>
-				<Flex direction="column">
-					<Flex justify="space-between" align="center">
-						<Text fw="bold" fz="h4">{`Adapters ( ${totalRecords ?? "-"} )`}</Text>
-						<Button leftSection={<IconPlus size={20} />}>Import/Update Adapters</Button>
+		<>
+			<ImportAdapter onClose={() => {}} />
+			{/* UI section */}
+			<Grid p="sm" pt="lg" gutter="lg" pos="relative">
+				<LoadingOverlay visible={false} />
+				<Grid.Col span={{ xs: 12, lg: 2.5 }}>
+					<BCSideFilter
+						height={height - 250}
+						onChange={handleUpdateQueryParams}
+						searchPlaceholder="Search by adapter Name"
+						filterItems={[
+							...dynamicFilters,
+							// {
+							//   name: "used",
+							//   type: "Switch",
+							//   label: "Show only used adapters",
+							// },
+						]}
+					/>
+				</Grid.Col>
+				<Grid.Col span={{ xs: 12, lg: 9.5 }}>
+					<Flex direction="column">
+						<Flex justify="space-between" align="center">
+							<Text fw="bold" fz="h4">{`Adapters ( ${totalRecords ?? "-"} )`}</Text>
+							<Button leftSection={<IconPlus size={20} />}>Import/Update Adapter</Button>
+						</Flex>
+						<Grid
+							gutter="sm"
+							mt="md"
+							pr="xs"
+							style={{ overflowY: "auto" }}
+							h={height - (paginationHidden ? 190 : 230)}
+						>
+							{Array(12)
+								.fill(null)
+								.map((_, idx) => (
+									<Grid.Col key={idx.toString()} span={{ xs: 12, md: 6, lg: 4 }}>
+										<AdapterSingleCard
+											cardIcon={getAdapterAndVendorIcon("aws", { size: 30 })}
+											tagIcon={getAdapterAndVendorIcon("monitor", { size: 18 })}
+										/>
+									</Grid.Col>
+								))}
+						</Grid>
+						{paginationHidden && (
+							<Center>
+								<Pagination
+									mt="xs"
+									withControls={false}
+									value={page}
+									total={totalRecords / pageSize}
+									onChange={(value) => tablePagination.onPageChange(value)}
+								/>
+							</Center>
+						)}
 					</Flex>
-					<Grid
-						gutter="sm"
-						mt="md"
-						pr="xs"
-						style={{ overflowY: "auto" }}
-						h={height - (paginationHidden ? 190 : 230)}
-					>
-						{Array(12)
-							.fill(null)
-							.map((_, idx) => (
-								<Grid.Col key={idx.toString()} span={{ xs: 12, md: 6, lg: 4 }}>
-									<AdapterSingleCard
-										cardIcon={getAdapterAndVendorIcon("aws", { size: 30 })}
-										tagIcon={getAdapterAndVendorIcon("monitor", { size: 18 })}
-									/>
-								</Grid.Col>
-							))}
-					</Grid>
-					{paginationHidden && (
-						<Center>
-							<Pagination
-								mt="xs"
-								withControls={false}
-								value={page}
-								total={totalRecords / pageSize}
-								onChange={(value) => tablePagination.onPageChange(value)}
-							/>
-						</Center>
-					)}
-				</Flex>
-			</Grid.Col>
-		</Grid>
+				</Grid.Col>
+			</Grid>
+		</>
 	);
 }
