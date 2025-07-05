@@ -7,8 +7,14 @@
  */
 
 export type GetConnectionsParams = {
-type?: string | null;
-creator?: string | null;
+/**
+ * MultiParam to filter based on connection's 'type'.
+ */
+type?: string[] | null;
+/**
+ * MultiParam to filter based on connection's 'creator'.
+ */
+creator?: string[] | null;
 /**
  * @minimum 1
  */

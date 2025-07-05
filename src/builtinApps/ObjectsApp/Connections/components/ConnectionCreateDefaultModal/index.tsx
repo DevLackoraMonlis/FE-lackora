@@ -4,6 +4,7 @@ import type { PropsWithChildren } from "react";
 type Props = PropsWithChildren<{
 	opened: boolean;
 	onClose: VoidFunction;
+	isEditMode: boolean;
 }>;
 
 export default function ConnectionCreateDefaultModal(props: Props) {
@@ -15,7 +16,7 @@ export default function ConnectionCreateDefaultModal(props: Props) {
 			size={650}
 			opened={props.opened}
 			onClose={props.onClose}
-			title={"Create New Connection"}
+			title={props.isEditMode ? "Edit Connection" : "Create New Connection"}
 		>
 			{props.children}
 		</BCModal>

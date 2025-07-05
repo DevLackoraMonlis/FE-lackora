@@ -1,5 +1,8 @@
 import ConnectionCreateFormSections from "@/builtinApps/ObjectsApp/Connections/components/ConnectionCreateFormSections";
-import { useCreateConnectionSNMPFormContext } from "@/builtinApps/ObjectsApp/Connections/components/ConnectionCreateSNMPModal/index.form";
+import {
+	type CreateConnectionSNMPFormValues,
+	useCreateConnectionSNMPFormContext,
+} from "@/builtinApps/ObjectsApp/Connections/components/ConnectionCreateSNMPModal/index.form";
 import {
 	CreateConnectionSNMPAuthenticationProtocolType,
 	CreateConnectionSNMPPrivacyProtocolType,
@@ -22,7 +25,7 @@ import {
 import { Fragment } from "react";
 
 export default function ConnectionCreateSNMPFormSettings(
-	props: Pick<CreateConnectionModalProps, "onTestConnection">,
+	props: Pick<CreateConnectionModalProps<CreateConnectionSNMPFormValues>, "onTestConnection">,
 ) {
 	const form = useCreateConnectionSNMPFormContext();
 

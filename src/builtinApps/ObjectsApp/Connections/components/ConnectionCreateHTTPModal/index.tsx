@@ -14,8 +14,11 @@ import type { CreateConnection } from "@/http/generated/models";
 import { validateInput } from "@/shared/lib/utils";
 import { Flex } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
+import { useEffect } from "react";
 
-export default function ConnectionCreateHTTPModal(props: CreateConnectionModalProps) {
+export default function ConnectionCreateHTTPModal(
+	props: CreateConnectionModalProps<CreateConnectionHTTPFormValues>,
+) {
 	const form = useCreateConnectionHTTPForm({
 		initialValues: {
 			description: "",
@@ -96,9 +99,20 @@ export default function ConnectionCreateHTTPModal(props: CreateConnectionModalPr
 		createHTTPConnectionMutation.mutate({ data: payload });
 	};
 
+	useEffect(() => {
+		if (props.initialFormValues) {
+			form.setValues(props.initialFormValues);
+		}
+	}, [props.initialFormValues, form.setValues]);
+
 	return (
-		<ConnectionCreateDefaultModal opened={props.opened} onClose={handleClose}>
+		<ConnectionCreateDefaultModal
+			isEditMode={!!props.initialFormValues}
+			opened={props.opened}
+			onClose={handleClose}
+		>
 			<ConnectionCreateFormChangeTypeWrapper
+				loading={props.loading}
 				type={"HTTP(HTTPS)"}
 				onChangeType={() => {
 					form.reset();
