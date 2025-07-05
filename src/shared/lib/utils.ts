@@ -26,6 +26,8 @@ type ValidationOptions = {
 	mustBeNonEmptyArray?: boolean;
 	mustBeEmail?: boolean;
 	mustContainSpecialChars?: boolean;
+	equalityFieldValue?: string;
+	equalityFieldName?: string;
 };
 
 export function validateInput(value: unknown, options: ValidationOptions = {}): string | null {
@@ -40,6 +42,8 @@ export function validateInput(value: unknown, options: ValidationOptions = {}): 
 		mustBeNonEmptyArray,
 		mustBeEmail,
 		mustContainSpecialChars,
+		equalityFieldValue,
+		equalityFieldName,
 	} = options;
 
 	// Array validation
@@ -54,28 +58,28 @@ export function validateInput(value: unknown, options: ValidationOptions = {}): 
 	}
 
 	// Required check
-	if (required) {
+	if (required && !mustBeNumber) {
 		if (typeof value !== "string" || value.trim() === "") {
 			return "Value is required";
 		}
 	}
 
-	if (typeof value !== "string") {
+	if (typeof value !== "string" && !mustBeNumber) {
 		return "Value must be a string";
 	}
 
-	if (mustBeEmail) {
+	if (mustBeEmail && !mustBeNumber) {
 		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-		if (!emailRegex.test(value)) {
+		if (!emailRegex.test(value as string)) {
 			return "Value must be a valid email address";
 		}
 	}
 
-	if (minLength !== undefined && value.length < minLength) {
+	if (minLength !== undefined && !mustBeNumber && (value as string).length < minLength) {
 		return `Minimum length is ${minLength} characters`;
 	}
 
-	if (maxLength !== undefined && value.length > maxLength) {
+	if (maxLength !== undefined && !mustBeNumber && (value as string).length > maxLength) {
 		return `Maximum length is ${maxLength} characters`;
 	}
 
@@ -83,24 +87,28 @@ export function validateInput(value: unknown, options: ValidationOptions = {}): 
 		return "Value must be a valid number";
 	}
 
-	if (onlyNumbers && !/^\d+$/.test(value)) {
+	if (onlyNumbers && !/^\d+$/.test(value as string)) {
 		return "Value must contain only numeric digits";
 	}
 
-	if (onlyEnglishChars && !/^[A-Za-z]+$/.test(value)) {
+	if (onlyEnglishChars && !/^[A-Za-z]+$/.test(value as string)) {
 		return "Value must contain only English letters (no spaces)";
 	}
 
-	if (onlyEnglishWithSpaces && !/^[A-Za-z\s]+$/.test(value)) {
+	if (onlyEnglishWithSpaces && !/^[A-Za-z\s]+$/.test(value as string)) {
 		return "Value must contain only English letters and spaces";
 	}
 
 	if (mustContainSpecialChars) {
 		// Define special characters commonly used in passwords
 		const specialCharRegex = /[!@#$%^&*()\[\]{}\-_+=~`:;"'<>,.?\\/|]/;
-		if (!specialCharRegex.test(value)) {
+		if (!specialCharRegex.test(value as string)) {
 			return "Value must contain at least one special character";
 		}
+	}
+
+	if (equalityFieldValue && equalityFieldValue !== value) {
+		return `Value must equal of ${equalityFieldName}`;
 	}
 
 	return null;
