@@ -1,12 +1,16 @@
 import { ActionIcon, Badge, Card, Flex, Menu, Text } from "@mantine/core";
 import { useHover } from "@mantine/hooks";
-import { IconDotsVertical, IconFileZip, IconSearch, IconTrash } from "@tabler/icons-react";
+import { IconDotsVertical, IconFileZip, IconTrash } from "@tabler/icons-react";
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { type ReactNode, useEffect, useState } from "react";
 
 const MotionDiv = motion.div;
 
-export default function AdapterSingleCard() {
+type Props = {
+	cardIcon: ReactNode;
+	tagIcon: ReactNode;
+};
+export default function AdapterSingleCard(props: Props) {
 	const [isFlipped, setIsFlip] = useState(false);
 	const { hovered, ref } = useHover();
 	const { hovered: hDescription, ref: refDescription } = useHover();
@@ -29,6 +33,7 @@ export default function AdapterSingleCard() {
 				unFlipped: { rotateY: 0 },
 			}}
 		>
+			{/* BackCard */}
 			<Card
 				h="200px"
 				shadow="xs"
@@ -56,6 +61,7 @@ export default function AdapterSingleCard() {
 					</Text>
 				</Card.Section>
 			</Card>
+			{/* FrontCard */}
 			<Card
 				h="200px"
 				shadow="xs"
@@ -67,16 +73,10 @@ export default function AdapterSingleCard() {
 				<Card.Section inheritPadding p="xs">
 					<Flex justify="space-between" align="start">
 						<Card variant="light" p="xs" shadow="none">
-							<IconSearch size={30} />
+							{props.cardIcon}
 						</Card>
 						<Flex align="center">
-							<Badge
-								component="span"
-								h="35px"
-								radius="xs"
-								variant="light"
-								rightSection={<IconSearch size={15} />}
-							>
+							<Badge component="span" h="35px" radius="xs" variant="light" rightSection={props.tagIcon}>
 								Discovery Adapter
 							</Badge>
 							<Menu withinPortal position="bottom-end" shadow="sm">
