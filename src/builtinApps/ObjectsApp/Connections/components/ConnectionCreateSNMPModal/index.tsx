@@ -7,7 +7,12 @@ import {
 	type CreateConnectionSNMPFormValues,
 	useCreateConnectionSNMPForm,
 } from "@/builtinApps/ObjectsApp/Connections/components/ConnectionCreateSNMPModal/index.form";
-import { CreateConnectionSSHAuthenticationType } from "@/builtinApps/ObjectsApp/Connections/index.enum";
+import {
+	CreateConnectionSNMPAuthenticationProtocolType,
+	CreateConnectionSNMPPrivacyProtocolType,
+	CreateConnectionSNMPSecurityLdLevelType,
+	CreateConnectionSNMPVersionType,
+} from "@/builtinApps/ObjectsApp/Connections/index.enum";
 import type { CreateConnectionModalProps } from "@/builtinApps/ObjectsApp/Connections/index.types";
 import { useCreateConnection } from "@/http/generated/management-center-connections";
 import type { CreateConnection } from "@/http/generated/models";
@@ -18,45 +23,77 @@ import { notifications } from "@mantine/notifications";
 export default function ConnectionCreateSNMPModal(props: CreateConnectionModalProps) {
 	const form = useCreateConnectionSNMPForm({
 		initialValues: {
-			authenticationType: CreateConnectionSSHAuthenticationType.USER_PASSWORD,
 			description: "",
 			name: "",
-			sshPort: 22,
-			enablePrivilegedMode: false,
+			snmpPort: 22,
+			snmpVersion: CreateConnectionSNMPVersionType.SNMP_V_2_C,
+			securityLevel: CreateConnectionSNMPSecurityLdLevelType.NO_SECURITY,
+			privacyProtocol: CreateConnectionSNMPPrivacyProtocolType.AES,
+			authenticationProtocol: CreateConnectionSNMPAuthenticationProtocolType.MD5,
 		},
 		validate: {
 			name: (value) =>
 				validateInput(value, {
 					required: true,
+					onlyEnglishWithSpaces: true,
 				}),
-			sshPort: (value) =>
+			snmpPort: (value) =>
 				validateInput(value, {
 					required: true,
 					mustBeNumber: true,
 				}),
-			password: (value, values) => {
-				if (values.authenticationType === "User/Password") {
+			community: (value, values) => {
+				if (values.snmpVersion === CreateConnectionSNMPVersionType.SNMP_V_2_C) {
 					return validateInput(value, { required: true });
 				}
 				return null;
 			},
-			privilegedPassword: (value, values) => {
-				if (values.enablePrivilegedMode) {
+			securityLevel: (value, values) => {
+				if (values.snmpVersion === CreateConnectionSNMPVersionType.SNMP_V_3) {
 					return validateInput(value, {
 						required: true,
 					});
 				}
 				return null;
 			},
-			passphrase: (value, values) => {
-				if (values.authenticationType === "Public/Private key") {
+			user: (value, values) => {
+				if (values.snmpVersion === CreateConnectionSNMPVersionType.SNMP_V_3) {
+					return validateInput(value, { required: true, onlyEnglishWithSpaces: true });
+				}
+				return null;
+			},
+			password: (value, values) => {
+				if (
+					values.snmpVersion === CreateConnectionSNMPVersionType.SNMP_V_3 &&
+					values.securityLevel === CreateConnectionSNMPSecurityLdLevelType.AUTHENTICATION_ONLY
+				) {
+					return validateInput(value, { required: true, onlyEnglishChars: true });
+				}
+				return null;
+			},
+			authenticationProtocol: (value, values) => {
+				if (
+					values.snmpVersion === CreateConnectionSNMPVersionType.SNMP_V_3 &&
+					values.securityLevel === CreateConnectionSNMPSecurityLdLevelType.AUTHENTICATION_ONLY
+				) {
 					return validateInput(value, { required: true });
 				}
 				return null;
 			},
-
-			username: (value, values) => {
-				if (values.authenticationType === "User/Password") {
+			privacyProtocol: (value, values) => {
+				if (
+					values.snmpVersion === CreateConnectionSNMPVersionType.SNMP_V_3 &&
+					values.securityLevel === CreateConnectionSNMPSecurityLdLevelType.AUTHENTICATION_PRIVACY
+				) {
+					return validateInput(value, { required: true });
+				}
+				return null;
+			},
+			privacyPassphrase: (value, values) => {
+				if (
+					values.snmpVersion === CreateConnectionSNMPVersionType.SNMP_V_3 &&
+					values.securityLevel === CreateConnectionSNMPSecurityLdLevelType.AUTHENTICATION_PRIVACY
+				) {
 					return validateInput(value, { required: true });
 				}
 				return null;
@@ -69,12 +106,12 @@ export default function ConnectionCreateSNMPModal(props: CreateConnectionModalPr
 		form.reset();
 	};
 
-	const createSSHConnectionMutation = useCreateConnection({
+	const createSNMPConnectionMutation = useCreateConnection({
 		mutation: {
 			onSuccess: () => {
 				notifications.show({
 					title: "Success",
-					message: "SSH Connection Created Successfully",
+					message: "SNMP Connection Created Successfully",
 					color: "green",
 					withBorder: true,
 				});
@@ -86,54 +123,50 @@ export default function ConnectionCreateSNMPModal(props: CreateConnectionModalPr
 
 	const handleSubmit = (formValues: CreateConnectionSNMPFormValues) => {
 		const payload: CreateConnection = {
-			authenticate_required: false,
 			description: formValues.description,
-			authentication_type:
-				formValues.authenticationType === CreateConnectionSSHAuthenticationType.USER_PASSWORD
-					? "username_password"
-					: "public_private_key",
 			password:
-				formValues.authenticationType === CreateConnectionSSHAuthenticationType.USER_PASSWORD
-					? formValues.password
-					: null,
+				formValues.snmpVersion === CreateConnectionSNMPVersionType.SNMP_V_2_C
+					? formValues.community
+					: formValues.password,
 			name: formValues.name,
-			port: formValues.sshPort,
-			type: "ssh",
-			username:
-				formValues.authenticationType === CreateConnectionSSHAuthenticationType.USER_PASSWORD
-					? formValues.username
-					: "",
-			privileged_password: formValues.privilegedPassword,
-			privileged_authentication: formValues.enablePrivilegedMode,
+			port: formValues.snmpPort,
+			type: "snmp",
+			username: formValues.snmpVersion === CreateConnectionSNMPVersionType.SNMP_V_3 ? formValues.user : null,
+			authentication_protocol:
+				formValues.snmpVersion === CreateConnectionSNMPVersionType.SNMP_V_3 &&
+				formValues.securityLevel === CreateConnectionSNMPSecurityLdLevelType.AUTHENTICATION_ONLY
+					? formValues.authenticationProtocol
+					: null,
+			privacy_protocol:
+				formValues.snmpVersion === CreateConnectionSNMPVersionType.SNMP_V_3 &&
+				formValues.securityLevel === CreateConnectionSNMPSecurityLdLevelType.AUTHENTICATION_ONLY
+					? formValues.privacyProtocol
+					: null,
+			privacy_passphrase:
+				formValues.snmpVersion === CreateConnectionSNMPVersionType.SNMP_V_3 &&
+				formValues.securityLevel === CreateConnectionSNMPSecurityLdLevelType.AUTHENTICATION_ONLY
+					? formValues.privacyPassphrase
+					: null,
 		};
-		createSSHConnectionMutation.mutate({ data: payload });
+		createSNMPConnectionMutation.mutate({ data: payload });
 	};
 
 	return (
 		<ConnectionCreateDefaultModal opened={props.opened} onClose={handleClose}>
 			<ConnectionCreateFormChangeTypeWrapper
-				type={"SSH"}
+				type={"SNMP"}
 				onChangeType={() => {
 					form.reset();
-					props.onChangeType("SSH");
+					props.onChangeType("SNMP");
 				}}
 			>
 				<CreateConnectionSNMPFormProvider form={form}>
 					<form className={"h-full w-full"} onSubmit={form.onSubmit(handleSubmit)}>
-						<Flex
-							h={
-								form.values.authenticationType === CreateConnectionSSHAuthenticationType.USER_PASSWORD
-									? 600
-									: 700
-							}
-							p={"lg"}
-							gap={"xs"}
-							direction={"column"}
-						>
+						<Flex h={700} p={"lg"} gap={"xs"} direction={"column"}>
 							<ConnectionCreateSNMPFormSettings onTestConnection={props.onTestConnection} />
 						</Flex>
 						<ConnectionCreateFormFooter
-							loading={createSSHConnectionMutation.isPending}
+							loading={createSNMPConnectionMutation.isPending}
 							onCancel={handleClose}
 						/>
 					</form>

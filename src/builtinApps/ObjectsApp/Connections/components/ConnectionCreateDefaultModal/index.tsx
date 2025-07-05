@@ -12,7 +12,7 @@ export default function ConnectionCreateDefaultModal(props: Props) {
 			closeOnClickOutside={false}
 			closeOnEscape={false}
 			withCloseButton={false}
-			size={600}
+			size={650}
 			opened={props.opened}
 			onClose={props.onClose}
 			title={"Create New Connection"}

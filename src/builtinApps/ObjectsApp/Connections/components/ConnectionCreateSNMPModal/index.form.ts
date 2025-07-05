@@ -1,16 +1,22 @@
-import type { CreateConnectionSSHAuthenticationType } from "@/builtinApps/ObjectsApp/Connections/index.enum";
+import type {
+	CreateConnectionSNMPAuthenticationProtocolType,
+	CreateConnectionSNMPPrivacyProtocolType,
+	CreateConnectionSNMPSecurityLdLevelType,
+	CreateConnectionSNMPVersionType,
+} from "@/builtinApps/ObjectsApp/Connections/index.enum";
 import type { CreateConnectionDefaultFormValues } from "@/builtinApps/ObjectsApp/Connections/index.types";
 import { createFormContext } from "@mantine/form";
 
 export type CreateConnectionSNMPFormValues = CreateConnectionDefaultFormValues<{
-	sshPort: number;
-	authenticationType: CreateConnectionSSHAuthenticationType;
-	sshKey?: string;
-	passphrase?: string;
-	enablePrivilegedMode: boolean;
-	username?: string;
+	snmpPort: number;
+	community?: string;
+	snmpVersion: CreateConnectionSNMPVersionType;
+	securityLevel?: CreateConnectionSNMPSecurityLdLevelType;
+	user?: string;
 	password?: string;
-	privilegedPassword?: string;
+	authenticationProtocol?: CreateConnectionSNMPAuthenticationProtocolType;
+	privacyProtocol?: CreateConnectionSNMPPrivacyProtocolType;
+	privacyPassphrase?: string;
 }>;
 
 export const [

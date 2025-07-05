@@ -74,7 +74,7 @@ export default function ConnectionCreateSSHFormSettings(
 									<Flex align={"center"} gap={"xs"}>
 										<Checkbox
 											label={"Enable privileged mode"}
-											{...form.getInputProps("enablePrivilegedMode")}
+											{...form.getInputProps("enablePrivilegedMode", { type: "checkbox" })}
 										/>
 										<Tooltip label={"Description about this section"}>
 											<IconInfoCircle color={"blue"} size={14} />
@@ -98,7 +98,7 @@ export default function ConnectionCreateSSHFormSettings(
 									<Flex align={"center"} gap={"xs"}>
 										<Checkbox
 											label={"Enable privileged mode"}
-											{...form.getInputProps("enablePrivilegedMode")}
+											{...form.getInputProps("enablePrivilegedMode", { type: "checkbox" })}
 										/>
 										<Tooltip label={"Description about this section"}>
 											<IconInfoCircle color={"blue"} size={14} />

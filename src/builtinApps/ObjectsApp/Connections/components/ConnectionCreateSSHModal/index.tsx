@@ -28,6 +28,7 @@ export default function ConnectionCreateSSHModal(props: CreateConnectionModalPro
 			name: (value) =>
 				validateInput(value, {
 					required: true,
+					onlyEnglishWithSpaces: true,
 				}),
 			sshPort: (value) =>
 				validateInput(value, {
@@ -57,7 +58,7 @@ export default function ConnectionCreateSSHModal(props: CreateConnectionModalPro
 
 			username: (value, values) => {
 				if (values.authenticationType === "User/Password") {
-					return validateInput(value, { required: true });
+					return validateInput(value, { required: true, onlyEnglishWithSpaces: true });
 				}
 				return null;
 			},
