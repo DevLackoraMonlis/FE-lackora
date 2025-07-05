@@ -121,7 +121,11 @@ export default function ConnectionCreateSSHModal(
 	}, [props.initialFormValues, form.setValues]);
 
 	return (
-		<ConnectionCreateDefaultModal opened={props.opened} onClose={handleClose}>
+		<ConnectionCreateDefaultModal
+			isEditMode={!!props.initialFormValues}
+			opened={props.opened}
+			onClose={handleClose}
+		>
 			<ConnectionCreateFormChangeTypeWrapper
 				loading={props.loading}
 				type={"SSH"}
