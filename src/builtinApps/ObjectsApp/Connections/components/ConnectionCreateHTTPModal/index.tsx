@@ -9,7 +9,7 @@ import {
 } from "@/builtinApps/ObjectsApp/Connections/components/ConnectionCreateHTTPModal/index.form";
 import { CreateConnectionHTTPProtocolType } from "@/builtinApps/ObjectsApp/Connections/index.enum";
 import type { CreateConnectionModalProps } from "@/builtinApps/ObjectsApp/Connections/index.types";
-import { useCreateConnection } from "@/http/generated/management-center-connections";
+import { useCreateConnection, useEditConnection } from "@/http/generated/management-center-connections";
 import type { CreateConnection } from "@/http/generated/models";
 import { validateInput } from "@/shared/lib/utils";
 import { Flex } from "@mantine/core";
@@ -32,7 +32,6 @@ export default function ConnectionCreateHTTPModal(
 			name: (value) =>
 				validateInput(value, {
 					required: true,
-					onlyEnglishWithSpaces: true,
 				}),
 			port: (value) =>
 				validateInput(value, {
@@ -78,7 +77,22 @@ export default function ConnectionCreateHTTPModal(
 					color: "green",
 					withBorder: true,
 				});
-				props.onSuccessCreate();
+				props.onSuccess();
+				handleClose();
+			},
+		},
+	});
+
+	const updateHTTPConnectionMutation = useEditConnection({
+		mutation: {
+			onSuccess: () => {
+				notifications.show({
+					title: "Success",
+					message: "HTTP(HTTPS) Connection Updated Successfully",
+					color: "green",
+					withBorder: true,
+				});
+				props.onSuccess();
 				handleClose();
 			},
 		},
@@ -96,7 +110,12 @@ export default function ConnectionCreateHTTPModal(
 			authenticate_required: formValues.authenticationRequired,
 			authentication_type: formValues.protocol === "HTTP" ? "http" : "https",
 		};
-		createHTTPConnectionMutation.mutate({ data: payload });
+
+		if (props.initialFormValues && props.id) {
+			updateHTTPConnectionMutation.mutate({ data: payload, connectionId: props.id });
+		} else {
+			createHTTPConnectionMutation.mutate({ data: payload });
+		}
 	};
 
 	useEffect(() => {
@@ -125,7 +144,7 @@ export default function ConnectionCreateHTTPModal(
 							<ConnectionCreateHTTPFormSettings onTestConnection={props.onTestConnection} />
 						</Flex>
 						<ConnectionCreateFormFooter
-							loading={createHTTPConnectionMutation.isPending}
+							loading={createHTTPConnectionMutation.isPending || updateHTTPConnectionMutation.isPending}
 							onCancel={handleClose}
 						/>
 					</form>

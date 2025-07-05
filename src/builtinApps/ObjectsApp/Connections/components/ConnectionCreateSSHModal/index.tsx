@@ -9,7 +9,7 @@ import {
 } from "@/builtinApps/ObjectsApp/Connections/components/ConnectionCreateSSHModal/index.form";
 import { CreateConnectionSSHAuthenticationType } from "@/builtinApps/ObjectsApp/Connections/index.enum";
 import type { CreateConnectionModalProps } from "@/builtinApps/ObjectsApp/Connections/index.types";
-import { useCreateConnection } from "@/http/generated/management-center-connections";
+import { useCreateConnection, useEditConnection } from "@/http/generated/management-center-connections";
 import type { CreateConnection } from "@/http/generated/models";
 import { validateInput } from "@/shared/lib/utils";
 import { Flex } from "@mantine/core";
@@ -31,7 +31,6 @@ export default function ConnectionCreateSSHModal(
 			name: (value) =>
 				validateInput(value, {
 					required: true,
-					onlyEnglishWithSpaces: true,
 				}),
 			sshPort: (value) =>
 				validateInput(value, {
@@ -82,7 +81,22 @@ export default function ConnectionCreateSSHModal(
 					color: "green",
 					withBorder: true,
 				});
-				props.onSuccessCreate();
+				props.onSuccess();
+				handleClose();
+			},
+		},
+	});
+
+	const updateSSHConnectionMutation = useEditConnection({
+		mutation: {
+			onSuccess: () => {
+				notifications.show({
+					title: "Success",
+					message: "SSH Connection Updated Successfully",
+					color: "green",
+					withBorder: true,
+				});
+				props.onSuccess();
 				handleClose();
 			},
 		},
@@ -111,7 +125,11 @@ export default function ConnectionCreateSSHModal(
 			privileged_password: formValues.privilegedPassword,
 			privileged_authentication: formValues.enablePrivilegedMode,
 		};
-		createSSHConnectionMutation.mutate({ data: payload });
+		if (props.initialFormValues && props.id) {
+			updateSSHConnectionMutation.mutate({ data: payload, connectionId: props.id });
+		} else {
+			createSSHConnectionMutation.mutate({ data: payload });
+		}
 	};
 
 	useEffect(() => {
@@ -149,7 +167,7 @@ export default function ConnectionCreateSSHModal(
 							<ConnectionCreateSSHFormSettings onTestConnection={props.onTestConnection} />
 						</Flex>
 						<ConnectionCreateFormFooter
-							loading={createSSHConnectionMutation.isPending}
+							loading={createSSHConnectionMutation.isPending || updateSSHConnectionMutation.isPending}
 							onCancel={handleClose}
 						/>
 					</form>

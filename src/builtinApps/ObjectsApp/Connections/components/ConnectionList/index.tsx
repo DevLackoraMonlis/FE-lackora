@@ -225,7 +225,7 @@ export default function ConnectionList() {
 				onTestConnection={(type) => {
 					console.log(`Test connection ${type}`);
 				}}
-				onSuccessCreate={getConnectionsQuery.refetch}
+				onSuccess={getConnectionsQuery.refetch}
 				onChangeType={() => {
 					createSSHModalHandlers.close();
 					createSelectionTypeModalHandlers.open();
@@ -264,7 +264,7 @@ export default function ConnectionList() {
 				onTestConnection={(type) => {
 					console.log(`Test connection ${type}`);
 				}}
-				onSuccessCreate={getConnectionsQuery.refetch}
+				onSuccess={getConnectionsQuery.refetch}
 				onChangeType={() => {
 					createSNMPModalHandlers.close();
 					createSelectionTypeModalHandlers.open();
@@ -296,7 +296,7 @@ export default function ConnectionList() {
 				onTestConnection={(type) => {
 					console.log(`Test connection ${type}`);
 				}}
-				onSuccessCreate={getConnectionsQuery.refetch}
+				onSuccess={getConnectionsQuery.refetch}
 				onChangeType={() => {
 					createHTTPModalHandlers.close();
 					createSelectionTypeModalHandlers.open();

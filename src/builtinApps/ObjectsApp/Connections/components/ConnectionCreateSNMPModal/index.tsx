@@ -14,7 +14,7 @@ import {
 	CreateConnectionSNMPVersionType,
 } from "@/builtinApps/ObjectsApp/Connections/index.enum";
 import type { CreateConnectionModalProps } from "@/builtinApps/ObjectsApp/Connections/index.types";
-import { useCreateConnection } from "@/http/generated/management-center-connections";
+import { useCreateConnection, useEditConnection } from "@/http/generated/management-center-connections";
 import type { CreateConnection } from "@/http/generated/models";
 import { validateInput } from "@/shared/lib/utils";
 import { Flex } from "@mantine/core";
@@ -38,7 +38,6 @@ export default function ConnectionCreateSNMPModal(
 			name: (value) =>
 				validateInput(value, {
 					required: true,
-					onlyEnglishWithSpaces: true,
 				}),
 			snmpPort: (value) =>
 				validateInput(value, {
@@ -118,7 +117,21 @@ export default function ConnectionCreateSNMPModal(
 					color: "green",
 					withBorder: true,
 				});
-				props.onSuccessCreate();
+				props.onSuccess();
+				handleClose();
+			},
+		},
+	});
+	const updateSNMPConnectionMutation = useEditConnection({
+		mutation: {
+			onSuccess: () => {
+				notifications.show({
+					title: "Success",
+					message: "SNMP Connection Updated Successfully",
+					color: "green",
+					withBorder: true,
+				});
+				props.onSuccess();
 				handleClose();
 			},
 		},
@@ -153,7 +166,12 @@ export default function ConnectionCreateSNMPModal(
 					? formValues.privacyPassphrase
 					: null,
 		};
-		createSNMPConnectionMutation.mutate({ data: payload });
+
+		if (props.initialFormValues && props.id) {
+			updateSNMPConnectionMutation.mutate({ data: payload, connectionId: props.id });
+		} else {
+			createSNMPConnectionMutation.mutate({ data: payload });
+		}
 	};
 
 	useEffect(() => {
@@ -182,7 +200,7 @@ export default function ConnectionCreateSNMPModal(
 							<ConnectionCreateSNMPFormSettings onTestConnection={props.onTestConnection} />
 						</Flex>
 						<ConnectionCreateFormFooter
-							loading={createSNMPConnectionMutation.isPending}
+							loading={createSNMPConnectionMutation.isPending || updateSNMPConnectionMutation.isPending}
 							onCancel={handleClose}
 						/>
 					</form>
