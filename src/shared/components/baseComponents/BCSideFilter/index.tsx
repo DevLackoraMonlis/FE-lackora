@@ -33,7 +33,6 @@ export default function BCSideFilter(props: Props) {
 			search: "",
 		},
 		onValuesChange: (values) => {
-			console.log(values);
 			props.onChange(values);
 		},
 	});

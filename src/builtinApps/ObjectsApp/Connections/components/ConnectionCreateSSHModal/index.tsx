@@ -141,10 +141,10 @@ export default function ConnectionCreateSSHModal(props: Props) {
 		createSSHConnectionMutation.mutate({ data: payload });
 	};
 
-	console.log(form.values);
-
 	return (
 		<BCModal
+			closeOnClickOutside={false}
+			closeOnEscape={false}
 			withCloseButton={false}
 			size={600}
 			opened={props.opened}
