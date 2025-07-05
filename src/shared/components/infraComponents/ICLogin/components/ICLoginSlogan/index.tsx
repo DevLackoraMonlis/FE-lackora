@@ -1,4 +1,4 @@
-import { MonoWatchLogo } from "@/shared/icons/component/general";
+import { MonoWatchLogo } from "@/shared/icons/components/general";
 import { Flex, Text } from "@mantine/core";
 
 export default function ICLoginSlogan() {

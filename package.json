@@ -10,7 +10,7 @@
 		"lint": "tsc --noEmit --noErrorTruncation && biome check --write --unsafe",
 		"lint-prod": "tsc --noEmit --noErrorTruncation && biome check --write --error-on-warnings --linter-enabled=true",
 		"lint-dev": "biome check --write --error-on-warnings --linter-enabled=true",
-		"icon:create": "npx @svgr/cli --memo --ref --typescript  --out-dir src/shared/icons/component --icon --replace-attr-values -- src/shared/icons/svg --ignore-existing",
+		"icon:create": "npx @svgr/cli --memo --ref --typescript  --out-dir src/shared/icons/components --icon --replace-attr-values -- src/shared/icons/svg --ignore-existing",
 		"prepare": "husky",
 		"lint-staged": "lint-staged -c lint-staged.config.js"
 	},

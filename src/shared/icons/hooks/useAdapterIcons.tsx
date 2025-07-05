@@ -17,7 +17,7 @@ import {
 	CIconAdapterSccm,
 	CIconAdapterServiceNow,
 	CIconAdapterVCenter,
-} from "../component/adapters";
+} from "../components/adapters";
 
 const adaptersIcons = {
 	aws: CIconAdapterAws,
