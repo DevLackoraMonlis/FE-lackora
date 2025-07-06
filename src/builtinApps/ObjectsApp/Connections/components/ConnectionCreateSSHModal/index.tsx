@@ -114,16 +114,22 @@ export default function ConnectionCreateSSHModal(
 			password:
 				formValues.authenticationType === CreateConnectionSSHAuthenticationType.USER_PASSWORD
 					? formValues.password
-					: "",
-			ssh_key: formValues.sshKey,
-			passphrase: formValues.passphrase,
+					: null,
+			ssh_key:
+				formValues.authenticationType === CreateConnectionSSHAuthenticationType.PUBLIC_PRIVATE_KEY
+					? formValues.sshKey
+					: null,
+			passphrase:
+				formValues.authenticationType === CreateConnectionSSHAuthenticationType.PUBLIC_PRIVATE_KEY
+					? formValues.passphrase
+					: null,
 			name: formValues.name,
 			port: formValues.sshPort,
 			type: "ssh",
 			username:
 				formValues.authenticationType === CreateConnectionSSHAuthenticationType.USER_PASSWORD
 					? formValues.username
-					: "",
+					: null,
 			privileged_password: formValues.privilegedPassword,
 			privileged_authentication: formValues.enablePrivilegedMode,
 		};
