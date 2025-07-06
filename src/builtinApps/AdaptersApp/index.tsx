@@ -5,18 +5,18 @@ import { useDisclosure, useViewportSize } from "@mantine/hooks";
 import { IconPlus } from "@tabler/icons-react";
 import { useState } from "react";
 
+import BCModal from "@/shared/components/baseComponents/BCModal";
 import BCSideFilter, { type BCSideFilterItem } from "@/shared/components/baseComponents/BCSideFilter";
 import { useTablePagination } from "@/shared/hooks/useTablePagination";
 import { useAdapterAndVendorIcons } from "@/shared/icons/hooks/useAdapterIcons";
 
-import BCModal from "@/shared/components/baseComponents/BCModal";
 import AdapterSingleCard from "./components/AdapterSingleCard";
 import ImportAdapter from "./components/ImportAdapter";
 import type { AdaptersFilters } from "./index.types";
 
 export default function AdapterManagementLandingPage() {
 	const { height } = useViewportSize();
-	const [openedImport, handleOpenedImport] = useDisclosure();
+	const [openedImport, handleOpenedImport] = useDisclosure(true);
 	const { getAdapterAndVendorIcon } = useAdapterAndVendorIcons();
 	const { tablePagination, page, pageSize, totalRecords } = useTablePagination({
 		defaultPageSize: 12,

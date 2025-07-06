@@ -5,6 +5,8 @@ import { useRef, useState } from "react";
 import BCDropzone from "@/shared/components/baseComponents/BCDropzone";
 import BCModal from "@/shared/components/baseComponents/BCModal";
 
+import { UploadStatusReadyToImport } from "./components/UploadStatus";
+
 type Props = {
 	onClose: VoidFunction;
 };
@@ -30,6 +32,7 @@ export default function ImportAdapter({ onClose }: Props) {
 					/>
 				</Card>
 				<Text>Uploaded Adapter</Text>
+				<UploadStatusReadyToImport />
 			</Flex>
 			<BCModal.Footer disabled={disabledImport} onApply={onApply} onCancel={onClose} applyLabel="Import" />
 		</>

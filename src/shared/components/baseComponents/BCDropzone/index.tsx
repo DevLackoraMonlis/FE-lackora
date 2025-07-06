@@ -33,6 +33,7 @@ export default function BCDropzone({ title, maxSize, accept, ...dropzoneProps }:
 						<Highlight
 							c="dimmed"
 							w="80%"
+							mb="xs"
 							ta="center"
 							highlight={[acceptFiles || "", acceptSize]}
 						>{`Drag'n'drop file here to upload. We can accept only ${acceptFiles} file that is less than ${maxSize}mb in size.`}</Highlight>
