@@ -215,9 +215,9 @@ export default function ConnectionList() {
 						description: getConnectionQuery.data.data.description || "",
 						enablePrivilegedMode: !!getConnectionQuery.data.data.privileged_authentication,
 						name: getConnectionQuery.data.data.name,
-						passphrase: getConnectionQuery.data.data.privacy_passphrase || "",
+						passphrase: getConnectionQuery.data.data.passphrase || "",
 						privilegedPassword: getConnectionQuery.data.data.privileged_password || "",
-						sshKey: getConnectionQuery.data.data.password || "",
+						sshKey: getConnectionQuery.data.data.ssh_key || "",
 						sshPort: getConnectionQuery.data.data.port || 0,
 					}
 				}
@@ -249,7 +249,7 @@ export default function ConnectionList() {
 								: CreateConnectionSNMPVersionType.SNMP_V_3,
 						authenticationProtocol: getConnectionQuery.data.data
 							.authentication_protocol as CreateConnectionSNMPAuthenticationProtocolType,
-						community: getConnectionQuery.data.data.password || "",
+						community: getConnectionQuery.data.data.community || "",
 						privacyProtocol: getConnectionQuery.data.data
 							.privacy_protocol as CreateConnectionSNMPPrivacyProtocolType,
 						securityLevel: getConnectionQuery.data.data.security_level

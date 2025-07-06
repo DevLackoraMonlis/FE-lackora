@@ -114,7 +114,9 @@ export default function ConnectionCreateSSHModal(
 			password:
 				formValues.authenticationType === CreateConnectionSSHAuthenticationType.USER_PASSWORD
 					? formValues.password
-					: formValues.sshKey,
+					: "",
+			ssh_key: formValues.sshKey,
+			passphrase: formValues.passphrase,
 			name: formValues.name,
 			port: formValues.sshPort,
 			type: "ssh",

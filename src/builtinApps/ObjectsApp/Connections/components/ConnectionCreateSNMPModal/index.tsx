@@ -141,11 +141,11 @@ export default function ConnectionCreateSNMPModal(
 		const payload: CreateConnection = {
 			description: formValues.description,
 			password:
-				formValues.snmpVersion === CreateConnectionSNMPVersionType.SNMP_V_2_C
-					? formValues.community
-					: formValues.password,
+				formValues.snmpVersion === CreateConnectionSNMPVersionType.SNMP_V_2_C ? formValues.password : "",
 			name: formValues.name,
 			port: formValues.snmpPort,
+			community:
+				formValues.snmpVersion === CreateConnectionSNMPVersionType.SNMP_V_2_C ? formValues.community : "",
 			type: "snmp",
 			authentication_type:
 				formValues.snmpVersion === CreateConnectionSNMPVersionType.SNMP_V_2_C ? "snmpv2c" : "snmpv3",
