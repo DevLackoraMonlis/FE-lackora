@@ -42,15 +42,6 @@ export default function ConnectionListActionButtons(props: Props) {
 				onClick={(event) => {
 					event.stopPropagation();
 					props.setSelectedEditConnectionId(props.id);
-
-					// const editModalMap: Record<CreateConnectionType, VoidFunction> = {
-					// 	"HTTP(HTTPS)": props.openHttpModal,
-					// 	SNMP: props.openSnmpModal,
-					// 	SSH: props.openSshModal,
-					// };
-					// setTimeout(() => {
-					// 	editModalMap[props.type]();
-					// }, 500);
 				}}
 				variant={"light"}
 				leftSection={<IconPencil />}
