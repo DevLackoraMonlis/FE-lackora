@@ -338,9 +338,15 @@ export default function ConnectionList() {
 											</Flex>
 										</Flex>
 										<ConnectionListActionButtons
-											loading={deleteUsedInConnectionQuery.isFetching}
+											getConnectionDataType={
+												getConnectionQuery.data?.data.type &&
+												connectionTypeMap[getConnectionQuery.data.data.type]
+											}
+											selectedEditConnectionId={selectedEditConnectionId}
+											deleteLoading={deleteUsedInConnectionQuery.isFetching}
 											type={connectionTypeMap[item.type]}
 											id={item.id}
+											editIsLoading={getConnectionQuery.isFetching}
 											openHttpModal={createHTTPModalHandlers.open}
 											openSnmpModal={createSNMPModalHandlers.open}
 											openSshModal={createSSHModalHandlers.open}

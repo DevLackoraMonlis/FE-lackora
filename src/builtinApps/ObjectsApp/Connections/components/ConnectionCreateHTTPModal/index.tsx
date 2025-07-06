@@ -131,6 +131,7 @@ export default function ConnectionCreateHTTPModal(
 			onClose={handleClose}
 		>
 			<ConnectionCreateFormChangeTypeWrapper
+				isEditMode={!!props.initialFormValues}
 				loading={props.loading}
 				type={"HTTP(HTTPS)"}
 				onChangeType={() => {

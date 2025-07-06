@@ -147,6 +147,7 @@ export default function ConnectionCreateSSHModal(
 			onClose={handleClose}
 		>
 			<ConnectionCreateFormChangeTypeWrapper
+				isEditMode={!!props.initialFormValues}
 				loading={props.loading}
 				type={"SSH"}
 				onChangeType={() => {

@@ -187,6 +187,7 @@ export default function ConnectionCreateSNMPModal(
 			onClose={handleClose}
 		>
 			<ConnectionCreateFormChangeTypeWrapper
+				isEditMode={!!props.initialFormValues}
 				loading={props.loading}
 				type={"SNMP"}
 				onChangeType={() => {

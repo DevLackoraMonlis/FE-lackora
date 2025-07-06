@@ -44,13 +44,7 @@ export default function ConnectionCreateHTTPFormSettings(
 							/>
 						</Grid.Col>
 						<Grid.Col span={4}>
-							<RadioGroup
-								key={"protocol"}
-								w={"100%"}
-								defaultValue={CreateConnectionHTTPProtocolType.HTTP}
-								{...form.getInputProps("protocol", { type: "checkbox" })}
-								label={"Protocol"}
-							>
+							<RadioGroup key={"protocol"} w={"100%"} {...form.getInputProps("protocol")} label={"Protocol"}>
 								<Group mt="xs">
 									<Radio
 										label={CreateConnectionHTTPProtocolType.HTTP}
@@ -96,7 +90,7 @@ export default function ConnectionCreateHTTPFormSettings(
 								disabled={!form.values.authenticationRequired}
 								w={"100%"}
 								key={"user"}
-								required
+								required={form.values.authenticationRequired}
 								placeholder={"Username"}
 								{...form.getInputProps("username")}
 							/>
@@ -107,7 +101,7 @@ export default function ConnectionCreateHTTPFormSettings(
 								disabled={!form.values.authenticationRequired}
 								w={"100%"}
 								key={"password"}
-								required
+								required={form.values.authenticationRequired}
 								{...form.getInputProps("password")}
 							/>
 						</Grid.Col>
