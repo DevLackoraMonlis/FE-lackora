@@ -30,13 +30,23 @@ export default function ConnectionCreateSNMPFormSettings(
 	const form = useCreateConnectionSNMPFormContext();
 
 	const userInput = (
-		<TextInput w={"100%"} key={"user"} required label={"User"} {...form.getInputProps("user")} />
+		<TextInput
+			w={"100%"}
+			key={"user"}
+			required={form.values.snmpVersion === CreateConnectionSNMPVersionType.SNMP_V_3}
+			label={"User"}
+			{...form.getInputProps("user")}
+		/>
 	);
 	const passwordInput = (
 		<PasswordInput
 			w={"100%"}
 			key={"password"}
-			required
+			required={
+				form.values.snmpVersion === CreateConnectionSNMPVersionType.SNMP_V_3 &&
+				(form.values.securityLevel === CreateConnectionSNMPSecurityLdLevelType.AUTHENTICATION_ONLY ||
+					form.values.securityLevel === CreateConnectionSNMPSecurityLdLevelType.AUTHENTICATION_PRIVACY)
+			}
 			label={"Password"}
 			{...form.getInputProps("password")}
 		/>
@@ -51,7 +61,11 @@ export default function ConnectionCreateSNMPFormSettings(
 			allowDeselect={false}
 			defaultValue={CreateConnectionSNMPAuthenticationProtocolType.MD5}
 			w={"100%"}
-			required
+			required={
+				form.values.snmpVersion === CreateConnectionSNMPVersionType.SNMP_V_3 &&
+				(form.values.securityLevel === CreateConnectionSNMPSecurityLdLevelType.AUTHENTICATION_ONLY ||
+					form.values.securityLevel === CreateConnectionSNMPSecurityLdLevelType.AUTHENTICATION_PRIVACY)
+			}
 			label={"Authentication Protocol"}
 			{...form.getInputProps("authenticationProtocol")}
 		/>
@@ -85,8 +99,7 @@ export default function ConnectionCreateSNMPFormSettings(
 							<RadioGroup
 								key={"snmpVersion"}
 								w={"100%"}
-								defaultValue={CreateConnectionSNMPVersionType.SNMP_V_2_C}
-								{...form.getInputProps("snmpVersion", { type: "checkbox" })}
+								{...form.getInputProps("snmpVersion")}
 								label={"SNMP Version"}
 							>
 								<Group mt="xs">
@@ -107,6 +120,7 @@ export default function ConnectionCreateSNMPFormSettings(
 						lightHidden={form.values.snmpVersion !== CreateConnectionSNMPVersionType.SNMP_V_2_C}
 						darkHidden={form.values.snmpVersion !== CreateConnectionSNMPVersionType.SNMP_V_2_C}
 						key={"Community"}
+						required={form.values.snmpVersion === CreateConnectionSNMPVersionType.SNMP_V_2_C}
 						w={"100%"}
 						placeholder={"Enter Community"}
 						label={"Community"}
@@ -121,11 +135,7 @@ export default function ConnectionCreateSNMPFormSettings(
 					>
 						<Grid>
 							<Grid.Col span={12}>
-								<RadioGroup
-									defaultValue={CreateConnectionSNMPSecurityLdLevelType.NO_SECURITY}
-									{...form.getInputProps("securityLevel", { type: "checkbox" })}
-									label={"Security Level"}
-								>
+								<RadioGroup {...form.getInputProps("securityLevel")} label={"Security Level"}>
 									<Group mt="xs">
 										<Radio
 											label={CreateConnectionSNMPSecurityLdLevelType.NO_SECURITY}
@@ -168,7 +178,11 @@ export default function ConnectionCreateSNMPFormSettings(
 											allowDeselect={false}
 											defaultValue={CreateConnectionSNMPPrivacyProtocolType.AES}
 											w={"100%"}
-											required
+											required={
+												form.values.snmpVersion === CreateConnectionSNMPVersionType.SNMP_V_3 &&
+												form.values.securityLevel ===
+													CreateConnectionSNMPSecurityLdLevelType.AUTHENTICATION_PRIVACY
+											}
 											key={"privacyProtocol"}
 											label={"Privacy Protocol"}
 											{...form.getInputProps("privacyProtocol")}
@@ -177,7 +191,11 @@ export default function ConnectionCreateSNMPFormSettings(
 									<Grid.Col span={6}>
 										<PasswordInput
 											w={"100%"}
-											required
+											required={
+												form.values.snmpVersion === CreateConnectionSNMPVersionType.SNMP_V_3 &&
+												form.values.securityLevel ===
+													CreateConnectionSNMPSecurityLdLevelType.AUTHENTICATION_PRIVACY
+											}
 											key={"privacyPassphrase"}
 											label={"Privacy Passphrase"}
 											{...form.getInputProps("privacyPassphrase")}

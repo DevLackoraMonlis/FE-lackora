@@ -215,9 +215,9 @@ export default function ConnectionList() {
 						description: getConnectionQuery.data.data.description || "",
 						enablePrivilegedMode: !!getConnectionQuery.data.data.privileged_authentication,
 						name: getConnectionQuery.data.data.name,
-						passphrase: getConnectionQuery.data.data.privacy_passphrase || "",
+						passphrase: getConnectionQuery.data.data.passphrase || "",
 						privilegedPassword: getConnectionQuery.data.data.privileged_password || "",
-						sshKey: getConnectionQuery.data.data.password || "",
+						sshKey: getConnectionQuery.data.data.ssh_key || "",
 						sshPort: getConnectionQuery.data.data.port || 0,
 					}
 				}
@@ -225,7 +225,7 @@ export default function ConnectionList() {
 				onTestConnection={(type) => {
 					console.log(`Test connection ${type}`);
 				}}
-				onSuccessCreate={getConnectionsQuery.refetch}
+				onSuccess={getConnectionsQuery.refetch}
 				onChangeType={() => {
 					createSSHModalHandlers.close();
 					createSelectionTypeModalHandlers.open();
@@ -249,7 +249,7 @@ export default function ConnectionList() {
 								: CreateConnectionSNMPVersionType.SNMP_V_3,
 						authenticationProtocol: getConnectionQuery.data.data
 							.authentication_protocol as CreateConnectionSNMPAuthenticationProtocolType,
-						community: getConnectionQuery.data.data.password || "",
+						community: getConnectionQuery.data.data.community || "",
 						privacyProtocol: getConnectionQuery.data.data
 							.privacy_protocol as CreateConnectionSNMPPrivacyProtocolType,
 						securityLevel: getConnectionQuery.data.data.security_level
@@ -264,7 +264,7 @@ export default function ConnectionList() {
 				onTestConnection={(type) => {
 					console.log(`Test connection ${type}`);
 				}}
-				onSuccessCreate={getConnectionsQuery.refetch}
+				onSuccess={getConnectionsQuery.refetch}
 				onChangeType={() => {
 					createSNMPModalHandlers.close();
 					createSelectionTypeModalHandlers.open();
@@ -296,7 +296,7 @@ export default function ConnectionList() {
 				onTestConnection={(type) => {
 					console.log(`Test connection ${type}`);
 				}}
-				onSuccessCreate={getConnectionsQuery.refetch}
+				onSuccess={getConnectionsQuery.refetch}
 				onChangeType={() => {
 					createHTTPModalHandlers.close();
 					createSelectionTypeModalHandlers.open();
@@ -338,9 +338,15 @@ export default function ConnectionList() {
 											</Flex>
 										</Flex>
 										<ConnectionListActionButtons
-											loading={deleteUsedInConnectionQuery.isFetching}
+											getConnectionDataType={
+												getConnectionQuery.data?.data.type &&
+												connectionTypeMap[getConnectionQuery.data.data.type]
+											}
+											selectedEditConnectionId={selectedEditConnectionId}
+											deleteLoading={deleteUsedInConnectionQuery.isFetching}
 											type={connectionTypeMap[item.type]}
 											id={item.id}
+											editIsLoading={getConnectionQuery.isFetching}
 											openHttpModal={createHTTPModalHandlers.open}
 											openSnmpModal={createSNMPModalHandlers.open}
 											openSshModal={createSSHModalHandlers.open}
@@ -351,9 +357,9 @@ export default function ConnectionList() {
 									</Flex>
 								</Accordion.Control>
 								<Accordion.Panel px={"3xl"} py={"xs"}>
-									<Flex direction={"column"} w={"50%"}>
+									<Flex direction={"column"} gap={"2xs"} w={"50%"}>
 										{Object.entries(omit(item, ["id"])).map(([key, value]) => (
-											<ConnectionLabelValue key={key} label={key} value={value as string} />
+											<ConnectionLabelValue key={key} label={key.toUpperCase()} value={value as string} />
 										))}
 									</Flex>
 								</Accordion.Panel>

@@ -27,10 +27,11 @@ import type {
 import type {
   CreateConnection,
   EachConnection,
+  EditConnection,
   GetConnectionsParams,
   HTTPValidationError,
   MessageOnlyResponse,
-  PaginatedBaseResponseEachConnectionEachConnectionMetadataWrapper
+  PaginatedBaseResponseEachPrivateConnectionEachConnectionMetadataWrapper
 } from './models';
 
 import { orvalMutator } from '../orval-mutator';
@@ -48,7 +49,7 @@ export const getConnections = (
 ) => {
       
       
-      return orvalMutator<PaginatedBaseResponseEachConnectionEachConnectionMetadataWrapper>(
+      return orvalMutator<PaginatedBaseResponseEachPrivateConnectionEachConnectionMetadataWrapper>(
       {url: "/api/management-center/connections/", method: 'GET',
         params, signal
     },
@@ -283,14 +284,14 @@ export function useGetConnection<TData = Awaited<ReturnType<typeof getConnection
  */
 export const editConnection = (
     connectionId: string,
-    createConnection: CreateConnection,
+    editConnection: EditConnection,
  ) => {
       
       
       return orvalMutator<EachConnection>(
       {url: `/api/management-center/connections/${connectionId}`, method: 'PUT',
       headers: {'Content-Type': 'application/json', },
-      data: createConnection
+      data: editConnection
     },
       );
     }
@@ -298,8 +299,8 @@ export const editConnection = (
 
 
 export const getEditConnectionMutationOptions = <TError = HTTPValidationError,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof editConnection>>, TError,{connectionId: string;data: CreateConnection}, TContext>, }
-): UseMutationOptions<Awaited<ReturnType<typeof editConnection>>, TError,{connectionId: string;data: CreateConnection}, TContext> => {
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof editConnection>>, TError,{connectionId: string;data: EditConnection}, TContext>, }
+): UseMutationOptions<Awaited<ReturnType<typeof editConnection>>, TError,{connectionId: string;data: EditConnection}, TContext> => {
 
 const mutationKey = ['editConnection'];
 const {mutation: mutationOptions} = options ?
@@ -311,7 +312,7 @@ const {mutation: mutationOptions} = options ?
       
 
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof editConnection>>, {connectionId: string;data: CreateConnection}> = (props) => {
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof editConnection>>, {connectionId: string;data: EditConnection}> = (props) => {
           const {connectionId,data} = props ?? {};
 
           return  editConnection(connectionId,data,)
@@ -323,18 +324,18 @@ const {mutation: mutationOptions} = options ?
   return  { mutationFn, ...mutationOptions }}
 
     export type EditConnectionMutationResult = NonNullable<Awaited<ReturnType<typeof editConnection>>>
-    export type EditConnectionMutationBody = CreateConnection
+    export type EditConnectionMutationBody = EditConnection
     export type EditConnectionMutationError = HTTPValidationError
 
     /**
  * @summary Update Connection
  */
 export const useEditConnection = <TError = HTTPValidationError,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof editConnection>>, TError,{connectionId: string;data: CreateConnection}, TContext>, }
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof editConnection>>, TError,{connectionId: string;data: EditConnection}, TContext>, }
  , queryClient?: QueryClient): UseMutationResult<
         Awaited<ReturnType<typeof editConnection>>,
         TError,
-        {connectionId: string;data: CreateConnection},
+        {connectionId: string;data: EditConnection},
         TContext
       > => {
 

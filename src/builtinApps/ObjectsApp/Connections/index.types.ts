@@ -15,7 +15,7 @@ export type CreateConnectionModalProps<INITIAL_FROM_VALUES> = {
 	onClose: VoidFunction;
 	onChangeType: CreateConnectionChangeTypeFn;
 	onTestConnection: (type: CreateConnectionType) => void;
-	onSuccessCreate: VoidFunction;
+	onSuccess: VoidFunction;
 	initialFormValues?: INITIAL_FROM_VALUES;
 	loading: boolean;
 };
