@@ -62,11 +62,12 @@ export function useDiscoveryAdapterById(adapterId: string, enabled: boolean) {
 			enabled: !!adapterId && enabled,
 			refetchOnMount: false,
 			select: (res) => {
-				const results = res?.data?.results?.map(({ id, is_active, config, creator }) => ({
+				const results = res?.data?.results?.map(({ id, is_active, config, editable }) => ({
 					id,
-					configs: configsTransformRs(config),
+					editable: !editable,
+
 					isActive: !!is_active,
-					editable: creator !== "SYSTEM",
+					configs: configsTransformRs(config),
 				}));
 				return { ...res?.data, results };
 			},
