@@ -8,7 +8,7 @@ variables:
 dev_pipeline:
   stage: install
   variables:
-    NODE_ENV: "development"
+    NODE_ENV: "production"
     BASE_URL: "http://172.31.100.57:8080"
     NEXTAUTH_URL: "http://172.31.100.57:3000"
     HOST_URL: "http://172.31.100.57:3000"
