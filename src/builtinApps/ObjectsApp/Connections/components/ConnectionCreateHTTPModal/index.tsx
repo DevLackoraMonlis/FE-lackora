@@ -64,8 +64,8 @@ export default function ConnectionCreateHTTPModal(
 	});
 
 	const handleClose = () => {
-		props.onClose();
 		form.reset();
+		props.onClose();
 	};
 
 	const createHTTPConnectionMutation = useCreateConnection({

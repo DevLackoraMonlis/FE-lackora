@@ -68,8 +68,8 @@ export default function ConnectionCreateSSHModal(
 	});
 
 	const handleClose = () => {
-		props.onClose();
 		form.reset();
+		props.onClose();
 	};
 
 	const createSSHConnectionMutation = useCreateConnection({
