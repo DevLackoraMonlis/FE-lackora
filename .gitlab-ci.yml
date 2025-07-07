@@ -5,11 +5,6 @@ stages:
 variables:
   DEPLOY_DIR: "/sources/app/dev/front"
 
-cache:
-  key: ${CI_COMMIT_REF_SLUG}
-  paths:
-    - node_modules/
-
 dev_pipeline:
   stage: install
   variables:
