@@ -40,8 +40,6 @@ dev_deploy:
   script:
     - echo "Deploying with NODE_ENV=$NODE_ENV..."
     - mkdir -p $DEPLOY_DIR
-    - cp -r .next/standalone/* $DEPLOY_DIR/
-    - cp -r .next/static $DEPLOY_DIR/.next/static
-    - cp -r public $DEPLOY_DIR/public
-    - cp next.config.js package.json $DEPLOY_DIR/
+    - cp -r .next $DEPLOY_DIR/
+    - cp -r public $DEPLOY_DIR/
     - systemctl restart front-dev
