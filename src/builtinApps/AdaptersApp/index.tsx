@@ -63,7 +63,7 @@ export default function AdapterManagementLandingPage() {
 					<Flex direction="column">
 						<Flex justify="space-between" align="center">
 							<Text fw="bold" fz="h4">{`Adapters ( ${totalRecords ?? "-"} )`}</Text>
-							<Button onClick={handleOpenedImport.open} leftSection={<IconPlus size={20} />}>
+							<Button color="main" onClick={handleOpenedImport.open} leftSection={<IconPlus size={20} />}>
 								Import/Update Adapter
 							</Button>
 						</Flex>
