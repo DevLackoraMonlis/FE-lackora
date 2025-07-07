@@ -1,10 +1,13 @@
-import { useAdapterAndVendorIcons } from "@/shared/icons/hooks/useAdapterIcons";
 import { Alert, Badge, Card, CloseButton, Flex, Loader, RingProgress, Text } from "@mantine/core";
-import { IconInfoCircle } from "@tabler/icons-react";
 
-export const UploadStatusUploading = () => {
+import { useAdapterAndVendorIcons } from "@/shared/icons/hooks/useAdapterIcons";
+
+import { ADAPTER_UPLOADED_STATUS } from "../../../../index.constants";
+import type { AdapterUploadedStatus } from "../../../../index.enum";
+
+export const UploadStatusUploading = ({ title, subTitle }: { title: string; subTitle: string }) => {
 	return (
-		<Card bd="1px solid gray.5" p="2xs">
+		<Card p="xs">
 			<Flex justify="space-between" align="center">
 				<Flex gap="xs" align="center">
 					<Card variant="light" bg="gray.1" p={0} m={0}>
@@ -12,10 +15,10 @@ export const UploadStatusUploading = () => {
 					</Card>
 					<Flex direction="column">
 						<Text fz="sm" c="dimmed">
-							File name.adp
+							{title || "-"}
 						</Text>
 						<Text fz="xs" c="dimmed">
-							description file ...
+							{subTitle || "-"}
 						</Text>
 					</Flex>
 				</Flex>
@@ -30,9 +33,9 @@ export const UploadStatusUploading = () => {
 	);
 };
 
-export const UploadStatusValidating = () => {
+export const UploadStatusValidating = ({ title, subTitle }: { title: string; subTitle: string }) => {
 	return (
-		<Card bd="1px solid gray.5" p="2xs">
+		<Card p="xs">
 			<Flex justify="space-between" align="center">
 				<Flex gap="xs" align="center">
 					<Card variant="light" bg="gray.1" p={10} m={0}>
@@ -40,10 +43,10 @@ export const UploadStatusValidating = () => {
 					</Card>
 					<Flex direction="column">
 						<Text fz="sm" c="dimmed">
-							File name.adp
+							{title || "-"}
 						</Text>
 						<Text fz="xs" c="dimmed">
-							description file ...
+							{subTitle || "-"}
 						</Text>
 					</Flex>
 				</Flex>
@@ -58,19 +61,33 @@ export const UploadStatusValidating = () => {
 	);
 };
 
-export const UploadStatusReadyToImport = () => {
+export const UploadStatusReadyToImport = ({
+	status,
+	title,
+	subTitle,
+	iconType,
+}: {
+	status: AdapterUploadedStatus;
+	title: string;
+	subTitle: string;
+	iconType: string;
+}) => {
 	const { getAdapterAndVendorIcon } = useAdapterAndVendorIcons();
+	const uploadStatus = ADAPTER_UPLOADED_STATUS[status] || {};
+	const Icon = uploadStatus.icon;
 	return (
 		<>
-			<Card bd="1px solid gray.5" bg="gray.1" p="2xs">
+			<Card bg="gray.1" p="xs">
 				<Flex justify="space-between" align="center">
 					<Flex gap="xs" align="center">
 						<Card variant="light" m={0} p={5}>
-							{getAdapterAndVendorIcon("cisco", { size: 30 })}
+							{getAdapterAndVendorIcon(iconType, { size: 30 })}
 						</Card>
 						<Flex direction="column">
-							<Text fz="sm">Cisco NXOS SSH Adapter</Text>
-							<Text fz="xs">Version 1.2.3</Text>
+							<Text fz="sm" fw="bold">
+								{title || "-"}
+							</Text>
+							<Text fz="xs">{subTitle || "-"}</Text>
 						</Flex>
 					</Flex>
 					<Flex gap="xs" align="center">
@@ -79,13 +96,11 @@ export const UploadStatusReadyToImport = () => {
 							h="30px"
 							radius="xs"
 							variant="light"
-							// color="green"
-							// leftSection={<IconCheck size={15} />}
-							color="blue"
-							leftSection={<IconInfoCircle size={15} />}
+							tt="capitalize"
+							color={uploadStatus.color}
+							leftSection={Icon ? <Icon size={15} /> : null}
 						>
-							{/* Ready to Import */}
-							Already exists - Upgrade Version
+							{uploadStatus.badgeText}
 						</Badge>
 						<CloseButton bg="transparent" />
 					</Flex>
@@ -94,12 +109,12 @@ export const UploadStatusReadyToImport = () => {
 			<Alert
 				mt="-xs"
 				variant="light"
-				color="blue"
-				title="Adapter already exists. No changes made!"
-				icon={<IconInfoCircle />}
+				hidden={!uploadStatus.alertTitle}
+				title={uploadStatus.alertTitle}
+				color={uploadStatus.color}
+				icon={Icon ? <Icon size={30} /> : null}
 			>
-				The uploaded adapter is identical to the current version and does not require import. If you still
-				want to re-import, please remove the existing adapter first.
+				{uploadStatus.alertDescription}
 			</Alert>
 		</>
 	);
