@@ -92,13 +92,6 @@ export default function ConnectionList() {
 		getConnectionsQuery.data?.data?.metadata?.filters,
 	);
 
-	const getConnectionQuery = useGetConnection(selectedEditConnectionId || "", {
-		query: {
-			enabled: !!selectedEditConnectionId,
-			queryKey: [GET_OBJECTS_CONNECTION_QUERY_KEY, selectedEditConnectionId],
-		},
-	});
-
 	const dynamicFilters: BCSideFilterItem[] =
 		stableFilters?.map((filter) => {
 			const filterItem: BCSideFilterItem = {
@@ -109,6 +102,13 @@ export default function ConnectionList() {
 			};
 			return filterItem;
 		}) || [];
+
+	const getConnectionQuery = useGetConnection(selectedEditConnectionId || "", {
+		query: {
+			enabled: !!selectedEditConnectionId,
+			queryKey: [GET_OBJECTS_CONNECTION_QUERY_KEY, selectedEditConnectionId],
+		},
+	});
 
 	const typeItems: CreateConnectionTypeItem[] = [
 		{

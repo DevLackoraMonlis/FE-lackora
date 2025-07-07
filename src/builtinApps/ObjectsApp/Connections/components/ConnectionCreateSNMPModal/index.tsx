@@ -104,8 +104,8 @@ export default function ConnectionCreateSNMPModal(
 	});
 
 	const handleClose = () => {
-		props.onClose();
 		form.reset();
+		props.onClose();
 	};
 
 	const createSNMPConnectionMutation = useCreateConnection({

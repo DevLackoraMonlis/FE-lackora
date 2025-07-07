@@ -90,6 +90,7 @@ export default function ConnectionCreateHTTPFormSettings(
 								disabled={!form.values.authenticationRequired}
 								w={"100%"}
 								key={"user"}
+								autoComplete={"new-password"}
 								required={form.values.authenticationRequired}
 								placeholder={"Username"}
 								{...form.getInputProps("username")}
@@ -97,6 +98,7 @@ export default function ConnectionCreateHTTPFormSettings(
 						</Grid.Col>
 						<Grid.Col span={4}>
 							<PasswordInput
+								autoComplete={"new-password"}
 								placeholder={"Password"}
 								disabled={!form.values.authenticationRequired}
 								w={"100%"}

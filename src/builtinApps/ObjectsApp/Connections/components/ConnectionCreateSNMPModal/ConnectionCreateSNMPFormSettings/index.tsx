@@ -198,6 +198,7 @@ export default function ConnectionCreateSNMPFormSettings(
 											}
 											key={"privacyPassphrase"}
 											label={"Privacy Passphrase"}
+											autoComplete={"new-password"}
 											{...form.getInputProps("privacyPassphrase")}
 										/>
 									</Grid.Col>

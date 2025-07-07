@@ -65,7 +65,6 @@ export function useDiscoveryAdapterById(adapterId: string, enabled: boolean) {
 				const results = res?.data?.results?.map(({ id, is_active, config, editable }) => ({
 					id,
 					editable: !editable,
-
 					isActive: !!is_active,
 					configs: configsTransformRs(config),
 				}));

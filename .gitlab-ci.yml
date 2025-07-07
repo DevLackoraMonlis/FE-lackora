@@ -5,21 +5,23 @@ stages:
 variables:
   DEPLOY_DIR: "/sources/app/dev/front"
 
-cache:
-  key: ${CI_COMMIT_REF_SLUG}
-  paths:
-    - node_modules/
-
 dev_pipeline:
   stage: install
   variables:
     NODE_ENV: "development"
+    BASE_URL: "http://172.31.100.57:8080"
+    NEXTAUTH_URL: "http://172.31.100.57:3000"
+    HOST_URL: "http://172.31.100.57:3000"
+    NODE_TLS_REJECT_UNAUTHORIZED: "0"
+    X_NONCE_AUTHENTICATE: "Ewi5To8Pf2rbIINNFp9i9g"
+    CSRF_SECRET: "50FaWgdOhi9M9wyna8taR1k3ODOR8d6u"
   only:
     - develop
   tags:
     - dev
   script:
     - npm config set registry http://172.31.100.53/repository/npm-proxy/
+    - rm -f package-lock.json; rm -f .npmrc; rm -rf node_modules
     - npm install --force
     - npm run build
   artifacts:
