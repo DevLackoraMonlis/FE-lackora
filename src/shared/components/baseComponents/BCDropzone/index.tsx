@@ -1,21 +1,52 @@
 import { Button, Card, Flex, Highlight, Text } from "@mantine/core";
-import { Dropzone, type DropzoneProps, MIME_TYPES } from "@mantine/dropzone";
-import { IconCloudUpload } from "@tabler/icons-react";
-import { useRef } from "react";
+import type { DropzoneProps, FileWithPath } from "@mantine/dropzone";
+import { Dropzone, MIME_TYPES } from "@mantine/dropzone";
+import { useRef, useState } from "react";
 
+import { uploadErrorObject } from "./index.constants";
+
+type UploadStatus = keyof typeof uploadErrorObject;
 type AcceptKeys = keyof typeof MIME_TYPES;
 
 type Props = DropzoneProps & {
 	title: string;
 	accept: string[] | Array<AcceptKeys>;
 	maxSize: number;
+	customAccept?: Record<string, string[]>;
 };
 
-export default function BCDropzone({ title, maxSize, accept, ...dropzoneProps }: Props) {
-	const openRef = useRef<VoidFunction>(null);
+export default function BCDropzone({
+	title,
+	maxSize,
+	accept,
+	customAccept,
+	onDrop,
+	...dropzoneProps
+}: Props) {
+	const ACCEPT_FILES = accept;
+	const MAX_SIZE = maxSize * 1000 * 1000; // bytes
+	const ACCEPT_FILES_DISPLAY = accept.join(", ") || "";
+	const ACCEPT_SIZE_DISPLAY = `${maxSize}mb`;
 
-	const acceptFiles = accept.join(", ") || "";
-	const acceptSize = `${maxSize}mb`;
+	const openRef = useRef<VoidFunction>(null);
+	const [uploadStatus, setUploadStatus] = useState<UploadStatus>("none");
+	const handleOnDrop = (files: FileWithPath[] = []) => {
+		const [file] = files;
+		if (!file) {
+			return setUploadStatus("fileError");
+		}
+		if (file.size > MAX_SIZE) {
+			return setUploadStatus("sizeError");
+		}
+		const [_, fileAccept] = file.name.split(".");
+		if (!ACCEPT_FILES.includes(fileAccept as AcceptKeys)) {
+			return setUploadStatus("acceptError");
+		}
+		return onDrop(files);
+	};
+
+	const { color, icon, bgColor, title: titleGenerator } = uploadErrorObject[uploadStatus || "none"];
+	const Icon = icon;
 	return (
 		<Card>
 			<Flex direction="column" gap="sm" justify="center" align="center">
@@ -23,20 +54,24 @@ export default function BCDropzone({ title, maxSize, accept, ...dropzoneProps }:
 					openRef={openRef}
 					w="100%"
 					h="100%"
-					accept={accept.map((item) => MIME_TYPES[item as AcceptKeys] || item)}
-					maxSize={maxSize * 1000 * 1000} // bytes
+					accept={customAccept || ACCEPT_FILES.map((item) => MIME_TYPES[item as AcceptKeys] || item)}
+					maxSize={MAX_SIZE}
+					onDrop={handleOnDrop}
+					bg={bgColor}
 					{...dropzoneProps}
 				>
 					<Flex direction="column" gap="xs" justify="center" align="center">
-						<IconCloudUpload size={50} />
-						<Text fz="h4" fw="bold">{`Upload ${title}`}</Text>
+						<Icon size={50} color={color} />
+						<Text fz="h4" fw="bold">
+							{titleGenerator(title, ACCEPT_SIZE_DISPLAY, ACCEPT_FILES_DISPLAY)}
+						</Text>
 						<Highlight
 							c="dimmed"
 							w="80%"
 							mb="xs"
 							ta="center"
-							highlight={[acceptFiles || "", acceptSize]}
-						>{`Drag'n'drop file here to upload. We can accept only ${acceptFiles} file that is less than ${maxSize}mb in size.`}</Highlight>
+							highlight={[ACCEPT_FILES_DISPLAY || "", ACCEPT_SIZE_DISPLAY]}
+						>{`Drag'n'drop file here to upload. We can accept only ${ACCEPT_FILES_DISPLAY} file that is less than ${ACCEPT_SIZE_DISPLAY} in size.`}</Highlight>
 					</Flex>
 				</Dropzone>
 				<Button mt="-25px" w="250px" onClick={() => openRef.current?.()} style={{ pointerEvents: "all" }}>

@@ -1,6 +1,6 @@
 import { ActionIcon, Badge, Card, Flex, Menu, Text } from "@mantine/core";
 import { useHover } from "@mantine/hooks";
-import { IconDotsVertical, IconFileZip, IconTrash } from "@tabler/icons-react";
+import { IconDotsVertical, IconRefresh, IconTrash } from "@tabler/icons-react";
 import { motion } from "framer-motion";
 import { type ReactNode, useEffect, useState } from "react";
 
@@ -10,6 +10,7 @@ type Props = {
 	cardIcon: ReactNode;
 	tagIcon: ReactNode;
 };
+
 export default function AdapterSingleCard(props: Props) {
 	const [isFlipped, setIsFlip] = useState(false);
 	const { hovered, ref } = useHover();
@@ -86,7 +87,7 @@ export default function AdapterSingleCard(props: Props) {
 									</ActionIcon>
 								</Menu.Target>
 								<Menu.Dropdown>
-									<Menu.Item leftSection={<IconFileZip size={15} />}>Download zip</Menu.Item>
+									<Menu.Item leftSection={<IconRefresh size={15} />}>Update Adapter</Menu.Item>
 									<Menu.Item leftSection={<IconTrash size={15} />} color="red">
 										Delete
 									</Menu.Item>

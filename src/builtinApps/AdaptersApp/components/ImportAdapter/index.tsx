@@ -17,7 +17,7 @@ type Props = {
 const status: AdapterUploadedStatus = AdapterUploadedStatus.Exists;
 
 function ImportAdapter({ onClose }: Props) {
-	const fileRef = useRef<FileWithPath[] | null>(null);
+	const fileRef = useRef<FileWithPath | null>(null);
 	const onApply = () => {};
 
 	const uploadStatus = ADAPTER_UPLOADED_STATUS[status] || {};
@@ -35,9 +35,12 @@ function ImportAdapter({ onClose }: Props) {
 					<BCDropzone
 						title="Adapter"
 						accept={[".adp"]}
+						customAccept={{
+							"application/x-adapter-file": [".adp"],
+						}}
 						maxSize={30}
 						onDrop={(files) => {
-							fileRef.current = files;
+							fileRef.current = files?.[0];
 						}}
 					/>
 				</Card>
