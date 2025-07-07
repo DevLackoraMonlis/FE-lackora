@@ -31,7 +31,7 @@ import type {
   GetConnectionsParams,
   HTTPValidationError,
   MessageOnlyResponse,
-  PaginatedBaseResponseEachPrivateConnectionEachConnectionMetadataWrapper
+  PaginatedBaseResponseEachPrivateConnectionEachListMetadataWrapper
 } from './models';
 
 import { orvalMutator } from '../orval-mutator';
@@ -49,7 +49,7 @@ export const getConnections = (
 ) => {
       
       
-      return orvalMutator<PaginatedBaseResponseEachPrivateConnectionEachConnectionMetadataWrapper>(
+      return orvalMutator<PaginatedBaseResponseEachPrivateConnectionEachListMetadataWrapper>(
       {url: "/api/management-center/connections/", method: 'GET',
         params, signal
     },
