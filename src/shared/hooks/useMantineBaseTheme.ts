@@ -17,6 +17,11 @@ export default function useMantineBaseTheme() {
 					size: "lg",
 				},
 			},
+			Highlight: {
+				defaultProps: {
+					highlightStyles: { background: "transparent", fontWeight: "bold" },
+				},
+			},
 		},
 		fontFamily: "var(--manrope) !important",
 		white: "#FAFAFA",
@@ -24,6 +29,7 @@ export default function useMantineBaseTheme() {
 		spacing: {
 			...DEFAULT_THEME.spacing,
 			"2xs": "4px",
+			"3xs": "2px",
 			"2lg": "26px",
 			"2xl": "40px",
 			"3xl": "60px",

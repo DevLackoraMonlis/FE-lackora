@@ -1,4 +1,5 @@
 "use client";
+import AdapterManagementLandingPage from "@/builtinApps/AdaptersApp";
 import AssetIdentificationDiscoverySettingsPage from "@/builtinApps/AssetIdentificationApp/DiscoverySettings";
 import AssetIdentificationProfilingSettingsPage from "@/builtinApps/AssetIdentificationApp/ProfillngSettings";
 import ObjectsConnectionsPage from "@/builtinApps/ObjectsApp/Connections";
@@ -8,6 +9,11 @@ import type { ICAppManagerType } from "../../index.types";
 import ICAppManagerContext from "./ICAppManagerContext";
 
 const apps: ICAppManagerType[] = [
+	{
+		name: AllApplications.ADAPTER_MANAGEMENT.name,
+		landing: AdapterManagementLandingPage,
+		modules: [],
+	},
 	{
 		name: AllApplications.ASSET_IDENTIFICATION.name,
 		modules: [
