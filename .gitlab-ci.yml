@@ -42,4 +42,5 @@ dev_deploy:
     - mkdir -p $DEPLOY_DIR
     - cp -r .next $DEPLOY_DIR/
     - cp -r public $DEPLOY_DIR/
+    - cp -r $DEPLOY_DIR/.next/static $DEPLOY_DIR/.next/standalone/.next/static
     - sudo systemctl restart front-dev
