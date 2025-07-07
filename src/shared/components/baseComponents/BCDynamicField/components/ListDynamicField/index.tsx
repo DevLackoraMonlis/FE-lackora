@@ -7,10 +7,13 @@ import { useEffect, useState } from "react";
 import { useTablePagination } from "@/shared/hooks/useTablePagination";
 import type { LabelValueType } from "@/shared/lib/general-types";
 
+import { GET_OBJECT_DATA_QUERY_KEY } from "../../index.constants";
 import type { BCDynamicFieldProps } from "../../index.types";
 
 type Props<TObject extends string> = InputBaseProps &
-	Omit<BCDynamicFieldProps<TObject>, "key"> & { onChange?: (value: string) => void };
+	Omit<BCDynamicFieldProps<TObject>, "key"> & {
+		onChange?: (value: string) => void;
+	};
 
 export default function ListDynamicField<TObject extends string>({
 	api,
@@ -18,6 +21,7 @@ export default function ListDynamicField<TObject extends string>({
 	paginate,
 	defaultValue = null,
 	onChange,
+	renderFooterInList,
 	...props
 }: Props<TObject>) {
 	const [selected, setSelectedValue] = useState<LabelValueType | null>(
@@ -30,7 +34,13 @@ export default function ListDynamicField<TObject extends string>({
 
 	const getObjectQuery = useQuery({
 		enabled: !!objectType,
-		queryKey: ["get-object-data", objectType, tablePagination.page, tablePagination.recordsPerPage, search],
+		queryKey: [
+			GET_OBJECT_DATA_QUERY_KEY,
+			objectType,
+			tablePagination.page,
+			tablePagination.recordsPerPage,
+			search,
+		],
 		refetchOnMount: false,
 		queryFn: ({ signal }) =>
 			api?.(
@@ -124,6 +134,7 @@ export default function ListDynamicField<TObject extends string>({
 						</Center>
 					</Combobox.Footer>
 				)}
+				{!!renderFooterInList && <Combobox.Footer bg="gray.2"> {renderFooterInList} </Combobox.Footer>}
 			</Combobox.Dropdown>
 		</Combobox>
 	);

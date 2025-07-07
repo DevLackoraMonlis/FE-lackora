@@ -20,6 +20,7 @@ export function getDynamicField<TObjectType extends string>({
 	objectType,
 	paginate,
 	disabled,
+	renderFooterInList,
 }: BCDynamicFieldProps<TObjectType>) {
 	if (objectType) type = "List";
 
@@ -41,6 +42,7 @@ export function getDynamicField<TObjectType extends string>({
 						api,
 						objectType,
 						paginate,
+						renderFooterInList,
 						...commonOptions,
 						defaultValue,
 					}}

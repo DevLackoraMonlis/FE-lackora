@@ -5,7 +5,7 @@ import { useState } from "react";
 
 import { useDiscoveryAdapters } from "../../index.hooks";
 
-import NoneCredentialServices from "./components/NoneCredentialServices";
+import NoneCredentialServices from "./components/NoneCredentialSections";
 
 const DiscoverySettingsNoneCredentialAdapters = () => {
 	const [activeAccordion, setActiveAccordion] = useState<string | null>(null);

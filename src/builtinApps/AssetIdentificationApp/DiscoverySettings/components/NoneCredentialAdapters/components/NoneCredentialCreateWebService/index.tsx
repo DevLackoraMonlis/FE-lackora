@@ -1,10 +1,10 @@
-import { ActionIcon, Box, Button, Flex, LoadingOverlay } from "@mantine/core";
+import { ActionIcon, Box, Fieldset, Flex, LoadingOverlay } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { IconCheck, IconPlus, IconX } from "@tabler/icons-react";
+import { IconCheck, IconX } from "@tabler/icons-react";
 import { isObject } from "lodash";
 import { useEffect } from "react";
 
-import { configsUpdateTransformRq, getDynamicField } from "@/shared/components/baseComponents/BCDynamicField";
+import { configsUpdateTransformRq } from "@/shared/components/baseComponents/BCDynamicField";
 import type {
 	BCDynamicConfigRq,
 	BCDynamicFieldRs,
@@ -22,13 +22,12 @@ type Props = DiscoveryAdapterConfigurationRs & {
 	onCancel: VoidFunction;
 };
 
-const NoneCredentialEditForm = ({
+export default function NoneCredentialCreateWebService({
 	configs = [],
 	loading,
 	onCancel,
 	handleEditAdapterConfigurations,
-	fields,
-}: Props) => {
+}: Props) {
 	const form = useForm<FormValues>({});
 
 	const handleSubmit = (values: typeof form.values) => {
@@ -41,7 +40,7 @@ const NoneCredentialEditForm = ({
 			acc[key] = isObject(value) ? value?.value : null;
 			return acc;
 		}, {} as FormValues);
-
+		// initialize
 		form.initialize(formInitialValues);
 	}, [configs]);
 
@@ -50,35 +49,31 @@ const NoneCredentialEditForm = ({
 			<LoadingOverlay visible={loading} />
 			<form onSubmit={form.onSubmit(handleSubmit)}>
 				<Flex gap="xs" mt="xs">
-					<Flex gap="xs" w="100%">
-						{fields.map(({ label, key, ...item }) => {
-							const defaultValue = configs?.find(({ key: valueKey }) => key === valueKey)?.value;
-							return getDynamicField({
-								otherElementOptions: {
-									withAsterisk: true,
-									style: { flex: 1 },
-								},
-								formInputProps: {
-									key: form.key(key),
-									...form.getInputProps(key),
-								},
-								key,
-								defaultValue,
-								label: "",
-								renderFooterInList: key === "web_service" && (
-									<Button size="sm" leftSection={<IconPlus size={15} />} variant="transparent">
-										Add Custom Web Service
-									</Button>
-								),
-								...item,
-							});
-						})}
-					</Flex>
-					<Flex gap="xs" align="center">
-						<ActionIcon size="lg" title="Save" c="gray.2" bg="primary.8" type="submit">
+					<Fieldset variant="filled" w="100%" pb="xs" pt="2xs">
+						<Flex gap="xs">
+							{/* {fields.map(({ key, ...item }) => {
+                const defaultValue = configs?.find(({ key: configKey }) => key === configKey)?.value;
+                return getDynamicField({
+                  otherElementOptions: {
+                    withAsterisk: true,
+                    style: { flex: 1 },
+                  },
+                  formInputProps: {
+                    key: form.key(key),
+                    ...form.getInputProps(key),
+                  },
+                  defaultValue,
+                  key,
+                  ...item,
+                });
+              })} */}
+						</Flex>
+					</Fieldset>
+					<Flex direction="column" gap="xs" justify="space-between" align="center">
+						<ActionIcon size="lg" title="Save" type="submit" c="gray.2" bg="primary.8">
 							<IconCheck size={20} />
 						</ActionIcon>
-						<ActionIcon size="lg" title="Cancel" c="gray.8" bg="gray.2" type="reset" onClick={onCancel}>
+						<ActionIcon size="lg" title="Cancel" type="reset" c="gray.8" bg="gray.2" onClick={onCancel}>
 							<IconX size={20} />
 						</ActionIcon>
 					</Flex>
@@ -86,5 +81,4 @@ const NoneCredentialEditForm = ({
 			</form>
 		</Box>
 	);
-};
-export default NoneCredentialEditForm;
+}
