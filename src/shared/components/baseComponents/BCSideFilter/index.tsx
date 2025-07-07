@@ -103,7 +103,7 @@ export default function BCSideFilter(props: Props) {
 							{filterItem.items?.map((item) => (
 								<Checkbox
 									key={item.value}
-									{...item}
+									value={item.value}
 									label={item.renderLabel ? item.renderLabel({ label: item.label }) : item.label}
 								/>
 							))}
