@@ -8,7 +8,6 @@ variables:
 dev_pipeline:
   stage: install
   variables:
-    # NODE_ENV: "production"
     BASE_URL: "http://172.31.100.57:8080"
     NEXTAUTH_URL: "http://172.31.100.57:3000"
     HOST_URL: "http://172.31.100.57:3000"
@@ -28,9 +27,6 @@ dev_pipeline:
     paths:
       - .next
       - public
-      - package.json
-      - next.config.js
-      - node_modules/
     expire_in: 1 hour
 
 dev_deploy:
