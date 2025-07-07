@@ -15,6 +15,7 @@ dev_pipeline:
     - dev
   script:
     - npm config set registry http://172.31.100.53/repository/npm-proxy/
+    - rm -f package-lock.json
     - npm install --force
     - npm run build
   artifacts:
