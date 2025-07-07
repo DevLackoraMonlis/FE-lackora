@@ -14,7 +14,8 @@ export async function GET() {
 	const res = NextResponse.json({ ok: true });
 	res.cookies.set("csrf-token", cookieValue, {
 		httpOnly: true,
-		secure: process.env.NODE_ENV === "production",
+		// secure: process.env.NODE_ENV === "production",
+		secure: false,
 		sameSite: "strict",
 		path: "/",
 	});

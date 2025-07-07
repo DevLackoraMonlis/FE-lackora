@@ -9,14 +9,17 @@ export async function POST(req: NextRequest) {
 	const cookieStore = await cookies();
 	const customCsrf = cookieStore.get("csrf-token");
 
+	console.info(`CSRF_SECRET: ${process.env.CSRF_SECRET},customCsrf?.value : ${customCsrf?.value}`);
+
 	if (!validateSignedCsrfToken(customCsrf?.value || "", process.env.CSRF_SECRET || "")) {
-		return new NextResponse("Unauthorized", { status: 401 });
+		return new NextResponse("Unauthorized Validate Signed CsrfToken", { status: 401 });
 	}
 
 	// Validate session token
 	const token = await getToken({ req, secret: process.env.NEXT_AUTH });
+	console.info(`Validated Access token From UI :${token}`);
 	if (!token) {
-		return new NextResponse("Unauthorized", { status: 401 });
+		return new NextResponse("Unauthorized Validate Access Token", { status: 401 });
 	}
 
 	const body = await req.json();
