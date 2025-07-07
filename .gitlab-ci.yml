@@ -8,7 +8,7 @@ variables:
 dev_pipeline:
   stage: install
   variables:
-    NODE_ENV: "production"
+    # NODE_ENV: "production"
     BASE_URL: "http://172.31.100.57:8080"
     NEXTAUTH_URL: "http://172.31.100.57:3000"
     HOST_URL: "http://172.31.100.57:3000"
@@ -22,8 +22,8 @@ dev_pipeline:
   script:
     - npm config set registry http://172.31.100.53/repository/npm-proxy/
     - rm -f package-lock.json; rm -f .npmrc; rm -rf node_modules
-    - npm install --force
-    - npm run build
+    - NODE_ENV=development npm install --force
+    - NODE_ENV=production npm run build
   artifacts:
     paths:
       - .next
