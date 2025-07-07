@@ -42,4 +42,4 @@ dev_deploy:
     - mkdir -p $DEPLOY_DIR
     - cp -r .next $DEPLOY_DIR/
     - cp -r public $DEPLOY_DIR/
-    - systemctl restart front-dev
+    - sudo systemctl restart front-dev
