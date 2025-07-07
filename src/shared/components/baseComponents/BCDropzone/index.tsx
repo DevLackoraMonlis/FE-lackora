@@ -40,7 +40,7 @@ export default function BCDropzone({
 		}
 		const [_, fileAccept] = file.name.split(".");
 		if (!ACCEPT_FILES.includes(fileAccept as AcceptKeys)) {
-			return setUploadStatus("fileError");
+			return setUploadStatus("acceptError");
 		}
 		return onDrop(files);
 	};
