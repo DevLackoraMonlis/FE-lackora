@@ -34,7 +34,7 @@ import type {
   HTTPValidationError,
   MessageOnlyResponse,
   PaginatedBaseResponseEachAdapterConfigurationNoneType,
-  PaginatedBaseResponseEachDiscoverySettingEachDiscoverySettingMetadataWrapper,
+  PaginatedBaseResponseEachDiscoverySettingEachListMetadataWrapper,
   UpdateAdapterConfigurationRequest
 } from './models';
 
@@ -53,7 +53,7 @@ export const getDiscoverySettings = (
 ) => {
       
       
-      return orvalMutator<PaginatedBaseResponseEachDiscoverySettingEachDiscoverySettingMetadataWrapper>(
+      return orvalMutator<PaginatedBaseResponseEachDiscoverySettingEachListMetadataWrapper>(
       {url: "/api/asset-identification/discovery-settings/", method: 'GET',
         params, signal
     },
