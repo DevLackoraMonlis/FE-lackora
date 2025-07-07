@@ -10,7 +10,7 @@
 		"lint": "tsc --noEmit --noErrorTruncation && biome check --write --unsafe",
 		"lint-prod": "tsc --noEmit --noErrorTruncation && biome check --write --error-on-warnings --linter-enabled=true",
 		"lint-dev": "biome check --write --error-on-warnings --linter-enabled=true",
-		"icon:create": "npx @svgr/cli --memo --ref --typescript  --out-dir src/shared/icons/component --icon --replace-attr-values -- src/shared/icons/svg --ignore-existing",
+		"icon:create": "npx @svgr/cli --memo --ref --typescript  --out-dir src/shared/icons/components --icon --replace-attr-values -- src/shared/icons/svg --ignore-existing",
 		"prepare": "husky",
 		"lint-staged": "lint-staged -c lint-staged.config.js"
 	},
@@ -59,6 +59,7 @@
 		"dotenv": "^16.4.7",
 		"echarts": "^5.6.0",
 		"echarts-gl": "^2.0.9",
+		"framer-motion": "^12.23.0",
 		"html-to-image": "^1.11.11",
 		"immer": "^10.0.3",
 		"json-2-csv": "^5.0.1",

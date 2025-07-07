@@ -34,8 +34,8 @@ import type { EachConnectionFilterItems, EachConnectionType } from "@/http/gener
 import BCDeleteModal from "@/shared/components/baseComponents/BCDeleteModal";
 import BCDeleteRestrictModal from "@/shared/components/baseComponents/BCDeleteRestrictModal";
 import BCSideFilter, { type BCSideFilterItem } from "@/shared/components/baseComponents/BCSideFilter";
-import { useConnectionIcon } from "@/shared/hooks/useConnectionIcon";
 import { useStableData } from "@/shared/hooks/useStableData";
+import { useConnectionIcon } from "@/shared/icons/hooks/useConnectionIcon";
 import { getErrorMessage } from "@/shared/lib/utils";
 import { Accordion, Button, Flex, Grid, ScrollArea, Text } from "@mantine/core";
 import { useDisclosure, useViewportSize } from "@mantine/hooks";

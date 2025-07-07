@@ -118,7 +118,7 @@ export const configsUpdateTransformRq = (configs: BCDynamicConfigRs[], values: R
 
 export const configsCreateTransformRq = (fields: BCDynamicFieldRs[], values: Record<string, unknown>) => {
 	return Object.entries(values).map(([key, value]) => {
-		const idAsValue = !!fields?.find(({ key: fieldKey }) => key === fieldKey)?.object_type;
+		const idAsValue = !!fields?.find(({ key: fieldKey }) => key === fieldKey)?.objectType;
 		const valueOrId = { [idAsValue ? "id" : "value"]: value };
 		return {
 			key,
@@ -127,7 +127,9 @@ export const configsCreateTransformRq = (fields: BCDynamicFieldRs[], values: Rec
 	});
 };
 
-export const fieldsTransformRs = (fields: BCDynamicFieldRs[]) => {
+export const fieldsTransformRs = (
+	fields: Array<Omit<BCDynamicFieldRs, "object_type"> & { object_type?: string | null }>,
+) => {
 	return (
 		fields?.map(({ object_type, ...item }) => ({
 			...item,

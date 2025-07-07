@@ -22,7 +22,7 @@ export type BCDynamicFieldProps<T extends string> = {
 	required?: boolean | null;
 	paginate?: boolean | null;
 	disabled?: boolean | null;
-	objectType?: T;
+	objectType?: T | null;
 	type?: BCDynamicFieldType | null;
 	options?: LabelValueType[] | null;
 	api?: (
@@ -45,7 +45,7 @@ export type BCDynamicConfigRq = Omit<BCDynamicConfigRs, "idAsValue" | "editable"
 export type BCDynamicFieldRs = {
 	label: string;
 	key: string;
-	object_type?: string | null;
+	objectType?: string | null;
 	type?: BCDynamicFieldType | null;
 	paginate?: boolean | null;
 	options?: LabelValueType[] | null;

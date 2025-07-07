@@ -32,10 +32,11 @@ BCModal.Footer = function Footer(props: {
 	onCancel: () => void;
 	onApply: () => void;
 	applyLabel?: string;
+	disabled?: boolean;
 }) {
 	return (
 		<Flex p={16} gap="sm" justify="flex-end" className={classes.footer}>
-			<Button id="data-test-modal-apply" onClick={props.onApply}>
+			<Button id="data-test-modal-apply" onClick={props.onApply} disabled={props.disabled}>
 				{props.applyLabel || "Apply"}
 			</Button>
 			<Button id="data-test-modal-cancel" onClick={props.onCancel} variant="default">
@@ -45,10 +46,7 @@ BCModal.Footer = function Footer(props: {
 	);
 };
 
-BCModal.FooterSingleButton = function Footer(props: {
-	onOk: () => void;
-	okLabel?: string;
-}) {
+BCModal.FooterSingleButton = function Footer(props: { onOk: () => void; okLabel?: string }) {
 	return (
 		<Flex p={16} gap="sm" justify="flex-end" className={classes.footer}>
 			<Button id="data-test-modal-ok" onClick={props.onOk}>
