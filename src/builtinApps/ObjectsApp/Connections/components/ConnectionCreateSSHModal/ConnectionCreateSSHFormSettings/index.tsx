@@ -72,6 +72,7 @@ export default function ConnectionCreateSSHFormSettings(
 						<Grid>
 							<Grid.Col span={6}>
 								<TextInput
+									autoComplete={"new-password"}
 									w={"100%"}
 									required={
 										form.values.authenticationType === CreateConnectionSSHAuthenticationType.USER_PASSWORD
@@ -82,6 +83,7 @@ export default function ConnectionCreateSSHFormSettings(
 							</Grid.Col>
 							<Grid.Col span={6}>
 								<PasswordInput
+									autoComplete={"new-password"}
 									w={"100%"}
 									required={
 										form.values.authenticationType === CreateConnectionSSHAuthenticationType.USER_PASSWORD
@@ -131,6 +133,7 @@ export default function ConnectionCreateSSHFormSettings(
 								form.values.authenticationType === CreateConnectionSSHAuthenticationType.PUBLIC_PRIVATE_KEY
 							}
 							label={"Passphrase"}
+							autoComplete={"new-password"}
 							{...form.getInputProps("passphrase")}
 						/>
 						<Grid align={"center"}>
