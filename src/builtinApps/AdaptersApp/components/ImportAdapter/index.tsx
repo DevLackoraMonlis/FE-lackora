@@ -11,11 +11,12 @@ import { UploadStatusReadyToImport } from "./components/UploadStatus";
 
 type Props = {
 	onClose: VoidFunction;
+	opened: boolean;
 };
 
 const status: AdapterUploadedStatus = AdapterUploadedStatus.Exists;
 
-export default function ImportAdapter({ onClose }: Props) {
+function ImportAdapter({ onClose }: Props) {
 	const fileRef = useRef<FileWithPath[] | null>(null);
 	const onApply = () => {};
 
@@ -55,5 +56,13 @@ export default function ImportAdapter({ onClose }: Props) {
 				onCancel={onClose}
 			/>
 		</>
+	);
+}
+
+export default function ImportAdapterModal({ onClose, opened }: Props) {
+	return (
+		<BCModal size="50%" centered title="Import/Update Adapters" onClose={onClose} opened={opened}>
+			<ImportAdapter onClose={onClose} opened={opened} />
+		</BCModal>
 	);
 }

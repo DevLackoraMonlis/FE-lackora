@@ -5,13 +5,12 @@ import { useDisclosure, useViewportSize } from "@mantine/hooks";
 import { IconPlus } from "@tabler/icons-react";
 import { useState } from "react";
 
-import BCModal from "@/shared/components/baseComponents/BCModal";
-import BCSideFilter, { type BCSideFilterItem } from "@/shared/components/baseComponents/BCSideFilter";
+import BCSideFilter from "@/shared/components/baseComponents/BCSideFilter";
 import { useTablePagination } from "@/shared/hooks/useTablePagination";
 import { useAdapterAndVendorIcons } from "@/shared/icons/hooks/useAdapterIcons";
 
 import AdapterSingleCard from "./components/AdapterSingleCard";
-import ImportAdapter from "./components/ImportAdapter";
+import ImportAdapterModal from "./components/ImportAdapter";
 import type { AdaptersFilters } from "./index.types";
 
 export default function AdapterManagementLandingPage() {
@@ -34,28 +33,21 @@ export default function AdapterManagementLandingPage() {
 		setQueryParams((perParams) => ({ ...perParams, ...params }));
 	};
 
-	const dynamicFilters: BCSideFilterItem[] = [];
-	// discoveryAdapters?.data?.metadata?.filters?.map((filter) => {
-	//   const filterItem: BCSideFilterItem = {
-	//     items: filter.items,
-	//     label: filter.label,
-	//     name: filter.param,
-	//     type: "CheckedList",
-	//   };
+	// const stableFilters = useStableData<typeof filters>(filters);
+	// const dynamicFilters: BCSideFilterItem[] =
+	// stableFilters?.map((filter) => {
+	// 	const filterItem: BCSideFilterItem = {
+	// 		items: filter.items,
+	// 		label: filter.label,
+	// 		name: filter.param,
+	// 		type: "CheckedList",
+	// 	};
+	// 	return filterItem;
+	// }) || [];
 
-	//   return filterItem;
-	// }) ||
 	return (
 		<>
-			<BCModal
-				size="50%"
-				centered
-				title="Import/Update Adapters"
-				onClose={handleOpenedImport.close}
-				opened={openedImport}
-			>
-				<ImportAdapter onClose={handleOpenedImport.close} />
-			</BCModal>
+			<ImportAdapterModal onClose={handleOpenedImport.close} opened={openedImport} />
 			{/* UI section */}
 			<Grid p="sm" pt="lg" gutter="lg" pos="relative">
 				<LoadingOverlay visible={false} />
@@ -64,14 +56,7 @@ export default function AdapterManagementLandingPage() {
 						height={height - 250}
 						onChange={handleUpdateQueryParams}
 						searchPlaceholder="Search by adapter Name"
-						filterItems={[
-							...dynamicFilters,
-							// {
-							//   name: "used",
-							//   type: "Switch",
-							//   label: "Show only used adapters",
-							// },
-						]}
+						filterItems={[]}
 					/>
 				</Grid.Col>
 				<Grid.Col span={{ xs: 12, lg: 9.5 }}>

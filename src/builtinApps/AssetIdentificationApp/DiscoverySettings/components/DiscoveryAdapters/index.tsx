@@ -1,35 +1,36 @@
 import { Badge, Card, Flex, Grid, LoadingOverlay, Text } from "@mantine/core";
 import { Accordion } from "@mantine/core";
+import { useViewportSize } from "@mantine/hooks";
 import { IconSearch } from "@tabler/icons-react";
 import { useState } from "react";
 
+import BCSideFilter, { type BCSideFilterItem } from "@/shared/components/baseComponents/BCSideFilter";
+import { useStableData } from "@/shared/hooks/useStableData";
+
 import { useDiscoveryAdapters } from "../../index.hooks";
 import type { DiscoveryAdapterFilters } from "../../index.types";
-
-import BCSideFilter, { type BCSideFilterItem } from "@/shared/components/baseComponents/BCSideFilter";
-import { useViewportSize } from "@mantine/hooks";
 import DiscoveryAdapterGateways from "./components/DiscoveryAdapterGateways";
 
 export default function DiscoverySettingsDiscoveryAdapters() {
+	const { height } = useViewportSize();
 	const [activeAccordion, setActiveAccordion] = useState<string | null>(null);
 	const [queryParams, setQueryParams] = useState<DiscoveryAdapterFilters>({ type: "discovery" });
 	const { discoveryAdapters } = useDiscoveryAdapters(queryParams);
-
-	const { height } = useViewportSize();
+	const filters = discoveryAdapters?.data?.metadata?.filters;
 
 	const handleUpdateQueryParams = (params: Partial<DiscoveryAdapterFilters>) => {
 		setQueryParams((perParams) => ({ ...perParams, ...params }));
 	};
 
+	const stableFilters = useStableData<typeof filters>(filters);
 	const dynamicFilters: BCSideFilterItem[] =
-		discoveryAdapters?.data?.metadata?.filters?.map((filter) => {
+		stableFilters?.map((filter) => {
 			const filterItem: BCSideFilterItem = {
 				items: filter.items,
 				label: filter.label,
 				name: filter.param,
 				type: "CheckedList",
 			};
-
 			return filterItem;
 		}) || [];
 
@@ -46,7 +47,6 @@ export default function DiscoverySettingsDiscoveryAdapters() {
 							type: "Switch",
 							label: "Show only used adapters",
 						},
-
 						...dynamicFilters,
 					]}
 					searchPlaceholder={"Search by adapter Name"}
