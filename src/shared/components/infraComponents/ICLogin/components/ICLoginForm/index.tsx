@@ -84,7 +84,6 @@ export default function ICLoginForm() {
 									<TextInput
 										required
 										size={"lg"}
-										autoComplete={"new-password"}
 										leftSection={<IconUserCircle />}
 										{...form.getInputProps("username")}
 										label={"Username"}
@@ -92,7 +91,6 @@ export default function ICLoginForm() {
 									<PasswordInput
 										minLength={8}
 										required
-										autoComplete={"new-password"}
 										size={"lg"}
 										leftSection={<IconLock />}
 										{...form.getInputProps("password")}
