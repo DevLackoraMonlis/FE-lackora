@@ -2,6 +2,7 @@ import { ActionIcon, Box, Button, Flex, LoadingOverlay } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { randomId, useDisclosure } from "@mantine/hooks";
 import { IconCheck, IconPlus, IconX } from "@tabler/icons-react";
+import { Fragment } from "react";
 
 import { configsCreateTransformRq, getDynamicField } from "@/shared/components/baseComponents/BCDynamicField";
 import type { BCDynamicFieldRs } from "@/shared/components/baseComponents/BCDynamicField/index.types";
@@ -54,26 +55,30 @@ const NoneCredentialCreate = (props: Props) => {
 		<Flex key={item.key} gap="xs" mt="xs">
 			<Flex gap="xs" w="100%">
 				{props.fields.map(({ label, key, ...item }) => {
-					return getDynamicField({
-						otherElementOptions: { withAsterisk: true, style: { flex: 1 } },
-						formInputProps: {
-							key: form.key(`list.${index}.${key}`),
-							...form.getInputProps(`list.${index}.${key}`),
-						},
-						label: "",
-						renderFooterInList: key === "web_service" && (
-							<Button
-								size="sm"
-								leftSection={<IconPlus size={15} />}
-								variant="transparent"
-								onClick={handleCreateWebService.open}
-							>
-								Add Custom Web Service
-							</Button>
-						),
-						key,
-						...item,
-					});
+					return (
+						<Fragment key={key}>
+							{getDynamicField({
+								otherElementOptions: { withAsterisk: true, style: { flex: 1 } },
+								formInputProps: {
+									key: form.key(`list.${index}.${key}`),
+									...form.getInputProps(`list.${index}.${key}`),
+								},
+								label: "",
+								renderFooterInList: key === "web_service" && (
+									<Button
+										size="sm"
+										leftSection={<IconPlus size={15} />}
+										variant="transparent"
+										onClick={handleCreateWebService.open}
+									>
+										Add Custom Web Service
+									</Button>
+								),
+								key,
+								...item,
+							})}
+						</Fragment>
+					);
 				})}
 			</Flex>
 			<Flex gap="xs" align="center">

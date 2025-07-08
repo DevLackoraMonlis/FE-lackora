@@ -1,6 +1,6 @@
 import { ActionIcon, Flex } from "@mantine/core";
 import { IconPencil, IconX } from "@tabler/icons-react";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 
 import { getDynamicField } from "@/shared/components/baseComponents/BCDynamicField";
 import type {
@@ -35,14 +35,18 @@ const NoneCredentialAdaptersCard = ({ showLabel, id, configs, isActive, ...props
 				{props.fields.map((item) => {
 					const { label, key, ...field } = item;
 					const defaultValue = configs?.find(({ key: valueKey }) => key === valueKey)?.value;
-					return getDynamicField({
-						otherElementOptions: { withAsterisk: true, style: { flex: 1 } },
-						...field,
-						key,
-						defaultValue,
-						disabled: true,
-						label: showLabel ? label : "",
-					});
+					return (
+						<Fragment key={key}>
+							{getDynamicField({
+								otherElementOptions: { withAsterisk: true, style: { flex: 1 } },
+								...field,
+								key,
+								defaultValue,
+								disabled: true,
+								label: showLabel ? label : "",
+							})}
+						</Fragment>
+					);
 				})}
 			</Flex>
 			<Flex gap="xs" align="center" mt={showLabel ? "2lg" : ""}>
