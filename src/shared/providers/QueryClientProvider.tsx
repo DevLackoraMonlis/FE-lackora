@@ -31,7 +31,7 @@ const queryClient = new QueryClient({
 					message: getSuccessMessage(response as CustomSuccess, mutationContext),
 					color: "green",
 					withBorder: true,
-					hidden: mutationContext.hideSuccessMessage,
+					hidden: mutationContext?.hideSuccessMessage,
 				});
 			},
 		},

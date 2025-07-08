@@ -41,7 +41,7 @@ const NoneCredentialServices = ({ enabled, adapterId, fields }: Props) => {
 	return (
 		<>
 			<Flex gap="xs" direction="column" pos="relative" mih="50px">
-				<LoadingOverlay visible={discoverySettingConfigurations?.isFetching} />
+				<LoadingOverlay visible={discoverySettingConfigurations?.isLoading} />
 				{discoverySettingConfigurations.data?.results?.map(({ configs, id, isActive, editable }, idx) => (
 					<NoneCredentialAdaptersCard
 						key={id}

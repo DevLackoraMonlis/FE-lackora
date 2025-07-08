@@ -1,12 +1,14 @@
 import { ActionIcon, Box, Button, Flex, LoadingOverlay } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { randomId } from "@mantine/hooks";
+import { randomId, useDisclosure } from "@mantine/hooks";
 import { IconCheck, IconPlus, IconX } from "@tabler/icons-react";
+import { Fragment } from "react";
 
 import { configsCreateTransformRq, getDynamicField } from "@/shared/components/baseComponents/BCDynamicField";
 import type { BCDynamicFieldRs } from "@/shared/components/baseComponents/BCDynamicField/index.types";
 
 import { useCreateDiscoverySetting } from "../../../../index.hooks";
+import NoneCredentialCreateWebService from "../NoneCredentialCreateWebService";
 
 type FormValues = { list: { [key: string]: string }[] };
 
@@ -18,6 +20,7 @@ type Props = {
 };
 
 const NoneCredentialCreate = (props: Props) => {
+	const [createWebService, handleCreateWebService] = useDisclosure();
 	const { createDiscoverySetting } = useCreateDiscoverySetting();
 
 	const insertListItem = props.fields.reduce(
@@ -51,16 +54,32 @@ const NoneCredentialCreate = (props: Props) => {
 	const fields = form.getValues().list.map((item, index) => (
 		<Flex key={item.key} gap="xs" mt="xs">
 			<Flex gap="xs" w="100%">
-				{props.fields.map(({ label, ...item }) => {
-					return getDynamicField({
-						otherElementOptions: { withAsterisk: true, style: { flex: 1 } },
-						formInputProps: {
-							key: form.key(`list.${index}.${item.key}`),
-							...form.getInputProps(`list.${index}.${item.key}`),
-						},
-						label: "",
-						...item,
-					});
+				{props.fields.map(({ label, key, ...item }) => {
+					return (
+						<Fragment key={`list.${index + 1}.${key}`}>
+							{getDynamicField({
+								otherElementOptions: { withAsterisk: true, style: { flex: 1 } },
+								formInputProps: {
+									key: form.key(`list.${index}.${key}`),
+									...form.getInputProps(`list.${index}.${key}`),
+								},
+								renderFooterInList: key === "web_service" && (
+									<Button
+										size="sm"
+										leftSection={<IconPlus size={15} />}
+										variant="transparent"
+										onClick={handleCreateWebService.open}
+									>
+										Add Custom Web Service
+									</Button>
+								),
+								label: "",
+								placeholder: label,
+								key,
+								...item,
+							})}
+						</Fragment>
+					);
 				})}
 			</Flex>
 			<Flex gap="xs" align="center">
@@ -84,6 +103,7 @@ const NoneCredentialCreate = (props: Props) => {
 		<Box pos="relative">
 			<LoadingOverlay visible={createDiscoverySetting.isPending} />
 			{fields}
+			{createWebService && <NoneCredentialCreateWebService onCancel={handleCreateWebService.close} />}
 			<Button
 				mt="sm"
 				leftSection={<IconPlus size={20} />}

@@ -1,6 +1,6 @@
 import { ActionIcon, Flex } from "@mantine/core";
 import { IconPencil, IconX } from "@tabler/icons-react";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 
 import { getDynamicField } from "@/shared/components/baseComponents/BCDynamicField";
 import type {
@@ -32,17 +32,21 @@ const NoneCredentialAdaptersCard = ({ showLabel, id, configs, isActive, ...props
 	return (
 		<Flex gap="xs" mt="2xs" align="center">
 			<Flex align="center" gap="xs" w="100%">
-				{props.fields.map((item) => {
+				{props.fields.map((item, idx) => {
 					const { label, key, ...field } = item;
 					const defaultValue = configs?.find(({ key: valueKey }) => key === valueKey)?.value;
-					return getDynamicField({
-						otherElementOptions: { withAsterisk: true, style: { flex: 1 } },
-						...field,
-						key,
-						defaultValue,
-						disabled: true,
-						label: showLabel ? label : "",
-					});
+					return (
+						<Fragment key={`${key}-${idx + 1}`}>
+							{getDynamicField({
+								otherElementOptions: { withAsterisk: true, style: { flex: 1 } },
+								...field,
+								key,
+								defaultValue,
+								disabled: true,
+								label: showLabel ? label : "",
+							})}
+						</Fragment>
+					);
 				})}
 			</Flex>
 			<Flex gap="xs" align="center" mt={showLabel ? "2lg" : ""}>
@@ -63,7 +67,7 @@ const NoneCredentialAdaptersCard = ({ showLabel, id, configs, isActive, ...props
 					onConfirm={props.handleDeleteAdapterConfigurations}
 					confirmBtnColor="red"
 					confirmBtnText="Delete"
-					message="Are you sure to delete gateway ?"
+					message="Are you sure to delete record ?"
 					renderProps={(onToggle) => (
 						<ActionIcon onClick={onToggle} title="Delete" variant="subtle" c="gray.8" bg="gray.2" size="lg">
 							<IconX size={20} />

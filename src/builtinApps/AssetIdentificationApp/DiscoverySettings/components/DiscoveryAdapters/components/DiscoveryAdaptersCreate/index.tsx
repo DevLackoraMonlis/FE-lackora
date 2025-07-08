@@ -2,6 +2,7 @@ import { ActionIcon, Box, Button, Fieldset, Flex, LoadingOverlay } from "@mantin
 import { useForm } from "@mantine/form";
 import { randomId } from "@mantine/hooks";
 import { IconCheck, IconPlus, IconX } from "@tabler/icons-react";
+import { Fragment } from "react";
 
 import { getDynamicField } from "@/shared/components/baseComponents/BCDynamicField";
 import { configsCreateTransformRq } from "@/shared/components/baseComponents/BCDynamicField";
@@ -53,16 +54,18 @@ const DiscoveryAdaptersCreateGateway = (props: Props) => {
 		<Flex key={item.key} gap="xs" mt="xs">
 			<Fieldset variant="filled" w="100%" pb="xs" pt="2xs">
 				<Flex gap="xs">
-					{props.fields.map((item) =>
-						getDynamicField({
-							otherElementOptions: { withAsterisk: true, style: { flex: 1 } },
-							formInputProps: {
-								key: form.key(`list.${index}.${item.key}`),
-								...form.getInputProps(`list.${index}.${item.key}`),
-							},
-							...item,
-						}),
-					)}
+					{props.fields.map((item) => (
+						<Fragment key={`list.${index + 1}.${item.key}`}>
+							{getDynamicField({
+								otherElementOptions: { withAsterisk: true, style: { flex: 1 } },
+								formInputProps: {
+									key: form.key(`list.${index}.${item.key}`),
+									...form.getInputProps(`list.${index}.${item.key}`),
+								},
+								...item,
+							})}
+						</Fragment>
+					))}
 				</Flex>
 			</Fieldset>
 			<Flex direction="column" gap="xs" justify="space-between" align="center">

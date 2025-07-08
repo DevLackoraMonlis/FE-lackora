@@ -1,8 +1,8 @@
 import { NumberInput, Select, TextInput, Textarea } from "@mantine/core";
-import { isNotEmpty } from "@mantine/form";
 import { isObject } from "lodash";
 
 import { getObjectRelatedRecords } from "@/http/generated/object-management";
+import { validateIP, validateInput } from "@/shared/lib/utils";
 
 import ListDynamicField from "./components/ListDynamicField";
 import type { BCDynamicConfigRs, BCDynamicFieldProps, BCDynamicFieldRs } from "./index.types";
@@ -20,6 +20,7 @@ export function getDynamicField<TObjectType extends string>({
 	objectType,
 	paginate,
 	disabled,
+	renderFooterInList,
 }: BCDynamicFieldProps<TObjectType>) {
 	if (objectType) type = "List";
 
@@ -41,6 +42,7 @@ export function getDynamicField<TObjectType extends string>({
 						api,
 						objectType,
 						paginate,
+						renderFooterInList,
 						...commonOptions,
 						defaultValue,
 					}}
@@ -79,11 +81,11 @@ export function getDynamicFieldValidate<T extends string>(
 			switch (type) {
 				case "IP":
 					accumulator[key] = (value: string) => {
-						return value ? null : required ? isNotEmpty("Filed is required") : null;
+						return value ? validateIP(value) : validateInput(value, { required: !!required });
 					};
 					break;
 				default:
-					accumulator[key] = () => (required ? isNotEmpty("Filed is required") : null);
+					accumulator[key] = (value: string) => validateInput(value, { required: !!required });
 					break;
 			}
 			return accumulator;
@@ -104,13 +106,13 @@ export const configsTransformRs = (configs: BCDynamicConfigRs[]) => {
 
 export const configsUpdateTransformRq = (configs: BCDynamicConfigRs[], values: Record<string, unknown>) => {
 	return (
-		configs?.map(({ value, key, id, type, idAsValue }) => {
+		configs?.map(({ key, idAsValue }) => {
 			const customValue = values[key] as string;
 			return {
-				type,
+				type: idAsValue ? key : null,
 				key,
-				id: idAsValue ? customValue : id,
-				value: idAsValue ? (isObject(value) ? value?.value || null : null) : customValue,
+				id: idAsValue ? customValue : null,
+				value: idAsValue ? null : customValue,
 			};
 		}) || []
 	);
@@ -118,10 +120,13 @@ export const configsUpdateTransformRq = (configs: BCDynamicConfigRs[], values: R
 
 export const configsCreateTransformRq = (fields: BCDynamicFieldRs[], values: Record<string, unknown>) => {
 	return Object.entries(values).map(([key, value]) => {
-		const idAsValue = !!fields?.find(({ key: fieldKey }) => key === fieldKey)?.objectType;
-		const valueOrId = { [idAsValue ? "id" : "value"]: value };
+		const objectType = fields?.find(({ key: fieldKey }) => key === fieldKey)?.objectType;
+		const valueOrId = { [objectType ? "id" : "value"]: value };
 		return {
 			key,
+			type: objectType || null,
+			value: null,
+			id: null,
 			...valueOrId,
 		};
 	});
