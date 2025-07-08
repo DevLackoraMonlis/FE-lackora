@@ -1,16 +1,19 @@
 import { Center, InputBase, type InputBaseProps } from "@mantine/core";
 import { Combobox, Loader, Pagination, useCombobox } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
-import { isObject } from "lodash";
+import { isNumber, isObject } from "lodash";
 import { useEffect, useState } from "react";
 
 import { useTablePagination } from "@/shared/hooks/useTablePagination";
 import type { LabelValueType } from "@/shared/lib/general-types";
 
+import { GET_OBJECT_DATA_QUERY_KEY } from "../../index.constants";
 import type { BCDynamicFieldProps } from "../../index.types";
 
 type Props<TObject extends string> = InputBaseProps &
-	Omit<BCDynamicFieldProps<TObject>, "key"> & { onChange?: (value: string) => void };
+	Omit<BCDynamicFieldProps<TObject>, "key"> & {
+		onChange?: (value: string) => void;
+	};
 
 export default function ListDynamicField<TObject extends string>({
 	api,
@@ -18,6 +21,7 @@ export default function ListDynamicField<TObject extends string>({
 	paginate,
 	defaultValue = null,
 	onChange,
+	renderFooterInList,
 	...props
 }: Props<TObject>) {
 	const [selected, setSelectedValue] = useState<LabelValueType | null>(
@@ -30,7 +34,13 @@ export default function ListDynamicField<TObject extends string>({
 
 	const getObjectQuery = useQuery({
 		enabled: !!objectType,
-		queryKey: ["get-object-data", objectType, tablePagination.page, tablePagination.recordsPerPage, search],
+		queryKey: [
+			GET_OBJECT_DATA_QUERY_KEY,
+			objectType,
+			tablePagination.page,
+			tablePagination.recordsPerPage,
+			search,
+		],
 		refetchOnMount: false,
 		queryFn: ({ signal }) =>
 			api?.(
@@ -45,7 +55,7 @@ export default function ListDynamicField<TObject extends string>({
 	});
 
 	useEffect(() => {
-		if (getObjectQuery.data?.data.total) {
+		if (isNumber(getObjectQuery.data?.data.total)) {
 			setTotalRecords(getObjectQuery.data?.data?.total);
 		}
 	}, [getObjectQuery.data?.data.total]);
@@ -71,8 +81,9 @@ export default function ListDynamicField<TObject extends string>({
 
 	return (
 		<Combobox
+			position="bottom"
 			store={combobox}
-			withinPortal={false}
+			withinPortal={true}
 			onOptionSubmit={(_, { children, value }) => {
 				onChange?.(value);
 				setSelectedValue({ label: children as string, value });
@@ -85,7 +96,7 @@ export default function ListDynamicField<TObject extends string>({
 					component="button"
 					type="button"
 					pointer
-					rightSection={getObjectQuery.isFetching ? <Loader size="xs" /> : <Combobox.Chevron />}
+					rightSection={getObjectQuery.isLoading ? <Loader size="xs" /> : <Combobox.Chevron />}
 					onClick={() => combobox.toggleDropdown()}
 					rightSectionPointerEvents="none"
 				>
@@ -95,15 +106,14 @@ export default function ListDynamicField<TObject extends string>({
 			<Combobox.Dropdown bd="1px solid gray.4">
 				<Combobox.Search
 					value={search}
-					onChange={(event) => setSearch(event.currentTarget.value)}
+					onChange={(event) => {
+						tablePagination.onPageChange(1);
+						setSearch(event.currentTarget.value);
+					}}
 					placeholder="Search"
 				/>
 				<Combobox.Options style={{ maxHeight: 200, overflow: "auto" }}>
-					{getObjectQuery.isFetching ? (
-						<Center h="100%">
-							<Loader />
-						</Center>
-					) : options?.length ? (
+					{options?.length ? (
 						options
 					) : (
 						<Center h="100%">
@@ -118,12 +128,13 @@ export default function ListDynamicField<TObject extends string>({
 								size="sm"
 								withControls={false}
 								value={page}
-								total={totalRecords / pageSize}
+								total={Math.ceil(totalRecords / pageSize)}
 								onChange={(value) => tablePagination.onPageChange(value)}
 							/>
 						</Center>
 					</Combobox.Footer>
 				)}
+				{!!renderFooterInList && <Combobox.Footer bg="gray.2"> {renderFooterInList} </Combobox.Footer>}
 			</Combobox.Dropdown>
 		</Combobox>
 	);

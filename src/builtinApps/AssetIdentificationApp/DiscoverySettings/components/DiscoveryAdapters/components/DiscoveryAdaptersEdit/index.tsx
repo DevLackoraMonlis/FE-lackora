@@ -2,7 +2,7 @@ import { ActionIcon, Box, Fieldset, Flex, LoadingOverlay } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { IconCheck, IconX } from "@tabler/icons-react";
 import { isObject } from "lodash";
-import { useEffect } from "react";
+import { Fragment, useEffect } from "react";
 
 import { configsUpdateTransformRq, getDynamicField } from "@/shared/components/baseComponents/BCDynamicField";
 import type {
@@ -52,21 +52,25 @@ const DiscoveryAdaptersForm = ({
 				<Flex gap="xs" mt="xs">
 					<Fieldset variant="filled" w="100%" pb="xs" pt="2xs">
 						<Flex gap="xs">
-							{fields.map(({ key, ...item }) => {
+							{fields.map(({ key, ...item }, idx) => {
 								const defaultValue = configs?.find(({ key: configKey }) => key === configKey)?.value;
-								return getDynamicField({
-									otherElementOptions: {
-										withAsterisk: true,
-										style: { flex: 1 },
-									},
-									formInputProps: {
-										key: form.key(key),
-										...form.getInputProps(key),
-									},
-									defaultValue,
-									key,
-									...item,
-								});
+								return (
+									<Fragment key={`${key}-${idx + 1}`}>
+										{getDynamicField({
+											otherElementOptions: {
+												withAsterisk: true,
+												style: { flex: 1 },
+											},
+											formInputProps: {
+												key: form.key(key),
+												...form.getInputProps(key),
+											},
+											defaultValue,
+											key,
+											...item,
+										})}
+									</Fragment>
+								);
 							})}
 						</Flex>
 					</Fieldset>

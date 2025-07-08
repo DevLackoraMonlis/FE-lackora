@@ -1,6 +1,7 @@
 import type { PaginationRq, PaginationRs } from "@/http/end-points/GeneralService.types";
 import type { LabelValueType } from "@/shared/lib/general-types";
 import type { AxiosResponse } from "axios";
+import type { ReactNode } from "react";
 
 export type BCDynamicFieldType =
 	| "Int64"
@@ -25,6 +26,7 @@ export type BCDynamicFieldProps<T extends string> = {
 	objectType?: T | null;
 	type?: BCDynamicFieldType | null;
 	options?: LabelValueType[] | null;
+	renderFooterInList?: ReactNode;
 	api?: (
 		variables: PaginationRq<{ object_type?: string | null }>,
 		signal?: AbortSignal,

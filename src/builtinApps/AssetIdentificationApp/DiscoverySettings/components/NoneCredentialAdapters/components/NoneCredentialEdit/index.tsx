@@ -2,7 +2,7 @@ import { ActionIcon, Box, Flex, LoadingOverlay } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { IconCheck, IconX } from "@tabler/icons-react";
 import { isObject } from "lodash";
-import { useEffect } from "react";
+import { Fragment, useEffect } from "react";
 
 import { configsUpdateTransformRq, getDynamicField } from "@/shared/components/baseComponents/BCDynamicField";
 import type {
@@ -51,19 +51,26 @@ const NoneCredentialEditForm = ({
 			<form onSubmit={form.onSubmit(handleSubmit)}>
 				<Flex gap="xs" mt="xs">
 					<Flex gap="xs" w="100%">
-						{fields.map(({ label, ...item }) => {
-							return getDynamicField({
-								otherElementOptions: {
-									withAsterisk: true,
-									style: { flex: 1 },
-								},
-								formInputProps: {
-									key: form.key(item.key),
-									...form.getInputProps(item.key),
-								},
-								label: "",
-								...item,
-							});
+						{fields.map(({ label, key, ...item }, idx) => {
+							const defaultValue = configs?.find(({ key: valueKey }) => key === valueKey)?.value;
+							return (
+								<Fragment key={`${key}-${idx + 1}`}>
+									{getDynamicField({
+										otherElementOptions: {
+											withAsterisk: true,
+											style: { flex: 1 },
+										},
+										formInputProps: {
+											key: form.key(key),
+											...form.getInputProps(key),
+										},
+										key,
+										defaultValue,
+										label: "",
+										...item,
+									})}
+								</Fragment>
+							);
 						})}
 					</Flex>
 					<Flex gap="xs" align="center">
