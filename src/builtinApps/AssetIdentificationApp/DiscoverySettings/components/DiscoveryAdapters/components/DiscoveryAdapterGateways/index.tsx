@@ -32,10 +32,19 @@ const DiscoveryAdapterGateways = ({ enabled, adapterId, fields }: Props) => {
 	};
 
 	const { editDiscoverySetting } = useEditDiscoverySetting();
-	const handleEditAdapterConfigurations = (configuration_id: string, configs: BCDynamicConfigRq[]) => {
+	const handleEditAdapterConfigurations = (
+		configuration_id: string,
+		configs: BCDynamicConfigRq[],
+		callback: VoidFunction,
+	) => {
 		editDiscoverySetting.mutate(
 			{ adapterId, data: { configs, configuration_id } },
-			{ onSuccess: () => discoverySettingConfigurations.refetch() },
+			{
+				onSuccess: () => {
+					discoverySettingConfigurations.refetch();
+					callback();
+				},
+			},
 		);
 	};
 
@@ -48,7 +57,9 @@ const DiscoveryAdapterGateways = ({ enabled, adapterId, fields }: Props) => {
 						key={id}
 						loading={deleteDiscoverySetting.isPending || editDiscoverySetting.isPending}
 						handleDeleteAdapterConfigurations={() => handleDeleteAdapterConfigurations(id)}
-						handleEditAdapterConfigurations={(newConfigs) => handleEditAdapterConfigurations(id, newConfigs)}
+						handleEditAdapterConfigurations={(newConfigs, callback) =>
+							handleEditAdapterConfigurations(id, newConfigs, callback)
+						}
 						{...{ configs, id, isActive, editable, fields }}
 					/>
 				))}

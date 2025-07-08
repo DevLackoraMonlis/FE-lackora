@@ -16,7 +16,7 @@ type FormValues = Record<string, unknown>;
 
 type Props = DiscoveryAdapterConfigurationRs & {
 	handleDeleteAdapterConfigurations: VoidFunction;
-	handleEditAdapterConfigurations: (configs: BCDynamicConfigRq[]) => void;
+	handleEditAdapterConfigurations: (configs: BCDynamicConfigRq[], callback: VoidFunction) => void;
 	fields: BCDynamicFieldRs[];
 	loading: boolean;
 	onCancel: VoidFunction;
@@ -33,7 +33,7 @@ const NoneCredentialEditForm = ({
 
 	const handleSubmit = (values: typeof form.values) => {
 		const updateValues = configsUpdateTransformRq(configs, values);
-		handleEditAdapterConfigurations(updateValues);
+		handleEditAdapterConfigurations(updateValues, onCancel);
 	};
 
 	useEffect(() => {

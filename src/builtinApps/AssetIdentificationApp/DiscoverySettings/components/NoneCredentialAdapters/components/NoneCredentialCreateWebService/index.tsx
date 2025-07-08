@@ -80,7 +80,7 @@ export default function NoneCredentialCreateWebService({ onCancel }: { onCancel:
 	const form = useForm<FormValues>({
 		validate: {
 			name: (value) => validateInput(value, { required: true }),
-			uri: (value) => validateInput(value, { required: true }),
+			uri: (value) => validateInput(value, { required: true, mustBeURI: true }),
 			matcher: (value) => validateInput(value, { required: true }),
 			code: (value) => validateInput(value, { required: true }),
 		},
