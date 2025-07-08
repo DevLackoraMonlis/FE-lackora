@@ -54,16 +54,15 @@ const NoneCredentialCreate = (props: Props) => {
 	const fields = form.getValues().list.map((item, index) => (
 		<Flex key={item.key} gap="xs" mt="xs">
 			<Flex gap="xs" w="100%">
-				{props.fields.map(({ label, key, ...item }) => {
+				{props.fields.map(({ label, key, ...item }, idx) => {
 					return (
-						<Fragment key={key}>
+						<Fragment key={`${key}-${idx + 1}`}>
 							{getDynamicField({
 								otherElementOptions: { withAsterisk: true, style: { flex: 1 } },
 								formInputProps: {
 									key: form.key(`list.${index}.${key}`),
 									...form.getInputProps(`list.${index}.${key}`),
 								},
-								label: "",
 								renderFooterInList: key === "web_service" && (
 									<Button
 										size="sm"
@@ -74,6 +73,8 @@ const NoneCredentialCreate = (props: Props) => {
 										Add Custom Web Service
 									</Button>
 								),
+								label: "",
+								placeholder: label,
 								key,
 								...item,
 							})}

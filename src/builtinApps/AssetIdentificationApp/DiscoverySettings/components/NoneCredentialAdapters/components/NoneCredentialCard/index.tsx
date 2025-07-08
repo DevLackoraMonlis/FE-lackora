@@ -32,11 +32,11 @@ const NoneCredentialAdaptersCard = ({ showLabel, id, configs, isActive, ...props
 	return (
 		<Flex gap="xs" mt="2xs" align="center">
 			<Flex align="center" gap="xs" w="100%">
-				{props.fields.map((item) => {
+				{props.fields.map((item, idx) => {
 					const { label, key, ...field } = item;
 					const defaultValue = configs?.find(({ key: valueKey }) => key === valueKey)?.value;
 					return (
-						<Fragment key={key}>
+						<Fragment key={`${key}-${idx + 1}`}>
 							{getDynamicField({
 								otherElementOptions: { withAsterisk: true, style: { flex: 1 } },
 								...field,

@@ -51,10 +51,10 @@ const NoneCredentialEditForm = ({
 			<form onSubmit={form.onSubmit(handleSubmit)}>
 				<Flex gap="xs" mt="xs">
 					<Flex gap="xs" w="100%">
-						{fields.map(({ label, key, ...item }) => {
+						{fields.map(({ label, key, ...item }, idx) => {
 							const defaultValue = configs?.find(({ key: valueKey }) => key === valueKey)?.value;
 							return (
-								<Fragment key={key}>
+								<Fragment key={`${key}-${idx + 1}`}>
 									{getDynamicField({
 										otherElementOptions: {
 											withAsterisk: true,

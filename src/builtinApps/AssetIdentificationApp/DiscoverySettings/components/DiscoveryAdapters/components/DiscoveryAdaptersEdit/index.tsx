@@ -52,10 +52,10 @@ const DiscoveryAdaptersForm = ({
 				<Flex gap="xs" mt="xs">
 					<Fieldset variant="filled" w="100%" pb="xs" pt="2xs">
 						<Flex gap="xs">
-							{fields.map(({ key, ...item }) => {
+							{fields.map(({ key, ...item }, idx) => {
 								const defaultValue = configs?.find(({ key: configKey }) => key === configKey)?.value;
 								return (
-									<Fragment key={key}>
+									<Fragment key={`${key}-${idx + 1}`}>
 										{getDynamicField({
 											otherElementOptions: {
 												withAsterisk: true,
