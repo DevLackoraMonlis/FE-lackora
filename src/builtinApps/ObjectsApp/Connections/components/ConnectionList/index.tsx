@@ -205,6 +205,7 @@ export default function ConnectionList() {
 				onClose={createSelectionTypeModalHandlers.close}
 			/>
 			<ConnectionCreateSSHModal
+				key={"SSH"}
 				loading={getConnectionQuery.isFetching}
 				initialFormValues={
 					getConnectionQuery.data?.data && {
@@ -242,6 +243,7 @@ export default function ConnectionList() {
 				}}
 			/>
 			<ConnectionCreateSNMPModal
+				key={"SNMP"}
 				loading={getConnectionQuery.isFetching}
 				initialFormValues={
 					getConnectionQuery.data?.data && {
@@ -284,6 +286,7 @@ export default function ConnectionList() {
 				}}
 			/>
 			<ConnectionCreateHTTPModal
+				key={"HTTP"}
 				loading={getConnectionQuery.isFetching}
 				initialFormValues={
 					getConnectionQuery.data?.data && {

@@ -76,7 +76,13 @@ export default function ConnectionCreateSNMPFormSettings(
 		<ConnectionCreateFormSections
 			generalInfoSection={
 				<Flex gap={"xs"} direction={"column"} p={"lg"}>
-					<TextInput key={"name"} required label={"Connection Name"} {...form.getInputProps("name")} />
+					<TextInput
+						autoComplete={"new-password"}
+						key={"name"}
+						required
+						label={"Connection Name"}
+						{...form.getInputProps("name")}
+					/>
 					<Textarea
 						rows={3}
 						key={"description"}

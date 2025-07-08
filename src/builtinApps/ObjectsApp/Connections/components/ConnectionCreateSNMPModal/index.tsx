@@ -192,6 +192,8 @@ export default function ConnectionCreateSNMPModal(
 	useEffect(() => {
 		if (props.initialFormValues) {
 			form.setValues(props.initialFormValues);
+		} else {
+			form.reset();
 		}
 	}, [props.initialFormValues, form.setValues]);
 

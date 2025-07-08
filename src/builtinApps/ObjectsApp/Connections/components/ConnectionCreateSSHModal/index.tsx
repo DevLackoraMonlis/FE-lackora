@@ -162,6 +162,8 @@ export default function ConnectionCreateSSHModal(
 	useEffect(() => {
 		if (props.initialFormValues) {
 			form.setValues(props.initialFormValues);
+		} else {
+			form.reset();
 		}
 	}, [props.initialFormValues, form.setValues]);
 
