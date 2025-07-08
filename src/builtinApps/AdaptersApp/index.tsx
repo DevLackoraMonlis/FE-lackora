@@ -91,7 +91,7 @@ export default function AdapterManagementLandingPage() {
 									mt="xs"
 									withControls={false}
 									value={page}
-									total={totalRecords / pageSize}
+									total={Math.ceil(totalRecords / pageSize)}
 									onChange={(value) => tablePagination.onPageChange(value)}
 								/>
 							</Center>

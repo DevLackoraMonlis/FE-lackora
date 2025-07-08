@@ -129,7 +129,7 @@ export default function ListDynamicField<TObject extends string>({
 								size="sm"
 								withControls={false}
 								value={page}
-								total={totalRecords / pageSize}
+								total={Math.ceil(totalRecords / pageSize)}
 								onChange={(value) => tablePagination.onPageChange(value)}
 							/>
 						</Center>
