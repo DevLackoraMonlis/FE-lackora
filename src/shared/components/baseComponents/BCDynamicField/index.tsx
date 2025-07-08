@@ -106,13 +106,13 @@ export const configsTransformRs = (configs: BCDynamicConfigRs[]) => {
 
 export const configsUpdateTransformRq = (configs: BCDynamicConfigRs[], values: Record<string, unknown>) => {
 	return (
-		configs?.map(({ value, key, id, type, idAsValue }) => {
+		configs?.map(({ key, type, idAsValue }) => {
 			const customValue = values[key] as string;
 			return {
 				type,
 				key,
-				id: idAsValue ? customValue : id,
-				value: idAsValue ? (isObject(value) ? value?.value || null : null) : customValue,
+				id: idAsValue ? customValue : null,
+				value: idAsValue ? null : customValue,
 			};
 		}) || []
 	);
@@ -124,6 +124,9 @@ export const configsCreateTransformRq = (fields: BCDynamicFieldRs[], values: Rec
 		const valueOrId = { [idAsValue ? "id" : "value"]: value };
 		return {
 			key,
+			type: null,
+			value: null,
+			id: null,
 			...valueOrId,
 		};
 	});

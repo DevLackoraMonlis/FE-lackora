@@ -73,7 +73,7 @@ const DiscoveryAdapterCard = ({ id, configs, isActive, loading, ...props }: Prop
 						onConfirm={props.handleDeleteAdapterConfigurations}
 						confirmBtnColor="red"
 						confirmBtnText="Delete"
-						message="Are you sure to delete gateway ?"
+						message="Are you sure to delete record ?"
 						renderProps={(onToggle) => (
 							<ActionIcon onClick={onToggle} title="Delete" variant="subtle" c="gray.8">
 								<IconX size={20} />

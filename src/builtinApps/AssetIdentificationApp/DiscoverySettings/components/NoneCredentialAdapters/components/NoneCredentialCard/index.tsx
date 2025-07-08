@@ -63,7 +63,7 @@ const NoneCredentialAdaptersCard = ({ showLabel, id, configs, isActive, ...props
 					onConfirm={props.handleDeleteAdapterConfigurations}
 					confirmBtnColor="red"
 					confirmBtnText="Delete"
-					message="Are you sure to delete gateway ?"
+					message="Are you sure to delete record ?"
 					renderProps={(onToggle) => (
 						<ActionIcon onClick={onToggle} title="Delete" variant="subtle" c="gray.8" bg="gray.2" size="lg">
 							<IconX size={20} />

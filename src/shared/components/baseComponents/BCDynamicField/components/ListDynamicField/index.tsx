@@ -81,8 +81,9 @@ export default function ListDynamicField<TObject extends string>({
 
 	return (
 		<Combobox
+			position="bottom"
 			store={combobox}
-			withinPortal={false}
+			withinPortal={true}
 			onOptionSubmit={(_, { children, value }) => {
 				onChange?.(value);
 				setSelectedValue({ label: children as string, value });

@@ -1,12 +1,13 @@
 import { ActionIcon, Box, Button, Flex, LoadingOverlay } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { randomId } from "@mantine/hooks";
+import { randomId, useDisclosure } from "@mantine/hooks";
 import { IconCheck, IconPlus, IconX } from "@tabler/icons-react";
 
 import { configsCreateTransformRq, getDynamicField } from "@/shared/components/baseComponents/BCDynamicField";
 import type { BCDynamicFieldRs } from "@/shared/components/baseComponents/BCDynamicField/index.types";
 
 import { useCreateDiscoverySetting } from "../../../../index.hooks";
+import NoneCredentialCreateWebService from "../NoneCredentialCreateWebService";
 
 type FormValues = { list: { [key: string]: string }[] };
 
@@ -18,6 +19,7 @@ type Props = {
 };
 
 const NoneCredentialCreate = (props: Props) => {
+	const [createWebService, handleCreateWebService] = useDisclosure();
 	const { createDiscoverySetting } = useCreateDiscoverySetting();
 
 	const insertListItem = props.fields.reduce(
@@ -60,7 +62,12 @@ const NoneCredentialCreate = (props: Props) => {
 						},
 						label: "",
 						renderFooterInList: key === "web_service" && (
-							<Button size="sm" leftSection={<IconPlus size={15} />} variant="transparent">
+							<Button
+								size="sm"
+								leftSection={<IconPlus size={15} />}
+								variant="transparent"
+								onClick={handleCreateWebService.open}
+							>
 								Add Custom Web Service
 							</Button>
 						),
@@ -90,6 +97,7 @@ const NoneCredentialCreate = (props: Props) => {
 		<Box pos="relative">
 			<LoadingOverlay visible={createDiscoverySetting.isPending} />
 			{fields}
+			{createWebService && <NoneCredentialCreateWebService onCancel={handleCreateWebService.close} />}
 			<Button
 				mt="sm"
 				leftSection={<IconPlus size={20} />}

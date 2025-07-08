@@ -1,6 +1,6 @@
-import { ActionIcon, Box, Button, Flex, LoadingOverlay } from "@mantine/core";
+import { ActionIcon, Box, Flex, LoadingOverlay } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { IconCheck, IconPlus, IconX } from "@tabler/icons-react";
+import { IconCheck, IconX } from "@tabler/icons-react";
 import { isObject } from "lodash";
 import { useEffect } from "react";
 
@@ -65,11 +65,6 @@ const NoneCredentialEditForm = ({
 								key,
 								defaultValue,
 								label: "",
-								renderFooterInList: key === "web_service" && (
-									<Button size="sm" leftSection={<IconPlus size={15} />} variant="transparent">
-										Add Custom Web Service
-									</Button>
-								),
 								...item,
 							});
 						})}
