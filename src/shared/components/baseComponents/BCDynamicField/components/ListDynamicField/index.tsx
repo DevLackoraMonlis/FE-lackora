@@ -1,7 +1,7 @@
 import { Center, InputBase, type InputBaseProps } from "@mantine/core";
 import { Combobox, Loader, Pagination, useCombobox } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
-import { isObject } from "lodash";
+import { isNumber, isObject } from "lodash";
 import { useEffect, useState } from "react";
 
 import { useTablePagination } from "@/shared/hooks/useTablePagination";
@@ -55,7 +55,7 @@ export default function ListDynamicField<TObject extends string>({
 	});
 
 	useEffect(() => {
-		if (getObjectQuery.data?.data.total) {
+		if (isNumber(getObjectQuery.data?.data.total)) {
 			setTotalRecords(getObjectQuery.data?.data?.total);
 		}
 	}, [getObjectQuery.data?.data.total]);
@@ -96,7 +96,7 @@ export default function ListDynamicField<TObject extends string>({
 					component="button"
 					type="button"
 					pointer
-					rightSection={getObjectQuery.isFetching ? <Loader size="xs" /> : <Combobox.Chevron />}
+					rightSection={getObjectQuery.isLoading ? <Loader size="xs" /> : <Combobox.Chevron />}
 					onClick={() => combobox.toggleDropdown()}
 					rightSectionPointerEvents="none"
 				>
@@ -113,11 +113,7 @@ export default function ListDynamicField<TObject extends string>({
 					placeholder="Search"
 				/>
 				<Combobox.Options style={{ maxHeight: 200, overflow: "auto" }}>
-					{getObjectQuery.isFetching ? (
-						<Center h="100%">
-							<Loader />
-						</Center>
-					) : options?.length ? (
+					{options?.length ? (
 						options
 					) : (
 						<Center h="100%">
