@@ -54,8 +54,8 @@ const DiscoveryAdaptersCreateGateway = (props: Props) => {
 		<Flex key={item.key} gap="xs" mt="xs">
 			<Fieldset variant="filled" w="100%" pb="xs" pt="2xs">
 				<Flex gap="xs">
-					{props.fields.map((item, idx) => (
-						<Fragment key={`${item.key}-${idx + 1}`}>
+					{props.fields.map((item) => (
+						<Fragment key={`list.${index + 1}.${item.key}`}>
 							{getDynamicField({
 								otherElementOptions: { withAsterisk: true, style: { flex: 1 } },
 								formInputProps: {
