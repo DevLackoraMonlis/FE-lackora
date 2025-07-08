@@ -16,6 +16,7 @@ import {
 	Radio,
 	RadioGroup,
 	TextInput,
+	Textarea,
 } from "@mantine/core";
 
 export default function ConnectionCreateHTTPFormSettings(
@@ -25,12 +26,18 @@ export default function ConnectionCreateHTTPFormSettings(
 
 	return (
 		<ConnectionCreateFormSections
-			connectionNameInputProps={{
-				...form.getInputProps("name"),
-			}}
-			connectionDescriptionInputProps={{
-				...form.getInputProps("description"),
-			}}
+			generalInfoSection={
+				<Flex gap={"xs"} direction={"column"} p={"lg"}>
+					<TextInput key={"name"} required label={"Connection Name"} {...form.getInputProps("name")} />
+					<Textarea
+						rows={3}
+						key={"description"}
+						placeholder={"Summary about connection"}
+						label={"Description"}
+						{...form.getInputProps("description")}
+					/>
+				</Flex>
+			}
 			connectionSettingSection={
 				<Flex direction={"column"} gap={"xs"}>
 					<Grid align={"center"}>

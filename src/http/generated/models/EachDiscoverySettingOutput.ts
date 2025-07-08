@@ -5,5 +5,6 @@
  * MonoWatch Security Asset Management
  * OpenAPI spec version: 1.0.0
  */
+import type { EachDiscoverySettingOutputAnyOf } from './EachDiscoverySettingOutputAnyOf';
 
-export type EachDiscoverySettingOutput = { [key: string]: unknown };
+export type EachDiscoverySettingOutput = EachDiscoverySettingOutputAnyOf | unknown[] | null;

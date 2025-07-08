@@ -5,5 +5,6 @@
  * MonoWatch Security Asset Management
  * OpenAPI spec version: 1.0.0
  */
+import type { CreateAdapterConfigurationResponseConfigAnyOf } from './CreateAdapterConfigurationResponseConfigAnyOf';
 
-export type CreateAdapterConfigurationResponseConfig = { [key: string]: unknown };
+export type CreateAdapterConfigurationResponseConfig = CreateAdapterConfigurationResponseConfigAnyOf | unknown[];

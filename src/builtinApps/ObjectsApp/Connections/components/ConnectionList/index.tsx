@@ -41,11 +41,13 @@ import { Accordion, Button, Flex, Grid, ScrollArea, Text } from "@mantine/core";
 import { useDisclosure, useViewportSize } from "@mantine/hooks";
 import { notifications } from "@mantine/notifications";
 import { IconPlus } from "@tabler/icons-react";
+import { useQueryClient } from "@tanstack/react-query";
 import { omit } from "lodash";
 import { useEffect, useState } from "react";
 
 export default function ConnectionList() {
 	const { height } = useViewportSize();
+	const queryClient = useQueryClient();
 	const [openedCreateSelectionTypeModal, createSelectionTypeModalHandlers] = useDisclosure(false);
 	const [openedCreateSSHModal, createSSHModalHandlers] = useDisclosure(false);
 	const [openedCreateSNMPModal, createSNMPModalHandlers] = useDisclosure(false);
@@ -155,7 +157,7 @@ export default function ConnectionList() {
 		}
 	}, [deleteUsedInConnectionQuery.data?.data]);
 
-	if (!getConnectionsQuery.data?.data.results.length && getConnectionsQuery.isFetched) {
+	if (!getConnectionsQuery.data?.data.metadata.total && getConnectionsQuery.isFetched) {
 		return <ConnectionEmpty onCreate={createSelectionTypeModalHandlers.open} />;
 	}
 
@@ -234,6 +236,9 @@ export default function ConnectionList() {
 				onClose={() => {
 					createSSHModalHandlers.close();
 					setSelectedEditConnectionId(undefined);
+					void queryClient.invalidateQueries({
+						queryKey: [GET_OBJECTS_CONNECTION_QUERY_KEY, selectedEditConnectionId],
+					});
 				}}
 			/>
 			<ConnectionCreateSNMPModal
@@ -273,6 +278,9 @@ export default function ConnectionList() {
 				onClose={() => {
 					createSNMPModalHandlers.close();
 					setSelectedEditConnectionId(undefined);
+					void queryClient.invalidateQueries({
+						queryKey: [GET_OBJECTS_CONNECTION_QUERY_KEY, selectedEditConnectionId],
+					});
 				}}
 			/>
 			<ConnectionCreateHTTPModal
@@ -305,6 +313,9 @@ export default function ConnectionList() {
 				onClose={() => {
 					createHTTPModalHandlers.close();
 					setSelectedEditConnectionId(undefined);
+					void queryClient.invalidateQueries({
+						queryKey: [GET_OBJECTS_CONNECTION_QUERY_KEY, selectedEditConnectionId],
+					});
 				}}
 			/>
 			<Grid.Col span={{ xs: 12, lg: 3 }}>

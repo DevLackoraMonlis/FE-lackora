@@ -165,6 +165,8 @@ export default function ConnectionCreateSSHModal(
 		}
 	}, [props.initialFormValues, form.setValues]);
 
+	console.log(form.values, props.initialFormValues);
+
 	return (
 		<ConnectionCreateDefaultModal
 			isEditMode={!!props.initialFormValues}

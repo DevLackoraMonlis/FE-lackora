@@ -36,7 +36,7 @@ export interface EachDiscoverySetting {
   tags?: EachDiscoverySettingTags;
   version: number;
   schema?: EachDiscoverySettingSchema;
-  output: EachDiscoverySettingOutput;
+  output?: EachDiscoverySettingOutput;
   service_name: string;
   request_queue: string;
   response_queue: string;
