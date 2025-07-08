@@ -10,6 +10,7 @@ import {
 
 import { configsTransformRs, fieldsTransformRs } from "@/shared/components/baseComponents/BCDynamicField";
 
+import { GET_DISCOVERY_SETTINGS_QUERY_KEY } from "./index.constants";
 import type { DiscoveryAdapterFilters } from "./index.types";
 
 export function useDiscoveryAdapters({ type, ...clientSideParams }: DiscoveryAdapterFilters) {
@@ -17,6 +18,7 @@ export function useDiscoveryAdapters({ type, ...clientSideParams }: DiscoveryAda
 		{ page: 1, limit: 99 },
 		{
 			query: {
+				queryKey: [GET_DISCOVERY_SETTINGS_QUERY_KEY],
 				select: (res) => {
 					const results = res?.data?.results?.map(({ name, fields, is_used, ...item }) => ({
 						...item,

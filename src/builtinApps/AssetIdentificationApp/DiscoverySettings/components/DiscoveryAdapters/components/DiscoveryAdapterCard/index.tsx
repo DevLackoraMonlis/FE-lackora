@@ -14,7 +14,7 @@ import DiscoveryAdaptersEditGateway from "../DiscoveryAdaptersEdit";
 
 type Props = DiscoveryAdapterConfigurationRs & {
 	handleDeleteAdapterConfigurations: VoidFunction;
-	handleEditAdapterConfigurations: (configs: BCDynamicConfigRq[]) => void;
+	handleEditAdapterConfigurations: (configs: BCDynamicConfigRq[], callback: VoidFunction) => void;
 	fields: BCDynamicFieldRs[];
 	loading: boolean;
 };

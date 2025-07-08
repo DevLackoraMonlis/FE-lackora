@@ -14,7 +14,7 @@ import NoneCredentialEditForm from "../NoneCredentialEdit";
 
 type Props = DiscoveryAdapterConfigurationRs & {
 	handleDeleteAdapterConfigurations: VoidFunction;
-	handleEditAdapterConfigurations: (configs: BCDynamicConfigRq[]) => void;
+	handleEditAdapterConfigurations: (configs: BCDynamicConfigRq[], callback: VoidFunction) => void;
 	fields: BCDynamicFieldRs[];
 	loading: boolean;
 	showLabel: boolean;

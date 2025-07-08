@@ -49,7 +49,12 @@ const DiscoverySettingsNoneCredentialAdapters = () => {
 									</Flex>
 								</Accordion.Control>
 								<Accordion.Panel>
-									<NoneCredentialServices enabled={activeAccordion === id} adapterId={id} fields={fields} />
+									<NoneCredentialServices
+										enabled={activeAccordion === id}
+										adapterId={id}
+										fields={fields}
+										refetchDiscoveryAdapters={discoveryAdapters.refetch}
+									/>
 								</Accordion.Panel>
 							</Accordion.Item>
 						);
