@@ -11,7 +11,7 @@ import { CreateConnectionHTTPProtocolType } from "@/builtinApps/ObjectsApp/Conne
 import type { CreateConnectionModalProps } from "@/builtinApps/ObjectsApp/Connections/index.types";
 import { useCreateConnection, useEditConnection } from "@/http/generated/management-center-connections";
 import type { CreateConnection } from "@/http/generated/models";
-import { validateInput } from "@/shared/lib/utils";
+import { getChangedFields, validateInput } from "@/shared/lib/utils";
 import { Flex } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 import { useEffect } from "react";
@@ -98,8 +98,8 @@ export default function ConnectionCreateHTTPModal(
 		},
 	});
 
-	const handleSubmit = (formValues: CreateConnectionHTTPFormValues) => {
-		const payload: CreateConnection = {
+	function getPayload(formValues: CreateConnectionHTTPFormValues): CreateConnection {
+		return {
 			description: formValues.description,
 			password: formValues.authenticationRequired ? formValues.password : null,
 			name: formValues.name,
@@ -110,11 +110,26 @@ export default function ConnectionCreateHTTPModal(
 			authenticate_required: formValues.authenticationRequired,
 			authentication_type: formValues.protocol === "HTTP" ? "http" : "https",
 		};
+	}
+
+	const handleSubmit = (formValues: CreateConnectionHTTPFormValues) => {
+		const newPayload = getPayload(formValues);
 
 		if (props.initialFormValues && props.id) {
-			updateHTTPConnectionMutation.mutate({ data: payload, connectionId: props.id });
+			const oldPayload = getPayload(props.initialFormValues);
+			const changedPayload = getChangedFields<CreateConnection>(oldPayload, newPayload);
+			if (!Object.keys(changedPayload).length) {
+				notifications.show({
+					title: "No Changes Made",
+					message: "You haven't made any changes to the form.",
+					color: "green",
+					withBorder: true,
+				});
+				return;
+			}
+			updateHTTPConnectionMutation.mutate({ data: changedPayload, connectionId: props.id });
 		} else {
-			createHTTPConnectionMutation.mutate({ data: payload });
+			createHTTPConnectionMutation.mutate({ data: newPayload });
 		}
 	};
 

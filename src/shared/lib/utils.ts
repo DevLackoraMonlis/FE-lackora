@@ -212,6 +212,18 @@ export function isValidJson(str: string) {
 	}
 }
 
+export function getChangedFields<T extends object>(oldData: T, newData: T): Partial<T> {
+	const changed: Partial<T> = {};
+
+	for (const key in newData) {
+		if (!Object.is(oldData[key], newData[key])) {
+			changed[key] = newData[key];
+		}
+	}
+
+	return changed;
+}
+
 type EnumRecord = Record<string, string | number>;
 
 export function enumToRecord(e: EnumRecord): EnumRecord {

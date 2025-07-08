@@ -16,7 +16,7 @@ import {
 import type { CreateConnectionModalProps } from "@/builtinApps/ObjectsApp/Connections/index.types";
 import { useCreateConnection, useEditConnection } from "@/http/generated/management-center-connections";
 import type { CreateConnection } from "@/http/generated/models";
-import { validateInput } from "@/shared/lib/utils";
+import { getChangedFields, validateInput } from "@/shared/lib/utils";
 import { Flex } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 import { useEffect } from "react";
@@ -137,8 +137,8 @@ export default function ConnectionCreateSNMPModal(
 		},
 	});
 
-	const handleSubmit = (formValues: CreateConnectionSNMPFormValues) => {
-		const payload: CreateConnection = {
+	function getPayload(formValues: CreateConnectionSNMPFormValues): CreateConnection {
+		return {
 			description: formValues.description,
 			password:
 				formValues.snmpVersion === CreateConnectionSNMPVersionType.SNMP_V_2_C ? formValues.password : null,
@@ -166,11 +166,26 @@ export default function ConnectionCreateSNMPModal(
 					? formValues.privacyPassphrase
 					: null,
 		};
+	}
+
+	const handleSubmit = (formValues: CreateConnectionSNMPFormValues) => {
+		const newPayload = getPayload(formValues);
 
 		if (props.initialFormValues && props.id) {
-			updateSNMPConnectionMutation.mutate({ data: payload, connectionId: props.id });
+			const oldPayload = getPayload(props.initialFormValues);
+			const changedPayload = getChangedFields<CreateConnection>(oldPayload, newPayload);
+			if (!Object.keys(changedPayload).length) {
+				notifications.show({
+					title: "No Changes Made",
+					message: "You haven't made any changes to the form.",
+					color: "green",
+					withBorder: true,
+				});
+				return;
+			}
+			updateSNMPConnectionMutation.mutate({ data: changedPayload, connectionId: props.id });
 		} else {
-			createSNMPConnectionMutation.mutate({ data: payload });
+			createSNMPConnectionMutation.mutate({ data: newPayload });
 		}
 	};
 

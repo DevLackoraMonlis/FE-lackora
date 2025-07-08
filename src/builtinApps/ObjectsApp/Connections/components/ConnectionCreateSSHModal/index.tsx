@@ -11,7 +11,7 @@ import { CreateConnectionSSHAuthenticationType } from "@/builtinApps/ObjectsApp/
 import type { CreateConnectionModalProps } from "@/builtinApps/ObjectsApp/Connections/index.types";
 import { useCreateConnection, useEditConnection } from "@/http/generated/management-center-connections";
 import type { CreateConnection } from "@/http/generated/models";
-import { validateInput } from "@/shared/lib/utils";
+import { getChangedFields, validateInput } from "@/shared/lib/utils";
 import { Flex } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 import { useEffect } from "react";
@@ -102,8 +102,8 @@ export default function ConnectionCreateSSHModal(
 		},
 	});
 
-	const handleSubmit = (formValues: CreateConnectionSSHFormValues) => {
-		const payload: CreateConnection = {
+	function getPayload(formValues: CreateConnectionSSHFormValues): CreateConnection {
+		return {
 			authenticate_required: false,
 			description: formValues.description,
 			privacy_passphrase: formValues.passphrase,
@@ -133,10 +133,29 @@ export default function ConnectionCreateSSHModal(
 			privileged_password: formValues.privilegedPassword,
 			privileged_authentication: formValues.enablePrivilegedMode,
 		};
+	}
+
+	const handleSubmit = (formValues: CreateConnectionSSHFormValues) => {
+		const newPayload = getPayload(formValues);
+
 		if (props.initialFormValues && props.id) {
-			updateSSHConnectionMutation.mutate({ data: payload, connectionId: props.id });
+			const oldPayload = getPayload(props.initialFormValues);
+			const changedPayload = getChangedFields<CreateConnection>(oldPayload, newPayload);
+			if (!Object.keys(changedPayload).length) {
+				notifications.show({
+					title: "No Changes Made",
+					message: "You haven't made any changes to the form.",
+					color: "green",
+					withBorder: true,
+				});
+				return;
+			}
+			updateSSHConnectionMutation.mutate({
+				data: changedPayload,
+				connectionId: props.id,
+			});
 		} else {
-			createSSHConnectionMutation.mutate({ data: payload });
+			createSSHConnectionMutation.mutate({ data: newPayload });
 		}
 	};
 
