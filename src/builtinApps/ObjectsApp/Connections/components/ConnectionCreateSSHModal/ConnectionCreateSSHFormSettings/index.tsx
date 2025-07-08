@@ -42,6 +42,8 @@ export default function ConnectionCreateSSHFormSettings() {
 							allowNegative={false}
 							allowLeadingZeros={false}
 							required
+							min={1}
+							max={65535}
 							label={"SSH Port"}
 							{...form.getInputProps("sshPort")}
 						/>

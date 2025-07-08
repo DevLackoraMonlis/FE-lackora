@@ -23,7 +23,7 @@ export default function ConnectionCreateHTTPModal(
 		initialValues: {
 			description: "",
 			name: "",
-			port: 0,
+			port: 80,
 			authenticationRequired: false,
 			baseUri: "",
 			protocol: CreateConnectionHTTPProtocolType.HTTP,
