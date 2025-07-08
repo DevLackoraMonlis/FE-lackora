@@ -15,7 +15,6 @@ export default function AssetIdentificationDiscoverySettingsPage() {
 		<Tabs
 			defaultValue={DiscoverySettingsTabs.DiscoveryAdapters}
 			styles={({ headings }) => ({ tabLabel: headings })}
-			style={{ overflowY: "auto", overflowX: "hidden", height: height - 100 }}
 		>
 			{/* TABS */}
 			<Tabs.List justify="center">
@@ -30,7 +29,7 @@ export default function AssetIdentificationDiscoverySettingsPage() {
 				</Tabs.Tab>
 			</Tabs.List>
 			{/* PANELS */}
-			<Grid>
+			<Grid style={{ overflowY: "auto", overflowX: "hidden", height: height - 150 }}>
 				<Grid.Col span={{ xs: 12, lg: 10 }}>
 					<Tabs.Panel value={DiscoverySettingsTabs.DiscoveryAdapters}>
 						<DiscoverySettingsDiscoveryAdapters />
