@@ -214,7 +214,12 @@ export default function ConnectionCreateSNMPModal(
 			>
 				<CreateConnectionSNMPFormProvider form={form}>
 					<form className={"h-full w-full"} onSubmit={form.onSubmit(handleSubmit)}>
-						<Flex h={700} p={"lg"} gap={"xs"} direction={"column"}>
+						<Flex
+							h={form.values.snmpVersion === CreateConnectionSNMPVersionType.SNMP_V_2_C ? 500 : 650}
+							p={"lg"}
+							gap={"xs"}
+							direction={"column"}
+						>
 							<ConnectionCreateSNMPFormSettings />
 						</Flex>
 						<ConnectionCreateFormFooter

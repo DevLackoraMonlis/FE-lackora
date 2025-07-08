@@ -158,7 +158,7 @@ export default function ConnectionCreateHTTPModal(
 			>
 				<CreateConnectionHTTPFormProvider form={form}>
 					<form className={"h-full w-full"} onSubmit={form.onSubmit(handleSubmit)}>
-						<Flex h={600} p={"lg"} gap={"xs"} direction={"column"}>
+						<Flex h={550} p={"lg"} gap={"xs"} direction={"column"}>
 							<ConnectionCreateHTTPFormSettings />
 						</Flex>
 						<ConnectionCreateFormFooter

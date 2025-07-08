@@ -187,8 +187,8 @@ export default function ConnectionCreateSSHModal(
 						<Flex
 							h={
 								form.values.authenticationType === CreateConnectionSSHAuthenticationType.USER_PASSWORD
-									? 600
-									: 700
+									? 550
+									: 650
 							}
 							p={"lg"}
 							gap={"xs"}
