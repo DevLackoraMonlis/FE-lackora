@@ -106,7 +106,10 @@ export default function ListDynamicField<TObject extends string>({
 			<Combobox.Dropdown bd="1px solid gray.4">
 				<Combobox.Search
 					value={search}
-					onChange={(event) => setSearch(event.currentTarget.value)}
+					onChange={(event) => {
+						tablePagination.onPageChange(1);
+						setSearch(event.currentTarget.value);
+					}}
 					placeholder="Search"
 				/>
 				<Combobox.Options style={{ maxHeight: 200, overflow: "auto" }}>
