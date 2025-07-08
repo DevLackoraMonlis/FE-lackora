@@ -215,7 +215,7 @@ export default function ConnectionCreateSNMPModal(
 				<CreateConnectionSNMPFormProvider form={form}>
 					<form className={"h-full w-full"} onSubmit={form.onSubmit(handleSubmit)}>
 						<Flex h={700} p={"lg"} gap={"xs"} direction={"column"}>
-							<ConnectionCreateSNMPFormSettings onTestConnection={props.onTestConnection} />
+							<ConnectionCreateSNMPFormSettings />
 						</Flex>
 						<ConnectionCreateFormFooter
 							loading={createSNMPConnectionMutation.isPending || updateSNMPConnectionMutation.isPending}

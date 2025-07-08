@@ -1,12 +1,7 @@
 import ConnectionCreateFormSections from "@/builtinApps/ObjectsApp/Connections/components/ConnectionCreateFormSections";
-import {
-	type CreateConnectionHTTPFormValues,
-	useCreateConnectionHTTPFormContext,
-} from "@/builtinApps/ObjectsApp/Connections/components/ConnectionCreateHTTPModal/index.form";
+import { useCreateConnectionHTTPFormContext } from "@/builtinApps/ObjectsApp/Connections/components/ConnectionCreateHTTPModal/index.form";
 import { CreateConnectionHTTPProtocolType } from "@/builtinApps/ObjectsApp/Connections/index.enum";
-import type { CreateConnectionModalProps } from "@/builtinApps/ObjectsApp/Connections/index.types";
 import {
-	Button,
 	Checkbox,
 	Flex,
 	Grid,
@@ -19,9 +14,7 @@ import {
 	Textarea,
 } from "@mantine/core";
 
-export default function ConnectionCreateHTTPFormSettings(
-	props: Pick<CreateConnectionModalProps<CreateConnectionHTTPFormValues>, "onTestConnection">,
-) {
+export default function ConnectionCreateHTTPFormSettings() {
 	const form = useCreateConnectionHTTPFormContext();
 
 	return (
@@ -73,6 +66,8 @@ export default function ConnectionCreateHTTPFormSettings(
 								allowNegative={false}
 								allowLeadingZeros={false}
 								required
+								min={1}
+								max={65535}
 								label={"Port"}
 								{...form.getInputProps("port")}
 							/>
@@ -115,9 +110,6 @@ export default function ConnectionCreateHTTPFormSettings(
 							/>
 						</Grid.Col>
 					</Grid>
-					<Button w={200} variant={"light"} onClick={() => props.onTestConnection("SSH")}>
-						Test Connection
-					</Button>
 				</Flex>
 			}
 		/>

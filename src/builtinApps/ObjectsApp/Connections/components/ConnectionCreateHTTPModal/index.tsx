@@ -159,7 +159,7 @@ export default function ConnectionCreateHTTPModal(
 				<CreateConnectionHTTPFormProvider form={form}>
 					<form className={"h-full w-full"} onSubmit={form.onSubmit(handleSubmit)}>
 						<Flex h={600} p={"lg"} gap={"xs"} direction={"column"}>
-							<ConnectionCreateHTTPFormSettings onTestConnection={props.onTestConnection} />
+							<ConnectionCreateHTTPFormSettings />
 						</Flex>
 						<ConnectionCreateFormFooter
 							loading={createHTTPConnectionMutation.isPending || updateHTTPConnectionMutation.isPending}

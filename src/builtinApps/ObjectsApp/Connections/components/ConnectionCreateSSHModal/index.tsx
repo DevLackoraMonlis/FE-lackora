@@ -167,8 +167,6 @@ export default function ConnectionCreateSSHModal(
 		}
 	}, [props.initialFormValues, form.setValues]);
 
-	console.log(form.values, props.initialFormValues);
-
 	return (
 		<ConnectionCreateDefaultModal
 			isEditMode={!!props.initialFormValues}
@@ -196,7 +194,7 @@ export default function ConnectionCreateSSHModal(
 							gap={"xs"}
 							direction={"column"}
 						>
-							<ConnectionCreateSSHFormSettings onTestConnection={props.onTestConnection} />
+							<ConnectionCreateSSHFormSettings />
 						</Flex>
 						<ConnectionCreateFormFooter
 							loading={createSSHConnectionMutation.isPending || updateSSHConnectionMutation.isPending}

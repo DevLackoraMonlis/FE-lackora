@@ -1,17 +1,12 @@
 import ConnectionCreateFormSections from "@/builtinApps/ObjectsApp/Connections/components/ConnectionCreateFormSections";
-import {
-	type CreateConnectionSNMPFormValues,
-	useCreateConnectionSNMPFormContext,
-} from "@/builtinApps/ObjectsApp/Connections/components/ConnectionCreateSNMPModal/index.form";
+import { useCreateConnectionSNMPFormContext } from "@/builtinApps/ObjectsApp/Connections/components/ConnectionCreateSNMPModal/index.form";
 import {
 	CreateConnectionSNMPAuthenticationProtocolType,
 	CreateConnectionSNMPPrivacyProtocolType,
 	CreateConnectionSNMPSecurityLdLevelType,
 	CreateConnectionSNMPVersionType,
 } from "@/builtinApps/ObjectsApp/Connections/index.enum";
-import type { CreateConnectionModalProps } from "@/builtinApps/ObjectsApp/Connections/index.types";
 import {
-	Button,
 	Flex,
 	Grid,
 	Group,
@@ -25,9 +20,7 @@ import {
 } from "@mantine/core";
 import { Fragment } from "react";
 
-export default function ConnectionCreateSNMPFormSettings(
-	props: Pick<CreateConnectionModalProps<CreateConnectionSNMPFormValues>, "onTestConnection">,
-) {
+export default function ConnectionCreateSNMPFormSettings() {
 	const form = useCreateConnectionSNMPFormContext();
 
 	const userInput = (
@@ -104,6 +97,8 @@ export default function ConnectionCreateSNMPFormSettings(
 								allowNegative={false}
 								allowLeadingZeros={false}
 								required
+								min={1}
+								max={65535}
 								label={"SNMP Port"}
 								{...form.getInputProps("snmpPort")}
 							/>
@@ -219,10 +214,6 @@ export default function ConnectionCreateSNMPFormSettings(
 							)}
 						</Grid>
 					</Flex>
-
-					<Button w={200} variant={"light"} onClick={() => props.onTestConnection("SSH")}>
-						Test Connection
-					</Button>
 				</Flex>
 			}
 		/>

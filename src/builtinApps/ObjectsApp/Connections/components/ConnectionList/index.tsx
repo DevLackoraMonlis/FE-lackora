@@ -225,9 +225,6 @@ export default function ConnectionList() {
 					}
 				}
 				id={selectedEditConnectionId}
-				onTestConnection={(type) => {
-					console.log(`Test connection ${type}`);
-				}}
 				onSuccess={getConnectionsQuery.refetch}
 				onChangeType={() => {
 					createSSHModalHandlers.close();
@@ -268,9 +265,6 @@ export default function ConnectionList() {
 					}
 				}
 				id={selectedEditConnectionId}
-				onTestConnection={(type) => {
-					console.log(`Test connection ${type}`);
-				}}
 				onSuccess={getConnectionsQuery.refetch}
 				onChangeType={() => {
 					createSNMPModalHandlers.close();
@@ -304,9 +298,6 @@ export default function ConnectionList() {
 					}
 				}
 				id={selectedEditConnectionId}
-				onTestConnection={(type) => {
-					console.log(`Test connection ${type}`);
-				}}
 				onSuccess={getConnectionsQuery.refetch}
 				onChangeType={() => {
 					createHTTPModalHandlers.close();

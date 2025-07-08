@@ -1,12 +1,7 @@
 import ConnectionCreateFormSections from "@/builtinApps/ObjectsApp/Connections/components/ConnectionCreateFormSections";
-import {
-	type CreateConnectionSSHFormValues,
-	useCreateConnectionSSHFormContext,
-} from "@/builtinApps/ObjectsApp/Connections/components/ConnectionCreateSSHModal/index.form";
+import { useCreateConnectionSSHFormContext } from "@/builtinApps/ObjectsApp/Connections/components/ConnectionCreateSSHModal/index.form";
 import { CreateConnectionSSHAuthenticationType } from "@/builtinApps/ObjectsApp/Connections/index.enum";
-import type { CreateConnectionModalProps } from "@/builtinApps/ObjectsApp/Connections/index.types";
 import {
-	Button,
 	Checkbox,
 	Flex,
 	Grid,
@@ -21,9 +16,7 @@ import {
 } from "@mantine/core";
 import { IconInfoCircle } from "@tabler/icons-react";
 
-export default function ConnectionCreateSSHFormSettings(
-	props: Pick<CreateConnectionModalProps<CreateConnectionSSHFormValues>, "onTestConnection">,
-) {
+export default function ConnectionCreateSSHFormSettings() {
 	const form = useCreateConnectionSSHFormContext();
 
 	return (
@@ -166,10 +159,6 @@ export default function ConnectionCreateSSHFormSettings(
 							)}
 						</Grid>
 					</Flex>
-
-					<Button w={200} variant={"light"} onClick={() => props.onTestConnection("SSH")}>
-						Test Connection
-					</Button>
 				</Flex>
 			}
 		/>
