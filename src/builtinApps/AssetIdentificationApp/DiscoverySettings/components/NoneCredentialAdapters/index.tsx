@@ -1,22 +1,23 @@
 import { Badge, Card, Flex, Grid, Text, getGradient } from "@mantine/core";
 import { Accordion } from "@mantine/core";
 import { useViewportSize } from "@mantine/hooks";
-import { IconCircleDot } from "@tabler/icons-react";
 import { useState } from "react";
 
-import { useDiscoveryAdapters } from "../../index.hooks";
+import { useAdapterAndVendorIcons } from "@/shared/icons/hooks/useAdapterIcons";
 
+import { useDiscoveryAdapters } from "../../index.hooks";
 import NoneCredentialServices from "./components/NoneCredentialSections";
 
 const DiscoverySettingsNoneCredentialAdapters = () => {
 	const { height } = useViewportSize();
+	const { getAdapterAndVendorIcon } = useAdapterAndVendorIcons();
 	const [activeAccordion, setActiveAccordion] = useState<string | null>(null);
 	const { discoveryAdapters } = useDiscoveryAdapters({ type: "none-credential" });
 	return (
 		<Grid p="sm" pt="lg" gutter="lg" style={{ overflowY: "auto", overflowX: "hidden", height: height - 150 }}>
 			<Grid.Col span={{ xs: 12, lg: 9 }} offset={{ lg: 3 }}>
 				<Accordion variant="separated" onChange={setActiveAccordion}>
-					{discoveryAdapters.data?.results?.map(({ id, fields, display_name, caption }) => {
+					{discoveryAdapters.data?.results?.map(({ id, fields, display_name, caption, service_name }) => {
 						return (
 							<Accordion.Item key={id} value={id}>
 								<Accordion.Control>
@@ -32,7 +33,7 @@ const DiscoverySettingsNoneCredentialAdapters = () => {
 													},
 												})}
 											>
-												<IconCircleDot size={30} />
+												{getAdapterAndVendorIcon(service_name, { size: 30, color: "white" })}
 											</Card>
 											<Flex direction="column" gap="2xs">
 												<Text fw="bold">{display_name}</Text>
