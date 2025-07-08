@@ -1,8 +1,8 @@
 import { NumberInput, Select, TextInput, Textarea } from "@mantine/core";
-import { isNotEmpty } from "@mantine/form";
 import { isObject } from "lodash";
 
 import { getObjectRelatedRecords } from "@/http/generated/object-management";
+import { validateIP, validateInput } from "@/shared/lib/utils";
 
 import ListDynamicField from "./components/ListDynamicField";
 import type { BCDynamicConfigRs, BCDynamicFieldProps, BCDynamicFieldRs } from "./index.types";
@@ -81,11 +81,11 @@ export function getDynamicFieldValidate<T extends string>(
 			switch (type) {
 				case "IP":
 					accumulator[key] = (value: string) => {
-						return value ? null : required ? isNotEmpty("Filed is required") : null;
+						return value ? validateIP(value) : validateInput(value, { required: !!required });
 					};
 					break;
 				default:
-					accumulator[key] = () => (required ? isNotEmpty("Filed is required") : null);
+					accumulator[key] = (value: string) => validateInput(value, { required: !!required });
 					break;
 			}
 			return accumulator;
