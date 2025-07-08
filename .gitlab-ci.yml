@@ -8,7 +8,6 @@ variables:
 dev_pipeline:
   stage: install
   variables:
-    NODE_ENV: "development"
     BASE_URL: "http://172.31.100.57:8080"
     NEXTAUTH_URL: "http://172.31.100.57:3000"
     HOST_URL: "http://172.31.100.57:3000"
@@ -22,15 +21,12 @@ dev_pipeline:
   script:
     - npm config set registry http://172.31.100.53/repository/npm-proxy/
     - rm -f package-lock.json; rm -f .npmrc; rm -rf node_modules
-    - npm install --force
-    - npm run build
+    - NODE_ENV=development npm install --force
+    - NODE_ENV=production npm run build
   artifacts:
     paths:
       - .next
       - public
-      - package.json
-      - next.config.js
-      - node_modules/
     expire_in: 1 hour
 
 dev_deploy:
@@ -44,8 +40,7 @@ dev_deploy:
   script:
     - echo "Deploying with NODE_ENV=$NODE_ENV..."
     - mkdir -p $DEPLOY_DIR
-    - cp -r .next/standalone/* $DEPLOY_DIR/
-    - cp -r .next/static $DEPLOY_DIR/.next/static
-    - cp -r public $DEPLOY_DIR/public
-    - cp next.config.js package.json $DEPLOY_DIR/
-    - systemctl restart front-dev
+    - cp -r .next $DEPLOY_DIR/
+    - cp -r public $DEPLOY_DIR/
+    - /bin/cp -rf $DEPLOY_DIR/.next/static/ $DEPLOY_DIR/.next/standalone/.next/
+    - sudo systemctl restart front-dev
