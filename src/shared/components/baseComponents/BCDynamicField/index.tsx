@@ -120,11 +120,11 @@ export const configsUpdateTransformRq = (configs: BCDynamicConfigRs[], values: R
 
 export const configsCreateTransformRq = (fields: BCDynamicFieldRs[], values: Record<string, unknown>) => {
 	return Object.entries(values).map(([key, value]) => {
-		const idAsValue = !!fields?.find(({ key: fieldKey }) => key === fieldKey)?.objectType;
-		const valueOrId = { [idAsValue ? "id" : "value"]: value };
+		const objectType = fields?.find(({ key: fieldKey }) => key === fieldKey)?.objectType;
+		const valueOrId = { [objectType ? "id" : "value"]: value };
 		return {
 			key,
-			type: null,
+			type: objectType || null,
 			value: null,
 			id: null,
 			...valueOrId,
