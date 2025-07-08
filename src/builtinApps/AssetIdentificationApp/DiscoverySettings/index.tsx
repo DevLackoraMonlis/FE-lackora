@@ -1,7 +1,6 @@
 "use client";
 
 import { Grid, Tabs } from "@mantine/core";
-import { useViewportSize } from "@mantine/hooks";
 import { IconBuilding, IconRadar2 } from "@tabler/icons-react";
 
 import { DiscoverySettingsTabs } from "./index.enum";
@@ -10,7 +9,6 @@ import DiscoverySettingsDiscoveryAdapters from "./components/DiscoveryAdapters";
 import DiscoverySettingsNoneCredentialAdapters from "./components/NoneCredentialAdapters";
 
 export default function AssetIdentificationDiscoverySettingsPage() {
-	const { height } = useViewportSize();
 	return (
 		<Tabs
 			defaultValue={DiscoverySettingsTabs.DiscoveryAdapters}
@@ -29,7 +27,7 @@ export default function AssetIdentificationDiscoverySettingsPage() {
 				</Tabs.Tab>
 			</Tabs.List>
 			{/* PANELS */}
-			<Grid style={{ overflowY: "auto", overflowX: "hidden", height: height - 150 }}>
+			<Grid>
 				<Grid.Col span={{ xs: 12, lg: 10 }}>
 					<Tabs.Panel value={DiscoverySettingsTabs.DiscoveryAdapters}>
 						<DiscoverySettingsDiscoveryAdapters />

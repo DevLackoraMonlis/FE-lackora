@@ -52,7 +52,10 @@ export default function DiscoverySettingsDiscoveryAdapters() {
 					searchPlaceholder={"Search by adapter Name"}
 				/>
 			</Grid.Col>
-			<Grid.Col span={{ xs: 12, lg: 9 }}>
+			<Grid.Col
+				span={{ xs: 12, lg: 9 }}
+				style={{ overflowY: "auto", overflowX: "hidden", height: height - 150 }}
+			>
 				<Accordion variant="separated" onChange={setActiveAccordion}>
 					{discoveryAdapters?.data?.results?.map((item) => (
 						<Accordion.Item key={item.id} value={item.id}>

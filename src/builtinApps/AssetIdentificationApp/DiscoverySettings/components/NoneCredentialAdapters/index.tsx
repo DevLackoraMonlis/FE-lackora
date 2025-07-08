@@ -1,5 +1,6 @@
 import { Badge, Card, Flex, Grid, Text, getGradient } from "@mantine/core";
 import { Accordion } from "@mantine/core";
+import { useViewportSize } from "@mantine/hooks";
 import { IconCircleDot } from "@tabler/icons-react";
 import { useState } from "react";
 
@@ -8,10 +9,11 @@ import { useDiscoveryAdapters } from "../../index.hooks";
 import NoneCredentialServices from "./components/NoneCredentialSections";
 
 const DiscoverySettingsNoneCredentialAdapters = () => {
+	const { height } = useViewportSize();
 	const [activeAccordion, setActiveAccordion] = useState<string | null>(null);
 	const { discoveryAdapters } = useDiscoveryAdapters({ type: "none-credential" });
 	return (
-		<Grid p="sm" pt="lg" gutter="lg">
+		<Grid p="sm" pt="lg" gutter="lg" style={{ overflowY: "auto", overflowX: "hidden", height: height - 150 }}>
 			<Grid.Col span={{ xs: 12, lg: 9 }} offset={{ lg: 3 }}>
 				<Accordion variant="separated" onChange={setActiveAccordion}>
 					{discoveryAdapters.data?.results?.map(({ id, fields, display_name, caption }) => {
