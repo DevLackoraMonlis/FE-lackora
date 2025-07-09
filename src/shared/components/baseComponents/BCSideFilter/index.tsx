@@ -57,7 +57,9 @@ export default function BCSideFilter(props: Props) {
 			),
 			Switch: (
 				<Switch
-					labelPosition={"left"}
+					my="xs"
+					size="md"
+					labelPosition="left"
 					key={filterItem.name}
 					{...form.getInputProps(filterItem.name, { type: "checkbox" })}
 					placeholder={filterItem.placeholder}
@@ -141,13 +143,14 @@ export default function BCSideFilter(props: Props) {
 						{...form.getInputProps("search")}
 						placeholder={props.searchPlaceholder}
 					/>
+					<Divider />
 					<ScrollArea h={props.height || "fit-content"}>
-						{props.filterItems.map((filterItem, index) => {
+						{props.filterItems.map((filterItem) => {
 							if (filterItem.type === "CheckedList") {
 								return (
 									<Fragment key={filterItem.name}>
+										<Divider />
 										{filterItemMap(filterItem)}
-										{index !== props.filterItems.length - 1 && <Divider />}
 									</Fragment>
 								);
 							}

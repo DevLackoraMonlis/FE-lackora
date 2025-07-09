@@ -1,8 +1,9 @@
 import { NumberInput, Select, TextInput, Textarea } from "@mantine/core";
+import type { FormValidateInput } from "@mantine/form";
 import { isObject } from "lodash";
 
 import { getObjectRelatedRecords } from "@/http/generated/object-management";
-import { validateIP, validateInput } from "@/shared/lib/utils";
+import { validateInput } from "@/shared/lib/utils";
 
 import ListDynamicField from "./components/ListDynamicField";
 import type { BCDynamicConfigRs, BCDynamicFieldProps, BCDynamicFieldRs } from "./index.types";
@@ -73,16 +74,14 @@ export function getDynamicField<TObjectType extends string>({
 	}
 }
 
-export function getDynamicFieldValidate<T extends string>(
+export function getDynamicFieldValidate<FormValues, T extends string>(
 	fields: Pick<BCDynamicFieldProps<T>, "key" | "type" | "required">[] = [],
 ) {
-	return fields.reduce(
+	const validations = fields.reduce(
 		(accumulator, { key, type, required }) => {
 			switch (type) {
 				case "IP":
-					accumulator[key] = (value: string) => {
-						return value ? validateIP(value) : validateInput(value, { required: !!required });
-					};
+					accumulator[key] = (value: string) => validateInput(value, { required: !!required });
 					break;
 				default:
 					accumulator[key] = (value: string) => validateInput(value, { required: !!required });
@@ -92,6 +91,8 @@ export function getDynamicFieldValidate<T extends string>(
 		},
 		{} as Record<string, unknown>,
 	);
+
+	return validations as FormValidateInput<FormValues>;
 }
 
 export const configsTransformRs = (configs: BCDynamicConfigRs[]) => {

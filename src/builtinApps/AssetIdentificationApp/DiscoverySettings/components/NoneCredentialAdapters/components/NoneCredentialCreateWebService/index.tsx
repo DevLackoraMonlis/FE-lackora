@@ -10,6 +10,10 @@ import { GET_OBJECT_DATA_QUERY_KEY } from "@/shared/components/baseComponents/BC
 import type { BCDynamicFieldProps } from "@/shared/components/baseComponents/BCDynamicField/index.types";
 import { validateInput } from "@/shared/lib/utils";
 
+type Props = {
+	onCancel: VoidFunction;
+	handleAddWebServiceAfterCreate: (webServiceId: string) => void;
+};
 type FormValues = {
 	name: string;
 	uri: string;
@@ -75,7 +79,7 @@ const fields: BCDynamicFieldProps<"">[] = [
 	},
 ];
 
-export default function NoneCredentialCreateWebService({ onCancel }: { onCancel: VoidFunction }) {
+export default function NoneCredentialCreateWebService({ onCancel, handleAddWebServiceAfterCreate }: Props) {
 	const queryClient = useQueryClient();
 	const form = useForm<FormValues>({
 		validate: {
@@ -99,7 +103,8 @@ export default function NoneCredentialCreateWebService({ onCancel }: { onCancel:
 				},
 			},
 			{
-				onSuccess() {
+				onSuccess(response) {
+					handleAddWebServiceAfterCreate(response?.data?.id);
 					queryClient.refetchQueries({ queryKey: [GET_OBJECT_DATA_QUERY_KEY] });
 					onCancel();
 				},

@@ -4,7 +4,11 @@ import { IconCheck, IconX } from "@tabler/icons-react";
 import { isObject } from "lodash";
 import { Fragment, useEffect } from "react";
 
-import { configsUpdateTransformRq, getDynamicField } from "@/shared/components/baseComponents/BCDynamicField";
+import {
+	configsUpdateTransformRq,
+	getDynamicField,
+	getDynamicFieldValidate,
+} from "@/shared/components/baseComponents/BCDynamicField";
 import type {
 	BCDynamicConfigRq,
 	BCDynamicFieldRs,
@@ -29,9 +33,15 @@ const DiscoveryAdaptersForm = ({
 	handleEditAdapterConfigurations,
 	fields,
 }: Props) => {
-	const form = useForm<FormValues>({});
+	const initValidations = getDynamicFieldValidate<FormValues, string>(fields);
+	const form = useForm<FormValues>({
+		validate: initValidations,
+	});
 
-	const handleSubmit = (values: typeof form.values) => {
+	const handleSubmit = () => {
+		const validate = form.validate();
+		if (validate.hasErrors) return;
+		const values = form.getValues();
 		const updateValues = configsUpdateTransformRq(configs, values);
 		handleEditAdapterConfigurations(updateValues, onCancel);
 	};
@@ -48,42 +58,40 @@ const DiscoveryAdaptersForm = ({
 	return (
 		<Box pos="relative">
 			<LoadingOverlay visible={loading} />
-			<form onSubmit={form.onSubmit(handleSubmit)}>
-				<Flex gap="xs" mt="xs">
-					<Fieldset variant="filled" w="100%" pb="xs" pt="2xs">
-						<Flex gap="xs">
-							{fields.map(({ key, ...item }, idx) => {
-								const defaultValue = configs?.find(({ key: configKey }) => key === configKey)?.value;
-								return (
-									<Fragment key={`${key}-${idx + 1}`}>
-										{getDynamicField({
-											otherElementOptions: {
-												withAsterisk: true,
-												style: { flex: 1 },
-											},
-											formInputProps: {
-												key: form.key(key),
-												...form.getInputProps(key),
-											},
-											defaultValue,
-											key,
-											...item,
-										})}
-									</Fragment>
-								);
-							})}
-						</Flex>
-					</Fieldset>
-					<Flex direction="column" gap="xs" justify="space-between" align="center">
-						<ActionIcon size="lg" title="Save" type="submit" c="gray.2" bg="primary.8">
-							<IconCheck size={20} />
-						</ActionIcon>
-						<ActionIcon size="lg" title="Cancel" type="reset" c="gray.8" bg="gray.2" onClick={onCancel}>
-							<IconX size={20} />
-						</ActionIcon>
+			<Flex gap="xs" mt="xs">
+				<Fieldset variant="filled" w="100%" pb="xs" pt="2xs">
+					<Flex gap="xs">
+						{fields.map(({ key, ...item }, idx) => {
+							const defaultValue = configs?.find(({ key: configKey }) => key === configKey)?.value;
+							return (
+								<Fragment key={`${key}-${idx + 1}`}>
+									{getDynamicField({
+										otherElementOptions: {
+											withAsterisk: true,
+											style: { flex: 1 },
+										},
+										formInputProps: {
+											key: form.key(key),
+											...form.getInputProps(key),
+										},
+										defaultValue,
+										key,
+										...item,
+									})}
+								</Fragment>
+							);
+						})}
 					</Flex>
+				</Fieldset>
+				<Flex direction="column" gap="xs" justify="space-between" align="center">
+					<ActionIcon size="lg" title="Save" c="gray.2" bg="primary.8" onClick={handleSubmit}>
+						<IconCheck size={20} />
+					</ActionIcon>
+					<ActionIcon size="lg" title="Cancel" type="reset" c="gray.8" bg="gray.2" onClick={onCancel}>
+						<IconX size={20} />
+					</ActionIcon>
 				</Flex>
-			</form>
+			</Flex>
 		</Box>
 	);
 };

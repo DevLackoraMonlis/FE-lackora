@@ -4,13 +4,14 @@ import { randomId } from "@mantine/hooks";
 import { IconCheck, IconPlus, IconX } from "@tabler/icons-react";
 import { Fragment } from "react";
 
-import { getDynamicField } from "@/shared/components/baseComponents/BCDynamicField";
+import { getDynamicField, getDynamicFieldValidate } from "@/shared/components/baseComponents/BCDynamicField";
 import { configsCreateTransformRq } from "@/shared/components/baseComponents/BCDynamicField";
 import type { BCDynamicFieldRs } from "@/shared/components/baseComponents/BCDynamicField/index.types";
 
 import { useCreateDiscoverySetting } from "../../../../index.hooks";
 
-type FormValues = { list: { [key: string]: string }[] };
+type FormList = { [key: string]: string };
+type FormValues = { list: FormList[] };
 
 type Props = {
 	refetchDiscoveryAdapters: VoidFunction;
@@ -22,21 +23,17 @@ type Props = {
 const DiscoveryAdaptersCreateGateway = (props: Props) => {
 	const { createDiscoverySetting } = useCreateDiscoverySetting();
 
-	const insertListItem = props.fields.reduce(
-		(accumulator, { key }) => {
-			accumulator[key] = "";
-			return accumulator;
-		},
-		{ key: randomId() } as Record<string, unknown>,
-	);
-
+	const initValidations = getDynamicFieldValidate<FormList, string>(props.fields);
 	const form = useForm<FormValues>({
 		initialValues: {
 			list: [],
 		},
+		validate: { list: initValidations as unknown as FormList },
 	});
 
 	const handleCreate = (index: number) => {
+		const validate = form.validate();
+		if (validate.hasErrors) return;
 		const { key, ...values } = form.getValues().list[index] || {};
 		const configs = configsCreateTransformRq(props.fields, values);
 		createDiscoverySetting.mutate(
@@ -50,6 +47,13 @@ const DiscoveryAdaptersCreateGateway = (props: Props) => {
 		);
 	};
 
+	const insertListItem = props.fields.reduce(
+		(accumulator, { key }) => {
+			accumulator[key] = "";
+			return accumulator;
+		},
+		{ key: randomId() } as Record<string, unknown>,
+	);
 	const fields = form.getValues().list.map((item, index) => (
 		<Flex key={item.key} gap="xs" mt="xs">
 			<Fieldset variant="filled" w="100%" pb="xs" pt="2xs">

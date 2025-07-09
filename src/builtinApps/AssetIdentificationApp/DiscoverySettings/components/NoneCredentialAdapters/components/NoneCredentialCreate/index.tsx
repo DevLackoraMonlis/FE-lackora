@@ -4,13 +4,18 @@ import { randomId, useDisclosure } from "@mantine/hooks";
 import { IconCheck, IconPlus, IconX } from "@tabler/icons-react";
 import { Fragment } from "react";
 
-import { configsCreateTransformRq, getDynamicField } from "@/shared/components/baseComponents/BCDynamicField";
+import {
+	configsCreateTransformRq,
+	getDynamicField,
+	getDynamicFieldValidate,
+} from "@/shared/components/baseComponents/BCDynamicField";
 import type { BCDynamicFieldRs } from "@/shared/components/baseComponents/BCDynamicField/index.types";
 
 import { useCreateDiscoverySetting } from "../../../../index.hooks";
 import NoneCredentialCreateWebService from "../NoneCredentialCreateWebService";
 
-type FormValues = { list: { [key: string]: string }[] };
+type FormList = { [key: string]: string };
+type FormValues = { list: FormList[] };
 
 type Props = {
 	refetchDiscoveryAdapters: VoidFunction;
@@ -23,21 +28,17 @@ const NoneCredentialCreate = (props: Props) => {
 	const [createWebService, handleCreateWebService] = useDisclosure();
 	const { createDiscoverySetting } = useCreateDiscoverySetting();
 
-	const insertListItem = props.fields.reduce(
-		(accumulator, { key }) => {
-			accumulator[key] = "";
-			return accumulator;
-		},
-		{ key: randomId() } as Record<string, unknown>,
-	);
-
+	const initValidations = getDynamicFieldValidate<FormList, string>(props.fields);
 	const form = useForm<FormValues>({
 		initialValues: {
 			list: [],
 		},
+		validate: { list: initValidations as unknown as FormList },
 	});
 
 	const handleCreate = (index: number) => {
+		const validate = form.validate();
+		if (validate.hasErrors) return;
 		const { key, ...values } = form.getValues().list[index] || {};
 		const configs = configsCreateTransformRq(props.fields, values);
 		createDiscoverySetting.mutate(
@@ -50,7 +51,26 @@ const NoneCredentialCreate = (props: Props) => {
 			},
 		);
 	};
+	const handleAddWebServiceAfterCreate = (webServiceId: string) => {
+		const configs = configsCreateTransformRq(props.fields, { web_service: webServiceId });
+		createDiscoverySetting.mutate(
+			{ adapterId: props.adapterId, data: { configs } },
+			{
+				onSuccess: () => {
+					props.refetchDiscoveryAdapters();
+					form.setValues({ list: [] });
+				},
+			},
+		);
+	};
 
+	const insertListItem = props.fields.reduce(
+		(accumulator, { key }) => {
+			accumulator[key] = "";
+			return accumulator;
+		},
+		{ key: randomId() } as FormList,
+	);
 	const fields = form.getValues().list.map((item, index) => (
 		<Flex key={item.key} gap="xs" mt="xs">
 			<Flex gap="xs" w="100%">
@@ -68,7 +88,10 @@ const NoneCredentialCreate = (props: Props) => {
 										size="sm"
 										leftSection={<IconPlus size={15} />}
 										variant="transparent"
-										onClick={handleCreateWebService.open}
+										onClick={() => {
+											form.setValues({ list: [] });
+											handleCreateWebService.open();
+										}}
 									>
 										Add Custom Web Service
 									</Button>
@@ -103,7 +126,12 @@ const NoneCredentialCreate = (props: Props) => {
 		<Box pos="relative">
 			<LoadingOverlay visible={createDiscoverySetting.isPending} />
 			{fields}
-			{createWebService && <NoneCredentialCreateWebService onCancel={handleCreateWebService.close} />}
+			{createWebService && (
+				<NoneCredentialCreateWebService
+					onCancel={handleCreateWebService.close}
+					handleAddWebServiceAfterCreate={handleAddWebServiceAfterCreate}
+				/>
+			)}
 			<Button
 				mt="sm"
 				leftSection={<IconPlus size={20} />}

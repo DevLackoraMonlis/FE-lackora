@@ -50,18 +50,17 @@ const NoneCredentialAdaptersCard = ({ showLabel, id, configs, isActive, ...props
 				})}
 			</Flex>
 			<Flex gap="xs" align="center" mt={showLabel ? "2lg" : ""}>
-				{props.editable && (
-					<ActionIcon
-						onClick={() => setEditMode((perValue) => !perValue)}
-						title="Edit"
-						variant="subtle"
-						size="lg"
-						c="gray.8"
-						bg="gray.2"
-					>
-						<IconPencil size={20} />
-					</ActionIcon>
-				)}
+				<ActionIcon
+					onClick={() => setEditMode((perValue) => !perValue)}
+					title="Edit"
+					variant="subtle"
+					disabled={!props.editable}
+					size="lg"
+					c={props.editable ? "gray.8" : "gray.4"}
+					bg="gray.2"
+				>
+					<IconPencil size={20} />
+				</ActionIcon>
 				<BCPopoverConfirm
 					loading={props.loading}
 					onConfirm={props.handleDeleteAdapterConfigurations}

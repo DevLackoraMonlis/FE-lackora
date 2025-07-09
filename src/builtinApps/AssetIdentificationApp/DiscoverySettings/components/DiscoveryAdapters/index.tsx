@@ -1,11 +1,11 @@
 import { Badge, Card, Flex, Grid, LoadingOverlay, Text } from "@mantine/core";
 import { Accordion } from "@mantine/core";
 import { useViewportSize } from "@mantine/hooks";
-import { IconSearch } from "@tabler/icons-react";
 import { useState } from "react";
 
 import BCSideFilter, { type BCSideFilterItem } from "@/shared/components/baseComponents/BCSideFilter";
 import { useStableData } from "@/shared/hooks/useStableData";
+import { useAdapterAndVendorIcons } from "@/shared/icons/hooks/useAdapterIcons";
 
 import { useDiscoveryAdapters } from "../../index.hooks";
 import type { DiscoveryAdapterFilters } from "../../index.types";
@@ -13,6 +13,8 @@ import DiscoveryAdapterGateways from "./components/DiscoveryAdapterGateways";
 
 export default function DiscoverySettingsDiscoveryAdapters() {
 	const { height } = useViewportSize();
+	const { getAdapterAndVendorIcon } = useAdapterAndVendorIcons();
+
 	const [activeAccordion, setActiveAccordion] = useState<string | null>(null);
 	const [queryParams, setQueryParams] = useState<DiscoveryAdapterFilters>({ type: "discovery" });
 	const { discoveryAdapters } = useDiscoveryAdapters(queryParams);
@@ -41,6 +43,7 @@ export default function DiscoverySettingsDiscoveryAdapters() {
 				<BCSideFilter
 					height={height - 300}
 					onChange={handleUpdateQueryParams}
+					searchPlaceholder="Search by adapter Name"
 					filterItems={[
 						{
 							name: "used",
@@ -49,10 +52,12 @@ export default function DiscoverySettingsDiscoveryAdapters() {
 						},
 						...dynamicFilters,
 					]}
-					searchPlaceholder={"Search by adapter Name"}
 				/>
 			</Grid.Col>
-			<Grid.Col span={{ xs: 12, lg: 9 }}>
+			<Grid.Col
+				span={{ xs: 12, lg: 9 }}
+				style={{ overflowY: "auto", overflowX: "hidden", height: height - 150 }}
+			>
 				<Accordion variant="separated" onChange={setActiveAccordion}>
 					{discoveryAdapters?.data?.results?.map((item) => (
 						<Accordion.Item key={item.id} value={item.id}>
@@ -60,7 +65,7 @@ export default function DiscoverySettingsDiscoveryAdapters() {
 								<Flex align="center" justify="space-between">
 									<Flex gap="sm">
 										<Card variant="light" p="xs">
-											<IconSearch size={30} />
+											{getAdapterAndVendorIcon(item.vendor, { size: 30 })}
 										</Card>
 										<Flex direction="column" gap="2xs">
 											<Text fw="bold">{item.display_name}</Text>
