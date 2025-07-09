@@ -2,6 +2,7 @@ import type { CustomError, CustomSuccess, MutationContext } from "@/http/end-poi
 import dayjs from "dayjs";
 import jwt from "jsonwebtoken";
 import { isNumber } from "lodash";
+import { isIP } from "range_check";
 
 export function capitalizeFirstLetter(string: string) {
 	return string.charAt(0).toUpperCase() + string.slice(1);
@@ -29,6 +30,7 @@ type ValidationOptions = {
 	equalityFieldValue?: string;
 	equalityFieldName?: string;
 	mustBeURI?: boolean;
+	mustBeIP?: boolean;
 };
 
 export function validateInput(valueInput: unknown, options: ValidationOptions = {}): string | null {
@@ -46,6 +48,7 @@ export function validateInput(valueInput: unknown, options: ValidationOptions = 
 		equalityFieldValue,
 		equalityFieldName,
 		mustBeURI,
+		mustBeIP,
 	} = options;
 
 	// Array validation
@@ -80,6 +83,12 @@ export function validateInput(valueInput: unknown, options: ValidationOptions = 
 		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 		if (!emailRegex.test(value as string)) {
 			return "Value must be a valid email address";
+		}
+	}
+
+	if (mustBeIP) {
+		if (!isIP(value)) {
+			return "Value must be a valid IP";
 		}
 	}
 
