@@ -1,12 +1,20 @@
-import { NumberInput, Select, TextInput, Textarea } from "@mantine/core";
+import { NumberInput, TextInput, Textarea } from "@mantine/core";
 import type { FormValidateInput } from "@mantine/form";
 import { isObject } from "lodash";
+import type { RefObject } from "react";
 
 import { getObjectRelatedRecords } from "@/http/generated/object-management";
 import { validateInput } from "@/shared/lib/utils";
 
+import type {
+	BCDynamicConfigRs,
+	BCDynamicFieldProps,
+	BCDynamicFieldRs,
+	OptionsLabelValueType,
+} from "./index.types";
+
+import ListDynamicApiField from "./components/ListDynamicApiField";
 import ListDynamicField from "./components/ListDynamicField";
-import type { BCDynamicConfigRs, BCDynamicFieldProps, BCDynamicFieldRs } from "./index.types";
 
 export function getDynamicField<TObjectType extends string>({
 	type = "String",
@@ -23,8 +31,7 @@ export function getDynamicField<TObjectType extends string>({
 	disabled,
 	renderFooterInList,
 }: BCDynamicFieldProps<TObjectType>) {
-	if (objectType) type = "List";
-
+	if (objectType) type = "ListWithApi";
 	const commonOptions = {
 		label,
 		placeholder,
@@ -36,9 +43,9 @@ export function getDynamicField<TObjectType extends string>({
 	};
 
 	switch (type) {
-		case "List":
+		case "ListWithApi":
 			return (
-				<ListDynamicField<TObjectType>
+				<ListDynamicApiField<TObjectType>
 					{...{
 						api,
 						objectType,
@@ -49,16 +56,17 @@ export function getDynamicField<TObjectType extends string>({
 					}}
 				/>
 			);
-		case "Select": {
+		case "List":
 			return (
-				<Select
+				<ListDynamicField<TObjectType>
 					{...{
+						objectType,
+						options,
 						...commonOptions,
-						data: options || [],
+						defaultValue,
 					}}
 				/>
 			);
-		}
 		case "Int64":
 			return <NumberInput {...commonOptions} />;
 		case "Boolean":
@@ -79,14 +87,14 @@ export function getDynamicFieldValidate<FormValues, T extends string>(
 ) {
 	const validations = fields.reduce(
 		(accumulator, { key, type, required }) => {
-			switch (type) {
-				case "IP":
-					accumulator[key] = (value: string) => validateInput(value, { required: !!required });
-					break;
-				default:
-					accumulator[key] = (value: string) => validateInput(value, { required: !!required });
-					break;
-			}
+			accumulator[key] = (value: string) =>
+				validateInput(value, {
+					required: !!required,
+					mustBeIP: type === "IP",
+					mustBeNumber: type === "Int64",
+					mustBeEmail: key.includes("email"),
+					mustBeURI: key.includes("uri"),
+				});
 			return accumulator;
 		},
 		{} as Record<string, unknown>,
@@ -144,3 +152,32 @@ export const fieldsTransformRs = (
 		})) || []
 	);
 };
+
+export function fieldsTransformDependenciesOptions<FormList extends Record<string, unknown>>(
+	{ key: fieldKey, listKey }: { key: string; listKey: string },
+	listItem: FormList,
+	fields: BCDynamicFieldRs[],
+	updateValuesState: RefObject<FormList>,
+) {
+	const updateOptions = {} as Record<string, unknown>;
+
+	fields.forEach((field) => {
+		const formValue = listItem?.[field.key];
+		if (!formValue) return;
+		const fieldOptions = field?.options as OptionsLabelValueType | null;
+		const haveDependency = fieldOptions
+			?.filter(({ value }) => value === formValue)
+			?.find((object) => object[fieldKey]);
+
+		if (haveDependency && listItem?.[field.key]) {
+			const defaultValue = haveDependency[fieldKey]?.[0];
+			if (defaultValue) {
+				updateOptions.defaultValue = defaultValue;
+				updateOptions.disabled = true;
+				updateValuesState.current = { ...updateValuesState.current, [listKey]: defaultValue.value };
+			}
+		}
+	});
+
+	return updateOptions;
+}

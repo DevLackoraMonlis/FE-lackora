@@ -2,10 +2,12 @@ import { ActionIcon, Box, Button, Flex, LoadingOverlay } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { randomId, useDisclosure } from "@mantine/hooks";
 import { IconCheck, IconPlus, IconX } from "@tabler/icons-react";
-import { Fragment } from "react";
+import { omitBy } from "lodash";
+import { Fragment, useRef } from "react";
 
 import {
 	configsCreateTransformRq,
+	fieldsTransformDependenciesOptions,
 	getDynamicField,
 	getDynamicFieldValidate,
 } from "@/shared/components/baseComponents/BCDynamicField";
@@ -25,6 +27,7 @@ type Props = {
 };
 
 const NoneCredentialCreate = (props: Props) => {
+	const updateValueOnce = useRef<FormList>({});
 	const [createWebService, handleCreateWebService] = useDisclosure();
 	const { createDiscoverySetting } = useCreateDiscoverySetting();
 
@@ -34,6 +37,13 @@ const NoneCredentialCreate = (props: Props) => {
 			list: [],
 		},
 		validate: { list: initValidations as unknown as FormList },
+		onValuesChange: () => {
+			setTimeout(() => {
+				Object.entries(updateValueOnce.current).forEach(([key, value]) => {
+					form.setFieldValue(key, value);
+				});
+			}, 100);
+		},
 	});
 
 	const handleCreate = (index: number) => {
@@ -71,17 +81,25 @@ const NoneCredentialCreate = (props: Props) => {
 		},
 		{ key: randomId() } as FormList,
 	);
-	const fields = form.getValues().list.map((item, index) => (
-		<Flex key={item.key} gap="xs" mt="xs">
+
+	const fields = form.getValues().list.map((listItem, index) => (
+		<Flex key={listItem.key} gap="xs" mt="xs">
 			<Flex gap="xs" w="100%">
 				{props.fields.map(({ label, key, ...item }) => {
+					const listKey = `list.${index}.${key}`;
+					const updateDependencyOptions = fieldsTransformDependenciesOptions<FormList>(
+						{ listKey, key },
+						listItem,
+						props.fields,
+						updateValueOnce,
+					);
 					return (
 						<Fragment key={`list.${index + 1}.${key}`}>
 							{getDynamicField({
 								otherElementOptions: { withAsterisk: true, style: { flex: 1 } },
 								formInputProps: {
-									key: form.key(`list.${index}.${key}`),
-									...form.getInputProps(`list.${index}.${key}`),
+									key: form.key(listKey),
+									...form.getInputProps(listKey),
 								},
 								renderFooterInList: key === "web_service" && (
 									<Button
@@ -99,6 +117,7 @@ const NoneCredentialCreate = (props: Props) => {
 								label: "",
 								placeholder: label,
 								key,
+								...updateDependencyOptions,
 								...item,
 							})}
 						</Fragment>
@@ -114,7 +133,13 @@ const NoneCredentialCreate = (props: Props) => {
 					title="Cancel"
 					c="gray.8"
 					bg="gray.2"
-					onClick={() => form.removeListItem("list", index)}
+					onClick={() => {
+						form.removeListItem("list", index);
+						const filterRemoved = omitBy(updateValueOnce.current, (_value, key) =>
+							key.includes(index.toString()),
+						);
+						updateValueOnce.current = filterRemoved;
+					}}
 				>
 					<IconX size={20} />
 				</ActionIcon>
