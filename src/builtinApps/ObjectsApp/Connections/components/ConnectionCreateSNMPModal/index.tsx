@@ -110,30 +110,12 @@ export default function ConnectionCreateSNMPModal(
 
 	const createSNMPConnectionMutation = useCreateConnection({
 		mutation: {
-			onSuccess: () => {
-				notifications.show({
-					title: "Success",
-					message: "SNMP Connection Created Successfully",
-					color: "green",
-					withBorder: true,
-				});
-				props.onSuccess();
-				handleClose();
-			},
+			onMutate: () => ({ successMessage: "SNMP Connection Created Successfully" }),
 		},
 	});
 	const updateSNMPConnectionMutation = useEditConnection({
 		mutation: {
-			onSuccess: () => {
-				notifications.show({
-					title: "Success",
-					message: "SNMP Connection Updated Successfully",
-					color: "green",
-					withBorder: true,
-				});
-				props.onSuccess();
-				handleClose();
-			},
+			onMutate: () => ({ successMessage: "SNMP Connection Updated Successfully" }),
 		},
 	});
 
@@ -183,9 +165,25 @@ export default function ConnectionCreateSNMPModal(
 				});
 				return;
 			}
-			updateSNMPConnectionMutation.mutate({ data: changedPayload, connectionId: props.id });
+			updateSNMPConnectionMutation.mutate(
+				{ data: changedPayload, connectionId: props.id },
+				{
+					onSuccess: () => {
+						props.onSuccess();
+						handleClose();
+					},
+				},
+			);
 		} else {
-			createSNMPConnectionMutation.mutate({ data: newPayload });
+			createSNMPConnectionMutation.mutate(
+				{ data: newPayload },
+				{
+					onSuccess: () => {
+						props.onSuccess();
+						handleClose();
+					},
+				},
+			);
 		}
 	};
 

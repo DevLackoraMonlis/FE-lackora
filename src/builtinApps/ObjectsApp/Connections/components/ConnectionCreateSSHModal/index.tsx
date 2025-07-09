@@ -74,31 +74,13 @@ export default function ConnectionCreateSSHModal(
 
 	const createSSHConnectionMutation = useCreateConnection({
 		mutation: {
-			onSuccess: () => {
-				notifications.show({
-					title: "Success",
-					message: "SSH Connection Created Successfully",
-					color: "green",
-					withBorder: true,
-				});
-				props.onSuccess();
-				handleClose();
-			},
+			onMutate: () => ({ successMessage: "SSH Connection Created Successfully" }),
 		},
 	});
 
 	const updateSSHConnectionMutation = useEditConnection({
 		mutation: {
-			onSuccess: () => {
-				notifications.show({
-					title: "Success",
-					message: "SSH Connection Updated Successfully",
-					color: "green",
-					withBorder: true,
-				});
-				props.onSuccess();
-				handleClose();
-			},
+			onMutate: () => ({ successMessage: "SSH Connection Updated Successfully" }),
 		},
 	});
 
@@ -150,12 +132,28 @@ export default function ConnectionCreateSSHModal(
 				});
 				return;
 			}
-			updateSSHConnectionMutation.mutate({
-				data: changedPayload,
-				connectionId: props.id,
-			});
+			updateSSHConnectionMutation.mutate(
+				{
+					data: changedPayload,
+					connectionId: props.id,
+				},
+				{
+					onSuccess: () => {
+						props.onSuccess();
+						handleClose();
+					},
+				},
+			);
 		} else {
-			createSSHConnectionMutation.mutate({ data: newPayload });
+			createSSHConnectionMutation.mutate(
+				{ data: newPayload },
+				{
+					onSuccess: () => {
+						props.onSuccess();
+						handleClose();
+					},
+				},
+			);
 		}
 	};
 

@@ -70,31 +70,13 @@ export default function ConnectionCreateHTTPModal(
 
 	const createHTTPConnectionMutation = useCreateConnection({
 		mutation: {
-			onSuccess: () => {
-				notifications.show({
-					title: "Success",
-					message: "HTTP(HTTPS) Connection Created Successfully",
-					color: "green",
-					withBorder: true,
-				});
-				props.onSuccess();
-				handleClose();
-			},
+			onMutate: () => ({ successMessage: "HTTP(HTTPS) Connection Created Successfully" }),
 		},
 	});
 
 	const updateHTTPConnectionMutation = useEditConnection({
 		mutation: {
-			onSuccess: () => {
-				notifications.show({
-					title: "Success",
-					message: "HTTP(HTTPS) Connection Updated Successfully",
-					color: "green",
-					withBorder: true,
-				});
-				props.onSuccess();
-				handleClose();
-			},
+			onMutate: () => ({ successMessage: "HTTP(HTTPS) Connection Updated Successfully" }),
 		},
 	});
 
@@ -127,9 +109,25 @@ export default function ConnectionCreateHTTPModal(
 				});
 				return;
 			}
-			updateHTTPConnectionMutation.mutate({ data: changedPayload, connectionId: props.id });
+			updateHTTPConnectionMutation.mutate(
+				{ data: changedPayload, connectionId: props.id },
+				{
+					onSuccess: () => {
+						props.onSuccess();
+						handleClose();
+					},
+				},
+			);
 		} else {
-			createHTTPConnectionMutation.mutate({ data: newPayload });
+			createHTTPConnectionMutation.mutate(
+				{ data: newPayload },
+				{
+					onSuccess: () => {
+						props.onSuccess();
+						handleClose();
+					},
+				},
+			);
 		}
 	};
 
