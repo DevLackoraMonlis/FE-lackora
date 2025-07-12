@@ -54,7 +54,7 @@ const fields: BCDynamicFieldProps<"">[] = [
 		},
 	},
 	{
-		type: "Select",
+		type: "List",
 		key: "code",
 		placeholder: "e.g., 200",
 		label: "Response Code",

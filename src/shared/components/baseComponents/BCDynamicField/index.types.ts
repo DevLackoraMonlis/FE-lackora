@@ -11,7 +11,10 @@ export type BCDynamicFieldType =
 	| "Textarea"
 	| "Select"
 	| "IP"
-	| "List";
+	| "List"
+	| "ListWithApi";
+
+export type OptionsLabelValueType = Array<LabelValueType & { [key: string]: OptionsLabelValueType }>;
 
 export type BCDynamicFieldProps<T extends string> = {
 	label: string;
@@ -25,7 +28,7 @@ export type BCDynamicFieldProps<T extends string> = {
 	disabled?: boolean | null;
 	objectType?: T | null;
 	type?: BCDynamicFieldType | null;
-	options?: LabelValueType[] | null;
+	options?: LabelValueType[] | OptionsLabelValueType | null;
 	renderFooterInList?: ReactNode;
 	api?: (
 		variables: PaginationRq<{ object_type?: string | null }>,
@@ -50,6 +53,7 @@ export type BCDynamicFieldRs = {
 	objectType?: string | null;
 	type?: BCDynamicFieldType | null;
 	paginate?: boolean | null;
-	options?: LabelValueType[] | null;
+	options?: LabelValueType[] | OptionsLabelValueType | null;
 	required: boolean;
+	disabled?: boolean;
 };
