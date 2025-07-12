@@ -30,6 +30,7 @@ export function getDynamicField<TObjectType extends string>({
 	paginate,
 	disabled,
 	renderFooterInList,
+	custom,
 }: BCDynamicFieldProps<TObjectType>) {
 	if (objectType) type = "ListWithApi";
 	const commonOptions = {
@@ -60,6 +61,7 @@ export function getDynamicField<TObjectType extends string>({
 			return (
 				<ListDynamicField<TObjectType>
 					{...{
+						custom,
 						objectType,
 						options,
 						...commonOptions,
@@ -153,23 +155,23 @@ export const fieldsTransformRs = (
 	);
 };
 
-export function fieldsTransformDependenciesOptions<FormList extends Record<string, unknown>>(
+export function fieldsTransformDependenciesOptions<FormItem extends Record<string, unknown>>(
 	{ key: fieldKey, listKey }: { key: string; listKey: string },
-	listItem: FormList,
+	formItem: FormItem,
 	fields: BCDynamicFieldRs[],
-	updateValuesState: RefObject<FormList>,
+	updateValuesState: RefObject<FormItem>,
 ) {
 	const updateOptions = {} as Record<string, unknown>;
 
 	fields.forEach((field) => {
-		const formValue = listItem?.[field.key];
+		const formValue = formItem?.[field.key];
 		if (!formValue) return;
 		const fieldOptions = field?.options as OptionsLabelValueType | null;
 		const haveDependency = fieldOptions
 			?.filter(({ value }) => value === formValue)
 			?.find((object) => object[fieldKey]);
 
-		if (haveDependency && listItem?.[field.key]) {
+		if (haveDependency && formItem?.[field.key]) {
 			const defaultValue = haveDependency[fieldKey]?.[0];
 			if (defaultValue) {
 				updateOptions.defaultValue = defaultValue;

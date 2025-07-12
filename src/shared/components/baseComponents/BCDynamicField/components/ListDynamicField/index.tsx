@@ -17,8 +17,10 @@ export default function ListDynamicField<TObject extends string>({
 	defaultValue = null,
 	onChange,
 	options,
+	custom,
 	...props
 }: Props<TObject>) {
+	const [data, setData] = useState<typeof options>(options || []);
 	const [selected, setSelectedValue] = useState<LabelValueType | null>();
 	const [search, setSearch] = useState("");
 
@@ -35,24 +37,38 @@ export default function ListDynamicField<TObject extends string>({
 		},
 	});
 
-	const comboboxOptions = options?.map(({ label, value }) => (
-		<Combobox.Option value={value} key={value}>
-			{label}
-		</Combobox.Option>
-	));
+	const comboboxOptions = data
+		?.filter(({ label }) => label?.toLowerCase().includes(search))
+		.map(({ label, value }) => (
+			<Combobox.Option value={value} key={value}>
+				{label}
+			</Combobox.Option>
+		));
 
 	useEffect(() => {
 		setSelectedValue(isObject(defaultValue) ? defaultValue : null);
 	}, [defaultValue]);
+
+	useEffect(() => {
+		setData(options);
+	}, [options]);
 
 	return (
 		<Combobox
 			position="bottom"
 			store={combobox}
 			withinPortal={true}
-			onOptionSubmit={(_, { children, value }) => {
-				onChange?.(value);
-				setSelectedValue({ label: children as string, value });
+			onOptionSubmit={(_, { children: label, value }) => {
+				if (value === "$create") {
+					const [_create, newValue] = label as string[];
+					const newOption = { label: newValue, value: newValue };
+					setData((current) => (current ? [...current, newOption] : [newOption]));
+					onChange?.(newValue);
+					setSelectedValue(newOption);
+				} else {
+					onChange?.(value);
+					setSelectedValue({ label: label as string, value });
+				}
 				combobox.closeDropdown();
 			}}
 		>
@@ -63,8 +79,8 @@ export default function ListDynamicField<TObject extends string>({
 					type="button"
 					pointer
 					rightSection={<Combobox.Chevron />}
-					onClick={() => combobox.toggleDropdown()}
 					rightSectionPointerEvents="none"
+					onClick={() => combobox.openDropdown()}
 				>
 					{selected?.label || ""}
 				</InputBase>
@@ -75,18 +91,19 @@ export default function ListDynamicField<TObject extends string>({
 					onChange={(event) => {
 						setSearch(event.currentTarget.value);
 					}}
-					placeholder="Search"
+					placeholder={custom ? "Search or Create new" : "Search"}
 				/>
 				<Combobox.Options style={{ maxHeight: 200, overflow: "auto" }}>
 					{comboboxOptions?.length ? (
 						comboboxOptions
+					) : search && custom ? (
+						<Combobox.Option value="$create">+ Create {search}</Combobox.Option>
 					) : (
 						<Center h="100%">
 							<Combobox.Empty>Nothing found</Combobox.Empty>
 						</Center>
 					)}
 				</Combobox.Options>
-				{/* <Combobox.Footer bg="gray.2">Footer</Combobox.Footer> */}
 			</Combobox.Dropdown>
 		</Combobox>
 	);

@@ -2,9 +2,14 @@ import { ActionIcon, Box, Button, Fieldset, Flex, LoadingOverlay } from "@mantin
 import { useForm } from "@mantine/form";
 import { randomId } from "@mantine/hooks";
 import { IconCheck, IconPlus, IconX } from "@tabler/icons-react";
-import { Fragment } from "react";
+import { omitBy } from "lodash";
+import { Fragment, useRef } from "react";
 
-import { getDynamicField, getDynamicFieldValidate } from "@/shared/components/baseComponents/BCDynamicField";
+import {
+	fieldsTransformDependenciesOptions,
+	getDynamicField,
+	getDynamicFieldValidate,
+} from "@/shared/components/baseComponents/BCDynamicField";
 import { configsCreateTransformRq } from "@/shared/components/baseComponents/BCDynamicField";
 import type { BCDynamicFieldRs } from "@/shared/components/baseComponents/BCDynamicField/index.types";
 
@@ -21,6 +26,7 @@ type Props = {
 };
 
 const DiscoveryAdaptersCreateGateway = (props: Props) => {
+	const updateValueOnce = useRef<FormList>({});
 	const { createDiscoverySetting } = useCreateDiscoverySetting();
 
 	const initValidations = getDynamicFieldValidate<FormList, string>(props.fields);
@@ -29,7 +35,20 @@ const DiscoveryAdaptersCreateGateway = (props: Props) => {
 			list: [],
 		},
 		validate: { list: initValidations as unknown as FormList },
+		onValuesChange: () => {
+			setTimeout(() => {
+				Object.entries(updateValueOnce.current).forEach(([key, value]) => {
+					form.setFieldValue(key, value);
+				});
+			}, 100);
+		},
 	});
+
+	const handleRemoveFromList = (index: number) => {
+		form.removeListItem("list", index);
+		const filterRemoved = omitBy(updateValueOnce.current, (_value, key) => key.includes(index.toString()));
+		updateValueOnce.current = filterRemoved;
+	};
 
 	const handleCreate = (index: number) => {
 		const validate = form.validate();
@@ -41,7 +60,7 @@ const DiscoveryAdaptersCreateGateway = (props: Props) => {
 			{
 				onSuccess: () => {
 					props.refetchDiscoveryAdapters();
-					form.removeListItem("list", index);
+					handleRemoveFromList(index);
 				},
 			},
 		);
@@ -54,22 +73,35 @@ const DiscoveryAdaptersCreateGateway = (props: Props) => {
 		},
 		{ key: randomId() } as Record<string, unknown>,
 	);
-	const fields = form.getValues().list.map((item, index) => (
-		<Flex key={item.key} gap="xs" mt="xs">
+
+	const fields = form.getValues().list.map((listItem, index) => (
+		<Flex key={listItem.key} gap="xs" mt="xs">
 			<Fieldset variant="filled" w="100%" pb="xs" pt="2xs">
 				<Flex gap="xs">
-					{props.fields.map((item) => (
-						<Fragment key={`list.${index + 1}.${item.key}`}>
-							{getDynamicField({
-								otherElementOptions: { withAsterisk: true, style: { flex: 1 } },
-								formInputProps: {
-									key: form.key(`list.${index}.${item.key}`),
-									...form.getInputProps(`list.${index}.${item.key}`),
-								},
-								...item,
-							})}
-						</Fragment>
-					))}
+					{props.fields.map(({ label, key, ...item }) => {
+						const listKey = `list.${index}.${key}`;
+						const updateDependencyOptions = fieldsTransformDependenciesOptions<FormList>(
+							{ listKey, key },
+							listItem,
+							props.fields,
+							updateValueOnce,
+						);
+						return (
+							<Fragment key={`list.${index + 1}.${key}`}>
+								{getDynamicField({
+									otherElementOptions: { withAsterisk: true, style: { flex: 1 } },
+									formInputProps: {
+										key: form.key(listKey),
+										...form.getInputProps(listKey),
+									},
+									label,
+									key,
+									...updateDependencyOptions,
+									...item,
+								})}
+							</Fragment>
+						);
+					})}
 				</Flex>
 			</Fieldset>
 			<Flex direction="column" gap="xs" justify="space-between" align="center">
@@ -81,7 +113,7 @@ const DiscoveryAdaptersCreateGateway = (props: Props) => {
 					title="Cancel"
 					c="gray.8"
 					bg="gray.2"
-					onClick={() => form.removeListItem("list", index)}
+					onClick={() => handleRemoveFromList(index)}
 				>
 					<IconX size={20} />
 				</ActionIcon>

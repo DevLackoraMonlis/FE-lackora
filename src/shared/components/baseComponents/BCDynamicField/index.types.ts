@@ -26,6 +26,7 @@ export type BCDynamicFieldProps<T extends string> = {
 	required?: boolean | null;
 	paginate?: boolean | null;
 	disabled?: boolean | null;
+	custom?: boolean | null;
 	objectType?: T | null;
 	type?: BCDynamicFieldType | null;
 	options?: LabelValueType[] | OptionsLabelValueType | null;

@@ -115,7 +115,7 @@ export default function ListDynamicApiField<TObject extends string>({
 				<Combobox.Options style={{ maxHeight: 200, overflow: "auto" }}>
 					{options?.length ? (
 						options
-					) : (
+					) : getObjectQuery.isFetching ? null : (
 						<Center h="100%">
 							<Combobox.Empty>Nothing found</Combobox.Empty>
 						</Center>
