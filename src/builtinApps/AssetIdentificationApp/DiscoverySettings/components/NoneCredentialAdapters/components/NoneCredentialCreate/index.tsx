@@ -45,6 +45,11 @@ const NoneCredentialCreate = (props: Props) => {
 			}, 100);
 		},
 	});
+	const handleRemoveFromList = (index: number) => {
+		form.removeListItem("list", index);
+		const filterRemoved = omitBy(updateValueOnce.current, (_value, key) => key.includes(index.toString()));
+		updateValueOnce.current = filterRemoved;
+	};
 
 	const handleCreate = (index: number) => {
 		const validate = form.validate();
@@ -56,7 +61,7 @@ const NoneCredentialCreate = (props: Props) => {
 			{
 				onSuccess: () => {
 					props.refetchDiscoveryAdapters();
-					form.removeListItem("list", index);
+					handleRemoveFromList(index);
 				},
 			},
 		);
@@ -69,6 +74,7 @@ const NoneCredentialCreate = (props: Props) => {
 				onSuccess: () => {
 					props.refetchDiscoveryAdapters();
 					form.setValues({ list: [] });
+					updateValueOnce.current = {};
 				},
 			},
 		);
@@ -94,7 +100,7 @@ const NoneCredentialCreate = (props: Props) => {
 						updateValueOnce,
 					);
 					return (
-						<Fragment key={`list.${index + 1}.${key}`}>
+						<Fragment key={listKey}>
 							{getDynamicField({
 								otherElementOptions: { withAsterisk: true, style: { flex: 1 } },
 								formInputProps: {
@@ -133,13 +139,7 @@ const NoneCredentialCreate = (props: Props) => {
 					title="Cancel"
 					c="gray.8"
 					bg="gray.2"
-					onClick={() => {
-						form.removeListItem("list", index);
-						const filterRemoved = omitBy(updateValueOnce.current, (_value, key) =>
-							key.includes(index.toString()),
-						);
-						updateValueOnce.current = filterRemoved;
-					}}
+					onClick={() => handleRemoveFromList(index)}
 				>
 					<IconX size={20} />
 				</ActionIcon>

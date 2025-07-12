@@ -2,10 +2,11 @@ import { ActionIcon, Box, Flex, LoadingOverlay } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { IconCheck, IconX } from "@tabler/icons-react";
 import { isObject } from "lodash";
-import { Fragment, useEffect } from "react";
+import { Fragment, useEffect, useRef } from "react";
 
 import {
 	configsUpdateTransformRq,
+	fieldsTransformDependenciesOptions,
 	getDynamicField,
 	getDynamicFieldValidate,
 } from "@/shared/components/baseComponents/BCDynamicField";
@@ -33,9 +34,17 @@ const NoneCredentialEditForm = ({
 	handleEditAdapterConfigurations,
 	fields,
 }: Props) => {
+	const updateValueOnce = useRef<FormValues>({});
 	const initValidations = getDynamicFieldValidate<FormValues, string>(fields);
 	const form = useForm<FormValues>({
 		validate: initValidations,
+		onValuesChange: () => {
+			setTimeout(() => {
+				Object.entries(updateValueOnce.current).forEach(([key, value]) => {
+					form.setFieldValue(key, value);
+				});
+			}, 100);
+		},
 	});
 
 	const handleSubmit = () => {
@@ -51,8 +60,11 @@ const NoneCredentialEditForm = ({
 			acc[key] = isObject(value) ? value?.value : null;
 			return acc;
 		}, {} as FormValues);
-		// initialize
+
 		form.initialize(formInitialValues);
+		return () => {
+			updateValueOnce.current = {};
+		};
 	}, [configs]);
 
 	return (
@@ -62,6 +74,12 @@ const NoneCredentialEditForm = ({
 				<Flex gap="xs" w="100%">
 					{fields.map(({ label, key, ...item }, idx) => {
 						const defaultValue = configs?.find(({ key: valueKey }) => key === valueKey)?.value;
+						const updateDependencyOptions = fieldsTransformDependenciesOptions<FormValues>(
+							{ listKey: key, key },
+							form.values,
+							fields,
+							updateValueOnce,
+						);
 						return (
 							<Fragment key={`${key}-${idx + 1}`}>
 								{getDynamicField({
@@ -76,6 +94,7 @@ const NoneCredentialEditForm = ({
 									key,
 									defaultValue,
 									label: "",
+									...updateDependencyOptions,
 									...item,
 								})}
 							</Fragment>
