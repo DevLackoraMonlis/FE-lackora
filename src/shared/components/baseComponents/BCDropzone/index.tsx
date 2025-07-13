@@ -78,9 +78,9 @@ export default function BCDropzone({
 					</Flex>
 				</Dropzone>
 				<Button
+					disabled={disabled}
 					mt="-25px"
 					w="250px"
-					color={disabled ? "gray" : ""}
 					onClick={() => openRef.current?.()}
 					style={{ pointerEvents: "all" }}
 				>

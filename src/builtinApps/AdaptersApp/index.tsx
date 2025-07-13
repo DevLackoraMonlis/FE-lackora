@@ -11,6 +11,7 @@ import { useStableData } from "@/shared/hooks/useStableData";
 import { useTablePagination } from "@/shared/hooks/useTablePagination";
 
 import AdapterSingleCard from "./components/AdapterSingleCard";
+import { DeleteAdapterModal } from "./components/DeleteAdapter";
 import { ImportAdapterModal, UpdateAdapterModal } from "./components/ImportAdapter";
 import { useAdapterManagement } from "./index.hooks";
 import type { AdaptersFilters } from "./index.types";
@@ -19,8 +20,6 @@ export default function AdapterManagementLandingPage() {
 	const { height } = useViewportSize();
 	const { renderAdapterBadge } = useAdapterBadges();
 
-	const [openedImport, handleOpenedImport] = useDisclosure(false);
-	const [openedUpdate, handleOpenedUpdate] = useDisclosure(false);
 	const { tablePagination, page, pageSize, totalRecords, setTotalRecords } = useTablePagination({
 		defaultPageSize: 12,
 	});
@@ -28,11 +27,16 @@ export default function AdapterManagementLandingPage() {
 	const [queryParams, setQueryParams] = useState<AdaptersFilters>({});
 	const { adapterManagement } = useAdapterManagement(queryParams);
 	const filters = adapterManagement.data?.metadata?.filters;
+	const results = adapterManagement.data?.results || [];
 	const total = adapterManagement?.data?.total;
-
 	const handleUpdateQueryParams = (params: Partial<AdaptersFilters>) => {
 		setQueryParams((perParams) => ({ ...perParams, ...params }));
 	};
+
+	const [openedImport, handleOpenedImport] = useDisclosure();
+	const [openedUpdate, handleOpenedUpdate] = useDisclosure();
+	const [openedDelete, handleOpenedDelete] = useDisclosure();
+	const [selectedAdapter, setSelectedAdapter] = useState<(typeof results)[number]>();
 
 	const stableFilters = useStableData<typeof filters>(filters);
 	const dynamicFilters = stableFilters?.map(
@@ -61,6 +65,13 @@ export default function AdapterManagementLandingPage() {
 				opened={openedUpdate}
 				refetchAdapters={adapterManagement.refetch}
 			/>
+			<DeleteAdapterModal
+				onClose={handleOpenedDelete.close}
+				opened={openedDelete && !!selectedAdapter}
+				refetchAdapters={adapterManagement.refetch}
+				adapterId={selectedAdapter?.id}
+				adapterName={selectedAdapter?.display_name}
+			/>
 			{/* UI section */}
 			<Grid p="sm" pt="lg" gutter="lg">
 				<Grid.Col span={{ xs: 12, lg: 2.5 }}>
@@ -88,13 +99,19 @@ export default function AdapterManagementLandingPage() {
 							pos="relative"
 						>
 							<LoadingOverlay visible={adapterManagement.isLoading} />
-							{adapterManagement.data?.results?.map((item) => (
+							{results?.map((item) => (
 								<Grid.Col key={item.id} span={{ xs: 12, md: 6, lg: 4 }}>
 									<AdapterSingleCard
-										onDeleteAdapter={handleOpenedImport.open}
-										onUpdateAdapter={handleOpenedUpdate.open}
-										adapterIconPath={item.icon}
+										onDeleteAdapter={() => {
+											setSelectedAdapter(item);
+											handleOpenedDelete.open();
+										}}
+										onUpdateAdapter={() => {
+											setSelectedAdapter(item);
+											handleOpenedUpdate.open();
+										}}
 										adapterBadge={renderAdapterBadge({ iconType: item.adapterType, h: "35px" })}
+										adapterIconPath={item.icon}
 										{...item}
 									/>
 								</Grid.Col>
