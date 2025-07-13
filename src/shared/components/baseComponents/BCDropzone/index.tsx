@@ -21,6 +21,7 @@ export default function BCDropzone({
 	accept,
 	customAccept,
 	onDrop,
+	disabled,
 	...dropzoneProps
 }: Props) {
 	const ACCEPT_FILES = accept;
@@ -59,6 +60,7 @@ export default function BCDropzone({
 					maxSize={MAX_SIZE}
 					onDrop={handleOnDrop}
 					bg={bgColor}
+					disabled={disabled}
 					{...dropzoneProps}
 				>
 					<Flex direction="column" gap="xs" justify="center" align="center">
@@ -75,7 +77,13 @@ export default function BCDropzone({
 						>{`Drag'n'drop file here to upload. We can accept only ${ACCEPT_FILES_DISPLAY} file that is less than ${ACCEPT_SIZE_DISPLAY} in size.`}</Highlight>
 					</Flex>
 				</Dropzone>
-				<Button mt="-25px" w="250px" onClick={() => openRef.current?.()} style={{ pointerEvents: "all" }}>
+				<Button
+					mt="-25px"
+					w="250px"
+					color={disabled ? "gray" : ""}
+					onClick={() => openRef.current?.()}
+					style={{ pointerEvents: "all" }}
+				>
 					Select File
 				</Button>
 			</Flex>

@@ -18,10 +18,12 @@ type Props = {
 	onClose: VoidFunction;
 	opened: boolean;
 	refetchAdapters: VoidFunction;
+	updateMode?: boolean;
 };
 
-function ImportAdapter({ onClose, refetchAdapters }: Props) {
-	const [status, setStatus] = useState<AdapterUploadedStatus>(AdapterUploadedStatus.None);
+function ImportAdapter({ onClose, refetchAdapters, updateMode }: Props) {
+	const defaultStatus = updateMode ? AdapterUploadedStatus.Upgrade : AdapterUploadedStatus.None;
+	const [status, setStatus] = useState<AdapterUploadedStatus>(defaultStatus);
 	const [file, setFile] = useState<FileWithPath | null>(null);
 	const [fileInfo, setFileInfo] = useState<{ subTitle: string }>({
 		subTitle: "Uploading and Validating ...",
@@ -30,6 +32,11 @@ function ImportAdapter({ onClose, refetchAdapters }: Props) {
 	const { validateAdapterAdp } = useAdapterManagementValidateAdp((updateStatus) => setStatus(updateStatus));
 	const { importAdapterAdp } = useAdapterManagementImportAdp();
 
+	const onCancelFile = () => {
+		setFile(null);
+		setFileInfo({ subTitle: "" });
+		setStatus(defaultStatus);
+	};
 	const onApply = () => {
 		if (file) {
 			const data = { file };
@@ -42,9 +49,7 @@ function ImportAdapter({ onClose, refetchAdapters }: Props) {
 					},
 					onSuccess() {
 						refetchAdapters();
-						setStatus(AdapterUploadedStatus.None);
-						setFile(null);
-						setFileInfo({ subTitle: "" });
+						onCancelFile();
 						onClose();
 					},
 				},
@@ -70,37 +75,38 @@ function ImportAdapter({ onClose, refetchAdapters }: Props) {
 		}
 	}, [file]);
 
-	const uploadStatus = ADAPTER_UPLOADED_STATUS[status] || {};
 	const renderUploadComponent = (status: AdapterUploadedStatus) => {
 		if (!file) return null;
 		const { name: title } = file;
 		const { subTitle } = fileInfo;
 		switch (status) {
 			case AdapterUploadedStatus.Loading:
-				return <UploadStatusUploading {...{ title, subTitle }} />;
+				return <UploadStatusUploading {...{ title, subTitle, onCancelFile }} />;
 			case AdapterUploadedStatus.Validating:
-				return <UploadStatusValidating {...{ title, subTitle }} />;
+				return <UploadStatusValidating {...{ title, subTitle, onCancelFile }} />;
 			case AdapterUploadedStatus.Downgrade:
 			case AdapterUploadedStatus.Ready:
 			case AdapterUploadedStatus.Exists:
 			case AdapterUploadedStatus.Upgrade:
-				return <UploadStatusReadyToImport {...{ title, subTitle, iconType: title, status }} />;
+				return <UploadStatusReadyToImport {...{ title, subTitle, onCancelFile, iconType: title, status }} />;
 			default:
 				return null;
 		}
 	};
+	const uploadStatus = ADAPTER_UPLOADED_STATUS[status] || {};
 	return (
 		<>
 			<Flex pb="3xl" direction="column" gap="md" px="md">
-				{status === AdapterUploadedStatus.Upgrade && (
+				{(updateMode || status === AdapterUploadedStatus.Upgrade) && (
 					<List listStyleType="none">
-						{ADAPTER_UPLOADED_DESCRIPTION[status].map((text) => (
+						{ADAPTER_UPLOADED_DESCRIPTION[AdapterUploadedStatus.Upgrade].map((text) => (
 							<List.Item key={text}>{text}</List.Item>
 						))}
 					</List>
 				)}
 				<Card bg="gray.1">
 					<BCDropzone
+						disabled={!!file}
 						title="Adapter"
 						accept={[".adp"]}
 						customAccept={{
@@ -114,9 +120,9 @@ function ImportAdapter({ onClose, refetchAdapters }: Props) {
 				{renderUploadComponent(status)}
 			</Flex>
 			<BCModal.Footer
-				disabled={uploadStatus.disabled ?? true}
+				disabled={uploadStatus.disabled || !file}
 				loading={importAdapterAdp.isPending}
-				applyLabel={uploadStatus.buttonText ?? "Import"}
+				applyLabel={updateMode ? "Upgrade" : uploadStatus.buttonText}
 				onApply={onApply}
 				onCancel={onClose}
 			/>
@@ -124,10 +130,18 @@ function ImportAdapter({ onClose, refetchAdapters }: Props) {
 	);
 }
 
-export default function ImportAdapterModal({ onClose, opened, ...props }: Props) {
+export function ImportAdapterModal({ onClose, opened, ...props }: Props) {
 	return (
-		<BCModal size="50%" centered title="Import/Update Adapters" onClose={onClose} opened={opened}>
+		<BCModal size="50%" centered title="Import Adapters" onClose={onClose} opened={opened}>
 			<ImportAdapter onClose={onClose} opened={opened} {...props} />
+		</BCModal>
+	);
+}
+
+export function UpdateAdapterModal({ onClose, opened, ...props }: Props) {
+	return (
+		<BCModal size="50%" centered title="Update Adapters" onClose={onClose} opened={opened}>
+			<ImportAdapter onClose={onClose} opened={opened} {...props} updateMode />
 		</BCModal>
 	);
 }

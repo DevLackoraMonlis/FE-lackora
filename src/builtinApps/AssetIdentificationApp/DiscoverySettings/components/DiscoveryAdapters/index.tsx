@@ -5,7 +5,7 @@ import { useState } from "react";
 
 import BCSideFilter, { type BCSideFilterItem } from "@/shared/components/baseComponents/BCSideFilter";
 import { useStableData } from "@/shared/hooks/useStableData";
-import { useAdapterAndVendorIcons } from "@/shared/icons/hooks/useAdapterIcons";
+import { useVendorIcons } from "@/shared/icons/hooks/useVendorIcons";
 
 import { useDiscoveryAdapters } from "../../index.hooks";
 import type { DiscoveryAdapterFilters } from "../../index.types";
@@ -13,7 +13,7 @@ import DiscoveryAdapterGateways from "./components/DiscoveryAdapterGateways";
 
 export default function DiscoverySettingsDiscoveryAdapters() {
 	const { height } = useViewportSize();
-	const { getAdapterAndVendorIcon } = useAdapterAndVendorIcons();
+	const { getVendorIcon } = useVendorIcons();
 
 	const [activeAccordion, setActiveAccordion] = useState<string | null>(null);
 	const [queryParams, setQueryParams] = useState<DiscoveryAdapterFilters>({ type: "discovery" });
@@ -65,7 +65,7 @@ export default function DiscoverySettingsDiscoveryAdapters() {
 								<Flex align="center" justify="space-between">
 									<Flex gap="sm">
 										<Card variant="light" p="xs">
-											{getAdapterAndVendorIcon(item.vendor, { size: 30 })}
+											{getVendorIcon(item.vendor, { size: 30 })}
 										</Card>
 										<Flex direction="column" gap="2xs">
 											<Text fw="bold">{item.display_name}</Text>

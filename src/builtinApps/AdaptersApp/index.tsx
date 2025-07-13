@@ -6,19 +6,22 @@ import { IconPlus } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 
 import BCSideFilter, { type BCSideFilterItem } from "@/shared/components/baseComponents/BCSideFilter";
+import { useAdapterBadges } from "@/shared/hooks/badges/useAdapterBadges";
 import { useStableData } from "@/shared/hooks/useStableData";
 import { useTablePagination } from "@/shared/hooks/useTablePagination";
-import { useAdapterAndVendorIcons } from "@/shared/icons/hooks/useAdapterIcons";
 
 import AdapterSingleCard from "./components/AdapterSingleCard";
-import ImportAdapterModal from "./components/ImportAdapter";
-import { useAdapterManagement } from "./index.hooks";
+import { ImportAdapterModal, UpdateAdapterModal } from "./components/ImportAdapter";
+import { useAdapterManagement, useAdapterManagementFilterLabel } from "./index.hooks";
 import type { AdaptersFilters } from "./index.types";
 
 export default function AdapterManagementLandingPage() {
 	const { height } = useViewportSize();
+	const { renderAdapterBadge } = useAdapterBadges();
+	const { renderLabel } = useAdapterManagementFilterLabel();
+
 	const [openedImport, handleOpenedImport] = useDisclosure(false);
-	const { getAdapterAndVendorIcon } = useAdapterAndVendorIcons();
+	const [openedUpdate, handleOpenedUpdate] = useDisclosure(false);
 	const { tablePagination, page, pageSize, totalRecords, setTotalRecords } = useTablePagination({
 		defaultPageSize: 12,
 	});
@@ -36,7 +39,10 @@ export default function AdapterManagementLandingPage() {
 	const dynamicFilters: BCSideFilterItem[] =
 		stableFilters?.map((filter) => {
 			const filterItem: BCSideFilterItem = {
-				items: filter.items,
+				items: filter.items.map((item) => ({
+					...item,
+					renderLabel,
+				})),
 				label: filter.label,
 				name: filter.param,
 				type: "CheckedList",
@@ -55,6 +61,11 @@ export default function AdapterManagementLandingPage() {
 				opened={openedImport}
 				refetchAdapters={adapterManagement.refetch}
 			/>
+			<UpdateAdapterModal
+				onClose={handleOpenedUpdate.close}
+				opened={openedUpdate}
+				refetchAdapters={adapterManagement.refetch}
+			/>
 			{/* UI section */}
 			<Grid p="sm" pt="lg" gutter="lg">
 				<Grid.Col span={{ xs: 12, lg: 2.5 }}>
@@ -65,8 +76,7 @@ export default function AdapterManagementLandingPage() {
 						filterItems={dynamicFilters}
 					/>
 				</Grid.Col>
-				<Grid.Col span={{ xs: 12, lg: 9.5 }} pos="relative">
-					<LoadingOverlay visible={adapterManagement.isLoading} />
+				<Grid.Col span={{ xs: 12, lg: 9.5 }}>
 					<Flex direction="column">
 						<Flex justify="space-between" align="center">
 							<Text fw="bold" fz="h4">{`Adapters ( ${totalRecords ?? "-"} )`}</Text>
@@ -80,12 +90,16 @@ export default function AdapterManagementLandingPage() {
 							pr="xs"
 							style={{ overflowY: "auto" }}
 							h={height - (showPagination ? 230 : 190)}
+							pos="relative"
 						>
+							<LoadingOverlay visible={adapterManagement.isLoading} />
 							{adapterManagement.data?.results?.map((item) => (
 								<Grid.Col key={item.id} span={{ xs: 12, md: 6, lg: 4 }}>
 									<AdapterSingleCard
-										cardIcon={item.icon}
-										tagIcon={getAdapterAndVendorIcon(item.adapterType, { size: 15 })}
+										onDeleteAdapter={handleOpenedImport.open}
+										onUpdateAdapter={handleOpenedUpdate.open}
+										adapterIconPath={item.icon}
+										adapterBadge={renderAdapterBadge({ iconType: item.adapterType, h: "35px" })}
 										{...item}
 									/>
 								</Grid.Col>

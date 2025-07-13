@@ -7,12 +7,14 @@ import { type ReactNode, useEffect, useState } from "react";
 const MotionDiv = motion.div;
 
 type Props = {
-	cardIcon?: string | null;
-	tagIcon: ReactNode;
+	adapterIconPath?: string | null;
+	adapterBadge: ReactNode;
 	adapterType: string;
 	name: string;
 	version: number;
 	description?: string | null;
+	onUpdateAdapter: VoidFunction;
+	onDeleteAdapter: VoidFunction;
 };
 
 export default function AdapterSingleCard(props: Props) {
@@ -40,7 +42,7 @@ export default function AdapterSingleCard(props: Props) {
 		>
 			{/* BackCard */}
 			<Card
-				h="200px"
+				h="160px"
 				shadow="xs"
 				radius="sm"
 				bg="transparent"
@@ -60,43 +62,55 @@ export default function AdapterSingleCard(props: Props) {
 			</Card>
 			{/* FrontCard */}
 			<Card
-				h="200px"
+				h="160px"
 				shadow="xs"
 				radius="sm"
 				bg="gray.2"
 				bd="2px solid gray.2"
 				style={{ display: isFlipped ? "none" : "block" }}
 			>
-				<Card.Section inheritPadding p="xs">
-					<Flex justify="space-between" align="start">
-						<Card w={50} h={50} variant="light" p="xs" shadow="none">
-							<Image w={30} h={30} radius="md" src={props.cardIcon} />
+				<Card.Section inheritPadding p="xs" withBorder>
+					<Flex gap="xs">
+						<Card w={80} h={70} variant="light" p="xs" shadow="none">
+							<Image w={50} h={50} radius="md" src={props.adapterIconPath} alt={props.name} />
 						</Card>
-						<Flex align="center">
-							<Badge component="span" h="35px" radius="xs" variant="light" rightSection={props.tagIcon}>
-								{props.adapterType || "-"}
-							</Badge>
-							<Menu withinPortal position="bottom-end" shadow="sm">
-								<Menu.Target>
-									<ActionIcon variant="transparent" color="gray">
-										<IconDotsVertical size={30} />
-									</ActionIcon>
-								</Menu.Target>
-								<Menu.Dropdown>
-									<Menu.Item leftSection={<IconRefresh size={15} />}>Update Adapter</Menu.Item>
-									<Menu.Item leftSection={<IconTrash size={15} />} color="red">
-										Delete
-									</Menu.Item>
-								</Menu.Dropdown>
-							</Menu>
+						<Flex direction="column" gap="2xs" w="100%">
+							<Flex justify="space-between">
+								<Text fw="bold" fz="h5" lineClamp={1}>
+									{props.name || "-"}
+								</Text>
+								<Menu withinPortal position="bottom-end" shadow="sm">
+									<Menu.Target>
+										<ActionIcon variant="transparent" color="gray">
+											<IconDotsVertical size={30} />
+										</ActionIcon>
+									</Menu.Target>
+									<Menu.Dropdown>
+										<Menu.Item leftSection={<IconRefresh size={15} />} onClick={props.onUpdateAdapter}>
+											Update Adapter
+										</Menu.Item>
+										<Menu.Item
+											leftSection={<IconTrash size={15} />}
+											color="red"
+											onClick={props.onDeleteAdapter}
+										>
+											Delete
+										</Menu.Item>
+									</Menu.Dropdown>
+								</Menu>
+							</Flex>
+							<Flex gap="xs">
+								<Badge component="span" h="35px" radius="xs" variant="light" color="gray">
+									<Text lineClamp={1} tt="capitalize">
+										Version {props.version || "-"}
+									</Text>
+								</Badge>
+								{props.adapterBadge}
+							</Flex>
 						</Flex>
 					</Flex>
 				</Card.Section>
-				<Card.Section p="xs">
-					<Text fw="bold" fz="h5" lineClamp={1}>
-						{props.name || "-"}
-					</Text>
-					<Text lineClamp={1}>Version {props.version || "-"}</Text>
+				<Card.Section px="xs">
 					<Text c="dimmed" mt="xs" lineClamp={2} className="cursor-pointer" ref={ref}>
 						{props.description || "-"}
 					</Text>
