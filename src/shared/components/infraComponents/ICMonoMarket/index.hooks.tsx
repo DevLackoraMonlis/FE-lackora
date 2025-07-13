@@ -44,7 +44,7 @@ export function useMonoApp(): {
 		showRestrictAccessModule: !module || !userAvailableModule,
 		showRestrictAccessApp: !app || !userAvailableApp || !app.modules.length,
 		restrictAccessElement: (
-			<ICMonoAppRestrictAccess onRedirectToMonoMarketPage={() => router.push(AppRoutes.appStore)} />
+			<ICMonoAppRestrictAccess onRedirectToMonoMarketPage={() => router.push(AppRoutes.monoMarket)} />
 		),
 	};
 }

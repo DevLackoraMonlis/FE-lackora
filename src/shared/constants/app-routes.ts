@@ -4,7 +4,7 @@ export const AppRoutes = {
 	login: "/login",
 	signout: "/signout",
 	updatePassword: "/update-password",
-	appStore: "/panel/app-store",
+	monoMarket: "/panel/mono-market",
 	licenseManagement: "/panel/",
 	appDetailPage: (appName: string) => `/panel/app-store/${appName}`,
 	appLandingPage: (appName: string) => `/panel/apps/${appName}`,
