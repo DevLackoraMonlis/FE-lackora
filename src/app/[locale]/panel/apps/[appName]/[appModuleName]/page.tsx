@@ -1,5 +1,5 @@
-import AppModule from "@/app/[locale]/panel/apps/components/AppModule";
+import ICMonoAppModulePage from "@/shared/components/infraComponents/ICMonoMarket/components/ICMonoAppModulePage";
 
 export default function AppModulePage() {
-	return <AppModule />;
+	return <ICMonoAppModulePage />;
 }

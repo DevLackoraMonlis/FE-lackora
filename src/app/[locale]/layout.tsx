@@ -11,7 +11,7 @@ import "../globals.css";
 import "@mantine/core/styles.css";
 import * as process from "node:process";
 import { I18nProviderClient } from "@/locales/client";
-import ICAppManagerProvider from "@/shared/components/infraComponents/ICAppManager/components/ICAppManagerProvider";
+import ICMonoMarketProvider from "@/shared/components/infraComponents/ICMonoMarket/components/ICMonoMarketProvider";
 import ContextProvider from "@/shared/providers/ContextProvider";
 import { EnvProvider } from "@/shared/providers/EnvProvider";
 import NextAuthSessionProvider from "@/shared/providers/NextAuthProvider";
@@ -57,7 +57,7 @@ export default async function RootLayout({
 							<QueryClientProvider>
 								<ContextProvider>
 									<NextAuthSessionProvider>
-										<ICAppManagerProvider>{children}</ICAppManagerProvider>
+										<ICMonoMarketProvider>{children}</ICMonoMarketProvider>
 									</NextAuthSessionProvider>
 								</ContextProvider>
 							</QueryClientProvider>

@@ -1,5 +1,5 @@
-import AppLanding from "@/app/[locale]/panel/apps/components/AppLanding";
+import ICMonoAppLandingPage from "@/shared/components/infraComponents/ICMonoMarket/components/ICMonoAppLandingPage";
 
 export default function AppLandingPage() {
-	return <AppLanding />;
+	return <ICMonoAppLandingPage />;
 }
