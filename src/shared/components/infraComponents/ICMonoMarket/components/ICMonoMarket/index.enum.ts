@@ -1,0 +1,5 @@
+export enum MonoAppProductTypeEnum {
+	ENTERPRISE = "ENTERPRISE",
+	STANDARD = "STANDARD",
+	PROFESSIONAL = "PROFESSIONAL",
+}
