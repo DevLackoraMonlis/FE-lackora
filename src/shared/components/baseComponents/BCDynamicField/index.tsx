@@ -171,7 +171,7 @@ export function fieldsTransformDependenciesOptions<FormItem extends Record<strin
 			?.filter(({ value }) => value === formValue)
 			?.find((object) => object[fieldKey]);
 
-		if (haveDependency && formItem?.[field.key]) {
+		if (haveDependency) {
 			const defaultValue = haveDependency[fieldKey]?.[0];
 			if (defaultValue) {
 				updateOptions.defaultValue = defaultValue;

@@ -33,13 +33,19 @@ BCModal.Footer = function Footer(props: {
 	onApply: () => void;
 	applyLabel?: string;
 	disabled?: boolean;
+	loading?: boolean;
 }) {
 	return (
 		<Flex p={16} gap="sm" justify="flex-end" className={classes.footer}>
-			<Button id="data-test-modal-apply" onClick={props.onApply} disabled={props.disabled}>
+			<Button
+				id="data-test-modal-apply"
+				onClick={props.onApply}
+				disabled={props.disabled}
+				loading={props.loading}
+			>
 				{props.applyLabel || "Apply"}
 			</Button>
-			<Button id="data-test-modal-cancel" onClick={props.onCancel} variant="default">
+			<Button id="data-test-modal-cancel" onClick={props.onCancel} variant="default" disabled={props.loading}>
 				Cancel
 			</Button>
 		</Flex>

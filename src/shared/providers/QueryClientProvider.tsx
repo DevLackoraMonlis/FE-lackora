@@ -17,22 +17,23 @@ const queryClient = new QueryClient({
 		mutations: {
 			onError: (error, _, context) => {
 				const mutationContext = context as MutationContext;
-				notifications.show({
-					title: "Failed",
-					message: getErrorMessage(error as CustomError, mutationContext),
-					color: "red",
-					withBorder: true,
-				});
+				!mutationContext?.hideErrorMessage &&
+					notifications.show({
+						title: "Failed",
+						message: getErrorMessage(error as CustomError, mutationContext),
+						color: "red",
+						withBorder: true,
+					});
 			},
 			onSuccess: (response, _, context) => {
 				const mutationContext = context as MutationContext;
-				notifications.show({
-					title: "Success",
-					message: getSuccessMessage(response as CustomSuccess, mutationContext),
-					color: "green",
-					withBorder: true,
-					hidden: mutationContext?.hideSuccessMessage,
-				});
+				!mutationContext?.hideSuccessMessage &&
+					notifications.show({
+						title: "Success",
+						message: getSuccessMessage(response as CustomSuccess, mutationContext),
+						color: "green",
+						withBorder: true,
+					});
 			},
 		},
 	},
