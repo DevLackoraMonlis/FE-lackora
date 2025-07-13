@@ -1,4 +1,5 @@
 import {
+	useDeleteAdapter,
 	useGetAdapters,
 	useImportAdapterAdp,
 	useValidateAdapterAdp,
@@ -46,4 +47,9 @@ export function useAdapterManagementImportAdp() {
 		},
 	});
 	return { importAdapterAdp };
+}
+
+export function useAdapterManagementDeleteAdp() {
+	const deleteAdapterAdp = useDeleteAdapter();
+	return { deleteAdapterAdp };
 }

@@ -1,4 +1,4 @@
-import { filter, groupBy } from "lodash";
+import { filter, groupBy, isObject } from "lodash";
 
 import {
 	useCreateDiscoverySettingConfiguration,
@@ -64,12 +64,26 @@ export function useDiscoveryAdapterById(adapterId: string, enabled: boolean) {
 			enabled: !!adapterId && enabled,
 			refetchOnMount: false,
 			select: (res) => {
-				const results = res?.data?.results?.map(({ id, is_active, config, editable }) => ({
-					id,
-					editable: !!editable,
-					isActive: !!is_active,
-					configs: configsTransformRs(config),
-				}));
+				const results = res?.data?.results?.map(({ id, is_active, config, editable }) => {
+					const updateConfigValues = config.map(({ value, ...item }) => ({
+						...item,
+						value:
+							typeof value === "number"
+								? `${value}`
+								: isObject(value)
+									? {
+											label: value.label,
+											value: typeof value.value === "number" ? `${value}` : value.value,
+										}
+									: value,
+					}));
+					return {
+						id,
+						editable: !!editable,
+						isActive: !!is_active,
+						configs: configsTransformRs(updateConfigValues),
+					};
+				});
 				return { ...res?.data, results };
 			},
 		},
