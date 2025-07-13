@@ -1,5 +1,3 @@
-import { IconMaximizeOff } from "@tabler/icons-react";
-import type { ReactNode } from "react";
 import {
 	CIconAdapterAws,
 	CIconAdapterAzure,
@@ -11,12 +9,13 @@ import {
 	CIconAdapterSccm,
 	CIconAdapterServiceNow,
 	CIconAdapterVCenter,
-} from "../components/adapterAndVendor";
+} from "@/shared/icons/components/adapterAndVendor";
+import { IconMaximizeOff } from "@tabler/icons-react";
+import type { ReactNode } from "react";
 
 const vendorIcons = {
 	aws: CIconAdapterAws,
 	azure: CIconAdapterAzure,
-
 	cisco: CIconAdapterCisco,
 	hp: CIconAdapterHp,
 	juniper: CIconAdapterJuniper,

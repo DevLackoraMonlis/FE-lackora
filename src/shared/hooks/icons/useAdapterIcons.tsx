@@ -11,11 +11,11 @@ import type { ReactNode } from "react";
 
 const adaptersIcons = {
 	monitor: IconHeartRateMonitor,
-	discovery: IconSearch,
 	inventory: IconBox,
 	management: IconBriefcase,
 	web: IconBrowserCheck,
 	port: IconCircleDot,
+	discovery: IconSearch,
 	none: IconMaximizeOff,
 };
 

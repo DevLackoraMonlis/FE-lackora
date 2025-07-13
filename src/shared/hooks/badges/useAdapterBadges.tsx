@@ -1,6 +1,6 @@
 import { Badge, type BadgeProps } from "@mantine/core";
 
-import { useAdapterIcons } from "@/shared/icons/hooks/useAdapterIcons";
+import { useAdapterIcons } from "@/shared/hooks/icons/useAdapterIcons";
 
 const adaptersColors = {
 	monitor: "green",

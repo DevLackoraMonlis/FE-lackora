@@ -12,13 +12,12 @@ import { useTablePagination } from "@/shared/hooks/useTablePagination";
 
 import AdapterSingleCard from "./components/AdapterSingleCard";
 import { ImportAdapterModal, UpdateAdapterModal } from "./components/ImportAdapter";
-import { useAdapterManagement, useAdapterManagementFilterLabel } from "./index.hooks";
+import { useAdapterManagement } from "./index.hooks";
 import type { AdaptersFilters } from "./index.types";
 
 export default function AdapterManagementLandingPage() {
 	const { height } = useViewportSize();
 	const { renderAdapterBadge } = useAdapterBadges();
-	const { renderLabel } = useAdapterManagementFilterLabel();
 
 	const [openedImport, handleOpenedImport] = useDisclosure(false);
 	const [openedUpdate, handleOpenedUpdate] = useDisclosure(false);
@@ -36,19 +35,15 @@ export default function AdapterManagementLandingPage() {
 	};
 
 	const stableFilters = useStableData<typeof filters>(filters);
-	const dynamicFilters: BCSideFilterItem[] =
-		stableFilters?.map((filter) => {
-			const filterItem: BCSideFilterItem = {
-				items: filter.items.map((item) => ({
-					...item,
-					renderLabel,
-				})),
+	const dynamicFilters = stableFilters?.map(
+		(filter) =>
+			({
+				items: filter.items,
 				label: filter.label,
 				name: filter.param,
 				type: "CheckedList",
-			};
-			return filterItem;
-		}) || [];
+			}) satisfies BCSideFilterItem,
+	);
 
 	useEffect(() => {
 		setTotalRecords(total || 0);
@@ -73,7 +68,7 @@ export default function AdapterManagementLandingPage() {
 						height={height - 250}
 						onChange={handleUpdateQueryParams}
 						searchPlaceholder="Search by adapter Name"
-						filterItems={dynamicFilters}
+						filterItems={dynamicFilters || []}
 					/>
 				</Grid.Col>
 				<Grid.Col span={{ xs: 12, lg: 9.5 }}>

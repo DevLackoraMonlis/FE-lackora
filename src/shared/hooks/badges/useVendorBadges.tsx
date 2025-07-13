@@ -1,6 +1,6 @@
 import { Badge, type BadgeProps } from "@mantine/core";
 
-import { useVendorIcons } from "@/shared/icons/hooks/useVendorIcons";
+import { useVendorIcons } from "@/shared/hooks/icons/useVendorIcons";
 
 export const useVendorBadges = () => {
 	const { getVendorIcon } = useVendorIcons();

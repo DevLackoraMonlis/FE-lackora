@@ -4,8 +4,8 @@ import { useViewportSize } from "@mantine/hooks";
 import { useState } from "react";
 
 import BCSideFilter, { type BCSideFilterItem } from "@/shared/components/baseComponents/BCSideFilter";
+import { useVendorIcons } from "@/shared/hooks/icons/useVendorIcons";
 import { useStableData } from "@/shared/hooks/useStableData";
-import { useVendorIcons } from "@/shared/icons/hooks/useVendorIcons";
 
 import { useDiscoveryAdapters } from "../../index.hooks";
 import type { DiscoveryAdapterFilters } from "../../index.types";
@@ -25,16 +25,15 @@ export default function DiscoverySettingsDiscoveryAdapters() {
 	};
 
 	const stableFilters = useStableData<typeof filters>(filters);
-	const dynamicFilters: BCSideFilterItem[] =
-		stableFilters?.map((filter) => {
-			const filterItem: BCSideFilterItem = {
+	const dynamicFilters = stableFilters?.map(
+		(filter) =>
+			({
 				items: filter.items,
 				label: filter.label,
 				name: filter.param,
 				type: "CheckedList",
-			};
-			return filterItem;
-		}) || [];
+			}) satisfies BCSideFilterItem,
+	);
 
 	return (
 		<Grid p="sm" pt="lg" gutter="lg">
@@ -50,7 +49,7 @@ export default function DiscoverySettingsDiscoveryAdapters() {
 							type: "Switch",
 							label: "Show only used adapters",
 						},
-						...dynamicFilters,
+						...(dynamicFilters || []),
 					]}
 				/>
 			</Grid.Col>

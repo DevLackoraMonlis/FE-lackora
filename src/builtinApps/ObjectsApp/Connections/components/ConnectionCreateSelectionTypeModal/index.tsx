@@ -1,7 +1,7 @@
 import ConnectionIconWrapper from "@/builtinApps/ObjectsApp/Connections/components/ConnectionIconWrapper";
 import type { CreateConnectionTypeItem } from "@/builtinApps/ObjectsApp/Connections/index.types";
 import BCModal from "@/shared/components/baseComponents/BCModal";
-import { useConnectionIcon } from "@/shared/icons/hooks/useConnectionIcon";
+import { useConnectionIcon } from "@/shared/hooks/icons/useConnectionIcon";
 import { Flex, NavLink, Text } from "@mantine/core";
 import { IconChevronRight } from "@tabler/icons-react";
 

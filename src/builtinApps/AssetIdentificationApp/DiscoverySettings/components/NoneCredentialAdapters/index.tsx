@@ -3,7 +3,7 @@ import { Accordion } from "@mantine/core";
 import { useViewportSize } from "@mantine/hooks";
 import { useState } from "react";
 
-import { useAdapterIcons } from "@/shared/icons/hooks/useAdapterIcons";
+import { useAdapterIcons } from "@/shared/hooks/icons/useAdapterIcons";
 
 import { useDiscoveryAdapters } from "../../index.hooks";
 import NoneCredentialServices from "./components/NoneCredentialSections";

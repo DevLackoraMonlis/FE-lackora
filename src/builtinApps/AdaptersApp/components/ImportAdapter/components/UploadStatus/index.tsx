@@ -1,6 +1,6 @@
 import { Alert, Badge, Card, CloseButton, Flex, Loader, RingProgress, Text } from "@mantine/core";
 
-import { useVendorIcons } from "@/shared/icons/hooks/useVendorIcons";
+import { useVendorIcons } from "@/shared/hooks/icons/useVendorIcons";
 
 import { ADAPTER_UPLOADED_STATUS } from "../../../../index.constants";
 import type { AdapterUploadedStatus } from "../../../../index.enum";
