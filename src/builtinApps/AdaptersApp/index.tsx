@@ -110,7 +110,7 @@ export default function AdapterManagementLandingPage() {
 											setSelectedAdapter(item);
 											handleOpenedUpdate.open();
 										}}
-										adapterBadge={renderAdapterBadge({ iconType: item.adapterType, h: "35px" })}
+										adapterBadge={renderAdapterBadge({ iconType: item.adapterType, h: "30px" })}
 										adapterIconPath={item.icon}
 										{...item}
 									/>
