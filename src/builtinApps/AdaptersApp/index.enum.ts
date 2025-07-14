@@ -5,6 +5,6 @@ export enum AdapterUploadedStatus {
 	Upgrade = "Already exists - Upgrade Version",
 	Exists = "Already exists",
 	Downgrade = "Cannot import – downgrade not allowed",
-	Error = "Unhanded Error",
+	Error = "Unhandled Error",
 	None = "",
 }
