@@ -4,10 +4,49 @@ import {
 } from "@/shared/components/infraComponents/ICMonoMarket/components/ICMonoMarket/index.helper";
 import type { MonoMarketCardProps } from "@/shared/components/infraComponents/ICMonoMarket/components/ICMonoMarket/index.types";
 import { Badge, Box, Button, Card, Flex, Text, Tooltip } from "@mantine/core";
-import { IconAward, IconInfoCircle } from "@tabler/icons-react";
+import { IconArrowNarrowRight, IconAward, IconInfoCircle, IconLock } from "@tabler/icons-react";
 
 export default function MonoMarketCard(props: MonoMarketCardProps) {
 	const generateBottomButton = () => {
+		if (props.status === "EXPIRED" && props.productType === "STANDARD") {
+			return (
+				<Button size={"xs"} color={"red"}>
+					Renew license
+				</Button>
+			);
+		}
+
+		if (props.status === "INACTIVE" && props.productType !== "STANDARD") {
+			return (
+				<Button disabled size={"xs"} rightSection={<IconLock />}>
+					Unavailable
+				</Button>
+			);
+		}
+
+		if (props.status === "ACTIVATED" && props.productType !== "STANDARD") {
+			if (props.isConfigured) {
+				return (
+					<Button variant={"outline"} size={"xs"}>
+						Open
+					</Button>
+				);
+			}
+			return (
+				<Button size={"xs"} rightSection={<IconArrowNarrowRight />}>
+					{props.hasConfig ? "Configure & Active" : "Active App"}
+				</Button>
+			);
+		}
+
+		if (props.status === "ACTIVATED") {
+			return (
+				<Button variant={"outline"} size={"xs"}>
+					Open
+				</Button>
+			);
+		}
+
 		return (
 			<Button size={"xs"} color={"red"}>
 				Renew license

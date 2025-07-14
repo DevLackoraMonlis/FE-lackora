@@ -29,6 +29,7 @@ export default function ICMonoMarket() {
 
 	const apps: MonoMarketCardProps[] = [
 		{
+			isConfigured: false,
 			description: "provides secure, encrypted remote access to Cisco",
 			hasConfig: false,
 			hasRequiredSupportLicense: true,
@@ -41,6 +42,7 @@ export default function ICMonoMarket() {
 			version: "1.0.0",
 		},
 		{
+			isConfigured: false,
 			description: "provides secure, encrypted remote access to Cisco",
 			hasConfig: false,
 			hasRequiredSupportLicense: false,
@@ -53,6 +55,7 @@ export default function ICMonoMarket() {
 			version: "1.1.1",
 		},
 		{
+			isConfigured: false,
 			description: "provides secure, encrypted remote access to Cisco",
 			hasConfig: false,
 			hasRequiredSupportLicense: true,
@@ -65,6 +68,7 @@ export default function ICMonoMarket() {
 			version: "1.1.1",
 		},
 		{
+			isConfigured: false,
 			description: "provides secure, encrypted remote access to Cisco",
 			hasConfig: true,
 			hasRequiredSupportLicense: true,
@@ -77,6 +81,7 @@ export default function ICMonoMarket() {
 			version: "1.1.1",
 		},
 		{
+			isConfigured: true,
 			description: "provides secure, encrypted remote access to Cisco",
 			hasConfig: true,
 			hasRequiredSupportLicense: true,
