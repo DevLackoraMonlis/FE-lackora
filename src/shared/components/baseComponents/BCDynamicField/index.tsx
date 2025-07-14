@@ -4,7 +4,7 @@ import { isObject } from "lodash";
 import type { RefObject } from "react";
 
 import { getObjectRelatedRecords } from "@/http/generated/object-management";
-import { validateInput } from "@/shared/lib/utils";
+import { isUUID, validateInput } from "@/shared/lib/utils";
 
 import type {
 	BCDynamicConfigRs,
@@ -117,13 +117,16 @@ export const configsTransformRs = (configs: BCDynamicConfigRs[]) => {
 
 export const configsUpdateTransformRq = (configs: BCDynamicConfigRs[], values: Record<string, unknown>) => {
 	return (
-		configs?.map(({ key, idAsValue }) => {
-			const customValue = values[key] as string;
+		configs?.map(({ key }) => {
+			const value = values[key] as string;
+			const isId = isUUID(value);
+			const valueOrId = { [isId ? "id" : "value"]: value };
 			return {
-				type: idAsValue ? key : null,
+				type: isId ? key : null,
 				key,
-				id: idAsValue ? customValue : null,
-				value: idAsValue ? null : customValue,
+				id: null,
+				value: null,
+				...valueOrId,
 			};
 		}) || []
 	);
