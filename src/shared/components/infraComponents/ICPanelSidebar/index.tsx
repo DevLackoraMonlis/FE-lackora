@@ -8,10 +8,10 @@ import {
 import type { ICPanelSidebarPopoverMenuGroupProps } from "@/shared/components/infraComponents/ICPanelSidebar/index.types";
 import { AppRoutes } from "@/shared/constants/app-routes";
 import activeAppsStore from "@/shared/stores/activeAppsStore";
-import { ActionIcon, Divider, Flex, ScrollArea } from "@mantine/core";
+import { ActionIcon, Divider, Flex, ScrollArea, useMantineTheme } from "@mantine/core";
 import { useViewportSize } from "@mantine/hooks";
 import { IconArrowLeft, IconArrowRight, IconChevronRight, IconSettings } from "@tabler/icons-react";
-import type { ReactNode } from "react";
+import { type ReactNode, useState } from "react";
 import { useStore } from "zustand";
 import { useShallow } from "zustand/react/shallow";
 import classes from "./index.module.css";
@@ -31,10 +31,14 @@ type Props = {
 const generateMenuItem = (params: {
 	items: SideMenuItem[];
 	opened: boolean;
+	onMouseEnter: VoidFunction;
+	onMouseLeave: VoidFunction;
 }) => {
 	return params.items.map((link) => {
 		const navLink = (
 			<BCNavLink
+				onMouseLeave={params.onMouseLeave}
+				onMouseEnter={params.onMouseEnter}
 				leftSection={link.icon}
 				rightSection={params.opened && link.menuGroupProps && <IconChevronRight color={"white"} size={16} />}
 				key={link.label}
@@ -76,6 +80,12 @@ function generatePopoverMenuGroup(params: {
 
 export default function ICPanelSidebar(props: Props) {
 	const { height } = useViewportSize();
+	const { colors } = useMantineTheme();
+	const baseColor = colors.gray[4];
+	const hoverColor = colors.primary[6];
+
+	const [color, setColor] = useState(baseColor);
+	const [colorManagementCenter, setColorManagementCenter] = useState(baseColor);
 
 	const store = useStore(
 		activeAppsStore,
@@ -91,7 +101,7 @@ export default function ICPanelSidebar(props: Props) {
 				.sort()
 				.map((item) => ({
 					href: AppRoutes.appLandingPage(item.name),
-					icon: getSidePanelAppIcon(24, item.name),
+					icon: getSidePanelAppIcon(24, item.name, color),
 					label: item.display_name,
 					menuGroupProps:
 						item.placement !== "sidebar"
@@ -103,6 +113,8 @@ export default function ICPanelSidebar(props: Props) {
 							: undefined,
 				})) || [],
 		opened: props.opened,
+		onMouseEnter: () => setColor(hoverColor),
+		onMouseLeave: () => setColor(baseColor),
 	});
 
 	const applicationMenuItems = generateMenuItem({
@@ -111,7 +123,7 @@ export default function ICPanelSidebar(props: Props) {
 				.filter((item) => !item.priority && item.placement === "application")
 				.map((item) => ({
 					href: AppRoutes.appLandingPage(item.name),
-					icon: getSidePanelAppIcon(24, item.name),
+					icon: getSidePanelAppIcon(24, item.name, color),
 					label: item.display_name,
 					menuGroupProps:
 						item.placement !== "sidebar"
@@ -123,6 +135,8 @@ export default function ICPanelSidebar(props: Props) {
 							: undefined,
 				})) || [],
 		opened: props.opened,
+		onMouseEnter: () => setColor(hoverColor),
+		onMouseLeave: () => setColor(baseColor),
 	});
 
 	const sidebarMenuItems = generateMenuItem({
@@ -131,7 +145,7 @@ export default function ICPanelSidebar(props: Props) {
 				.filter((item) => !item.priority && item.placement === "sidebar")
 				.map((item) => ({
 					href: AppRoutes.appLandingPage(item.name),
-					icon: getSidePanelAppIcon(24, item.name),
+					icon: getSidePanelAppIcon(24, item.name, color),
 					label: item.display_name,
 					menuGroupProps:
 						item.placement !== "sidebar"
@@ -143,6 +157,8 @@ export default function ICPanelSidebar(props: Props) {
 							: undefined,
 				})) || [],
 		opened: props.opened,
+		onMouseEnter: () => setColor(hoverColor),
+		onMouseLeave: () => setColor(baseColor),
 	});
 
 	return (
@@ -161,7 +177,9 @@ export default function ICPanelSidebar(props: Props) {
 							withoutOffset={!props.opened}
 							target={
 								<BCNavLink
-									leftSection={<IconSettings color={"white"} />}
+									onMouseEnter={() => setColorManagementCenter(hoverColor)}
+									onMouseLeave={() => setColorManagementCenter(baseColor)}
+									leftSection={<IconSettings color={colorManagementCenter} />}
 									rightSection={props.opened && <IconChevronRight color={"white"} size={16} />}
 									key={"management-center"}
 									label={props.opened && "Management Center"}
@@ -175,7 +193,7 @@ export default function ICPanelSidebar(props: Props) {
 									href: AppRoutes.appLandingPage(item.name),
 									icon: (
 										<ICPanelSidebarIconWrapper>
-											{getSidePanelAppIcon(12, item.name)}
+											{getSidePanelAppIcon(12, item.name, color)}
 										</ICPanelSidebarIconWrapper>
 									),
 									label: item.display_name,

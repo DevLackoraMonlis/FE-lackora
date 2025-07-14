@@ -3,6 +3,7 @@ import AdapterManagementLandingPage from "@/builtinApps/AdaptersApp";
 import AssetIdentificationDiscoverySettingsPage from "@/builtinApps/AssetIdentificationApp/DiscoverySettings";
 import AssetIdentificationProfilingSettingsPage from "@/builtinApps/AssetIdentificationApp/ProfillngSettings";
 import ObjectsConnectionsPage from "@/builtinApps/ObjectsApp/Connections";
+import ICMonoMarket from "@/shared/components/infraComponents/ICMonoMarket/components/ICMonoMarket";
 import { AllApplications } from "@/shared/enums/index.enums";
 import type { PropsWithChildren } from "react";
 import type { ICMonoMarketAppType } from "../../index.types";
@@ -38,6 +39,12 @@ const apps: ICMonoMarketAppType[] = [
 				headerTitle: "Connections",
 			},
 		],
+	},
+	{
+		name: AllApplications.MONO_MARKET.name,
+		landing: ICMonoMarket,
+		headerTitle: "Mono Market",
+		modules: [],
 	},
 ];
 

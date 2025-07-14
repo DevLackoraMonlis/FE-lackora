@@ -1,7 +1,11 @@
 import { NavLink, type NavLinkProps } from "@mantine/core";
 import classes from "./index.module.css";
 
-type Props = Omit<NavLinkProps, "classNames"> & { href?: string };
+type Props = Omit<NavLinkProps, "classNames"> & {
+	href?: string;
+	onMouseEnter?: VoidFunction;
+	onMouseLeave?: VoidFunction;
+};
 
 export default function BCNavLink(props: Props) {
 	return (

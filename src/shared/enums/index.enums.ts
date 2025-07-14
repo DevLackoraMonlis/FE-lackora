@@ -2,6 +2,9 @@ export const AllApplications = {
 	ADAPTER_MANAGEMENT: {
 		name: "adapter_management",
 	},
+	MONO_MARKET: {
+		name: "marketplace",
+	},
 	ASSET_IDENTIFICATION: {
 		name: "asset_identification",
 		modules: {
