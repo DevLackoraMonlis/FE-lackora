@@ -3,60 +3,83 @@
 import { Button, Center, Flex, Grid, LoadingOverlay, Pagination, Text } from "@mantine/core";
 import { useDisclosure, useViewportSize } from "@mantine/hooks";
 import { IconPlus } from "@tabler/icons-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-import BCSideFilter from "@/shared/components/baseComponents/BCSideFilter";
+import BCSideFilter, { type BCSideFilterItem } from "@/shared/components/baseComponents/BCSideFilter";
+import { useAdapterBadges } from "@/shared/hooks/badges/useAdapterBadges";
+import { useStableData } from "@/shared/hooks/useStableData";
 import { useTablePagination } from "@/shared/hooks/useTablePagination";
-import { useAdapterAndVendorIcons } from "@/shared/icons/hooks/useAdapterIcons";
 
 import AdapterSingleCard from "./components/AdapterSingleCard";
-import ImportAdapterModal from "./components/ImportAdapter";
+import { DeleteAdapterModal } from "./components/DeleteAdapter";
+import { ImportAdapterModal, UpdateAdapterModal } from "./components/ImportAdapter";
+import { useAdapterManagement } from "./index.hooks";
 import type { AdaptersFilters } from "./index.types";
 
 export default function AdapterManagementLandingPage() {
 	const { height } = useViewportSize();
-	const [openedImport, handleOpenedImport] = useDisclosure(true);
-	const { getAdapterAndVendorIcon } = useAdapterAndVendorIcons();
-	const { tablePagination, page, pageSize, totalRecords } = useTablePagination({
+	const { renderAdapterBadge } = useAdapterBadges();
+
+	const { tablePagination, page, pageSize, totalRecords, setTotalRecords } = useTablePagination({
 		defaultPageSize: 12,
 	});
-	const paginationHidden = !(totalRecords > pageSize);
-	const [queryParams, setQueryParams] = useState<AdaptersFilters>({
-		type: "discovery",
-		page,
-		limit: pageSize,
-	});
-	console.info(queryParams);
-	// const { discoveryAdapters } = useDiscoveryAdapters(queryParams);
-
+	const showPagination = totalRecords > pageSize;
+	const [queryParams, setQueryParams] = useState<AdaptersFilters>({});
+	const { adapterManagement } = useAdapterManagement(queryParams);
+	const filters = adapterManagement.data?.metadata?.filters;
+	const results = adapterManagement.data?.results || [];
+	const total = adapterManagement?.data?.total;
 	const handleUpdateQueryParams = (params: Partial<AdaptersFilters>) => {
 		setQueryParams((perParams) => ({ ...perParams, ...params }));
 	};
 
-	// const stableFilters = useStableData<typeof filters>(filters);
-	// const dynamicFilters: BCSideFilterItem[] =
-	// stableFilters?.map((filter) => {
-	// 	const filterItem: BCSideFilterItem = {
-	// 		items: filter.items,
-	// 		label: filter.label,
-	// 		name: filter.param,
-	// 		type: "CheckedList",
-	// 	};
-	// 	return filterItem;
-	// }) || [];
+	const [openedImport, handleOpenedImport] = useDisclosure();
+	const [openedUpdate, handleOpenedUpdate] = useDisclosure();
+	const [openedDelete, handleOpenedDelete] = useDisclosure();
+	const [selectedAdapter, setSelectedAdapter] = useState<(typeof results)[number]>();
+
+	const stableFilters = useStableData<typeof filters>(filters);
+	const dynamicFilters = stableFilters?.map(
+		(filter) =>
+			({
+				items: filter.items,
+				label: filter.label,
+				name: filter.param,
+				type: "CheckedList",
+			}) satisfies BCSideFilterItem,
+	);
+
+	useEffect(() => {
+		setTotalRecords(total || 0);
+	}, [total]);
 
 	return (
 		<>
-			<ImportAdapterModal onClose={handleOpenedImport.close} opened={openedImport} />
+			<ImportAdapterModal
+				onClose={handleOpenedImport.close}
+				opened={openedImport}
+				refetchAdapters={adapterManagement.refetch}
+			/>
+			<UpdateAdapterModal
+				onClose={handleOpenedUpdate.close}
+				opened={openedUpdate}
+				refetchAdapters={adapterManagement.refetch}
+			/>
+			<DeleteAdapterModal
+				onClose={handleOpenedDelete.close}
+				opened={openedDelete && !!selectedAdapter}
+				refetchAdapters={adapterManagement.refetch}
+				adapterId={selectedAdapter?.id}
+				adapterName={selectedAdapter?.display_name}
+			/>
 			{/* UI section */}
-			<Grid p="sm" pt="lg" gutter="lg" pos="relative">
-				<LoadingOverlay visible={false} />
+			<Grid p="sm" pt="lg" gutter="lg">
 				<Grid.Col span={{ xs: 12, lg: 2.5 }}>
 					<BCSideFilter
 						height={height - 250}
 						onChange={handleUpdateQueryParams}
 						searchPlaceholder="Search by adapter Name"
-						filterItems={[]}
+						filterItems={dynamicFilters || []}
 					/>
 				</Grid.Col>
 				<Grid.Col span={{ xs: 12, lg: 9.5 }}>
@@ -72,20 +95,29 @@ export default function AdapterManagementLandingPage() {
 							mt="md"
 							pr="xs"
 							style={{ overflowY: "auto" }}
-							h={height - (paginationHidden ? 190 : 230)}
+							h={height - (showPagination ? 230 : 190)}
+							pos="relative"
 						>
-							{Array(12)
-								.fill(null)
-								.map((_, idx) => (
-									<Grid.Col key={idx.toString()} span={{ xs: 12, md: 6, lg: 4 }}>
-										<AdapterSingleCard
-											cardIcon={getAdapterAndVendorIcon("aws", { size: 30 })}
-											tagIcon={getAdapterAndVendorIcon("monitor", { size: 18 })}
-										/>
-									</Grid.Col>
-								))}
+							<LoadingOverlay visible={adapterManagement.isLoading} />
+							{results?.map((item) => (
+								<Grid.Col key={item.id} span={{ xs: 12, md: 6, lg: 4 }}>
+									<AdapterSingleCard
+										onDeleteAdapter={() => {
+											setSelectedAdapter(item);
+											handleOpenedDelete.open();
+										}}
+										onUpdateAdapter={() => {
+											setSelectedAdapter(item);
+											handleOpenedUpdate.open();
+										}}
+										adapterBadge={renderAdapterBadge({ iconType: item.adapterType, h: "35px" })}
+										adapterIconPath={item.icon}
+										{...item}
+									/>
+								</Grid.Col>
+							))}
 						</Grid>
-						{paginationHidden && (
+						{showPagination && (
 							<Center>
 								<Pagination
 									mt="xs"

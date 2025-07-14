@@ -4,15 +4,21 @@ import { DatePickerInput, DateTimePicker } from "@mantine/dates";
 import { useForm } from "@mantine/form";
 import { IconSearch, IconX } from "@tabler/icons-react";
 import { Fragment, type ReactNode } from "react";
+import { useRenderLabel } from "./index.hooks";
 
 type FilterType = "Text" | "Date" | "DateTime" | "Switch" | "CheckedList";
+
+export type RenderLabel = (params: BCSideFilterItemOption, filterItem: BCSideFilterItem) => React.ReactNode;
+type BCSideFilterItemOption = LabelValueType & {
+	renderLabel?: RenderLabel;
+};
 
 export type BCSideFilterItem = {
 	type: FilterType;
 	label: string;
 	placeholder?: string;
 	name: string;
-	items?: (LabelValueType & { renderLabel?: (params: { label: string }) => ReactNode })[];
+	items?: BCSideFilterItemOption[];
 };
 
 type FormValues = {
@@ -28,6 +34,7 @@ type Props = {
 };
 
 export default function BCSideFilter(props: Props) {
+	const { renderLabel: defaultRenderLabel } = useRenderLabel();
 	const form = useForm<FormValues>({
 		initialValues: {
 			search: "",
@@ -106,7 +113,11 @@ export default function BCSideFilter(props: Props) {
 								<Checkbox
 									key={item.value}
 									value={item.value}
-									label={item.renderLabel ? item.renderLabel({ label: item.label }) : item.label}
+									label={
+										item.renderLabel
+											? item.renderLabel(item, filterItem)
+											: defaultRenderLabel(item, filterItem)
+									}
 								/>
 							))}
 						</Flex>

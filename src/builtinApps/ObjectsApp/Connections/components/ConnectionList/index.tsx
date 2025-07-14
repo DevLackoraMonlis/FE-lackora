@@ -34,8 +34,8 @@ import type { EachConnectionFilterItems, EachConnectionType } from "@/http/gener
 import BCDeleteModal from "@/shared/components/baseComponents/BCDeleteModal";
 import BCDeleteRestrictModal from "@/shared/components/baseComponents/BCDeleteRestrictModal";
 import BCSideFilter, { type BCSideFilterItem } from "@/shared/components/baseComponents/BCSideFilter";
+import { useConnectionIcon } from "@/shared/hooks/icons/useConnectionIcon";
 import { useStableData } from "@/shared/hooks/useStableData";
-import { useConnectionIcon } from "@/shared/icons/hooks/useConnectionIcon";
 import { getErrorMessage } from "@/shared/lib/utils";
 import { Accordion, Button, Flex, Grid, ScrollArea, Text } from "@mantine/core";
 import { useDisclosure, useViewportSize } from "@mantine/hooks";
@@ -93,17 +93,15 @@ export default function ConnectionList() {
 	const stableFilters = useStableData<EachConnectionFilterItems[]>(
 		getConnectionsQuery.data?.data?.metadata?.filters,
 	);
-
-	const dynamicFilters: BCSideFilterItem[] =
-		stableFilters?.map((filter) => {
-			const filterItem: BCSideFilterItem = {
+	const dynamicFilters = stableFilters?.map(
+		(filter) =>
+			({
 				items: filter.items,
 				label: filter.label,
 				name: filter.param,
 				type: "CheckedList",
-			};
-			return filterItem;
-		}) || [];
+			}) satisfies BCSideFilterItem,
+	);
 
 	const getConnectionQuery = useGetConnection(selectedEditConnectionId || "", {
 		query: {
@@ -316,7 +314,7 @@ export default function ConnectionList() {
 				<BCSideFilter
 					height={height - 220}
 					onChange={setFilters}
-					filterItems={[...dynamicFilters]}
+					filterItems={dynamicFilters || []}
 					searchPlaceholder={"Search by adapter Name"}
 				/>
 			</Grid.Col>

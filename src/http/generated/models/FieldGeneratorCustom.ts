@@ -6,7 +6,4 @@
  * OpenAPI spec version: 1.0.0
  */
 
-/**
- * Port number must be between 1 and 65535 (or null)
- */
-export type EditConnectionPort = number | null;
+export type FieldGeneratorCustom = boolean | null;

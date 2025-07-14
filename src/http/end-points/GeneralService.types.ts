@@ -34,4 +34,5 @@ export type MutationContext = {
 	successMessage?: string;
 	errorMessage?: string;
 	hideSuccessMessage?: boolean;
+	hideErrorMessage?: boolean;
 };

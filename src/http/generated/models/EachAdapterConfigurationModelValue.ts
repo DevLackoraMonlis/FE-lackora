@@ -7,4 +7,4 @@
  */
 import type { EachAdapterConfigurationValueModel } from './EachAdapterConfigurationValueModel';
 
-export type EachAdapterConfigurationModelValue = string | EachAdapterConfigurationValueModel | null;
+export type EachAdapterConfigurationModelValue = string | EachAdapterConfigurationValueModel | number | null;
