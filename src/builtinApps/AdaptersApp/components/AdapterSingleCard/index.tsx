@@ -71,8 +71,8 @@ export default function AdapterSingleCard(props: Props) {
 			>
 				<Card.Section inheritPadding p="xs" withBorder>
 					<Flex gap="xs">
-						<Card w={80} h={70} variant="light" p="xs" shadow="none">
-							<Image w={50} h={50} radius="md" src={props.adapterIconPath} alt={props.name} />
+						<Card w={80} h={62} variant="light" shadow="none" padding={0} pt="2xs">
+							<Image fit="fill" radius="md" src={props.adapterIconPath} alt={props.name} />
 						</Card>
 						<Flex direction="column" gap="2xs" w="100%">
 							<Flex justify="space-between">
@@ -100,7 +100,7 @@ export default function AdapterSingleCard(props: Props) {
 								</Menu>
 							</Flex>
 							<Flex gap="xs">
-								<Badge component="span" h="35px" radius="xs" variant="light" color="gray">
+								<Badge component="span" h="30px" radius="xs" variant="light" color="gray">
 									<Text lineClamp={1} tt="capitalize">
 										Version {props.version || "-"}
 									</Text>

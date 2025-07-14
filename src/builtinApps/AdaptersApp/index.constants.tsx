@@ -42,6 +42,15 @@ export const ADAPTER_UPLOADED_STATUS = {
 		alertDescription:
 			"The uploaded adapter version is older than the currently installed version. Downgrading is not allowed to ensure system stability. Please upload a newer version.",
 	},
+	[AdapterUploadedStatus.Error]: {
+		badgeText: AdapterUploadedStatus.Error,
+		icon: IconCancel,
+		color: "red",
+		disabled: true,
+		buttonText: "Import",
+		alertTitle: "Unhandled Error",
+		alertDescription: "Something wrong, please try again!",
+	},
 	[AdapterUploadedStatus.None]: {
 		badgeText: AdapterUploadedStatus.None,
 		icon: "",
