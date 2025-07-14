@@ -19,6 +19,7 @@ export type BCSideFilterItem = {
 	placeholder?: string;
 	name: string;
 	items?: BCSideFilterItemOption[];
+	order?: number;
 };
 
 type FormValues = {
@@ -156,17 +157,19 @@ export default function BCSideFilter(props: Props) {
 					/>
 					<Divider />
 					<ScrollArea h={props.height || "fit-content"}>
-						{props.filterItems.map((filterItem) => {
-							if (filterItem.type === "CheckedList") {
-								return (
-									<Fragment key={filterItem.name}>
-										<Divider />
-										{filterItemMap(filterItem)}
-									</Fragment>
-								);
-							}
-							return filterItemMap(filterItem);
-						})}
+						{props.filterItems
+							.sort((a, b) => (b?.order || 0) - (a.order || 0))
+							.map((filterItem) => {
+								if (filterItem.type === "CheckedList") {
+									return (
+										<Fragment key={filterItem.name}>
+											<Divider />
+											{filterItemMap(filterItem)}
+										</Fragment>
+									);
+								}
+								return filterItemMap(filterItem);
+							})}
 					</ScrollArea>
 				</Card.Section>
 			</form>

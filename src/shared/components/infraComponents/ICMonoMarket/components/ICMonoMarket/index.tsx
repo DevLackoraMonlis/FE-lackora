@@ -49,7 +49,7 @@ export default function ICMonoMarket() {
 			hasRequiredSupportLicense: false,
 			status: MonoAppStatusTypeEnum.ACTIVATED,
 			label: "Adapters",
-			name: "adapter_management",
+			name: "adapter_management4",
 			owner: "MonoSuite",
 			productType: MonoAppProductTypeEnum.STANDARD,
 			supportLicenseExpireDate: "2026-10-10",
@@ -62,7 +62,7 @@ export default function ICMonoMarket() {
 			hasRequiredSupportLicense: true,
 			status: MonoAppStatusTypeEnum.INACTIVE,
 			label: "File Activity Monitoring",
-			name: "adapter_management",
+			name: "adapter_management3",
 			owner: "MonoSuite",
 			productType: MonoAppProductTypeEnum.PROFESSIONAL,
 			supportLicenseExpireDate: "2024-10-10",
@@ -75,7 +75,7 @@ export default function ICMonoMarket() {
 			hasRequiredSupportLicense: true,
 			status: MonoAppStatusTypeEnum.INACTIVE,
 			label: "Anomaly Detection Engine",
-			name: "adapter_management",
+			name: "adapter_management2",
 			owner: "Elastic",
 			productType: MonoAppProductTypeEnum.PROFESSIONAL,
 			supportLicenseExpireDate: "2024-10-10",
@@ -104,14 +104,14 @@ export default function ICMonoMarket() {
 					onChange={setFilters}
 					filterItems={[
 						...dynamicFilters,
-						{ name: "support_required", type: "Switch", label: "MonoSupport Required" },
+						{ name: "support_required", type: "Switch", label: "MonoSupport Required", order: 2 },
 					]}
 					searchPlaceholder={"Search by adapter Name"}
 				/>
 			</Grid.Col>
 			<Grid.Col span={9}>
 				<ScrollArea h={height - 160}>
-					<Grid>
+					<Grid overflow={"hidden"}>
 						{apps.map((app) => (
 							<Grid.Col key={app.name} span={{ lg: 4, "2xl": 3 }}>
 								<MonoMarketCard {...app} />
