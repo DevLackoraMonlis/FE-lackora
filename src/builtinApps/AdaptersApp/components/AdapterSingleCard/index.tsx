@@ -1,6 +1,6 @@
-import { ActionIcon, Badge, Card, Flex, Image, Menu, Text } from "@mantine/core";
+import { ActionIcon, Badge, Card, Center, Flex, Image, Menu, Text } from "@mantine/core";
 import { useHover } from "@mantine/hooks";
-import { IconDotsVertical, IconRefresh, IconTrash } from "@tabler/icons-react";
+import { IconBuildingSkyscraper, IconDotsVertical, IconRefresh, IconTrash } from "@tabler/icons-react";
 import { motion } from "framer-motion";
 import { type ReactNode, useEffect, useState } from "react";
 
@@ -72,7 +72,13 @@ export default function AdapterSingleCard(props: Props) {
 				<Card.Section inheritPadding p="xs" withBorder>
 					<Flex gap="xs">
 						<Card w={80} h={62} variant="light" shadow="none" padding={0} pt="2xs">
-							<Image fit="fill" radius="md" src={props.adapterIconPath} alt={props.name} />
+							<Center>
+								{props.adapterIconPath ? (
+									<Image fit="fill" radius="md" src={props.adapterIconPath} alt={props.name} />
+								) : (
+									<IconBuildingSkyscraper size={50} strokeWidth={1} />
+								)}
+							</Center>
 						</Card>
 						<Flex direction="column" gap="2xs" w="100%">
 							<Flex justify="space-between">

@@ -14,9 +14,11 @@ import DiscoveryAdaptersEditGateway from "../DiscoveryAdaptersEdit";
 
 type Props = DiscoveryAdapterConfigurationRs & {
 	handleDeleteAdapterConfigurations: VoidFunction;
+	handleDiscoverySettingTestConnection: VoidFunction;
 	handleEditAdapterConfigurations: (configs: BCDynamicConfigRq[], callback: VoidFunction) => void;
 	fields: BCDynamicFieldRs[];
 	loading: boolean;
+	testLoading: boolean;
 };
 
 const DiscoveryAdapterCard = ({ id, configs, isActive, loading, ...props }: Props) => {
@@ -45,7 +47,8 @@ const DiscoveryAdapterCard = ({ id, configs, isActive, loading, ...props }: Prop
 						</Text>
 					</Badge>
 					<ActionIcon
-						// onClick={() => form.removeListItem("gateways", index)}
+						loading={props.testLoading}
+						onClick={props.handleDiscoverySettingTestConnection}
 						title="Test Connection"
 						variant="subtle"
 						c="gray.8"

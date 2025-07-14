@@ -25,6 +25,7 @@ import type {
 } from '@tanstack/react-query';
 
 import type {
+  AdapterValidationResponse,
   BodyImportAdapterAdp,
   BodyValidateAdapterAdp,
   GetAdaptersParams,
@@ -50,7 +51,7 @@ export const validateAdapterAdp = (
       const formData = new FormData();
 formData.append("file", bodyValidateAdapterAdp.file)
 
-      return orvalMutator<MessageOnlyResponse>(
+      return orvalMutator<AdapterValidationResponse>(
       {url: "/api/adapter-management/validate-adp", method: 'POST',
       headers: {'Content-Type': 'multipart/form-data', },
        data: formData, signal
@@ -116,7 +117,7 @@ export const importAdapterAdp = (
       const formData = new FormData();
 formData.append("file", bodyImportAdapterAdp.file)
 
-      return orvalMutator<MessageOnlyResponse>(
+      return orvalMutator<AdapterValidationResponse>(
       {url: "/api/adapter-management/import-adp", method: 'POST',
       headers: {'Content-Type': 'multipart/form-data', },
        data: formData, signal
