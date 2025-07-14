@@ -1,5 +1,6 @@
 "use client";
 import AdapterManagementLandingPage from "@/builtinApps/AdaptersApp";
+import AssetIdentificationAppConfig from "@/builtinApps/AssetIdentificationApp/AssetIdentificationAppConfig";
 import AssetIdentificationDiscoverySettingsPage from "@/builtinApps/AssetIdentificationApp/DiscoverySettings";
 import AssetIdentificationProfilingSettingsPage from "@/builtinApps/AssetIdentificationApp/ProfillngSettings";
 import ObjectsConnectionsPage from "@/builtinApps/ObjectsApp/Connections";
@@ -17,6 +18,7 @@ const apps: ICMonoMarketAppType[] = [
 	},
 	{
 		name: AllApplications.ASSET_IDENTIFICATION.name,
+		config: AssetIdentificationAppConfig,
 		modules: [
 			{
 				name: AllApplications.ASSET_IDENTIFICATION.modules.DISCOVERY_SETTINGS,

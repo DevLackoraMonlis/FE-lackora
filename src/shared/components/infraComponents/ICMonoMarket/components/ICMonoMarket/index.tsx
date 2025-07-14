@@ -1,7 +1,9 @@
 "use client";
+
 import type { EachConnectionFilterItems } from "@/http/generated/models";
 import BCSideFilter, { type BCSideFilterItem } from "@/shared/components/baseComponents/BCSideFilter";
 import MonoMarketActivationNonConfigAppModal from "@/shared/components/infraComponents/ICMonoMarket/components/ICMonoMarket/components/MonoMarketActivationNonConfigAppModal";
+import MonoMarketActivationWithConfigAppModal from "@/shared/components/infraComponents/ICMonoMarket/components/ICMonoMarket/components/MonoMarketActivationWithConfigAppModal";
 import MonoMarketCard from "@/shared/components/infraComponents/ICMonoMarket/components/ICMonoMarket/components/MonoMarketCard";
 import {
 	MonoAppProductTypeEnum,
@@ -17,6 +19,7 @@ export default function ICMonoMarket() {
 	const { height } = useViewportSize();
 	const [_filters, setFilters] = useState<Record<string, unknown>>();
 	const [openedActiveOnlyModal, activeOnlyHandlers] = useDisclosure(false);
+	const [openedActiveWithConfigModal, activeWithConfigHandlers] = useDisclosure(false);
 	const [selectedApp, setSelectedApp] = useState<
 		Omit<MonoMarketCardProps, "onActiveOnly" | "onActiveWithConfig"> | undefined
 	>(undefined);
@@ -41,7 +44,7 @@ export default function ICMonoMarket() {
 			hasRequiredSupportLicense: true,
 			status: MonoAppStatusTypeEnum.ACTIVATED,
 			label: "Asset Identification",
-			name: "asset_identification",
+			name: "asset_identification2",
 			owner: "MonoSuite",
 			productType: MonoAppProductTypeEnum.PROFESSIONAL,
 			supportLicenseExpireDate: "2026-10-10",
@@ -54,7 +57,7 @@ export default function ICMonoMarket() {
 			hasRequiredSupportLicense: true,
 			status: MonoAppStatusTypeEnum.ACTIVATED,
 			label: "Asset Identification",
-			name: "asset_identification2",
+			name: "asset_identification",
 			owner: "MonoSuite",
 			productType: MonoAppProductTypeEnum.PROFESSIONAL,
 			supportLicenseExpireDate: "2026-10-10",
@@ -128,6 +131,20 @@ export default function ICMonoMarket() {
 					console.log("active app");
 				}}
 			/>
+			<MonoMarketActivationWithConfigAppModal
+				version={selectedApp?.version || ""}
+				opened={openedActiveWithConfigModal}
+				onClose={() => {
+					setSelectedApp(undefined);
+					activeWithConfigHandlers.close();
+				}}
+				appName={selectedApp?.name || ""}
+				owner={selectedApp?.owner || ""}
+				loading={false}
+				onSaveAndActivate={() => {
+					console.log("active with config app");
+				}}
+			/>
 			<Grid.Col span={3}>
 				<BCSideFilter
 					height={height - 225}
@@ -152,6 +169,7 @@ export default function ICMonoMarket() {
 									}}
 									onActiveWithConfig={() => {
 										setSelectedApp(app);
+										activeWithConfigHandlers.open();
 									}}
 								/>
 							</Grid.Col>

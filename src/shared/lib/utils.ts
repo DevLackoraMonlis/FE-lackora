@@ -31,6 +31,7 @@ type ValidationOptions = {
 	equalityFieldName?: string;
 	mustBeURI?: boolean;
 	mustBeIP?: boolean;
+	mustBePort?: boolean;
 };
 
 export function validateInput(valueInput: unknown, options: ValidationOptions = {}): string | null {
@@ -49,6 +50,7 @@ export function validateInput(valueInput: unknown, options: ValidationOptions = 
 		equalityFieldName,
 		mustBeURI,
 		mustBeIP,
+		mustBePort,
 	} = options;
 
 	// Array validation
@@ -64,6 +66,14 @@ export function validateInput(valueInput: unknown, options: ValidationOptions = 
 
 	if (mustBeNumber && Number.isNaN(Number(valueInput))) {
 		return "Value must be a valid number";
+	}
+
+	if (mustBePort) {
+		const port = Number(valueInput);
+
+		if (Number.isNaN(port) || !Number.isInteger(port) || port < 1 || port > 65535) {
+			return "Value must be a valid port (1–65535)";
+		}
 	}
 
 	const value = valueInput?.toString();

@@ -12,8 +12,7 @@ export type ICMonoMarketAppModuleType = {
 
 export type ICMonoMarketAppType = {
 	name: string;
-	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-	config?: FC<any>;
+	config?: FC<{ onChange: (values: unknown) => void }>;
 	headerType?: "basic";
 	headerTitle?: ReactNode;
 	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
