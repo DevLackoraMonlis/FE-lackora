@@ -23,6 +23,12 @@ export const uploadErrorObject = {
 		icon: IconX,
 		color: "red",
 		bgColor: "red.1",
-		title: (_t: string, _maxSize: string, acceptFiles: string) => `Only upload ${acceptFiles} File(s)`,
+		title: (_t: string, _maxSize: string, acceptFiles: string) => `Only upload ${acceptFiles} File`,
+	},
+	filesError: {
+		icon: IconX,
+		color: "red",
+		bgColor: "red.1",
+		title: (_t: string, _maxSize: string, _acceptFiles: string) => "Only upload one File",
 	},
 };

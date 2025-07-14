@@ -28,7 +28,7 @@ export default function AssetIdentificationDiscoverySettingsPage() {
 			</Tabs.List>
 			{/* PANELS */}
 			<Grid>
-				<Grid.Col span={{ xs: 12, lg: 10 }}>
+				<Grid.Col span={10}>
 					<Tabs.Panel value={DiscoverySettingsTabs.DiscoveryAdapters}>
 						<DiscoverySettingsDiscoveryAdapters />
 					</Tabs.Panel>

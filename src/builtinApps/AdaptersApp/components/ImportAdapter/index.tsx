@@ -2,11 +2,14 @@ import { Card, Flex, List, Text } from "@mantine/core";
 import type { FileWithPath } from "@mantine/dropzone";
 import { useEffect, useState } from "react";
 
+import type { CustomError } from "@/http/end-points/GeneralService.types";
 import BCDropzone from "@/shared/components/baseComponents/BCDropzone";
 import BCModal from "@/shared/components/baseComponents/BCModal";
 
+import { getErrorMessage } from "@/shared/lib/utils";
 import { ADAPTER_UPLOADED_DESCRIPTION, ADAPTER_UPLOADED_STATUS } from "../../index.constants";
 import { AdapterUploadedStatus } from "../../index.enum";
+import { handleGetStatusFromResponse } from "../../index.helper";
 import { useAdapterManagementImportAdp, useAdapterManagementValidateAdp } from "../../index.hooks";
 import {
 	UploadStatusReadyToImport,
@@ -43,9 +46,12 @@ function ImportAdapter({ onClose, refetchAdapters, updateMode }: Props) {
 			importAdapterAdp.mutate(
 				{ data },
 				{
-					onError(response) {
-						setStatus(AdapterUploadedStatus.Exists);
-						setFileInfo({ subTitle: response.detail?.join(", ") || "" });
+					onError(error) {
+						const err = error as CustomError;
+						const subTitle = getErrorMessage(err) || "";
+						const status = handleGetStatusFromResponse(subTitle);
+						setStatus(status);
+						setFileInfo({ subTitle });
 					},
 					onSuccess() {
 						refetchAdapters();
@@ -62,9 +68,12 @@ function ImportAdapter({ onClose, refetchAdapters, updateMode }: Props) {
 			validateAdapterAdp.mutate(
 				{ data },
 				{
-					onError(response) {
-						setStatus(AdapterUploadedStatus.Downgrade);
-						setFileInfo({ subTitle: response.detail?.join(", ") || "" });
+					onError(error) {
+						const err = error as CustomError;
+						const subTitle = getErrorMessage(err) || "";
+						const status = handleGetStatusFromResponse(subTitle);
+						setStatus(status);
+						setFileInfo({ subTitle });
 					},
 					onSuccess(response) {
 						setStatus(AdapterUploadedStatus.Ready);
