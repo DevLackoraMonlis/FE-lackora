@@ -104,7 +104,7 @@ export default function ICMonoMarket() {
 				<ScrollArea h={height - 100}>
 					<Grid>
 						{apps.map((app) => (
-							<Grid.Col key={app.name} span={{ lg: 4, xl: 3 }}>
+							<Grid.Col key={app.name} span={{ lg: 4, "2xl": 3 }}>
 								<MonoMarketCard {...app} />
 							</Grid.Col>
 						))}

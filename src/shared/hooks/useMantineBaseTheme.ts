@@ -26,6 +26,10 @@ export default function useMantineBaseTheme() {
 		fontFamily: "var(--manrope) !important",
 		white: "#FAFAFA",
 		black: "#11121F",
+		breakpoints: {
+			...DEFAULT_THEME.breakpoints,
+			"2xl": "120em",
+		},
 		spacing: {
 			...DEFAULT_THEME.spacing,
 			"2xs": "4px",
