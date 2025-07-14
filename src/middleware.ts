@@ -19,7 +19,7 @@ export async function middleware(request: NextRequest) {
       script-src 'self' 'unsafe-eval' 'nonce-${nonce.nonce}';
       style-src 'self' 'unsafe-inline';
       font-src 'self';
-      img-src 'self' data:;
+      img-src 'self' data: ${process.env.IMAGE_BASE_URL || ""};
       object-src 'self' data:;
     `
 			.replace(/\s{2,}/g, " ")

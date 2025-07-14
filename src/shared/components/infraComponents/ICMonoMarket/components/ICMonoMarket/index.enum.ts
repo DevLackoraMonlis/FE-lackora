@@ -3,3 +3,9 @@ export enum MonoAppProductTypeEnum {
 	STANDARD = "STANDARD",
 	PROFESSIONAL = "PROFESSIONAL",
 }
+
+export enum MonoAppStatusTypeEnum {
+	INACTIVE = "INACTIVE",
+	ACTIVATED = "ACTIVATED",
+	EXPIRED = "EXPIRED",
+}
