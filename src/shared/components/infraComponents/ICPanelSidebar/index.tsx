@@ -11,6 +11,7 @@ import activeAppsStore from "@/shared/stores/activeAppsStore";
 import { ActionIcon, Divider, Flex, ScrollArea, useMantineTheme } from "@mantine/core";
 import { useViewportSize } from "@mantine/hooks";
 import { IconArrowLeft, IconArrowRight, IconChevronRight, IconSettings } from "@tabler/icons-react";
+import { usePathname } from "next/navigation";
 import { type ReactNode, useState } from "react";
 import { useStore } from "zustand";
 import { useShallow } from "zustand/react/shallow";
@@ -34,6 +35,7 @@ const generateMenuItem = (params: {
 	onMouseEnter: VoidFunction;
 	onMouseLeave: VoidFunction;
 }) => {
+	const pathname = usePathname();
 	return params.items.map((link) => {
 		const navLink = (
 			<BCNavLink
@@ -43,7 +45,7 @@ const generateMenuItem = (params: {
 				rightSection={params.opened && link.menuGroupProps && <IconChevronRight color={"white"} size={16} />}
 				key={link.label}
 				label={params.opened ? link.label : ""}
-				href={link.href}
+				href={pathname === link.href ? "#" : link.href}
 			/>
 		);
 
