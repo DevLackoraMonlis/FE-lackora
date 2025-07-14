@@ -10,7 +10,7 @@ import {
 	CIconAdapterServiceNow,
 	CIconAdapterVCenter,
 } from "@/shared/icons/components/adapterAndVendor";
-import { IconMaximizeOff } from "@tabler/icons-react";
+import { IconBuildingSkyscraper, IconMaximizeOff } from "@tabler/icons-react";
 import type { ReactNode } from "react";
 
 const vendorIcons = {
@@ -24,6 +24,7 @@ const vendorIcons = {
 	service: CIconAdapterServiceNow,
 	vcenter: CIconAdapterVCenter,
 	mikrotik: CIconAdapterMikrotik,
+	generic: IconBuildingSkyscraper,
 	none: IconMaximizeOff,
 };
 

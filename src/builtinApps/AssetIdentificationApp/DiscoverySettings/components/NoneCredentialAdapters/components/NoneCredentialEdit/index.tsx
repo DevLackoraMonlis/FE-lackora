@@ -72,7 +72,7 @@ const NoneCredentialEditForm = ({
 			<LoadingOverlay visible={loading} />
 			<Flex gap="xs" mt="xs">
 				<Flex gap="xs" w="100%">
-					{fields.map(({ label, key, ...item }, idx) => {
+					{fields.map(({ label, key, ...item }) => {
 						const defaultValue = configs?.find(({ key: valueKey }) => key === valueKey)?.value;
 						const updateDependencyOptions = fieldsTransformDependenciesOptions<FormValues>(
 							{ listKey: key, key },
@@ -81,7 +81,7 @@ const NoneCredentialEditForm = ({
 							updateValueOnce,
 						);
 						return (
-							<Fragment key={`${key}-${idx + 1}`}>
+							<Fragment key={key}>
 								{getDynamicField({
 									otherElementOptions: {
 										withAsterisk: true,
