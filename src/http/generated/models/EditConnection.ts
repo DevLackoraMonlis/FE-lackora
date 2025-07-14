@@ -26,6 +26,7 @@ import type { EditConnectionUsername } from './EditConnectionUsername';
 export interface EditConnection {
   name?: EditConnectionName;
   description?: EditConnectionDescription;
+  /** Port number must be between 1 and 65535 (or null) */
   port?: EditConnectionPort;
   authentication_type?: EditConnectionAuthenticationType;
   authenticate_required?: EditConnectionAuthenticateRequired;

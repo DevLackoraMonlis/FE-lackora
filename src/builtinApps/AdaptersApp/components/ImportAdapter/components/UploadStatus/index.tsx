@@ -1,11 +1,13 @@
 import { Alert, Badge, Card, CloseButton, Flex, Loader, RingProgress, Text } from "@mantine/core";
 
-import { useAdapterAndVendorIcons } from "@/shared/icons/hooks/useAdapterIcons";
+import { useVendorIcons } from "@/shared/hooks/icons/useVendorIcons";
 
 import { ADAPTER_UPLOADED_STATUS } from "../../../../index.constants";
 import type { AdapterUploadedStatus } from "../../../../index.enum";
 
-export const UploadStatusUploading = ({ title, subTitle }: { title: string; subTitle: string }) => {
+type CommonType = { title: string; subTitle: string; onCancelFile: VoidFunction };
+
+export const UploadStatusUploading = ({ title, subTitle, onCancelFile }: CommonType) => {
 	return (
 		<Card p="xs">
 			<Flex justify="space-between" align="center">
@@ -26,14 +28,14 @@ export const UploadStatusUploading = ({ title, subTitle }: { title: string; subT
 					<Text fz="sm" c="dimmed">
 						Uploading ...
 					</Text>
-					<CloseButton bg="transparent" />
+					<CloseButton bg="transparent" onClick={onCancelFile} />
 				</Flex>
 			</Flex>
 		</Card>
 	);
 };
 
-export const UploadStatusValidating = ({ title, subTitle }: { title: string; subTitle: string }) => {
+export const UploadStatusValidating = ({ title, subTitle, onCancelFile }: CommonType) => {
 	return (
 		<Card p="xs">
 			<Flex justify="space-between" align="center">
@@ -54,7 +56,7 @@ export const UploadStatusValidating = ({ title, subTitle }: { title: string; sub
 					<Text fz="sm" c="dimmed">
 						Validating ...
 					</Text>
-					<CloseButton bg="transparent" />
+					<CloseButton bg="transparent" onClick={onCancelFile} />
 				</Flex>
 			</Flex>
 		</Card>
@@ -66,13 +68,12 @@ export const UploadStatusReadyToImport = ({
 	title,
 	subTitle,
 	iconType,
-}: {
+	onCancelFile,
+}: CommonType & {
 	status: AdapterUploadedStatus;
-	title: string;
-	subTitle: string;
 	iconType: string;
 }) => {
-	const { getAdapterAndVendorIcon } = useAdapterAndVendorIcons();
+	const { getVendorIcon } = useVendorIcons();
 	const uploadStatus = ADAPTER_UPLOADED_STATUS[status] || {};
 	const Icon = uploadStatus.icon;
 	return (
@@ -81,7 +82,7 @@ export const UploadStatusReadyToImport = ({
 				<Flex justify="space-between" align="center">
 					<Flex gap="xs" align="center">
 						<Card variant="light" m={0} p={5}>
-							{getAdapterAndVendorIcon(iconType, { size: 30 })}
+							{getVendorIcon(iconType, { size: 30 })}
 						</Card>
 						<Flex direction="column">
 							<Text fz="sm" fw="bold">
@@ -102,7 +103,7 @@ export const UploadStatusReadyToImport = ({
 						>
 							{uploadStatus.badgeText}
 						</Badge>
-						<CloseButton bg="transparent" />
+						<CloseButton bg="transparent" onClick={onCancelFile} />
 					</Flex>
 				</Flex>
 			</Card>

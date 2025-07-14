@@ -16,4 +16,5 @@ export const FieldGeneratorFieldType = {
   IP: 'IP',
   Datetime: 'Datetime',
   Boolean: 'Boolean',
+  List: 'List',
 } as const;

@@ -259,3 +259,65 @@ export function useGetAdapters<TData = Awaited<ReturnType<typeof getAdapters>>, 
 
 
 
+/**
+ * @summary Delete Single Adapter
+ */
+export const deleteAdapter = (
+    adapterId: string,
+ ) => {
+      
+      
+      return orvalMutator<MessageOnlyResponse>(
+      {url: `/api/adapter-management/${adapterId}`, method: 'DELETE'
+    },
+      );
+    }
+  
+
+
+export const getDeleteAdapterMutationOptions = <TError = HTTPValidationError,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteAdapter>>, TError,{adapterId: string}, TContext>, }
+): UseMutationOptions<Awaited<ReturnType<typeof deleteAdapter>>, TError,{adapterId: string}, TContext> => {
+
+const mutationKey = ['deleteAdapter'];
+const {mutation: mutationOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteAdapter>>, {adapterId: string}> = (props) => {
+          const {adapterId} = props ?? {};
+
+          return  deleteAdapter(adapterId,)
+        }
+
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type DeleteAdapterMutationResult = NonNullable<Awaited<ReturnType<typeof deleteAdapter>>>
+    
+    export type DeleteAdapterMutationError = HTTPValidationError
+
+    /**
+ * @summary Delete Single Adapter
+ */
+export const useDeleteAdapter = <TError = HTTPValidationError,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteAdapter>>, TError,{adapterId: string}, TContext>, }
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof deleteAdapter>>,
+        TError,
+        {adapterId: string},
+        TContext
+      > => {
+
+      const mutationOptions = getDeleteAdapterMutationOptions(options);
+
+      return useMutation(mutationOptions , queryClient);
+    }
+    

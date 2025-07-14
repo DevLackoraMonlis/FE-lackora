@@ -12,6 +12,7 @@ import type { CreateConnectionCommunity } from './CreateConnectionCommunity';
 import type { CreateConnectionDescription } from './CreateConnectionDescription';
 import type { CreateConnectionPassphrase } from './CreateConnectionPassphrase';
 import type { CreateConnectionPassword } from './CreateConnectionPassword';
+import type { CreateConnectionPort } from './CreateConnectionPort';
 import type { CreateConnectionPrivacyPassphrase } from './CreateConnectionPrivacyPassphrase';
 import type { CreateConnectionPrivacyProtocol } from './CreateConnectionPrivacyProtocol';
 import type { CreateConnectionPrivilegedAuthentication } from './CreateConnectionPrivilegedAuthentication';
@@ -26,7 +27,8 @@ export interface CreateConnection {
   name: string;
   description?: CreateConnectionDescription;
   type: EachConnectionType;
-  port: number;
+  /** Port number must be between 1 and 65535 (or null) */
+  port?: CreateConnectionPort;
   authentication_type?: CreateConnectionAuthenticationType;
   authenticate_required?: CreateConnectionAuthenticateRequired;
   privileged_authentication?: CreateConnectionPrivilegedAuthentication;

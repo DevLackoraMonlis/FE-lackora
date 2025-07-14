@@ -42,10 +42,37 @@ export const ADAPTER_UPLOADED_STATUS = {
 		alertDescription:
 			"The uploaded adapter version is older than the currently installed version. Downgrading is not allowed to ensure system stability. Please upload a newer version.",
 	},
+	[AdapterUploadedStatus.None]: {
+		badgeText: AdapterUploadedStatus.None,
+		icon: "",
+		color: "",
+		disabled: true,
+		buttonText: "Import",
+		alertTitle: "",
+		alertDescription: "",
+	},
+	[AdapterUploadedStatus.Loading]: {
+		badgeText: AdapterUploadedStatus.Loading,
+		icon: "",
+		color: "",
+		disabled: true,
+		buttonText: "Import",
+		alertTitle: "",
+		alertDescription: "",
+	},
+	[AdapterUploadedStatus.Validating]: {
+		badgeText: AdapterUploadedStatus.Validating,
+		icon: "",
+		color: "",
+		disabled: true,
+		buttonText: "Import",
+		alertTitle: "",
+		alertDescription: "",
+	},
 };
 
 export const ADAPTER_UPLOADED_DESCRIPTION = {
-	[AdapterUploadedStatus.Ready]: [
+	[AdapterUploadedStatus.Upgrade]: [
 		"Upload a new version of the adapter. We’ll check the version of the uploaded file:",
 		"If it’s newer → we’ll update the current adapter",
 		"If it’s the same → nothing changes",

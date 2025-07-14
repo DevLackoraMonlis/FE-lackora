@@ -1,4 +1,4 @@
-import { ActionIcon, Badge, Card, Flex, Menu, Text } from "@mantine/core";
+import { ActionIcon, Badge, Card, Flex, Image, Menu, Text } from "@mantine/core";
 import { useHover } from "@mantine/hooks";
 import { IconDotsVertical, IconRefresh, IconTrash } from "@tabler/icons-react";
 import { motion } from "framer-motion";
@@ -7,8 +7,14 @@ import { type ReactNode, useEffect, useState } from "react";
 const MotionDiv = motion.div;
 
 type Props = {
-	cardIcon: ReactNode;
-	tagIcon: ReactNode;
+	adapterIconPath?: string | null;
+	adapterBadge: ReactNode;
+	adapterType: string;
+	name: string;
+	version: number;
+	description?: string | null;
+	onUpdateAdapter: VoidFunction;
+	onDeleteAdapter: VoidFunction;
 };
 
 export default function AdapterSingleCard(props: Props) {
@@ -36,7 +42,7 @@ export default function AdapterSingleCard(props: Props) {
 		>
 			{/* BackCard */}
 			<Card
-				h="200px"
+				h="160px"
 				shadow="xs"
 				radius="sm"
 				bg="transparent"
@@ -46,63 +52,67 @@ export default function AdapterSingleCard(props: Props) {
 			>
 				<Card.Section p="xs" h="200px" style={{ overflowY: "auto", transform: "scaleX(-1)" }}>
 					<Text fw="bold" fz="h5">
-						AWS EC2 Discovery Adapter
+						{props.name || "-"}
 					</Text>
-					<Text>version 1.5.4</Text>
+					<Text>Version {props.version || "-"}</Text>
 					<Text c="dimmed" className="cursor-pointer" ta="justify">
-						provides secure, encrypted remote access to Cisco Nexus devices provides secure, encrypted remote
-						access to Cisco Nexus devices provides secure, encrypted remote access to Cisco Nexus devices
-						provides secure, encrypted remote access to Cisco Nexus devices provides secure, encrypted remote
-						access to Cisco Nexus devices provides secure, encrypted remote access to Cisco Nexus devices
-						provides secure, encrypted remote access to Cisco Nexus devices provides secure, encrypted remote
-						access to Cisco Nexus devices provides secure, encrypted remote access to Cisco Nexus devices
-						provides secure, encrypted remote access to Cisco Nexus devices provides secure, encrypted remote
-						access to Cisco Nexus devices provides secure, encrypted remote access to Cisco Nexus devices
-						provides secure, encrypted remote access to Cisco Nexus devices
+						{props.description || "-"}
 					</Text>
 				</Card.Section>
 			</Card>
 			{/* FrontCard */}
 			<Card
-				h="200px"
+				h="160px"
 				shadow="xs"
 				radius="sm"
 				bg="gray.2"
 				bd="2px solid gray.2"
 				style={{ display: isFlipped ? "none" : "block" }}
 			>
-				<Card.Section inheritPadding p="xs">
-					<Flex justify="space-between" align="start">
-						<Card variant="light" p="xs" shadow="none">
-							{props.cardIcon}
+				<Card.Section inheritPadding p="xs" withBorder>
+					<Flex gap="xs">
+						<Card w={80} h={70} variant="light" p="xs" shadow="none">
+							<Image w={50} h={50} radius="md" src={props.adapterIconPath} alt={props.name} />
 						</Card>
-						<Flex align="center">
-							<Badge component="span" h="35px" radius="xs" variant="light" rightSection={props.tagIcon}>
-								Discovery Adapter
-							</Badge>
-							<Menu withinPortal position="bottom-end" shadow="sm">
-								<Menu.Target>
-									<ActionIcon variant="transparent" color="gray">
-										<IconDotsVertical size={30} />
-									</ActionIcon>
-								</Menu.Target>
-								<Menu.Dropdown>
-									<Menu.Item leftSection={<IconRefresh size={15} />}>Update Adapter</Menu.Item>
-									<Menu.Item leftSection={<IconTrash size={15} />} color="red">
-										Delete
-									</Menu.Item>
-								</Menu.Dropdown>
-							</Menu>
+						<Flex direction="column" gap="2xs" w="100%">
+							<Flex justify="space-between">
+								<Text fw="bold" fz="h5" lineClamp={1}>
+									{props.name || "-"}
+								</Text>
+								<Menu withinPortal position="bottom-end" shadow="sm">
+									<Menu.Target>
+										<ActionIcon variant="transparent" color="gray">
+											<IconDotsVertical size={30} />
+										</ActionIcon>
+									</Menu.Target>
+									<Menu.Dropdown>
+										<Menu.Item leftSection={<IconRefresh size={15} />} onClick={props.onUpdateAdapter}>
+											Update Adapter
+										</Menu.Item>
+										<Menu.Item
+											leftSection={<IconTrash size={15} />}
+											color="red"
+											onClick={props.onDeleteAdapter}
+										>
+											Delete
+										</Menu.Item>
+									</Menu.Dropdown>
+								</Menu>
+							</Flex>
+							<Flex gap="xs">
+								<Badge component="span" h="35px" radius="xs" variant="light" color="gray">
+									<Text lineClamp={1} tt="capitalize">
+										Version {props.version || "-"}
+									</Text>
+								</Badge>
+								{props.adapterBadge}
+							</Flex>
 						</Flex>
 					</Flex>
 				</Card.Section>
-				<Card.Section p="xs">
-					<Text fw="bold" fz="h5" lineClamp={1}>
-						AWS EC2 Discovery Adapter
-					</Text>
-					<Text lineClamp={1}>version 1.5.4</Text>
+				<Card.Section px="xs">
 					<Text c="dimmed" mt="xs" lineClamp={2} className="cursor-pointer" ref={ref}>
-						provides secure, encrypted remote access to Cisco Nexus devices
+						{props.description || "-"}
 					</Text>
 				</Card.Section>
 			</Card>

@@ -3,14 +3,14 @@ import { Accordion } from "@mantine/core";
 import { useViewportSize } from "@mantine/hooks";
 import { useState } from "react";
 
-import { useAdapterAndVendorIcons } from "@/shared/icons/hooks/useAdapterIcons";
+import { useAdapterIcons } from "@/shared/hooks/icons/useAdapterIcons";
 
 import { useDiscoveryAdapters } from "../../index.hooks";
 import NoneCredentialServices from "./components/NoneCredentialSections";
 
 const DiscoverySettingsNoneCredentialAdapters = () => {
 	const { height } = useViewportSize();
-	const { getAdapterAndVendorIcon } = useAdapterAndVendorIcons();
+	const { getAdapterIcon } = useAdapterIcons();
 	const [activeAccordion, setActiveAccordion] = useState<string | null>(null);
 	const { discoveryAdapters } = useDiscoveryAdapters({ type: "none-credential" });
 	return (
@@ -33,7 +33,7 @@ const DiscoverySettingsNoneCredentialAdapters = () => {
 													},
 												})}
 											>
-												{getAdapterAndVendorIcon(service_name, { size: 30, color: "white" })}
+												{getAdapterIcon(service_name, { size: 30 })}
 											</Card>
 											<Flex direction="column" gap="2xs">
 												<Text fw="bold">{display_name}</Text>

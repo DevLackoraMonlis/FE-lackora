@@ -9,4 +9,4 @@
 /**
  * Port number must be between 1 and 65535 (or null)
  */
-export type EditConnectionPort = number | null;
+export type CreateConnectionPort = number | null;

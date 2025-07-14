@@ -4,8 +4,8 @@ import { useViewportSize } from "@mantine/hooks";
 import { useState } from "react";
 
 import BCSideFilter, { type BCSideFilterItem } from "@/shared/components/baseComponents/BCSideFilter";
+import { useVendorIcons } from "@/shared/hooks/icons/useVendorIcons";
 import { useStableData } from "@/shared/hooks/useStableData";
-import { useAdapterAndVendorIcons } from "@/shared/icons/hooks/useAdapterIcons";
 
 import { useDiscoveryAdapters } from "../../index.hooks";
 import type { DiscoveryAdapterFilters } from "../../index.types";
@@ -13,7 +13,7 @@ import DiscoveryAdapterGateways from "./components/DiscoveryAdapterGateways";
 
 export default function DiscoverySettingsDiscoveryAdapters() {
 	const { height } = useViewportSize();
-	const { getAdapterAndVendorIcon } = useAdapterAndVendorIcons();
+	const { getVendorIcon } = useVendorIcons();
 
 	const [activeAccordion, setActiveAccordion] = useState<string | null>(null);
 	const [queryParams, setQueryParams] = useState<DiscoveryAdapterFilters>({ type: "discovery" });
@@ -25,16 +25,15 @@ export default function DiscoverySettingsDiscoveryAdapters() {
 	};
 
 	const stableFilters = useStableData<typeof filters>(filters);
-	const dynamicFilters: BCSideFilterItem[] =
-		stableFilters?.map((filter) => {
-			const filterItem: BCSideFilterItem = {
+	const dynamicFilters = stableFilters?.map(
+		(filter) =>
+			({
 				items: filter.items,
 				label: filter.label,
 				name: filter.param,
 				type: "CheckedList",
-			};
-			return filterItem;
-		}) || [];
+			}) satisfies BCSideFilterItem,
+	);
 
 	return (
 		<Grid p="sm" pt="lg" gutter="lg">
@@ -50,7 +49,7 @@ export default function DiscoverySettingsDiscoveryAdapters() {
 							type: "Switch",
 							label: "Show only used adapters",
 						},
-						...dynamicFilters,
+						...(dynamicFilters || []),
 					]}
 				/>
 			</Grid.Col>
@@ -65,7 +64,7 @@ export default function DiscoverySettingsDiscoveryAdapters() {
 								<Flex align="center" justify="space-between">
 									<Flex gap="sm">
 										<Card variant="light" p="xs">
-											{getAdapterAndVendorIcon(item.vendor, { size: 30 })}
+											{getVendorIcon(item.vendor, { size: 30 })}
 										</Card>
 										<Flex direction="column" gap="2xs">
 											<Text fw="bold">{item.display_name}</Text>

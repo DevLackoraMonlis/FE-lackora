@@ -9,4 +9,5 @@
 export interface EachFieldGeneratorOption {
   label: string;
   value: string;
-}
+  [key: string]: unknown;
+ }
