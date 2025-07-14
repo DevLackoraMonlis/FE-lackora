@@ -35,7 +35,11 @@ export default function MonoMarketCard(props: MonoMarketCardProps) {
 				);
 			}
 			return (
-				<Button size={"xs"} rightSection={<IconArrowNarrowRight />}>
+				<Button
+					onClick={props.hasConfig ? props.onActiveWithConfig : props.onActiveOnly}
+					size={"xs"}
+					rightSection={<IconArrowNarrowRight />}
+				>
 					{props.hasConfig ? "Configure & Active" : "Active App"}
 				</Button>
 			);

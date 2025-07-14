@@ -15,4 +15,6 @@ export type MonoMarketCardProps = {
 	isConfigured: boolean;
 	supportLicenseExpireDate: string;
 	status: MonoAppStatusTypeEnum;
+	onActiveOnly: VoidFunction;
+	onActiveWithConfig: VoidFunction;
 };
