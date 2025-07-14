@@ -18,9 +18,11 @@ export default function MonoMarketCard(props: MonoMarketCardProps) {
 
 		if (props.status === "INACTIVE" && props.productType !== "STANDARD") {
 			return (
-				<Button disabled size={"xs"} rightSection={<IconLock />}>
-					Unavailable
-				</Button>
+				<Tooltip label={"Upgrade your license to activate this app"}>
+					<Button disabled size={"xs"} rightSection={<IconLock color={"black"} size={16} />}>
+						Unavailable
+					</Button>
+				</Tooltip>
 			);
 		}
 
@@ -150,14 +152,14 @@ export default function MonoMarketCard(props: MonoMarketCardProps) {
 					<Flex gap={"2xs"} align={"center"}>
 						<Box>
 							{props.status === "ACTIVATED" ? (
-								<Badge radius={"xs"} variant={"light"} color={"#12B886"}>
+								<Badge size={"lg"} radius={"xs"} variant={"light"} color={"#12B886"}>
 									{props.status}
 								</Badge>
 							) : (
 								<Box />
 							)}
 							{props.status === "EXPIRED" ? (
-								<Badge radius={"xs"} variant={"light"} color={"#FA5252"}>
+								<Badge size={"lg"} radius={"xs"} variant={"light"} color={"#FA5252"}>
 									{props.status}
 								</Badge>
 							) : (

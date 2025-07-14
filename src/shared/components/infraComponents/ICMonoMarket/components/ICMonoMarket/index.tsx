@@ -8,7 +8,7 @@ import {
 } from "@/shared/components/infraComponents/ICMonoMarket/components/ICMonoMarket/index.enum";
 import type { MonoMarketCardProps } from "@/shared/components/infraComponents/ICMonoMarket/components/ICMonoMarket/index.types";
 import { useStableData } from "@/shared/hooks/useStableData";
-import { Grid, ScrollArea } from "@mantine/core";
+import { Flex, Grid, Pagination, ScrollArea } from "@mantine/core";
 import { useViewportSize } from "@mantine/hooks";
 import { useState } from "react";
 
@@ -17,15 +17,16 @@ export default function ICMonoMarket() {
 	const [_filters, setFilters] = useState<Record<string, unknown>>();
 
 	const stableFilters = useStableData<EachConnectionFilterItems[]>([]);
-	const dynamicFilters = stableFilters?.map(
-		(filter) =>
-			({
-				items: filter.items,
-				label: filter.label,
-				name: filter.param,
-				type: "CheckedList",
-			}) satisfies BCSideFilterItem,
-	);
+	const dynamicFilters =
+		stableFilters?.map(
+			(filter) =>
+				({
+					items: filter.items,
+					label: filter.label,
+					name: filter.param,
+					type: "CheckedList",
+				}) satisfies BCSideFilterItem,
+		) || [];
 
 	const apps: MonoMarketCardProps[] = [
 		{
@@ -99,14 +100,17 @@ export default function ICMonoMarket() {
 		<Grid p="sm" pt="lg" gutter="lg" pos={"relative"}>
 			<Grid.Col span={3}>
 				<BCSideFilter
-					height={height - 220}
+					height={height - 225}
 					onChange={setFilters}
-					filterItems={dynamicFilters || []}
+					filterItems={[
+						...dynamicFilters,
+						{ name: "support_required", type: "Switch", label: "MonoSupport Required" },
+					]}
 					searchPlaceholder={"Search by adapter Name"}
 				/>
 			</Grid.Col>
 			<Grid.Col span={9}>
-				<ScrollArea h={height - 100}>
+				<ScrollArea h={height - 160}>
 					<Grid>
 						{apps.map((app) => (
 							<Grid.Col key={app.name} span={{ lg: 4, "2xl": 3 }}>
@@ -115,6 +119,9 @@ export default function ICMonoMarket() {
 						))}
 					</Grid>
 				</ScrollArea>
+				<Flex justify={"center"} align={"center"}>
+					<Pagination total={100} />
+				</Flex>
 			</Grid.Col>
 		</Grid>
 	);
