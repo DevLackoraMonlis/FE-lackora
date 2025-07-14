@@ -74,15 +74,15 @@ export default function AdapterManagementLandingPage() {
 			/>
 			{/* UI section */}
 			<Grid p="sm" pt="lg" gutter="lg">
-				<Grid.Col span={{ xs: 12, lg: 2.5 }}>
+				<Grid.Col span={3}>
 					<BCSideFilter
-						height={height - 250}
+						height={height - 230}
 						onChange={handleUpdateQueryParams}
 						searchPlaceholder="Search by adapter Name"
 						filterItems={dynamicFilters || []}
 					/>
 				</Grid.Col>
-				<Grid.Col span={{ xs: 12, lg: 9.5 }}>
+				<Grid.Col span={9}>
 					<Flex direction="column">
 						<Flex justify="space-between" align="center">
 							<Text fw="bold" fz="h4">{`Adapters ( ${totalRecords ?? "-"} )`}</Text>
@@ -110,7 +110,7 @@ export default function AdapterManagementLandingPage() {
 											setSelectedAdapter(item);
 											handleOpenedUpdate.open();
 										}}
-										adapterBadge={renderAdapterBadge({ iconType: item.adapterType, h: "35px" })}
+										adapterBadge={renderAdapterBadge({ iconType: item.adapterType, h: "30px" })}
 										adapterIconPath={item.icon}
 										{...item}
 									/>

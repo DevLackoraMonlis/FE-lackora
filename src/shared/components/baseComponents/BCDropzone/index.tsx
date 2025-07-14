@@ -32,16 +32,19 @@ export default function BCDropzone({
 	const openRef = useRef<VoidFunction>(null);
 	const [uploadStatus, setUploadStatus] = useState<UploadStatus>("none");
 	const handleOnDrop = (files: FileWithPath[] = []) => {
-		const [file] = files;
+		const [file, moreFiles] = files;
 		setUploadStatus("none");
 		if (!file) {
 			return setUploadStatus("fileError");
 		}
+		if (moreFiles) {
+			return setUploadStatus("filesError");
+		}
 		if (file.size > MAX_SIZE) {
 			return setUploadStatus("sizeError");
 		}
-		const [_, fileAccept] = file.name.split(".");
-		if (!ACCEPT_FILES.includes(`.${fileAccept}` as AcceptKeys)) {
+		const accept = ACCEPT_FILES.some((item) => file.name?.includes(item));
+		if (!accept) {
 			return setUploadStatus("acceptError");
 		}
 		return onDrop(files);
