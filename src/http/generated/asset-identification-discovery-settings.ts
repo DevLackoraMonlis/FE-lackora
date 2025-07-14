@@ -29,10 +29,12 @@ import type {
   CreateAdapterConfigurationRequest,
   CreateAdapterConfigurationResponse,
   DeleteAdapterConfigurationRequest,
+  DiscoverySettingConfigurationTestConnectionParams,
   EachDiscoverySetting,
   GetDiscoverySettingsParams,
   HTTPValidationError,
   MessageOnlyResponse,
+  MessageStatusOnlyResponse,
   PaginatedBaseResponseEachAdapterConfigurationNoneType,
   PaginatedBaseResponseEachDiscoverySettingEachListMetadataWrapper,
   UpdateAdapterConfigurationRequest
@@ -477,4 +479,98 @@ export const useEditDiscoverySettingStatus = <TError = HTTPValidationError,
 
       return useMutation(mutationOptions , queryClient);
     }
+    /**
+ * @summary Discovery Setting Test Connection
+ */
+export const discoverySettingConfigurationTestConnection = (
+    adapterId: string,
+    params: DiscoverySettingConfigurationTestConnectionParams,
+ signal?: AbortSignal
+) => {
+      
+      
+      return orvalMutator<MessageStatusOnlyResponse>(
+      {url: `/api/asset-identification/discovery-settings/${adapterId}/test-connection`, method: 'GET',
+        params, signal
+    },
+      );
+    }
+  
+
+const getDiscoverySettingConfigurationTestConnectionQueryKey = (adapterId: string,
+    params: DiscoverySettingConfigurationTestConnectionParams,) => {
+    return [`/api/asset-identification/discovery-settings/${adapterId}/test-connection`, ...(params ? [params]: [])] as const;
+    }
+
     
+export const getDiscoverySettingConfigurationTestConnectionQueryOptions = <TData = Awaited<ReturnType<typeof discoverySettingConfigurationTestConnection>>, TError = HTTPValidationError>(adapterId: string,
+    params: DiscoverySettingConfigurationTestConnectionParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof discoverySettingConfigurationTestConnection>>, TError, TData>>, }
+) => {
+
+const {query: queryOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getDiscoverySettingConfigurationTestConnectionQueryKey(adapterId,params);
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof discoverySettingConfigurationTestConnection>>> = ({ signal }) => discoverySettingConfigurationTestConnection(adapterId,params, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, enabled: !!(adapterId), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof discoverySettingConfigurationTestConnection>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type DiscoverySettingConfigurationTestConnectionQueryResult = NonNullable<Awaited<ReturnType<typeof discoverySettingConfigurationTestConnection>>>
+export type DiscoverySettingConfigurationTestConnectionQueryError = HTTPValidationError
+
+
+export function useDiscoverySettingConfigurationTestConnection<TData = Awaited<ReturnType<typeof discoverySettingConfigurationTestConnection>>, TError = HTTPValidationError>(
+ adapterId: string,
+    params: DiscoverySettingConfigurationTestConnectionParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof discoverySettingConfigurationTestConnection>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof discoverySettingConfigurationTestConnection>>,
+          TError,
+          Awaited<ReturnType<typeof discoverySettingConfigurationTestConnection>>
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useDiscoverySettingConfigurationTestConnection<TData = Awaited<ReturnType<typeof discoverySettingConfigurationTestConnection>>, TError = HTTPValidationError>(
+ adapterId: string,
+    params: DiscoverySettingConfigurationTestConnectionParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof discoverySettingConfigurationTestConnection>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof discoverySettingConfigurationTestConnection>>,
+          TError,
+          Awaited<ReturnType<typeof discoverySettingConfigurationTestConnection>>
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useDiscoverySettingConfigurationTestConnection<TData = Awaited<ReturnType<typeof discoverySettingConfigurationTestConnection>>, TError = HTTPValidationError>(
+ adapterId: string,
+    params: DiscoverySettingConfigurationTestConnectionParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof discoverySettingConfigurationTestConnection>>, TError, TData>>, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary Discovery Setting Test Connection
+ */
+
+export function useDiscoverySettingConfigurationTestConnection<TData = Awaited<ReturnType<typeof discoverySettingConfigurationTestConnection>>, TError = HTTPValidationError>(
+ adapterId: string,
+    params: DiscoverySettingConfigurationTestConnectionParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof discoverySettingConfigurationTestConnection>>, TError, TData>>, }
+ , queryClient?: QueryClient 
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getDiscoverySettingConfigurationTestConnectionQueryOptions(adapterId,params,options)
+
+  const query = useQuery(queryOptions , queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+

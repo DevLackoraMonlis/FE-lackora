@@ -9,6 +9,7 @@ import {
 	useDeleteDiscoverySetting,
 	useDiscoveryAdapterById,
 	useEditDiscoverySetting,
+	useTestDiscoverySettingConnection,
 } from "../../../../index.hooks";
 
 import DiscoveryAdapterCard from "../DiscoveryAdapterCard";
@@ -22,6 +23,7 @@ type Props = {
 
 const DiscoveryAdapterGateways = ({ enabled, adapterId, fields }: Props) => {
 	const { discoverySettingConfigurations } = useDiscoveryAdapterById(adapterId, enabled);
+	const { testDiscoverySettingConnection, testLoading } = useTestDiscoverySettingConnection();
 
 	const { deleteDiscoverySetting } = useDeleteDiscoverySetting();
 	const handleDeleteAdapterConfigurations = (configuration_id: string) => {
@@ -55,8 +57,10 @@ const DiscoveryAdapterGateways = ({ enabled, adapterId, fields }: Props) => {
 				{discoverySettingConfigurations.data?.results?.map(({ configs, id, isActive, editable }) => (
 					<DiscoveryAdapterCard
 						key={id}
+						testLoading={testLoading}
 						loading={deleteDiscoverySetting.isPending || editDiscoverySetting.isPending}
 						handleDeleteAdapterConfigurations={() => handleDeleteAdapterConfigurations(id)}
+						handleDiscoverySettingTestConnection={() => testDiscoverySettingConnection(adapterId, id)}
 						handleEditAdapterConfigurations={(newConfigs, callback) =>
 							handleEditAdapterConfigurations(id, newConfigs, callback)
 						}
