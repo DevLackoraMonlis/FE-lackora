@@ -79,7 +79,7 @@ export function useDiscoveryAdapterById(adapterId: string, enabled: boolean) {
 					}));
 					return {
 						id,
-						editable: !!editable,
+						editable: editable !== false,
 						isActive: !!is_active,
 						configs: configsTransformRs(updateConfigValues),
 					};

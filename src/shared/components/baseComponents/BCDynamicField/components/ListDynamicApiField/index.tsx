@@ -1,4 +1,4 @@
-import { Center, InputBase, type InputBaseProps } from "@mantine/core";
+import { Center, InputBase, type InputBaseProps, Text } from "@mantine/core";
 import { Combobox, Loader, Pagination, useCombobox } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
 import { isNumber, isObject } from "lodash";
@@ -20,13 +20,12 @@ export default function ListDynamicApiField<TObject extends string>({
 	objectType,
 	paginate,
 	defaultValue = null,
+	placeholder = "",
 	onChange,
 	renderFooterInList,
 	...props
 }: Props<TObject>) {
-	const [selected, setSelectedValue] = useState<LabelValueType | null>(
-		isObject(defaultValue) ? defaultValue : null,
-	);
+	const [selected, setSelectedValue] = useState<LabelValueType | null>();
 	const [search, setSearch] = useState("");
 	const { setTotalRecords, tablePagination, page, pageSize, totalRecords } = useTablePagination({
 		defaultPageSize: 10,
@@ -59,6 +58,10 @@ export default function ListDynamicApiField<TObject extends string>({
 			setTotalRecords(getObjectQuery.data?.data?.total);
 		}
 	}, [getObjectQuery.data?.data.total]);
+
+	useEffect(() => {
+		setSelectedValue(isObject(defaultValue) ? defaultValue : null);
+	}, [defaultValue]);
 
 	// combobox configs
 	const combobox = useCombobox({
@@ -100,7 +103,11 @@ export default function ListDynamicApiField<TObject extends string>({
 					onClick={() => combobox.toggleDropdown()}
 					rightSectionPointerEvents="none"
 				>
-					{selected?.label || ""}
+					{selected?.label || (
+						<Text c="gray.5" fz="sm">
+							{placeholder}
+						</Text>
+					)}
 				</InputBase>
 			</Combobox.Target>
 			<Combobox.Dropdown bd="1px solid gray.4">

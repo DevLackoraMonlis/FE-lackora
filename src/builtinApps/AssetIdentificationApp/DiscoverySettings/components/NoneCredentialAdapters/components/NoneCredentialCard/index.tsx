@@ -8,6 +8,7 @@ import type {
 	BCDynamicFieldRs,
 } from "@/shared/components/baseComponents/BCDynamicField/index.types";
 import BCPopoverConfirm from "@/shared/components/baseComponents/BCPopoverConfirm";
+import type { LabelValueType } from "@/shared/lib/general-types";
 
 import type { DiscoveryAdapterConfigurationRs } from "../../../../index.types";
 import NoneCredentialEditForm from "../NoneCredentialEdit";
@@ -34,9 +35,10 @@ const NoneCredentialAdaptersCard = ({ showLabel, id, configs, isActive, ...props
 			<Flex align="center" gap="xs" w="100%">
 				{props.fields.map((item, idx) => {
 					const { label, key, ...field } = item;
-					const defaultValue = configs?.find(({ key: valueKey }) => key === valueKey)?.value;
+					const defaultValue = configs?.find(({ key: valueKey }) => key === valueKey)
+						?.value as LabelValueType;
 					return (
-						<Fragment key={`${key}-${idx + 1}`}>
+						<Fragment key={`${key}-${idx + 1}-${defaultValue?.value}`}>
 							{getDynamicField({
 								otherElementOptions: { withAsterisk: true, style: { flex: 1 } },
 								...field,
