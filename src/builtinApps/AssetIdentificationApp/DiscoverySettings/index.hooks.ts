@@ -1,6 +1,9 @@
+import { useToggle } from "@mantine/hooks";
+import { notifications } from "@mantine/notifications";
 import { filter, groupBy, isObject } from "lodash";
 
 import {
+	discoverySettingConfigurationTestConnection,
 	useCreateDiscoverySettingConfiguration,
 	useDeleteDiscoverySettingConfiguration,
 	useEditDiscoverySettingConfiguration,
@@ -8,7 +11,9 @@ import {
 	useGetDiscoverySettings,
 } from "@/http/generated/asset-identification-discovery-settings";
 
+import type { CustomError, CustomSuccess } from "@/http/end-points/GeneralService.types";
 import { configsTransformRs, fieldsTransformRs } from "@/shared/components/baseComponents/BCDynamicField";
+import { getErrorMessage, getSuccessMessage } from "@/shared/lib/utils";
 
 import { GET_DISCOVERY_SETTINGS_QUERY_KEY } from "./index.constants";
 import type { DiscoveryAdapterFilters } from "./index.types";
@@ -104,4 +109,33 @@ export function useEditDiscoverySetting() {
 export function useCreateDiscoverySetting() {
 	const createDiscoverySetting = useCreateDiscoverySettingConfiguration();
 	return { createDiscoverySetting };
+}
+
+export function useTestDiscoverySettingConnection() {
+	const [testLoading, toggleTestLoading] = useToggle([false, true]);
+
+	function testDiscoverySettingConnection(adapterId: string, configuration_id: string) {
+		toggleTestLoading(true);
+		discoverySettingConfigurationTestConnection(adapterId, { configuration_id })
+			.then((response) => {
+				toggleTestLoading(false);
+				notifications.show({
+					title: "Success",
+					message: getSuccessMessage(response as CustomSuccess),
+					color: response?.data?.status ? "green" : "red",
+					withBorder: true,
+				});
+			})
+			.catch((error) => {
+				toggleTestLoading(false);
+				notifications.show({
+					title: "Failed",
+					message: getErrorMessage(error as CustomError),
+					color: "red",
+					withBorder: true,
+				});
+			});
+	}
+
+	return { testDiscoverySettingConnection, testLoading };
 }
