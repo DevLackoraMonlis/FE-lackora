@@ -96,6 +96,7 @@ export function getDynamicFieldValidate<FormValues, T extends string>(
 					mustBeNumber: type === "Int64",
 					mustBeEmail: key.includes("email"),
 					mustBeURI: key.includes("uri"),
+					mustBePort: key.includes("port"),
 				});
 			return accumulator;
 		},
