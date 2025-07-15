@@ -6,6 +6,7 @@ import {
 	discoverySettingConfigurationTestConnection,
 	useCreateDiscoverySettingConfiguration,
 	useDeleteDiscoverySettingConfiguration,
+	useDiscoverySettingRunNow,
 	useEditDiscoverySettingConfiguration,
 	useGetDiscoverySettingConfigurations,
 	useGetDiscoverySettings,
@@ -69,7 +70,7 @@ export function useDiscoveryAdapterById(adapterId: string, enabled: boolean) {
 			enabled: !!adapterId && enabled,
 			refetchOnMount: false,
 			select: (res) => {
-				const results = res?.data?.results?.map(({ id, is_active, config, editable }) => {
+				const results = res?.data?.results?.map(({ id, is_active, config, editable, adapter_id }) => {
 					const updateConfigValues = config.map(({ value, ...item }) => ({
 						...item,
 						value:
@@ -84,6 +85,7 @@ export function useDiscoveryAdapterById(adapterId: string, enabled: boolean) {
 					}));
 					return {
 						id,
+						adapterId: adapter_id,
 						editable: editable !== false,
 						isActive: !!is_active,
 						configs: configsTransformRs(updateConfigValues),
@@ -138,4 +140,22 @@ export function useTestDiscoverySettingConnection() {
 	}
 
 	return { testDiscoverySettingConnection, testLoading };
+}
+
+export function useDiscoverySettingQuickDiscovery(
+	enabled: boolean,
+	adapterId: string,
+	configuration_id: string,
+) {
+	const discoverySettingRunNow = useDiscoverySettingRunNow(
+		adapterId,
+		{ configuration_id },
+		{
+			query: {
+				enabled: enabled && !!(adapterId && configuration_id),
+			},
+		},
+	);
+
+	return { discoverySettingRunNow };
 }
