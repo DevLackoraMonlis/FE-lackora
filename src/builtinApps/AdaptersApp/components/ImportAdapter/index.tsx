@@ -5,8 +5,8 @@ import { useEffect, useState } from "react";
 import type { CustomError } from "@/http/end-points/GeneralService.types";
 import BCDropzone from "@/shared/components/baseComponents/BCDropzone";
 import BCModal from "@/shared/components/baseComponents/BCModal";
-
 import { getErrorMessage } from "@/shared/lib/utils";
+
 import { ADAPTER_UPLOADED_DESCRIPTION, ADAPTER_UPLOADED_STATUS } from "../../index.constants";
 import { AdapterUploadedStatus } from "../../index.enum";
 import { handleGetStatusFromResponse } from "../../index.helper";
@@ -49,14 +49,21 @@ function ImportAdapter({ onClose, refetchAdapters, updateMode }: Props) {
 					onError(error) {
 						const err = error as CustomError;
 						const subTitle = getErrorMessage(err) || "";
-						const status = handleGetStatusFromResponse(subTitle);
+						const { status } = handleGetStatusFromResponse();
 						setStatus(status);
 						setFileInfo({ subTitle });
 					},
-					onSuccess() {
-						refetchAdapters();
-						onCancelFile();
-						onClose();
+					onSuccess(response) {
+						const data = response?.data;
+						const { status, subTitle, apiStatus } = handleGetStatusFromResponse<typeof data>(data);
+						if (apiStatus) {
+							refetchAdapters();
+							onCancelFile();
+							onClose();
+						} else {
+							setStatus(status);
+							setFileInfo({ subTitle });
+						}
 					},
 				},
 			);
@@ -71,13 +78,15 @@ function ImportAdapter({ onClose, refetchAdapters, updateMode }: Props) {
 					onError(error) {
 						const err = error as CustomError;
 						const subTitle = getErrorMessage(err) || "";
-						const status = handleGetStatusFromResponse(subTitle);
+						const { status } = handleGetStatusFromResponse();
 						setStatus(status);
 						setFileInfo({ subTitle });
 					},
 					onSuccess(response) {
-						setStatus(AdapterUploadedStatus.Ready);
-						setFileInfo({ subTitle: response.data?.message || "" });
+						const data = response?.data;
+						const { status, subTitle } = handleGetStatusFromResponse<typeof data>(data);
+						setStatus(status);
+						setFileInfo({ subTitle });
 					},
 				},
 			);

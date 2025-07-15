@@ -36,8 +36,7 @@ export default function DiscoverySettingsDiscoveryAdapters() {
 	);
 
 	return (
-		<Grid p="sm" pt="lg" gutter="lg">
-			<LoadingOverlay visible={discoveryAdapters.isLoading} />
+		<Grid overflow="hidden" p="sm" pt="lg" gutter="lg">
 			<Grid.Col span={3}>
 				<BCSideFilter
 					height={height - 300}
@@ -53,7 +52,8 @@ export default function DiscoverySettingsDiscoveryAdapters() {
 					]}
 				/>
 			</Grid.Col>
-			<Grid.Col span={9} style={{ overflowY: "auto", overflowX: "hidden", height: height - 150 }}>
+			<Grid.Col span={9} h={height - 150} pos="relative">
+				<LoadingOverlay visible={discoveryAdapters.isLoading} />
 				<Accordion variant="separated" onChange={setActiveAccordion}>
 					{discoveryAdapters?.data?.results?.map((item) => (
 						<Accordion.Item key={item.id} value={item.id}>

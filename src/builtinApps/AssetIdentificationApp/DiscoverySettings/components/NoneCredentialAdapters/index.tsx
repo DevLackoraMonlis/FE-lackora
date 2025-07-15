@@ -14,7 +14,7 @@ const DiscoverySettingsNoneCredentialAdapters = () => {
 	const [activeAccordion, setActiveAccordion] = useState<string | null>(null);
 	const { discoveryAdapters } = useDiscoveryAdapters({ type: "none-credential" });
 	return (
-		<Grid p="sm" pt="lg" gutter="lg" style={{ overflowY: "auto", overflowX: "hidden", height: height - 150 }}>
+		<Grid p="sm" pt="lg" gutter="lg" overflow="hidden" h={height - 150}>
 			<Grid.Col span={{ xs: 12, lg: 9 }} offset={{ lg: 3 }}>
 				<Accordion variant="separated" onChange={setActiveAccordion}>
 					{discoveryAdapters.data?.results?.map(({ id, fields, display_name, caption, service_name }) => {
