@@ -36,16 +36,17 @@ export function DiscoveryQuickModal(props: Props) {
 	}, []);
 
 	const { default: defaultTitle, loading, results } = QUICK_DISCOVERY_TITLES;
-	const title = !enabledQuery ? defaultTitle : discoverySettingRunNow.isLoading ? loading : results;
+	const titleSize = !enabledQuery ? defaultTitle : discoverySettingRunNow.isLoading ? loading : results;
 	return (
 		<BCModal
-			size="40%"
+			size={titleSize.size}
+			h={titleSize.hight}
 			centered
 			onClose={onClose}
 			opened={props.opened}
-			title={title}
-			withCloseButton={!!title}
-			closeOnClickOutside={!!title}
+			title={titleSize.title}
+			withCloseButton={!!titleSize.title}
+			closeOnClickOutside={!!titleSize.title}
 		>
 			{!enabledQuery ? (
 				<>

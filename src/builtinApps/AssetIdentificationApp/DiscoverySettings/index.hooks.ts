@@ -153,7 +153,19 @@ export function useDiscoverySettingQuickDiscovery(
 		{
 			query: {
 				enabled: enabled && !!(adapterId && configuration_id),
-				select: (res) => res?.data,
+				select: (res) => {
+					const results =
+						res?.data?.results?.map((item) => {
+							const record = item as Record<string, string>;
+							return {
+								key: `${record?.ip}-${record?.mac}-${record?.created_time}`,
+								ipAddress: record?.ip,
+								macAddress: record?.mac,
+								discoveryTime: record?.created_time,
+							};
+						}) || [];
+					return { ...res.data, results };
+				},
 			},
 		},
 	);

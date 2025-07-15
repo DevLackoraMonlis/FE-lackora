@@ -1,5 +1,7 @@
-import type { DataTableProps, DataTableSortStatus } from "mantine-datatable";
+import { Badge, Flex, Text } from "@mantine/core";
+import { IconCheck, IconX } from "@tabler/icons-react";
 import { DataTable } from "mantine-datatable";
+import type { DataTableProps, DataTableSortStatus } from "mantine-datatable";
 import { useState } from "react";
 
 import { useDiscoverySettingQuickDiscovery } from "../../../../index.hooks";
@@ -16,6 +18,9 @@ export function DiscoveryQuickResults(props: Props) {
 		props.configurationId || "",
 	);
 	const results = discoverySettingRunNow?.data?.results || [];
+	const status = discoverySettingRunNow?.data?.status;
+	const message = discoverySettingRunNow?.data?.message;
+	const total = discoverySettingRunNow?.data?.total;
 
 	const [page, setPage] = useState(1);
 	const [sortStatus, setSortStatus] = useState<DataTableSortStatus<(typeof results)[number]>>({
@@ -30,42 +35,65 @@ export function DiscoveryQuickResults(props: Props) {
 
 	const columns: DataTableProps<(typeof results)[number]>["columns"] = [
 		{
-			accessor: "name",
+			accessor: "ipAddress",
+			title: "IP Address",
 			noWrap: true,
+			sortable: true,
+			render: ({ ipAddress }) => (
+				<Text c="blue" fz="sm" className="cursor-pointer">
+					{ipAddress}
+				</Text>
+			),
+		},
+		{
+			accessor: "macAddress",
+			title: "MAC Address",
 			sortable: true,
 		},
 		{
-			accessor: "email",
-			sortable: true,
-		},
-		{
-			accessor: "department.company.name",
-			title: "Company",
-			noWrap: true,
+			accessor: "discoveryTime",
+			title: "Time of Discovery",
 			sortable: true,
 		},
 	];
 
 	return (
-		<DataTable
-			height="70dvh"
-			minHeight={400}
-			maxHeight={1000}
-			withTableBorder
-			highlightOnHover
-			borderRadius="sm"
-			withColumnBorders
-			striped
-			verticalAlign="top"
-			pinLastColumn
-			columns={columns}
-			page={page}
-			onPageChange={setPage}
-			records={discoverySettingRunNow?.data?.results}
-			totalRecords={discoverySettingRunNow?.data?.results?.length}
-			recordsPerPage={25}
-			sortStatus={sortStatus}
-			onSortStatusChange={handleSortStatusChange}
-		/>
+		<Flex direction="column" p="sm" gap="xs" w="100%">
+			<Flex gap="sm" align="center" justify="center" py="sm" bg="gray.1">
+				<Badge color={status ? "green" : "red"} circle size="30px">
+					{status ? <IconCheck color="white" /> : <IconX color="white" />}
+				</Badge>
+				<Text fz="lg" fw="bold" tt="capitalize">
+					{status ? `${total} IPs discovered From ${props.configurationIP}` : `${message}`}
+				</Text>
+			</Flex>
+			<Flex gap="sm" align="center" p="sm" bg="gray.1">
+				<Badge color={status ? "green" : "red"} circle size="30px">
+					{status ? <IconCheck color="white" /> : <IconX color="white" />}
+				</Badge>
+				<Text fz="lg" fw="bold" tt="capitalize">
+					{status ? `${total} IPs discovered From ${props.configurationIP}` : `${message}`}
+				</Text>
+			</Flex>
+			<DataTable
+				scrollAreaProps={{ h: 400 }}
+				withTableBorder
+				highlightOnHover
+				borderRadius="sm"
+				withColumnBorders
+				striped
+				verticalAlign="top"
+				pinLastColumn
+				border={2}
+				columns={columns}
+				page={page}
+				onPageChange={setPage}
+				recordsPerPage={25}
+				records={results}
+				totalRecords={total}
+				sortStatus={sortStatus}
+				onSortStatusChange={handleSortStatusChange}
+			/>
+		</Flex>
 	);
 }
