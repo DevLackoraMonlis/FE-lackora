@@ -3,6 +3,12 @@ export type LabelValueType = {
 	value: string;
 };
 
+export type LabelValueFilter = {
+	label: string;
+	value: string | boolean;
+	icon?: string | null;
+};
+
 export type LabelNameType = {
 	label: string;
 	name: string;

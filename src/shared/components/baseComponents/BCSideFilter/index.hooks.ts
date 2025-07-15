@@ -7,7 +7,8 @@ export function useRenderLabel() {
 	const { renderAdapterBadge } = useAdapterBadges();
 	const { renderVendorBadge } = useVendorBadges();
 
-	const renderLabel: RenderLabel = ({ label, value: iconType }, { name }) => {
+	const renderLabel: RenderLabel = ({ label, value }, { name }) => {
+		const iconType = `${value}`;
 		switch (name) {
 			case "adapter_type":
 				return renderAdapterBadge({ iconType });

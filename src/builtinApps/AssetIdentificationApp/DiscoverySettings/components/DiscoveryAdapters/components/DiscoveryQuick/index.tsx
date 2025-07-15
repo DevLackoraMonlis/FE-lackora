@@ -1,7 +1,7 @@
 import { Badge, Flex, Text } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { IconPlayerPlayFilled } from "@tabler/icons-react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import BCModal from "@/shared/components/baseComponents/BCModal";
 
@@ -17,7 +17,6 @@ type Props = Partial<ConfigurationRs> & {
 };
 
 export function DiscoveryQuickModal(props: Props) {
-	const [title, setTitle] = useState(QUICK_DISCOVERY_TITLES.default);
 	const [enabledQuery, handleEnabledQuery] = useDisclosure();
 	const { discoverySettingRunNow } = useDiscoverySettingQuickDiscovery(
 		enabledQuery,
@@ -32,18 +31,19 @@ export function DiscoveryQuickModal(props: Props) {
 
 	useEffect(() => {
 		return () => {
-			handleEnabledQuery.close();
-			setTitle(QUICK_DISCOVERY_TITLES.default);
+			onClose();
 		};
 	}, []);
 
+	const { default: defaultTitle, loading, results } = QUICK_DISCOVERY_TITLES;
+	const title = !enabledQuery ? defaultTitle : discoverySettingRunNow.isLoading ? loading : results;
 	return (
 		<BCModal
 			size="40%"
 			centered
-			title={title}
 			onClose={onClose}
 			opened={props.opened}
+			title={title}
 			withCloseButton={!!title}
 			closeOnClickOutside={!!title}
 		>
@@ -61,19 +61,12 @@ export function DiscoveryQuickModal(props: Props) {
 							the system. Do you want to continue?
 						</Text>
 					</Flex>
-					<BCModal.Footer
-						applyLabel="Start"
-						onApply={() => {
-							setTitle("");
-							handleEnabledQuery.open();
-						}}
-						onCancel={onClose}
-					/>
+					<BCModal.Footer applyLabel="Start" onApply={handleEnabledQuery.open} onCancel={onClose} />
 				</>
 			) : discoverySettingRunNow.isLoading ? (
 				<DiscoveryQuickConfirmDiscovering<Props> {...props} />
 			) : (
-				<DiscoveryQuickResults {...props} />
+				<DiscoveryQuickResults enabledQuery={false} {...props} />
 			)}
 		</BCModal>
 	);

@@ -153,6 +153,7 @@ export function useDiscoverySettingQuickDiscovery(
 		{
 			query: {
 				enabled: enabled && !!(adapterId && configuration_id),
+				select: (res) => res?.data,
 			},
 		},
 	);

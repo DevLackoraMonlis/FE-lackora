@@ -30,7 +30,7 @@ import {
 	useGetConnectionUsedInObjects,
 	useGetConnections,
 } from "@/http/generated/management-center-connections";
-import type { EachConnectionFilterItems, EachConnectionType } from "@/http/generated/models";
+import type { EachConnectionType } from "@/http/generated/models";
 import BCDeleteModal from "@/shared/components/baseComponents/BCDeleteModal";
 import BCDeleteRestrictModal from "@/shared/components/baseComponents/BCDeleteRestrictModal";
 import BCSideFilter, { type BCSideFilterItem } from "@/shared/components/baseComponents/BCSideFilter";
@@ -90,9 +90,8 @@ export default function ConnectionList() {
 	const selectedConnection = getConnectionsQuery.data?.data.results.find(
 		(item) => item.id === selectedConnectionId,
 	);
-	const stableFilters = useStableData<EachConnectionFilterItems[]>(
-		getConnectionsQuery.data?.data?.metadata?.filters,
-	);
+	const connectionsFilters = getConnectionsQuery.data?.data?.metadata?.filters;
+	const stableFilters = useStableData<typeof connectionsFilters>(connectionsFilters);
 	const dynamicFilters = stableFilters?.map(
 		(filter) =>
 			({
