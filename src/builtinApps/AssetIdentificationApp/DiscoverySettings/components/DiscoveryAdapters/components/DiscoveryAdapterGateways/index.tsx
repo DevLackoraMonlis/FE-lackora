@@ -26,18 +26,26 @@ type Props = {
 };
 
 const DiscoveryAdapterGateways = ({ enabled, adapterId, fields }: Props) => {
+	const [selectedId, setSelectedId] = useState("");
 	const [openedDiscoveryQuick, handlersDiscoveryQuick] = useDisclosure(false);
 
-	const { testDiscoverySettingConnection, testLoading } = useTestDiscoverySettingConnection();
 	const { discoverySettingConfigurations } = useDiscoveryAdapterById(adapterId, enabled);
 	const [selectedRecord, setSelectedRecord] = useState<ConfigurationRs>();
 	const handleDiscoverySettingQuickDiscovery = (adapter: ConfigurationRs) => {
+		setSelectedId(adapter.configurationId);
 		setSelectedRecord(adapter);
 		handlersDiscoveryQuick.open();
 	};
 
+	const { testDiscoverySettingConnection, testLoading } = useTestDiscoverySettingConnection();
+	const handleDiscoverySettingTestConnection = (adapterId: string, configuration_id: string) => {
+		setSelectedId(configuration_id);
+		testDiscoverySettingConnection(adapterId, configuration_id);
+	};
+
 	const { deleteDiscoverySetting } = useDeleteDiscoverySetting();
 	const handleDeleteAdapterConfigurations = (configuration_id: string) => {
+		setSelectedId(configuration_id);
 		deleteDiscoverySetting.mutate(
 			{ adapterId, data: { configuration_id } },
 			{ onSuccess: () => discoverySettingConfigurations.refetch() },
@@ -50,6 +58,7 @@ const DiscoveryAdapterGateways = ({ enabled, adapterId, fields }: Props) => {
 		configs: BCDynamicConfigRq[],
 		callback: VoidFunction,
 	) => {
+		setSelectedId(configuration_id);
 		editDiscoverySetting.mutate(
 			{ adapterId, data: { configs, configuration_id } },
 			{
@@ -60,6 +69,8 @@ const DiscoveryAdapterGateways = ({ enabled, adapterId, fields }: Props) => {
 			},
 		);
 	};
+
+	const loading = deleteDiscoverySetting.isPending || editDiscoverySetting.isPending;
 
 	return (
 		<>
@@ -75,15 +86,23 @@ const DiscoveryAdapterGateways = ({ enabled, adapterId, fields }: Props) => {
 					({ configs, id, isActive, editable, adapterId }) => (
 						<DiscoveryAdapterCard
 							key={id}
-							testLoading={testLoading}
-							loading={deleteDiscoverySetting.isPending || editDiscoverySetting.isPending}
-							handleDeleteAdapterConfigurations={() => handleDeleteAdapterConfigurations(id)}
-							handleDiscoverySettingTestConnection={() => testDiscoverySettingConnection(adapterId, id)}
+							handleDeleteAdapterConfigurations={handleDeleteAdapterConfigurations}
+							handleDiscoverySettingTestConnection={handleDiscoverySettingTestConnection}
 							handleDiscoverySettingQuickDiscovery={handleDiscoverySettingQuickDiscovery}
-							handleEditAdapterConfigurations={(newConfigs, callback) =>
-								handleEditAdapterConfigurations(id, newConfigs, callback)
-							}
-							{...{ configs, id, isActive, editable, adapterId, fields }}
+							handleEditAdapterConfigurations={handleEditAdapterConfigurations}
+							{...{
+								configs,
+								id,
+								isActive,
+								editable,
+								adapterId,
+								fields,
+								disabled: testLoading || loading,
+								...(id === selectedId && {
+									testLoading,
+									loading,
+								}),
+							}}
 						/>
 					),
 				)}

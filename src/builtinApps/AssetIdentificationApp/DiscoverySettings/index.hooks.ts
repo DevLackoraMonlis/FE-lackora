@@ -151,6 +151,9 @@ export function useDiscoverySettingQuickDiscovery(
 		{ configuration_id },
 		{
 			query: {
+				refetchOnMount: true,
+				staleTime: 0,
+				gcTime: 0,
 				enabled: enabled && !!(adapterId && configuration_id),
 				select: (res) => {
 					const results =

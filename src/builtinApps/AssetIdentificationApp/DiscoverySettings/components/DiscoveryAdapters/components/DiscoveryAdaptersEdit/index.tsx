@@ -20,14 +20,14 @@ import type { DiscoveryAdapterConfigurationRs } from "../../../../index.types";
 type FormValues = Record<string, unknown>;
 
 type Props = DiscoveryAdapterConfigurationRs & {
-	handleDeleteAdapterConfigurations: VoidFunction;
-	handleEditAdapterConfigurations: (configs: BCDynamicConfigRq[], callback: VoidFunction) => void;
+	handleEditAdapterConfigurations: (id: string, configs: BCDynamicConfigRq[], callback: VoidFunction) => void;
 	fields: BCDynamicFieldRs[];
 	loading: boolean;
 	onCancel: VoidFunction;
 };
 
 const DiscoveryAdaptersForm = ({
+	id,
 	configs = [],
 	loading,
 	onCancel,
@@ -52,7 +52,7 @@ const DiscoveryAdaptersForm = ({
 		if (validate.hasErrors) return;
 		const values = form.getValues();
 		const updateValues = configsUpdateTransformRq(configs, values);
-		handleEditAdapterConfigurations(updateValues, onCancel);
+		handleEditAdapterConfigurations(id, updateValues, onCancel);
 	};
 
 	useEffect(() => {
