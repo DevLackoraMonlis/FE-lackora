@@ -30,6 +30,8 @@ import type {
   CreateAdapterConfigurationResponse,
   DeleteAdapterConfigurationRequest,
   DiscoverySettingConfigurationTestConnectionParams,
+  DiscoverySettingRunNowParams,
+  DiscoverySettingsRunNowResponse,
   EachDiscoverySetting,
   GetDiscoverySettingsParams,
   HTTPValidationError,
@@ -564,6 +566,195 @@ export function useDiscoverySettingConfigurationTestConnection<TData = Awaited<R
  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
   const queryOptions = getDiscoverySettingConfigurationTestConnectionQueryOptions(adapterId,params,options)
+
+  const query = useQuery(queryOptions , queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+/**
+ * @summary Discovery Setting Run Now
+ */
+export const discoverySettingRunNow = (
+    adapterId: string,
+    params: DiscoverySettingRunNowParams,
+ signal?: AbortSignal
+) => {
+      
+      
+      return orvalMutator<DiscoverySettingsRunNowResponse>(
+      {url: `/api/asset-identification/discovery-settings/${adapterId}/run-now`, method: 'GET',
+        params, signal
+    },
+      );
+    }
+  
+
+const getDiscoverySettingRunNowQueryKey = (adapterId: string,
+    params: DiscoverySettingRunNowParams,) => {
+    return [`/api/asset-identification/discovery-settings/${adapterId}/run-now`, ...(params ? [params]: [])] as const;
+    }
+
+    
+export const getDiscoverySettingRunNowQueryOptions = <TData = Awaited<ReturnType<typeof discoverySettingRunNow>>, TError = HTTPValidationError>(adapterId: string,
+    params: DiscoverySettingRunNowParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof discoverySettingRunNow>>, TError, TData>>, }
+) => {
+
+const {query: queryOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getDiscoverySettingRunNowQueryKey(adapterId,params);
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof discoverySettingRunNow>>> = ({ signal }) => discoverySettingRunNow(adapterId,params, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, enabled: !!(adapterId), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof discoverySettingRunNow>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type DiscoverySettingRunNowQueryResult = NonNullable<Awaited<ReturnType<typeof discoverySettingRunNow>>>
+export type DiscoverySettingRunNowQueryError = HTTPValidationError
+
+
+export function useDiscoverySettingRunNow<TData = Awaited<ReturnType<typeof discoverySettingRunNow>>, TError = HTTPValidationError>(
+ adapterId: string,
+    params: DiscoverySettingRunNowParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof discoverySettingRunNow>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof discoverySettingRunNow>>,
+          TError,
+          Awaited<ReturnType<typeof discoverySettingRunNow>>
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useDiscoverySettingRunNow<TData = Awaited<ReturnType<typeof discoverySettingRunNow>>, TError = HTTPValidationError>(
+ adapterId: string,
+    params: DiscoverySettingRunNowParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof discoverySettingRunNow>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof discoverySettingRunNow>>,
+          TError,
+          Awaited<ReturnType<typeof discoverySettingRunNow>>
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useDiscoverySettingRunNow<TData = Awaited<ReturnType<typeof discoverySettingRunNow>>, TError = HTTPValidationError>(
+ adapterId: string,
+    params: DiscoverySettingRunNowParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof discoverySettingRunNow>>, TError, TData>>, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary Discovery Setting Run Now
+ */
+
+export function useDiscoverySettingRunNow<TData = Awaited<ReturnType<typeof discoverySettingRunNow>>, TError = HTTPValidationError>(
+ adapterId: string,
+    params: DiscoverySettingRunNowParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof discoverySettingRunNow>>, TError, TData>>, }
+ , queryClient?: QueryClient 
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getDiscoverySettingRunNowQueryOptions(adapterId,params,options)
+
+  const query = useQuery(queryOptions , queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+/**
+ * @summary Get Discovery Setting Last Run
+ */
+export const getDiscoverySettingLastRun = (
+    adapterId: string,
+    runId: string,
+ signal?: AbortSignal
+) => {
+      
+      
+      return orvalMutator<DiscoverySettingsRunNowResponse>(
+      {url: `/api/asset-identification/discovery-settings/${adapterId}/run-now/${runId}`, method: 'GET', signal
+    },
+      );
+    }
+  
+
+const getGetDiscoverySettingLastRunQueryKey = (adapterId: string,
+    runId: string,) => {
+    return [`/api/asset-identification/discovery-settings/${adapterId}/run-now/${runId}`] as const;
+    }
+
+    
+export const getGetDiscoverySettingLastRunQueryOptions = <TData = Awaited<ReturnType<typeof getDiscoverySettingLastRun>>, TError = HTTPValidationError>(adapterId: string,
+    runId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getDiscoverySettingLastRun>>, TError, TData>>, }
+) => {
+
+const {query: queryOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetDiscoverySettingLastRunQueryKey(adapterId,runId);
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getDiscoverySettingLastRun>>> = ({ signal }) => getDiscoverySettingLastRun(adapterId,runId, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, enabled: !!(adapterId && runId), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getDiscoverySettingLastRun>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetDiscoverySettingLastRunQueryResult = NonNullable<Awaited<ReturnType<typeof getDiscoverySettingLastRun>>>
+export type GetDiscoverySettingLastRunQueryError = HTTPValidationError
+
+
+export function useGetDiscoverySettingLastRun<TData = Awaited<ReturnType<typeof getDiscoverySettingLastRun>>, TError = HTTPValidationError>(
+ adapterId: string,
+    runId: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getDiscoverySettingLastRun>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getDiscoverySettingLastRun>>,
+          TError,
+          Awaited<ReturnType<typeof getDiscoverySettingLastRun>>
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetDiscoverySettingLastRun<TData = Awaited<ReturnType<typeof getDiscoverySettingLastRun>>, TError = HTTPValidationError>(
+ adapterId: string,
+    runId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getDiscoverySettingLastRun>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getDiscoverySettingLastRun>>,
+          TError,
+          Awaited<ReturnType<typeof getDiscoverySettingLastRun>>
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetDiscoverySettingLastRun<TData = Awaited<ReturnType<typeof getDiscoverySettingLastRun>>, TError = HTTPValidationError>(
+ adapterId: string,
+    runId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getDiscoverySettingLastRun>>, TError, TData>>, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary Get Discovery Setting Last Run
+ */
+
+export function useGetDiscoverySettingLastRun<TData = Awaited<ReturnType<typeof getDiscoverySettingLastRun>>, TError = HTTPValidationError>(
+ adapterId: string,
+    runId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getDiscoverySettingLastRun>>, TError, TData>>, }
+ , queryClient?: QueryClient 
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetDiscoverySettingLastRunQueryOptions(adapterId,runId,options)
 
   const query = useQuery(queryOptions , queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 

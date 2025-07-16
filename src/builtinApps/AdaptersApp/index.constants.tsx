@@ -42,6 +42,16 @@ export const ADAPTER_UPLOADED_STATUS = {
 		alertDescription:
 			"The uploaded adapter version is older than the currently installed version. Downgrading is not allowed to ensure system stability. Please upload a newer version.",
 	},
+	[AdapterUploadedStatus.Invalid]: {
+		badgeText: AdapterUploadedStatus.Invalid,
+		icon: IconCancel,
+		color: "red",
+		disabled: true,
+		buttonText: "Import",
+		alertTitle: "Adapter File is not valid!",
+		alertDescription:
+			"The uploaded adapter file is invalid or corrupted and cannot be imported. Please ensure the file follows the correct format and try uploading again.",
+	},
 	[AdapterUploadedStatus.Error]: {
 		badgeText: AdapterUploadedStatus.Error,
 		icon: IconCancel,
