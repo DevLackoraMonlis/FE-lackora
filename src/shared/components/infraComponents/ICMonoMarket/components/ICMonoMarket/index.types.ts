@@ -21,4 +21,5 @@ export type MonoMarketCardProps = {
 	keyCapabilities: string[];
 	businessValue: string[];
 	configurationRequired: string[];
+	isProcessing?: boolean;
 };

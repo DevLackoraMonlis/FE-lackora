@@ -8,8 +8,8 @@ import type {
 } from "@/shared/components/infraComponents/ICMonoMarket/components/ICMonoMarket/index.enum";
 import type { MonoMarketCardProps } from "@/shared/components/infraComponents/ICMonoMarket/components/ICMonoMarket/index.types";
 import { MonoWatchLogo } from "@/shared/icons/components/general";
-import { Button, Tooltip } from "@mantine/core";
-import { IconArrowNarrowRight, IconAward, IconBox, IconLock } from "@tabler/icons-react";
+import { Badge, Button, Flex, Tooltip } from "@mantine/core";
+import { IconArrowNarrowRight, IconAward, IconBox, IconLock, IconSettings } from "@tabler/icons-react";
 import type { ReactNode } from "react";
 
 export function getMonoMarketAppProductionButton(params: {
@@ -18,25 +18,30 @@ export function getMonoMarketAppProductionButton(params: {
 }) {
 	if (params.size === "xLarge") {
 		return (
-			<Button
-				c={MonoAppProductColor[params.type]}
+			<Badge
+				tt={"capitalize"}
+				fz={"2xs"}
+				radius={"xs"}
 				variant={"light"}
+				color={MonoAppProductColor[params.type]}
 				leftSection={<IconAward size={14} color={MonoAppProductColor[params.type]} />}
-				size={"xs"}
+				size={"lg"}
 			>
 				{`PRODUCT LICENSE LEVEL: ${params.type} SECURITY`}
-			</Button>
+			</Badge>
 		);
 	}
 	return (
-		<Button
-			c={MonoAppProductColor[params.type]}
+		<Badge
+			fz={"2xs"}
+			radius={"xs"}
+			color={MonoAppProductColor[params.type]}
 			variant={"light"}
 			leftSection={<IconAward size={14} color={MonoAppProductColor[params.type]} />}
-			size={params.size === "small" ? "compact-xs" : "sm"}
+			size={"lg"}
 		>
 			{params.size === "small" ? MonoAppProductTypeShortName[params.type] : params.type}
-		</Button>
+		</Badge>
 	);
 }
 
@@ -44,14 +49,16 @@ export function getMonoMarketAppMonoCareLicenseButton(params: {
 	size: "small" | "large";
 }) {
 	return (
-		<Button
-			c={"#15AABF"}
+		<Badge
+			fz={"2xs"}
+			radius={"xs"}
+			color={"#15AABF"}
 			variant={"light"}
 			leftSection={<IconAward size={14} color={"#15AABF"} />}
-			size={params.size === "small" ? "compact-xs" : "xs"}
+			size={"lg"}
 		>
 			{params.size === "small" ? "MC" : "MONOCARE REQUIRED"}
-		</Button>
+		</Badge>
 	);
 }
 
@@ -68,6 +75,8 @@ export function getMonoAppIcon(params: {
 export const getMonoMarketActivateConfigButton = (
 	params: {
 		status: MonoAppStatusTypeEnum;
+		showConfigButton: boolean;
+		onConfig?: VoidFunction;
 	} & Pick<
 		MonoMarketCardProps,
 		"isConfigured" | "productType" | "hasConfig" | "onActiveWithConfig" | "onActiveOnly"
@@ -94,9 +103,16 @@ export const getMonoMarketActivateConfigButton = (
 	if (params.status === "ACTIVATED" && params.productType !== "STANDARD") {
 		if (params.isConfigured) {
 			return (
-				<Button variant={"outline"} size={"xs"}>
-					Open
-				</Button>
+				<Flex gap={"2xs"} align={"center"}>
+					<Button variant={"outline"} size={"xs"}>
+						Open
+					</Button>
+					{params.showConfigButton && (
+						<Button onClick={params.onConfig} variant={"default"}>
+							<IconSettings />
+						</Button>
+					)}
+				</Flex>
 			);
 		}
 		return (
@@ -112,9 +128,16 @@ export const getMonoMarketActivateConfigButton = (
 
 	if (params.status === "ACTIVATED") {
 		return (
-			<Button variant={"outline"} size={"xs"}>
-				Open
-			</Button>
+			<Flex gap={"2xs"} align={"center"}>
+				<Button variant={"outline"} size={"xs"}>
+					Open
+				</Button>
+				{params.showConfigButton && (
+					<Button size={"xs"} p={"2xs"} onClick={params.onConfig} variant={"default"}>
+						<IconSettings />
+					</Button>
+				)}
+			</Flex>
 		);
 	}
 

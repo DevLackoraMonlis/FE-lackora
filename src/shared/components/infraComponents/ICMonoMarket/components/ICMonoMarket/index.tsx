@@ -16,7 +16,10 @@ import { Flex, Grid, Pagination, ScrollArea } from "@mantine/core";
 import { useDisclosure, useViewportSize } from "@mantine/hooks";
 import { useState } from "react";
 
-type SelectAppType = Omit<MonoMarketCardProps, "onActiveOnly" | "onActiveWithConfig" | "onShowMore">;
+type SelectAppType = Omit<
+	MonoMarketCardProps,
+	"onActiveOnly" | "onActiveWithConfig" | "onShowMore" | "isProcessing"
+>;
 
 export default function ICMonoMarket() {
 	const { height } = useViewportSize();
@@ -72,12 +75,12 @@ export default function ICMonoMarket() {
 			keyCapabilities: ["tst", "stats"],
 		},
 		{
-			isConfigured: false,
+			isConfigured: true,
 			description: "provides secure, encrypted remote access to Cisco",
-			hasConfig: false,
+			hasConfig: true,
 			hasRequiredSupportLicense: false,
 			status: MonoAppStatusTypeEnum.ACTIVATED,
-			label: "Adapters",
+			label: "Adapters2",
 			name: "adapter_management4",
 			owner: "MonoSuite",
 			productType: MonoAppProductTypeEnum.STANDARD,

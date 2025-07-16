@@ -48,6 +48,7 @@
 		"allure-commandline": "^2.32.0",
 		"allure-playwright": "^3.0.8",
 		"axios": "^1.9.0",
+		"change-case": "^5.4.4",
 		"clsx": "^2.0.0",
 		"crypto": "^1.0.1",
 		"dayjs": "^1.11.10",
