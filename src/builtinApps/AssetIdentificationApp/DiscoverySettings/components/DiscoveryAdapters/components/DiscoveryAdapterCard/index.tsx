@@ -13,16 +13,26 @@ import type { ConfigurationRs, DiscoveryAdapterConfigurationRs } from "../../../
 import DiscoveryAdaptersEditGateway from "../DiscoveryAdaptersEdit";
 
 type Props = DiscoveryAdapterConfigurationRs & {
-	handleDeleteAdapterConfigurations: VoidFunction;
-	handleDiscoverySettingTestConnection: VoidFunction;
+	handleDeleteAdapterConfigurations: (id: string) => void;
+	handleDiscoverySettingTestConnection: (adapterId: string, id: string) => void;
 	handleDiscoverySettingQuickDiscovery: (adapter: ConfigurationRs) => void;
-	handleEditAdapterConfigurations: (configs: BCDynamicConfigRq[], callback: VoidFunction) => void;
+	handleEditAdapterConfigurations: (id: string, configs: BCDynamicConfigRq[], callback: VoidFunction) => void;
 	fields: BCDynamicFieldRs[];
-	loading: boolean;
-	testLoading: boolean;
+	disabled: boolean;
+	loading?: boolean;
+	testLoading?: boolean;
 };
 
-const DiscoveryAdapterCard = ({ id, configs, isActive, loading, adapterId, ...props }: Props) => {
+const DiscoveryAdapterCard = ({
+	id,
+	adapterId,
+	configs,
+	isActive,
+	testLoading = false,
+	loading = false,
+	disabled = false,
+	...props
+}: Props) => {
 	const [editMode, setEditMode] = useState(false);
 
 	if (editMode) {
@@ -49,6 +59,7 @@ const DiscoveryAdapterCard = ({ id, configs, isActive, loading, adapterId, ...pr
 						</Text>
 					</Badge>
 					<ActionIcon
+						disabled={disabled}
 						onClick={() => {
 							props.handleDiscoverySettingQuickDiscovery({
 								configurationIP: `${isObject(configurationIP) ? configurationIP?.label : ""}`,
@@ -63,8 +74,9 @@ const DiscoveryAdapterCard = ({ id, configs, isActive, loading, adapterId, ...pr
 						<IconZoomReset size={20} />
 					</ActionIcon>
 					<ActionIcon
-						loading={props.testLoading}
-						onClick={props.handleDiscoverySettingTestConnection}
+						disabled={disabled}
+						loading={testLoading}
+						onClick={() => props.handleDiscoverySettingTestConnection(adapterId, id)}
 						title="Test Connection"
 						variant="subtle"
 						c="gray.8"
@@ -72,6 +84,7 @@ const DiscoveryAdapterCard = ({ id, configs, isActive, loading, adapterId, ...pr
 						<IconPlugConnected size={20} />
 					</ActionIcon>
 					<ActionIcon
+						disabled={disabled}
 						onClick={() => setEditMode((perValue) => !perValue)}
 						title="Edit"
 						variant="subtle"
@@ -81,12 +94,12 @@ const DiscoveryAdapterCard = ({ id, configs, isActive, loading, adapterId, ...pr
 					</ActionIcon>
 					<BCPopoverConfirm
 						loading={loading}
-						onConfirm={props.handleDeleteAdapterConfigurations}
+						onConfirm={() => props.handleDeleteAdapterConfigurations(id)}
 						confirmBtnColor="red"
 						confirmBtnText="Delete"
 						message="Are you sure to delete record ?"
 						renderProps={(onToggle) => (
-							<ActionIcon onClick={onToggle} title="Delete" variant="subtle" c="gray.8">
+							<ActionIcon disabled={disabled} onClick={onToggle} title="Delete" variant="subtle" c="gray.8">
 								<IconX size={20} />
 							</ActionIcon>
 						)}

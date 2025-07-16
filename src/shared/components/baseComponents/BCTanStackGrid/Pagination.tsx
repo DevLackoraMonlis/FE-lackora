@@ -35,6 +35,7 @@ const AgPagination: FC<AgPaginationProps> = (props) => {
 			<Flex columnGap={8} align="center">
 				<Text size="xs">Rows per page</Text>
 				<Select
+					size="xs"
 					id="pagination-data-test"
 					w={100}
 					value={props.recordsPerPage?.toString()}

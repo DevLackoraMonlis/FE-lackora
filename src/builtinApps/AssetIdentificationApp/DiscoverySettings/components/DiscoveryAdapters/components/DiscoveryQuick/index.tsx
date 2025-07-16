@@ -24,7 +24,7 @@ export function DiscoveryQuickModal(props: Props) {
 	);
 
 	const onClose = () => {
-		handleEnabledQuery.close();
+		setTimeout(() => handleEnabledQuery.close(), 1000);
 		props.onClose();
 	};
 
