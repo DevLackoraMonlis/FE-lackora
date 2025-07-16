@@ -19,6 +19,7 @@ table {
 	border-spacing: 0;
 	font-family: inherit;
 	table-layout: fixed;
+	font-size: var(--mantine-font-size-sm);
 }
 
 thead {
