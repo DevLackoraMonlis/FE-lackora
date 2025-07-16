@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 
 import BCSideFilter, { type BCSideFilterItem } from "@/shared/components/baseComponents/BCSideFilter";
 import { useAdapterBadges } from "@/shared/hooks/badges/useAdapterBadges";
+import { useRenderFilterLabels } from "@/shared/hooks/useRenderFilterLabels";
 import { useStableData } from "@/shared/hooks/useStableData";
 import { useTablePagination } from "@/shared/hooks/useTablePagination";
 
@@ -19,6 +20,7 @@ import type { AdaptersFilters } from "./index.types";
 export default function AdapterManagementLandingPage() {
 	const { height } = useViewportSize();
 	const { renderAdapterBadge } = useAdapterBadges();
+	const { renderLabel } = useRenderFilterLabels();
 
 	const { tablePagination, page, pageSize, totalRecords, setTotalRecords } = useTablePagination({
 		defaultPageSize: 12,
@@ -42,7 +44,7 @@ export default function AdapterManagementLandingPage() {
 	const dynamicFilters = stableFilters?.map(
 		(filter) =>
 			({
-				items: filter.items,
+				items: filter.items.map((item) => ({ ...item, renderLabel })),
 				label: filter.label,
 				name: filter.param,
 				type: "CheckedList",

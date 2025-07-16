@@ -1,9 +1,17 @@
-import type { RenderLabel } from "@/shared/components/baseComponents/BCSideFilter";
+import type {
+	BCSideFilterItem,
+	BCSideFilterItemOption,
+} from "@/shared/components/baseComponents/BCSideFilter";
 
 import { useAdapterBadges } from "@/shared/hooks/badges/useAdapterBadges";
 import { useVendorBadges } from "@/shared/hooks/badges/useVendorBadges";
 
-export function useRenderLabel() {
+type RenderLabel = (
+	params: Partial<BCSideFilterItemOption>,
+	filterItem: Partial<BCSideFilterItem>,
+) => React.ReactNode;
+
+export function useRenderFilterLabels() {
 	const { renderAdapterBadge } = useAdapterBadges();
 	const { renderVendorBadge } = useVendorBadges();
 

@@ -1,8 +1,9 @@
 import { Badge, Flex, Text } from "@mantine/core";
 import { IconCheck, IconX } from "@tabler/icons-react";
-import { DataTable } from "mantine-datatable";
-import type { DataTableProps, DataTableSortStatus } from "mantine-datatable";
 import { useState } from "react";
+
+import BCTanStackGrid from "@/shared/components/baseComponents/BCTanStackGrid";
+import type { TanStackGridProps } from "@/shared/components/baseComponents/BCTanStackGrid/index.types";
 
 import { useDiscoverySettingQuickDiscovery } from "../../../../index.hooks";
 import type { ConfigurationRs } from "../../../../index.types";
@@ -23,22 +24,11 @@ export function DiscoveryQuickResults(props: Props) {
 	const total = discoverySettingRunNow?.data?.total;
 
 	const [page, setPage] = useState(1);
-	const [sortStatus, setSortStatus] = useState<DataTableSortStatus<(typeof results)[number]>>({
-		columnAccessor: "name",
-		direction: "asc",
-	});
 
-	const handleSortStatusChange = (status: DataTableSortStatus<(typeof results)[number]>) => {
-		setPage(1);
-		setSortStatus(status);
-	};
-
-	const columns: DataTableProps<(typeof results)[number]>["columns"] = [
+	const columns: TanStackGridProps<(typeof results)[number]>["columns"] = [
 		{
 			accessor: "ipAddress",
 			title: "IP Address",
-			noWrap: true,
-			sortable: true,
 			render: ({ ipAddress }) => (
 				<Text c="blue" fz="sm" className="cursor-pointer">
 					{ipAddress}
@@ -48,12 +38,10 @@ export function DiscoveryQuickResults(props: Props) {
 		{
 			accessor: "macAddress",
 			title: "MAC Address",
-			sortable: true,
 		},
 		{
 			accessor: "discoveryTime",
 			title: "Time of Discovery",
-			sortable: true,
 		},
 	];
 
@@ -75,24 +63,18 @@ export function DiscoveryQuickResults(props: Props) {
 					{status ? `${total} IPs discovered From ${props.configurationIP}` : `${message}`}
 				</Text>
 			</Flex>
-			<DataTable
-				scrollAreaProps={{ h: 400 }}
+			<BCTanStackGrid
+				h={400}
 				withTableBorder
-				highlightOnHover
-				borderRadius="sm"
 				withColumnBorders
-				striped
-				verticalAlign="top"
+				idAccessor="key"
 				pinLastColumn
-				border={2}
 				columns={columns}
 				page={page}
 				onPageChange={setPage}
 				recordsPerPage={25}
 				records={results}
 				totalRecords={total}
-				sortStatus={sortStatus}
-				onSortStatusChange={handleSortStatusChange}
 			/>
 		</Flex>
 	);

@@ -122,7 +122,6 @@ export function useTestDiscoverySettingConnection() {
 			.then((response) => {
 				toggleTestLoading(false);
 				notifications.show({
-					title: "Success",
 					message: getSuccessMessage(response as CustomSuccess),
 					color: response?.data?.status ? "green" : "red",
 					withBorder: true,

@@ -1,7 +1,6 @@
 import { Badge, Flex, Text } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { IconPlayerPlayFilled } from "@tabler/icons-react";
-import { useEffect } from "react";
 
 import BCModal from "@/shared/components/baseComponents/BCModal";
 
@@ -28,12 +27,6 @@ export function DiscoveryQuickModal(props: Props) {
 		handleEnabledQuery.close();
 		props.onClose();
 	};
-
-	useEffect(() => {
-		return () => {
-			onClose();
-		};
-	}, []);
 
 	const { default: defaultTitle, loading, results } = QUICK_DISCOVERY_TITLES;
 	const titleSize = !enabledQuery ? defaultTitle : discoverySettingRunNow.isLoading ? loading : results;
