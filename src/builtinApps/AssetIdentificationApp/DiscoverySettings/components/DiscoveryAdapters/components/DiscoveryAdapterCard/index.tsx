@@ -1,5 +1,5 @@
 import { ActionIcon, Badge, Card, Flex, LoadingOverlay, Text } from "@mantine/core";
-import { IconPencil, IconPlugConnected, IconX } from "@tabler/icons-react";
+import { IconPencil, IconPlugConnected, IconX, IconZoomReset } from "@tabler/icons-react";
 import { isObject } from "lodash";
 import { useState } from "react";
 
@@ -9,36 +9,38 @@ import type {
 } from "@/shared/components/baseComponents/BCDynamicField/index.types";
 import BCPopoverConfirm from "@/shared/components/baseComponents/BCPopoverConfirm";
 
-import type { DiscoveryAdapterConfigurationRs } from "../../../../index.types";
+import type { ConfigurationRs, DiscoveryAdapterConfigurationRs } from "../../../../index.types";
 import DiscoveryAdaptersEditGateway from "../DiscoveryAdaptersEdit";
 
 type Props = DiscoveryAdapterConfigurationRs & {
 	handleDeleteAdapterConfigurations: VoidFunction;
 	handleDiscoverySettingTestConnection: VoidFunction;
+	handleDiscoverySettingQuickDiscovery: (adapter: ConfigurationRs) => void;
 	handleEditAdapterConfigurations: (configs: BCDynamicConfigRq[], callback: VoidFunction) => void;
 	fields: BCDynamicFieldRs[];
 	loading: boolean;
 	testLoading: boolean;
 };
 
-const DiscoveryAdapterCard = ({ id, configs, isActive, loading, ...props }: Props) => {
+const DiscoveryAdapterCard = ({ id, configs, isActive, loading, adapterId, ...props }: Props) => {
 	const [editMode, setEditMode] = useState(false);
 
 	if (editMode) {
 		return (
 			<DiscoveryAdaptersEditGateway
-				{...{ id, configs, isActive, loading, ...props }}
+				{...{ id, configs, isActive, adapterId, loading, ...props }}
 				onCancel={() => setEditMode(false)}
 			/>
 		);
 	}
 
+	const configurationIP = configs?.find(({ key }) => key === "ip")?.value;
 	return (
 		<Card bg="gray.1" w="100%" padding="xs">
 			<LoadingOverlay visible={loading} />
 			<Flex align="center" justify="space-between">
 				<Text fw="bold" fz="sm">
-					{configs?.map(({ value }) => (isObject(value) ? value?.label : "")).join(" - ")}
+					{configs?.map(({ value }) => (isObject(value) ? value?.label : ""))?.join(" - ")}
 				</Text>
 				<Flex gap="2xs">
 					<Badge variant="light" color={isActive ? "green" : "red"} p="sm">
@@ -46,6 +48,20 @@ const DiscoveryAdapterCard = ({ id, configs, isActive, loading, ...props }: Prop
 							{isActive ? "Connected" : "Disconnected"}
 						</Text>
 					</Badge>
+					<ActionIcon
+						onClick={() => {
+							props.handleDiscoverySettingQuickDiscovery({
+								configurationIP: `${isObject(configurationIP) ? configurationIP?.label : ""}`,
+								configurationId: id,
+								adapterId,
+							});
+						}}
+						title="Quick Discover"
+						variant="subtle"
+						c="gray.8"
+					>
+						<IconZoomReset size={20} />
+					</ActionIcon>
 					<ActionIcon
 						loading={props.testLoading}
 						onClick={props.handleDiscoverySettingTestConnection}
@@ -55,14 +71,6 @@ const DiscoveryAdapterCard = ({ id, configs, isActive, loading, ...props }: Prop
 					>
 						<IconPlugConnected size={20} />
 					</ActionIcon>
-					{/* <ActionIcon
-						onClick={() => form.removeListItem("gateways", index)}
-						title="View Results"
-						variant="subtle"
-						c="gray.8"
-					>
-						<IconListDetails size={20} />
-					</ActionIcon> */}
 					<ActionIcon
 						onClick={() => setEditMode((perValue) => !perValue)}
 						title="Edit"

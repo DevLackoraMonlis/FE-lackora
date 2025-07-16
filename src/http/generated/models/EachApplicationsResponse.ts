@@ -5,11 +5,19 @@
  * MonoWatch Security Asset Management
  * OpenAPI spec version: 1.0.0
  */
+import type { ApplicationVendorName } from './ApplicationVendorName';
 import type { EachApplicationsResponseActivationTime } from './EachApplicationsResponseActivationTime';
 import type { EachApplicationsResponseCategory } from './EachApplicationsResponseCategory';
 import type { EachApplicationsResponseExpirationTime } from './EachApplicationsResponseExpirationTime';
+import type { EachApplicationsResponseIcon } from './EachApplicationsResponseIcon';
+import type { EachApplicationsResponseIsActive } from './EachApplicationsResponseIsActive';
+import type { EachApplicationsResponseIsAvailable } from './EachApplicationsResponseIsAvailable';
 import type { EachApplicationsResponseLastView } from './EachApplicationsResponseLastView';
 import type { EachApplicationsResponsePurchaseLink } from './EachApplicationsResponsePurchaseLink';
+import type { EachApplicationsResponseStatus } from './EachApplicationsResponseStatus';
+import type { EachApplicationsResponseSupportLicense } from './EachApplicationsResponseSupportLicense';
+import type { EachApplicationsResponseSupportLicenseExpirationTime } from './EachApplicationsResponseSupportLicenseExpirationTime';
+import type { EachApplicationsResponseType } from './EachApplicationsResponseType';
 import type { EachApplicationsResponseUpdatedTime } from './EachApplicationsResponseUpdatedTime';
 import type { EachApplicationsResponseUpdater } from './EachApplicationsResponseUpdater';
 import type { EachApplicationsResponseViewer } from './EachApplicationsResponseViewer';
@@ -20,17 +28,23 @@ export interface EachApplicationsResponse {
   product_id: string;
   name: string;
   display_name: string;
+  vendor: ApplicationVendorName;
+  icon?: EachApplicationsResponseIcon;
   version: string;
-  type?: string;
   summary?: string;
   description?: string;
-  status: string;
-  is_active: boolean;
+  status?: EachApplicationsResponseStatus;
+  is_active?: EachApplicationsResponseIsActive;
   activation_time?: EachApplicationsResponseActivationTime;
   expiration_time?: EachApplicationsResponseExpirationTime;
   category?: EachApplicationsResponseCategory;
   tags?: string[];
+  support_license?: EachApplicationsResponseSupportLicense;
+  support_license_expiration_time?: EachApplicationsResponseSupportLicenseExpirationTime;
+  type?: EachApplicationsResponseType;
+  is_base: boolean;
   purchase_link?: EachApplicationsResponsePurchaseLink;
+  is_available?: EachApplicationsResponseIsAvailable;
   is_configurable: boolean;
   is_installing: boolean;
   steps: string[];

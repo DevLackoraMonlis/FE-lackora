@@ -1,4 +1,6 @@
 import { Flex, LoadingOverlay } from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
+import { useState } from "react";
 
 import type {
 	BCDynamicConfigRq,
@@ -11,9 +13,11 @@ import {
 	useEditDiscoverySetting,
 	useTestDiscoverySettingConnection,
 } from "../../../../index.hooks";
+import type { ConfigurationRs } from "../../../../index.types";
 
 import DiscoveryAdapterCard from "../DiscoveryAdapterCard";
 import DiscoveryAdaptersCreateGateway from "../DiscoveryAdaptersCreate";
+import { DiscoveryQuickModal } from "../DiscoveryQuick";
 
 type Props = {
 	enabled: boolean;
@@ -22,8 +26,15 @@ type Props = {
 };
 
 const DiscoveryAdapterGateways = ({ enabled, adapterId, fields }: Props) => {
-	const { discoverySettingConfigurations } = useDiscoveryAdapterById(adapterId, enabled);
+	const [openedDiscoveryQuick, handlersDiscoveryQuick] = useDisclosure(false);
+
 	const { testDiscoverySettingConnection, testLoading } = useTestDiscoverySettingConnection();
+	const { discoverySettingConfigurations } = useDiscoveryAdapterById(adapterId, enabled);
+	const [selectedRecord, setSelectedRecord] = useState<ConfigurationRs>();
+	const handleDiscoverySettingQuickDiscovery = (adapter: ConfigurationRs) => {
+		setSelectedRecord(adapter);
+		handlersDiscoveryQuick.open();
+	};
 
 	const { deleteDiscoverySetting } = useDeleteDiscoverySetting();
 	const handleDeleteAdapterConfigurations = (configuration_id: string) => {
@@ -52,21 +63,30 @@ const DiscoveryAdapterGateways = ({ enabled, adapterId, fields }: Props) => {
 
 	return (
 		<>
+			<DiscoveryQuickModal
+				opened={openedDiscoveryQuick}
+				onClose={handlersDiscoveryQuick.close}
+				{...(selectedRecord || {})}
+			/>
+			{/* UI section */}
 			<Flex gap="xs" direction="column" pos="relative" mih="50px">
 				<LoadingOverlay visible={discoverySettingConfigurations?.isFetching} />
-				{discoverySettingConfigurations.data?.results?.map(({ configs, id, isActive, editable }) => (
-					<DiscoveryAdapterCard
-						key={id}
-						testLoading={testLoading}
-						loading={deleteDiscoverySetting.isPending || editDiscoverySetting.isPending}
-						handleDeleteAdapterConfigurations={() => handleDeleteAdapterConfigurations(id)}
-						handleDiscoverySettingTestConnection={() => testDiscoverySettingConnection(adapterId, id)}
-						handleEditAdapterConfigurations={(newConfigs, callback) =>
-							handleEditAdapterConfigurations(id, newConfigs, callback)
-						}
-						{...{ configs, id, isActive, editable, fields }}
-					/>
-				))}
+				{discoverySettingConfigurations.data?.results?.map(
+					({ configs, id, isActive, editable, adapterId }) => (
+						<DiscoveryAdapterCard
+							key={id}
+							testLoading={testLoading}
+							loading={deleteDiscoverySetting.isPending || editDiscoverySetting.isPending}
+							handleDeleteAdapterConfigurations={() => handleDeleteAdapterConfigurations(id)}
+							handleDiscoverySettingTestConnection={() => testDiscoverySettingConnection(adapterId, id)}
+							handleDiscoverySettingQuickDiscovery={handleDiscoverySettingQuickDiscovery}
+							handleEditAdapterConfigurations={(newConfigs, callback) =>
+								handleEditAdapterConfigurations(id, newConfigs, callback)
+							}
+							{...{ configs, id, isActive, editable, adapterId, fields }}
+						/>
+					),
+				)}
 			</Flex>
 			<DiscoveryAdaptersCreateGateway
 				fields={fields}

@@ -14,4 +14,9 @@ export const AdapterValidationStatus = {
   icon_not_found: 'icon_not_found',
   multiple_icon: 'multiple_icon',
   old_version: 'old_version',
+  exists: 'exists',
+  adapter_json_invalid: 'adapter_json_invalid',
+  upgrade: 'upgrade',
+  ready: 'ready',
+  installed: 'installed',
 } as const;

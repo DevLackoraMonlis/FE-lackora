@@ -34,7 +34,7 @@ import type {
   GetApplicationsParams,
   HTTPValidationError,
   PaginatedBaseResponseEachApplicationHistoryResponseWrapperNoneType,
-  PaginatedBaseResponseEachApplicationsResponseEachApplicationMetadataWrapper
+  PaginatedBaseResponseEachApplicationsResponseEachListMetadataWrapper
 } from './models';
 
 import { orvalMutator } from '../orval-mutator';
@@ -52,7 +52,7 @@ export const getApplications = (
 ) => {
       
       
-      return orvalMutator<PaginatedBaseResponseEachApplicationsResponseEachApplicationMetadataWrapper>(
+      return orvalMutator<PaginatedBaseResponseEachApplicationsResponseEachListMetadataWrapper>(
       {url: "/api/application-management/", method: 'GET',
         params, signal
     },

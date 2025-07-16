@@ -1,17 +1,17 @@
-import type { LabelValueType } from "@/shared/lib/general-types";
+import type { LabelValueFilter } from "@/shared/lib/general-types";
 import { Badge, Card, Checkbox, Divider, Flex, ScrollArea, Switch, Text, TextInput } from "@mantine/core";
 import { DatePickerInput, DateTimePicker } from "@mantine/dates";
 import { useForm } from "@mantine/form";
 import { IconSearch, IconX } from "@tabler/icons-react";
 import { Fragment, type ReactNode } from "react";
-import { useRenderLabel } from "./index.hooks";
 
 type FilterType = "Text" | "Date" | "DateTime" | "Switch" | "CheckedList";
 
-export type RenderLabel = (params: BCSideFilterItemOption, filterItem: BCSideFilterItem) => React.ReactNode;
-type BCSideFilterItemOption = LabelValueType & {
+export type BCSideFilterItemOption = LabelValueFilter & {
 	renderLabel?: RenderLabel;
 };
+
+export type RenderLabel = (params: BCSideFilterItemOption, filterItem: BCSideFilterItem) => React.ReactNode;
 
 export type BCSideFilterItem = {
 	type: FilterType;
@@ -35,7 +35,6 @@ type Props = {
 };
 
 export default function BCSideFilter(props: Props) {
-	const { renderLabel: defaultRenderLabel } = useRenderLabel();
 	const form = useForm<FormValues>({
 		initialValues: {
 			search: "",
@@ -112,13 +111,9 @@ export default function BCSideFilter(props: Props) {
 						<Flex direction="column" gap="xs" py="xs">
 							{filterItem.items?.map((item) => (
 								<Checkbox
-									key={item.value}
-									value={item.value}
-									label={
-										item.renderLabel
-											? item.renderLabel(item, filterItem)
-											: defaultRenderLabel(item, filterItem)
-									}
+									key={`${item.value}`}
+									value={`${item.value}`}
+									label={item.renderLabel ? item.renderLabel(item, filterItem) : item.label}
 								/>
 							))}
 						</Flex>
