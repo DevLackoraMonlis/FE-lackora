@@ -1,9 +1,9 @@
 import { MonoAppProductTypeEnum } from "@/shared/components/infraComponents/ICMonoMarket/components/ICMonoMarket/index.enum";
 
 export const MonoAppProductTypeShortName: Record<MonoAppProductTypeEnum, string> = {
-	[MonoAppProductTypeEnum.ENTERPRISE]: "ENT",
-	[MonoAppProductTypeEnum.PROFESSIONAL]: "PRO",
-	[MonoAppProductTypeEnum.STANDARD]: "STD",
+	[MonoAppProductTypeEnum.ENTERPRISE]: "ES",
+	[MonoAppProductTypeEnum.PROFESSIONAL]: "PS",
+	[MonoAppProductTypeEnum.STANDARD]: "SS",
 };
 
 export const MonoAppProductColor: Record<MonoAppProductTypeEnum, string> = {

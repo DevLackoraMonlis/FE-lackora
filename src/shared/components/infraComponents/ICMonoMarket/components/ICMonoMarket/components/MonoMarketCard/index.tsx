@@ -1,65 +1,14 @@
 import {
 	getMonoAppIcon,
+	getMonoMarketActivateConfigButton,
+	getMonoMarketAppMonoCareLicenseButton,
 	getMonoMarketAppProductionButton,
 } from "@/shared/components/infraComponents/ICMonoMarket/components/ICMonoMarket/index.helper";
 import type { MonoMarketCardProps } from "@/shared/components/infraComponents/ICMonoMarket/components/ICMonoMarket/index.types";
 import { Badge, Box, Button, Card, Flex, Text, Tooltip } from "@mantine/core";
-import { IconArrowNarrowRight, IconAward, IconInfoCircle, IconLock } from "@tabler/icons-react";
+import { IconInfoCircle } from "@tabler/icons-react";
 
 export default function MonoMarketCard(props: MonoMarketCardProps) {
-	const generateBottomButton = () => {
-		if (props.status === "EXPIRED" && props.productType === "STANDARD") {
-			return (
-				<Button size={"xs"} color={"red"}>
-					Renew license
-				</Button>
-			);
-		}
-
-		if (props.status === "INACTIVE" && props.productType !== "STANDARD") {
-			return (
-				<Tooltip label={"Upgrade your license to activate this app"}>
-					<Button disabled size={"xs"} rightSection={<IconLock color={"black"} size={16} />}>
-						Unavailable
-					</Button>
-				</Tooltip>
-			);
-		}
-
-		if (props.status === "ACTIVATED" && props.productType !== "STANDARD") {
-			if (props.isConfigured) {
-				return (
-					<Button variant={"outline"} size={"xs"}>
-						Open
-					</Button>
-				);
-			}
-			return (
-				<Button
-					onClick={props.hasConfig ? props.onActiveWithConfig : props.onActiveOnly}
-					size={"xs"}
-					rightSection={<IconArrowNarrowRight />}
-				>
-					{props.hasConfig ? "Configure & Active" : "Active App"}
-				</Button>
-			);
-		}
-
-		if (props.status === "ACTIVATED") {
-			return (
-				<Button variant={"outline"} size={"xs"}>
-					Open
-				</Button>
-			);
-		}
-
-		return (
-			<Button size={"xs"} color={"red"}>
-				Renew license
-			</Button>
-		);
-	};
-
 	const getSupportLicenseTooltipLabel = () => {
 		if (props.status === "ACTIVATED") {
 			return (
@@ -112,14 +61,7 @@ export default function MonoMarketCard(props: MonoMarketCardProps) {
 									</Flex>
 								}
 							>
-								<Button
-									c={"#15AABF"}
-									variant={"light"}
-									leftSection={<IconAward size={14} color={"#15AABF"} />}
-									size={"compact-xs"}
-								>
-									SUP
-								</Button>
+								{getMonoMarketAppMonoCareLicenseButton({ size: "small" })}
 							</Tooltip>
 						</Flex>
 					)}
@@ -136,6 +78,7 @@ export default function MonoMarketCard(props: MonoMarketCardProps) {
 						{props.description}
 					</Text>
 					<Button
+						onClick={props.onShowMore}
 						td={"underline"}
 						h={14}
 						classNames={{
@@ -178,7 +121,14 @@ export default function MonoMarketCard(props: MonoMarketCardProps) {
 							</Tooltip>
 						)}
 					</Flex>
-					{generateBottomButton()}
+					{getMonoMarketActivateConfigButton({
+						hasConfig: props.hasConfig,
+						isConfigured: props.isConfigured,
+						onActiveOnly: props.onActiveOnly,
+						onActiveWithConfig: props.onActiveWithConfig,
+						productType: props.productType,
+						status: props.status,
+					})}
 				</Flex>
 			</Card.Section>
 		</Card>

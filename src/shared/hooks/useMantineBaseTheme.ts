@@ -22,6 +22,11 @@ export default function useMantineBaseTheme() {
 					highlightStyles: { background: "transparent", fontWeight: "bold" },
 				},
 			},
+			Text: {
+				defaultProps: {
+					fz: "sm",
+				},
+			},
 		},
 		fontFamily: "var(--manrope) !important",
 		white: "#FAFAFA",
@@ -39,6 +44,7 @@ export default function useMantineBaseTheme() {
 			"3xl": "60px",
 		},
 		fontSizes: {
+			"2xs": "10px",
 			...DEFAULT_THEME.fontSizes,
 			"2xl": "26px",
 			"3xl": "32px",

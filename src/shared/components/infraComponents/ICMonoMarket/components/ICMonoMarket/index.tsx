@@ -4,6 +4,7 @@ import type { EachConnectionFilterItems } from "@/http/generated/models";
 import BCSideFilter, { type BCSideFilterItem } from "@/shared/components/baseComponents/BCSideFilter";
 import MonoMarketActivationNonConfigAppModal from "@/shared/components/infraComponents/ICMonoMarket/components/ICMonoMarket/components/MonoMarketActivationNonConfigAppModal";
 import MonoMarketActivationWithConfigAppModal from "@/shared/components/infraComponents/ICMonoMarket/components/ICMonoMarket/components/MonoMarketActivationWithConfigAppModal";
+import MonoMarketAppDetailsModal from "@/shared/components/infraComponents/ICMonoMarket/components/ICMonoMarket/components/MonoMarketAppDetailsModal";
 import MonoMarketCard from "@/shared/components/infraComponents/ICMonoMarket/components/ICMonoMarket/components/MonoMarketCard";
 import {
 	MonoAppProductTypeEnum,
@@ -15,14 +16,15 @@ import { Flex, Grid, Pagination, ScrollArea } from "@mantine/core";
 import { useDisclosure, useViewportSize } from "@mantine/hooks";
 import { useState } from "react";
 
+type SelectAppType = Omit<MonoMarketCardProps, "onActiveOnly" | "onActiveWithConfig" | "onShowMore">;
+
 export default function ICMonoMarket() {
 	const { height } = useViewportSize();
 	const [_filters, setFilters] = useState<Record<string, unknown>>();
 	const [openedActiveOnlyModal, activeOnlyHandlers] = useDisclosure(false);
 	const [openedActiveWithConfigModal, activeWithConfigHandlers] = useDisclosure(false);
-	const [selectedApp, setSelectedApp] = useState<
-		Omit<MonoMarketCardProps, "onActiveOnly" | "onActiveWithConfig"> | undefined
-	>(undefined);
+	const [openedAppDetailsModal, appDetailsModalHandlers] = useDisclosure(false);
+	const [selectedApp, setSelectedApp] = useState<SelectAppType | undefined>(undefined);
 
 	const stableFilters = useStableData<EachConnectionFilterItems[]>([]);
 	const dynamicFilters =
@@ -36,7 +38,7 @@ export default function ICMonoMarket() {
 				}) satisfies BCSideFilterItem,
 		) || [];
 
-	const apps: Omit<MonoMarketCardProps, "onActiveOnly" | "onActiveWithConfig">[] = [
+	const apps: SelectAppType[] = [
 		{
 			isConfigured: false,
 			description: "provides secure, encrypted remote access to Cisco",
@@ -49,6 +51,9 @@ export default function ICMonoMarket() {
 			productType: MonoAppProductTypeEnum.PROFESSIONAL,
 			supportLicenseExpireDate: "2026-10-10",
 			version: "1.0.0",
+			businessValue: ["tst", "stats"],
+			configurationRequired: ["tst", "stats"],
+			keyCapabilities: ["tst", "stats"],
 		},
 		{
 			isConfigured: false,
@@ -62,6 +67,9 @@ export default function ICMonoMarket() {
 			productType: MonoAppProductTypeEnum.PROFESSIONAL,
 			supportLicenseExpireDate: "2026-10-10",
 			version: "1.0.0",
+			businessValue: ["tst", "stats"],
+			configurationRequired: ["tst", "stats"],
+			keyCapabilities: ["tst", "stats"],
 		},
 		{
 			isConfigured: false,
@@ -75,6 +83,9 @@ export default function ICMonoMarket() {
 			productType: MonoAppProductTypeEnum.STANDARD,
 			supportLicenseExpireDate: "2026-10-10",
 			version: "1.1.1",
+			businessValue: ["tst", "stats"],
+			configurationRequired: ["tst", "stats"],
+			keyCapabilities: ["tst", "stats"],
 		},
 		{
 			isConfigured: false,
@@ -88,6 +99,9 @@ export default function ICMonoMarket() {
 			productType: MonoAppProductTypeEnum.PROFESSIONAL,
 			supportLicenseExpireDate: "2024-10-10",
 			version: "1.1.1",
+			businessValue: ["tst", "stats"],
+			configurationRequired: ["tst", "stats"],
+			keyCapabilities: ["tst", "stats"],
 		},
 		{
 			isConfigured: false,
@@ -101,6 +115,9 @@ export default function ICMonoMarket() {
 			productType: MonoAppProductTypeEnum.PROFESSIONAL,
 			supportLicenseExpireDate: "2024-10-10",
 			version: "1.1.1",
+			businessValue: ["tst", "stats"],
+			configurationRequired: ["tst", "stats"],
+			keyCapabilities: ["tst", "stats"],
 		},
 		{
 			isConfigured: true,
@@ -114,11 +131,41 @@ export default function ICMonoMarket() {
 			productType: MonoAppProductTypeEnum.ENTERPRISE,
 			supportLicenseExpireDate: "2024-10-10",
 			version: "1.1.1",
+			businessValue: ["tst", "stats"],
+			configurationRequired: ["tst", "stats"],
+			keyCapabilities: ["tst", "stats"],
 		},
 	];
 
+	const onActiveOnly = (app: SelectAppType) => {
+		setSelectedApp(app);
+		activeOnlyHandlers.open();
+	};
+	const onActiveWithConfig = (app: SelectAppType) => {
+		setSelectedApp(app);
+		activeWithConfigHandlers.open();
+	};
+
+	const onShowMore = (app: SelectAppType) => {
+		setSelectedApp(app);
+		appDetailsModalHandlers.open();
+	};
+
 	return (
 		<Grid p="sm" pt="lg" gutter="lg" pos={"relative"}>
+			{selectedApp && (
+				<MonoMarketAppDetailsModal
+					{...(selectedApp && { appData: selectedApp })}
+					onActiveOnly={() => onActiveOnly(selectedApp)}
+					onActiveWithConfig={() => onActiveWithConfig(selectedApp)}
+					opened={openedAppDetailsModal}
+					onClose={() => {
+						appDetailsModalHandlers.close();
+						setSelectedApp(undefined);
+					}}
+				/>
+			)}
+
 			<MonoMarketActivationNonConfigAppModal
 				opened={openedActiveOnlyModal}
 				onClose={() => {
@@ -138,7 +185,7 @@ export default function ICMonoMarket() {
 					setSelectedApp(undefined);
 					activeWithConfigHandlers.close();
 				}}
-				appName={selectedApp?.name || ""}
+				name={selectedApp?.name || ""}
 				owner={selectedApp?.owner || ""}
 				loading={false}
 				onSaveAndActivate={() => {
@@ -163,14 +210,9 @@ export default function ICMonoMarket() {
 							<Grid.Col key={app.name} span={{ lg: 4, "2xl": 3 }}>
 								<MonoMarketCard
 									{...app}
-									onActiveOnly={() => {
-										setSelectedApp(app);
-										activeOnlyHandlers.open();
-									}}
-									onActiveWithConfig={() => {
-										setSelectedApp(app);
-										activeWithConfigHandlers.open();
-									}}
+									onActiveOnly={() => onActiveOnly(app)}
+									onActiveWithConfig={() => onActiveWithConfig(app)}
+									onShowMore={() => onShowMore(app)}
 								/>
 							</Grid.Col>
 						))}
