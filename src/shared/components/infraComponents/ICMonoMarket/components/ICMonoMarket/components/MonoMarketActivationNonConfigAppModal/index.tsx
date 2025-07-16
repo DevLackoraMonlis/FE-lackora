@@ -1,10 +1,9 @@
 import BCModal from "@/shared/components/baseComponents/BCModal";
+import type { ModalDefaultProps } from "@/shared/types/index.types";
 import { Badge, Box, Button, Flex, Text } from "@mantine/core";
 import { IconDiscountCheck } from "@tabler/icons-react";
 
-type Props = {
-	opened: boolean;
-	onClose: VoidFunction;
+type Props = ModalDefaultProps & {
 	appName: string;
 	loading: boolean;
 	onActivate: VoidFunction;
