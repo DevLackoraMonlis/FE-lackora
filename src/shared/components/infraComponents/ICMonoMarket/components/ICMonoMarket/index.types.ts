@@ -17,4 +17,8 @@ export type MonoMarketCardProps = {
 	status: MonoAppStatusTypeEnum;
 	onActiveOnly: VoidFunction;
 	onActiveWithConfig: VoidFunction;
+	onShowMore: VoidFunction;
+	keyCapabilities: string[];
+	businessValue: string[];
+	configurationRequired: string[];
 };

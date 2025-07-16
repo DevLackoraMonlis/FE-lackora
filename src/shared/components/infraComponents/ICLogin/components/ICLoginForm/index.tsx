@@ -70,8 +70,7 @@ export default function ICLoginForm() {
 
 	return (
 		<Flex w={"100%"} h={"100%"} justify={"center"} align={"center"}>
-			<Card h={700} w={"100%"} p={"2xl"} radius={"lg"}>
-				{/* <AppLogoDark width={161} height={37} /> */}
+			<Card h={error ? 700 : 600} w={"100%"} p={"2xl"} radius={"lg"}>
 				<Flex direction={"column"} h={"100%"} justify={"center"} align={"flex-start"} gap={"xs"}>
 					{error !== "locked" ? (
 						<>
@@ -97,7 +96,13 @@ export default function ICLoginForm() {
 										label={"Password"}
 									/>
 									<Checkbox label={"Remember me"} />
-									<Button color={"main"} disabled={!form.isValid()} type={"submit"} loading={isLoading}>
+									<Button
+										size={"lg"}
+										color={"main"}
+										disabled={!form.isValid()}
+										type={"submit"}
+										loading={isLoading}
+									>
 										Sign in
 									</Button>
 									{error === "credentials" && (

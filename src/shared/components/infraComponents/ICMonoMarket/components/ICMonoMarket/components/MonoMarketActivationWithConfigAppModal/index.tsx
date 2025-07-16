@@ -1,6 +1,7 @@
 import type { AssetIdentificationAppConfigProps } from "@/builtinApps/AssetIdentificationApp/AssetIdentificationAppConfig";
 import BCModal from "@/shared/components/baseComponents/BCModal";
 import { getMonoAppIcon } from "@/shared/components/infraComponents/ICMonoMarket/components/ICMonoMarket/index.helper";
+import type { MonoMarketCardProps } from "@/shared/components/infraComponents/ICMonoMarket/components/ICMonoMarket/index.types";
 import ICMonoMarketContext from "@/shared/components/infraComponents/ICMonoMarket/components/ICMonoMarketProvider/ICMonoMarketContext";
 import { Box, Button, Flex, Text } from "@mantine/core";
 import { type FC, useContext } from "react";
@@ -8,19 +9,16 @@ import { type FC, useContext } from "react";
 type Props = {
 	opened: boolean;
 	onClose: VoidFunction;
-	appName: string;
 	loading: boolean;
 	onSaveAndActivate: VoidFunction;
-	owner: string;
-	version: string;
-};
+} & Pick<MonoMarketCardProps, "owner" | "version" | "name">;
 
 export default function MonoMarketActivationWithConfigAppModal(props: Props) {
 	const { apps } = useContext(ICMonoMarketContext);
 
 	let AppConfig: FC<AssetIdentificationAppConfigProps> | null = null;
 
-	const app = apps.find((app) => app.name === props.appName);
+	const app = apps.find((app) => app.name === props.name);
 
 	if (app?.config) {
 		AppConfig = app.config as FC<AssetIdentificationAppConfigProps>;
