@@ -1,12 +1,16 @@
-import { ActionIcon, Flex, Input, type InputProps } from "@mantine/core";
+import { ActionIcon, Flex, type MantineSize, TextInput } from "@mantine/core";
 import { getHotkeyHandler } from "@mantine/hooks";
-import { IconSearch } from "@tabler/icons-react";
+import { IconSearch, IconX } from "@tabler/icons-react";
 import { useState } from "react";
 
-type Props = InputProps & {
+type Props = {
 	onSubmitSearch: (value: string) => void;
+	placeholder?: string;
+	inputSize?: MantineSize;
+	iconSize?: MantineSize;
 };
-export default function BCSearchInput({ onSubmitSearch, ...props }: Props) {
+
+export default function BCSearchInput({ onSubmitSearch, placeholder, inputSize, iconSize }: Props) {
 	const [value, setValue] = useState("");
 
 	const handleSubmit = () => {
@@ -16,19 +20,20 @@ export default function BCSearchInput({ onSubmitSearch, ...props }: Props) {
 
 	return (
 		<Flex gap="xs" align="center">
-			<Input
+			<TextInput
 				value={value}
+				placeholder={placeholder}
+				size={inputSize}
 				onChange={(event) => setValue(event.currentTarget.value)}
 				miw="250px"
 				leftSectionPointerEvents="none"
 				leftSection={<IconSearch size={15} />}
-				{...props}
 				onKeyDown={getHotkeyHandler([["Enter", handleSubmit]])}
 				rightSectionPointerEvents="auto"
-				rightSection={value ? <Input.ClearButton size="sm" onClick={() => setValue("")} /> : undefined}
+				rightSection={value ? <IconX size={15} onClick={() => setValue("")} /> : undefined}
 			/>
-			<ActionIcon size={props.size} onClick={handleSubmit}>
-				<IconSearch size={15} />
+			<ActionIcon size={iconSize || "input-sm"} onClick={handleSubmit}>
+				<IconSearch size={20} />
 			</ActionIcon>
 		</Flex>
 	);

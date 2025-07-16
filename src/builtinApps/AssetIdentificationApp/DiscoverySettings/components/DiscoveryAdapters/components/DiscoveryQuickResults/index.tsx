@@ -1,4 +1,5 @@
 import { Badge, Flex, Text } from "@mantine/core";
+import { useViewportSize } from "@mantine/hooks";
 import { IconCheck, IconX } from "@tabler/icons-react";
 import { useState } from "react";
 
@@ -14,6 +15,7 @@ type Props = Partial<ConfigurationRs> & {
 };
 
 export function DiscoveryQuickResults(props: Props) {
+	const { height } = useViewportSize();
 	const { discoverySettingRunNow } = useDiscoverySettingQuickDiscovery(
 		props.enabledQuery,
 		props.adapterId || "",
@@ -57,14 +59,13 @@ export function DiscoveryQuickResults(props: Props) {
 				</Text>
 			</Flex>
 			<Flex gap="sm" align="center" p="sm" bg="gray.1">
-				<BCSearchInput onSubmitSearch={() => {}} />
+				<BCSearchInput onSubmitSearch={() => {}} placeholder="Search by IP or MAC address" />
 			</Flex>
 			<BCTanStackGrid
-				h={350}
+				h={height - 390}
 				withTableBorder
 				withColumnBorders
 				idAccessor="key"
-				pinLastColumn
 				columns={columns}
 				page={page}
 				onPageChange={setPage}
