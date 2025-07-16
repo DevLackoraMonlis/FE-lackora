@@ -5,6 +5,7 @@ import { useState } from "react";
 
 import BCSideFilter, { type BCSideFilterItem } from "@/shared/components/baseComponents/BCSideFilter";
 import { useVendorIcons } from "@/shared/hooks/icons/useVendorIcons";
+import { useRenderFilterLabels } from "@/shared/hooks/useRenderFilterLabels";
 import { useStableData } from "@/shared/hooks/useStableData";
 
 import { useDiscoveryAdapters } from "../../index.hooks";
@@ -14,7 +15,7 @@ import DiscoveryAdapterGateways from "./components/DiscoveryAdapterGateways";
 export default function DiscoverySettingsDiscoveryAdapters() {
 	const { height } = useViewportSize();
 	const { getVendorIcon } = useVendorIcons();
-
+	const { renderLabel } = useRenderFilterLabels();
 	const [activeAccordion, setActiveAccordion] = useState<string | null>(null);
 	const [queryParams, setQueryParams] = useState<DiscoveryAdapterFilters>({ type: "discovery" });
 	const { discoveryAdapters } = useDiscoveryAdapters(queryParams);
@@ -28,7 +29,7 @@ export default function DiscoverySettingsDiscoveryAdapters() {
 	const dynamicFilters = stableFilters?.map(
 		(filter) =>
 			({
-				items: filter.items,
+				items: filter.items.map((item) => ({ ...item, renderLabel })),
 				label: filter.label,
 				name: filter.param,
 				type: "CheckedList",

@@ -57,17 +57,19 @@ const NoneCredentialServices = ({ enabled, adapterId, fields, refetchDiscoveryAd
 		<>
 			<Flex gap="xs" direction="column" pos="relative" mih="50px">
 				<LoadingOverlay visible={discoverySettingConfigurations?.isLoading} />
-				{discoverySettingConfigurations.data?.results?.map(({ configs, id, isActive, editable }, idx) => (
-					<NoneCredentialAdaptersCard
-						key={id}
-						loading={deleteDiscoverySetting.isPending || editDiscoverySetting.isPending}
-						handleDeleteAdapterConfigurations={() => handleDeleteAdapterConfigurations(id)}
-						handleEditAdapterConfigurations={(newConfigs, callback) =>
-							handleEditAdapterConfigurations(id, newConfigs, callback)
-						}
-						{...{ configs, id, isActive, fields, showLabel: !idx, editable }}
-					/>
-				))}
+				{discoverySettingConfigurations.data?.results?.map(
+					({ configs, id, isActive, editable, adapterId }, idx) => (
+						<NoneCredentialAdaptersCard
+							key={id}
+							loading={deleteDiscoverySetting.isPending || editDiscoverySetting.isPending}
+							handleDeleteAdapterConfigurations={() => handleDeleteAdapterConfigurations(id)}
+							handleEditAdapterConfigurations={(newConfigs, callback) =>
+								handleEditAdapterConfigurations(id, newConfigs, callback)
+							}
+							{...{ configs, id, isActive, fields, showLabel: !idx, editable, adapterId }}
+						/>
+					),
+				)}
 			</Flex>
 			<NoneCredentialCreate
 				fields={fields}

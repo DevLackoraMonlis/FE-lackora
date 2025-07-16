@@ -5,10 +5,24 @@
  * MonoWatch Security Asset Management
  * OpenAPI spec version: 1.0.0
  */
+import type { ApplicationHistoryStatus } from './ApplicationHistoryStatus';
+import type { ApplicationLicenseType } from './ApplicationLicenseType';
+import type { ApplicationVendorName } from './ApplicationVendorName';
 
 export type GetApplicationsParams = {
-commercial?: boolean | null;
-type?: string | null;
+/**
+ * MultiParam to filter based on application status
+ */
+status?: ApplicationHistoryStatus[] | null;
+/**
+ * MultiParam to filter based on application's license type
+ */
+type?: ApplicationLicenseType[] | null;
+/**
+ * MultiParam to filter based on application vendor
+ */
+vendor?: ApplicationVendorName[] | null;
+support_license?: boolean | null;
 /**
  * @minimum 1
  */
