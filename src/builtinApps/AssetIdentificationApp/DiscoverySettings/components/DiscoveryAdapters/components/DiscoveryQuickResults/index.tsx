@@ -2,6 +2,7 @@ import { Badge, Flex, Text } from "@mantine/core";
 import { IconCheck, IconX } from "@tabler/icons-react";
 import { useState } from "react";
 
+import BCSearchInput from "@/shared/components/baseComponents/BCSearchInput";
 import BCTanStackGrid from "@/shared/components/baseComponents/BCTanStackGrid";
 import type { TanStackGridProps } from "@/shared/components/baseComponents/BCTanStackGrid/index.types";
 
@@ -30,7 +31,7 @@ export function DiscoveryQuickResults(props: Props) {
 			accessor: "ipAddress",
 			title: "IP Address",
 			render: ({ ipAddress }) => (
-				<Text c="blue" fz="sm" className="cursor-pointer">
+				<Text c="blue" className="cursor-pointer">
 					{ipAddress}
 				</Text>
 			),
@@ -56,15 +57,10 @@ export function DiscoveryQuickResults(props: Props) {
 				</Text>
 			</Flex>
 			<Flex gap="sm" align="center" p="sm" bg="gray.1">
-				<Badge color={status ? "green" : "red"} circle size="30px">
-					{status ? <IconCheck color="white" /> : <IconX color="white" />}
-				</Badge>
-				<Text fz="lg" fw="bold" tt="capitalize">
-					{status ? `${total} IPs discovered From ${props.configurationIP}` : `${message}`}
-				</Text>
+				<BCSearchInput onSubmitSearch={() => {}} />
 			</Flex>
 			<BCTanStackGrid
-				h={400}
+				h={350}
 				withTableBorder
 				withColumnBorders
 				idAccessor="key"
