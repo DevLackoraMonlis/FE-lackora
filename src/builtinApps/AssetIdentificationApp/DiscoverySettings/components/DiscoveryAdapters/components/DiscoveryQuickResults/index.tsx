@@ -1,4 +1,4 @@
-import { ActionIcon, Badge, Flex, Highlight, Text } from "@mantine/core";
+import { Badge, Flex, Highlight, Text } from "@mantine/core";
 import { useViewportSize } from "@mantine/hooks";
 import { IconCheck, IconX } from "@tabler/icons-react";
 import { sortBy } from "lodash";
@@ -28,7 +28,7 @@ export function DiscoveryQuickResults(props: Props) {
 	const status = discoverySettingRunNow?.data?.status;
 
 	const [{ search = "", ...queryParams }, setQueryParams] = useState<PaginationRq>({ limit: 25, page: 1 });
-	const { handleSortOnTable, sortIcons, sortStatus } = useTableSort<(typeof results)[number]>({
+	const { generateSortIcons, sortStatus } = useTableSort<(typeof results)[number]>({
 		columnAccessor: "discoveryTime",
 		direction: "des",
 	});
@@ -43,9 +43,7 @@ export function DiscoveryQuickResults(props: Props) {
 			title: (
 				<Flex justify="space-between" align="center">
 					<Text>IP Address</Text>
-					<ActionIcon variant="transparent" c="dimmed" onClick={() => handleSortOnTable("ipAddress")}>
-						{sortIcons("ipAddress")}
-					</ActionIcon>
+					{generateSortIcons("ipAddress")}
 				</Flex>
 			),
 			render: ({ ipAddress }) => (
@@ -59,9 +57,7 @@ export function DiscoveryQuickResults(props: Props) {
 			title: (
 				<Flex justify="space-between" align="center">
 					<Text>MAC Address</Text>
-					<ActionIcon variant="transparent" c="dimmed" onClick={() => handleSortOnTable("macAddress")}>
-						{sortIcons("macAddress")}
-					</ActionIcon>
+					{generateSortIcons("macAddress")}
 				</Flex>
 			),
 			render: ({ macAddress }) => (
@@ -75,9 +71,7 @@ export function DiscoveryQuickResults(props: Props) {
 			title: (
 				<Flex justify="space-between" align="center">
 					<Text>Time of Discovery</Text>
-					<ActionIcon variant="transparent" c="dimmed" onClick={() => handleSortOnTable("discoveryTime")}>
-						{sortIcons("discoveryTime")}
-					</ActionIcon>
+					{generateSortIcons("discoveryTime")}
 				</Flex>
 			),
 			render: ({ discoveryTime }) => (

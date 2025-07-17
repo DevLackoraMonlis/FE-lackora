@@ -1,3 +1,4 @@
+import { ActionIcon } from "@mantine/core";
 import { IconArrowsSort, IconSortAscending, IconSortDescending } from "@tabler/icons-react";
 import { useState } from "react";
 
@@ -12,7 +13,7 @@ export function useTableSort<TableDatasource extends Record<string, unknown>>(
 	const [sortStatus, setSortStatus] = useState<SortState<TableDatasource>>(
 		defaultSortState || {
 			columnAccessor: "",
-			direction: "des",
+			direction: "",
 		},
 	);
 
@@ -34,13 +35,19 @@ export function useTableSort<TableDatasource extends Record<string, unknown>>(
 		});
 	};
 
-	const sortIcons = (accessor: SortState<TableDatasource>["columnAccessor"]) => {
+	const generateSortIcons = (accessor: SortState<TableDatasource>["columnAccessor"]) => {
+		let Icon = <IconArrowsSort size={15} />;
 		if (accessor === sortStatus.columnAccessor) {
-			if (sortStatus.direction === "asc") return <IconSortAscending size={15} />;
-			if (sortStatus.direction === "des") return <IconSortDescending size={15} />;
+			if (sortStatus.direction === "asc") Icon = <IconSortAscending size={15} />;
+			if (sortStatus.direction === "des") Icon = <IconSortDescending size={15} />;
 		}
-		return <IconArrowsSort size={15} />;
+
+		return (
+			<ActionIcon variant="transparent" c="dimmed" onClick={() => handleSortOnTable(accessor)}>
+				{Icon}
+			</ActionIcon>
+		);
 	};
 
-	return { sortStatus, handleSortOnTable, sortIcons };
+	return { sortStatus, generateSortIcons };
 }
