@@ -1,5 +1,7 @@
+import { Badge } from "@mantine/core";
 import { useToggle } from "@mantine/hooks";
 import { notifications } from "@mantine/notifications";
+import { IconCheck } from "@tabler/icons-react";
 import { filter, groupBy, isObject } from "lodash";
 
 import {
@@ -99,7 +101,24 @@ export function useDiscoveryAdapterById(adapterId: string, enabled: boolean) {
 }
 
 export function useDeleteDiscoverySetting() {
-	const deleteDiscoverySetting = useDeleteDiscoverySettingConfiguration();
+	const deleteDiscoverySetting = useDeleteDiscoverySettingConfiguration({
+		mutation: {
+			onSuccess() {
+				notifications.show({
+					title: "Gateway deleted successfully",
+					message:
+						"Some assets associated with the deleted gateway may become Unreachable or Unmanageable in future discovery scans.",
+					color: "green",
+					withBorder: true,
+					icon: (
+						<Badge variant="light" circle c="white" bg="green" size="30px">
+							<IconCheck />
+						</Badge>
+					),
+				});
+			},
+		},
+	});
 	return { deleteDiscoverySetting };
 }
 

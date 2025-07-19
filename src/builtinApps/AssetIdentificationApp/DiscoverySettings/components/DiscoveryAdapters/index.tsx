@@ -66,9 +66,16 @@ export default function DiscoverySettingsDiscoveryAdapters() {
 												{getVendorIcon(item.vendor, { size: 30 })}
 											</Card>
 											<Flex direction="column" gap="2xs">
-												<Text fw="bold">{item.display_name}</Text>
+												<Text fw="bold">
+													{item.display_name}
+													{item.version && (
+														<Text component="span" px="2xs" fz="xs" fw="bold">
+															v.{item.version}
+														</Text>
+													)}
+												</Text>
 												<Text fz="sm" c="gray.6">
-													{item.description || "-"}
+													{item.caption || "-"}
 												</Text>
 											</Flex>
 										</Flex>
@@ -92,6 +99,7 @@ export default function DiscoverySettingsDiscoveryAdapters() {
 										enabled={activeAccordion === item.id}
 										adapterId={item.id}
 										fields={item.fields}
+										refetchDiscoveryAdapters={discoveryAdapters.refetch}
 									/>
 								</Accordion.Panel>
 							</Accordion.Item>

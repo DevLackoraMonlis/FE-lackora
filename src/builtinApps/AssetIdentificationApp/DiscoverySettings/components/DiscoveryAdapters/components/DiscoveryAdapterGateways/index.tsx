@@ -8,13 +8,13 @@ import type {
 } from "@/shared/components/baseComponents/BCDynamicField/index.types";
 
 import {
-	useDeleteDiscoverySetting,
 	useDiscoveryAdapterById,
 	useEditDiscoverySetting,
 	useTestDiscoverySettingConnection,
 } from "../../../../index.hooks";
 import type { ConfigurationRs } from "../../../../index.types";
 
+import { DeleteDiscoveryAdapterModal } from "../DeleteDiscoveryAdapter";
 import DiscoveryAdapterCard from "../DiscoveryAdapterCard";
 import DiscoveryAdaptersCreateGateway from "../DiscoveryAdaptersCreate";
 import { DiscoveryIPsDrawerModal } from "../DiscoveryIPs";
@@ -24,15 +24,17 @@ type Props = {
 	enabled: boolean;
 	adapterId: string;
 	fields: BCDynamicFieldRs[];
+	refetchDiscoveryAdapters: VoidFunction;
 };
 
-const DiscoveryAdapterGateways = ({ enabled, adapterId, fields }: Props) => {
+const DiscoveryAdapterGateways = ({ enabled, adapterId, fields, refetchDiscoveryAdapters }: Props) => {
 	const [selectedId, setSelectedId] = useState("");
-	const [openedDiscoveryQuick, handlersDiscoveryQuick] = useDisclosure(false);
+	const [selectedRecord, setSelectedRecord] = useState<ConfigurationRs>();
 	const [openedDiscoveryIPs, handlersDiscoveryIPs] = useDisclosure(false);
+	const [openedDiscoveryQuick, handlersDiscoveryQuick] = useDisclosure(false);
+	const [openedDelete, handlersDelete] = useDisclosure(false);
 
 	const { discoverySettingConfigurations } = useDiscoveryAdapterById(adapterId, enabled);
-	const [selectedRecord, setSelectedRecord] = useState<ConfigurationRs>();
 	const handleDiscoverySettingQuickDiscovery = (adapter: ConfigurationRs) => {
 		setSelectedId(adapter.configurationId);
 		setSelectedRecord(adapter);
@@ -50,13 +52,10 @@ const DiscoveryAdapterGateways = ({ enabled, adapterId, fields }: Props) => {
 		testDiscoverySettingConnection(adapterId, configuration_id);
 	};
 
-	const { deleteDiscoverySetting } = useDeleteDiscoverySetting();
-	const handleDeleteAdapterConfigurations = (configuration_id: string) => {
-		setSelectedId(configuration_id);
-		deleteDiscoverySetting.mutate(
-			{ adapterId, data: { configuration_id } },
-			{ onSuccess: () => discoverySettingConfigurations.refetch() },
-		);
+	const handleDeleteAdapterConfigurations = (adapter: ConfigurationRs) => {
+		setSelectedId(adapter.configurationId);
+		setSelectedRecord(adapter);
+		handlersDelete.open();
 	};
 
 	const { editDiscoverySetting } = useEditDiscoverySetting();
@@ -77,9 +76,16 @@ const DiscoveryAdapterGateways = ({ enabled, adapterId, fields }: Props) => {
 		);
 	};
 
-	const loading = deleteDiscoverySetting.isPending || editDiscoverySetting.isPending;
 	return (
 		<>
+			<DeleteDiscoveryAdapterModal
+				opened={openedDelete}
+				onClose={handlersDelete.close}
+				{...(selectedRecord || {})}
+				refetchDiscoveryAdapters={() => {
+					discoverySettingConfigurations.refetch().then(refetchDiscoveryAdapters);
+				}}
+			/>
 			<DiscoveryIPsDrawerModal
 				opened={openedDiscoveryIPs}
 				onClose={handlersDiscoveryIPs.close}
@@ -109,10 +115,10 @@ const DiscoveryAdapterGateways = ({ enabled, adapterId, fields }: Props) => {
 								editable,
 								adapterId,
 								fields,
-								disabled: testLoading || loading,
+								disabled: testLoading || editDiscoverySetting.isPending,
 								...(id === selectedId && {
 									testLoading,
-									loading,
+									loading: editDiscoverySetting.isPending,
 								}),
 							}}
 						/>
@@ -123,7 +129,9 @@ const DiscoveryAdapterGateways = ({ enabled, adapterId, fields }: Props) => {
 				fields={fields}
 				adapterId={adapterId}
 				disabled={discoverySettingConfigurations.isFetching}
-				refetchDiscoveryAdapters={discoverySettingConfigurations.refetch}
+				refetchDiscoveryAdapters={() => {
+					discoverySettingConfigurations.refetch().then(refetchDiscoveryAdapters);
+				}}
 			/>
 		</>
 	);

@@ -76,7 +76,7 @@ const NoneCredentialServices = ({ enabled, adapterId, fields, refetchDiscoveryAd
 				adapterId={adapterId}
 				disabled={discoverySettingConfigurations.isFetching}
 				refetchDiscoveryAdapters={() => {
-					discoverySettingConfigurations.refetch().then(() => refetchDiscoveryAdapters());
+					discoverySettingConfigurations.refetch().then(refetchDiscoveryAdapters);
 				}}
 			/>
 		</>

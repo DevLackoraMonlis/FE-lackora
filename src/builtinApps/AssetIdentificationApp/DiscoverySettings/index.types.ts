@@ -16,6 +16,7 @@ export type DiscoveryAdapterConfigurationRs = {
 
 export type ConfigurationRs = {
 	adapterId: string;
+	adapterName: string;
 	configurationId: string;
 	configurationIP: string;
 };
