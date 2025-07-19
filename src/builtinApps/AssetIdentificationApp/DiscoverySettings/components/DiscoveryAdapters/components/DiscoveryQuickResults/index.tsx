@@ -1,4 +1,4 @@
-import { Badge, Flex, Highlight, Text } from "@mantine/core";
+import { Badge, Flex, Highlight, LoadingOverlay, Text } from "@mantine/core";
 import { useViewportSize } from "@mantine/hooks";
 import { IconCheck, IconX } from "@tabler/icons-react";
 import { sortBy } from "lodash";
@@ -15,6 +15,7 @@ import type { ConfigurationRs } from "../../../../index.types";
 
 type Props = Partial<ConfigurationRs> & {
 	enabledQuery: boolean;
+	hightOffset?: number;
 };
 
 export function DiscoveryQuickResults(props: Props) {
@@ -24,6 +25,7 @@ export function DiscoveryQuickResults(props: Props) {
 		props.adapterId || "",
 		props.configurationId || "",
 	);
+
 	const results = discoverySettingRunNow?.data?.results || [];
 	const status = discoverySettingRunNow?.data?.status;
 
@@ -95,6 +97,7 @@ export function DiscoveryQuickResults(props: Props) {
 	const tableRecords = filteredResults.slice(from, to);
 	const totalRecords = filteredResults?.length;
 
+	if (discoverySettingRunNow.isLoading && props.enabledQuery) return <LoadingOverlay visible />;
 	return (
 		<Flex direction="column" p="sm" gap="xs" w="100%">
 			<Flex gap="sm" align="center" justify="center" py="sm" bg="gray.1">
@@ -116,7 +119,7 @@ export function DiscoveryQuickResults(props: Props) {
 				/>
 			</Flex>
 			<BCTanStackGrid
-				h={height - 390}
+				h={height - (props.hightOffset ?? 390)}
 				withTableBorder
 				withColumnBorders
 				withRowBorders

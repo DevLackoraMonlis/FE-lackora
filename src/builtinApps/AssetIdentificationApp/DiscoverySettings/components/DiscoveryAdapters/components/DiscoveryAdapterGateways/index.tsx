@@ -17,6 +17,7 @@ import type { ConfigurationRs } from "../../../../index.types";
 
 import DiscoveryAdapterCard from "../DiscoveryAdapterCard";
 import DiscoveryAdaptersCreateGateway from "../DiscoveryAdaptersCreate";
+import { DiscoveryIPsDrawerModal } from "../DiscoveryIPs";
 import { DiscoveryQuickModal } from "../DiscoveryQuick";
 
 type Props = {
@@ -28,6 +29,7 @@ type Props = {
 const DiscoveryAdapterGateways = ({ enabled, adapterId, fields }: Props) => {
 	const [selectedId, setSelectedId] = useState("");
 	const [openedDiscoveryQuick, handlersDiscoveryQuick] = useDisclosure(false);
+	const [openedDiscoveryIPs, handlersDiscoveryIPs] = useDisclosure(false);
 
 	const { discoverySettingConfigurations } = useDiscoveryAdapterById(adapterId, enabled);
 	const [selectedRecord, setSelectedRecord] = useState<ConfigurationRs>();
@@ -35,6 +37,11 @@ const DiscoveryAdapterGateways = ({ enabled, adapterId, fields }: Props) => {
 		setSelectedId(adapter.configurationId);
 		setSelectedRecord(adapter);
 		handlersDiscoveryQuick.open();
+	};
+	const handleDiscoverySettingDiscoveryIPs = (adapter: ConfigurationRs) => {
+		setSelectedId(adapter.configurationId);
+		setSelectedRecord(adapter);
+		handlersDiscoveryIPs.open();
 	};
 
 	const { testDiscoverySettingConnection, testLoading } = useTestDiscoverySettingConnection();
@@ -71,9 +78,13 @@ const DiscoveryAdapterGateways = ({ enabled, adapterId, fields }: Props) => {
 	};
 
 	const loading = deleteDiscoverySetting.isPending || editDiscoverySetting.isPending;
-
 	return (
 		<>
+			<DiscoveryIPsDrawerModal
+				opened={openedDiscoveryIPs}
+				onClose={handlersDiscoveryIPs.close}
+				{...(selectedRecord || {})}
+			/>
 			<DiscoveryQuickModal
 				opened={openedDiscoveryQuick}
 				onClose={handlersDiscoveryQuick.close}
@@ -85,11 +96,12 @@ const DiscoveryAdapterGateways = ({ enabled, adapterId, fields }: Props) => {
 				{discoverySettingConfigurations.data?.results?.map(
 					({ configs, id, isActive, editable, adapterId }) => (
 						<DiscoveryAdapterCard
-							key={id}
 							handleDeleteAdapterConfigurations={handleDeleteAdapterConfigurations}
 							handleDiscoverySettingTestConnection={handleDiscoverySettingTestConnection}
 							handleDiscoverySettingQuickDiscovery={handleDiscoverySettingQuickDiscovery}
+							handleDiscoverySettingDiscoveryIPs={handleDiscoverySettingDiscoveryIPs}
 							handleEditAdapterConfigurations={handleEditAdapterConfigurations}
+							key={id}
 							{...{
 								configs,
 								id,

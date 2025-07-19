@@ -16,6 +16,7 @@ type Props = DiscoveryAdapterConfigurationRs & {
 	handleDeleteAdapterConfigurations: (id: string) => void;
 	handleDiscoverySettingTestConnection: (adapterId: string, id: string) => void;
 	handleDiscoverySettingQuickDiscovery: (adapter: ConfigurationRs) => void;
+	handleDiscoverySettingDiscoveryIPs: (adapter: ConfigurationRs) => void;
 	handleEditAdapterConfigurations: (id: string, configs: BCDynamicConfigRq[], callback: VoidFunction) => void;
 	fields: BCDynamicFieldRs[];
 	disabled: boolean;
@@ -53,11 +54,32 @@ const DiscoveryAdapterCard = ({
 					{configs?.map(({ value }) => (isObject(value) ? value?.label : ""))?.join(" - ")}
 				</Text>
 				<Flex gap="2xs">
-					<Badge variant="light" color={isActive ? "green" : "red"} p="sm">
-						<Text p="2xs" tt="capitalize">
-							{isActive ? "Connected" : "Disconnected"}
-						</Text>
-					</Badge>
+					<Flex align="center" gap="2xs" w="300px">
+						<Badge
+							variant="light"
+							color="gray"
+							p="sm"
+							onClick={() => {
+								props.handleDiscoverySettingDiscoveryIPs({
+									configurationIP: `${isObject(configurationIP) ? configurationIP?.label : ""}`,
+									configurationId: id,
+									adapterId,
+								});
+							}}
+						>
+							<Text p="2xs" tt="capitalize" className="cursor-pointer">
+								<Text component="span" fw="bold" px="2xs">
+									500
+								</Text>
+								Discovered IPs
+							</Text>
+						</Badge>
+						<Badge variant="light" color={isActive ? "green" : "red"} p="sm">
+							<Text p="2xs" tt="capitalize">
+								{isActive ? "Connected" : "Disconnected"}
+							</Text>
+						</Badge>
+					</Flex>
 					<ActionIcon
 						disabled={disabled}
 						onClick={() => {
