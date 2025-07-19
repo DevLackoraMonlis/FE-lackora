@@ -51,10 +51,20 @@ playwright_tests:
     - dev
   variables:
     PLAYWRIGHT_BROWSERS_PATH: .playwright-browsers
+    NODE_ENV: "production"
+    CI: "true"
+  dependencies:
+    - dev_pipeline
   script:
     - npm ci
     - mkdir -p test-results
     - NODE_ENV=production CI=true npm run test
+    - echo "── LS ROOT ──"
+    - ls -la
+    - echo "── LS test-results ──"
+    - ls -la test-results || echo "❌ test-results not found"
+    - echo "── LS allure-results ──"
+    - ls -la allure-results || echo "❌ allure-results not found"
   artifacts:
     when: always
     paths:
