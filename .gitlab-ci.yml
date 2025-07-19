@@ -28,7 +28,6 @@ dev_pipeline:
     NODE_TLS_REJECT_UNAUTHORIZED: "0"
     X_NONCE_AUTHENTICATE: "Ewi5To8Pf2rbIINNFp9i9g"
     CSRF_SECRET: "50FaWgdOhi9M9wyna8taR1k3ODOR8d6u"
-    CI: true
   only:
     - develop
   tags:
@@ -55,7 +54,7 @@ playwright_tests:
   script:
     - npm ci
     - mkdir -p test-results
-    - npx playwright test
+    - NODE_ENV=production CI=true npm run test
   artifacts:
     when: always
     paths:
