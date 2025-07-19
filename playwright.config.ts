@@ -11,6 +11,7 @@ import { defineConfig, devices } from "@playwright/test";
 // playwright.config.ts
 const isCI = !!process.env.CI; // در GitLab یا هر CI دیگر
 const isProd = process.env.NODE_ENV === "production";
+const port = 4000;
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -31,7 +32,7 @@ export default defineConfig({
 	/* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
 	use: {
 		/* Base URL to use in actions like `await page.goto('/')`. */
-		baseURL: "http://localhost:3000",
+		baseURL: `http://localhost:${port}`,
 		headless: isCI,
 		/* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
 		trace: "on-first-retry",
@@ -70,8 +71,8 @@ export default defineConfig({
 
 	/* Run your local dev server before starting the tests */
 	webServer: {
-		command: !isProd ? "npm run dev" : "node .next/standalone/server.js",
-		url: "http://localhost:3000",
+		command: !isProd ? "npm run dev:test" : "node .next/standalone/server.js",
+		url: `http://localhost:${port}`,
 		reuseExistingServer: !isCI,
 		timeout: 60 * 3 * 1000, // 2 دقیقه صبر می‌کنه تا سرور بالا بیاد
 	},

@@ -4,12 +4,12 @@
 	"private": true,
 	"scripts": {
 		"dev": "next dev -p 3000 --turbopack",
+		"dev:test": "NEXTAUTH_URL=http://localhost:4000 HOST_URL=http://localhost:4000 next dev -p 4000 --turbopack",
 		"build": "npm run lint-dev && next build",
 		"start": "next start",
 		"test": "npx playwright test",
 		"test-codegen": "concurrently -k -s first -n \"DEV,GEN\" -c \"green,blue\" \"npm run dev\" \"npx playwright codegen --target=ts http://localhost:3000\"",
 		"test-headed": "npx playwright test --headed",
-		"dev:test": "cross-env NEXT_PUBLIC_TEST=test  next dev -p 3000",
 		"lint": "tsc --noEmit --noErrorTruncation && biome check --write --unsafe",
 		"lint-prod": "tsc --noEmit --noErrorTruncation && biome check --write --error-on-warnings --linter-enabled=true",
 		"lint-dev": "biome check --write --error-on-warnings --linter-enabled=true",
