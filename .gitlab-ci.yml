@@ -57,7 +57,7 @@ playwright_tests:
     CI: "true"
     PORT: 4000
   dependencies:
-    - dev_pipeline
+    - dev_test_pipeline
   script:
     - mkdir -p test-results
     - npx playwright test
