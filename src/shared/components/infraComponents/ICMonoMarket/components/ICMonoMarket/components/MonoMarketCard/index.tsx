@@ -5,7 +5,7 @@ import {
 	getMonoMarketAppProductionButton,
 } from "@/shared/components/infraComponents/ICMonoMarket/components/ICMonoMarket/index.helper";
 import type { MonoMarketCardProps } from "@/shared/components/infraComponents/ICMonoMarket/components/ICMonoMarket/index.types";
-import { Badge, Box, Button, Card, Flex, Text, Tooltip } from "@mantine/core";
+import { Badge, Box, Button, Card, Flex, Loader, Text, Tooltip } from "@mantine/core";
 import { IconInfoCircle } from "@tabler/icons-react";
 
 export default function MonoMarketCard(props: MonoMarketCardProps) {
@@ -49,7 +49,7 @@ export default function MonoMarketCard(props: MonoMarketCardProps) {
 						</Tooltip>
 					</Flex>
 					{props.hasRequiredSupportLicense && (
-						<Flex pos={"absolute"} right={"0"} top={25}>
+						<Flex pos={"absolute"} right={"0"} top={28}>
 							<Tooltip
 								position={"top"}
 								label={
@@ -80,6 +80,7 @@ export default function MonoMarketCard(props: MonoMarketCardProps) {
 						{props.description}
 					</Text>
 					<Button
+						disabled={props.isProcessing}
 						onClick={props.onShowMore}
 						td={"underline"}
 						h={14}
@@ -97,41 +98,50 @@ export default function MonoMarketCard(props: MonoMarketCardProps) {
 				</Flex>
 			</Card.Section>
 			<Card.Section bg={"white"}>
-				<Flex p={"sm"} align={"center"} justify={"space-between"} h={52}>
-					<Flex gap={"2xs"} align={"center"}>
-						<Box>
-							{props.status === "ACTIVATED" ? (
-								<Badge size={"lg"} radius={"xs"} variant={"light"} color={"#12B886"}>
-									{props.status}
-								</Badge>
-							) : (
-								<Box />
+				{props.isProcessing ? (
+					<Box p={"sm"}>
+						<Button radius={"lg"} w={"100%"} variant={"light"} leftSection={<Loader color="blue" />}>
+							Processing...
+						</Button>
+					</Box>
+				) : (
+					<Flex p={"sm"} align={"center"} justify={"space-between"} h={52}>
+						<Flex gap={"2xs"} align={"center"}>
+							<Box>
+								{props.status === "ACTIVATED" ? (
+									<Badge size={"lg"} radius={"xs"} variant={"light"} color={"#12B886"}>
+										{props.status}
+									</Badge>
+								) : (
+									<Box />
+								)}
+								{props.status === "EXPIRED" ? (
+									<Badge size={"lg"} radius={"xs"} variant={"light"} color={"#FA5252"}>
+										{props.status}
+									</Badge>
+								) : (
+									<Box />
+								)}
+							</Box>
+							{props.hasRequiredSupportLicense && props.status !== "INACTIVE" && (
+								<Tooltip label={getSupportLicenseTooltipLabel()}>
+									<Box mt={"xs"}>
+										<IconInfoCircle size={18} />
+									</Box>
+								</Tooltip>
 							)}
-							{props.status === "EXPIRED" ? (
-								<Badge size={"lg"} radius={"xs"} variant={"light"} color={"#FA5252"}>
-									{props.status}
-								</Badge>
-							) : (
-								<Box />
-							)}
-						</Box>
-						{props.hasRequiredSupportLicense && props.status !== "INACTIVE" && (
-							<Tooltip label={getSupportLicenseTooltipLabel()}>
-								<Box mt={"xs"}>
-									<IconInfoCircle size={18} />
-								</Box>
-							</Tooltip>
-						)}
+						</Flex>
+						{getMonoMarketActivateConfigButton({
+							hasConfig: props.hasConfig,
+							isConfigured: props.isConfigured,
+							onActiveOnly: props.onActiveOnly,
+							onActiveWithConfig: props.onActiveWithConfig,
+							productType: props.productType,
+							status: props.status,
+							showConfigButton: false,
+						})}
 					</Flex>
-					{getMonoMarketActivateConfigButton({
-						hasConfig: props.hasConfig,
-						isConfigured: props.isConfigured,
-						onActiveOnly: props.onActiveOnly,
-						onActiveWithConfig: props.onActiveWithConfig,
-						productType: props.productType,
-						status: props.status,
-					})}
-				</Flex>
+				)}
 			</Card.Section>
 		</Card>
 	);

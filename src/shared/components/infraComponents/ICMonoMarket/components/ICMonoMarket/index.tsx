@@ -1,6 +1,5 @@
 "use client";
 
-import type { EachConnectionFilterItems } from "@/http/generated/models";
 import BCSideFilter, { type BCSideFilterItem } from "@/shared/components/baseComponents/BCSideFilter";
 import MonoMarketActivationNonConfigAppModal from "@/shared/components/infraComponents/ICMonoMarket/components/ICMonoMarket/components/MonoMarketActivationNonConfigAppModal";
 import MonoMarketActivationWithConfigAppModal from "@/shared/components/infraComponents/ICMonoMarket/components/ICMonoMarket/components/MonoMarketActivationWithConfigAppModal";
@@ -16,7 +15,10 @@ import { Flex, Grid, Pagination, ScrollArea } from "@mantine/core";
 import { useDisclosure, useViewportSize } from "@mantine/hooks";
 import { useState } from "react";
 
-type SelectAppType = Omit<MonoMarketCardProps, "onActiveOnly" | "onActiveWithConfig" | "onShowMore">;
+type SelectAppType = Omit<
+	MonoMarketCardProps,
+	"onActiveOnly" | "onActiveWithConfig" | "onShowMore" | "isProcessing"
+>;
 
 export default function ICMonoMarket() {
 	const { height } = useViewportSize();
@@ -26,17 +28,14 @@ export default function ICMonoMarket() {
 	const [openedAppDetailsModal, appDetailsModalHandlers] = useDisclosure(false);
 	const [selectedApp, setSelectedApp] = useState<SelectAppType | undefined>(undefined);
 
-	const stableFilters = useStableData<EachConnectionFilterItems[]>([]);
+	const stableFilters = useStableData<Record<string, unknown>[]>([]);
 	const dynamicFilters =
-		stableFilters?.map(
-			(filter) =>
-				({
-					items: filter.items,
-					label: filter.label,
-					name: filter.param,
-					type: "CheckedList",
-				}) satisfies BCSideFilterItem,
-		) || [];
+		stableFilters?.map((filter) => ({
+			items: filter.items,
+			label: filter.label,
+			name: filter.param,
+			type: "CheckedList",
+		})) || [];
 
 	const apps: SelectAppType[] = [
 		{
@@ -72,12 +71,12 @@ export default function ICMonoMarket() {
 			keyCapabilities: ["tst", "stats"],
 		},
 		{
-			isConfigured: false,
+			isConfigured: true,
 			description: "provides secure, encrypted remote access to Cisco",
-			hasConfig: false,
+			hasConfig: true,
 			hasRequiredSupportLicense: false,
 			status: MonoAppStatusTypeEnum.ACTIVATED,
-			label: "Adapters",
+			label: "Adapters2",
 			name: "adapter_management4",
 			owner: "MonoSuite",
 			productType: MonoAppProductTypeEnum.STANDARD,
@@ -197,7 +196,7 @@ export default function ICMonoMarket() {
 					height={height - 225}
 					onChange={setFilters}
 					filterItems={[
-						...dynamicFilters,
+						...(dynamicFilters as BCSideFilterItem[]),
 						{ name: "support_required", type: "Switch", label: "MonoSupport Required", order: 2 },
 					]}
 					searchPlaceholder={"Search by adapter Name"}

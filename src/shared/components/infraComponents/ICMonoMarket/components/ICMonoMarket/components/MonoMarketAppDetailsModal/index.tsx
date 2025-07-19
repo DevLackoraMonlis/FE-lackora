@@ -1,5 +1,9 @@
 import BCModal from "@/shared/components/baseComponents/BCModal";
 import {
+	MonoAppProductTypeEnum,
+	MonoAppStatusTypeEnum,
+} from "@/shared/components/infraComponents/ICMonoMarket/components/ICMonoMarket/index.enum";
+import {
 	getMonoAppIcon,
 	getMonoMarketActivateConfigButton,
 	getMonoMarketAppMonoCareLicenseButton,
@@ -7,7 +11,9 @@ import {
 } from "@/shared/components/infraComponents/ICMonoMarket/components/ICMonoMarket/index.helper";
 import type { MonoMarketCardProps } from "@/shared/components/infraComponents/ICMonoMarket/components/ICMonoMarket/index.types";
 import type { ModalDefaultProps } from "@/shared/types/index.types";
-import { Box, Flex, List, Text } from "@mantine/core";
+import { Alert, Badge, Box, Flex, List, Text } from "@mantine/core";
+import { IconAlertTriangle } from "@tabler/icons-react";
+import * as changeCase from "change-case";
 import { FcPuzzle, FcSearch } from "react-icons/fc";
 import { GiBullseye } from "react-icons/gi";
 import { PiGearFineDuotone } from "react-icons/pi";
@@ -17,8 +23,54 @@ type Props = ModalDefaultProps & {
 } & Pick<MonoMarketCardProps, "onActiveWithConfig" | "onActiveOnly">;
 
 export default function MonoMarketAppDetailsModal(props: Props) {
+	const getSupportLicenseBadge = () => {
+		if (props.appData.hasRequiredSupportLicense) {
+			if (props.appData.status === MonoAppStatusTypeEnum.ACTIVATED) {
+				return (
+					<Badge fz={"2xs"} radius={"xs"} variant={"light"} color={"green"} size={"lg"}>
+						{`ACTIVATED - VALID UNTIL ${props.appData.supportLicenseExpireDate}`}
+					</Badge>
+				);
+			}
+			if (props.appData.status === MonoAppStatusTypeEnum.EXPIRED) {
+				return (
+					<Badge fz={"2xs"} radius={"xs"} variant={"light"} color={"red"} size={"lg"}>
+						{`SUPPORT LICENSE EXPIRED ON ${props.appData.supportLicenseExpireDate}`}
+					</Badge>
+				);
+			}
+		}
+		return null;
+	};
+
+	const getLicenseRequiredAlert = () => {
+		if (props.appData.hasRequiredSupportLicense && props.appData.status === MonoAppStatusTypeEnum.EXPIRED)
+			return (
+				<Alert mb={"xs"} title={"[Support]License Expired:"} icon={<IconAlertTriangle />} color={"red"}>
+					Your license for this App has expired. Please renew to activate.
+				</Alert>
+			);
+
+		if (
+			props.appData.productType !== MonoAppProductTypeEnum.STANDARD &&
+			props.appData.status === MonoAppStatusTypeEnum.INACTIVE
+		)
+			return (
+				<Alert
+					mb={"xs"}
+					title={`[${changeCase.pascalCase(props.appData.productType)} Security] License Required!`}
+					icon={<IconAlertTriangle />}
+					color={"yellow"}
+				>
+					{`This App requires a [${changeCase.pascalCase(props.appData.productType)} Security] license. Please upgrade your license to use this feature`}
+				</Alert>
+			);
+
+		return null;
+	};
+
 	return (
-		<BCModal size={700} title={"Mono App Details"} opened={props.opened} onClose={props.onClose}>
+		<BCModal size={650} title={"Mono App Details"} opened={props.opened} onClose={props.onClose}>
 			<Box bg={"white"} p={"sm"}>
 				<Box bg={"gray.1"} p={"md"}>
 					<Flex gap={"xs"} mb={"sm"}>
@@ -33,22 +85,36 @@ export default function MonoMarketAppDetailsModal(props: Props) {
 								{getMonoMarketActivateConfigButton({
 									hasConfig: props.appData.hasConfig,
 									isConfigured: props.appData.isConfigured,
-									onActiveOnly: props.onActiveOnly,
-									onActiveWithConfig: props.onActiveWithConfig,
+									onActiveOnly: () => {
+										props.onActiveOnly();
+										props.onClose();
+									},
+									onActiveWithConfig: () => {
+										props.onActiveWithConfig();
+										props.onClose();
+									},
 									productType: props.appData.productType,
 									status: props.appData.status,
+									showConfigButton: props.appData.hasConfig,
+									onConfig: () => {
+										props.onActiveWithConfig();
+										props.onClose();
+									},
 								})}
 							</Flex>
 							<Text
 								fz={"xs"}
 								c={"gray.8"}
 							>{`version ${props.appData.version} | by ${props.appData.owner}`}</Text>
-							<Flex gap={"xs"}>
+							<Flex gap={"2xs"}>
 								{getMonoMarketAppProductionButton({ type: props.appData.productType, size: "xLarge" })}
 								{getMonoMarketAppMonoCareLicenseButton({ size: "large" })}
 							</Flex>
+							<Box mt={"2xs"}>{getSupportLicenseBadge()}</Box>
 						</Flex>
 					</Flex>
+
+					{getLicenseRequiredAlert()}
 
 					<Flex direction={"column"} gap={"xs"}>
 						<Flex align={"center"}>

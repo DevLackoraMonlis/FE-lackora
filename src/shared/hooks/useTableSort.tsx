@@ -36,15 +36,30 @@ export function useTableSort<TableDatasource extends Record<string, unknown>>(
 	};
 
 	const generateSortIcons = (accessor: SortState<TableDatasource>["columnAccessor"]) => {
-		let Icon = <IconArrowsSort size={15} />;
+		let iconWithTitle = { icon: <IconArrowsSort size={15} aria-label="sort-none" />, title: "Sort None" };
 		if (accessor === sortStatus.columnAccessor) {
-			if (sortStatus.direction === "asc") Icon = <IconSortAscending size={15} />;
-			if (sortStatus.direction === "des") Icon = <IconSortDescending size={15} />;
+			if (sortStatus.direction === "asc") {
+				iconWithTitle = {
+					icon: <IconSortAscending size={15} aria-label="sort-ascending" />,
+					title: "Sort Ascending",
+				};
+			}
+			if (sortStatus.direction === "des") {
+				iconWithTitle = {
+					icon: <IconSortDescending size={15} aria-label="sort-descending" />,
+					title: "Sort Descending",
+				};
+			}
 		}
 
 		return (
-			<ActionIcon variant="transparent" c="dimmed" onClick={() => handleSortOnTable(accessor)}>
-				{Icon}
+			<ActionIcon
+				variant="transparent"
+				c="dimmed"
+				title={iconWithTitle.title}
+				onClick={() => handleSortOnTable(accessor)}
+			>
+				{iconWithTitle.icon}
 			</ActionIcon>
 		);
 	};

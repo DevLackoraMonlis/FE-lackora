@@ -81,6 +81,7 @@ export default function ICLoginForm() {
 							<form style={{ height: "fit-content", width: "100%" }} onSubmit={form.onSubmit(onSubmit)}>
 								<Flex mt={"xl"} gap={"xl"} direction={"column"} w={"100%"}>
 									<TextInput
+										data-testid="login-username"
 										required
 										size={"lg"}
 										leftSection={<IconUserCircle />}
@@ -88,6 +89,7 @@ export default function ICLoginForm() {
 										label={"Username"}
 									/>
 									<PasswordInput
+										data-testid="login-password"
 										minLength={8}
 										required
 										size={"lg"}
@@ -97,6 +99,7 @@ export default function ICLoginForm() {
 									/>
 									<Checkbox label={"Remember me"} />
 									<Button
+										data-testid="login-submit-button"
 										size={"lg"}
 										color={"main"}
 										disabled={!form.isValid()}
