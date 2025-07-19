@@ -60,6 +60,7 @@ playwright_tests:
     when: always
     paths:
       - test-results/
+      - allure-results/
       - .playwright-browsers
     reports:
       junit: test-results/junit.xml
