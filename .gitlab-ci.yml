@@ -54,12 +54,12 @@ playwright_tests:
     PLAYWRIGHT_BROWSERS_PATH: .playwright-browsers
   script:
     - npm ci
-    - npx playwright install
+    - npx playwright install --force
     - npx playwright test --reporter=line,allure-playwright
   artifacts:
     when: always
     paths:
-      - allure-results/
+      - test-results/
       - .playwright-browsers
     reports:
       junit: junit.xml
