@@ -11,7 +11,7 @@ variables:
 default:
   image: mcr.microsoft.com/playwright:v1.43.1-jammy
   before_script:
-    - npx playwright install
+    - npx playwright install --force
 
 cache:
   key: shared-playwright-cache
@@ -62,7 +62,7 @@ playwright_tests:
       - test-results/
       - .playwright-browsers
     reports:
-      junit: junit.xml
+      junit: test-results/junit.xml
   allow_failure: false
 
 
