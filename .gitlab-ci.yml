@@ -6,7 +6,7 @@ stages:
 
 variables:
   DEPLOY_DIR: "/sources/app/dev/front"
-  PLAYWRIGHT_BROWSERS_PATH: /root/.cache/ms-playwright
+  PLAYWRIGHT_BROWSERS_PATH: .playwright-browsers
 
 default:
   image: mcr.microsoft.com/playwright:v1.43.1-jammy
@@ -17,6 +17,7 @@ cache:
   key: ${CI_COMMIT_REF_SLUG}
   paths:
     - .cache/ms-playwright
+    - .playwright-browsers
 
 dev_pipeline:
   stage: install
@@ -49,17 +50,22 @@ playwright_tests:
     - develop
   tags:
     - dev
+  variables:
+    PLAYWRIGHT_BROWSERS_PATH: .playwright-browsers
   script:
-    - npm install --force
-    - npx playwright install --with-deps
+    - npm ci
+    - npx playwright install
     - npx playwright test --reporter=line,allure-playwright
   artifacts:
     when: always
     paths:
       - allure-results/
+      - .playwright-browsers
     reports:
       junit: junit.xml
   allow_failure: false
+
+
 
 upload_allure:
   stage: report
