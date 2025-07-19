@@ -9,9 +9,6 @@ variables:
   DEPLOY_DIR: "/sources/app/dev/front"
   PLAYWRIGHT_BROWSERS_PATH: .playwright-browsers
 
-default:
-  image: mcr.microsoft.com/playwright:v1.43.1-jammy
-
 cache:
   key: shared-playwright-cache
   paths:
@@ -61,7 +58,7 @@ playwright_tests:
     - dev_test_pipeline
   script:
     - echo "🛠 Installing system dependencies for Playwright..."
-    - sudo npx playwright install-deps
+    - npx playwright install-deps --force
     - echo "✅ System dependencies installed."
     - mkdir -p test-results
     - npx playwright test
