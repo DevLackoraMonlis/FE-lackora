@@ -11,7 +11,7 @@ variables:
 default:
   image: mcr.microsoft.com/playwright:v1.43.1-jammy
   before_script:
-    - npx playwright install --with-deps
+    - npx playwright install
 
 cache:
   key: ${CI_COMMIT_REF_SLUG}
