@@ -54,7 +54,6 @@ playwright_tests:
     PLAYWRIGHT_BROWSERS_PATH: .playwright-browsers
   script:
     - npm ci
-    - npx playwright install --force
     - mkdir -p test-results
     - npx playwright test
   artifacts:
