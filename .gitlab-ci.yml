@@ -55,7 +55,7 @@ playwright_tests:
     PLAYWRIGHT_BROWSERS_PATH: .playwright-browsers
     NODE_ENV: "production"
     CI: "true"
-    PORT: 4000
+    PORT: "4000"
   dependencies:
     - dev_test_pipeline
   script:

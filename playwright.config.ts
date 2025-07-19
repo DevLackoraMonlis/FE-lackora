@@ -75,7 +75,7 @@ export default defineConfig({
 
 	/* Run your local dev server before starting the tests */
 	webServer: {
-		command: isProd ? "node .next/standalone/server.js" : "npm run dev",
+		command: isProd ? "npm run start" : "npm run dev",
 		env: {
 			PORT: port.toString(),
 		},
