@@ -14,7 +14,6 @@ default:
 cache:
   key: shared-playwright-cache
   paths:
-    - .cache/ms-playwright
     - .playwright-browsers
 
 dev_pipeline:
@@ -40,6 +39,8 @@ dev_pipeline:
       - node_modules/
       - .next
       - public
+      - playwright.config.ts
+      - next.config.js
     expire_in: 1 hour
 
 playwright_tests:
