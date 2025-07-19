@@ -23,7 +23,11 @@ dev_pipeline:
     - rm -f package-lock.json; rm -f .npmrc; rm -rf node_modules
     - NODE_ENV=development npm install --force
     - NODE_ENV=production npm run build
-
+  artifacts:
+    paths:
+      - .next
+      - public
+    expire_in: 1 hour
 
 dev_deploy:
   stage: deploy
