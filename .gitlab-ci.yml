@@ -14,7 +14,7 @@ default:
     - npx playwright install
 
 cache:
-  key: ${CI_COMMIT_REF_SLUG}
+  key: shared-playwright-cache
   paths:
     - .cache/ms-playwright
     - .playwright-browsers
