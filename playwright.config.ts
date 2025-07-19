@@ -1,17 +1,21 @@
 import { defineConfig, devices } from "@playwright/test";
 
-/**
- * Read environment variables from file.
- * https://github.com/motdotla/dotenv
- */
-// import dotenv from 'dotenv';
-// import path from 'path';
-// dotenv.config({ path: path.resolve(__dirname, '.env') });
+// import path from "path";
+// /**
+//  * Read environment variables from file.
+//  * https://github.com/motdotla/dotenv
+//  */
+// import dotenv from "dotenv";
+// dotenv.config({ path: path.resolve(__dirname, ".env") });
 
 // playwright.config.ts
 const isCI = !!process.env.CI; // در GitLab یا هر CI دیگر
 const isProd = process.env.NODE_ENV === "production";
-const port = 4000;
+const port = process.env.PORT || 3000;
+
+console.log(isCI, "isCI");
+console.log(isProd, "isProd");
+console.log(port, "port");
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -33,7 +37,7 @@ export default defineConfig({
 	use: {
 		/* Base URL to use in actions like `await page.goto('/')`. */
 		baseURL: `http://localhost:${port}`,
-		headless: isCI,
+		headless: false,
 		/* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
 		trace: "on-first-retry",
 		actionTimeout: 10000,
@@ -71,9 +75,12 @@ export default defineConfig({
 
 	/* Run your local dev server before starting the tests */
 	webServer: {
-		command: !isProd ? "npm run dev:test" : `PORT=${port} node .next/standalone/server.js`,
+		command: isProd ? "node .next/standalone/server.js" : "npm run dev",
+		env: {
+			PORT: port.toString(),
+		},
 		url: `http://localhost:${port}`,
 		reuseExistingServer: !isCI,
-		timeout: 60 * 3 * 1000, // 2 دقیقه صبر می‌کنه تا سرور بالا بیاد
+		timeout: 60 * 10 * 1000,
 	},
 });

@@ -1,7 +1,8 @@
 stages:
-  - install
+  - install_test
   - test
   - report
+  - install
   - deploy
 
 variables:
@@ -16,15 +17,16 @@ cache:
   paths:
     - .playwright-browsers
 
-dev_pipeline:
-  stage: install
+dev_test_pipeline:
+  stage: install_test
   variables:
     BASE_URL: "http://172.31.100.57:8080"
-    NEXTAUTH_URL: "http://172.31.100.57:3000"
-    HOST_URL: "http://172.31.100.57:3000"
+    NEXTAUTH_URL: "http://172.31.100.57:4000"
+    HOST_URL: "http://172.31.100.57:4000"
     NODE_TLS_REJECT_UNAUTHORIZED: "0"
     X_NONCE_AUTHENTICATE: "Ewi5To8Pf2rbIINNFp9i9g"
     CSRF_SECRET: "50FaWgdOhi9M9wyna8taR1k3ODOR8d6u"
+    PORT: "4000"
   only:
     - develop
   tags:
@@ -53,11 +55,12 @@ playwright_tests:
     PLAYWRIGHT_BROWSERS_PATH: .playwright-browsers
     NODE_ENV: "production"
     CI: "true"
+    PORT: 4000
   dependencies:
     - dev_pipeline
   script:
     - mkdir -p test-results
-    - NODE_ENV=production CI=true npx playwright test
+    - npx playwright test
     - echo "── LS ROOT ──"
     - ls -la
     - echo "── LS test-results ──"
@@ -68,7 +71,6 @@ playwright_tests:
     when: always
     paths:
       - test-results/
-      - allure-results/
       - .playwright-browsers
     reports:
       junit: test-results/junit.xml
@@ -88,10 +90,36 @@ upload_allure:
     - chmod 600 id_rsa
     - mkdir -p ~/.ssh
     - ssh-keyscan -H 172.31.100.98 >> ~/.ssh/known_hosts
-    - scp -i id_rsa -r allure-results/ root@172.31.100.98:/tmp/allure-results
+    - scp -i id_rsa -r test-results/ root@172.31.100.98:/tmp/allure-results
     - ssh -i id_rsa root@172.31.100.98 'allure generate /tmp/allure-results -o /var/www/allure --clean'
   when: always
 
+
+
+dev_pipeline:
+  stage: install
+  dependencies:
+    - dev_test_pipeline
+  variables:
+    BASE_URL: "http://172.31.100.57:8080"
+    NEXTAUTH_URL: "http://172.31.100.57:3000"
+    HOST_URL: "http://172.31.100.57:3000"
+    NODE_TLS_REJECT_UNAUTHORIZED: "0"
+    X_NONCE_AUTHENTICATE: "Ewi5To8Pf2rbIINNFp9i9g"
+    CSRF_SECRET: "50FaWgdOhi9M9wyna8taR1k3ODOR8d6u"
+    PORT: "3000"
+    CI: false
+  only:
+    - develop
+  tags:
+    - dev
+  script:
+    - NODE_ENV=production npm run build
+  artifacts:
+    paths:
+      - .next
+      - public
+    expire_in: 1 hour
 
 dev_deploy:
   stage: deploy
