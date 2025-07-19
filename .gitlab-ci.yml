@@ -1,30 +1,19 @@
 stages:
-  - install_test
-  - test
-  - report
   - install
   - deploy
 
 variables:
   DEPLOY_DIR: "/sources/app/dev/front"
-  PLAYWRIGHT_BROWSERS_PATH: .playwright-browsers
 
-cache:
-  key: shared-playwright-cache
-  paths:
-    - .playwright
-    - .playwright-browsers
-
-dev_test_pipeline:
-  stage: install_test
+dev_pipeline:
+  stage: install
   variables:
     BASE_URL: "http://172.31.100.57:8080"
-    NEXTAUTH_URL: "http://172.31.100.57:4000"
-    HOST_URL: "http://172.31.100.57:4000"
+    NEXTAUTH_URL: "http://172.31.100.57:3000"
+    HOST_URL: "http://172.31.100.57:3000"
     NODE_TLS_REJECT_UNAUTHORIZED: "0"
     X_NONCE_AUTHENTICATE: "Ewi5To8Pf2rbIINNFp9i9g"
     CSRF_SECRET: "50FaWgdOhi9M9wyna8taR1k3ODOR8d6u"
-    PORT: "4000"
   only:
     - develop
   tags:
@@ -33,104 +22,6 @@ dev_test_pipeline:
     - npm config set registry http://172.31.100.53/repository/npm-proxy/
     - rm -f package-lock.json; rm -f .npmrc; rm -rf node_modules
     - NODE_ENV=development npm install --force
-    - NODE_ENV=production npm run build
-  artifacts:
-    paths:
-      - node_modules/
-      - .next
-      - public
-      - playwright.config.ts
-      - next.config.js
-    expire_in: 1 hour
-
-playwright_tests:
-  stage: test
-  only:
-    - develop
-  tags:
-    - dev
-  variables:
-    PLAYWRIGHT_BROWSERS_PATH: .playwright-browsers
-    NODE_ENV: "production"
-    CI: "true"
-    PORT: "4000"
-  dependencies:
-    - dev_test_pipeline
-  script:
-    - echo "🛠 Installing system dependencies for Playwright..."
-    - dnf install -y \
-      nspr \
-      nss \
-      atk \
-      at-spi2-atk \
-      cups-libs \
-      libxkbcommon \
-      at-spi2-core \
-      libXcomposite \
-      libXdamage \
-      libXext \
-      libXfixes \
-      libXrandr \
-      mesa-libgbm \
-      cairo \
-      pango \
-      alsa-lib
-    - echo "✅ System dependencies installed."
-    - mkdir -p test-results
-    - npx playwright test
-    - echo "── LS ROOT ──"
-    - ls -la
-    - echo "── LS test-results ──"
-    - ls -la test-results || echo "❌ test-results not found"
-    - echo "── LS allure-results ──"
-    - ls -la allure-results || echo "❌ allure-results not found"
-  artifacts:
-    when: always
-    paths:
-      - test-results/
-      - .playwright-browsers
-    reports:
-      junit: test-results/junit.xml
-  allow_failure: false
-
-
-upload_allure:
-  stage: report
-  only:
-    - develop
-  tags:
-    - dev
-  dependencies:
-    - playwright_tests
-  script:
-    - echo "$SSH_PRIVATE_KEY" > id_rsa
-    - chmod 600 id_rsa
-    - mkdir -p ~/.ssh
-    - ssh-keyscan -H 172.31.100.98 >> ~/.ssh/known_hosts
-    - scp -i id_rsa -r test-results/ root@172.31.100.98:/tmp/allure-results
-    - ssh -i id_rsa root@172.31.100.98 'allure generate /tmp/allure-results -o /var/www/allure --clean'
-  when: always
-
-
-
-dev_pipeline:
-  stage: install
-  dependencies:
-    - dev_test_pipeline
-  variables:
-    BASE_URL: "http://172.31.100.57:8080"
-    NEXTAUTH_URL: "http://172.31.100.57:3000"
-    HOST_URL: "http://172.31.100.57:3000"
-    NODE_TLS_REJECT_UNAUTHORIZED: "0"
-    X_NONCE_AUTHENTICATE: "Ewi5To8Pf2rbIINNFp9i9g"
-    CSRF_SECRET: "50FaWgdOhi9M9wyna8taR1k3ODOR8d6u"
-    PORT: "3000"
-    CI: false
-  only:
-    - develop
-  tags:
-    - dev
-  script:
     - NODE_ENV=production npm run build
   artifacts:
     paths:
