@@ -1,9 +1,23 @@
 stages:
   - install
+  - test
+  - report
   - deploy
 
 variables:
   DEPLOY_DIR: "/sources/app/dev/front"
+  PLAYWRIGHT_BROWSERS_PATH: .playwright-browsers
+
+default:
+  image: mcr.microsoft.com/playwright:v1.43.1-jammy
+  before_script:
+    - npx playwright install
+
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - .cache/ms-playwright
+    - .playwright-browsers
 
 dev_pipeline:
   stage: install
@@ -29,6 +43,45 @@ dev_pipeline:
       - .next
       - public
     expire_in: 1 hour
+
+playwright_tests:
+  stage: test
+  only:
+    - develop
+  tags:
+    - dev
+  variables:
+    PLAYWRIGHT_BROWSERS_PATH: .playwright-browsers
+  script:
+    - npm ci
+    - npx playwright install
+    - npx playwright test --reporter=line,allure-playwright
+  artifacts:
+    when: always
+    paths:
+      - allure-results/
+      - .playwright-browsers
+    reports:
+      junit: junit.xml
+  allow_failure: false
+
+
+
+upload_allure:
+  stage: report
+  only:
+    - develop
+  tags:
+    - dev
+  dependencies:
+    - playwright_tests
+  script:
+    - echo "$SSH_PRIVATE_KEY" > id_rsa
+    - chmod 600 id_rsa
+    - mkdir -p ~/.ssh
+    - ssh-keyscan -H 172.31.100.98 >> ~/.ssh/known_hosts
+    - scp -i id_rsa -r allure-results/ allure@172.31.100.98:/tmp/allure-results
+    - ssh -i id_rsa allure@172.31.100.98 'allure generate /tmp/allure-results -o /var/www/allure --clean'
 
 dev_deploy:
   stage: deploy
