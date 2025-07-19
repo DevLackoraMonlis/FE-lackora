@@ -58,7 +58,11 @@ const DiscoveryAdapterCard = (props: Props) => {
 							p="sm"
 							onClick={() => props.handleDiscoverySettingDiscoveryIPs(configurationData)}
 						>
-							<Highlight highlight={highlightNumbers} style={{ textTransform: "capitalize" }}>
+							<Highlight
+								className="cursor-pointer"
+								highlight={highlightNumbers}
+								style={{ textTransform: "capitalize" }}
+							>
 								{props.lastExecution}
 							</Highlight>
 						</Badge>
