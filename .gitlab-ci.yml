@@ -15,6 +15,7 @@ default:
 cache:
   key: shared-playwright-cache
   paths:
+    - .playwright
     - .playwright-browsers
 
 dev_test_pipeline:
