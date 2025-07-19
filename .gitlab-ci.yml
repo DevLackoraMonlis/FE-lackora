@@ -59,6 +59,9 @@ playwright_tests:
   dependencies:
     - dev_test_pipeline
   script:
+    - echo "🛠 Installing system dependencies for Playwright..."
+    - sudo npx playwright install-deps
+    - echo "✅ System dependencies installed."
     - mkdir -p test-results
     - npx playwright test
     - echo "── LS ROOT ──"
