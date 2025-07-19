@@ -48,7 +48,7 @@ export default function ICPanelHeaderAvatarMenu(props: ICPanelHeaderProps) {
 								radius="xl"
 							/>
 						</Box>
-						<Text ml="md" mr="md" c="white">
+						<Text data-testid="logged-username" ml="md" mr="md" c="white">
 							{userSession?.data?.profile?.username}
 						</Text>
 						<IconChevronDown size={16} strokeWidth={2} color="white" />
