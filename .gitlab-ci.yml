@@ -58,7 +58,23 @@ playwright_tests:
     - dev_test_pipeline
   script:
     - echo "🛠 Installing system dependencies for Playwright..."
-    - npx playwright install-deps --force
+    - dnf install -y \
+      nspr \
+      nss \
+      atk \
+      at-spi2-atk \
+      cups-libs \
+      libxkbcommon \
+      at-spi2-core \
+      libXcomposite \
+      libXdamage \
+      libXext \
+      libXfixes \
+      libXrandr \
+      mesa-libgbm \
+      cairo \
+      pango \
+      alsa-lib
     - echo "✅ System dependencies installed."
     - mkdir -p test-results
     - npx playwright test
