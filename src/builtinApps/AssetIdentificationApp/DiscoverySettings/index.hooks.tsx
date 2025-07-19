@@ -122,6 +122,11 @@ export function useDeleteDiscoverySetting() {
 	return { deleteDiscoverySetting };
 }
 
+export function useDeleteNoneCredential() {
+	const deleteDiscoverySetting = useDeleteDiscoverySettingConfiguration();
+	return { deleteDiscoverySetting };
+}
+
 export function useEditDiscoverySetting() {
 	const editDiscoverySetting = useEditDiscoverySettingConfiguration();
 	return { editDiscoverySetting };

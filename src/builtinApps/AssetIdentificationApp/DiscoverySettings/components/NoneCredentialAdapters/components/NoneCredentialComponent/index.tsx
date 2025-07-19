@@ -6,7 +6,7 @@ import type {
 } from "@/shared/components/baseComponents/BCDynamicField/index.types";
 
 import {
-	useDeleteDiscoverySetting,
+	useDeleteNoneCredential,
 	useDiscoveryAdapterById,
 	useEditDiscoverySetting,
 } from "../../../../index.hooks";
@@ -23,7 +23,7 @@ type Props = {
 const NoneCredentialServices = ({ enabled, adapterId, fields, refetchDiscoveryAdapters }: Props) => {
 	const { discoverySettingConfigurations } = useDiscoveryAdapterById(adapterId, enabled);
 
-	const { deleteDiscoverySetting } = useDeleteDiscoverySetting();
+	const { deleteDiscoverySetting } = useDeleteNoneCredential();
 	const handleDeleteAdapterConfigurations = (configuration_id: string) => {
 		deleteDiscoverySetting.mutate(
 			{ adapterId, data: { configuration_id } },

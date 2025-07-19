@@ -10,7 +10,7 @@ import { useStableData } from "@/shared/hooks/useStableData";
 
 import { useDiscoveryAdapters } from "../../index.hooks";
 import type { DiscoveryAdapterFilters } from "../../index.types";
-import DiscoveryAdapterGateways from "./components/DiscoveryAdapterGateways";
+import DiscoveryAdapterGateways from "./components/DiscoveryAdapterComponent";
 
 export default function DiscoverySettingsDiscoveryAdapters() {
 	const { height } = useViewportSize();
