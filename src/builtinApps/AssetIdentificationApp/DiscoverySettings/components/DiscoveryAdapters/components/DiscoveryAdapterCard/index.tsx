@@ -54,8 +54,9 @@ const DiscoveryAdapterCard = ({
 					{configs?.map(({ value }) => (isObject(value) ? value?.label : ""))?.join(" - ")}
 				</Text>
 				<Flex gap="2xs">
-					<Flex align="center" gap="2xs" w="300px">
+					<Flex align="center" gap="2xs">
 						<Badge
+							w="170px"
 							variant="light"
 							color="gray"
 							p="sm"
@@ -74,7 +75,7 @@ const DiscoveryAdapterCard = ({
 								Discovered IPs
 							</Text>
 						</Badge>
-						<Badge variant="light" color={isActive ? "green" : "red"} p="sm">
+						<Badge w="130px" variant="light" color={isActive ? "green" : "red"} p="sm">
 							<Text p="2xs" tt="capitalize">
 								{isActive ? "Connected" : "Disconnected"}
 							</Text>
