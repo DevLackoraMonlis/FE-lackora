@@ -10,8 +10,6 @@ variables:
 
 default:
   image: mcr.microsoft.com/playwright:v1.43.1-jammy
-  before_script:
-    - npx playwright install --force
 
 cache:
   key: shared-playwright-cache
@@ -39,6 +37,7 @@ dev_pipeline:
     - NODE_ENV=production npm run build
   artifacts:
     paths:
+      - node_modules/
       - .next
       - public
     expire_in: 1 hour
@@ -56,9 +55,8 @@ playwright_tests:
   dependencies:
     - dev_pipeline
   script:
-    - npm ci
     - mkdir -p test-results
-    - NODE_ENV=production CI=true npm run test
+    - NODE_ENV=production CI=true npx playwright test
     - echo "── LS ROOT ──"
     - ls -la
     - echo "── LS test-results ──"
