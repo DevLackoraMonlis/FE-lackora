@@ -29,7 +29,7 @@ export function DiscoveryQuickModal(props: Props) {
 	};
 
 	const { default: defaultTitle, loading, results } = QUICK_DISCOVERY_TITLES;
-	const titleSize = !enabledQuery ? defaultTitle : discoverySettingRunNow.isLoading ? loading : results;
+	const titleSize = !enabledQuery ? defaultTitle : discoverySettingRunNow.isFetching ? loading : results;
 	return (
 		<BCModal
 			size={titleSize.size}
@@ -57,7 +57,7 @@ export function DiscoveryQuickModal(props: Props) {
 					</Flex>
 					<BCModal.Footer applyLabel="Start" onApply={handleEnabledQuery.open} onCancel={onClose} />
 				</>
-			) : discoverySettingRunNow.isLoading ? (
+			) : discoverySettingRunNow.isFetching ? (
 				<DiscoveryQuickConfirmDiscovering<Props> {...props} />
 			) : (
 				<DiscoveryQuickResults enabledQuery={false} {...props} />

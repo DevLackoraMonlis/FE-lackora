@@ -66,14 +66,7 @@ export default function DiscoverySettingsDiscoveryAdapters() {
 												{getVendorIcon(item.vendor, { size: 30 })}
 											</Card>
 											<Flex direction="column" gap="2xs">
-												<Text fw="bold">
-													{item.display_name}
-													{item.version && (
-														<Text component="span" px="2xs" fz="xs" fw="bold">
-															v.{item.version}
-														</Text>
-													)}
-												</Text>
+												<Text fw="bold">{item.display_name}</Text>
 												<Text fz="sm" c="gray.6">
 													{item.caption || "-"}
 												</Text>
