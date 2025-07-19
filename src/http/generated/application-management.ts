@@ -6,35 +6,27 @@
  * OpenAPI spec version: 1.0.0
  */
 import {
-  useMutation,
   useQuery
 } from '@tanstack/react-query';
 import type {
   DataTag,
   DefinedInitialDataOptions,
   DefinedUseQueryResult,
-  MutationFunction,
   QueryClient,
   QueryFunction,
   QueryKey,
   UndefinedInitialDataOptions,
-  UseMutationOptions,
-  UseMutationResult,
   UseQueryOptions,
   UseQueryResult
 } from '@tanstack/react-query';
 
 import type {
-  ActivatePluginWithCode,
-  ActivatePluginWithCodeResponse,
   ActiveApplicationsResponse,
-  ApplicationPurchaseLinkResponse,
   EachApplicationsResponse,
-  GetApplicationHistoryParams,
   GetApplicationsParams,
   HTTPValidationError,
-  PaginatedBaseResponseEachApplicationHistoryResponseWrapperNoneType,
-  PaginatedBaseResponseEachApplicationsResponseEachListMetadataWrapper
+  MessageOnlyResponse,
+  PaginatedBaseResponseEachApplicationsInListResponseEachListMetadataWrapper
 } from './models';
 
 import { orvalMutator } from '../orval-mutator';
@@ -52,7 +44,7 @@ export const getApplications = (
 ) => {
       
       
-      return orvalMutator<PaginatedBaseResponseEachApplicationsResponseEachListMetadataWrapper>(
+      return orvalMutator<PaginatedBaseResponseEachApplicationsInListResponseEachListMetadataWrapper>(
       {url: "/api/application-management/", method: 'GET',
         params, signal
     },
@@ -222,39 +214,39 @@ export function useGetActiveApplications<TData = Awaited<ReturnType<typeof getAc
  * @summary Get Single Application Details
  */
 export const getApplication = (
-    application: string,
+    applicationId: string,
  signal?: AbortSignal
 ) => {
       
       
       return orvalMutator<EachApplicationsResponse>(
-      {url: `/api/application-management/${application}`, method: 'GET', signal
+      {url: `/api/application-management/${applicationId}`, method: 'GET', signal
     },
       );
     }
   
 
-const getGetApplicationQueryKey = (application: string,) => {
-    return [`/api/application-management/${application}`] as const;
+const getGetApplicationQueryKey = (applicationId: string,) => {
+    return [`/api/application-management/${applicationId}`] as const;
     }
 
     
-export const getGetApplicationQueryOptions = <TData = Awaited<ReturnType<typeof getApplication>>, TError = HTTPValidationError>(application: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getApplication>>, TError, TData>>, }
+export const getGetApplicationQueryOptions = <TData = Awaited<ReturnType<typeof getApplication>>, TError = HTTPValidationError>(applicationId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getApplication>>, TError, TData>>, }
 ) => {
 
 const {query: queryOptions} = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getGetApplicationQueryKey(application);
+  const queryKey =  queryOptions?.queryKey ?? getGetApplicationQueryKey(applicationId);
 
   
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getApplication>>> = ({ signal }) => getApplication(application, signal);
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getApplication>>> = ({ signal }) => getApplication(applicationId, signal);
 
       
 
       
 
-   return  { queryKey, queryFn, enabled: !!(application), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getApplication>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+   return  { queryKey, queryFn, enabled: !!(applicationId), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getApplication>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
 }
 
 export type GetApplicationQueryResult = NonNullable<Awaited<ReturnType<typeof getApplication>>>
@@ -262,7 +254,7 @@ export type GetApplicationQueryError = HTTPValidationError
 
 
 export function useGetApplication<TData = Awaited<ReturnType<typeof getApplication>>, TError = HTTPValidationError>(
- application: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getApplication>>, TError, TData>> & Pick<
+ applicationId: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getApplication>>, TError, TData>> & Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof getApplication>>,
           TError,
@@ -272,7 +264,7 @@ export function useGetApplication<TData = Awaited<ReturnType<typeof getApplicati
  , queryClient?: QueryClient
   ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 export function useGetApplication<TData = Awaited<ReturnType<typeof getApplication>>, TError = HTTPValidationError>(
- application: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getApplication>>, TError, TData>> & Pick<
+ applicationId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getApplication>>, TError, TData>> & Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof getApplication>>,
           TError,
@@ -282,7 +274,7 @@ export function useGetApplication<TData = Awaited<ReturnType<typeof getApplicati
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 export function useGetApplication<TData = Awaited<ReturnType<typeof getApplication>>, TError = HTTPValidationError>(
- application: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getApplication>>, TError, TData>>, }
+ applicationId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getApplication>>, TError, TData>>, }
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 /**
@@ -290,11 +282,11 @@ export function useGetApplication<TData = Awaited<ReturnType<typeof getApplicati
  */
 
 export function useGetApplication<TData = Awaited<ReturnType<typeof getApplication>>, TError = HTTPValidationError>(
- application: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getApplication>>, TError, TData>>, }
+ applicationId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getApplication>>, TError, TData>>, }
  , queryClient?: QueryClient 
  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
-  const queryOptions = getGetApplicationQueryOptions(application,options)
+  const queryOptions = getGetApplicationQueryOptions(applicationId,options)
 
   const query = useQuery(queryOptions , queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 
@@ -306,90 +298,82 @@ export function useGetApplication<TData = Awaited<ReturnType<typeof getApplicati
 
 
 /**
- * @summary Get Single Application History
+ * @summary Activate Available Monoapp
  */
-export const getApplicationHistory = (
-    application: string,
-    params?: GetApplicationHistoryParams,
+export const activateMonoApplication = (
+    applicationId: string,
  signal?: AbortSignal
 ) => {
       
       
-      return orvalMutator<PaginatedBaseResponseEachApplicationHistoryResponseWrapperNoneType>(
-      {url: `/api/application-management/${application}/history`, method: 'GET',
-        params, signal
+      return orvalMutator<MessageOnlyResponse>(
+      {url: `/api/application-management/${applicationId}/activate`, method: 'GET', signal
     },
       );
     }
   
 
-const getGetApplicationHistoryQueryKey = (application: string,
-    params?: GetApplicationHistoryParams,) => {
-    return [`/api/application-management/${application}/history`, ...(params ? [params]: [])] as const;
+const getActivateMonoApplicationQueryKey = (applicationId: string,) => {
+    return [`/api/application-management/${applicationId}/activate`] as const;
     }
 
     
-export const getGetApplicationHistoryQueryOptions = <TData = Awaited<ReturnType<typeof getApplicationHistory>>, TError = HTTPValidationError>(application: string,
-    params?: GetApplicationHistoryParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getApplicationHistory>>, TError, TData>>, }
+export const getActivateMonoApplicationQueryOptions = <TData = Awaited<ReturnType<typeof activateMonoApplication>>, TError = HTTPValidationError>(applicationId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof activateMonoApplication>>, TError, TData>>, }
 ) => {
 
 const {query: queryOptions} = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getGetApplicationHistoryQueryKey(application,params);
+  const queryKey =  queryOptions?.queryKey ?? getActivateMonoApplicationQueryKey(applicationId);
 
   
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getApplicationHistory>>> = ({ signal }) => getApplicationHistory(application,params, signal);
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof activateMonoApplication>>> = ({ signal }) => activateMonoApplication(applicationId, signal);
 
       
 
       
 
-   return  { queryKey, queryFn, enabled: !!(application), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getApplicationHistory>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+   return  { queryKey, queryFn, enabled: !!(applicationId), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof activateMonoApplication>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
 }
 
-export type GetApplicationHistoryQueryResult = NonNullable<Awaited<ReturnType<typeof getApplicationHistory>>>
-export type GetApplicationHistoryQueryError = HTTPValidationError
+export type ActivateMonoApplicationQueryResult = NonNullable<Awaited<ReturnType<typeof activateMonoApplication>>>
+export type ActivateMonoApplicationQueryError = HTTPValidationError
 
 
-export function useGetApplicationHistory<TData = Awaited<ReturnType<typeof getApplicationHistory>>, TError = HTTPValidationError>(
- application: string,
-    params: undefined |  GetApplicationHistoryParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getApplicationHistory>>, TError, TData>> & Pick<
+export function useActivateMonoApplication<TData = Awaited<ReturnType<typeof activateMonoApplication>>, TError = HTTPValidationError>(
+ applicationId: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof activateMonoApplication>>, TError, TData>> & Pick<
         DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getApplicationHistory>>,
+          Awaited<ReturnType<typeof activateMonoApplication>>,
           TError,
-          Awaited<ReturnType<typeof getApplicationHistory>>
+          Awaited<ReturnType<typeof activateMonoApplication>>
         > , 'initialData'
       >, }
  , queryClient?: QueryClient
   ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetApplicationHistory<TData = Awaited<ReturnType<typeof getApplicationHistory>>, TError = HTTPValidationError>(
- application: string,
-    params?: GetApplicationHistoryParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getApplicationHistory>>, TError, TData>> & Pick<
+export function useActivateMonoApplication<TData = Awaited<ReturnType<typeof activateMonoApplication>>, TError = HTTPValidationError>(
+ applicationId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof activateMonoApplication>>, TError, TData>> & Pick<
         UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getApplicationHistory>>,
+          Awaited<ReturnType<typeof activateMonoApplication>>,
           TError,
-          Awaited<ReturnType<typeof getApplicationHistory>>
+          Awaited<ReturnType<typeof activateMonoApplication>>
         > , 'initialData'
       >, }
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetApplicationHistory<TData = Awaited<ReturnType<typeof getApplicationHistory>>, TError = HTTPValidationError>(
- application: string,
-    params?: GetApplicationHistoryParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getApplicationHistory>>, TError, TData>>, }
+export function useActivateMonoApplication<TData = Awaited<ReturnType<typeof activateMonoApplication>>, TError = HTTPValidationError>(
+ applicationId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof activateMonoApplication>>, TError, TData>>, }
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 /**
- * @summary Get Single Application History
+ * @summary Activate Available Monoapp
  */
 
-export function useGetApplicationHistory<TData = Awaited<ReturnType<typeof getApplicationHistory>>, TError = HTTPValidationError>(
- application: string,
-    params?: GetApplicationHistoryParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getApplicationHistory>>, TError, TData>>, }
+export function useActivateMonoApplication<TData = Awaited<ReturnType<typeof activateMonoApplication>>, TError = HTTPValidationError>(
+ applicationId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof activateMonoApplication>>, TError, TData>>, }
  , queryClient?: QueryClient 
  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
-  const queryOptions = getGetApplicationHistoryQueryOptions(application,params,options)
+  const queryOptions = getActivateMonoApplicationQueryOptions(applicationId,options)
 
   const query = useQuery(queryOptions , queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 
@@ -400,156 +384,3 @@ export function useGetApplicationHistory<TData = Awaited<ReturnType<typeof getAp
 
 
 
-/**
- * @summary Get Application Purchase Link
- */
-export const getApplicationPurchaseLink = (
-    application: string,
- signal?: AbortSignal
-) => {
-      
-      
-      return orvalMutator<ApplicationPurchaseLinkResponse>(
-      {url: `/api/application-management/${application}/purchase-link`, method: 'GET', signal
-    },
-      );
-    }
-  
-
-const getGetApplicationPurchaseLinkQueryKey = (application: string,) => {
-    return [`/api/application-management/${application}/purchase-link`] as const;
-    }
-
-    
-export const getGetApplicationPurchaseLinkQueryOptions = <TData = Awaited<ReturnType<typeof getApplicationPurchaseLink>>, TError = HTTPValidationError>(application: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getApplicationPurchaseLink>>, TError, TData>>, }
-) => {
-
-const {query: queryOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getGetApplicationPurchaseLinkQueryKey(application);
-
-  
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getApplicationPurchaseLink>>> = ({ signal }) => getApplicationPurchaseLink(application, signal);
-
-      
-
-      
-
-   return  { queryKey, queryFn, enabled: !!(application), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getApplicationPurchaseLink>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type GetApplicationPurchaseLinkQueryResult = NonNullable<Awaited<ReturnType<typeof getApplicationPurchaseLink>>>
-export type GetApplicationPurchaseLinkQueryError = HTTPValidationError
-
-
-export function useGetApplicationPurchaseLink<TData = Awaited<ReturnType<typeof getApplicationPurchaseLink>>, TError = HTTPValidationError>(
- application: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getApplicationPurchaseLink>>, TError, TData>> & Pick<
-        DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getApplicationPurchaseLink>>,
-          TError,
-          Awaited<ReturnType<typeof getApplicationPurchaseLink>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetApplicationPurchaseLink<TData = Awaited<ReturnType<typeof getApplicationPurchaseLink>>, TError = HTTPValidationError>(
- application: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getApplicationPurchaseLink>>, TError, TData>> & Pick<
-        UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getApplicationPurchaseLink>>,
-          TError,
-          Awaited<ReturnType<typeof getApplicationPurchaseLink>>
-        > , 'initialData'
-      >, }
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetApplicationPurchaseLink<TData = Awaited<ReturnType<typeof getApplicationPurchaseLink>>, TError = HTTPValidationError>(
- application: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getApplicationPurchaseLink>>, TError, TData>>, }
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
- * @summary Get Application Purchase Link
- */
-
-export function useGetApplicationPurchaseLink<TData = Awaited<ReturnType<typeof getApplicationPurchaseLink>>, TError = HTTPValidationError>(
- application: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getApplicationPurchaseLink>>, TError, TData>>, }
- , queryClient?: QueryClient 
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-
-  const queryOptions = getGetApplicationPurchaseLinkQueryOptions(application,options)
-
-  const query = useQuery(queryOptions , queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  query.queryKey = queryOptions.queryKey ;
-
-  return query;
-}
-
-
-
-/**
- * @summary Verify Application Activation Code
- */
-export const verifyApplication = (
-    application: string,
-    activatePluginWithCode: ActivatePluginWithCode,
- signal?: AbortSignal
-) => {
-      
-      
-      return orvalMutator<ActivatePluginWithCodeResponse>(
-      {url: `/api/application-management/${application}/verification`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: activatePluginWithCode, signal
-    },
-      );
-    }
-  
-
-
-export const getVerifyApplicationMutationOptions = <TError = HTTPValidationError,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof verifyApplication>>, TError,{application: string;data: ActivatePluginWithCode}, TContext>, }
-): UseMutationOptions<Awaited<ReturnType<typeof verifyApplication>>, TError,{application: string;data: ActivatePluginWithCode}, TContext> => {
-
-const mutationKey = ['verifyApplication'];
-const {mutation: mutationOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }};
-
-      
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof verifyApplication>>, {application: string;data: ActivatePluginWithCode}> = (props) => {
-          const {application,data} = props ?? {};
-
-          return  verifyApplication(application,data,)
-        }
-
-        
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type VerifyApplicationMutationResult = NonNullable<Awaited<ReturnType<typeof verifyApplication>>>
-    export type VerifyApplicationMutationBody = ActivatePluginWithCode
-    export type VerifyApplicationMutationError = HTTPValidationError
-
-    /**
- * @summary Verify Application Activation Code
- */
-export const useVerifyApplication = <TError = HTTPValidationError,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof verifyApplication>>, TError,{application: string;data: ActivatePluginWithCode}, TContext>, }
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof verifyApplication>>,
-        TError,
-        {application: string;data: ActivatePluginWithCode},
-        TContext
-      > => {
-
-      const mutationOptions = getVerifyApplicationMutationOptions(options);
-
-      return useMutation(mutationOptions , queryClient);
-    }
-    

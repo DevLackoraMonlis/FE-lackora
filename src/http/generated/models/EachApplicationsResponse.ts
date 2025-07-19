@@ -7,13 +7,16 @@
  */
 import type { ApplicationVendorName } from './ApplicationVendorName';
 import type { EachApplicationsResponseActivationTime } from './EachApplicationsResponseActivationTime';
+import type { EachApplicationsResponseBusinessValue } from './EachApplicationsResponseBusinessValue';
 import type { EachApplicationsResponseCategory } from './EachApplicationsResponseCategory';
+import type { EachApplicationsResponseConfiguration } from './EachApplicationsResponseConfiguration';
+import type { EachApplicationsResponseConfigurationRequirements } from './EachApplicationsResponseConfigurationRequirements';
 import type { EachApplicationsResponseExpirationTime } from './EachApplicationsResponseExpirationTime';
 import type { EachApplicationsResponseIcon } from './EachApplicationsResponseIcon';
 import type { EachApplicationsResponseIsActive } from './EachApplicationsResponseIsActive';
 import type { EachApplicationsResponseIsAvailable } from './EachApplicationsResponseIsAvailable';
+import type { EachApplicationsResponseKeyCapabilities } from './EachApplicationsResponseKeyCapabilities';
 import type { EachApplicationsResponseLastView } from './EachApplicationsResponseLastView';
-import type { EachApplicationsResponsePurchaseLink } from './EachApplicationsResponsePurchaseLink';
 import type { EachApplicationsResponseStatus } from './EachApplicationsResponseStatus';
 import type { EachApplicationsResponseSupportLicense } from './EachApplicationsResponseSupportLicense';
 import type { EachApplicationsResponseSupportLicenseExpirationTime } from './EachApplicationsResponseSupportLicenseExpirationTime';
@@ -21,7 +24,6 @@ import type { EachApplicationsResponseType } from './EachApplicationsResponseTyp
 import type { EachApplicationsResponseUpdatedTime } from './EachApplicationsResponseUpdatedTime';
 import type { EachApplicationsResponseUpdater } from './EachApplicationsResponseUpdater';
 import type { EachApplicationsResponseViewer } from './EachApplicationsResponseViewer';
-import type { EachInstallingStep } from './EachInstallingStep';
 
 export interface EachApplicationsResponse {
   id: string;
@@ -33,6 +35,9 @@ export interface EachApplicationsResponse {
   version: string;
   summary?: string;
   description?: string;
+  key_capabilities?: EachApplicationsResponseKeyCapabilities;
+  business_value?: EachApplicationsResponseBusinessValue;
+  configuration_requirements?: EachApplicationsResponseConfigurationRequirements;
   status?: EachApplicationsResponseStatus;
   is_active?: EachApplicationsResponseIsActive;
   activation_time?: EachApplicationsResponseActivationTime;
@@ -43,12 +48,9 @@ export interface EachApplicationsResponse {
   support_license_expiration_time?: EachApplicationsResponseSupportLicenseExpirationTime;
   type?: EachApplicationsResponseType;
   is_base: boolean;
-  purchase_link?: EachApplicationsResponsePurchaseLink;
   is_available?: EachApplicationsResponseIsAvailable;
   is_configurable: boolean;
-  is_installing: boolean;
-  steps: string[];
-  current_step: string;
+  configuration?: EachApplicationsResponseConfiguration;
   placement: string;
   priority: number;
   modules: string[];
@@ -58,6 +60,5 @@ export interface EachApplicationsResponse {
   updated_time?: EachApplicationsResponseUpdatedTime;
   viewer?: EachApplicationsResponseViewer;
   last_view?: EachApplicationsResponseLastView;
-  installingsteps: EachInstallingStep[];
   is_new: boolean;
 }
