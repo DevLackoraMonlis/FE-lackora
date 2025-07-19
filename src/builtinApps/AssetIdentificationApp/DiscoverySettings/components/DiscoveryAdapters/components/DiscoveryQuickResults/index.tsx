@@ -106,7 +106,9 @@ export function DiscoveryQuickResults(props: Props) {
 				</Badge>
 				<Text fz="lg" fw="bold" tt="capitalize">
 					{status
-						? `${discoverySettingRunNow?.data?.total ?? "-"} IPs discovered From ${props.configurationIP}`
+						? `${discoverySettingRunNow?.data?.total ?? "-"} IPs discovered In ${
+								discoverySettingRunNow?.data?.duration
+							} From ${props.configurationIP}`
 						: `${discoverySettingRunNow?.data?.message || "-"}`}
 				</Text>
 			</Flex>

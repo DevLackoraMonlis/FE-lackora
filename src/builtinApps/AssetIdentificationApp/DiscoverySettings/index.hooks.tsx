@@ -72,27 +72,30 @@ export function useDiscoveryAdapterById(adapterId: string, enabled: boolean) {
 			enabled: !!adapterId && enabled,
 			refetchOnMount: false,
 			select: (res) => {
-				const results = res?.data?.results?.map(({ id, is_active, config, editable, adapter_id }) => {
-					const updateConfigValues = config.map(({ value, ...item }) => ({
-						...item,
-						value:
-							typeof value === "number"
-								? `${value}`
-								: isObject(value)
-									? {
-											label: value.label,
-											value: typeof value.value === "number" ? `${value}` : value.value,
-										}
-									: value,
-					}));
-					return {
-						id,
-						adapterId: adapter_id,
-						editable: editable !== false,
-						isActive: !!is_active,
-						configs: configsTransformRs(updateConfigValues),
-					};
-				});
+				const results = res?.data?.results?.map(
+					({ id, is_active, config, editable, adapter_id, last_execution }) => {
+						const updateConfigValues = config.map(({ value, ...item }) => ({
+							...item,
+							value:
+								typeof value === "number"
+									? `${value}`
+									: isObject(value)
+										? {
+												label: value.label,
+												value: typeof value.value === "number" ? `${value}` : value.value,
+											}
+										: value,
+						}));
+						return {
+							id,
+							adapterId: adapter_id,
+							editable: editable !== false,
+							isActive: !!is_active,
+							lastExecution: last_execution || "",
+							configs: configsTransformRs(updateConfigValues),
+						};
+					},
+				);
 				return { ...res?.data, results };
 			},
 		},

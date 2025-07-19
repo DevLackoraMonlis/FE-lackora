@@ -1,4 +1,4 @@
-import { ActionIcon, Badge, Card, Flex, LoadingOverlay, Text } from "@mantine/core";
+import { ActionIcon, Badge, Card, Flex, Highlight, LoadingOverlay, Text } from "@mantine/core";
 import { IconPencil, IconPlugConnected, IconX, IconZoomReset } from "@tabler/icons-react";
 import { isObject } from "lodash";
 import { useState } from "react";
@@ -10,6 +10,10 @@ import type {
 
 import type { ConfigurationRs, DiscoveryAdapterConfigurationRs } from "../../../../index.types";
 import DiscoveryAdaptersEditGateway from "../DiscoveryAdaptersEdit";
+
+const highlightNumbers = Array(10)
+	.fill(null)
+	.map((_, num) => num.toString());
 
 type Props = DiscoveryAdapterConfigurationRs & {
 	handleEditAdapterConfigurations: (id: string, configs: BCDynamicConfigRq[], callback: VoidFunction) => void;
@@ -50,15 +54,13 @@ const DiscoveryAdapterCard = (props: Props) => {
 							w="170px"
 							variant="light"
 							color="gray"
+							tt="capitalize"
 							p="sm"
 							onClick={() => props.handleDiscoverySettingDiscoveryIPs(configurationData)}
 						>
-							<Text p="2xs" tt="capitalize" className="cursor-pointer">
-								<Text component="span" fw="bold" px="2xs">
-									500
-								</Text>
-								Discovered IPs
-							</Text>
+							<Highlight highlight={highlightNumbers} style={{ textTransform: "capitalize" }}>
+								{props.lastExecution}
+							</Highlight>
 						</Badge>
 						<Badge w="130px" variant="light" color={props.isActive ? "green" : "red"} p="sm">
 							<Text p="2xs" tt="capitalize">

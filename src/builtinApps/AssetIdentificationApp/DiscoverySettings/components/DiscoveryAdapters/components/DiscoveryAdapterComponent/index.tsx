@@ -99,31 +99,25 @@ const DiscoveryAdapterGateways = ({ enabled, adapterId, fields, refetchDiscovery
 			{/* UI section */}
 			<Flex gap="xs" direction="column" pos="relative" mih="50px">
 				<LoadingOverlay visible={discoverySettingConfigurations?.isFetching} />
-				{discoverySettingConfigurations.data?.results?.map(
-					({ configs, id, isActive, editable, adapterId }) => (
-						<DiscoveryAdapterCard
-							handleDeleteAdapterConfigurations={handleDeleteAdapterConfigurations}
-							handleDiscoverySettingTestConnection={handleDiscoverySettingTestConnection}
-							handleDiscoverySettingQuickDiscovery={handleDiscoverySettingQuickDiscovery}
-							handleDiscoverySettingDiscoveryIPs={handleDiscoverySettingDiscoveryIPs}
-							handleEditAdapterConfigurations={handleEditAdapterConfigurations}
-							key={id}
-							{...{
-								configs,
-								id,
-								isActive,
-								editable,
-								adapterId,
-								fields,
-								disabled: testLoading || editDiscoverySetting.isPending,
-								...(id === selectedId && {
-									testLoading,
-									loading: editDiscoverySetting.isPending,
-								}),
-							}}
-						/>
-					),
-				)}
+				{discoverySettingConfigurations.data?.results?.map((item) => (
+					<DiscoveryAdapterCard
+						handleDeleteAdapterConfigurations={handleDeleteAdapterConfigurations}
+						handleDiscoverySettingTestConnection={handleDiscoverySettingTestConnection}
+						handleDiscoverySettingQuickDiscovery={handleDiscoverySettingQuickDiscovery}
+						handleDiscoverySettingDiscoveryIPs={handleDiscoverySettingDiscoveryIPs}
+						handleEditAdapterConfigurations={handleEditAdapterConfigurations}
+						key={item.id}
+						{...{
+							fields,
+							disabled: testLoading || editDiscoverySetting.isPending,
+							...(item.id === selectedId && {
+								testLoading,
+								loading: editDiscoverySetting.isPending,
+							}),
+							...item,
+						}}
+					/>
+				))}
 			</Flex>
 			<DiscoveryAdaptersCreateGateway
 				fields={fields}
