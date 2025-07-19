@@ -71,7 +71,7 @@ export default defineConfig({
 
 	/* Run your local dev server before starting the tests */
 	webServer: {
-		command: !isProd ? "npm run dev:test" : `PORT=${port}node .next/standalone/server.js`,
+		command: !isProd ? "npm run dev:test" : `PORT=${port} node .next/standalone/server.js`,
 		url: `http://localhost:${port}`,
 		reuseExistingServer: !isCI,
 		timeout: 60 * 3 * 1000, // 2 دقیقه صبر می‌کنه تا سرور بالا بیاد
