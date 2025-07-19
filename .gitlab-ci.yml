@@ -80,8 +80,10 @@ upload_allure:
     - chmod 600 id_rsa
     - mkdir -p ~/.ssh
     - ssh-keyscan -H 172.31.100.98 >> ~/.ssh/known_hosts
-    - scp -i id_rsa -r allure-results/ allure@172.31.100.98:/tmp/allure-results
-    - ssh -i id_rsa allure@172.31.100.98 'allure generate /tmp/allure-results -o /var/www/allure --clean'
+    - scp -i id_rsa -r allure-results/ root@172.31.100.98:/tmp/allure-results
+    - ssh -i id_rsa root@172.31.100.98 'allure generate /tmp/allure-results -o /var/www/allure --clean'
+  when: always
+
 
 dev_deploy:
   stage: deploy
