@@ -116,7 +116,7 @@ export const getMonoMarketActivateConfigButton = (
 		"isConfigured" | "productType" | "configRequired" | "onActiveWithConfig" | "onActiveOnly"
 	>,
 ) => {
-	if (params.status === MonoAppStatusTypeEnum.EXPIRED && params.hasSupportLicenseSupport) {
+	if (params.status === MonoAppStatusTypeEnum.SUPPORT_LICENSE_EXPIRED && params.hasSupportLicenseSupport) {
 		return (
 			<Button size={"xs"} color={"red"}>
 				Renew license
