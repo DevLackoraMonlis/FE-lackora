@@ -57,6 +57,9 @@ export function getMonoMarketAppProductButton(params: {
 	}
 	return (
 		<Badge
+			classNames={{
+				label: "pl-1-5",
+			}}
 			fz={"2xs"}
 			radius={"xs"}
 			color={MonoAppProductColor[params.type]}
