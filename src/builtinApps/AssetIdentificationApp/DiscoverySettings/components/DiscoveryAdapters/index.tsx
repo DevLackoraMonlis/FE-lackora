@@ -1,4 +1,4 @@
-import { Badge, Card, Flex, Grid, LoadingOverlay, ScrollArea, Text } from "@mantine/core";
+import { Badge, Card, Flex, Grid, ScrollArea, Text } from "@mantine/core";
 import { Accordion } from "@mantine/core";
 import { useViewportSize } from "@mantine/hooks";
 import { useState } from "react";
@@ -11,6 +11,7 @@ import { useStableData } from "@/shared/hooks/useStableData";
 import { useDiscoveryAdapters } from "../../index.hooks";
 import type { DiscoveryAdapterFilters } from "../../index.types";
 import DiscoveryAdapterGateways from "./components/DiscoveryAdapterComponent";
+import DiscoveryAdapterSkelton from "./components/DiscoveryAdapterSkelton";
 
 export default function DiscoverySettingsDiscoveryAdapters() {
 	const { height } = useViewportSize();
@@ -54,50 +55,53 @@ export default function DiscoverySettingsDiscoveryAdapters() {
 				/>
 			</Grid.Col>
 			<Grid.Col span={9} pos="relative">
-				<LoadingOverlay visible={discoveryAdapters.isLoading} />
 				<ScrollArea h={height - 160}>
-					<Accordion variant="separated" onChange={setActiveAccordion}>
-						{discoveryAdapters?.data?.results?.map((item) => (
-							<Accordion.Item key={item.id} value={item.id}>
-								<Accordion.Control>
-									<Flex align="center" justify="space-between">
-										<Flex gap="sm">
-											<Card variant="light" p="xs">
-												{getVendorIcon(item.vendor, { size: 30 })}
-											</Card>
-											<Flex direction="column" gap="2xs">
-												<Text fw="bold">{item.display_name}</Text>
-												<Text fz="sm" c="gray.6">
-													{item.caption || "-"}
-												</Text>
+					{discoveryAdapters.isLoading ? (
+						<DiscoveryAdapterSkelton count={9} />
+					) : (
+						<Accordion variant="separated" onChange={setActiveAccordion}>
+							{discoveryAdapters?.data?.results?.map((item) => (
+								<Accordion.Item key={item.id} value={item.id}>
+									<Accordion.Control>
+										<Flex align="center" justify="space-between">
+											<Flex gap="sm">
+												<Card variant="light" p="xs">
+													{getVendorIcon(item.vendor, { size: 30 })}
+												</Card>
+												<Flex direction="column" gap="2xs">
+													<Text fw="bold">{item.display_name}</Text>
+													<Text fz="sm" c="gray.6">
+														{item.caption || "-"}
+													</Text>
+												</Flex>
+											</Flex>
+											<Flex align="center" gap="xs" px="sm">
+												<Badge variant="light" color={item.is_used ? "green" : "gray"} p="md">
+													<Text p="2xs">{item.is_used ? "USED" : "UNUSED"}</Text>
+												</Badge>
+												<Badge variant="light" radius="xs" p="lg">
+													<Text tt="capitalize" p="2xs">
+														Configure
+													</Text>
+												</Badge>
 											</Flex>
 										</Flex>
-										<Flex align="center" gap="xs" px="sm">
-											<Badge variant="light" color={item.is_used ? "green" : "gray"} p="md">
-												<Text p="2xs">{item.is_used ? "USED" : "UNUSED"}</Text>
-											</Badge>
-											<Badge variant="light" radius="xs" p="lg">
-												<Text tt="capitalize" p="2xs">
-													Configure
-												</Text>
-											</Badge>
-										</Flex>
-									</Flex>
-								</Accordion.Control>
-								<Accordion.Panel>
-									<Text py="xs" c="gray.6">
-										Added Configurations
-									</Text>
-									<DiscoveryAdapterGateways
-										enabled={activeAccordion === item.id}
-										adapterId={item.id}
-										fields={item.fields}
-										refetchDiscoveryAdapters={discoveryAdapters.refetch}
-									/>
-								</Accordion.Panel>
-							</Accordion.Item>
-						))}
-					</Accordion>
+									</Accordion.Control>
+									<Accordion.Panel>
+										<Text py="xs" c="gray.6">
+											Added Configurations
+										</Text>
+										<DiscoveryAdapterGateways
+											enabled={activeAccordion === item.id}
+											adapterId={item.id}
+											fields={item.fields}
+											refetchDiscoveryAdapters={discoveryAdapters.refetch}
+										/>
+									</Accordion.Panel>
+								</Accordion.Item>
+							))}
+						</Accordion>
+					)}
 				</ScrollArea>
 			</Grid.Col>
 		</Grid>
