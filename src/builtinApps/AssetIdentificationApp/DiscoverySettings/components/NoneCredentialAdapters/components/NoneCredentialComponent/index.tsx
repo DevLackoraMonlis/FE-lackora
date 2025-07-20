@@ -22,7 +22,7 @@ type Props = {
 
 const NoneCredentialServices = ({ enabled, adapterId, fields, refetchDiscoveryAdapters }: Props) => {
 	const { discoverySettingConfigurations } = useDiscoveryAdapterById(adapterId, enabled);
-	const results = discoverySettingConfigurations.data?.results;
+
 	const { deleteDiscoverySetting } = useDeleteNoneCredential();
 	const handleDeleteAdapterConfigurations = (configuration_id: string) => {
 		deleteDiscoverySetting.mutate(
@@ -55,9 +55,14 @@ const NoneCredentialServices = ({ enabled, adapterId, fields, refetchDiscoveryAd
 
 	return (
 		<>
-			<Flex gap="xs" direction="column" pos="relative" mih={results?.length ? "50px" : ""}>
+			<Flex
+				gap="xs"
+				direction="column"
+				pos="relative"
+				mih={discoverySettingConfigurations?.isFetching ? "50px" : ""}
+			>
 				<LoadingOverlay visible={discoverySettingConfigurations?.isLoading} />
-				{results?.map((item, idx) => (
+				{discoverySettingConfigurations.data?.results?.map((item, idx) => (
 					<NoneCredentialAdaptersCard
 						handleDeleteAdapterConfigurations={() => handleDeleteAdapterConfigurations(item.id)}
 						handleEditAdapterConfigurations={(newConfigs, callback) =>

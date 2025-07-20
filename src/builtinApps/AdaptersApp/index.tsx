@@ -18,14 +18,14 @@ import { ImportAdapterModal, UpdateAdapterModal } from "./components/ImportAdapt
 import { useAdapterManagement } from "./index.hooks";
 import type { AdaptersFilters } from "./index.types";
 
-const params = { defaultPageSize: 12 };
-
 export default function AdapterManagementLandingPage() {
 	const { height } = useViewportSize();
 	const { renderAdapterBadge } = useAdapterBadges();
 	const { renderLabel } = useRenderFilterLabels();
 
-	const { tablePagination, page, pageSize, totalRecords, setTotalRecords } = useTablePagination(params);
+	const { tablePagination, page, pageSize, totalRecords, setTotalRecords } = useTablePagination({
+		defaultPageSize: 12,
+	});
 	const showPagination = totalRecords > pageSize;
 	const [queryParams, setQueryParams] = useState<AdaptersFilters>({});
 	const { adapterManagement } = useAdapterManagement(queryParams);
@@ -102,7 +102,7 @@ export default function AdapterManagementLandingPage() {
 							pos="relative"
 						>
 							{adapterManagement.isLoading ? (
-								<AdapterSingleCardSkelton count={params.defaultPageSize} />
+								<AdapterSingleCardSkelton count={9} />
 							) : (
 								results?.map((item) => (
 									<Grid.Col key={item.id} span={{ xs: 12, md: 6, lg: 4 }}>
