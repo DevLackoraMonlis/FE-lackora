@@ -12,7 +12,7 @@ import { Badge, Button, Flex, Tooltip } from "@mantine/core";
 import { IconArrowNarrowRight, IconAward, IconBox, IconLock, IconSettings } from "@tabler/icons-react";
 import type { ReactNode } from "react";
 
-export function getMonoMarketAppProductionButton(params: {
+export function getMonoMarketAppProductButton(params: {
 	size: "small" | "large" | "xLarge";
 	type: MonoAppProductTypeEnum;
 }) {
@@ -67,7 +67,7 @@ export function getMonoAppIcon(params: {
 	name: string;
 }) {
 	const icons: Record<string, ReactNode> = {
-		MonoSuite: <MonoWatchLogo width={params.size} height={params.size} />,
+		monosuite: <MonoWatchLogo width={params.size} height={params.size} />,
 	};
 	return icons[params.name] || <IconBox size={params.size} />;
 }
@@ -77,6 +77,7 @@ export const getMonoMarketActivateConfigButton = (
 		status: MonoAppStatusTypeEnum;
 		showConfigButton: boolean;
 		onConfig?: VoidFunction;
+		onOpen: VoidFunction;
 	} & Pick<
 		MonoMarketCardProps,
 		"isConfigured" | "productType" | "hasConfig" | "onActiveWithConfig" | "onActiveOnly"
@@ -104,7 +105,7 @@ export const getMonoMarketActivateConfigButton = (
 		if (params.isConfigured) {
 			return (
 				<Flex gap={"2xs"} align={"center"}>
-					<Button variant={"outline"} size={"xs"}>
+					<Button onClick={params.onOpen} variant={"outline"} size={"xs"}>
 						Open
 					</Button>
 					{params.showConfigButton && (
@@ -129,7 +130,7 @@ export const getMonoMarketActivateConfigButton = (
 	if (params.status === "ACTIVATED") {
 		return (
 			<Flex gap={"2xs"} align={"center"}>
-				<Button variant={"outline"} size={"xs"}>
+				<Button onClick={params.onOpen} variant={"outline"} size={"xs"}>
 					Open
 				</Button>
 				{params.showConfigButton && (

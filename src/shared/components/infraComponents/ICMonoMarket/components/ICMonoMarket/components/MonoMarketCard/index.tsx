@@ -2,7 +2,7 @@ import {
 	getMonoAppIcon,
 	getMonoMarketActivateConfigButton,
 	getMonoMarketAppMonoCareLicenseButton,
-	getMonoMarketAppProductionButton,
+	getMonoMarketAppProductButton,
 } from "@/shared/components/infraComponents/ICMonoMarket/components/ICMonoMarket/index.helper";
 import type { MonoMarketCardProps } from "@/shared/components/infraComponents/ICMonoMarket/components/ICMonoMarket/index.types";
 import { Badge, Box, Button, Card, Flex, Loader, Text, Tooltip } from "@mantine/core";
@@ -45,7 +45,7 @@ export default function MonoMarketCard(props: MonoMarketCardProps) {
 								</Flex>
 							}
 						>
-							{getMonoMarketAppProductionButton({ size: "small", type: props.productType })}
+							{getMonoMarketAppProductButton({ size: "small", type: props.productType })}
 						</Tooltip>
 					</Flex>
 					{props.hasRequiredSupportLicense && (
@@ -139,6 +139,7 @@ export default function MonoMarketCard(props: MonoMarketCardProps) {
 							productType: props.productType,
 							status: props.status,
 							showConfigButton: false,
+							onOpen: props.onOpen,
 						})}
 					</Flex>
 				)}

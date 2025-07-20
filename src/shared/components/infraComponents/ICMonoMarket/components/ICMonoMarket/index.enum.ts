@@ -8,4 +8,5 @@ export enum MonoAppStatusTypeEnum {
 	INACTIVE = "INACTIVE",
 	ACTIVATED = "ACTIVATED",
 	EXPIRED = "EXPIRED",
+	INSTALLING = "INSTALLING",
 }

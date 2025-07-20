@@ -8,10 +8,13 @@ import { Fragment, type ReactNode } from "react";
 type FilterType = "Text" | "Date" | "DateTime" | "Switch" | "CheckedList";
 
 export type BCSideFilterItemOption = LabelValueFilter & {
-	renderLabel?: RenderLabel;
+	renderLabel?: BCSideFilterRenderLabel;
 };
 
-export type RenderLabel = (params: BCSideFilterItemOption, filterItem: BCSideFilterItem) => React.ReactNode;
+export type BCSideFilterRenderLabel = (
+	itemOption: BCSideFilterItemOption,
+	filterItem: BCSideFilterItem,
+) => ReactNode;
 
 export type BCSideFilterItem = {
 	type: FilterType;
@@ -153,7 +156,11 @@ export default function BCSideFilter(props: Props) {
 					<Divider />
 					<ScrollArea h={props.height || "fit-content"}>
 						{props.filterItems
-							.sort((a, b) => (b?.order || 0) - (a.order || 0))
+							.sort((a, b) => {
+								if (a?.order === undefined) return 1;
+								if (b?.order === undefined) return -1;
+								return a.order - b.order;
+							})
 							.map((filterItem) => {
 								if (filterItem.type === "CheckedList") {
 									return (

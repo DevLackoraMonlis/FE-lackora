@@ -32,15 +32,15 @@ type Props = {
 const generateMenuItem = (params: {
 	items: SideMenuItem[];
 	opened: boolean;
-	onMouseEnter: VoidFunction;
-	onMouseLeave: VoidFunction;
+	onMouseEnter: (href: string) => void;
+	onMouseLeave: (href: string) => void;
 }) => {
 	const pathname = usePathname();
 	return params.items.map((link) => {
 		const navLink = (
 			<BCNavLink
-				onMouseLeave={params.onMouseLeave}
-				onMouseEnter={params.onMouseEnter}
+				onMouseLeave={() => params.onMouseLeave(link.href)}
+				onMouseEnter={() => params.onMouseEnter(link.href)}
 				leftSection={link.icon}
 				rightSection={params.opened && link.menuGroupProps && <IconChevronRight color={"white"} size={16} />}
 				key={link.label}
@@ -87,6 +87,7 @@ export default function ICPanelSidebar(props: Props) {
 	const hoverColor = colors.primary[6];
 
 	const [color, setColor] = useState(baseColor);
+	const [hoveredName, setHovered] = useState("");
 	const [colorManagementCenter, setColorManagementCenter] = useState(baseColor);
 
 	const store = useStore(
@@ -96,6 +97,15 @@ export default function ICPanelSidebar(props: Props) {
 		})),
 	);
 
+	const onMouseEnter = (href: string) => {
+		setColor(hoverColor);
+		setHovered(href);
+	};
+	const onMouseLeave = () => {
+		setColor(baseColor);
+		setHovered("");
+	};
+
 	const topMenuItems = generateMenuItem({
 		items:
 			store.apps
@@ -103,7 +113,11 @@ export default function ICPanelSidebar(props: Props) {
 				.sort()
 				.map((item) => ({
 					href: AppRoutes.appLandingPage(item.name),
-					icon: getSidePanelAppIcon(24, item.name, color),
+					icon: getSidePanelAppIcon(
+						24,
+						item.name,
+						hoveredName === AppRoutes.appLandingPage(item.name) ? color : undefined,
+					),
 					label: item.display_name,
 					menuGroupProps:
 						item.placement !== "sidebar"
@@ -115,8 +129,8 @@ export default function ICPanelSidebar(props: Props) {
 							: undefined,
 				})) || [],
 		opened: props.opened,
-		onMouseEnter: () => setColor(hoverColor),
-		onMouseLeave: () => setColor(baseColor),
+		onMouseEnter,
+		onMouseLeave,
 	});
 
 	const applicationMenuItems = generateMenuItem({
@@ -125,7 +139,11 @@ export default function ICPanelSidebar(props: Props) {
 				.filter((item) => !item.priority && item.placement === "application")
 				.map((item) => ({
 					href: AppRoutes.appLandingPage(item.name),
-					icon: getSidePanelAppIcon(24, item.name, color),
+					icon: getSidePanelAppIcon(
+						24,
+						item.name,
+						hoveredName === AppRoutes.appLandingPage(item.name) ? color : undefined,
+					),
 					label: item.display_name,
 					menuGroupProps:
 						item.placement !== "sidebar"
@@ -137,8 +155,8 @@ export default function ICPanelSidebar(props: Props) {
 							: undefined,
 				})) || [],
 		opened: props.opened,
-		onMouseEnter: () => setColor(hoverColor),
-		onMouseLeave: () => setColor(baseColor),
+		onMouseEnter,
+		onMouseLeave,
 	});
 
 	const sidebarMenuItems = generateMenuItem({
@@ -147,7 +165,11 @@ export default function ICPanelSidebar(props: Props) {
 				.filter((item) => !item.priority && item.placement === "sidebar")
 				.map((item) => ({
 					href: AppRoutes.appLandingPage(item.name),
-					icon: getSidePanelAppIcon(24, item.name, color),
+					icon: getSidePanelAppIcon(
+						24,
+						item.name,
+						hoveredName === AppRoutes.appLandingPage(item.name) ? color : undefined,
+					),
 					label: item.display_name,
 					menuGroupProps:
 						item.placement !== "sidebar"
@@ -159,8 +181,8 @@ export default function ICPanelSidebar(props: Props) {
 							: undefined,
 				})) || [],
 		opened: props.opened,
-		onMouseEnter: () => setColor(hoverColor),
-		onMouseLeave: () => setColor(baseColor),
+		onMouseEnter,
+		onMouseLeave,
 	});
 
 	return (

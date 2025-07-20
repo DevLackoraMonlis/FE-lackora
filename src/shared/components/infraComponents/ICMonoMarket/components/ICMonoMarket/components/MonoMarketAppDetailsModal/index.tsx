@@ -7,20 +7,24 @@ import {
 	getMonoAppIcon,
 	getMonoMarketActivateConfigButton,
 	getMonoMarketAppMonoCareLicenseButton,
-	getMonoMarketAppProductionButton,
+	getMonoMarketAppProductButton,
 } from "@/shared/components/infraComponents/ICMonoMarket/components/ICMonoMarket/index.helper";
 import type { MonoMarketCardProps } from "@/shared/components/infraComponents/ICMonoMarket/components/ICMonoMarket/index.types";
 import type { ModalDefaultProps } from "@/shared/types/index.types";
-import { Alert, Badge, Box, Flex, List, Text } from "@mantine/core";
+import { Alert, Badge, Box, Flex, Text } from "@mantine/core";
 import { IconAlertTriangle } from "@tabler/icons-react";
 import * as changeCase from "change-case";
 import { FcPuzzle, FcSearch } from "react-icons/fc";
 import { GiBullseye } from "react-icons/gi";
 import { PiGearFineDuotone } from "react-icons/pi";
+import Markdown from "react-markdown";
 
 type Props = ModalDefaultProps & {
-	appData: Omit<MonoMarketCardProps, "onShowMore" | "onActiveOnly" | "onActiveWithConfig">;
-} & Pick<MonoMarketCardProps, "onActiveWithConfig" | "onActiveOnly">;
+	appData: Omit<
+		MonoMarketCardProps,
+		"onShowMore" | "onActiveOnly" | "onActiveWithConfig" | "onOpen" | "isProcessing"
+	>;
+} & Pick<MonoMarketCardProps, "onActiveWithConfig" | "onActiveOnly" | "onOpen">;
 
 export default function MonoMarketAppDetailsModal(props: Props) {
 	const getSupportLicenseBadge = () => {
@@ -96,6 +100,7 @@ export default function MonoMarketAppDetailsModal(props: Props) {
 									productType: props.appData.productType,
 									status: props.appData.status,
 									showConfigButton: props.appData.hasConfig,
+									onOpen: props.onOpen,
 									onConfig: () => {
 										props.onActiveWithConfig();
 										props.onClose();
@@ -107,7 +112,7 @@ export default function MonoMarketAppDetailsModal(props: Props) {
 								c={"gray.8"}
 							>{`version ${props.appData.version} | by ${props.appData.owner}`}</Text>
 							<Flex gap={"2xs"}>
-								{getMonoMarketAppProductionButton({ type: props.appData.productType, size: "xLarge" })}
+								{getMonoMarketAppProductButton({ type: props.appData.productType, size: "xLarge" })}
 								{getMonoMarketAppMonoCareLicenseButton({ size: "large" })}
 							</Flex>
 							<Box mt={"2xs"}>{getSupportLicenseBadge()}</Box>
@@ -129,22 +134,14 @@ export default function MonoMarketAppDetailsModal(props: Props) {
 							<Text fw={"bold"}>Key Capabilities:</Text>
 						</Flex>
 						<Box bg={"white"} p={"xs"}>
-							<List>
-								{props.appData.keyCapabilities.map((item) => (
-									<List.Item key={item}>{item}</List.Item>
-								))}
-							</List>
+							<Markdown>{props.appData.keyCapabilities}</Markdown>
 						</Box>
 						<Flex align={"center"} mt={"xs"}>
 							<GiBullseye color={"red"} size={16} />
 							<Text fw={"bold"}>Business Value:</Text>
 						</Flex>
 						<Box bg={"white"} p={"xs"}>
-							<List>
-								{props.appData.businessValue.map((item) => (
-									<List.Item key={item}>{item}</List.Item>
-								))}
-							</List>
+							<Markdown>{props.appData.businessValue}</Markdown>
 						</Box>
 						{props.appData.hasConfig && (
 							<>
@@ -153,11 +150,7 @@ export default function MonoMarketAppDetailsModal(props: Props) {
 									<Text fw={"bold"}>Configuration Required:</Text>
 								</Flex>
 								<Box bg={"white"} p={"xs"}>
-									<List>
-										{props.appData.configurationRequired.map((item) => (
-											<List.Item key={item}>{item}</List.Item>
-										))}
-									</List>
+									<Markdown>{props.appData.configurationRequired}</Markdown>
 								</Box>
 							</>
 						)}
