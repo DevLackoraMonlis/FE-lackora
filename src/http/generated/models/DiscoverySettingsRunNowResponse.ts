@@ -13,6 +13,7 @@ export interface DiscoverySettingsRunNowResponse {
   status: boolean;
   results: unknown[];
   total: number;
+  duration: string;
   message?: DiscoverySettingsRunNowResponseMessage;
   creator: string;
   created_time: string;

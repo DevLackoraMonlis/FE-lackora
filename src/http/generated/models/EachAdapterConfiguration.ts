@@ -15,6 +15,8 @@ export interface EachAdapterConfiguration {
   id: string;
   adapter_id: string;
   config: EachAdapterConfigurationModel[];
+  last_execution: string;
+  last_execution_id: string;
   is_active?: EachAdapterConfigurationIsActive;
   editable?: EachAdapterConfigurationEditable;
   creator: string;

@@ -8,6 +8,7 @@
 import type { ApplicationVendorName } from './ApplicationVendorName';
 import type { EachApplicationsInListResponseActivationTime } from './EachApplicationsInListResponseActivationTime';
 import type { EachApplicationsInListResponseBusinessValue } from './EachApplicationsInListResponseBusinessValue';
+import type { EachApplicationsInListResponseConfiguration } from './EachApplicationsInListResponseConfiguration';
 import type { EachApplicationsInListResponseConfigurationRequirements } from './EachApplicationsInListResponseConfigurationRequirements';
 import type { EachApplicationsInListResponseExpirationTime } from './EachApplicationsInListResponseExpirationTime';
 import type { EachApplicationsInListResponseIcon } from './EachApplicationsInListResponseIcon';
@@ -47,6 +48,7 @@ export interface EachApplicationsInListResponse {
   is_base: boolean;
   is_available?: EachApplicationsInListResponseIsAvailable;
   is_configurable: boolean;
+  configuration?: EachApplicationsInListResponseConfiguration;
   creator: string;
   created_time: string;
   updater?: EachApplicationsInListResponseUpdater;

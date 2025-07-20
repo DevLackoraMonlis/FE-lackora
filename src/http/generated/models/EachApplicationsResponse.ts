@@ -9,6 +9,7 @@ import type { ApplicationVendorName } from './ApplicationVendorName';
 import type { EachApplicationsResponseActivationTime } from './EachApplicationsResponseActivationTime';
 import type { EachApplicationsResponseBusinessValue } from './EachApplicationsResponseBusinessValue';
 import type { EachApplicationsResponseCategory } from './EachApplicationsResponseCategory';
+import type { EachApplicationsResponseConfiguration } from './EachApplicationsResponseConfiguration';
 import type { EachApplicationsResponseConfigurationRequirements } from './EachApplicationsResponseConfigurationRequirements';
 import type { EachApplicationsResponseExpirationTime } from './EachApplicationsResponseExpirationTime';
 import type { EachApplicationsResponseIcon } from './EachApplicationsResponseIcon';
@@ -49,6 +50,7 @@ export interface EachApplicationsResponse {
   is_base: boolean;
   is_available?: EachApplicationsResponseIsAvailable;
   is_configurable: boolean;
+  configuration?: EachApplicationsResponseConfiguration;
   placement: string;
   priority: number;
   modules: string[];
