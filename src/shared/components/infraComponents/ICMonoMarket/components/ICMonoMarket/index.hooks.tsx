@@ -20,7 +20,7 @@ export const useMonoMarket = () => {
 		expired: MonoAppStatusTypeEnum.EXPIRED,
 		inactive: MonoAppStatusTypeEnum.INACTIVE,
 		installing: MonoAppStatusTypeEnum.INSTALLING,
-		support_licensed_expired: MonoAppStatusTypeEnum.EXPIRED,
+		support_licensed_expired: MonoAppStatusTypeEnum.SUPPORT_LICENSE_EXPIRED,
 	};
 
 	const filterOrderMap: Record<string, number> = {

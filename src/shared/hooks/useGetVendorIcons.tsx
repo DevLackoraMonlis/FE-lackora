@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 export const useGetVendorIcons = () => {
 	const getVendorIcon = (params: { size: number; name: string }) => {
 		const icons: Record<string, ReactNode> = {
-			monosuite: <MonoWatchLogo width={params.size} height={params.size} />,
+			MonoSuite: <MonoWatchLogo width={params.size} height={params.size} />,
 		};
 
 		return icons[params.name];

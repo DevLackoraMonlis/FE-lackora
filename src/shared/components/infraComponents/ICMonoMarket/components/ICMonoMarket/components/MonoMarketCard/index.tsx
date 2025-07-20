@@ -98,7 +98,7 @@ export default function MonoMarketCard(props: MonoMarketCardProps) {
 				</Flex>
 			</Card.Section>
 			<Card.Section bg={"white"}>
-				{props.isProcessing ? (
+				{props.isProcessing && props.id === props.selectedAppId ? (
 					<Box p={"sm"}>
 						<Button radius={"lg"} w={"100%"} variant={"light"} leftSection={<Loader color="blue" />}>
 							Processing...
@@ -132,7 +132,8 @@ export default function MonoMarketCard(props: MonoMarketCardProps) {
 							)}
 						</Flex>
 						{getMonoMarketActivateConfigButton({
-							hasConfig: props.hasConfig,
+							isAvailable: props.isAvailable,
+							configRequired: props.configRequired,
 							isConfigured: props.isConfigured,
 							onActiveOnly: props.onActiveOnly,
 							onActiveWithConfig: props.onActiveWithConfig,

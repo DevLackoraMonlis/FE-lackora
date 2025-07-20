@@ -87,7 +87,8 @@ export default function MonoMarketAppDetailsModal(props: Props) {
 									{props.appData.label}
 								</Text>
 								{getMonoMarketActivateConfigButton({
-									hasConfig: props.appData.hasConfig,
+									isAvailable: props.appData.isAvailable,
+									configRequired: props.appData.configRequired,
 									isConfigured: props.appData.isConfigured,
 									onActiveOnly: () => {
 										props.onActiveOnly();
@@ -99,7 +100,7 @@ export default function MonoMarketAppDetailsModal(props: Props) {
 									},
 									productType: props.appData.productType,
 									status: props.appData.status,
-									showConfigButton: props.appData.hasConfig,
+									showConfigButton: props.appData.configRequired,
 									onOpen: props.onOpen,
 									onConfig: () => {
 										props.onActiveWithConfig();
@@ -143,7 +144,7 @@ export default function MonoMarketAppDetailsModal(props: Props) {
 						<Box bg={"white"} p={"xs"}>
 							<Markdown>{props.appData.businessValue}</Markdown>
 						</Box>
-						{props.appData.hasConfig && (
+						{props.appData.configRequired && (
 							<>
 								<Flex align={"center"} mt={"xs"}>
 									<PiGearFineDuotone size={16} />

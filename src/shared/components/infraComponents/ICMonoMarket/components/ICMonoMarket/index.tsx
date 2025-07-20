@@ -6,6 +6,7 @@ import MonoMarketActivationNonConfigAppModal from "@/shared/components/infraComp
 import MonoMarketActivationWithConfigAppModal from "@/shared/components/infraComponents/ICMonoMarket/components/ICMonoMarket/components/MonoMarketActivationWithConfigAppModal";
 import MonoMarketAppDetailsModal from "@/shared/components/infraComponents/ICMonoMarket/components/ICMonoMarket/components/MonoMarketAppDetailsModal";
 import MonoMarketCard from "@/shared/components/infraComponents/ICMonoMarket/components/ICMonoMarket/components/MonoMarketCard";
+import MonoMarketCardSkeleton from "@/shared/components/infraComponents/ICMonoMarket/components/ICMonoMarket/components/MonoMarketCardSkeleton";
 import {
 	GET_MONO_MARKET_ACTIVATE_QUERY_KEY,
 	GET_MONO_MARKET_APPS_QUERY_KEY,
@@ -28,7 +29,7 @@ import { useEffect, useState } from "react";
 
 type SelectAppType = Omit<
 	MonoMarketCardProps,
-	"onActiveOnly" | "onActiveWithConfig" | "onShowMore" | "isProcessing" | "onOpen"
+	"onActiveOnly" | "onActiveWithConfig" | "onShowMore" | "isProcessing" | "onOpen" | "selectedAppId"
 >;
 
 export default function ICMonoMarket() {
@@ -52,12 +53,13 @@ export default function ICMonoMarket() {
 				select: (response) => {
 					const results: SelectAppType[] = response.data.results.map((app) => {
 						const item: SelectAppType = {
+							isAvailable: !!app.is_available,
 							configurationRequired: app.configuration_requirements || "",
 							businessValue: app.business_value || "",
 							productType: app.type ? productTypeMap[app.type] : MonoAppProductTypeEnum.STANDARD,
 							status: app.status ? appStatusMap[app.status] : MonoAppStatusTypeEnum.INACTIVE,
-							isConfigured: !!app.configuration,
-							hasConfig: app.is_configurable,
+							isConfigured: !!app.configuration?.length,
+							configRequired: app.is_configurable,
 							label: app.display_name,
 							name: app.name,
 							version: app.version,
@@ -134,21 +136,6 @@ export default function ICMonoMarket() {
 		}
 	}, [getMonoMarketAppsQuery.data?.data.total]);
 
-	useEffect(() => {
-		if (activateAppQuery.data?.data && activateAppQuery.isFetched) {
-			notifications.show({
-				title: "App Activated Successfully",
-				message: "You’ve activated “File Activity Monitoring” Mono App",
-				color: "green",
-				withBorder: true,
-				icon: <IconCheck />,
-				onClose: () => {
-					router.refresh();
-				},
-			});
-		}
-	}, [activateAppQuery.data?.data, activateAppQuery.isFetched]);
-
 	return (
 		<Grid p="sm" pt="lg" gutter="lg" pos={"relative"}>
 			{selectedApp && (
@@ -171,10 +158,23 @@ export default function ICMonoMarket() {
 					setSelectedApp(undefined);
 					activeOnlyHandlers.close();
 				}}
-				appName={selectedApp?.name || ""}
+				appName={selectedApp?.label || ""}
 				loading={activateAppQuery.isFetching}
 				onActivate={() => {
-					return activateAppQuery.refetch();
+					activeOnlyHandlers.close();
+					activateAppQuery.refetch().then(() => {
+						void getMonoMarketAppsQuery.refetch();
+						notifications.show({
+							title: "App Activated Successfully",
+							message: "You’ve activated “File Activity Monitoring” Mono App",
+							color: "green",
+							withBorder: true,
+							icon: <IconCheck />,
+							onClose: () => {
+								router.refresh();
+							},
+						});
+					});
 				}}
 			/>
 			<MonoMarketActivationWithConfigAppModal
@@ -210,10 +210,14 @@ export default function ICMonoMarket() {
 									onActiveWithConfig={() => onActiveWithConfig(app)}
 									onShowMore={() => onShowMore(app)}
 									onOpen={() => onOpenApp(app.name)}
-									isProcessing={activateAppQuery.isFetching}
+									isProcessing={
+										activateAppQuery.isFetching || app.status === MonoAppStatusTypeEnum.INSTALLING
+									}
+									selectedAppId={selectedApp?.id}
 								/>
 							</Grid.Col>
 						))}
+						{getMonoMarketAppsQuery.isFetching && <MonoMarketCardSkeleton />}
 					</Grid>
 				</ScrollArea>
 				<Flex justify={"center"} align={"center"}>

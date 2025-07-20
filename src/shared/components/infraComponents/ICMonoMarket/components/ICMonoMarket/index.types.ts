@@ -12,7 +12,7 @@ export type MonoMarketCardProps = {
 	version: string;
 	description: string;
 	hasRequiredSupportLicense: boolean;
-	hasConfig: boolean;
+	configRequired: boolean;
 	isConfigured: boolean;
 	supportLicenseExpireDate: string;
 	status: MonoAppStatusTypeEnum;
@@ -24,4 +24,6 @@ export type MonoMarketCardProps = {
 	configurationRequired: string;
 	isProcessing: boolean;
 	onOpen: VoidFunction;
+	isAvailable: boolean;
+	selectedAppId?: string;
 };
