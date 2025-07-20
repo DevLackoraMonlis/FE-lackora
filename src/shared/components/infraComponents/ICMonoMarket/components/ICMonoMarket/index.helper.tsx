@@ -30,6 +30,11 @@ export function getMonoMarketAppActivationStatusBadge(status: MonoAppStatusTypeE
 			</Badge>
 		),
 		[MonoAppStatusTypeEnum.INSTALLING]: null,
+		[MonoAppStatusTypeEnum.SUPPORT_LICENSE_EXPIRED]: (
+			<Badge size={"lg"} radius={"xs"} variant={"light"} color={"#FA5252"}>
+				{status}
+			</Badge>
+		),
 	};
 
 	return badges[status] || (withEmptyBox ? <Box /> : null);

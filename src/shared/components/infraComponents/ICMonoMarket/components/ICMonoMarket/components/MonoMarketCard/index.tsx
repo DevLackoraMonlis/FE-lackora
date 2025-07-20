@@ -110,11 +110,15 @@ export default function MonoMarketCard(props: MonoMarketCardProps) {
 					<Flex p={"sm"} align={"center"} justify={"space-between"} h={52}>
 						<Flex gap={"2xs"} align={"center"}>
 							<Box>
-								{[MonoAppStatusTypeEnum.ACTIVATED, MonoAppStatusTypeEnum.EXPIRED].includes(props.status)
+								{[
+									MonoAppStatusTypeEnum.ACTIVATED,
+									MonoAppStatusTypeEnum.EXPIRED,
+									MonoAppStatusTypeEnum.SUPPORT_LICENSE_EXPIRED,
+								].includes(props.status)
 									? getMonoMarketAppActivationStatusBadge(props.status, true)
 									: null}
 							</Box>
-							{props.hasRequiredSupportLicense && props.status !== "INACTIVE" && (
+							{props.hasRequiredSupportLicense && props.status !== MonoAppStatusTypeEnum.INACTIVE && (
 								<Tooltip label={getSupportLicenseTooltipLabel()}>
 									<Box mt={"xs"}>
 										<IconInfoCircle size={18} />

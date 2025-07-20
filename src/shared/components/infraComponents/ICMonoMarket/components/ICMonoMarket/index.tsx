@@ -58,7 +58,7 @@ export default function ICMonoMarket() {
 							businessValue: app.business_value || "",
 							productType: app.type ? productTypeMap[app.type] : MonoAppProductTypeEnum.STANDARD,
 							status: app.status
-								? appStatusMap[app.status as Exclude<ApplicationHistoryStatus, "support_licensed_expired">]
+								? appStatusMap[app.status as Exclude<ApplicationHistoryStatus, "expired">]
 								: MonoAppStatusTypeEnum.INACTIVE,
 							isConfigured: !!app.configuration?.length,
 							configRequired: app.is_configurable,
