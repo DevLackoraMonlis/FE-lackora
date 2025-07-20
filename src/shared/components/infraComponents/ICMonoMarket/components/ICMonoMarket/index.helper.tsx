@@ -20,7 +20,7 @@ export function getMonoMarketAppActivationStatusBadge(status: MonoAppStatusTypeE
 			</Badge>
 		),
 		[MonoAppStatusTypeEnum.EXPIRED]: (
-			<Badge size={"lg"} radius={"xs"} variant={"light"} color={"#12B886"}>
+			<Badge size={"lg"} radius={"xs"} variant={"light"} color={"#FA5252"}>
 				{status}
 			</Badge>
 		),
@@ -30,7 +30,6 @@ export function getMonoMarketAppActivationStatusBadge(status: MonoAppStatusTypeE
 			</Badge>
 		),
 		[MonoAppStatusTypeEnum.INSTALLING]: null,
-		[MonoAppStatusTypeEnum.SUPPORT_LICENSE_EXPIRED]: null,
 	};
 
 	return badges[status] || (withEmptyBox ? <Box /> : null);
@@ -106,12 +105,13 @@ export const getMonoMarketActivateConfigButton = (
 		onConfig?: VoidFunction;
 		onOpen: VoidFunction;
 		isAvailable: boolean;
+		hasSupportLicenseSupport: boolean;
 	} & Pick<
 		MonoMarketCardProps,
 		"isConfigured" | "productType" | "configRequired" | "onActiveWithConfig" | "onActiveOnly"
 	>,
 ) => {
-	if (params.status === MonoAppStatusTypeEnum.SUPPORT_LICENSE_EXPIRED) {
+	if (params.status === MonoAppStatusTypeEnum.EXPIRED && params.hasSupportLicenseSupport) {
 		return (
 			<Button size={"xs"} color={"red"}>
 				Renew license

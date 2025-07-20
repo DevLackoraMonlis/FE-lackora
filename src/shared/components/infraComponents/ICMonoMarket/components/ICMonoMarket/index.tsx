@@ -1,6 +1,6 @@
 "use client";
 import { useActivateMonoApplication, useGetApplications } from "@/http/generated/application-management";
-import type { EachMetadataFilterItems } from "@/http/generated/models";
+import type { ApplicationHistoryStatus, EachMetadataFilterItems } from "@/http/generated/models";
 import BCSideFilter, { type BCSideFilterItem } from "@/shared/components/baseComponents/BCSideFilter";
 import MonoMarketActivationNonConfigAppModal from "@/shared/components/infraComponents/ICMonoMarket/components/ICMonoMarket/components/MonoMarketActivationNonConfigAppModal";
 import MonoMarketActivationWithConfigAppModal from "@/shared/components/infraComponents/ICMonoMarket/components/ICMonoMarket/components/MonoMarketActivationWithConfigAppModal";
@@ -57,7 +57,9 @@ export default function ICMonoMarket() {
 							configurationRequired: app.configuration_requirements || "",
 							businessValue: app.business_value || "",
 							productType: app.type ? productTypeMap[app.type] : MonoAppProductTypeEnum.STANDARD,
-							status: app.status ? appStatusMap[app.status] : MonoAppStatusTypeEnum.INACTIVE,
+							status: app.status
+								? appStatusMap[app.status as Exclude<ApplicationHistoryStatus, "support_licensed_expired">]
+								: MonoAppStatusTypeEnum.INACTIVE,
 							isConfigured: !!app.configuration?.length,
 							configRequired: app.is_configurable,
 							label: app.display_name,

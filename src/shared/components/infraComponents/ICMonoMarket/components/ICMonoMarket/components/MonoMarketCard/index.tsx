@@ -132,6 +132,7 @@ export default function MonoMarketCard(props: MonoMarketCardProps) {
 							status: props.status,
 							showConfigButton: false,
 							onOpen: props.onOpen,
+							hasSupportLicenseSupport: props.hasRequiredSupportLicense,
 						})}
 					</Flex>
 				)}

@@ -18,12 +18,14 @@ export const useMonoMarket = () => {
 		standard: MonoAppProductTypeEnum.STANDARD,
 	};
 
-	const appStatusMap: Record<ApplicationHistoryStatus, MonoAppStatusTypeEnum> = {
+	const appStatusMap: Record<
+		Exclude<ApplicationHistoryStatus, "support_licensed_expired">,
+		MonoAppStatusTypeEnum
+	> = {
 		active: MonoAppStatusTypeEnum.ACTIVATED,
 		expired: MonoAppStatusTypeEnum.EXPIRED,
 		inactive: MonoAppStatusTypeEnum.INACTIVE,
 		installing: MonoAppStatusTypeEnum.INSTALLING,
-		support_licensed_expired: MonoAppStatusTypeEnum.SUPPORT_LICENSE_EXPIRED,
 	};
 
 	const filterOrderMap: Record<string, number> = {
@@ -45,7 +47,9 @@ export const useMonoMarket = () => {
 			);
 		},
 		status: (option) =>
-			getMonoMarketAppActivationStatusBadge(appStatusMap[option.value as ApplicationHistoryStatus]),
+			getMonoMarketAppActivationStatusBadge(
+				appStatusMap[option.value as Exclude<ApplicationHistoryStatus, "support_licensed_expired">],
+			),
 		type: (option) => {
 			return getMonoMarketAppProductButton({
 				size: "large",

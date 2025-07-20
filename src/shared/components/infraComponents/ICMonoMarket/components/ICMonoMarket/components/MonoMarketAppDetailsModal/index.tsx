@@ -87,6 +87,7 @@ export default function MonoMarketAppDetailsModal(props: Props) {
 									{props.appData.label}
 								</Text>
 								{getMonoMarketActivateConfigButton({
+									hasSupportLicenseSupport: props.appData.hasRequiredSupportLicense,
 									isAvailable: props.appData.isAvailable,
 									configRequired: props.appData.configRequired,
 									isConfigured: props.appData.isConfigured,
