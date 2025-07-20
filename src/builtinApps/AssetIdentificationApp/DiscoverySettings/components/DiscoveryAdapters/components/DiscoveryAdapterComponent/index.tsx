@@ -35,6 +35,7 @@ const DiscoveryAdapterGateways = ({ enabled, adapterId, fields, refetchDiscovery
 	const [openedDelete, handlersDelete] = useDisclosure(false);
 
 	const { discoverySettingConfigurations } = useDiscoveryAdapterById(adapterId, enabled);
+	const results = discoverySettingConfigurations.data?.results;
 	const handleDiscoverySettingQuickDiscovery = (adapter: ConfigurationRs) => {
 		setSelectedId(adapter.configurationId);
 		setSelectedRecord(adapter);
@@ -49,7 +50,7 @@ const DiscoveryAdapterGateways = ({ enabled, adapterId, fields, refetchDiscovery
 	const { testDiscoverySettingConnection, testLoading } = useTestDiscoverySettingConnection();
 	const handleDiscoverySettingTestConnection = (adapterId: string, configuration_id: string) => {
 		setSelectedId(configuration_id);
-		testDiscoverySettingConnection(adapterId, configuration_id);
+		testDiscoverySettingConnection(adapterId, configuration_id, discoverySettingConfigurations.refetch);
 	};
 
 	const handleDeleteAdapterConfigurations = (adapter: ConfigurationRs) => {
@@ -97,9 +98,9 @@ const DiscoveryAdapterGateways = ({ enabled, adapterId, fields, refetchDiscovery
 				{...(selectedRecord || {})}
 			/>
 			{/* UI section */}
-			<Flex gap="xs" direction="column" pos="relative" mih="50px">
+			<Flex gap="xs" direction="column" pos="relative" mih={results?.length ? "50px" : ""}>
 				<LoadingOverlay visible={discoverySettingConfigurations?.isFetching} />
-				{discoverySettingConfigurations.data?.results?.map((item) => (
+				{results?.map((item) => (
 					<DiscoveryAdapterCard
 						handleDeleteAdapterConfigurations={handleDeleteAdapterConfigurations}
 						handleDiscoverySettingTestConnection={handleDiscoverySettingTestConnection}

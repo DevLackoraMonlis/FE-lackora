@@ -10,6 +10,7 @@ export type DiscoveryAdapterConfigurationRs = {
 	id: string;
 	adapterId: string;
 	lastExecution: string;
+	lastExecutionId: string;
 	isActive: boolean;
 	editable: boolean;
 	configs: BCDynamicConfigRs[];
@@ -20,4 +21,5 @@ export type ConfigurationRs = {
 	adapterName: string;
 	configurationId: string;
 	configurationIP: string;
+	lastExecutionId: string;
 };

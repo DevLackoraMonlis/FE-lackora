@@ -132,7 +132,7 @@ const DiscoveryAdaptersCreateGateway = (props: Props) => {
 				disabled={props.disabled}
 				onClick={() => form.insertListItem("list", insertListItem)}
 			>
-				Add Gateway
+				Add Configure
 			</Button>
 		</Box>
 	);

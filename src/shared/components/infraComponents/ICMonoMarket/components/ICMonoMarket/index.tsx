@@ -29,13 +29,12 @@ export default function ICMonoMarket() {
 	const [selectedApp, setSelectedApp] = useState<SelectAppType | undefined>(undefined);
 
 	const stableFilters = useStableData<Record<string, unknown>[]>([]);
-	const dynamicFilters =
-		stableFilters?.map((filter) => ({
-			items: filter.items,
-			label: filter.label,
-			name: filter.param,
-			type: "CheckedList",
-		})) || [];
+	const dynamicFilters = (stableFilters?.map((filter) => ({
+		items: filter.items,
+		label: filter.label,
+		name: filter.param,
+		type: "CheckedList",
+	})) || []) as BCSideFilterItem[];
 
 	const apps: SelectAppType[] = [
 		{
@@ -196,7 +195,7 @@ export default function ICMonoMarket() {
 					height={height - 225}
 					onChange={setFilters}
 					filterItems={[
-						...(dynamicFilters as BCSideFilterItem[]),
+						...dynamicFilters,
 						{ name: "support_required", type: "Switch", label: "MonoSupport Required", order: 2 },
 					]}
 					searchPlaceholder={"Search by adapter Name"}

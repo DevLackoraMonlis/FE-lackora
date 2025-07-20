@@ -86,7 +86,7 @@ export default function DiscoverySettingsDiscoveryAdapters() {
 								</Accordion.Control>
 								<Accordion.Panel>
 									<Text py="xs" c="gray.6">
-										Added Gateways
+										Added Configurations
 									</Text>
 									<DiscoveryAdapterGateways
 										enabled={activeAccordion === item.id}

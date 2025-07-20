@@ -40,6 +40,7 @@ const DiscoveryAdapterCard = (props: Props) => {
 		configurationId: props.id,
 		adapterName: `${isObject(adapterName) ? adapterName?.label : ""}`,
 		adapterId: props.adapterId,
+		lastExecutionId: props.lastExecutionId,
 	};
 	return (
 		<Card bg="gray.1" w="100%" padding="xs">

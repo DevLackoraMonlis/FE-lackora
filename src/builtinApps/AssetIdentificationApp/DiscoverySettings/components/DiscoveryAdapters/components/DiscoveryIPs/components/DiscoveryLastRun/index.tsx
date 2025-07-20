@@ -10,20 +10,20 @@ import BCTanStackGrid from "@/shared/components/baseComponents/BCTanStackGrid";
 import type { TanStackGridProps } from "@/shared/components/baseComponents/BCTanStackGrid/index.types";
 import { useTableSort } from "@/shared/hooks/useTableSort";
 
-import { useDiscoverySettingQuickDiscovery } from "../../../../index.hooks";
-import type { ConfigurationRs } from "../../../../index.types";
+import { useDiscoverySettingLastRun } from "../../../../../../index.hooks";
+import type { ConfigurationRs } from "../../../../../../index.types";
 
 type Props = Partial<ConfigurationRs> & {
 	enabledQuery: boolean;
 	hightOffset?: number;
 };
 
-export function DiscoveryQuickResults(props: Props) {
+export function DiscoveryLastRun(props: Props) {
 	const { height } = useViewportSize();
-	const { discoverySettingRunNow } = useDiscoverySettingQuickDiscovery(
+	const { discoverySettingRunNow } = useDiscoverySettingLastRun(
 		props.enabledQuery,
 		props.adapterId || "",
-		props.configurationId || "",
+		props.lastExecutionId || "",
 	);
 
 	const results = discoverySettingRunNow?.data?.results || [];

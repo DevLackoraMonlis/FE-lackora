@@ -164,7 +164,7 @@ const NoneCredentialCreate = (props: Props) => {
 				disabled={props.disabled}
 				onClick={() => form.insertListItem("list", insertListItem)}
 			>
-				Add Another
+				Add Configure
 			</Button>
 		</Box>
 	);

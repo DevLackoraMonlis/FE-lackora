@@ -1,7 +1,7 @@
 import BCDrawer from "@/shared/components/baseComponents/BCDrawer";
 
 import type { ConfigurationRs } from "../../../../index.types";
-import { DiscoveryQuickResults } from "../DiscoveryQuickResults";
+import { DiscoveryLastRun } from "./components/DiscoveryLastRun";
 
 type Props = Partial<ConfigurationRs> & {
 	onClose: VoidFunction;
@@ -11,7 +11,7 @@ type Props = Partial<ConfigurationRs> & {
 export function DiscoveryIPsDrawerModal({ onClose, opened, ...configs }: Props) {
 	return (
 		<BCDrawer onClose={onClose} opened={opened} title="Discovered IPs">
-			<DiscoveryQuickResults enabledQuery={true} hightOffset={310} {...configs} />
+			<DiscoveryLastRun enabledQuery={true} hightOffset={310} {...configs} />
 		</BCDrawer>
 	);
 }

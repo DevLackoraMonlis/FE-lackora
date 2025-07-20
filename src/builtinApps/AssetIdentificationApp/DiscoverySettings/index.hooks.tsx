@@ -11,6 +11,7 @@ import {
 	useDiscoverySettingRunNow,
 	useEditDiscoverySettingConfiguration,
 	useGetDiscoverySettingConfigurations,
+	useGetDiscoverySettingLastRun,
 	useGetDiscoverySettings,
 } from "@/http/generated/asset-identification-discovery-settings";
 
@@ -73,7 +74,7 @@ export function useDiscoveryAdapterById(adapterId: string, enabled: boolean) {
 			refetchOnMount: false,
 			select: (res) => {
 				const results = res?.data?.results?.map(
-					({ id, is_active, config, editable, adapter_id, last_execution }) => {
+					({ id, is_active, config, editable, adapter_id, last_execution, last_execution_id }) => {
 						const updateConfigValues = config.map(({ value, ...item }) => ({
 							...item,
 							value:
@@ -92,6 +93,7 @@ export function useDiscoveryAdapterById(adapterId: string, enabled: boolean) {
 							editable: editable !== false,
 							isActive: !!is_active,
 							lastExecution: last_execution || "",
+							lastExecutionId: last_execution_id || "",
 							configs: configsTransformRs(updateConfigValues),
 						};
 					},
@@ -143,11 +145,16 @@ export function useCreateDiscoverySetting() {
 export function useTestDiscoverySettingConnection() {
 	const [testLoading, toggleTestLoading] = useToggle([false, true]);
 
-	function testDiscoverySettingConnection(adapterId: string, configuration_id: string) {
+	function testDiscoverySettingConnection(
+		adapterId: string,
+		configuration_id: string,
+		callback: VoidFunction,
+	) {
 		toggleTestLoading(true);
 		discoverySettingConfigurationTestConnection(adapterId, { configuration_id })
 			.then((response) => {
 				toggleTestLoading(false);
+				callback();
 				notifications.show({
 					message: getSuccessMessage(response as CustomSuccess),
 					color: response?.data?.status ? "green" : "red",
@@ -198,6 +205,32 @@ export function useDiscoverySettingQuickDiscovery(
 			},
 		},
 	);
+
+	return { discoverySettingRunNow };
+}
+
+export function useDiscoverySettingLastRun(enabled: boolean, adapterId: string, lastExecutionId: string) {
+	const discoverySettingRunNow = useGetDiscoverySettingLastRun(adapterId, lastExecutionId, {
+		query: {
+			refetchOnMount: true,
+			staleTime: 0,
+			gcTime: 0,
+			enabled: enabled && !!(adapterId && lastExecutionId),
+			select: (res) => {
+				const results =
+					res?.data?.results?.map((item) => {
+						const record = item as Record<string, string>;
+						return {
+							key: `${record?.ip}-${record?.mac}-${record?.created_time}`,
+							ipAddress: record?.ip,
+							macAddress: record?.mac,
+							discoveryTime: record?.created_time,
+						};
+					}) || [];
+				return { ...res.data, results };
+			},
+		},
+	});
 
 	return { discoverySettingRunNow };
 }
