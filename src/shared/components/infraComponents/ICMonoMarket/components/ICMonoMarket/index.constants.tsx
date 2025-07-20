@@ -11,3 +11,6 @@ export const MonoAppProductColor: Record<MonoAppProductTypeEnum, string> = {
 	[MonoAppProductTypeEnum.ENTERPRISE]: "#FAB005",
 	[MonoAppProductTypeEnum.STANDARD]: "#4C6EF5",
 };
+
+export const GET_MONO_MARKET_APPS_QUERY_KEY = "get-mono-market-apps";
+export const GET_MONO_MARKET_ACTIVATE_QUERY_KEY = "get-mono-app-active";

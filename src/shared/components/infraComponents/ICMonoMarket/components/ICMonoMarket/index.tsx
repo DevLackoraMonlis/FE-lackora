@@ -7,6 +7,10 @@ import MonoMarketActivationWithConfigAppModal from "@/shared/components/infraCom
 import MonoMarketAppDetailsModal from "@/shared/components/infraComponents/ICMonoMarket/components/ICMonoMarket/components/MonoMarketAppDetailsModal";
 import MonoMarketCard from "@/shared/components/infraComponents/ICMonoMarket/components/ICMonoMarket/components/MonoMarketCard";
 import {
+	GET_MONO_MARKET_ACTIVATE_QUERY_KEY,
+	GET_MONO_MARKET_APPS_QUERY_KEY,
+} from "@/shared/components/infraComponents/ICMonoMarket/components/ICMonoMarket/index.constants";
+import {
 	MonoAppProductTypeEnum,
 	MonoAppStatusTypeEnum,
 } from "@/shared/components/infraComponents/ICMonoMarket/components/ICMonoMarket/index.enum";
@@ -41,10 +45,10 @@ export default function ICMonoMarket() {
 	const { appStatusMap, filterOrderMap, filterRenderItemMap, productTypeMap } = useMonoMarket();
 
 	const getMonoMarketAppsQuery = useGetApplications(
-		{ limit: tablePagination.recordsPerPage, page: tablePagination.page },
+		{ limit: tablePagination.recordsPerPage, page: tablePagination.page, ...filters },
 		{
 			query: {
-				queryKey: [filters],
+				queryKey: [GET_MONO_MARKET_APPS_QUERY_KEY, filters],
 				select: (response) => {
 					const results: SelectAppType[] = response.data.results.map((app) => {
 						const item: SelectAppType = {
@@ -83,12 +87,12 @@ export default function ICMonoMarket() {
 	const activateAppQuery = useActivateMonoApplication(selectedApp?.id || "", {
 		query: {
 			enabled: false,
-			queryKey: ["active-mono-app", selectedApp?.id],
+			queryKey: [GET_MONO_MARKET_ACTIVATE_QUERY_KEY, selectedApp?.id],
 		},
 	});
 
 	const stableFilters = useStableData<EachMetadataFilterItems[]>(
-		getMonoMarketAppsQuery.data?.data.metadata.filters || [],
+		getMonoMarketAppsQuery.data?.data.metadata.filters,
 	);
 
 	const dynamicFilters =
