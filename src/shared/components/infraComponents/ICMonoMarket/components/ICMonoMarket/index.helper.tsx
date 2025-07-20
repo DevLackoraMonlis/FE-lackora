@@ -2,8 +2,8 @@ import {
 	MonoAppProductColor,
 	MonoAppProductTypeShortName,
 } from "@/shared/components/infraComponents/ICMonoMarket/components/ICMonoMarket/index.constants";
-import type {
-	MonoAppProductTypeEnum,
+import {
+	type MonoAppProductTypeEnum,
 	MonoAppStatusTypeEnum,
 } from "@/shared/components/infraComponents/ICMonoMarket/components/ICMonoMarket/index.enum";
 import type { MonoMarketCardProps } from "@/shared/components/infraComponents/ICMonoMarket/components/ICMonoMarket/index.types";
@@ -12,7 +12,7 @@ import { Badge, Button, Flex, Tooltip } from "@mantine/core";
 import { IconArrowNarrowRight, IconAward, IconBox, IconLock, IconSettings } from "@tabler/icons-react";
 import type { ReactNode } from "react";
 
-export function getMonoMarketAppProductionButton(params: {
+export function getMonoMarketAppProductButton(params: {
 	size: "small" | "large" | "xLarge";
 	type: MonoAppProductTypeEnum;
 }) {
@@ -77,12 +77,14 @@ export const getMonoMarketActivateConfigButton = (
 		status: MonoAppStatusTypeEnum;
 		showConfigButton: boolean;
 		onConfig?: VoidFunction;
+		onOpen: VoidFunction;
+		isAvailable: boolean;
 	} & Pick<
 		MonoMarketCardProps,
-		"isConfigured" | "productType" | "hasConfig" | "onActiveWithConfig" | "onActiveOnly"
+		"isConfigured" | "productType" | "configRequired" | "onActiveWithConfig" | "onActiveOnly"
 	>,
 ) => {
-	if (params.status === "EXPIRED" && params.productType === "STANDARD") {
+	if (params.status === MonoAppStatusTypeEnum.SUPPORT_LICENSE_EXPIRED) {
 		return (
 			<Button size={"xs"} color={"red"}>
 				Renew license
@@ -90,7 +92,7 @@ export const getMonoMarketActivateConfigButton = (
 		);
 	}
 
-	if (params.status === "INACTIVE" && params.productType !== "STANDARD") {
+	if (!params.isAvailable) {
 		return (
 			<Tooltip label={"Upgrade your license to activate this app"}>
 				<Button disabled size={"xs"} rightSection={<IconLock color={"black"} size={16} />}>
@@ -100,28 +102,18 @@ export const getMonoMarketActivateConfigButton = (
 		);
 	}
 
-	if (params.status === "ACTIVATED" && params.productType !== "STANDARD") {
-		if (params.isConfigured) {
-			return (
-				<Flex gap={"2xs"} align={"center"}>
-					<Button variant={"outline"} size={"xs"}>
-						Open
-					</Button>
-					{params.showConfigButton && (
-						<Button onClick={params.onConfig} variant={"default"}>
-							<IconSettings />
-						</Button>
-					)}
-				</Flex>
-			);
-		}
+	if (params.status === "INACTIVE" && params.configRequired) {
 		return (
-			<Button
-				onClick={params.hasConfig ? params.onActiveWithConfig : params.onActiveOnly}
-				size={"xs"}
-				rightSection={<IconArrowNarrowRight />}
-			>
-				{params.hasConfig ? "Configure & Active" : "Active App"}
+			<Button onClick={params.onActiveWithConfig} size={"xs"} rightSection={<IconArrowNarrowRight />}>
+				{"Configure & Active"}
+			</Button>
+		);
+	}
+
+	if (params.status === "INACTIVE" && !params.configRequired) {
+		return (
+			<Button onClick={params.onActiveOnly} size={"xs"} rightSection={<IconArrowNarrowRight />}>
+				{"Active App"}
 			</Button>
 		);
 	}
@@ -129,11 +121,11 @@ export const getMonoMarketActivateConfigButton = (
 	if (params.status === "ACTIVATED") {
 		return (
 			<Flex gap={"2xs"} align={"center"}>
-				<Button variant={"outline"} size={"xs"}>
+				<Button onClick={params.onOpen} variant={"outline"} size={"xs"}>
 					Open
 				</Button>
-				{params.showConfigButton && (
-					<Button size={"xs"} p={"2xs"} onClick={params.onConfig} variant={"default"}>
+				{params.showConfigButton && params.isConfigured && (
+					<Button onClick={params.onConfig} variant={"default"}>
 						<IconSettings />
 					</Button>
 				)}
@@ -141,9 +133,5 @@ export const getMonoMarketActivateConfigButton = (
 		);
 	}
 
-	return (
-		<Button size={"xs"} color={"red"}>
-			Renew license
-		</Button>
-	);
+	return null;
 };

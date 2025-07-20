@@ -66,7 +66,7 @@ export default function ICPanelSidebarPopoverMenu(props: ICPanelSidebarPopoverMe
 			classNames={{
 				dropdown: classes.dropdown,
 			}}
-			width={props.width || 200}
+			width={props.width || 250}
 			position={props.position || "right-start"}
 			withArrow
 			arrowOffset={10}

@@ -2,7 +2,7 @@ import {
 	getMonoAppIcon,
 	getMonoMarketActivateConfigButton,
 	getMonoMarketAppMonoCareLicenseButton,
-	getMonoMarketAppProductionButton,
+	getMonoMarketAppProductButton,
 } from "@/shared/components/infraComponents/ICMonoMarket/components/ICMonoMarket/index.helper";
 import type { MonoMarketCardProps } from "@/shared/components/infraComponents/ICMonoMarket/components/ICMonoMarket/index.types";
 import { Badge, Box, Button, Card, Flex, Loader, Text, Tooltip } from "@mantine/core";
@@ -45,7 +45,7 @@ export default function MonoMarketCard(props: MonoMarketCardProps) {
 								</Flex>
 							}
 						>
-							{getMonoMarketAppProductionButton({ size: "small", type: props.productType })}
+							{getMonoMarketAppProductButton({ size: "small", type: props.productType })}
 						</Tooltip>
 					</Flex>
 					{props.hasRequiredSupportLicense && (
@@ -98,7 +98,7 @@ export default function MonoMarketCard(props: MonoMarketCardProps) {
 				</Flex>
 			</Card.Section>
 			<Card.Section bg={"white"}>
-				{props.isProcessing ? (
+				{props.isProcessing && props.id === props.selectedAppId ? (
 					<Box p={"sm"}>
 						<Button radius={"lg"} w={"100%"} variant={"light"} leftSection={<Loader color="blue" />}>
 							Processing...
@@ -132,13 +132,15 @@ export default function MonoMarketCard(props: MonoMarketCardProps) {
 							)}
 						</Flex>
 						{getMonoMarketActivateConfigButton({
-							hasConfig: props.hasConfig,
+							isAvailable: props.isAvailable,
+							configRequired: props.configRequired,
 							isConfigured: props.isConfigured,
 							onActiveOnly: props.onActiveOnly,
 							onActiveWithConfig: props.onActiveWithConfig,
 							productType: props.productType,
 							status: props.status,
 							showConfigButton: false,
+							onOpen: props.onOpen,
 						})}
 					</Flex>
 				)}
