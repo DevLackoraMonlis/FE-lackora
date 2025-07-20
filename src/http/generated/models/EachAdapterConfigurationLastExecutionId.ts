@@ -6,6 +6,4 @@
  * OpenAPI spec version: 1.0.0
  */
 
-export interface ActivatePluginWithCode {
-  activation_code: string;
-}
+export type EachAdapterConfigurationLastExecutionId = string | null;

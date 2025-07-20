@@ -11,6 +11,6 @@ export type ApplicationVendorName = typeof ApplicationVendorName[keyof typeof Ap
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const ApplicationVendorName = {
-  monosuite: 'monosuite',
+  MonoSuite: 'MonoSuite',
   monowatch: 'monowatch',
 } as const;

@@ -1,4 +1,4 @@
-import { ActionIcon, Badge, Card, Flex, LoadingOverlay, Text } from "@mantine/core";
+import { ActionIcon, Badge, Card, Flex, Highlight, LoadingOverlay, Text } from "@mantine/core";
 import { IconPencil, IconPlugConnected, IconX, IconZoomReset } from "@tabler/icons-react";
 import { isObject } from "lodash";
 import { useState } from "react";
@@ -7,66 +7,75 @@ import type {
 	BCDynamicConfigRq,
 	BCDynamicFieldRs,
 } from "@/shared/components/baseComponents/BCDynamicField/index.types";
-import BCPopoverConfirm from "@/shared/components/baseComponents/BCPopoverConfirm";
 
 import type { ConfigurationRs, DiscoveryAdapterConfigurationRs } from "../../../../index.types";
 import DiscoveryAdaptersEditGateway from "../DiscoveryAdaptersEdit";
 
+const highlightNumbers = Array(10)
+	.fill(null)
+	.map((_, num) => num.toString());
+
 type Props = DiscoveryAdapterConfigurationRs & {
-	handleDeleteAdapterConfigurations: (id: string) => void;
-	handleDiscoverySettingTestConnection: (adapterId: string, id: string) => void;
-	handleDiscoverySettingQuickDiscovery: (adapter: ConfigurationRs) => void;
 	handleEditAdapterConfigurations: (id: string, configs: BCDynamicConfigRq[], callback: VoidFunction) => void;
+	handleDiscoverySettingTestConnection: (adapterId: string, id: string) => void;
+	handleDeleteAdapterConfigurations: (configurationData: ConfigurationRs) => void;
+	handleDiscoverySettingQuickDiscovery: (configurationData: ConfigurationRs) => void;
+	handleDiscoverySettingDiscoveryIPs: (configurationData: ConfigurationRs) => void;
 	fields: BCDynamicFieldRs[];
 	disabled: boolean;
 	loading?: boolean;
 	testLoading?: boolean;
 };
 
-const DiscoveryAdapterCard = ({
-	id,
-	adapterId,
-	configs,
-	isActive,
-	testLoading = false,
-	loading = false,
-	disabled = false,
-	...props
-}: Props) => {
+const DiscoveryAdapterCard = (props: Props) => {
 	const [editMode, setEditMode] = useState(false);
-
 	if (editMode) {
-		return (
-			<DiscoveryAdaptersEditGateway
-				{...{ id, configs, isActive, adapterId, loading, ...props }}
-				onCancel={() => setEditMode(false)}
-			/>
-		);
+		return <DiscoveryAdaptersEditGateway {...{ onCancel: () => setEditMode(false), ...props }} />;
 	}
 
-	const configurationIP = configs?.find(({ key }) => key === "ip")?.value;
+	const configurationIP = props.configs?.find(({ key }) => key === "ip")?.value;
+	const adapterName = props.configs?.find(({ key }) => key === "connection")?.value;
+	const configurationData = {
+		configurationIP: `${isObject(configurationIP) ? configurationIP?.label : ""}`,
+		configurationId: props.id,
+		adapterName: `${isObject(adapterName) ? adapterName?.label : ""}`,
+		adapterId: props.adapterId,
+		lastExecutionId: props.lastExecutionId,
+	};
 	return (
 		<Card bg="gray.1" w="100%" padding="xs">
-			<LoadingOverlay visible={loading} />
+			<LoadingOverlay visible={props.loading} />
 			<Flex align="center" justify="space-between">
 				<Text fw="bold" fz="sm">
-					{configs?.map(({ value }) => (isObject(value) ? value?.label : ""))?.join(" - ")}
+					{props.configs?.map(({ value }) => (isObject(value) ? value?.label : ""))?.join(" - ")}
 				</Text>
 				<Flex gap="2xs">
-					<Badge variant="light" color={isActive ? "green" : "red"} p="sm">
-						<Text p="2xs" tt="capitalize">
-							{isActive ? "Connected" : "Disconnected"}
-						</Text>
-					</Badge>
+					<Flex align="center" gap="2xs">
+						<Badge
+							w="170px"
+							variant="light"
+							color="gray"
+							tt="capitalize"
+							p="sm"
+							onClick={() => props.handleDiscoverySettingDiscoveryIPs(configurationData)}
+						>
+							<Highlight
+								className="cursor-pointer"
+								highlight={highlightNumbers}
+								style={{ textTransform: "capitalize" }}
+							>
+								{props.lastExecution}
+							</Highlight>
+						</Badge>
+						<Badge w="130px" variant="light" color={props.isActive ? "green" : "red"} p="sm">
+							<Text p="2xs" tt="capitalize">
+								{props.isActive ? "Connected" : "Disconnected"}
+							</Text>
+						</Badge>
+					</Flex>
 					<ActionIcon
-						disabled={disabled}
-						onClick={() => {
-							props.handleDiscoverySettingQuickDiscovery({
-								configurationIP: `${isObject(configurationIP) ? configurationIP?.label : ""}`,
-								configurationId: id,
-								adapterId,
-							});
-						}}
+						disabled={props.disabled}
+						onClick={() => props.handleDiscoverySettingQuickDiscovery(configurationData)}
 						title="Quick Discover"
 						variant="subtle"
 						c="gray.8"
@@ -74,9 +83,9 @@ const DiscoveryAdapterCard = ({
 						<IconZoomReset size={20} />
 					</ActionIcon>
 					<ActionIcon
-						disabled={disabled}
-						loading={testLoading}
-						onClick={() => props.handleDiscoverySettingTestConnection(adapterId, id)}
+						disabled={props.disabled}
+						loading={props.testLoading}
+						onClick={() => props.handleDiscoverySettingTestConnection(props.adapterId, props.id)}
 						title="Test Connection"
 						variant="subtle"
 						c="gray.8"
@@ -84,7 +93,7 @@ const DiscoveryAdapterCard = ({
 						<IconPlugConnected size={20} />
 					</ActionIcon>
 					<ActionIcon
-						disabled={disabled}
+						disabled={props.disabled}
 						onClick={() => setEditMode((perValue) => !perValue)}
 						title="Edit"
 						variant="subtle"
@@ -92,18 +101,15 @@ const DiscoveryAdapterCard = ({
 					>
 						<IconPencil size={20} />
 					</ActionIcon>
-					<BCPopoverConfirm
-						loading={loading}
-						onConfirm={() => props.handleDeleteAdapterConfigurations(id)}
-						confirmBtnColor="red"
-						confirmBtnText="Delete"
-						message="Are you sure to delete record ?"
-						renderProps={(onToggle) => (
-							<ActionIcon disabled={disabled} onClick={onToggle} title="Delete" variant="subtle" c="gray.8">
-								<IconX size={20} />
-							</ActionIcon>
-						)}
-					/>
+					<ActionIcon
+						disabled={props.disabled}
+						onClick={() => props.handleDeleteAdapterConfigurations(configurationData)}
+						title="Delete"
+						variant="subtle"
+						c="gray.8"
+					>
+						<IconX size={20} />
+					</ActionIcon>
 				</Flex>
 			</Flex>
 		</Card>

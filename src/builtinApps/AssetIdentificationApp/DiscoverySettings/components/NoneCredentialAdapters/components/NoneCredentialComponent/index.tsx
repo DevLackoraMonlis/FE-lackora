@@ -6,7 +6,7 @@ import type {
 } from "@/shared/components/baseComponents/BCDynamicField/index.types";
 
 import {
-	useDeleteDiscoverySetting,
+	useDeleteNoneCredential,
 	useDiscoveryAdapterById,
 	useEditDiscoverySetting,
 } from "../../../../index.hooks";
@@ -22,8 +22,8 @@ type Props = {
 
 const NoneCredentialServices = ({ enabled, adapterId, fields, refetchDiscoveryAdapters }: Props) => {
 	const { discoverySettingConfigurations } = useDiscoveryAdapterById(adapterId, enabled);
-
-	const { deleteDiscoverySetting } = useDeleteDiscoverySetting();
+	const results = discoverySettingConfigurations.data?.results;
+	const { deleteDiscoverySetting } = useDeleteNoneCredential();
 	const handleDeleteAdapterConfigurations = (configuration_id: string) => {
 		deleteDiscoverySetting.mutate(
 			{ adapterId, data: { configuration_id } },
@@ -55,28 +55,28 @@ const NoneCredentialServices = ({ enabled, adapterId, fields, refetchDiscoveryAd
 
 	return (
 		<>
-			<Flex gap="xs" direction="column" pos="relative" mih="50px">
+			<Flex gap="xs" direction="column" pos="relative" mih={results?.length ? "50px" : ""}>
 				<LoadingOverlay visible={discoverySettingConfigurations?.isLoading} />
-				{discoverySettingConfigurations.data?.results?.map(
-					({ configs, id, isActive, editable, adapterId }, idx) => (
-						<NoneCredentialAdaptersCard
-							key={id}
-							loading={deleteDiscoverySetting.isPending || editDiscoverySetting.isPending}
-							handleDeleteAdapterConfigurations={() => handleDeleteAdapterConfigurations(id)}
-							handleEditAdapterConfigurations={(newConfigs, callback) =>
-								handleEditAdapterConfigurations(id, newConfigs, callback)
-							}
-							{...{ configs, id, isActive, fields, showLabel: !idx, editable, adapterId }}
-						/>
-					),
-				)}
+				{results?.map((item, idx) => (
+					<NoneCredentialAdaptersCard
+						handleDeleteAdapterConfigurations={() => handleDeleteAdapterConfigurations(item.id)}
+						handleEditAdapterConfigurations={(newConfigs, callback) =>
+							handleEditAdapterConfigurations(item.id, newConfigs, callback)
+						}
+						key={item.id}
+						showLabel={!idx}
+						fields={fields}
+						loading={deleteDiscoverySetting.isPending || editDiscoverySetting.isPending}
+						{...item}
+					/>
+				))}
 			</Flex>
 			<NoneCredentialCreate
 				fields={fields}
 				adapterId={adapterId}
 				disabled={discoverySettingConfigurations.isFetching}
 				refetchDiscoveryAdapters={() => {
-					discoverySettingConfigurations.refetch().then(() => refetchDiscoveryAdapters());
+					discoverySettingConfigurations.refetch().then(refetchDiscoveryAdapters);
 				}}
 			/>
 		</>

@@ -22,7 +22,7 @@ type FormValues = Record<string, unknown>;
 type Props = DiscoveryAdapterConfigurationRs & {
 	handleEditAdapterConfigurations: (id: string, configs: BCDynamicConfigRq[], callback: VoidFunction) => void;
 	fields: BCDynamicFieldRs[];
-	loading: boolean;
+	loading?: boolean;
 	onCancel: VoidFunction;
 };
 

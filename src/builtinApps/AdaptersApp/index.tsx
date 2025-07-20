@@ -1,6 +1,6 @@
 "use client";
 
-import { Button, Center, Flex, Grid, LoadingOverlay, Pagination, Text } from "@mantine/core";
+import { Button, Center, Flex, Grid, Pagination, Text } from "@mantine/core";
 import { useDisclosure, useViewportSize } from "@mantine/hooks";
 import { IconPlus } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
@@ -12,19 +12,20 @@ import { useStableData } from "@/shared/hooks/useStableData";
 import { useTablePagination } from "@/shared/hooks/useTablePagination";
 
 import AdapterSingleCard from "./components/AdapterSingleCard";
+import AdapterSingleCardSkelton from "./components/AdapterSingleCardSkelton";
 import { DeleteAdapterModal } from "./components/DeleteAdapter";
 import { ImportAdapterModal, UpdateAdapterModal } from "./components/ImportAdapter";
 import { useAdapterManagement } from "./index.hooks";
 import type { AdaptersFilters } from "./index.types";
+
+const params = { defaultPageSize: 12 };
 
 export default function AdapterManagementLandingPage() {
 	const { height } = useViewportSize();
 	const { renderAdapterBadge } = useAdapterBadges();
 	const { renderLabel } = useRenderFilterLabels();
 
-	const { tablePagination, page, pageSize, totalRecords, setTotalRecords } = useTablePagination({
-		defaultPageSize: 12,
-	});
+	const { tablePagination, page, pageSize, totalRecords, setTotalRecords } = useTablePagination(params);
 	const showPagination = totalRecords > pageSize;
 	const [queryParams, setQueryParams] = useState<AdaptersFilters>({});
 	const { adapterManagement } = useAdapterManagement(queryParams);
@@ -100,24 +101,27 @@ export default function AdapterManagementLandingPage() {
 							h={height - (showPagination ? 230 : 190)}
 							pos="relative"
 						>
-							<LoadingOverlay visible={adapterManagement.isLoading} />
-							{results?.map((item) => (
-								<Grid.Col key={item.id} span={{ xs: 12, md: 6, lg: 4 }}>
-									<AdapterSingleCard
-										onDeleteAdapter={() => {
-											setSelectedAdapter(item);
-											handleOpenedDelete.open();
-										}}
-										onUpdateAdapter={() => {
-											setSelectedAdapter(item);
-											handleOpenedUpdate.open();
-										}}
-										adapterBadge={renderAdapterBadge({ iconType: item.adapterType, h: "30px" })}
-										adapterIconPath={item.icon}
-										{...item}
-									/>
-								</Grid.Col>
-							))}
+							{adapterManagement.isLoading ? (
+								<AdapterSingleCardSkelton count={params.defaultPageSize} />
+							) : (
+								results?.map((item) => (
+									<Grid.Col key={item.id} span={{ xs: 12, md: 6, lg: 4 }}>
+										<AdapterSingleCard
+											onDeleteAdapter={() => {
+												setSelectedAdapter(item);
+												handleOpenedDelete.open();
+											}}
+											onUpdateAdapter={() => {
+												setSelectedAdapter(item);
+												handleOpenedUpdate.open();
+											}}
+											adapterBadge={renderAdapterBadge({ iconType: item.adapterType, h: "30px" })}
+											adapterIconPath={item.icon}
+											{...item}
+										/>
+									</Grid.Col>
+								))
+							)}
 						</Grid>
 						{showPagination && (
 							<Center>

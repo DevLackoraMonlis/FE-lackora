@@ -6,7 +6,4 @@
  * OpenAPI spec version: 1.0.0
  */
 
-export interface EachDiscoverySettingFilter {
-  label: string;
-  value: string;
-}
+export type EachAdapterConfigurationLastExecution = string | null;

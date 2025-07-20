@@ -6,7 +6,7 @@ import { useState } from "react";
 import { useAdapterIcons } from "@/shared/hooks/icons/useAdapterIcons";
 
 import { useDiscoveryAdapters } from "../../index.hooks";
-import NoneCredentialServices from "./components/NoneCredentialSections";
+import NoneCredentialServices from "./components/NoneCredentialComponent";
 
 const DiscoverySettingsNoneCredentialAdapters = () => {
 	const { height } = useViewportSize();
