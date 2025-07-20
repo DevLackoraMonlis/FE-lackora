@@ -69,7 +69,7 @@ export default function MonoMarketCard(props: MonoMarketCardProps) {
 					)}
 
 					<Flex gap={"xs"} align={"center"}>
-						{getMonoAppIcon({ size: 40, name: props.owner })}
+						{getMonoAppIcon({ size: 50, name: props.owner })}
 						<Text fz={"lg"} fw={"bold"}>
 							{props.owner}
 						</Text>
