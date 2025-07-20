@@ -21,21 +21,17 @@ type Props = DiscoveryAdapterConfigurationRs & {
 	showLabel: boolean;
 };
 
-const NoneCredentialAdaptersCard = ({ showLabel, id, configs, isActive, ...props }: Props) => {
+const NoneCredentialAdaptersCard = (props: Props) => {
 	const [editMode, setEditMode] = useState(false);
-
 	if (editMode) {
-		return (
-			<NoneCredentialEditForm {...{ id, configs, isActive, ...props }} onCancel={() => setEditMode(false)} />
-		);
+		return <NoneCredentialEditForm {...{ onCancel: () => setEditMode(false), ...props }} />;
 	}
-
 	return (
 		<Flex gap="xs" mt="2xs" align="center">
 			<Flex align="center" gap="xs" w="100%">
 				{props.fields.map((item, idx) => {
 					const { label, key, ...field } = item;
-					const defaultValue = configs?.find(({ key: valueKey }) => key === valueKey)
+					const defaultValue = props.configs?.find(({ key: valueKey }) => key === valueKey)
 						?.value as LabelValueType;
 					return (
 						<Fragment key={`${key}-${idx + 1}-${defaultValue?.value}`}>
@@ -45,13 +41,13 @@ const NoneCredentialAdaptersCard = ({ showLabel, id, configs, isActive, ...props
 								key,
 								defaultValue,
 								disabled: true,
-								label: showLabel ? label : "",
+								label: props.showLabel ? label : "",
 							})}
 						</Fragment>
 					);
 				})}
 			</Flex>
-			<Flex gap="xs" align="center" mt={showLabel ? "2lg" : ""}>
+			<Flex gap="xs" align="center" mt={props.showLabel ? "2lg" : ""}>
 				<ActionIcon
 					onClick={() => setEditMode((perValue) => !perValue)}
 					title="Edit"
@@ -68,7 +64,7 @@ const NoneCredentialAdaptersCard = ({ showLabel, id, configs, isActive, ...props
 					onConfirm={props.handleDeleteAdapterConfigurations}
 					confirmBtnColor="red"
 					confirmBtnText="Delete"
-					message="Are you sure to delete record ?"
+					message="Are you sure to delete entry?"
 					renderProps={(onToggle) => (
 						<ActionIcon onClick={onToggle} title="Delete" variant="subtle" c="gray.8" bg="gray.2" size="lg">
 							<IconX size={20} />

@@ -9,6 +9,8 @@ export type DiscoveryAdapterFilters = Record<string, unknown> & {
 export type DiscoveryAdapterConfigurationRs = {
 	id: string;
 	adapterId: string;
+	lastExecution: string;
+	lastExecutionId: string;
 	isActive: boolean;
 	editable: boolean;
 	configs: BCDynamicConfigRs[];
@@ -16,6 +18,8 @@ export type DiscoveryAdapterConfigurationRs = {
 
 export type ConfigurationRs = {
 	adapterId: string;
+	adapterName: string;
 	configurationId: string;
 	configurationIP: string;
+	lastExecutionId: string;
 };

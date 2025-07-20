@@ -5,5 +5,6 @@
  * MonoWatch Security Asset Management
  * OpenAPI spec version: 1.0.0
  */
+import type { DiscoverySettingsType } from './DiscoverySettingsType';
 
-export type EachApplicationsResponsePurchaseLink = string | null;
+export type EachDiscoverySettingType = DiscoverySettingsType | null;

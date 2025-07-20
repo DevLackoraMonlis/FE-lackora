@@ -24,6 +24,7 @@ export function getDynamicField<TObjectType extends string>({
 	placeholder = "",
 	defaultValue,
 	formInputProps,
+	key: keyForElements,
 	otherElementOptions = {},
 	api,
 	objectType,
@@ -47,6 +48,7 @@ export function getDynamicField<TObjectType extends string>({
 		case "ListWithApi":
 			return (
 				<ListDynamicApiField<TObjectType>
+					key={keyForElements}
 					{...{
 						api,
 						objectType,
@@ -60,6 +62,7 @@ export function getDynamicField<TObjectType extends string>({
 		case "List":
 			return (
 				<ListDynamicField<TObjectType>
+					key={keyForElements}
 					{...{
 						custom,
 						objectType,
@@ -70,17 +73,17 @@ export function getDynamicField<TObjectType extends string>({
 				/>
 			);
 		case "Int64":
-			return <NumberInput {...commonOptions} />;
+			return <NumberInput key={keyForElements} {...commonOptions} />;
 		case "Boolean":
 			return "";
 		case "Datetime":
 			return "";
 		case "Textarea":
-			return <Textarea {...commonOptions} />;
+			return <Textarea key={keyForElements} {...commonOptions} />;
 		case "IP":
-			return <TextInput {...commonOptions} />;
+			return <TextInput key={keyForElements} {...commonOptions} />;
 		default:
-			return <TextInput {...commonOptions} />;
+			return <TextInput key={keyForElements} {...commonOptions} />;
 	}
 }
 

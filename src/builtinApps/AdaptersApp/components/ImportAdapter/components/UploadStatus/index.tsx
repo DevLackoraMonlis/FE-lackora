@@ -37,7 +37,7 @@ export const UploadStatusUploading = ({ title, subTitle, onCancelFile }: CommonT
 
 export const UploadStatusValidating = ({ title, subTitle, onCancelFile }: CommonType) => {
 	return (
-		<Card p="xs">
+		<Card bg="gray.1" p="xs">
 			<Flex justify="space-between" align="center">
 				<Flex gap="xs" align="center">
 					<Card variant="light" bg="gray.1" p={10} m={0}>
@@ -48,7 +48,7 @@ export const UploadStatusValidating = ({ title, subTitle, onCancelFile }: Common
 							{title || "-"}
 						</Text>
 						<Text fz="xs" c="dimmed">
-							{subTitle || "-"}
+							{subTitle || "Validating File ..."}
 						</Text>
 					</Flex>
 				</Flex>

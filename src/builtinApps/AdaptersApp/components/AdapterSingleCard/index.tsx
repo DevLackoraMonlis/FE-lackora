@@ -116,7 +116,7 @@ export default function AdapterSingleCard(props: Props) {
 						</Flex>
 					</Flex>
 				</Card.Section>
-				<Card.Section px="xs">
+				<Card.Section px="xs" className="h-full w-full" ref={ref}>
 					<Text c="dimmed" mt="xs" lineClamp={2} className="cursor-pointer" ref={ref}>
 						{props.description || "-"}
 					</Text>

@@ -20,7 +20,6 @@ import type { DiscoveryAdapterConfigurationRs } from "../../../../index.types";
 type FormValues = Record<string, unknown>;
 
 type Props = DiscoveryAdapterConfigurationRs & {
-	handleDeleteAdapterConfigurations: VoidFunction;
 	handleEditAdapterConfigurations: (configs: BCDynamicConfigRq[], callback: VoidFunction) => void;
 	fields: BCDynamicFieldRs[];
 	loading: boolean;
