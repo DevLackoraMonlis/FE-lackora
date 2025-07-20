@@ -28,7 +28,7 @@ export default function ConnectionCreateSNMPModal(
 		initialValues: {
 			description: "",
 			name: "",
-			snmpPort: 165,
+			snmpPort: 161,
 			snmpVersion: CreateConnectionSNMPVersionType.SNMP_V_2_C,
 			securityLevel: CreateConnectionSNMPSecurityLdLevelType.NO_SECURITY,
 			privacyProtocol: CreateConnectionSNMPPrivacyProtocolType.AES,
