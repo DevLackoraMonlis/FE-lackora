@@ -163,12 +163,11 @@ export default function ICMonoMarket() {
 				appName={selectedApp?.label || ""}
 				loading={activateAppQuery.isFetching}
 				onActivate={() => {
-					activeOnlyHandlers.close();
 					activateAppQuery.refetch().then(() => {
 						void getMonoMarketAppsQuery.refetch();
 						notifications.show({
 							title: "App Activated Successfully",
-							message: "You’ve activated “File Activity Monitoring” Mono App",
+							message: `You’ve activated “${selectedApp?.label}” Mono App`,
 							color: "green",
 							withBorder: true,
 							icon: <IconCheck />,
@@ -177,6 +176,7 @@ export default function ICMonoMarket() {
 							},
 						});
 					});
+					activeOnlyHandlers.close();
 				}}
 			/>
 			<MonoMarketActivationWithConfigAppModal
