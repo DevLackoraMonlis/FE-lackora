@@ -57,7 +57,7 @@ export default function DiscoverySettingsDiscoveryAdapters() {
 			<Grid.Col span={9} pos="relative">
 				<ScrollArea h={height - 160}>
 					{discoveryAdapters.isLoading ? (
-						<DiscoveryAdapterSkelton count={9} />
+						<DiscoveryAdapterSkelton count={6} />
 					) : (
 						<Accordion variant="separated" onChange={setActiveAccordion}>
 							{discoveryAdapters?.data?.results?.map((item) => (
