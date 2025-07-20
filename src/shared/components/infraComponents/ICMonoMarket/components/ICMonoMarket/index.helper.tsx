@@ -8,9 +8,33 @@ import {
 } from "@/shared/components/infraComponents/ICMonoMarket/components/ICMonoMarket/index.enum";
 import type { MonoMarketCardProps } from "@/shared/components/infraComponents/ICMonoMarket/components/ICMonoMarket/index.types";
 import { MonoWatchLogo } from "@/shared/icons/components/general";
-import { Badge, Button, Flex, Tooltip } from "@mantine/core";
+import { Badge, Box, Button, Flex, Tooltip } from "@mantine/core";
 import { IconArrowNarrowRight, IconAward, IconBox, IconLock, IconSettings } from "@tabler/icons-react";
 import type { ReactNode } from "react";
+
+export function getMonoMarketAppActivationStatusBadge(status: MonoAppStatusTypeEnum, withEmptyBox = false) {
+	const badges: Record<MonoAppStatusTypeEnum, ReactNode> = {
+		[MonoAppStatusTypeEnum.ACTIVATED]: (
+			<Badge size={"lg"} radius={"xs"} variant={"light"} color={"#12B886"}>
+				{status}
+			</Badge>
+		),
+		[MonoAppStatusTypeEnum.EXPIRED]: (
+			<Badge size={"lg"} radius={"xs"} variant={"light"} color={"#12B886"}>
+				{status}
+			</Badge>
+		),
+		[MonoAppStatusTypeEnum.INACTIVE]: (
+			<Badge size={"lg"} radius={"xs"} variant={"light"} color={"#868E96"}>
+				{status}
+			</Badge>
+		),
+		[MonoAppStatusTypeEnum.INSTALLING]: null,
+		[MonoAppStatusTypeEnum.SUPPORT_LICENSE_EXPIRED]: null,
+	};
+
+	return badges[status] || (withEmptyBox ? <Box /> : null);
+}
 
 export function getMonoMarketAppProductButton(params: {
 	size: "small" | "large" | "xLarge";

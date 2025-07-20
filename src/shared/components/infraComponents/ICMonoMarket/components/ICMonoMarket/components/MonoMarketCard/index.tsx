@@ -1,11 +1,13 @@
+import { MonoAppStatusTypeEnum } from "@/shared/components/infraComponents/ICMonoMarket/components/ICMonoMarket/index.enum";
 import {
 	getMonoAppIcon,
 	getMonoMarketActivateConfigButton,
+	getMonoMarketAppActivationStatusBadge,
 	getMonoMarketAppMonoCareLicenseButton,
 	getMonoMarketAppProductButton,
 } from "@/shared/components/infraComponents/ICMonoMarket/components/ICMonoMarket/index.helper";
 import type { MonoMarketCardProps } from "@/shared/components/infraComponents/ICMonoMarket/components/ICMonoMarket/index.types";
-import { Badge, Box, Button, Card, Flex, Loader, Text, Tooltip } from "@mantine/core";
+import { Box, Button, Card, Flex, Loader, Text, Tooltip } from "@mantine/core";
 import { IconInfoCircle } from "@tabler/icons-react";
 
 export default function MonoMarketCard(props: MonoMarketCardProps) {
@@ -108,20 +110,9 @@ export default function MonoMarketCard(props: MonoMarketCardProps) {
 					<Flex p={"sm"} align={"center"} justify={"space-between"} h={52}>
 						<Flex gap={"2xs"} align={"center"}>
 							<Box>
-								{props.status === "ACTIVATED" ? (
-									<Badge size={"lg"} radius={"xs"} variant={"light"} color={"#12B886"}>
-										{props.status}
-									</Badge>
-								) : (
-									<Box />
-								)}
-								{props.status === "EXPIRED" ? (
-									<Badge size={"lg"} radius={"xs"} variant={"light"} color={"#FA5252"}>
-										{props.status}
-									</Badge>
-								) : (
-									<Box />
-								)}
+								{[MonoAppStatusTypeEnum.ACTIVATED, MonoAppStatusTypeEnum.EXPIRED].includes(props.status)
+									? getMonoMarketAppActivationStatusBadge(props.status, true)
+									: null}
 							</Box>
 							{props.hasRequiredSupportLicense && props.status !== "INACTIVE" && (
 								<Tooltip label={getSupportLicenseTooltipLabel()}>

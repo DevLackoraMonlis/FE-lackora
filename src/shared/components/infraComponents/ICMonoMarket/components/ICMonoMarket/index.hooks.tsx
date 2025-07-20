@@ -4,9 +4,12 @@ import {
 	MonoAppProductTypeEnum,
 	MonoAppStatusTypeEnum,
 } from "@/shared/components/infraComponents/ICMonoMarket/components/ICMonoMarket/index.enum";
-import { getMonoMarketAppProductButton } from "@/shared/components/infraComponents/ICMonoMarket/components/ICMonoMarket/index.helper";
+import {
+	getMonoMarketAppActivationStatusBadge,
+	getMonoMarketAppProductButton,
+} from "@/shared/components/infraComponents/ICMonoMarket/components/ICMonoMarket/index.helper";
 import { useGetVendorIcons } from "@/shared/hooks/useGetVendorIcons";
-import { Badge, Flex, Text } from "@mantine/core";
+import { Flex, Text } from "@mantine/core";
 
 export const useMonoMarket = () => {
 	const productTypeMap: Record<ApplicationLicenseType, MonoAppProductTypeEnum> = {
@@ -41,25 +44,8 @@ export const useMonoMarket = () => {
 				</Flex>
 			);
 		},
-		status: (option) => {
-			const colors: Record<ApplicationHistoryStatus, string> = {
-				active: "#12B886",
-				expired: "#FA5252",
-				inactive: "#868E96",
-				installing: "white",
-				support_licensed_expired: "white",
-			};
-			return (
-				<Badge
-					size={"lg"}
-					variant={"light"}
-					radius={"xs"}
-					color={colors[option.value as ApplicationHistoryStatus]}
-				>
-					{option.label}
-				</Badge>
-			);
-		},
+		status: (option) =>
+			getMonoMarketAppActivationStatusBadge(appStatusMap[option.value as ApplicationHistoryStatus]),
 		type: (option) => {
 			return getMonoMarketAppProductButton({
 				size: "large",
