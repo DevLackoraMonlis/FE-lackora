@@ -50,7 +50,12 @@ export const useMonoMarket = () => {
 				support_licensed_expired: "white",
 			};
 			return (
-				<Badge variant={"light"} radius={"xs"} color={colors[option.value as ApplicationHistoryStatus]}>
+				<Badge
+					size={"lg"}
+					variant={"light"}
+					radius={"xs"}
+					color={colors[option.value as ApplicationHistoryStatus]}
+				>
 					{option.label}
 				</Badge>
 			);
