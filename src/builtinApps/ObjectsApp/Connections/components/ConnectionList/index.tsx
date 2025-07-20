@@ -311,7 +311,7 @@ export default function ConnectionList() {
 			/>
 			<Grid.Col span={{ xs: 12, lg: 3 }}>
 				<BCSideFilter
-					height={height - 220}
+					height={height - 227}
 					onChange={setFilters}
 					filterItems={dynamicFilters || []}
 					searchPlaceholder={"Search by adapter Name"}
