@@ -213,7 +213,10 @@ export default function ICMonoMarket() {
 					</Grid>
 				</ScrollArea>
 				<Flex justify={"center"} align={"center"}>
-					<Pagination total={tablePagination.totalRecords} onChange={tablePagination.onPageChange} />
+					<Pagination
+						total={Math.ceil(tablePagination.totalRecords / tablePagination.recordsPerPage)}
+						onChange={tablePagination.onPageChange}
+					/>
 				</Flex>
 			</Grid.Col>
 		</Grid>
