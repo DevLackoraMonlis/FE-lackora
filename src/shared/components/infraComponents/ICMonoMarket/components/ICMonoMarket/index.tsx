@@ -165,15 +165,13 @@ export default function ICMonoMarket() {
 				onActivate={() => {
 					activateAppQuery.refetch().then(() => {
 						void getMonoMarketAppsQuery.refetch();
+						router.refresh();
 						notifications.show({
 							title: "App Activated Successfully",
 							message: `You’ve activated “${selectedApp?.label}” Mono App`,
 							color: "green",
 							withBorder: true,
 							icon: <IconCheck />,
-							onClose: () => {
-								router.refresh();
-							},
 						});
 					});
 					activeOnlyHandlers.close();
