@@ -309,7 +309,7 @@ export default function ConnectionList() {
 				<ConnectionEmpty onCreate={createSelectionTypeModalHandlers.open} />
 			) : (
 				<>
-					<Grid.Col span={{ xs: 12, lg: 3 }}>
+					<Grid.Col span={3}>
 						<BCSideFilter
 							height={height - 227}
 							onChange={setFilters}
@@ -317,7 +317,7 @@ export default function ConnectionList() {
 							searchPlaceholder={"Search by adapter Name"}
 						/>
 					</Grid.Col>
-					<Grid.Col span={{ xs: 12, lg: 9 }}>
+					<Grid.Col span={9}>
 						<Flex justify={"space-between"} align={"center"} py={"md"}>
 							<Text
 								fz={"lg"}

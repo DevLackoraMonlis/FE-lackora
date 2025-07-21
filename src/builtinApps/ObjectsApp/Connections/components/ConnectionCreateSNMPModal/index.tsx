@@ -69,7 +69,7 @@ export default function ConnectionCreateSNMPModal(
 					values.snmpVersion === CreateConnectionSNMPVersionType.SNMP_V_3 &&
 					values.securityLevel === CreateConnectionSNMPSecurityLdLevelType.AUTHENTICATION_ONLY
 				) {
-					return validateInput(value, { required: true, onlyEnglishChars: true });
+					return validateInput(value, { required: true });
 				}
 				return null;
 			},
@@ -123,7 +123,11 @@ export default function ConnectionCreateSNMPModal(
 		return {
 			description: formValues.description,
 			password:
-				formValues.snmpVersion === CreateConnectionSNMPVersionType.SNMP_V_2_C ? formValues.password : null,
+				formValues.snmpVersion === CreateConnectionSNMPVersionType.SNMP_V_2_C ||
+				(formValues.snmpVersion === CreateConnectionSNMPVersionType.SNMP_V_3 &&
+					formValues.securityLevel !== CreateConnectionSNMPSecurityLdLevelType.NO_SECURITY)
+					? formValues.password
+					: null,
 			name: formValues.name,
 			port: formValues.snmpPort,
 			community:
@@ -134,17 +138,17 @@ export default function ConnectionCreateSNMPModal(
 			username: formValues.snmpVersion === CreateConnectionSNMPVersionType.SNMP_V_3 ? formValues.user : null,
 			authentication_protocol:
 				formValues.snmpVersion === CreateConnectionSNMPVersionType.SNMP_V_3 &&
-				formValues.securityLevel === CreateConnectionSNMPSecurityLdLevelType.AUTHENTICATION_ONLY
+				formValues.securityLevel !== CreateConnectionSNMPSecurityLdLevelType.NO_SECURITY
 					? formValues.authenticationProtocol
 					: null,
 			privacy_protocol:
 				formValues.snmpVersion === CreateConnectionSNMPVersionType.SNMP_V_3 &&
-				formValues.securityLevel === CreateConnectionSNMPSecurityLdLevelType.AUTHENTICATION_ONLY
+				formValues.securityLevel === CreateConnectionSNMPSecurityLdLevelType.AUTHENTICATION_PRIVACY
 					? formValues.privacyProtocol
 					: null,
 			privacy_passphrase:
 				formValues.snmpVersion === CreateConnectionSNMPVersionType.SNMP_V_3 &&
-				formValues.securityLevel === CreateConnectionSNMPSecurityLdLevelType.AUTHENTICATION_ONLY
+				formValues.securityLevel === CreateConnectionSNMPSecurityLdLevelType.AUTHENTICATION_PRIVACY
 					? formValues.privacyPassphrase
 					: null,
 		};
