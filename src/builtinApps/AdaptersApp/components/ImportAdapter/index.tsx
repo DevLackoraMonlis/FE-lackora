@@ -28,8 +28,9 @@ function ImportAdapter({ onClose, refetchAdapters, updateMode }: Props) {
 	const defaultStatus = updateMode ? AdapterUploadedStatus.Upgrade : AdapterUploadedStatus.None;
 	const [status, setStatus] = useState<AdapterUploadedStatus>(defaultStatus);
 	const [file, setFile] = useState<FileWithPath | null>(null);
-	const [fileInfo, setFileInfo] = useState<{ subTitle: string }>({
+	const [fileInfo, setFileInfo] = useState<{ subTitle: string; iconPath: string }>({
 		subTitle: "Uploading and Validating ...",
+		iconPath: "",
 	});
 
 	const { validateAdapterAdp } = useAdapterManagementValidateAdp((updateStatus) => setStatus(updateStatus));
@@ -37,7 +38,7 @@ function ImportAdapter({ onClose, refetchAdapters, updateMode }: Props) {
 
 	const onCancelFile = () => {
 		setFile(null);
-		setFileInfo({ subTitle: "" });
+		setFileInfo({ subTitle: "", iconPath: "" });
 		setStatus(defaultStatus);
 	};
 	const onApply = () => {
@@ -49,20 +50,20 @@ function ImportAdapter({ onClose, refetchAdapters, updateMode }: Props) {
 					onError(error) {
 						const err = error as CustomError;
 						const subTitle = getErrorMessage(err) || "";
-						const { status } = handleGetStatusFromResponse();
+						const { status, iconPath } = handleGetStatusFromResponse();
 						setStatus(status);
-						setFileInfo({ subTitle });
+						setFileInfo({ subTitle, iconPath });
 					},
 					onSuccess(response) {
 						const data = response?.data;
-						const { status, subTitle, apiStatus } = handleGetStatusFromResponse<typeof data>(data);
+						const { status, subTitle, iconPath, apiStatus } = handleGetStatusFromResponse<typeof data>(data);
 						if (apiStatus) {
 							refetchAdapters();
 							onCancelFile();
 							onClose();
 						} else {
 							setStatus(status);
-							setFileInfo({ subTitle });
+							setFileInfo({ subTitle, iconPath });
 						}
 					},
 				},
@@ -80,13 +81,13 @@ function ImportAdapter({ onClose, refetchAdapters, updateMode }: Props) {
 						const subTitle = getErrorMessage(err) || "";
 						const { status } = handleGetStatusFromResponse();
 						setStatus(status);
-						setFileInfo({ subTitle });
+						setFileInfo({ subTitle, iconPath: "" });
 					},
 					onSuccess(response) {
 						const data = response?.data;
-						const { status, subTitle } = handleGetStatusFromResponse<typeof data>(data);
+						const { status, subTitle, iconPath } = handleGetStatusFromResponse<typeof data>(data);
 						setStatus(status);
-						setFileInfo({ subTitle });
+						setFileInfo({ subTitle, iconPath });
 					},
 				},
 			);
@@ -96,7 +97,7 @@ function ImportAdapter({ onClose, refetchAdapters, updateMode }: Props) {
 	const renderUploadComponent = (status: AdapterUploadedStatus) => {
 		if (!file) return null;
 		const { name: title } = file;
-		const { subTitle } = fileInfo;
+		const { subTitle, iconPath } = fileInfo;
 		switch (status) {
 			case AdapterUploadedStatus.Loading:
 				return <UploadStatusUploading {...{ title, subTitle, onCancelFile }} />;
@@ -106,7 +107,7 @@ function ImportAdapter({ onClose, refetchAdapters, updateMode }: Props) {
 			case AdapterUploadedStatus.Ready:
 			case AdapterUploadedStatus.Exists:
 			case AdapterUploadedStatus.Upgrade:
-				return <UploadStatusReadyToImport {...{ title, subTitle, onCancelFile, iconType: title, status }} />;
+				return <UploadStatusReadyToImport {...{ title, subTitle, onCancelFile, iconPath, status }} />;
 			default:
 				return null;
 		}

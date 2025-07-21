@@ -1,6 +1,6 @@
-import { ActionIcon, Badge, Card, Center, Flex, Image, Menu, Text } from "@mantine/core";
+import { ActionIcon, Badge, Card, Flex, Image, Menu, Text } from "@mantine/core";
 import { useHover } from "@mantine/hooks";
-import { IconBuildingSkyscraper, IconDotsVertical, IconRefresh, IconTrash } from "@tabler/icons-react";
+import { IconDotsVertical, IconRefresh, IconTrash } from "@tabler/icons-react";
 import { motion } from "framer-motion";
 import { type ReactNode, useEffect, useState } from "react";
 
@@ -9,6 +9,7 @@ const MotionDiv = motion.div;
 type Props = {
 	adapterIconPath?: string | null;
 	adapterBadge: ReactNode;
+	genericAdapter: ReactNode;
 	adapterType: string;
 	name: string;
 	version: number;
@@ -71,14 +72,14 @@ export default function AdapterSingleCard(props: Props) {
 			>
 				<Card.Section inheritPadding p="xs" withBorder>
 					<Flex gap="xs">
-						<Card w={80} h={62} variant="light" shadow="none" padding={0} pt="2xs">
-							<Center>
+						<Card w={80} h={62} variant="light" shadow="none" padding="xs">
+							<Flex justify="center" align="center">
 								{props.adapterIconPath ? (
-									<Image fit="fill" radius="md" src={props.adapterIconPath} alt={props.name} />
+									<Image fit="cover" radius="md" src={props.adapterIconPath} alt={props.name} />
 								) : (
-									<IconBuildingSkyscraper size={50} strokeWidth={1} />
+									props.genericAdapter
 								)}
-							</Center>
+							</Flex>
 						</Card>
 						<Flex direction="column" gap="2xs" w="100%">
 							<Flex justify="space-between">

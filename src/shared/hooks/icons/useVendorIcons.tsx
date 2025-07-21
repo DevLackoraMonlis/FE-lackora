@@ -10,7 +10,8 @@ import {
 	CIconAdapterServiceNow,
 	CIconAdapterVCenter,
 } from "@/shared/icons/components/adapterAndVendor";
-import { IconBuildingSkyscraper, IconMaximizeOff } from "@tabler/icons-react";
+import { MonoWatchLogo } from "@/shared/icons/components/general";
+import { IconMaximizeOff } from "@tabler/icons-react";
 import type { ReactNode } from "react";
 
 const vendorIcons = {
@@ -24,7 +25,7 @@ const vendorIcons = {
 	service: CIconAdapterServiceNow,
 	vcenter: CIconAdapterVCenter,
 	mikrotik: CIconAdapterMikrotik,
-	generic: IconBuildingSkyscraper,
+	generic: MonoWatchLogo,
 	none: IconMaximizeOff,
 };
 

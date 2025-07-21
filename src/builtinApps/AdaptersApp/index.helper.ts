@@ -3,6 +3,7 @@ import { AdapterUploadedStatus } from "./index.enum";
 type AdapterValidationResponse = {
 	status: boolean;
 	message: string;
+	icon?: string | null;
 	type?:
 		| "exists"
 		| "adapter_json_invalid"
@@ -16,7 +17,7 @@ type AdapterValidationResponse = {
 };
 
 export function handleGetStatusFromResponse<T extends AdapterValidationResponse>(data?: T) {
-	const { type, message = "", status: apiStatus = false } = data || {};
+	const { type, message = "", icon, status: apiStatus = false } = data || {};
 
 	let status: AdapterUploadedStatus;
 	let subTitle: string;
@@ -53,5 +54,5 @@ export function handleGetStatusFromResponse<T extends AdapterValidationResponse>
 			break;
 	}
 
-	return { status, subTitle, apiStatus };
+	return { status, subTitle, apiStatus, iconPath: icon || "" };
 }

@@ -1,4 +1,4 @@
-import { Badge, Card, Flex, Grid, ScrollArea, Text } from "@mantine/core";
+import { Badge, Card, Flex, Grid, Image, ScrollArea, Text } from "@mantine/core";
 import { Accordion } from "@mantine/core";
 import { useViewportSize } from "@mantine/hooks";
 import { useState } from "react";
@@ -65,8 +65,14 @@ export default function DiscoverySettingsDiscoveryAdapters() {
 									<Accordion.Control>
 										<Flex align="center" justify="space-between">
 											<Flex gap="sm">
-												<Card variant="light" p="xs">
-													{getVendorIcon(item.vendor, { size: 30 })}
+												<Card w={50} h={50} variant="light" shadow="none" padding="xs" p="2xs">
+													<Flex justify="center" align="center">
+														{item.icon ? (
+															<Image fit="cover" radius="md" src={item.icon} alt={item.display_name} />
+														) : (
+															getVendorIcon("generic")
+														)}
+													</Flex>
 												</Card>
 												<Flex direction="column" gap="2xs">
 													<Text fw="bold">{item.display_name}</Text>
