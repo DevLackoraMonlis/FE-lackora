@@ -26,7 +26,7 @@ export const useVendorBadges = () => {
 				{...props}
 				{...{ [iconLeft ? "leftSection" : "rightSection"]: getVendorIcon(iconType, { size: iconSize }) }}
 			>
-				{iconType || badgeLabel || "-"}
+				{badgeLabel || iconType || "-"}
 			</Badge>
 		);
 	};

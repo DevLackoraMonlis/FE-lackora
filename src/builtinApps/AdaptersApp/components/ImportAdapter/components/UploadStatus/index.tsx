@@ -1,6 +1,4 @@
-import { Alert, Badge, Card, CloseButton, Flex, Loader, RingProgress, Text } from "@mantine/core";
-
-import { useVendorIcons } from "@/shared/hooks/icons/useVendorIcons";
+import { Alert, Badge, Card, CloseButton, Flex, Image, Loader, RingProgress, Text } from "@mantine/core";
 
 import { ADAPTER_UPLOADED_STATUS } from "../../../../index.constants";
 import type { AdapterUploadedStatus } from "../../../../index.enum";
@@ -67,13 +65,12 @@ export const UploadStatusReadyToImport = ({
 	status,
 	title,
 	subTitle,
-	iconType,
+	iconPath,
 	onCancelFile,
 }: CommonType & {
 	status: AdapterUploadedStatus;
-	iconType: string;
+	iconPath: string;
 }) => {
-	const { getVendorIcon } = useVendorIcons();
 	const uploadStatus = ADAPTER_UPLOADED_STATUS[status] || {};
 	const Icon = uploadStatus.icon;
 	return (
@@ -81,8 +78,10 @@ export const UploadStatusReadyToImport = ({
 			<Card bg="gray.1" p="xs">
 				<Flex justify="space-between" align="center">
 					<Flex gap="xs" align="center">
-						<Card variant="light" m={0} p={5}>
-							{getVendorIcon(iconType, { size: 30 })}
+						<Card variant="light" m={0} p={0} w="40px" h="40px">
+							<Flex justify="center" align="center" w="40px" h="40px" p="2xs">
+								{iconPath ? <Image fit="cover" radius="md" src={iconPath} alt="adapter-icon" /> : null}
+							</Flex>
 						</Card>
 						<Flex direction="column">
 							<Text fz="sm" fw="bold">
