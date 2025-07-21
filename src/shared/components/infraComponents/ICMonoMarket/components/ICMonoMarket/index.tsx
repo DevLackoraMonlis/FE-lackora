@@ -20,12 +20,15 @@ import type { MonoMarketCardProps } from "@/shared/components/infraComponents/IC
 import { AppRoutes } from "@/shared/constants/app-routes";
 import { useStableData } from "@/shared/hooks/useStableData";
 import { useTablePagination } from "@/shared/hooks/useTablePagination";
+import activeAppsStore from "@/shared/stores/activeAppsStore";
 import { Flex, Grid, Pagination, ScrollArea } from "@mantine/core";
 import { useDisclosure, useViewportSize } from "@mantine/hooks";
 import { notifications } from "@mantine/notifications";
 import { IconCheck } from "@tabler/icons-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useStore } from "zustand/index";
+import { useShallow } from "zustand/react/shallow";
 
 type SelectAppType = Omit<
 	MonoMarketCardProps,
@@ -40,6 +43,13 @@ export default function ICMonoMarket() {
 	const [openedActiveWithConfigModal, activeWithConfigHandlers] = useDisclosure(false);
 	const [openedAppDetailsModal, appDetailsModalHandlers] = useDisclosure(false);
 	const [selectedApp, setSelectedApp] = useState<SelectAppType | undefined>(undefined);
+
+	const store = useStore(
+		activeAppsStore,
+		useShallow((state) => ({
+			apps: state.apps,
+		})),
+	);
 
 	const { tablePagination, setTotalRecords } = useTablePagination();
 
@@ -129,6 +139,15 @@ export default function ICMonoMarket() {
 	};
 
 	const onOpenApp = (appName: string) => {
+		const findApp = store.apps.find((app) => app.name === appName);
+		if (findApp) {
+			router.push(
+				findApp.has_landing
+					? AppRoutes.appLandingPage(appName)
+					: AppRoutes.appModulePage(appName, findApp.modules[0]),
+			);
+			return;
+		}
 		router.push(AppRoutes.appLandingPage(appName));
 	};
 
