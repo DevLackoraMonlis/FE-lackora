@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 
 import BCSideFilter, { type BCSideFilterItem } from "@/shared/components/baseComponents/BCSideFilter";
 import { useAdapterBadges } from "@/shared/hooks/badges/useAdapterBadges";
-import { useVendorIcons } from "@/shared/hooks/icons/useVendorIcons";
 import { useRenderFilterLabels } from "@/shared/hooks/useRenderFilterLabels";
 import { useStableData } from "@/shared/hooks/useStableData";
 import { useTablePagination } from "@/shared/hooks/useTablePagination";
@@ -21,7 +20,6 @@ import type { AdaptersFilters } from "./index.types";
 
 export default function AdapterManagementLandingPage() {
 	const { height } = useViewportSize();
-	const { getVendorIcon } = useVendorIcons();
 	const { renderAdapterBadge } = useAdapterBadges();
 	const { renderLabel } = useRenderFilterLabels();
 
@@ -117,7 +115,6 @@ export default function AdapterManagementLandingPage() {
 												setSelectedAdapter(item);
 												handleOpenedUpdate.open();
 											}}
-											genericAdapter={getVendorIcon("generic")}
 											adapterBadge={renderAdapterBadge({ iconType: item.adapterType, h: "30px" })}
 											adapterIconPath={item.icon}
 											{...item}

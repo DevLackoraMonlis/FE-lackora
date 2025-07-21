@@ -1,7 +1,5 @@
 import { Alert, Badge, Card, CloseButton, Flex, Image, Loader, RingProgress, Text } from "@mantine/core";
 
-import { useVendorIcons } from "@/shared/hooks/icons/useVendorIcons";
-
 import { ADAPTER_UPLOADED_STATUS } from "../../../../index.constants";
 import type { AdapterUploadedStatus } from "../../../../index.enum";
 
@@ -73,7 +71,6 @@ export const UploadStatusReadyToImport = ({
 	status: AdapterUploadedStatus;
 	iconPath: string;
 }) => {
-	const { getVendorIcon } = useVendorIcons();
 	const uploadStatus = ADAPTER_UPLOADED_STATUS[status] || {};
 	const Icon = uploadStatus.icon;
 	return (
@@ -82,12 +79,8 @@ export const UploadStatusReadyToImport = ({
 				<Flex justify="space-between" align="center">
 					<Flex gap="xs" align="center">
 						<Card variant="light" m={0} p={0} w="40px" h="40px">
-							<Flex justify="center" align="center" w="40px" h="40px">
-								{iconPath ? (
-									<Image fit="cover" radius="md" src={iconPath} alt="adapter-icon" />
-								) : (
-									getVendorIcon("generic", { size: 30 })
-								)}
+							<Flex justify="center" align="center" w="40px" h="40px" p="2xs">
+								{iconPath ? <Image fit="cover" radius="md" src={iconPath} alt="adapter-icon" /> : null}
 							</Flex>
 						</Card>
 						<Flex direction="column">

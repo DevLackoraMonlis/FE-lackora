@@ -9,7 +9,6 @@ const MotionDiv = motion.div;
 type Props = {
 	adapterIconPath?: string | null;
 	adapterBadge: ReactNode;
-	genericAdapter: ReactNode;
 	adapterType: string;
 	name: string;
 	version: number;
@@ -76,9 +75,7 @@ export default function AdapterSingleCard(props: Props) {
 							<Flex justify="center" align="center">
 								{props.adapterIconPath ? (
 									<Image fit="cover" radius="md" src={props.adapterIconPath} alt={props.name} />
-								) : (
-									props.genericAdapter
-								)}
+								) : null}
 							</Flex>
 						</Card>
 						<Flex direction="column" gap="2xs" w="100%">

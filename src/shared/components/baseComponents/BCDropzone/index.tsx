@@ -77,7 +77,7 @@ export default function BCDropzone({
 							mb="xs"
 							ta="center"
 							highlight={[ACCEPT_FILES_DISPLAY || "", ACCEPT_SIZE_DISPLAY]}
-						>{`Drag'n'drop file here to upload. We can accept only ${ACCEPT_FILES_DISPLAY} file that is less than ${ACCEPT_SIZE_DISPLAY} in size.`}</Highlight>
+						>{`Drag & drop file here to upload. We can accept only ${ACCEPT_FILES_DISPLAY} file that is less than ${ACCEPT_SIZE_DISPLAY} in size.`}</Highlight>
 					</Flex>
 				</Dropzone>
 				<Button

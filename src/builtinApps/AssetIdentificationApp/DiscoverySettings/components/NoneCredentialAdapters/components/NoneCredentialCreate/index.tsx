@@ -28,6 +28,13 @@ type Props = {
 
 const NoneCredentialCreate = (props: Props) => {
 	const updateValueOnce = useRef<FormList>({});
+	const onValuesChange = () => {
+		setTimeout(() => {
+			Object.entries(updateValueOnce.current).forEach(([key, value]) => {
+				form.setFieldValue(key, value);
+			});
+		}, 100);
+	};
 	const [createWebService, handleCreateWebService] = useDisclosure();
 	const { createDiscoverySetting } = useCreateDiscoverySetting();
 
@@ -37,18 +44,13 @@ const NoneCredentialCreate = (props: Props) => {
 			list: [],
 		},
 		validate: { list: initValidations as unknown as FormList },
-		onValuesChange: () => {
-			setTimeout(() => {
-				Object.entries(updateValueOnce.current).forEach(([key, value]) => {
-					form.setFieldValue(key, value);
-				});
-			}, 100);
-		},
+		onValuesChange: onValuesChange,
 	});
 	const handleRemoveFromList = (index: number) => {
 		form.removeListItem("list", index);
 		const filterRemoved = omitBy(updateValueOnce.current, (_value, key) => key.includes(index.toString()));
 		updateValueOnce.current = filterRemoved;
+		onValuesChange();
 	};
 
 	const handleCreate = (index: number) => {

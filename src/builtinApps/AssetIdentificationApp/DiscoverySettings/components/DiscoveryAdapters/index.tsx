@@ -4,7 +4,6 @@ import { useViewportSize } from "@mantine/hooks";
 import { useState } from "react";
 
 import BCSideFilter, { type BCSideFilterItem } from "@/shared/components/baseComponents/BCSideFilter";
-import { useVendorIcons } from "@/shared/hooks/icons/useVendorIcons";
 import { useRenderFilterLabels } from "@/shared/hooks/useRenderFilterLabels";
 import { useStableData } from "@/shared/hooks/useStableData";
 
@@ -15,7 +14,6 @@ import DiscoveryAdapterSkelton from "./components/DiscoveryAdapterSkelton";
 
 export default function DiscoverySettingsDiscoveryAdapters() {
 	const { height } = useViewportSize();
-	const { getVendorIcon } = useVendorIcons();
 	const { renderLabel } = useRenderFilterLabels();
 	const [activeAccordion, setActiveAccordion] = useState<string | null>(null);
 	const [queryParams, setQueryParams] = useState<DiscoveryAdapterFilters>({ type: "discovery" });
@@ -69,9 +67,7 @@ export default function DiscoverySettingsDiscoveryAdapters() {
 													<Flex justify="center" align="center">
 														{item.icon ? (
 															<Image fit="cover" radius="md" src={item.icon} alt={item.display_name} />
-														) : (
-															getVendorIcon("generic")
-														)}
+														) : null}
 													</Flex>
 												</Card>
 												<Flex direction="column" gap="2xs">

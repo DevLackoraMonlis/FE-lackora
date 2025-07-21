@@ -27,27 +27,29 @@ type Props = {
 
 const DiscoveryAdaptersCreateGateway = (props: Props) => {
 	const updateValueOnce = useRef<FormList>({});
-	const { createDiscoverySetting } = useCreateDiscoverySetting();
+	const onValuesChange = () => {
+		setTimeout(() => {
+			Object.entries(updateValueOnce.current).forEach(([key, value]) => {
+				form.setFieldValue(key, value);
+			});
+		}, 100);
+	};
 
+	const { createDiscoverySetting } = useCreateDiscoverySetting();
 	const initValidations = getDynamicFieldValidate<FormList, string>(props.fields);
 	const form = useForm<FormValues>({
 		initialValues: {
 			list: [],
 		},
 		validate: { list: initValidations as unknown as FormList },
-		onValuesChange: () => {
-			setTimeout(() => {
-				Object.entries(updateValueOnce.current).forEach(([key, value]) => {
-					form.setFieldValue(key, value);
-				});
-			}, 100);
-		},
+		onValuesChange: onValuesChange,
 	});
 
 	const handleRemoveFromList = (index: number) => {
 		form.removeListItem("list", index);
 		const filterRemoved = omitBy(updateValueOnce.current, (_value, key) => key.includes(index.toString()));
 		updateValueOnce.current = filterRemoved;
+		onValuesChange();
 	};
 
 	const handleCreate = (index: number) => {

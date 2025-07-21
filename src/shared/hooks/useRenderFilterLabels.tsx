@@ -5,7 +5,6 @@ import type {
 import { Badge, type BadgeProps, Image } from "@mantine/core";
 
 import { useAdapterBadges } from "@/shared/hooks/badges/useAdapterBadges";
-import { useVendorIcons } from "@/shared/hooks/icons/useVendorIcons";
 
 type RenderLabel = (
 	params: Partial<BCSideFilterItemOption>,
@@ -13,7 +12,6 @@ type RenderLabel = (
 ) => React.ReactNode;
 
 export function useRenderFilterLabels() {
-	const { getVendorIcon } = useVendorIcons();
 	const { renderAdapterBadge } = useAdapterBadges();
 
 	const renderLabel: RenderLabel = ({ label, value, icon }, { name }, props?: BadgeProps) => {
@@ -33,9 +31,7 @@ export function useRenderFilterLabels() {
 						c="black"
 						leftSection={
 							icon ? (
-								<Image w="20px" h="30px" fit="contain" radius="md" src={icon} alt={badgeLabel} />
-							) : badgeLabel?.toLocaleLowerCase() === "generic" ? (
-								getVendorIcon("generic", { size: 20 })
+								<Image p={1} w="20px" h="30px" fit="contain" radius="md" src={icon} alt={badgeLabel} />
 							) : null
 						}
 						{...props}
