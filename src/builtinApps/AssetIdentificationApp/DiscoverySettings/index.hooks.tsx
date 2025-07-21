@@ -51,7 +51,10 @@ export function useDiscoveryAdapters({ type, ...clientSideParams }: DiscoveryAda
 		);
 	}
 
-	results = filter(results, ({ is_used }) => type === "none-credential" || !!is_used === !!used);
+	results = filter(
+		results,
+		({ is_used }) => type === "none-credential" || (used ? !!is_used === used : true),
+	);
 	filters?.forEach(({ param }) => {
 		const filtered = clientSideParams[param] as unknown[];
 		if (filtered?.length) {
