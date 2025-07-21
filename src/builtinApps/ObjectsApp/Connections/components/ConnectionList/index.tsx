@@ -154,10 +154,6 @@ export default function ConnectionList() {
 		}
 	}, [deleteUsedInConnectionQuery.data?.data]);
 
-	if (!getConnectionsQuery.data?.data.metadata.total && getConnectionsQuery.isFetched) {
-		return <ConnectionEmpty onCreate={createSelectionTypeModalHandlers.open} />;
-	}
-
 	return (
 		<Grid p="sm" pt="lg" gutter="lg" pos={"relative"}>
 			<BCDeleteRestrictModal
@@ -309,68 +305,81 @@ export default function ConnectionList() {
 					});
 				}}
 			/>
-			<Grid.Col span={{ xs: 12, lg: 3 }}>
-				<BCSideFilter
-					height={height - 227}
-					onChange={setFilters}
-					filterItems={dynamicFilters || []}
-					searchPlaceholder={"Search by adapter Name"}
-				/>
-			</Grid.Col>
-			<Grid.Col span={{ xs: 12, lg: 9 }}>
-				<Flex justify={"space-between"} align={"center"} py={"md"}>
-					<Text fz={"lg"} fw={"bold"}>{`Connections (${getConnectionsQuery.data?.data.total ?? 0})`}</Text>
-					<Button onClick={createSelectionTypeModalHandlers.open} color={"main"} leftSection={<IconPlus />}>
-						Create Connection
-					</Button>
-				</Flex>
-				<Accordion variant="separated">
-					<ScrollArea h={height - 195}>
-						{getConnectionsQuery.data?.data.results.map((item) => (
-							<Accordion.Item key={item.id} value={item.id}>
-								<Accordion.Control>
-									<Flex align="center" justify="space-between">
-										<Flex gap="xs" align={"center"}>
-											<ConnectionIconWrapper>{getConnectionIcon(item.type)}</ConnectionIconWrapper>
-											<Flex direction="column">
-												<Text fw="bold">{item.name}</Text>
-												<Text fz="sm" c="gray.6">
-													{item.description || "-"}
-												</Text>
+			{!getConnectionsQuery.data?.data.metadata.total && getConnectionsQuery.isFetched ? (
+				<ConnectionEmpty onCreate={createSelectionTypeModalHandlers.open} />
+			) : (
+				<>
+					<Grid.Col span={{ xs: 12, lg: 3 }}>
+						<BCSideFilter
+							height={height - 227}
+							onChange={setFilters}
+							filterItems={dynamicFilters || []}
+							searchPlaceholder={"Search by adapter Name"}
+						/>
+					</Grid.Col>
+					<Grid.Col span={{ xs: 12, lg: 9 }}>
+						<Flex justify={"space-between"} align={"center"} py={"md"}>
+							<Text
+								fz={"lg"}
+								fw={"bold"}
+							>{`Connections (${getConnectionsQuery.data?.data.total ?? 0})`}</Text>
+							<Button
+								onClick={createSelectionTypeModalHandlers.open}
+								color={"main"}
+								leftSection={<IconPlus />}
+							>
+								Create Connection
+							</Button>
+						</Flex>
+						<Accordion variant="separated">
+							<ScrollArea h={height - 195}>
+								{getConnectionsQuery.data?.data.results.map((item) => (
+									<Accordion.Item key={item.id} value={item.id}>
+										<Accordion.Control>
+											<Flex align="center" justify="space-between">
+												<Flex gap="xs" align={"center"}>
+													<ConnectionIconWrapper>{getConnectionIcon(item.type)}</ConnectionIconWrapper>
+													<Flex direction="column">
+														<Text fw="bold">{item.name}</Text>
+														<Text fz="sm" c="gray.6">
+															{item.description || "-"}
+														</Text>
+													</Flex>
+												</Flex>
+												<ConnectionListActionButtons
+													getConnectionDataType={
+														getConnectionQuery.data?.data.type &&
+														connectionTypeMap[getConnectionQuery.data.data.type]
+													}
+													selectedEditConnectionId={selectedEditConnectionId}
+													deleteLoading={deleteUsedInConnectionQuery.isFetching}
+													type={connectionTypeMap[item.type]}
+													id={item.id}
+													editIsLoading={getConnectionQuery.isFetching}
+													openHttpModal={createHTTPModalHandlers.open}
+													openSnmpModal={createSNMPModalHandlers.open}
+													openSshModal={createSSHModalHandlers.open}
+													setSelectedConnectionId={setSelectedConnectionId}
+													setSelectedEditConnectionId={setSelectedEditConnectionId}
+													selectedConnectionId={selectedConnectionId}
+												/>
 											</Flex>
-										</Flex>
-										<ConnectionListActionButtons
-											getConnectionDataType={
-												getConnectionQuery.data?.data.type &&
-												connectionTypeMap[getConnectionQuery.data.data.type]
-											}
-											selectedEditConnectionId={selectedEditConnectionId}
-											deleteLoading={deleteUsedInConnectionQuery.isFetching}
-											type={connectionTypeMap[item.type]}
-											id={item.id}
-											editIsLoading={getConnectionQuery.isFetching}
-											openHttpModal={createHTTPModalHandlers.open}
-											openSnmpModal={createSNMPModalHandlers.open}
-											openSshModal={createSSHModalHandlers.open}
-											setSelectedConnectionId={setSelectedConnectionId}
-											setSelectedEditConnectionId={setSelectedEditConnectionId}
-											selectedConnectionId={selectedConnectionId}
-										/>
-									</Flex>
-								</Accordion.Control>
-								<Accordion.Panel px={"3xl"} py={"xs"}>
-									<Flex direction={"column"} gap={"2xs"} w={"50%"}>
-										{Object.entries(omit(item, ["id"])).map(([key, value]) => (
-											<ConnectionLabelValue key={key} label={key.toUpperCase()} value={value as string} />
-										))}
-									</Flex>
-								</Accordion.Panel>
-							</Accordion.Item>
-						))}
-						{getConnectionsQuery.isFetching && <ConnectionListSkeleton />}
-					</ScrollArea>
-				</Accordion>
-			</Grid.Col>
+										</Accordion.Control>
+										<Accordion.Panel px={"3xl"} py={"xs"}>
+											<Flex direction={"column"} gap={"2xs"} w={"50%"}>
+												{Object.entries(omit(item, ["id"])).map(([key, value]) => (
+													<ConnectionLabelValue key={key} label={key.toUpperCase()} value={value as string} />
+												))}
+											</Flex>
+										</Accordion.Panel>
+									</Accordion.Item>
+								))}
+								{getConnectionsQuery.isFetching && <ConnectionListSkeleton />}
+							</ScrollArea>
+						</Accordion>
+					</Grid.Col>
+				</>
+			)}
 		</Grid>
 	);
 }
