@@ -8,6 +8,9 @@ body {
 .cursor-pointer {
 	cursor: pointer;
 }
+.cursor-alias {
+	cursor: alias;
+}
 
 .h-full {
 	height: 100%;

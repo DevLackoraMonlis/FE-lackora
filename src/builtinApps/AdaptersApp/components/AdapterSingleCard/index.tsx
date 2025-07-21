@@ -1,5 +1,5 @@
 import { ActionIcon, Badge, Card, Flex, Image, Menu, Text } from "@mantine/core";
-import { useHover } from "@mantine/hooks";
+import { useDebouncedValue, useHover } from "@mantine/hooks";
 import { IconDotsVertical, IconRefresh, IconTrash } from "@tabler/icons-react";
 import { motion } from "framer-motion";
 import { type ReactNode, useEffect, useState } from "react";
@@ -21,14 +21,16 @@ export default function AdapterSingleCard(props: Props) {
 	const [isFlipped, setIsFlip] = useState(false);
 	const { hovered, ref } = useHover();
 	const { hovered: hDescription, ref: refDescription } = useHover();
+	const [debouncedHovered] = useDebouncedValue(hovered, 500);
+	const [debouncedDescription] = useDebouncedValue(hDescription, 500);
 
 	useEffect(() => {
-		if (hovered && !hDescription) {
+		if (debouncedHovered && !debouncedDescription) {
 			setIsFlip(true);
-		} else if (!hDescription) {
+		} else if (!debouncedDescription) {
 			setIsFlip(false);
 		}
-	}, [hovered, hDescription]);
+	}, [debouncedHovered, debouncedDescription]);
 
 	return (
 		<MotionDiv
@@ -114,8 +116,8 @@ export default function AdapterSingleCard(props: Props) {
 						</Flex>
 					</Flex>
 				</Card.Section>
-				<Card.Section px="xs" className="h-full w-full" ref={ref}>
-					<Text c="dimmed" mt="xs" lineClamp={2} className="cursor-pointer" ref={ref}>
+				<Card.Section px="xs" className="h-full w-full cursor-alias" ref={ref}>
+					<Text c="dimmed" mt="xs" lineClamp={2} ref={ref}>
 						{props.description || "-"}
 					</Text>
 				</Card.Section>
