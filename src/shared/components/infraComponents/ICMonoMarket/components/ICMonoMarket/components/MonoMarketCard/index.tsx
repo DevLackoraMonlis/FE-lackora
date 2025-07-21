@@ -16,7 +16,7 @@ export default function MonoMarketCard(props: MonoMarketCardProps) {
 			return (
 				<Flex direction={"column"}>
 					<Text fz={"xs"}>This app is available until</Text>
-					<Text fz={"xs"}>your Mono Care</Text>
+					<Text fz={"xs"}>your MonoCare license</Text>
 					<Text fz={"xs"}>expires on:</Text>
 					<Text fz={"xs"}>{props.supportLicenseExpireDate}</Text>
 				</Flex>
@@ -24,7 +24,7 @@ export default function MonoMarketCard(props: MonoMarketCardProps) {
 		}
 		return (
 			<Flex direction={"column"}>
-				<Text fz={"xs"}>Mono Care expired on:</Text>
+				<Text fz={"xs"}>MonoCare license expired on:</Text>
 				<Text fz={"xs"}>{props.supportLicenseExpireDate}</Text>
 				<Text fz={"xs"}>Renew to access this app</Text>
 			</Flex>
@@ -58,7 +58,7 @@ export default function MonoMarketCard(props: MonoMarketCardProps) {
 									<Flex gap={"2xs"}>
 										<Text fz={"xs"}>Requires</Text>
 										<Text fz={"xs"} fw={"bold"}>
-											Active Mono Care
+											Active MonoCare license
 										</Text>
 									</Flex>
 								}
