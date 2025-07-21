@@ -29,6 +29,7 @@ import type {
   CreateAdapterConfigurationRequest,
   CreateAdapterConfigurationResponse,
   DeleteAdapterConfigurationRequest,
+  DiscoveryConfigurationDependencyCheckResponse,
   DiscoverySettingConfigurationTestConnectionParams,
   DiscoverySettingRunNowParams,
   DiscoverySettingsRunNowResponse,
@@ -417,6 +418,93 @@ export const useDeleteDiscoverySettingConfiguration = <TError = HTTPValidationEr
       return useMutation(mutationOptions , queryClient);
     }
     /**
+ * @summary Get Discovery Setting Configuration Dependency
+ */
+export const getDiscoverySettingConfigurationDependecy = (
+    configurationId: string,
+ signal?: AbortSignal
+) => {
+      
+      
+      return orvalMutator<DiscoveryConfigurationDependencyCheckResponse>(
+      {url: `/api/asset-identification/discovery-settings/configurations/${configurationId}/dependency`, method: 'GET', signal
+    },
+      );
+    }
+  
+
+const getGetDiscoverySettingConfigurationDependecyQueryKey = (configurationId: string,) => {
+    return [`/api/asset-identification/discovery-settings/configurations/${configurationId}/dependency`] as const;
+    }
+
+    
+export const getGetDiscoverySettingConfigurationDependecyQueryOptions = <TData = Awaited<ReturnType<typeof getDiscoverySettingConfigurationDependecy>>, TError = HTTPValidationError>(configurationId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getDiscoverySettingConfigurationDependecy>>, TError, TData>>, }
+) => {
+
+const {query: queryOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetDiscoverySettingConfigurationDependecyQueryKey(configurationId);
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getDiscoverySettingConfigurationDependecy>>> = ({ signal }) => getDiscoverySettingConfigurationDependecy(configurationId, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, enabled: !!(configurationId), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getDiscoverySettingConfigurationDependecy>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetDiscoverySettingConfigurationDependecyQueryResult = NonNullable<Awaited<ReturnType<typeof getDiscoverySettingConfigurationDependecy>>>
+export type GetDiscoverySettingConfigurationDependecyQueryError = HTTPValidationError
+
+
+export function useGetDiscoverySettingConfigurationDependecy<TData = Awaited<ReturnType<typeof getDiscoverySettingConfigurationDependecy>>, TError = HTTPValidationError>(
+ configurationId: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getDiscoverySettingConfigurationDependecy>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getDiscoverySettingConfigurationDependecy>>,
+          TError,
+          Awaited<ReturnType<typeof getDiscoverySettingConfigurationDependecy>>
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetDiscoverySettingConfigurationDependecy<TData = Awaited<ReturnType<typeof getDiscoverySettingConfigurationDependecy>>, TError = HTTPValidationError>(
+ configurationId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getDiscoverySettingConfigurationDependecy>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getDiscoverySettingConfigurationDependecy>>,
+          TError,
+          Awaited<ReturnType<typeof getDiscoverySettingConfigurationDependecy>>
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetDiscoverySettingConfigurationDependecy<TData = Awaited<ReturnType<typeof getDiscoverySettingConfigurationDependecy>>, TError = HTTPValidationError>(
+ configurationId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getDiscoverySettingConfigurationDependecy>>, TError, TData>>, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary Get Discovery Setting Configuration Dependency
+ */
+
+export function useGetDiscoverySettingConfigurationDependecy<TData = Awaited<ReturnType<typeof getDiscoverySettingConfigurationDependecy>>, TError = HTTPValidationError>(
+ configurationId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getDiscoverySettingConfigurationDependecy>>, TError, TData>>, }
+ , queryClient?: QueryClient 
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetDiscoverySettingConfigurationDependecyQueryOptions(configurationId,options)
+
+  const query = useQuery(queryOptions , queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+/**
  * @summary Change Adapter Active Status
  */
 export const editDiscoverySettingStatus = (

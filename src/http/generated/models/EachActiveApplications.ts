@@ -6,6 +6,7 @@
  * OpenAPI spec version: 1.0.0
  */
 import type { ApplicationPlacementEnum } from './ApplicationPlacementEnum';
+import type { EachActiveApplicationsFirstModule } from './EachActiveApplicationsFirstModule';
 
 export interface EachActiveApplications {
   name: string;
@@ -14,4 +15,6 @@ export interface EachActiveApplications {
   placement: ApplicationPlacementEnum;
   priority: number;
   modules: string[];
+  has_landing: boolean;
+  first_module?: EachActiveApplicationsFirstModule;
 }

@@ -6,11 +6,9 @@
  * OpenAPI spec version: 1.0.0
  */
 import type { ApplicationVendorName } from './ApplicationVendorName';
-import type { EachApplicationsInListResponseActivationTime } from './EachApplicationsInListResponseActivationTime';
 import type { EachApplicationsInListResponseBusinessValue } from './EachApplicationsInListResponseBusinessValue';
 import type { EachApplicationsInListResponseConfiguration } from './EachApplicationsInListResponseConfiguration';
 import type { EachApplicationsInListResponseConfigurationRequirements } from './EachApplicationsInListResponseConfigurationRequirements';
-import type { EachApplicationsInListResponseExpirationTime } from './EachApplicationsInListResponseExpirationTime';
 import type { EachApplicationsInListResponseIcon } from './EachApplicationsInListResponseIcon';
 import type { EachApplicationsInListResponseIsActive } from './EachApplicationsInListResponseIsActive';
 import type { EachApplicationsInListResponseIsAvailable } from './EachApplicationsInListResponseIsAvailable';
@@ -39,8 +37,6 @@ export interface EachApplicationsInListResponse {
   configuration_requirements?: EachApplicationsInListResponseConfigurationRequirements;
   status?: EachApplicationsInListResponseStatus;
   is_active?: EachApplicationsInListResponseIsActive;
-  activation_time?: EachApplicationsInListResponseActivationTime;
-  expiration_time?: EachApplicationsInListResponseExpirationTime;
   tags?: string[];
   support_license?: EachApplicationsInListResponseSupportLicense;
   support_license_expiration_time?: EachApplicationsInListResponseSupportLicenseExpirationTime;
