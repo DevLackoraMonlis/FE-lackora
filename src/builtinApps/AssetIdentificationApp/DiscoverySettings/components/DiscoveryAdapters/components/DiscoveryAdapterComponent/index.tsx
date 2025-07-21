@@ -45,6 +45,10 @@ const DiscoveryAdapterGateways = ({ enabled, adapterId, fields, refetchDiscovery
 		setSelectedRecord(adapter);
 		handlersDiscoveryIPs.open();
 	};
+	const onCloseDiscoveryQuickModal = () => {
+		handlersDiscoveryQuick.close();
+		setTimeout(discoverySettingConfigurations.refetch, 200);
+	};
 
 	const { testDiscoverySettingConnection, testLoading } = useTestDiscoverySettingConnection();
 	const handleDiscoverySettingTestConnection = (adapterId: string, configuration_id: string) => {
@@ -93,7 +97,7 @@ const DiscoveryAdapterGateways = ({ enabled, adapterId, fields, refetchDiscovery
 			/>
 			<DiscoveryQuickModal
 				opened={openedDiscoveryQuick}
-				onClose={handlersDiscoveryQuick.close}
+				onClose={onCloseDiscoveryQuickModal}
 				{...(selectedRecord || {})}
 			/>
 			{/* UI section */}

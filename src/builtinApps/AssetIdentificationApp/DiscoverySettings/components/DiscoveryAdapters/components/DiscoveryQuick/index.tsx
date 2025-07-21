@@ -45,8 +45,10 @@ export function DiscoveryQuickModal(props: Props) {
 				<>
 					<Flex direction="column" gap="xs" px="xs" mb="70px">
 						<Flex gap="sm" align="center" justify="center" py="sm">
-							<Badge circle size="30px">
-								<IconPlayerPlayFilled color="white" />
+							<Badge circle size="35px">
+								<Flex align="center" justify="center">
+									<IconPlayerPlayFilled color="white" />
+								</Flex>
 							</Badge>
 							<Text fz="lg" fw="bold">{`Start Quick Discovery With ${props.configurationIP}`}</Text>
 						</Flex>

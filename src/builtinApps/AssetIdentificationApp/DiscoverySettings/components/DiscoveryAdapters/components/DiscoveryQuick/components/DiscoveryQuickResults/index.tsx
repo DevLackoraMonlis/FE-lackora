@@ -25,7 +25,6 @@ export function DiscoveryQuickResults(props: Props) {
 		props.adapterId || "",
 		props.configurationId || "",
 	);
-
 	const results = discoverySettingRunNow?.data?.results || [];
 	const status = discoverySettingRunNow?.data?.status;
 
@@ -106,10 +105,10 @@ export function DiscoveryQuickResults(props: Props) {
 				</Badge>
 				<Text fz="lg" fw="bold" tt="capitalize">
 					{status
-						? `${discoverySettingRunNow?.data?.total ?? "-"} IPs discovered In ${
+						? `${discoverySettingRunNow?.data?.total ?? ""} IPs discovered In ${
 								discoverySettingRunNow?.data?.duration
 							} From ${props.configurationIP}`
-						: `${discoverySettingRunNow?.data?.message || "-"}`}
+						: `${discoverySettingRunNow?.data?.message || ""}`}
 				</Text>
 			</Flex>
 			<Flex gap="sm" align="center" p="sm" bg="gray.1">

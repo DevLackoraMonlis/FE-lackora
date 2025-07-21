@@ -51,22 +51,24 @@ const DiscoveryAdapterCard = (props: Props) => {
 				</Text>
 				<Flex gap="2xs">
 					<Flex align="center" gap="2xs">
-						<Badge
-							w="170px"
-							variant="light"
-							color="gray"
-							tt="capitalize"
-							p="sm"
-							onClick={() => props.handleDiscoverySettingDiscoveryIPs(configurationData)}
-						>
-							<Highlight
-								className="cursor-pointer"
-								highlight={highlightNumbers}
-								style={{ textTransform: "capitalize" }}
+						{props.lastExecution && (
+							<Badge
+								w="180px"
+								variant="light"
+								color="gray"
+								tt="capitalize"
+								p="sm"
+								onClick={() => props.handleDiscoverySettingDiscoveryIPs(configurationData)}
 							>
-								{props.lastExecution}
-							</Highlight>
-						</Badge>
+								<Highlight
+									className="cursor-pointer"
+									highlight={highlightNumbers}
+									style={{ textTransform: "capitalize" }}
+								>
+									{props.lastExecution}
+								</Highlight>
+							</Badge>
+						)}
 						<Badge w="130px" variant="light" color={props.isActive ? "green" : "red"} p="sm">
 							<Text p="2xs" tt="capitalize">
 								{props.isActive ? "Connected" : "Disconnected"}
