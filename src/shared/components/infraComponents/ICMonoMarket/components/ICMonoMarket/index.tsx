@@ -215,7 +215,7 @@ export default function ICMonoMarket() {
 					height={height - 225}
 					onChange={setFilters}
 					filterItems={dynamicFilters}
-					searchPlaceholder={"Search by adapter Name"}
+					searchPlaceholder={"Search by mono app name"}
 				/>
 			</Grid.Col>
 			<Grid.Col span={9}>
