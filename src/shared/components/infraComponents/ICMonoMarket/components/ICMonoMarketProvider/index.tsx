@@ -14,11 +14,13 @@ const apps: ICMonoMarketAppType[] = [
 	{
 		name: AllApplications.ADAPTER_MANAGEMENT.name,
 		landing: AdapterManagementLandingPage,
+		headerTitle: "Adapters",
 		modules: [],
 	},
 	{
 		name: AllApplications.ASSET_IDENTIFICATION.name,
 		config: AssetIdentificationAppConfig,
+		headerTitle: "Asset Identification",
 		modules: [
 			{
 				name: AllApplications.ASSET_IDENTIFICATION.modules.DISCOVERY_SETTINGS,
