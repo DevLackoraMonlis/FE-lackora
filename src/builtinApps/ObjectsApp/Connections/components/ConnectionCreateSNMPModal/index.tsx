@@ -137,7 +137,7 @@ export default function ConnectionCreateSNMPModal(
 			name: formValues.name,
 			port: formValues.snmpPort,
 			security_level:
-				formValues.snmpVersion === CreateConnectionSNMPVersionType.SNMP_V_2_C && formValues.securityLevel
+				formValues.snmpVersion === CreateConnectionSNMPVersionType.SNMP_V_3 && formValues.securityLevel
 					? securityLevelMap[formValues.securityLevel]
 					: null,
 			community:
