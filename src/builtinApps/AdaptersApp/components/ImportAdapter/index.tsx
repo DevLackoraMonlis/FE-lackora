@@ -131,7 +131,7 @@ function ImportAdapter({ onClose, refetchAdapters, updateMode }: Props) {
 						customAccept={{
 							"application/x-adapter-file": ["audio/adpcm"],
 						}}
-						maxSize={30}
+						maxSizeMb={30}
 						onDrop={(files) => setFile(files?.[0])}
 					/>
 				</Card>

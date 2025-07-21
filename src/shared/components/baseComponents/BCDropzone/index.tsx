@@ -11,13 +11,13 @@ type AcceptKeys = keyof typeof MIME_TYPES;
 type Props = DropzoneProps & {
 	title: string;
 	accept: string[] | Array<AcceptKeys>;
-	maxSize: number;
+	maxSizeMb: number;
 	customAccept?: Record<string, string[]>;
 };
 
 export default function BCDropzone({
 	title,
-	maxSize,
+	maxSizeMb,
 	accept,
 	customAccept,
 	onDrop,
@@ -25,9 +25,9 @@ export default function BCDropzone({
 	...dropzoneProps
 }: Props) {
 	const ACCEPT_FILES = accept;
-	const MAX_SIZE = maxSize * 1000 * 1000; // bytes
+	const MAX_SIZE = maxSizeMb * 1000 * 1000; // bytes
 	const ACCEPT_FILES_DISPLAY = accept.join(", ") || "";
-	const ACCEPT_SIZE_DISPLAY = `${maxSize}mb`;
+	const ACCEPT_SIZE_DISPLAY = `${maxSizeMb}mb`;
 
 	const openRef = useRef<VoidFunction>(null);
 	const [uploadStatus, setUploadStatus] = useState<UploadStatus>("none");
