@@ -15,7 +15,7 @@ import {
 } from "@/builtinApps/ObjectsApp/Connections/index.enum";
 import type { CreateConnectionModalProps } from "@/builtinApps/ObjectsApp/Connections/index.types";
 import { useCreateConnection, useEditConnection } from "@/http/generated/management-center-connections";
-import type { CreateConnection } from "@/http/generated/models";
+import type { CreateConnection, EachConnectionSecurityLevel } from "@/http/generated/models";
 import { getChangedFields, validateInput } from "@/shared/lib/utils";
 import { Flex } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
@@ -119,6 +119,12 @@ export default function ConnectionCreateSNMPModal(
 		},
 	});
 
+	const securityLevelMap: Record<CreateConnectionSNMPSecurityLdLevelType, EachConnectionSecurityLevel> = {
+		[CreateConnectionSNMPSecurityLdLevelType.AUTHENTICATION_ONLY]: "authentication_only",
+		[CreateConnectionSNMPSecurityLdLevelType.AUTHENTICATION_PRIVACY]: "authentication_privacy",
+		[CreateConnectionSNMPSecurityLdLevelType.NO_SECURITY]: "no_security",
+	};
+
 	function getPayload(formValues: CreateConnectionSNMPFormValues): CreateConnection {
 		return {
 			description: formValues.description,
@@ -130,6 +136,10 @@ export default function ConnectionCreateSNMPModal(
 					: null,
 			name: formValues.name,
 			port: formValues.snmpPort,
+			security_level:
+				formValues.snmpVersion === CreateConnectionSNMPVersionType.SNMP_V_2_C && formValues.securityLevel
+					? securityLevelMap[formValues.securityLevel]
+					: null,
 			community:
 				formValues.snmpVersion === CreateConnectionSNMPVersionType.SNMP_V_2_C ? formValues.community : null,
 			type: "snmp",
