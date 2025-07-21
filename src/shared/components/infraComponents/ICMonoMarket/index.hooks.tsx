@@ -5,6 +5,7 @@ import type {
 	ICMonoMarketAppType,
 } from "@/shared/components/infraComponents/ICMonoMarket/index.types";
 import { AppRoutes } from "@/shared/constants/app-routes";
+import { AllApplications } from "@/shared/enums/index.enums";
 import activeAppsStore from "@/shared/stores/activeAppsStore";
 import { useParams, useRouter } from "next/navigation";
 import { type ReactElement, useContext } from "react";
@@ -44,7 +45,11 @@ export function useMonoApp(): {
 		showRestrictAccessModule: !module || !userAvailableModule,
 		showRestrictAccessApp: !app || !userAvailableApp,
 		restrictAccessElement: (
-			<ICMonoAppRestrictAccess onRedirectToMonoMarketPage={() => router.push(AppRoutes.monoMarket)} />
+			<ICMonoAppRestrictAccess
+				onRedirectToMonoMarketPage={() =>
+					router.push(AppRoutes.appLandingPage(AllApplications.MONO_MARKET.name))
+				}
+			/>
 		),
 	};
 }
