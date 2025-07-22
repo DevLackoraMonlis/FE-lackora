@@ -39,7 +39,7 @@ export default function MonoMarketAppDetailsModal(props: Props) {
 			if (props.appData.status === MonoAppStatusTypeEnum.EXPIRED) {
 				return (
 					<Badge fz={"2xs"} radius={"xs"} variant={"light"} color={"red"} size={"lg"}>
-						{`SUPPORT LICENSE EXPIRED ON ${props.appData.supportLicenseExpireDate}`}
+						{`MONOCARE LICENSE EXPIRED ON ${props.appData.supportLicenseExpireDate}`}
 					</Badge>
 				);
 			}
