@@ -1,12 +1,14 @@
 import {
+	getAdapterDependency,
 	useDeleteAdapter,
 	useGetAdapters,
 	useImportAdapterAdp,
 	useValidateAdapterAdp,
 } from "@/http/generated/adapter-management";
 
+import { useToggle } from "@mantine/hooks";
 import { AdapterUploadedStatus } from "./index.enum";
-import type { AdaptersFilters } from "./index.types";
+import type { AdaptersFilters, DeleteDependencyAdapters } from "./index.types";
 
 export function useAdapterManagement(clientSideParams: AdaptersFilters) {
 	const adapterManagementUQ = useGetAdapters(clientSideParams, {
@@ -52,4 +54,23 @@ export function useAdapterManagementImportAdp() {
 export function useAdapterManagementDeleteAdp() {
 	const deleteAdapterAdp = useDeleteAdapter();
 	return { deleteAdapterAdp };
+}
+
+export function useAdapterManagementCheckAdpDependency() {
+	const [adapterDeleteDependencyLoading, toggleAdapterDeleteDependencyLoading] = useToggle([false, true]);
+
+	async function getAdapterDeleteDependency(adapterId: string) {
+		toggleAdapterDeleteDependencyLoading(true);
+		return await getAdapterDependency(adapterId)
+			.then(({ data }) => {
+				toggleAdapterDeleteDependencyLoading(false);
+				return { ...data, disabledDeletion: false };
+			})
+			.catch(() => {
+				toggleAdapterDeleteDependencyLoading(false);
+				return { disabledDeletion: true, message: "", status: false, total: 0 } as DeleteDependencyAdapters;
+			});
+	}
+
+	return { getAdapterDeleteDependency, adapterDeleteDependencyLoading };
 }

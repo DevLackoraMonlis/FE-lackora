@@ -21,8 +21,8 @@ export default function BCDeleteModal(props: Props) {
 	return (
 		<BCModal size={props.size || 500} title={props.title} opened={props.opened} onClose={props.onClose}>
 			<Flex direction="column" gap="xs" px="xs">
-				<Flex gap="sm" align="center" justify="center" py="sm">
-					<Badge variant="light" circle c="red" bg="red.1" size="30px">
+				<Flex gap="sm" align="center" justify="center" pt="sm">
+					<Badge variant="light" circle c="red" bg="red.1" size="35px">
 						<Flex align="center" justify="center">
 							<IconTrashX />
 						</Flex>
