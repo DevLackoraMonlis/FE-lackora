@@ -27,7 +27,7 @@ export function DeleteDiscoveryAdapterModal({
 	const [showAssetsResult, handlersShowAssetsResult] = useDisclosure(false);
 
 	const deleteNoneCredentialDependency = useDeleteNoneCredentialDependency();
-	const { deleteDiscoverySetting } = useDeleteDiscoverySetting();
+	const { deleteDiscoverySetting } = useDeleteDiscoverySetting(deleteStatus?.status === false);
 	const onDelete = () => {
 		deleteDiscoverySetting.mutate(
 			{ adapterId, data: { configuration_id: configurationId } },

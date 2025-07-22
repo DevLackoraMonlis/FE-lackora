@@ -109,9 +109,10 @@ export function useDiscoveryAdapterById(adapterId: string, enabled: boolean) {
 	return { discoverySettingConfigurations };
 }
 
-export function useDeleteDiscoverySetting() {
-	const deleteDiscoverySetting = useDeleteDiscoverySettingConfiguration({
-		mutation: {
+export function useDeleteDiscoverySetting(showCustomMessage?: boolean) {
+	let mutation = {};
+	if (showCustomMessage) {
+		mutation = {
 			onSuccess() {
 				notifications.show({
 					title: "Gateway deleted successfully",
@@ -120,14 +121,15 @@ export function useDeleteDiscoverySetting() {
 					color: "green",
 					withBorder: true,
 					icon: (
-						<Badge variant="light" circle c="white" bg="green" size="30px">
+						<Badge variant="light" circle c="white" bg="green" size="30px" mb="2xl">
 							<IconCheck />
 						</Badge>
 					),
 				});
 			},
-		},
-	});
+		};
+	}
+	const deleteDiscoverySetting = useDeleteDiscoverySettingConfiguration({ mutation });
 	return { deleteDiscoverySetting };
 }
 
