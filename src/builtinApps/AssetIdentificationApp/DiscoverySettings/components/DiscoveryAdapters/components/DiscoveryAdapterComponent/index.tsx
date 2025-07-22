@@ -53,7 +53,8 @@ const DiscoveryAdapterGateways = ({ enabled, adapterId, fields, refetchDiscovery
 	const { testDiscoverySettingConnection, testLoading } = useTestDiscoverySettingConnection();
 	const handleDiscoverySettingTestConnection = (adapterId: string, configuration_id: string) => {
 		setSelectedId(configuration_id);
-		testDiscoverySettingConnection(adapterId, configuration_id, discoverySettingConfigurations.refetch);
+		const callback = () => discoverySettingConfigurations.refetch().then(refetchDiscoveryAdapters);
+		testDiscoverySettingConnection(adapterId, configuration_id, callback);
 	};
 
 	const handleDeleteAdapterConfigurations = (adapter: ConfigurationRs) => {
