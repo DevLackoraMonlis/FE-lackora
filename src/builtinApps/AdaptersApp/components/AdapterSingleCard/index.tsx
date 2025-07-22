@@ -76,7 +76,7 @@ export default function AdapterSingleCard(props: Props) {
 						<Card w={80} h={62} variant="light" shadow="none" padding="xs">
 							<Flex justify="center" align="center">
 								{props.adapterIconPath ? (
-									<Image fit="cover" radius="md" src={props.adapterIconPath} alt={props.name} />
+									<Image w={50} h={40} fit="cover" radius="md" src={props.adapterIconPath} alt={props.name} />
 								) : null}
 							</Flex>
 						</Card>

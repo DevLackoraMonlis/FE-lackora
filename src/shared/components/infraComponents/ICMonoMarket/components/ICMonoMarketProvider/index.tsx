@@ -5,7 +5,7 @@ import AssetIdentificationDiscoverySettingsPage from "@/builtinApps/AssetIdentif
 import AssetIdentificationProfilingSettingsPage from "@/builtinApps/AssetIdentificationApp/ProfillngSettings";
 import ObjectsConnectionsPage from "@/builtinApps/ObjectsApp/Connections";
 import ICMonoMarket from "@/shared/components/infraComponents/ICMonoMarket/components/ICMonoMarket";
-import { AllApplications } from "@/shared/enums/index.enums";
+import { AllApplications } from "@/shared/constants/routes";
 import type { PropsWithChildren } from "react";
 import type { ICMonoMarketAppType } from "../../index.types";
 import ICMonoMarketContext from "./ICMonoMarketContext";

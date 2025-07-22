@@ -1,6 +1,6 @@
 "use client";
 import type { Token } from "@/http/generated/models";
-import { AppRoutes } from "@/shared/constants/app-routes";
+import { AppRoutes } from "@/shared/constants/routes";
 import envStore from "@/shared/stores/envStore";
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 import axios from "axios";

@@ -6,6 +6,7 @@ import { filter, groupBy, isObject } from "lodash";
 
 import {
 	discoverySettingConfigurationTestConnection,
+	getDiscoverySettingConfigurationDependecy,
 	useCreateDiscoverySettingConfiguration,
 	useDeleteDiscoverySettingConfiguration,
 	useDiscoverySettingRunNow,
@@ -20,7 +21,7 @@ import { configsTransformRs, fieldsTransformRs } from "@/shared/components/baseC
 import { getErrorMessage, getSuccessMessage } from "@/shared/lib/utils";
 
 import { GET_DISCOVERY_SETTINGS_QUERY_KEY } from "./index.constants";
-import type { DiscoveryAdapterFilters } from "./index.types";
+import type { DeleteDependencyAssets, DiscoveryAdapterFilters } from "./index.types";
 
 export function useDiscoveryAdapters({ type, ...clientSideParams }: DiscoveryAdapterFilters) {
 	const discoveryAdaptersUQ = useGetDiscoverySettings(
@@ -133,6 +134,37 @@ export function useDeleteDiscoverySetting() {
 export function useDeleteNoneCredential() {
 	const deleteDiscoverySetting = useDeleteDiscoverySettingConfiguration();
 	return { deleteDiscoverySetting };
+}
+export function useDeleteNoneCredentialDependency() {
+	const [configurationDependencyLoading, toggleConfigurationDependencyLoading] = useToggle([false, true]);
+
+	async function discoverySettingConfigurationDependency(configurationId: string) {
+		toggleConfigurationDependencyLoading(true);
+		return await getDiscoverySettingConfigurationDependecy(configurationId)
+			.then(({ data }) => {
+				toggleConfigurationDependencyLoading(false);
+				const results = data?.results?.map(({ hostname, id, primary_ip, status }, idx) => ({
+					hostname,
+					id,
+					status,
+					ipAddress: primary_ip,
+					key: `${idx + 1}`,
+				}));
+				return { ...data, disabledDeletion: false, results };
+			})
+			.catch(() => {
+				toggleConfigurationDependencyLoading(false);
+				return {
+					disabledDeletion: true,
+					message: "",
+					status: false,
+					total: 0,
+					results: [],
+				} as DeleteDependencyAssets;
+			});
+	}
+
+	return { discoverySettingConfigurationDependency, configurationDependencyLoading };
 }
 
 export function useEditDiscoverySetting() {

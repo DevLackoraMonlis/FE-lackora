@@ -6,7 +6,7 @@ import {
 	getSidePanelAppModuleIcon,
 } from "@/shared/components/infraComponents/ICPanelSidebar/index.helper";
 import type { ICPanelSidebarPopoverMenuGroupProps } from "@/shared/components/infraComponents/ICPanelSidebar/index.types";
-import { AppRoutes } from "@/shared/constants/app-routes";
+import { AppRoutes } from "@/shared/constants/routes";
 import activeAppsStore from "@/shared/stores/activeAppsStore";
 import { ActionIcon, Divider, Flex, ScrollArea, useMantineTheme } from "@mantine/core";
 import { useViewportSize } from "@mantine/hooks";

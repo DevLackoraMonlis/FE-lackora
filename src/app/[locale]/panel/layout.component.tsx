@@ -3,7 +3,7 @@
 import type { SessionUserType } from "@/http/httpService";
 import ICPanelHeader from "@/shared/components/infraComponents/ICPanelHeader";
 import ICPanelSidebar from "@/shared/components/infraComponents/ICPanelSidebar";
-import { AppRoutes } from "@/shared/constants/app-routes";
+import { AppRoutes } from "@/shared/constants/routes";
 import { Box, Flex, useMantineTheme } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { IconBell, IconBox } from "@tabler/icons-react";

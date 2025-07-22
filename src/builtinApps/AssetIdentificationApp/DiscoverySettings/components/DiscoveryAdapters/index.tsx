@@ -53,7 +53,7 @@ export default function DiscoverySettingsDiscoveryAdapters() {
 				/>
 			</Grid.Col>
 			<Grid.Col span={9} pos="relative">
-				<ScrollArea h={height - 160}>
+				<ScrollArea px="2xs" h={height - 160}>
 					{discoveryAdapters.isLoading ? (
 						<DiscoveryAdapterSkelton count={6} />
 					) : (
@@ -63,10 +63,17 @@ export default function DiscoverySettingsDiscoveryAdapters() {
 									<Accordion.Control>
 										<Flex align="center" justify="space-between">
 											<Flex gap="sm">
-												<Card w={50} h={50} variant="light" shadow="none" padding="xs" p="2xs">
-													<Flex justify="center" align="center">
+												<Card w={50} h={50} variant="light" shadow="none" padding={0}>
+													<Flex justify="center" align="center" m="auto">
 														{item.icon ? (
-															<Image fit="cover" radius="md" src={item.icon} alt={item.display_name} />
+															<Image
+																w={40}
+																h={40}
+																fit="cover"
+																radius="md"
+																src={item.icon}
+																alt={item.display_name}
+															/>
 														) : null}
 													</Flex>
 												</Card>

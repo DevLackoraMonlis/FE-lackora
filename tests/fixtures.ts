@@ -1,4 +1,4 @@
-import { AppRoutes } from "@/shared/constants/app-routes";
+import { AppRoutes } from "@/shared/constants/routes";
 // tests/fixtures.ts
 import { test as baseTest } from "@playwright/test";
 

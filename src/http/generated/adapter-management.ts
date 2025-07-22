@@ -26,6 +26,7 @@ import type {
 
 import type {
   AdapterValidationResponse,
+  AdaptersDependencyCheckResponse,
   BodyImportAdapterAdp,
   BodyValidateAdapterAdp,
   GetAdaptersParams,
@@ -250,6 +251,93 @@ export function useGetAdapters<TData = Awaited<ReturnType<typeof getAdapters>>, 
  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
   const queryOptions = getGetAdaptersQueryOptions(params,options)
+
+  const query = useQuery(queryOptions , queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+/**
+ * @summary Get Adapter Dependency
+ */
+export const getAdapterDependency = (
+    adapterId: string,
+ signal?: AbortSignal
+) => {
+      
+      
+      return orvalMutator<AdaptersDependencyCheckResponse>(
+      {url: `/api/adapter-management/${adapterId}/dependency`, method: 'GET', signal
+    },
+      );
+    }
+  
+
+const getGetAdapterDependencyQueryKey = (adapterId: string,) => {
+    return [`/api/adapter-management/${adapterId}/dependency`] as const;
+    }
+
+    
+export const getGetAdapterDependencyQueryOptions = <TData = Awaited<ReturnType<typeof getAdapterDependency>>, TError = HTTPValidationError>(adapterId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAdapterDependency>>, TError, TData>>, }
+) => {
+
+const {query: queryOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetAdapterDependencyQueryKey(adapterId);
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getAdapterDependency>>> = ({ signal }) => getAdapterDependency(adapterId, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, enabled: !!(adapterId), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getAdapterDependency>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetAdapterDependencyQueryResult = NonNullable<Awaited<ReturnType<typeof getAdapterDependency>>>
+export type GetAdapterDependencyQueryError = HTTPValidationError
+
+
+export function useGetAdapterDependency<TData = Awaited<ReturnType<typeof getAdapterDependency>>, TError = HTTPValidationError>(
+ adapterId: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAdapterDependency>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getAdapterDependency>>,
+          TError,
+          Awaited<ReturnType<typeof getAdapterDependency>>
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetAdapterDependency<TData = Awaited<ReturnType<typeof getAdapterDependency>>, TError = HTTPValidationError>(
+ adapterId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAdapterDependency>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getAdapterDependency>>,
+          TError,
+          Awaited<ReturnType<typeof getAdapterDependency>>
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetAdapterDependency<TData = Awaited<ReturnType<typeof getAdapterDependency>>, TError = HTTPValidationError>(
+ adapterId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAdapterDependency>>, TError, TData>>, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary Get Adapter Dependency
+ */
+
+export function useGetAdapterDependency<TData = Awaited<ReturnType<typeof getAdapterDependency>>, TError = HTTPValidationError>(
+ adapterId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAdapterDependency>>, TError, TData>>, }
+ , queryClient?: QueryClient 
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetAdapterDependencyQueryOptions(adapterId,options)
 
   const query = useQuery(queryOptions , queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 

@@ -1,4 +1,4 @@
-import { AllApplications } from "@/shared/enums/index.enums";
+import { AllApplications } from "@/shared/constants/routes";
 import { IconArrowsLeftRight, IconAsset, IconBrandAppgallery, IconDiscount } from "@tabler/icons-react";
 import type { ReactNode } from "react";
 

@@ -1,4 +1,4 @@
-import { AppRoutes } from "@/shared/constants/app-routes";
+import { AppRoutes } from "@/shared/constants/routes";
 import { Button, Checkbox, Flex } from "@mantine/core";
 import type { Direction } from "@mantine/core";
 import { useRouter } from "next/navigation";
