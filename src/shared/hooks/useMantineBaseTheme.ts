@@ -14,7 +14,11 @@ export default function useMantineBaseTheme() {
 			Loader: {
 				defaultProps: {
 					type: "dots",
-					size: "lg",
+				},
+			},
+			LoadingOverlay: {
+				defaultProps: {
+					overlayProps: { radius: "xs", blur: 1 },
 				},
 			},
 			Highlight: {
