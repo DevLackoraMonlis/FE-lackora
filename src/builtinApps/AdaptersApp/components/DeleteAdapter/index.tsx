@@ -79,7 +79,7 @@ export function DeleteAdapterModal({ onClose, opened, refetchAdapters, ...select
 		}
 		return (
 			<List listStyleType="none">
-				<List.Item>Failed to check the associated gateway.</List.Item>
+				<List.Item>Failed to check the adapter usage.</List.Item>
 				<List.Item>please try again.</List.Item>
 			</List>
 		);
