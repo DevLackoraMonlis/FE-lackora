@@ -9,10 +9,12 @@ variables:
   DEPLOY_DIR: "/sources/app/dev/front"
   PLAYWRIGHT_BROWSERS_PATH: .playwright-browsers
 
+default:
+  image: mcr.microsoft.com/playwright:v1.43.1-jammy
+
 cache:
   key: shared-playwright-cache
   paths:
-    - .playwright
     - .playwright-browsers
 
 dev_test_pipeline:
@@ -57,33 +59,7 @@ playwright_tests:
   dependencies:
     - dev_test_pipeline
   script:
-    - echo "🛠 Installing system dependencies for Playwright..."
-    - dnf install -y \
-      nspr \
-      nss \
-      atk \
-      at-spi2-atk \
-      cups-libs \
-      libxkbcommon \
-      at-spi2-core \
-      libXcomposite \
-      libXdamage \
-      libXext \
-      libXfixes \
-      libXrandr \
-      mesa-libgbm \
-      cairo \
-      pango \
-      alsa-lib
-    - echo "✅ System dependencies installed."
-    - mkdir -p test-results
     - npx playwright test
-    - echo "── LS ROOT ──"
-    - ls -la
-    - echo "── LS test-results ──"
-    - ls -la test-results || echo "❌ test-results not found"
-    - echo "── LS allure-results ──"
-    - ls -la allure-results || echo "❌ allure-results not found"
   artifacts:
     when: always
     paths:

@@ -5,7 +5,6 @@ type DefaultPaginationRq = {
 	limit: number;
 	sort?: string;
 	order?: string;
-	condition?: string;
 	search?: string;
 };
 
@@ -13,10 +12,10 @@ export type PaginationRq<T = null> = T extends Record<string, unknown>
 	? T & DefaultPaginationRq
 	: DefaultPaginationRq;
 
-export type PaginationRs<T, K = unknown> = {
+export type PaginationRs<T, META_DATA = unknown> = {
 	results: T[];
 	total: number;
-	metadata?: K;
+	metadata?: META_DATA;
 };
 
 export type SessionEnvs = {

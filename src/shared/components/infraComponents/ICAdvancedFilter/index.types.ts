@@ -1,0 +1,127 @@
+import type { PaginationRq, PaginationRs } from "@/http/end-points/GeneralService.types";
+import type {
+	IC_ADVANCED_FILTER_DEFAULT_OPERATORS,
+	IC_ADVANCED_FILTER_STRING_OPERATORS,
+} from "@/shared/components/infraComponents/ICAdvancedFilter/index.constants";
+import type { ICAdvancedGroupByFunctions } from "@/shared/components/infraComponents/ICAdvancedFilter/index.enum";
+import type { LabelValueType } from "@/shared/lib/general-types";
+import type { ValueOf } from "@/shared/types/index.types";
+
+type ICAdvancedFilterOrder = "asc" | "desc";
+type ICAdvancedFilterOperator = "and" | "or";
+
+type ICAdvancedFilterDataColumnRq = {
+	name: string;
+	orderBy?: ICAdvancedFilterOrder | null;
+};
+
+export type ICAdvancedConditionValueTypeRq = {
+	objectType?: string;
+	label: string;
+	value: string;
+};
+
+export type ICAdvancedFilterConditionRq = {
+	openBracket: number;
+	columnName: string;
+	operator:
+		| ValueOf<typeof IC_ADVANCED_FILTER_STRING_OPERATORS>
+		| ValueOf<typeof IC_ADVANCED_FILTER_DEFAULT_OPERATORS>;
+	values: ICAdvancedConditionValueTypeRq[];
+	closBracket: number;
+	nextOperator: ICAdvancedFilterOperator;
+};
+
+export type ICAdvancedFilterAggregationConditionRq = Omit<ICAdvancedFilterConditionRq, "columnName">;
+
+export type ICAdvancedFilterGroupByRq = {
+	function: ICAdvancedGroupByFunctions;
+	order: ICAdvancedFilterOrder;
+	displayName: string;
+	column: "*" | string;
+	aggregatedConditions: ICAdvancedFilterAggregationConditionRq[];
+};
+
+export type ICAdvancedFilterSearchRq = {
+	columnName: string | null;
+	value: string;
+};
+
+export type ICAdvancedFilterColumnType = "Int64" | "String" | "Boolean" | "Date" | "DateTime" | "IP" | "List";
+
+export type ICAdvancedFilterColumnOption = {
+	label: string;
+	value: string;
+};
+
+export type ICAdvancedFilterColumn = {
+	name: string;
+	type: ICAdvancedFilterColumnType;
+	objectType?: string[];
+	isDefault: boolean;
+	displayName: string;
+	options?: ICAdvancedFilterColumnOption[];
+};
+
+export type ICAdvancedFilterRq<META_DATA extends Record<string, unknown> | unknown = unknown> = {
+	search: ICAdvancedFilterSearchRq;
+	columns: ICAdvancedFilterDataColumnRq[];
+	groupBy?: ICAdvancedFilterGroupByRq;
+	conditions: ICAdvancedFilterConditionRq[];
+	startDate?: string;
+	endDate?: string;
+	metaData?: META_DATA;
+} & Pick<PaginationRq, "page" | "limit">;
+
+export type ICAdvancedFilterRs = PaginationRs<
+	{ id: string; [key: string]: unknown },
+	Record<string, unknown>
+>;
+
+export type ICAdvancedFilterSaveConditionCreateRq = {
+	name: string;
+	scope: "PUBLIC" | "PRIVATE";
+	description: string;
+} & Omit<ICAdvancedFilterRq, "metaData" | "page" | "limit">;
+
+export type ICAdvancedFilterSaveConditionRs = PaginationRs<
+	ICAdvancedFilterSaveConditionCreateRq & { id: string }
+>;
+
+export type ICAdvancedFilterStoreIncludeExcludeType = (
+	columnName: string,
+	value: unknown,
+	allColumns: ICAdvancedFilterColumn[],
+) => void;
+
+export type ICAdvancedFilterStoreType = {
+	updateOrder: (columnName: string, order: ICAdvancedFilterOrder) => void;
+	includeCondition: ICAdvancedFilterStoreIncludeExcludeType;
+	excludeCondition: ICAdvancedFilterStoreIncludeExcludeType;
+	groupBy?: ICAdvancedFilterGroupByRq;
+	setGroupBy: (groupBy: ICAdvancedFilterGroupByRq) => void;
+	totalRecord: number;
+	setTotalRecords: (total: number) => void;
+	variables: ICAdvancedFilterRq;
+	setVariables: (variables: ICAdvancedFilterRq) => void;
+	searchInputPlaceholder: string;
+	searchInputItems?: LabelValueType[];
+	setColumns: (columns: ICAdvancedFilterDataColumnRq[]) => void;
+	addColumnToVariables: (column: ICAdvancedFilterDataColumnRq) => void;
+	setConditions: (conditions: ICAdvancedFilterConditionRq[]) => void;
+	addCondition: (condition: ICAdvancedFilterConditionRq) => void;
+	setAggregationConditionsToGroupBy: (columns: ICAdvancedFilterConditionRq[]) => void;
+	setPage: (page: number) => void;
+	setLimit: (limit: number) => void;
+	setSearch: (search: ICAdvancedFilterSearchRq) => void;
+	resetToDefaultVariables: () => void;
+	openedFilterConditionModal: boolean;
+	setOpenFilterConditionModal: (opened: boolean) => void;
+	openedGroupByModal: boolean;
+	setOpenGroupByModal: (opened: boolean) => void;
+};
+
+export type SetStateStore<T> = (
+	partial: T | Partial<T> | ((state: T) => T | Partial<T>),
+	replace?: false | undefined,
+) => void;
