@@ -40,8 +40,7 @@ export function DeleteDiscoveryAdapterModal({
 		);
 	};
 	const deleteRestrict = async () => {
-		const response =
-			await deleteNoneCredentialDependency.discoverySettingConfigurationDependency(configurationId);
+		const response = await deleteNoneCredentialDependency.getDependency(configurationId);
 		setDeleteStatus(response);
 	};
 
@@ -55,7 +54,7 @@ export function DeleteDiscoveryAdapterModal({
 	}, [configurationId, opened]);
 
 	const description = () => {
-		if (deleteNoneCredentialDependency.configurationDependencyLoading) {
+		if (deleteNoneCredentialDependency.dependencyLoading) {
 			return (
 				<Center>
 					<Loader color="red" size="sm" />
@@ -113,9 +112,7 @@ export function DeleteDiscoveryAdapterModal({
 				opened={opened}
 				description={description()}
 				disabled={!!deleteStatus?.disabledDeletion}
-				loading={
-					deleteDiscoverySetting.isPending || deleteNoneCredentialDependency.configurationDependencyLoading
-				}
+				loading={deleteDiscoverySetting.isPending || deleteNoneCredentialDependency.dependencyLoading}
 			/>
 		</>
 	);

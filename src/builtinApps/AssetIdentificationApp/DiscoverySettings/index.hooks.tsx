@@ -138,13 +138,13 @@ export function useDeleteNoneCredential() {
 	return { deleteDiscoverySetting };
 }
 export function useDeleteNoneCredentialDependency() {
-	const [configurationDependencyLoading, toggleConfigurationDependencyLoading] = useToggle([false, true]);
+	const [dependencyLoading, toggleDependencyLoading] = useToggle([false, true]);
 
-	async function discoverySettingConfigurationDependency(configurationId: string) {
-		toggleConfigurationDependencyLoading(true);
+	async function getDependency(configurationId: string) {
+		toggleDependencyLoading(true);
 		return await getDiscoverySettingConfigurationDependecy(configurationId)
 			.then(({ data }) => {
-				toggleConfigurationDependencyLoading(false);
+				toggleDependencyLoading(false);
 				const results = data?.results?.map(({ hostname, id, primary_ip, status }, idx) => ({
 					hostname,
 					id,
@@ -155,7 +155,7 @@ export function useDeleteNoneCredentialDependency() {
 				return { ...data, disabledDeletion: false, results };
 			})
 			.catch(() => {
-				toggleConfigurationDependencyLoading(false);
+				toggleDependencyLoading(false);
 				return {
 					disabledDeletion: true,
 					message: "",
@@ -166,7 +166,7 @@ export function useDeleteNoneCredentialDependency() {
 			});
 	}
 
-	return { discoverySettingConfigurationDependency, configurationDependencyLoading };
+	return { getDependency, dependencyLoading };
 }
 
 export function useEditDiscoverySetting() {
@@ -182,11 +182,7 @@ export function useCreateDiscoverySetting() {
 export function useTestDiscoverySettingConnection() {
 	const [testLoading, toggleTestLoading] = useToggle([false, true]);
 
-	function testDiscoverySettingConnection(
-		adapterId: string,
-		configuration_id: string,
-		callback: VoidFunction,
-	) {
+	function testConnection(adapterId: string, configuration_id: string, callback: VoidFunction) {
 		toggleTestLoading(true);
 		discoverySettingConfigurationTestConnection(adapterId, { configuration_id })
 			.then((response) => {
@@ -209,7 +205,7 @@ export function useTestDiscoverySettingConnection() {
 			});
 	}
 
-	return { testDiscoverySettingConnection, testLoading };
+	return { testConnection, testLoading };
 }
 
 export function useDiscoverySettingQuickDiscovery(
