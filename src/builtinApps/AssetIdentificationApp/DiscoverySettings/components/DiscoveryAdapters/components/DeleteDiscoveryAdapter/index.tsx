@@ -39,13 +39,13 @@ export function DeleteDiscoveryAdapterModal({
 			},
 		);
 	};
+	const deleteRestrict = async () => {
+		const response =
+			await deleteNoneCredentialDependency.discoverySettingConfigurationDependency(configurationId);
+		setDeleteStatus(response);
+	};
 
 	useEffect(() => {
-		const deleteRestrict = async () => {
-			const response =
-				await deleteNoneCredentialDependency.discoverySettingConfigurationDependency(configurationId);
-			setDeleteStatus(response);
-		};
 		if (opened) {
 			deleteRestrict();
 		}
