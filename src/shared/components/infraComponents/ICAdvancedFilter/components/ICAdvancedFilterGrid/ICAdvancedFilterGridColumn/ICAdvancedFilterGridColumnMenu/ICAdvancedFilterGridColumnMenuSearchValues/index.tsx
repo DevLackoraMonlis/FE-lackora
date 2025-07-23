@@ -10,6 +10,7 @@ import type {
 	ICAdvancedFilterConditionRq,
 	ICAdvancedFilterProps,
 } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
+import { validateInput } from "@/shared/lib/utils";
 import type { ModalDefaultProps } from "@/shared/types/index.types";
 import { Button, Flex, Menu, NumberInput, Select, Switch, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
@@ -78,6 +79,9 @@ export default function ICAdvancedFilterGridColumnMenuSearchValues<T>(props: Pro
 		initialValues: {
 			operator: IC_ADVANCED_FILTER_DEFAULT_OPERATORS["="],
 			values: [],
+		},
+		validate: {
+			values: (value) => validateInput(value, { required: true }),
 		},
 	});
 
