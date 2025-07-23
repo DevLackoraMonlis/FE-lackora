@@ -2,7 +2,7 @@ import { IconCheck, IconSearch, IconSettings, IconWorld } from "@tabler/icons-re
 import { IconDeviceDesktopSearch, IconDeviceLaptop } from "@tabler/icons-react";
 import WorkflowAccordion from "../shared/WorkflowAccordion";
 
-export default function WorkflowAssetDiscoveryAccordionItem() {
+export default function WorkflowAssetDiscovery() {
 	return (
 		<WorkflowAccordion
 			value="assetDiscovery"
