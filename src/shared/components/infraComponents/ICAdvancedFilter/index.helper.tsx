@@ -1,12 +1,35 @@
-import { ICAdvancedGroupByFunctions } from "@/shared/components/infraComponents/ICAdvancedFilter/index.enum";
+import {
+	ICAdvancedFilterCriticality,
+	ICAdvancedFilterDiscoveryType,
+	type ICAdvancedFilterState,
+	type ICAdvancedFilterStatus,
+	ICAdvancedGroupByFunctions,
+} from "@/shared/components/infraComponents/ICAdvancedFilter/index.enum";
 import type {
 	ICAdvancedFilterColumn,
-	ICAdvancedFilterConditionRq,
+	ICAdvancedFilterCondition,
 	ICAdvancedFilterRq,
 	ICAdvancedFilterStoreType,
 	SetStateStore,
 } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
-import { IC_ADVANCED_FILTER_DEFAULT_OPERATORS } from "./index.constants";
+import { Badge, Flex, Text } from "@mantine/core";
+import {
+	IconAlertTriangle,
+	IconArchive,
+	IconCircleCheck,
+	IconCircleDot,
+	IconFlame,
+	IconHighlight,
+	IconSearch,
+} from "@tabler/icons-react";
+import type { ReactNode } from "react";
+import { v4 } from "uuid";
+import {
+	IC_ADVANCED_FILTER_CRITICALITY_COLOR,
+	IC_ADVANCED_FILTER_DEFAULT_OPERATORS,
+	IC_ADVANCED_FILTER_STATE_COLOR,
+	IC_ADVANCED_FILTER_STATUS_COLOR,
+} from "./index.constants";
 
 const defaultAdvancedVariables: ICAdvancedFilterRq = {
 	search: {
@@ -24,16 +47,17 @@ function includeExcludeAction(
 	value: unknown,
 	allColumns: ICAdvancedFilterColumn[],
 	state: ICAdvancedFilterStoreType,
-	operator: ICAdvancedFilterConditionRq["operator"],
+	operator: ICAdvancedFilterCondition["operator"],
 ): Partial<ICAdvancedFilterStoreType> {
 	const isFunctionColumn = state.getIsGroupByFunctionColumn(columnName);
-	const condition: ICAdvancedFilterConditionRq = {
+	const condition: ICAdvancedFilterCondition = {
 		columnName,
 		closBracket: 0,
 		nextOperator: "and",
 		openBracket: 0,
 		operator,
 		values: [],
+		id: v4(),
 	};
 
 	const findColumn = allColumns.find((column) => column.name === columnName);
@@ -120,13 +144,16 @@ function includeExcludeAction(
 export function getDefaultICAdvancedStore(params: {
 	set: SetStateStore<ICAdvancedFilterStoreType>;
 	defaultVariables?: ICAdvancedFilterStoreType["variables"];
-	overrideValues?: Pick<ICAdvancedFilterStoreType, "searchInputPlaceholder" | "searchInputItems">;
 }): ICAdvancedFilterStoreType {
-	const { defaultVariables, overrideValues, set } = params;
+	const { defaultVariables, set } = params;
 
 	return {
 		openedGroupByModal: false,
+		openedConditionSection: false,
+		openedFullScreenModal: false,
+		setOpenFullScreenModal: (value) => set({ openedFullScreenModal: value }),
 		setOpenGroupByModal: (value) => set({ openedGroupByModal: value }),
+		setOpenFilterConditionSection: (value) => set({ openedConditionSection: value }),
 		openedFilterConditionModal: false,
 		setOpenFilterConditionModal: (value) => set({ openedFilterConditionModal: value }),
 		excludeCondition: (columnName, value, allColumns) => {
@@ -153,6 +180,16 @@ export function getDefaultICAdvancedStore(params: {
 		},
 		setGroupBy: (groupBy) => {
 			set({ groupBy });
+		},
+		removeCondition: (id) => {
+			set((state) => {
+				return {
+					variables: {
+						...state.variables,
+						conditions: state.variables.conditions.filter((item) => item.id !== id),
+					},
+				};
+			});
 		},
 		updateOrder: (columnName, order) => {
 			set((state) => {
@@ -200,7 +237,6 @@ export function getDefaultICAdvancedStore(params: {
 				};
 			});
 		},
-		searchInputPlaceholder: "Search by name",
 		setSearch: (search) => set((state) => ({ variables: { ...state.variables, search } })),
 		variables: defaultVariables || defaultAdvancedVariables,
 		setVariables: (variables) => set({ variables }),
@@ -238,6 +274,65 @@ export function getDefaultICAdvancedStore(params: {
 			})),
 		setPage: (page: number) => set((state) => ({ variables: { ...state.variables, page } })),
 		setLimit: (limit: number) => set((state) => ({ variables: { ...state.variables, limit } })),
-		...overrideValues,
 	};
+}
+
+export function getICAdvancedFilterCriticalityBadge(params: {
+	type: ICAdvancedFilterCriticality;
+}) {
+	const iconMaps: Record<ICAdvancedFilterCriticality, ReactNode> = {
+		[ICAdvancedFilterCriticality.HIGH]: <IconAlertTriangle size={12} />,
+		[ICAdvancedFilterCriticality.LOW]: <IconCircleCheck size={12} />,
+		[ICAdvancedFilterCriticality.MEDIUM]: <IconCircleDot size={12} />,
+		[ICAdvancedFilterCriticality.VERY_HIGH]: <IconFlame size={12} />,
+	};
+
+	return (
+		<Badge
+			variant={"light"}
+			radius={"xl"}
+			leftSection={iconMaps[params.type]}
+			size={"sm"}
+			c={"black"}
+			color={IC_ADVANCED_FILTER_CRITICALITY_COLOR[params.type]}
+		>
+			{params.type}
+		</Badge>
+	);
+}
+
+export function getICAdvancedFilterStatusBadge(params: {
+	type: ICAdvancedFilterStatus;
+}) {
+	return (
+		<Badge variant={"dot"} radius={"xl"} size={"sm"} color={IC_ADVANCED_FILTER_STATUS_COLOR[params.type]}>
+			{params.type}
+		</Badge>
+	);
+}
+
+export function getICAdvancedFilterStateBadge(params: {
+	type: ICAdvancedFilterState;
+}) {
+	return (
+		<Badge variant={"outline"} radius={"xl"} size={"sm"} color={IC_ADVANCED_FILTER_STATE_COLOR[params.type]}>
+			{params.type}
+		</Badge>
+	);
+}
+
+export function getICAdvancedFilterDiscoveryTypeBadge(params: {
+	type: ICAdvancedFilterDiscoveryType;
+}) {
+	const iconMap: Record<ICAdvancedFilterDiscoveryType, ReactNode> = {
+		[ICAdvancedFilterDiscoveryType.BY_INVENTORY]: <IconArchive size={12} />,
+		[ICAdvancedFilterDiscoveryType.DISCOVERED]: <IconSearch size={12} />,
+		[ICAdvancedFilterDiscoveryType.MANUAL]: <IconHighlight size={12} />,
+	};
+	return (
+		<Flex align={"center"} gap={"md"}>
+			{iconMap[params.type]}
+			<Text fz={"xs"}>{params.type}</Text>
+		</Flex>
+	);
 }

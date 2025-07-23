@@ -6,14 +6,15 @@ import {
 import type {
 	ICAdvancedConditionValueTypeRq,
 	ICAdvancedFilterColumnType,
+	ICAdvancedFilterCondition,
 	ICAdvancedFilterConditionOperator,
-	ICAdvancedFilterConditionRq,
 	ICAdvancedFilterProps,
 } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
 import { validateInput } from "@/shared/lib/utils";
 import type { ModalDefaultProps } from "@/shared/types/index.types";
 import { Button, Flex, Menu, NumberInput, Select, Switch, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
+import { v4 } from "uuid";
 import { useStore } from "zustand/index";
 import { useShallow } from "zustand/react/shallow";
 
@@ -88,7 +89,8 @@ export default function ICAdvancedFilterGridColumnMenuSearchValues<T>(props: Pro
 
 	const onSubmit = (formValues: FormValues) => {
 		if (getColumnOptions) {
-			const condition: ICAdvancedFilterConditionRq = {
+			const condition: ICAdvancedFilterCondition = {
+				id: v4(),
 				operator: formValues.operator as ICAdvancedFilterConditionOperator,
 				columnName: getColumnOptions.name,
 				openBracket: 0,

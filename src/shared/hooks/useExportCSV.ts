@@ -2,7 +2,7 @@ import { basicBrowserDownload } from "@/shared/lib/utils";
 import dayjs from "dayjs";
 import { json2csv } from "json-2-csv";
 
-export default function useExportCSV<T extends object>() {
+export default function useExportCSV<T>() {
 	const defaultFileName = `${dayjs().format("YYYY/MM/DD HH:mm:ss")}.csv`;
 	const downloadCSV = async (params: {
 		data?: T[];
@@ -11,7 +11,7 @@ export default function useExportCSV<T extends object>() {
 	}) => {
 		if (!params.data?.length) return;
 
-		const csv = json2csv(params.data, {
+		const csv = json2csv(params.data as object[], {
 			excludeKeys: params.excludeKeys,
 			emptyFieldValue: "",
 		});

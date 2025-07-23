@@ -7,6 +7,8 @@ import type {
 import type { ICAdvancedGroupByFunctions } from "@/shared/components/infraComponents/ICAdvancedFilter/index.enum";
 import type { LabelValueType } from "@/shared/lib/general-types";
 import type { ValueOf } from "@/shared/types/index.types";
+import type { AxiosResponse } from "axios";
+import type { ReactNode } from "react";
 import type { StoreApi } from "zustand/index";
 
 export type ICAdvancedFilterOrder = "asc" | "desc";
@@ -27,7 +29,8 @@ export type ICAdvancedFilterConditionOperator =
 	| ValueOf<typeof IC_ADVANCED_FILTER_STRING_OPERATORS>
 	| ValueOf<typeof IC_ADVANCED_FILTER_DEFAULT_OPERATORS>;
 
-export type ICAdvancedFilterConditionRq = {
+export type ICAdvancedFilterCondition = {
+	id: string;
 	openBracket: number;
 	columnName: string;
 	operator: ICAdvancedFilterConditionOperator;
@@ -36,7 +39,7 @@ export type ICAdvancedFilterConditionRq = {
 	nextOperator: ICAdvancedFilterOperator;
 };
 
-export type ICAdvancedFilterAggregationConditionRq = Omit<ICAdvancedFilterConditionRq, "columnName">;
+export type ICAdvancedFilterAggregationConditionRq = Omit<ICAdvancedFilterCondition, "columnName">;
 
 export type ICAdvancedFilterGroupByRq = {
 	function: ICAdvancedGroupByFunctions;
@@ -71,16 +74,15 @@ export type ICAdvancedFilterRq<META_DATA extends Record<string, unknown> | unkno
 	search: ICAdvancedFilterSearchRq;
 	columns: ICAdvancedFilterDataColumnRq[];
 	groupBy?: ICAdvancedFilterGroupByRq;
-	conditions: ICAdvancedFilterConditionRq[];
+	conditions: ICAdvancedFilterCondition[];
 	startDate?: string;
 	endDate?: string;
 	metaData?: META_DATA;
 } & Pick<PaginationRq, "page" | "limit">;
 
-export type ICAdvancedFilterRs = PaginationRs<
-	{ id: string; [key: string]: unknown },
-	Record<string, unknown>
->;
+export type ICAdvancedFilterDataRs = { id: string; [key: string]: unknown };
+
+export type ICAdvancedFilterRs = PaginationRs<ICAdvancedFilterDataRs, Record<string, unknown>>;
 
 export type ICAdvancedFilterSaveConditionCreateRq = {
 	name: string;
@@ -106,21 +108,24 @@ export type ICAdvancedFilterStoreType = {
 	setGroupBy: (groupBy: ICAdvancedFilterGroupByRq) => void;
 	variables: ICAdvancedFilterRq;
 	setVariables: (variables: ICAdvancedFilterRq) => void;
-	searchInputPlaceholder: string;
-	searchInputItems?: LabelValueType[];
 	setColumns: (columns: ICAdvancedFilterDataColumnRq[]) => void;
 	addColumnToVariables: (column: ICAdvancedFilterDataColumnRq) => void;
-	setConditions: (conditions: ICAdvancedFilterConditionRq[]) => void;
-	addCondition: (condition: ICAdvancedFilterConditionRq) => void;
-	setAggregationConditionsToGroupBy: (columns: ICAdvancedFilterConditionRq[]) => void;
+	setConditions: (conditions: ICAdvancedFilterCondition[]) => void;
+	addCondition: (condition: ICAdvancedFilterCondition) => void;
+	setAggregationConditionsToGroupBy: (columns: ICAdvancedFilterCondition[]) => void;
 	setPage: (page: number) => void;
 	setLimit: (limit: number) => void;
 	setSearch: (search: ICAdvancedFilterSearchRq) => void;
 	resetToDefaultVariables: () => void;
 	openedFilterConditionModal: boolean;
 	setOpenFilterConditionModal: (opened: boolean) => void;
+	openedFullScreenModal: boolean;
+	setOpenFullScreenModal: (opened: boolean) => void;
+	openedConditionSection: boolean;
+	setOpenFilterConditionSection: (opened: boolean) => void;
 	openedGroupByModal: boolean;
 	setOpenGroupByModal: (opened: boolean) => void;
+	removeCondition: (id: string) => void;
 	hideColumn: (columnName: string) => void;
 	getIsGroupByFunctionColumn: (columnName: string) => boolean;
 };
@@ -141,4 +146,8 @@ export type ICAdvancedFilterProps<T> = {
 	totalRecords: number;
 	recordsPerPageOptions?: number[];
 	run: VoidFunction;
+	leftSection?: ReactNode;
+	searchInputPlaceholder: string;
+	searchInputItems: LabelValueType[];
+	exportDataApi?: (variables: ICAdvancedFilterRq) => Promise<AxiosResponse<ICAdvancedFilterRs>>;
 };
