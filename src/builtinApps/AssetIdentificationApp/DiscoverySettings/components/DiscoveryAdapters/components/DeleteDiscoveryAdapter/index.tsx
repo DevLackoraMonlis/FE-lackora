@@ -39,12 +39,12 @@ export function DeleteDiscoveryAdapterModal({
 			},
 		);
 	};
+	const deleteRestrict = async () => {
+		const response = await deleteNoneCredentialDependency.getDependency(configurationId);
+		setDeleteStatus(response);
+	};
 
 	useEffect(() => {
-		const deleteRestrict = async () => {
-			const response = await deleteNoneCredentialDependency.getDependency(configurationId);
-			setDeleteStatus(response);
-		};
 		if (opened) {
 			deleteRestrict();
 		}

@@ -35,14 +35,14 @@ export function DeleteAdapterModal({ onClose, opened, refetchAdapters, ...select
 			},
 		);
 	};
+	const deleteDependency = async () => {
+		const response = await adapterManagementCheckAdpDependency.getAdapterDeleteDependency(
+			selectedAdapter.adapterId || "",
+		);
+		setDeleteStatus(response);
+	};
 
 	useEffect(() => {
-		const deleteDependency = async () => {
-			const response = await adapterManagementCheckAdpDependency.getAdapterDeleteDependency(
-				selectedAdapter.adapterId || "",
-			);
-			setDeleteStatus(response);
-		};
 		if (opened) {
 			deleteDependency();
 		}
