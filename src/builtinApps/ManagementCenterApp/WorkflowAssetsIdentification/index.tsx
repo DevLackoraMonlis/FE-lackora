@@ -3,7 +3,7 @@
 import { Grid, ScrollArea } from "@mantine/core";
 import { useViewportSize } from "@mantine/hooks";
 
-import WorkflowAssetDiscoveryAccordionItem from "./components/WorkflowAssetDiscoveryAccordion";
+import WorkflowAssetDiscoveryAccordionItem from "./components/WorkflowAssetDiscoveryAccordionItem";
 import WorkflowScanAccordionItem from "./components/WorkflowScanAccordion";
 import WorkflowPlayerTracking from "./components/shared/WorkflowPlayerTracking";
 
