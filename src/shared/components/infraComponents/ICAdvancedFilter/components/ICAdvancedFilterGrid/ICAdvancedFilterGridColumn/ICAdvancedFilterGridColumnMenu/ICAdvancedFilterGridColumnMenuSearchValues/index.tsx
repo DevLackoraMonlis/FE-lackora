@@ -45,6 +45,7 @@ export default function ICAdvancedFilterGridColumnMenuSearchValues<T>(props: Pro
 		if (getColumnOptions?.options?.length) {
 			return (
 				<Select
+					data={getColumnOptions?.options || []}
 					label={getColumnOptions?.displayName || ""}
 					multiple
 					{...form.getInputProps("values")}
