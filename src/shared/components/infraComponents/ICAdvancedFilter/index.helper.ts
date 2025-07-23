@@ -26,7 +26,7 @@ function includeExcludeAction(
 	state: ICAdvancedFilterStoreType,
 	operator: ICAdvancedFilterConditionRq["operator"],
 ): Partial<ICAdvancedFilterStoreType> {
-	let isFunctionColumn = false;
+	const isFunctionColumn = state.getIsGroupByFunctionColumn(columnName);
 	const condition: ICAdvancedFilterConditionRq = {
 		columnName,
 		closBracket: 0,
@@ -35,11 +35,6 @@ function includeExcludeAction(
 		operator,
 		values: [],
 	};
-	Object.keys(ICAdvancedGroupByFunctions).forEach((item) => {
-		if (columnName.includes(item)) {
-			isFunctionColumn = true;
-		}
-	});
 
 	const findColumn = allColumns.find((column) => column.name === columnName);
 
@@ -163,9 +158,7 @@ export function getDefaultICAdvancedStore(params: {
 			set((state) => {
 				const variables = { ...state.variables };
 
-				const isGroupByColumn = Object.keys(ICAdvancedGroupByFunctions).some((fn) =>
-					columnName.startsWith(fn),
-				);
+				const isGroupByColumn = state.getIsGroupByFunctionColumn(columnName);
 
 				if (isGroupByColumn) {
 					if (state.groupBy) {
@@ -186,8 +179,27 @@ export function getDefaultICAdvancedStore(params: {
 				return state;
 			});
 		},
-		totalRecord: 0,
-		setTotalRecords: (totalRecord) => set({ totalRecord }),
+
+		getIsGroupByFunctionColumn: (columnName) => {
+			return Object.keys(ICAdvancedGroupByFunctions).some((fn) => columnName.startsWith(fn));
+		},
+		hideColumn: (columnName) => {
+			set((state) => {
+				const variables = { ...state.variables };
+
+				const isGroupByColumn = state.getIsGroupByFunctionColumn(columnName);
+
+				if (isGroupByColumn) {
+					return state;
+				}
+				return {
+					variables: {
+						...variables,
+						columns: variables.columns.filter((column) => column.name !== columnName),
+					},
+				};
+			});
+		},
 		searchInputPlaceholder: "Search by name",
 		setSearch: (search) => set((state) => ({ variables: { ...state.variables, search } })),
 		variables: defaultVariables || defaultAdvancedVariables,

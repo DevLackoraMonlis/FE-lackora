@@ -1,3 +1,5 @@
+import type { ICAdvancedFilterColumnType } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
+
 export const IC_ADVANCED_FILTER_DEFAULT_OPERATORS = {
 	"=": "equal",
 	"==": "==",
@@ -37,3 +39,15 @@ export const IC_ADVANCED_FILTER_DATE_OPERATORS = {
 	"Field Like": "fieldlike",
 	"Field Not Like": "fieldnotlike",
 } as const;
+
+export const IC_ADVANCED_FILTER_OPERATORS_MAP: Record<
+	Exclude<ICAdvancedFilterColumnType, "Boolean">,
+	Record<string, string>
+> = {
+	Date: IC_ADVANCED_FILTER_DATE_OPERATORS,
+	DateTime: IC_ADVANCED_FILTER_DATE_OPERATORS,
+	Int64: IC_ADVANCED_FILTER_INT64_OPERATORS,
+	IP: IC_ADVANCED_FILTER_INT64_OPERATORS,
+	List: IC_ADVANCED_FILTER_STRING_OPERATORS,
+	String: IC_ADVANCED_FILTER_STRING_OPERATORS,
+};

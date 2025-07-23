@@ -1,4 +1,5 @@
 import type { PaginationRq, PaginationRs } from "@/http/end-points/GeneralService.types";
+import type { TanStackDataTableColumnColDef } from "@/shared/components/baseComponents/BCTanStackGrid/index.types";
 import type {
 	IC_ADVANCED_FILTER_DEFAULT_OPERATORS,
 	IC_ADVANCED_FILTER_STRING_OPERATORS,
@@ -6,9 +7,10 @@ import type {
 import type { ICAdvancedGroupByFunctions } from "@/shared/components/infraComponents/ICAdvancedFilter/index.enum";
 import type { LabelValueType } from "@/shared/lib/general-types";
 import type { ValueOf } from "@/shared/types/index.types";
+import type { StoreApi } from "zustand/index";
 
-type ICAdvancedFilterOrder = "asc" | "desc";
-type ICAdvancedFilterOperator = "and" | "or";
+export type ICAdvancedFilterOrder = "asc" | "desc";
+export type ICAdvancedFilterOperator = "and" | "or";
 
 type ICAdvancedFilterDataColumnRq = {
 	name: string;
@@ -21,12 +23,14 @@ export type ICAdvancedConditionValueTypeRq = {
 	value: string;
 };
 
+export type ICAdvancedFilterConditionOperator =
+	| ValueOf<typeof IC_ADVANCED_FILTER_STRING_OPERATORS>
+	| ValueOf<typeof IC_ADVANCED_FILTER_DEFAULT_OPERATORS>;
+
 export type ICAdvancedFilterConditionRq = {
 	openBracket: number;
 	columnName: string;
-	operator:
-		| ValueOf<typeof IC_ADVANCED_FILTER_STRING_OPERATORS>
-		| ValueOf<typeof IC_ADVANCED_FILTER_DEFAULT_OPERATORS>;
+	operator: ICAdvancedFilterConditionOperator;
 	values: ICAdvancedConditionValueTypeRq[];
 	closBracket: number;
 	nextOperator: ICAdvancedFilterOperator;
@@ -36,7 +40,7 @@ export type ICAdvancedFilterAggregationConditionRq = Omit<ICAdvancedFilterCondit
 
 export type ICAdvancedFilterGroupByRq = {
 	function: ICAdvancedGroupByFunctions;
-	order: ICAdvancedFilterOrder;
+	order: ICAdvancedFilterOrder | null;
 	displayName: string;
 	column: "*" | string;
 	aggregatedConditions: ICAdvancedFilterAggregationConditionRq[];
@@ -95,13 +99,11 @@ export type ICAdvancedFilterStoreIncludeExcludeType = (
 ) => void;
 
 export type ICAdvancedFilterStoreType = {
-	updateOrder: (columnName: string, order: ICAdvancedFilterOrder) => void;
+	updateOrder: (columnName: string, order: ICAdvancedFilterOrder | null) => void;
 	includeCondition: ICAdvancedFilterStoreIncludeExcludeType;
 	excludeCondition: ICAdvancedFilterStoreIncludeExcludeType;
 	groupBy?: ICAdvancedFilterGroupByRq;
 	setGroupBy: (groupBy: ICAdvancedFilterGroupByRq) => void;
-	totalRecord: number;
-	setTotalRecords: (total: number) => void;
 	variables: ICAdvancedFilterRq;
 	setVariables: (variables: ICAdvancedFilterRq) => void;
 	searchInputPlaceholder: string;
@@ -119,9 +121,24 @@ export type ICAdvancedFilterStoreType = {
 	setOpenFilterConditionModal: (opened: boolean) => void;
 	openedGroupByModal: boolean;
 	setOpenGroupByModal: (opened: boolean) => void;
+	hideColumn: (columnName: string) => void;
+	getIsGroupByFunctionColumn: (columnName: string) => boolean;
 };
 
 export type SetStateStore<T> = (
 	partial: T | Partial<T> | ((state: T) => T | Partial<T>),
 	replace?: false | undefined,
 ) => void;
+
+export type ICAdvancedFilterProps<T> = {
+	height: number;
+	idAccessor: string;
+	store: StoreApi<ICAdvancedFilterStoreType>;
+	data: T[];
+	isLoading: boolean;
+	columns: TanStackDataTableColumnColDef<T>[];
+	allColumns: ICAdvancedFilterColumn[];
+	totalRecords: number;
+	recordsPerPageOptions?: number[];
+	run: VoidFunction;
+};
