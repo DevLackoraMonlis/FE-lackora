@@ -118,7 +118,7 @@ export const getMonoMarketActivateConfigButton = (
 ) => {
 	if (params.status === MonoAppStatusTypeEnum.SUPPORT_LICENSE_EXPIRED && params.hasSupportLicenseSupport) {
 		return (
-			<Button size={"xs"} color={"red"}>
+			<Button miw={120} size={"xs"} color={"red"}>
 				Renew license
 			</Button>
 		);
@@ -145,7 +145,7 @@ export const getMonoMarketActivateConfigButton = (
 	if (params.status === "INACTIVE" && !params.configRequired) {
 		return (
 			<Button onClick={params.onActiveOnly} size={"xs"} rightSection={<IconArrowNarrowRight />}>
-				{"Active App"}
+				{"Activate App"}
 			</Button>
 		);
 	}

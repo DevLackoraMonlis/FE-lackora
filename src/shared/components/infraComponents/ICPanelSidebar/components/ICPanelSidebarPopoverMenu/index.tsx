@@ -15,6 +15,7 @@ export default function ICPanelSidebarPopoverMenu(props: ICPanelSidebarPopoverMe
 			if (item.childrenItems?.length) {
 				return (
 					<BCNavLink
+						p={0}
 						c={"white"}
 						label={
 							<Text

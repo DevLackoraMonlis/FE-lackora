@@ -8,7 +8,7 @@ import {
 import type { ICPanelSidebarPopoverMenuGroupProps } from "@/shared/components/infraComponents/ICPanelSidebar/index.types";
 import { AppRoutes } from "@/shared/constants/routes";
 import activeAppsStore from "@/shared/stores/activeAppsStore";
-import { ActionIcon, Divider, Flex, ScrollArea, useMantineTheme } from "@mantine/core";
+import { ActionIcon, Divider, Flex, ScrollArea, Tooltip, useMantineTheme } from "@mantine/core";
 import { useViewportSize } from "@mantine/hooks";
 import { IconArrowLeft, IconArrowRight, IconChevronRight, IconSettings } from "@tabler/icons-react";
 import { usePathname } from "next/navigation";
@@ -34,6 +34,7 @@ const generateMenuItem = (params: {
 	opened: boolean;
 	onMouseEnter: (href: string) => void;
 	onMouseLeave: (href: string) => void;
+	showTooltip?: boolean;
 }) => {
 	const pathname = usePathname();
 	return params.items.map((link) => {
@@ -59,6 +60,14 @@ const generateMenuItem = (params: {
 					dynamicMenuGroup={link.menuGroupProps.dynamicMenuGroup}
 					staticMenuGroup={link.menuGroupProps.staticMenuGroup}
 				/>
+			);
+		}
+
+		if (params.showTooltip && !params.opened) {
+			return (
+				<Tooltip position={"right-start"} label={link.label}>
+					{navLink}
+				</Tooltip>
 			);
 		}
 		return navLink;
@@ -131,6 +140,7 @@ export default function ICPanelSidebar(props: Props) {
 		opened: props.opened,
 		onMouseEnter,
 		onMouseLeave,
+		showTooltip: true,
 	});
 
 	const applicationMenuItems = generateMenuItem({
@@ -188,8 +198,8 @@ export default function ICPanelSidebar(props: Props) {
 	return (
 		<nav className={`${classes.navbar} ${props.opened ? classes.openedNavbar : classes.closedNavbar}`}>
 			<Flex h={"100%"} pb={"md"} direction={"column"} justify={"space-between"}>
-				<ScrollArea h={height - 48}>
-					<Flex direction={"column"} gap={"sm"}>
+				<ScrollArea scrollbars={"y"} h={height - 48}>
+					<Flex direction={"column"} justify={"center"} gap={"sm"}>
 						{topMenuItems}
 						{!!topMenuItems.length && <Divider color={"var(--mantine-color-gray-7)"} />}
 						{applicationMenuItems}
@@ -229,7 +239,7 @@ export default function ICPanelSidebar(props: Props) {
 						/>
 					</Flex>
 				</ScrollArea>
-				<Flex justify={"flex-end"} align={"center"} pr={"sm"}>
+				<Flex justify={props.opened ? "flex-end" : "center"} align={"center"}>
 					<ActionIcon
 						size={24}
 						onClick={props.onToggle}

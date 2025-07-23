@@ -34,7 +34,7 @@ export default function MonoMarketCard(props: MonoMarketCardProps) {
 	return (
 		<Card withBorder shadow={"xs"}>
 			<Card.Section bg={"gray.2"} p={"sm"}>
-				<Flex bg={"white"} h={80} justify={"center"} align={"center"} pos={"relative"}>
+				<Flex justify={"flex-start"} align={"center"} pos={"relative"}>
 					<Flex pos={"absolute"} right={"0"} top={"0"}>
 						<Tooltip
 							position={"top"}
@@ -69,15 +69,16 @@ export default function MonoMarketCard(props: MonoMarketCardProps) {
 					)}
 
 					<Flex gap={"xs"} align={"center"}>
-						{getMonoAppIcon({ size: 50, name: props.owner })}
-						<Text fz={"lg"} fw={"bold"}>
-							{props.owner}
-						</Text>
+						<Flex bg={"white"} justify={"center"} w={44} h={44} align={"center"}>
+							{getMonoAppIcon({ size: 32, name: props.owner })}
+						</Flex>
+						<Flex gap={"2xs"} direction={"column"}>
+							<Text fw={"bold"}>{props.label}</Text>
+							<Text fz={"xs"} c={"gray.7"}>{`Version ${props.version} | by ${props.owner}`}</Text>
+						</Flex>
 					</Flex>
 				</Flex>
 				<Flex gap={"2xs"} mt={"xs"} direction={"column"}>
-					<Text fw={"bold"}>{props.label}</Text>
-					<Text fz={"xs"}>{`version ${props.version} | by ${props.owner}`}</Text>
 					<Text mt={"2xs"} fz={"xs"} c={"gray.6"} maw={"90%"} truncate={"end"}>
 						{props.description}
 					</Text>

@@ -4,9 +4,10 @@ import type { SessionUserType } from "@/http/httpService";
 import ICPanelHeader from "@/shared/components/infraComponents/ICPanelHeader";
 import ICPanelSidebar from "@/shared/components/infraComponents/ICPanelSidebar";
 import { AppRoutes } from "@/shared/constants/routes";
+import { MonoWatchLogo } from "@/shared/icons/components/general";
 import { Box, Flex, useMantineTheme } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { IconBell, IconBox } from "@tabler/icons-react";
+import { IconBell } from "@tabler/icons-react";
 import { signOut } from "next-auth/react";
 import { redirect } from "next/navigation";
 import { type PropsWithChildren, useEffect } from "react";
@@ -42,7 +43,7 @@ export default function PanelLayout(
 						paddingLeft: "14px",
 						backgroundColor: "var(--mantine-color-main-6)",
 					}}
-					applicationLogo={<IconBox color={white} />}
+					applicationLogo={<MonoWatchLogo width={30} height={30} color={white} />}
 					onLogout={() => signOut({ redirect: true, callbackUrl: AppRoutes.login })}
 					sessionUser={props.sessionUser}
 					notification={<IconBell color={white} />}
