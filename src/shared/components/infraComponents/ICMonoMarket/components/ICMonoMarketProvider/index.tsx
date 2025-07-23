@@ -9,7 +9,7 @@ import AdapterManagementLandingPage from "@/builtinApps/AdaptersApp";
 import AssetIdentificationAppConfig from "@/builtinApps/AssetIdentificationApp/AssetIdentificationAppConfig";
 import AssetIdentificationDiscoverySettingsPage from "@/builtinApps/AssetIdentificationApp/DiscoverySettings";
 import AssetIdentificationProfilingSettingsPage from "@/builtinApps/AssetIdentificationApp/ProfillngSettings";
-import CyberAssetsIdentificationWorkflow from "@/builtinApps/ManagementCenterApp/CyberAssetsIdentificationWorkflow";
+import WorkflowAssetsIdentification from "@/builtinApps/ManagementCenterApp/WorkflowAssetsIdentification";
 import ObjectsConnectionsPage from "@/builtinApps/ObjectsApp/Connections";
 import ICMonoMarket from "@/shared/components/infraComponents/ICMonoMarket/components/ICMonoMarket";
 
@@ -32,7 +32,7 @@ const apps: ICMonoMarketAppType[] = [
 			},
 			{
 				name: AllApplications.ASSET_IDENTIFICATION.modules.PROFILING_SETTINGS,
-				page: CyberAssetsIdentificationWorkflow, // AssetIdentificationProfilingSettingsPage
+				page: WorkflowAssetsIdentification, // AssetIdentificationProfilingSettingsPage
 				headerTitle: "Profiling Settings",
 			},
 		],

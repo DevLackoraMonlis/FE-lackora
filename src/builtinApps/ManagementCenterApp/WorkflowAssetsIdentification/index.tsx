@@ -1,3 +1,5 @@
+"use client";
+
 import { Grid, ScrollArea } from "@mantine/core";
 import { useViewportSize } from "@mantine/hooks";
 
@@ -5,7 +7,7 @@ import WorkflowAssetDiscoveryAccordionItem from "./components/WorkflowAssetDisco
 import WorkflowScanAccordionItem from "./components/WorkflowScanAccordion";
 import WorkflowPlayerTracking from "./components/shared/WorkflowPlayerTracking";
 
-export default function CyberAssetsIdentificationWorkflow() {
+export default function WorkflowAssetsIdentification() {
 	const { height } = useViewportSize();
 	return (
 		<Grid p="xs" pt="lg">
