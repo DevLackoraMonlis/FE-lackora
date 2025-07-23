@@ -13,7 +13,7 @@ const DiscoverySettingsNoneCredentialAdapters = () => {
 	return (
 		<Grid p="sm" pt="lg" gutter="lg">
 			<Grid.Col span={{ xs: 12, lg: 9 }} offset={{ lg: 3 }}>
-				<ScrollArea px="2xs" h={height - 160}>
+				<ScrollArea px="xs" h={height - 160}>
 					<Accordion variant="separated" onChange={setActiveAccordion}>
 						{discoveryAdapters.data?.results?.map(({ id, fields, display_name, caption, icon }) => {
 							return (
@@ -30,9 +30,7 @@ const DiscoverySettingsNoneCredentialAdapters = () => {
 												</Card>
 												<Flex direction="column" gap="2xs">
 													<Text fw="bold">{display_name}</Text>
-													<Text fz="sm" c="gray.6">
-														{caption}
-													</Text>
+													<Text c="gray.6">{caption}</Text>
 												</Flex>
 											</Flex>
 											<Flex align="center" gap="xs" px="sm">

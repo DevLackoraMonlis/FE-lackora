@@ -14,18 +14,14 @@ export const UploadStatusUploading = ({ title, subTitle, onCancelFile }: CommonT
 						<RingProgress thickness={4} size={35} roundCaps sections={[{ value: 40, color: "cyan" }]} />
 					</Card>
 					<Flex direction="column">
-						<Text fz="sm" c="dimmed">
-							{title || "-"}
-						</Text>
+						<Text c="dimmed">{title || "-"}</Text>
 						<Text fz="xs" c="dimmed">
 							{subTitle || "-"}
 						</Text>
 					</Flex>
 				</Flex>
 				<Flex gap="xs" align="center">
-					<Text fz="sm" c="dimmed">
-						Uploading ...
-					</Text>
+					<Text c="dimmed">Uploading ...</Text>
 					<CloseButton bg="transparent" onClick={onCancelFile} />
 				</Flex>
 			</Flex>
@@ -42,18 +38,14 @@ export const UploadStatusValidating = ({ title, subTitle, onCancelFile }: Common
 						<Loader size={25} type="bars" color="lime" />
 					</Card>
 					<Flex direction="column">
-						<Text fz="sm" c="dimmed">
-							{title || "-"}
-						</Text>
+						<Text c="dimmed">{title || "-"}</Text>
 						<Text fz="xs" c="dimmed">
 							{subTitle || "Validating File ..."}
 						</Text>
 					</Flex>
 				</Flex>
 				<Flex gap="xs" align="center">
-					<Text fz="sm" c="dimmed">
-						Validating ...
-					</Text>
+					<Text c="dimmed">Validating ...</Text>
 					<CloseButton bg="transparent" onClick={onCancelFile} />
 				</Flex>
 			</Flex>
@@ -84,9 +76,7 @@ export const UploadStatusReadyToImport = ({
 							</Flex>
 						</Card>
 						<Flex direction="column">
-							<Text fz="sm" fw="bold">
-								{title || "-"}
-							</Text>
+							<Text fw="bold">{title || "-"}</Text>
 							<Text fz="xs">{subTitle || "-"}</Text>
 						</Flex>
 					</Flex>

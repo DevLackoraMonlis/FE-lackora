@@ -46,7 +46,7 @@ const DiscoveryAdapterCard = (props: Props) => {
 		<Card bg="gray.1" w="100%" padding="xs">
 			<LoadingOverlay visible={props.loading} />
 			<Flex align="center" justify="space-between">
-				<Text fw="bold" fz="sm">
+				<Text fw="bold">
 					{props.configs?.map(({ value }) => (isObject(value) ? value?.label : ""))?.join(" - ")}
 				</Text>
 				<Flex gap="2xs">

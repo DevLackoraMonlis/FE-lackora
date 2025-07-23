@@ -83,11 +83,7 @@ export default function ListDynamicField<TObject extends string>({
 					rightSectionPointerEvents="none"
 					onClick={() => combobox.openDropdown()}
 				>
-					{selected?.label || (
-						<Text c="gray.5" fz="sm">
-							{placeholder}
-						</Text>
-					)}
+					{selected?.label || <Text c="gray.5">{placeholder}</Text>}
 				</InputBase>
 			</Combobox.Target>
 			<Combobox.Dropdown bd="1px solid gray.4">
