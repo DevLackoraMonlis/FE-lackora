@@ -33,7 +33,7 @@ export default function ICPanelHeaderAvatarMenu(props: ICPanelHeaderProps) {
 							<Avatar
 								styles={{
 									root: {
-										backgroundColor: "var(--mantine-color-primary-0)",
+										backgroundColor: "var(--mantine-color-main-4)",
 									},
 									image: {
 										color: "var(--mantine-color-white)",

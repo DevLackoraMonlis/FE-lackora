@@ -15,6 +15,7 @@ export default function BCNavLink(props: Props) {
 				chevron: classes.chevron,
 				label: classes.label,
 				root: classes.root,
+				section: classes.section,
 			}}
 		/>
 	);
