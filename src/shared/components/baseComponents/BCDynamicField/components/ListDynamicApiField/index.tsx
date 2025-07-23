@@ -103,11 +103,7 @@ export default function ListDynamicApiField<TObject extends string>({
 					onClick={() => combobox.toggleDropdown()}
 					rightSectionPointerEvents="none"
 				>
-					{selected?.label || (
-						<Text c="gray.5" fz="sm">
-							{placeholder}
-						</Text>
-					)}
+					{selected?.label || <Text c="gray.5">{placeholder}</Text>}
 				</InputBase>
 			</Combobox.Target>
 			<Combobox.Dropdown bd="1px solid gray.4">

@@ -341,9 +341,7 @@ export default function ConnectionList() {
 													<ConnectionIconWrapper>{getConnectionIcon(item.type)}</ConnectionIconWrapper>
 													<Flex direction="column">
 														<Text fw="bold">{item.name}</Text>
-														<Text fz="sm" c="gray.6">
-															{item.description || "-"}
-														</Text>
+														<Text c="gray.6">{item.description || "-"}</Text>
 													</Flex>
 												</Flex>
 												<ConnectionListActionButtons
