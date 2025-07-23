@@ -1,14 +1,17 @@
 "use client";
-import AdapterManagementLandingPage from "@/builtinApps/AdaptersApp";
-import AssetIdentificationAppConfig from "@/builtinApps/AssetIdentificationApp/AssetIdentificationAppConfig";
-import AssetIdentificationDiscoverySettingsPage from "@/builtinApps/AssetIdentificationApp/DiscoverySettings";
-import AssetIdentificationProfilingSettingsPage from "@/builtinApps/AssetIdentificationApp/ProfillngSettings";
-import ObjectsConnectionsPage from "@/builtinApps/ObjectsApp/Connections";
-import ICMonoMarket from "@/shared/components/infraComponents/ICMonoMarket/components/ICMonoMarket";
+
 import { AllApplications } from "@/shared/constants/routes";
 import type { PropsWithChildren } from "react";
 import type { ICMonoMarketAppType } from "../../index.types";
 import ICMonoMarketContext from "./ICMonoMarketContext";
+
+import AdapterManagementLandingPage from "@/builtinApps/AdaptersApp";
+import AssetIdentificationAppConfig from "@/builtinApps/AssetIdentificationApp/AssetIdentificationAppConfig";
+import AssetIdentificationDiscoverySettingsPage from "@/builtinApps/AssetIdentificationApp/DiscoverySettings";
+import AssetIdentificationProfilingSettingsPage from "@/builtinApps/AssetIdentificationApp/ProfillngSettings";
+import WorkflowAssetsIdentification from "@/builtinApps/ManagementCenterApp/WorkflowAssetsIdentification";
+import ObjectsConnectionsPage from "@/builtinApps/ObjectsApp/Connections";
+import ICMonoMarket from "@/shared/components/infraComponents/ICMonoMarket/components/ICMonoMarket";
 
 const apps: ICMonoMarketAppType[] = [
 	{
@@ -29,7 +32,7 @@ const apps: ICMonoMarketAppType[] = [
 			},
 			{
 				name: AllApplications.ASSET_IDENTIFICATION.modules.PROFILING_SETTINGS,
-				page: AssetIdentificationProfilingSettingsPage,
+				page: WorkflowAssetsIdentification, // AssetIdentificationProfilingSettingsPage
 				headerTitle: "Profiling Settings",
 			},
 		],
@@ -49,6 +52,17 @@ const apps: ICMonoMarketAppType[] = [
 		landing: ICMonoMarket,
 		headerTitle: "Mono Market",
 		modules: [],
+	},
+	{
+		name: AllApplications.MANAGEMENT_CENTER.name,
+		headerTitle: "Management Center",
+		modules: [
+			{
+				name: AllApplications.MANAGEMENT_CENTER.modules.WORKFLOW,
+				page: AssetIdentificationProfilingSettingsPage, // CyberAssetsIdentificationWorkflow
+				headerTitle: "Cyber Assets Identification Workflow",
+			},
+		],
 	},
 ];
 

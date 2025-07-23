@@ -53,7 +53,7 @@ export default function DiscoverySettingsDiscoveryAdapters() {
 				/>
 			</Grid.Col>
 			<Grid.Col span={9} pos="relative">
-				<ScrollArea px="2xs" h={height - 160}>
+				<ScrollArea px="xs" h={height - 160}>
 					{discoveryAdapters.isLoading ? (
 						<DiscoveryAdapterSkelton count={6} />
 					) : (
@@ -79,9 +79,7 @@ export default function DiscoverySettingsDiscoveryAdapters() {
 												</Card>
 												<Flex direction="column" gap="2xs">
 													<Text fw="bold">{item.display_name}</Text>
-													<Text fz="sm" c="gray.6">
-														{item.caption || "-"}
-													</Text>
+													<Text c="gray.6">{item.caption || "-"}</Text>
 												</Flex>
 											</Flex>
 											<Flex align="center" gap="xs" px="sm">
