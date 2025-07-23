@@ -23,3 +23,18 @@ export type ConfigurationRs = {
 	configurationIP: string;
 	lastExecutionId: string;
 };
+
+type DeleteDependencyAsset = {
+	hostname: string;
+	id: string;
+	status: string;
+	ipAddress: string;
+	key: string;
+};
+export type DeleteDependencyAssets = {
+	disabledDeletion: boolean;
+	message: string;
+	status: boolean;
+	total: number;
+	results?: DeleteDependencyAsset[];
+};

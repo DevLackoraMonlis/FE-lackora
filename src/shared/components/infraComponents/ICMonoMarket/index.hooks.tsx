@@ -4,8 +4,8 @@ import type {
 	ICMonoMarketAppModuleType,
 	ICMonoMarketAppType,
 } from "@/shared/components/infraComponents/ICMonoMarket/index.types";
-import { AppRoutes } from "@/shared/constants/app-routes";
-import { AllApplications } from "@/shared/enums/index.enums";
+import { AppRoutes } from "@/shared/constants/routes";
+import { AllApplications } from "@/shared/constants/routes";
 import activeAppsStore from "@/shared/stores/activeAppsStore";
 import { useParams, useRouter } from "next/navigation";
 import { type ReactElement, useContext } from "react";

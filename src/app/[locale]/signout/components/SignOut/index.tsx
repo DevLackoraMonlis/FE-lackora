@@ -1,5 +1,5 @@
 "use client";
-import { AppRoutes } from "@/shared/constants/app-routes";
+import { AppRoutes } from "@/shared/constants/routes";
 import { Flex, Loader } from "@mantine/core";
 import { signOut } from "next-auth/react";
 import { useEffect } from "react";

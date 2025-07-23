@@ -6,6 +6,7 @@ import { filter, groupBy, isObject } from "lodash";
 
 import {
 	discoverySettingConfigurationTestConnection,
+	getDiscoverySettingConfigurationDependecy,
 	useCreateDiscoverySettingConfiguration,
 	useDeleteDiscoverySettingConfiguration,
 	useDiscoverySettingRunNow,
@@ -20,7 +21,7 @@ import { configsTransformRs, fieldsTransformRs } from "@/shared/components/baseC
 import { getErrorMessage, getSuccessMessage } from "@/shared/lib/utils";
 
 import { GET_DISCOVERY_SETTINGS_QUERY_KEY } from "./index.constants";
-import type { DiscoveryAdapterFilters } from "./index.types";
+import type { DeleteDependencyAssets, DiscoveryAdapterFilters } from "./index.types";
 
 export function useDiscoveryAdapters({ type, ...clientSideParams }: DiscoveryAdapterFilters) {
 	const discoveryAdaptersUQ = useGetDiscoverySettings(
@@ -108,9 +109,10 @@ export function useDiscoveryAdapterById(adapterId: string, enabled: boolean) {
 	return { discoverySettingConfigurations };
 }
 
-export function useDeleteDiscoverySetting() {
-	const deleteDiscoverySetting = useDeleteDiscoverySettingConfiguration({
-		mutation: {
+export function useDeleteDiscoverySetting(showCustomMessage?: boolean) {
+	let mutation = {};
+	if (showCustomMessage) {
+		mutation = {
 			onSuccess() {
 				notifications.show({
 					title: "Gateway deleted successfully",
@@ -119,20 +121,52 @@ export function useDeleteDiscoverySetting() {
 					color: "green",
 					withBorder: true,
 					icon: (
-						<Badge variant="light" circle c="white" bg="green" size="30px">
+						<Badge variant="light" circle c="white" bg="green" size="30px" mb="2xl">
 							<IconCheck />
 						</Badge>
 					),
 				});
 			},
-		},
-	});
+		};
+	}
+	const deleteDiscoverySetting = useDeleteDiscoverySettingConfiguration({ mutation });
 	return { deleteDiscoverySetting };
 }
 
 export function useDeleteNoneCredential() {
 	const deleteDiscoverySetting = useDeleteDiscoverySettingConfiguration();
 	return { deleteDiscoverySetting };
+}
+export function useDeleteNoneCredentialDependency() {
+	const [dependencyLoading, toggleDependencyLoading] = useToggle([false, true]);
+
+	async function getDependency(configurationId: string) {
+		toggleDependencyLoading(true);
+		return await getDiscoverySettingConfigurationDependecy(configurationId)
+			.then(({ data }) => {
+				toggleDependencyLoading(false);
+				const results = data?.results?.map(({ hostname, id, primary_ip, status }, idx) => ({
+					hostname,
+					id,
+					status,
+					ipAddress: primary_ip,
+					key: `${idx + 1}`,
+				}));
+				return { ...data, disabledDeletion: false, results };
+			})
+			.catch(() => {
+				toggleDependencyLoading(false);
+				return {
+					disabledDeletion: true,
+					message: "",
+					status: false,
+					total: 0,
+					results: [],
+				} as DeleteDependencyAssets;
+			});
+	}
+
+	return { getDependency, dependencyLoading };
 }
 
 export function useEditDiscoverySetting() {
@@ -148,11 +182,7 @@ export function useCreateDiscoverySetting() {
 export function useTestDiscoverySettingConnection() {
 	const [testLoading, toggleTestLoading] = useToggle([false, true]);
 
-	function testDiscoverySettingConnection(
-		adapterId: string,
-		configuration_id: string,
-		callback: VoidFunction,
-	) {
+	function testConnection(adapterId: string, configuration_id: string, callback: VoidFunction) {
 		toggleTestLoading(true);
 		discoverySettingConfigurationTestConnection(adapterId, { configuration_id })
 			.then((response) => {
@@ -175,7 +205,7 @@ export function useTestDiscoverySettingConnection() {
 			});
 	}
 
-	return { testDiscoverySettingConnection, testLoading };
+	return { testConnection, testLoading };
 }
 
 export function useDiscoverySettingQuickDiscovery(

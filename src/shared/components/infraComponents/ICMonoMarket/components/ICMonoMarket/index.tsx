@@ -17,7 +17,7 @@ import {
 } from "@/shared/components/infraComponents/ICMonoMarket/components/ICMonoMarket/index.enum";
 import { useMonoMarket } from "@/shared/components/infraComponents/ICMonoMarket/components/ICMonoMarket/index.hooks";
 import type { MonoMarketCardProps } from "@/shared/components/infraComponents/ICMonoMarket/components/ICMonoMarket/index.types";
-import { AppRoutes } from "@/shared/constants/app-routes";
+import { AppRoutes } from "@/shared/constants/routes";
 import { useStableData } from "@/shared/hooks/useStableData";
 import { useTablePagination } from "@/shared/hooks/useTablePagination";
 import activeAppsStore from "@/shared/stores/activeAppsStore";

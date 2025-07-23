@@ -5,11 +5,11 @@
  * MonoWatch Security Asset Management
  * OpenAPI spec version: 1.0.0
  */
-import type { EachAssetDependencyResponse } from './EachAssetDependencyResponse';
+import type { DiscoveryConfigurationDependencyCheckResponseResults } from './DiscoveryConfigurationDependencyCheckResponseResults';
 
 export interface DiscoveryConfigurationDependencyCheckResponse {
   status: boolean;
-  results: EachAssetDependencyResponse[];
+  results?: DiscoveryConfigurationDependencyCheckResponseResults;
   total: number;
   message: string;
 }

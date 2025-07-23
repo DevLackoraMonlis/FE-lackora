@@ -2,7 +2,7 @@ import type { ICPanelHeaderProps } from "@/shared/components/infraComponents/ICP
 import PasswordContainCharacters from "@/shared/components/infraComponents/shared/PasswordContainCharacters";
 import PasswordContainNumber from "@/shared/components/infraComponents/shared/PasswordContainNumber";
 import PasswordContainSpecial from "@/shared/components/infraComponents/shared/PasswordContainSpecial";
-import { AppRoutes } from "@/shared/constants/app-routes";
+import { AppRoutes } from "@/shared/constants/routes";
 import { Button, Card, CheckIcon, Flex, Modal, PasswordInput, Text } from "@mantine/core";
 import { hasLength, useForm } from "@mantine/form";
 import { signOut } from "next-auth/react";

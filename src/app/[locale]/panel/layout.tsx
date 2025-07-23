@@ -3,7 +3,7 @@ import { getHttpRequestXNonce } from "@/app/actions/get-http-request-x-nonce";
 import { GlobalService } from "@/http/end-points/GlobalService";
 import type { ActiveApplicationsResponse } from "@/http/generated/models";
 import type { SessionUserType } from "@/http/httpService";
-import { AppRoutes } from "@/shared/constants/app-routes";
+import { AppRoutes } from "@/shared/constants/routes";
 import { sessionOptions } from "@/shared/lib/sessionOptions";
 import { ActiveAppsProvider } from "@/shared/providers/ActiveAppsProvider";
 import type { AxiosError } from "axios";

@@ -1,6 +1,6 @@
 import type { SessionUserType } from "@/http/httpService";
 import ICLoginLocked from "@/shared/components/infraComponents/ICLogin/components/ICLoginForm/ICLoginLocked";
-import { AppRoutes } from "@/shared/constants/app-routes";
+import { AppRoutes } from "@/shared/constants/routes";
 import { validateInput } from "@/shared/lib/utils";
 import envStore from "@/shared/stores/envStore";
 import { Alert, Button, Card, Checkbox, Flex, PasswordInput, Text, TextInput, Title } from "@mantine/core";
