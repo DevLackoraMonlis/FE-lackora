@@ -36,9 +36,7 @@ export function DeleteAdapterModal({ onClose, opened, refetchAdapters, ...select
 		);
 	};
 	const deleteDependency = async () => {
-		const response = await adapterManagementCheckAdpDependency.getAdapterDeleteDependency(
-			selectedAdapter.adapterId || "",
-		);
+		const response = await adapterManagementCheckAdpDependency.getDependency(selectedAdapter.adapterId || "");
 		setDeleteStatus(response);
 	};
 
@@ -49,7 +47,7 @@ export function DeleteAdapterModal({ onClose, opened, refetchAdapters, ...select
 	}, [opened, selectedAdapter.adapterId]);
 
 	const description = () => {
-		if (adapterManagementCheckAdpDependency.adapterDeleteDependencyLoading) {
+		if (adapterManagementCheckAdpDependency.dependencyLoading) {
 			return (
 				<Center>
 					<Loader size="sm" />
@@ -92,7 +90,7 @@ export function DeleteAdapterModal({ onClose, opened, refetchAdapters, ...select
 				onOk={handleClose}
 				onClose={handleClose}
 				opened={opened && deleteStatus?.status !== true}
-				loading={adapterManagementCheckAdpDependency.adapterDeleteDependencyLoading}
+				loading={adapterManagementCheckAdpDependency.dependencyLoading}
 				title={"Deletion Restricted"}
 				deleteItemName={selectedAdapter?.adapterName || ""}
 				description={modalsDescription}

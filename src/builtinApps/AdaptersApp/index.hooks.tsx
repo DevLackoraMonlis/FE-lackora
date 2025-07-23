@@ -57,20 +57,20 @@ export function useAdapterManagementDeleteAdp() {
 }
 
 export function useAdapterManagementCheckAdpDependency() {
-	const [adapterDeleteDependencyLoading, toggleAdapterDeleteDependencyLoading] = useToggle([false, true]);
+	const [dependencyLoading, toggledependencyLoading] = useToggle([false, true]);
 
-	async function getAdapterDeleteDependency(adapterId: string) {
-		toggleAdapterDeleteDependencyLoading(true);
+	async function getDependency(adapterId: string) {
+		toggledependencyLoading(true);
 		return await getAdapterDependency(adapterId)
 			.then(({ data }) => {
-				toggleAdapterDeleteDependencyLoading(false);
+				toggledependencyLoading(false);
 				return { ...data, disabledDeletion: false };
 			})
 			.catch(() => {
-				toggleAdapterDeleteDependencyLoading(false);
+				toggledependencyLoading(false);
 				return { disabledDeletion: true, message: "", status: false, total: 0 } as DeleteDependencyAdapters;
 			});
 	}
 
-	return { getAdapterDeleteDependency, adapterDeleteDependencyLoading };
+	return { getDependency, dependencyLoading };
 }
