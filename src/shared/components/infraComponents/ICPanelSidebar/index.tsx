@@ -65,7 +65,7 @@ const generateMenuItem = (params: {
 
 		if (params.showTooltip && !params.opened) {
 			return (
-				<Tooltip position={"right-start"} label={link.label}>
+				<Tooltip key={link.label} position={"right-start"} label={link.label}>
 					{navLink}
 				</Tooltip>
 			);

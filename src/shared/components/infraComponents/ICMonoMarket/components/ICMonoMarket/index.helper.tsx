@@ -62,14 +62,14 @@ export function getMonoMarketAppProductButton(params: {
 	return (
 		<Badge
 			classNames={{
-				label: "pl-1-5",
+				label: "pl-0-5",
 			}}
 			fz={"2xs"}
 			radius={"xs"}
 			color={MonoAppProductColor[params.type]}
 			variant={"light"}
 			leftSection={<IconAward size={14} color={MonoAppProductColor[params.type]} />}
-			size={"lg"}
+			size={"md"}
 		>
 			{params.size === "small" ? MonoAppProductTypeShortName[params.type] : params.type}
 		</Badge>
@@ -85,8 +85,8 @@ export function getMonoMarketAppMonoCareLicenseButton(params: {
 			radius={"xs"}
 			color={"#15AABF"}
 			variant={"light"}
-			leftSection={<IconAward size={14} color={"#15AABF"} />}
-			size={"lg"}
+			leftSection={<IconAward size={12} color={"#15AABF"} />}
+			size={"md"}
 		>
 			{params.size === "small" ? "MC" : "MONOCARE REQUIRED"}
 		</Badge>

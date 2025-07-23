@@ -51,7 +51,7 @@ export default function MonoMarketCard(props: MonoMarketCardProps) {
 						</Tooltip>
 					</Flex>
 					{props.hasRequiredSupportLicense && (
-						<Flex pos={"absolute"} right={"0"} top={28}>
+						<Flex pos={"absolute"} right={"0"} top={24}>
 							<Tooltip
 								position={"top"}
 								label={
