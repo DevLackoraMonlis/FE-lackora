@@ -59,16 +59,16 @@ export default function DiscoverySettingsDiscoveryAdapters() {
 					) : (
 						<Accordion variant="separated" onChange={setActiveAccordion}>
 							{discoveryAdapters?.data?.results?.map((item) => (
-								<Accordion.Item key={item.id} value={item.id}>
-									<Accordion.Control>
+								<Accordion.Item key={item.id} value={item.id} my="xs">
+									<Accordion.Control h="56px">
 										<Flex align="center" justify="space-between">
-											<Flex gap="sm">
-												<Card w={50} h={50} variant="light" shadow="none" padding={0}>
+											<Flex gap="sm" align="center">
+												<Card w={40} h={40} variant="light" shadow="none" padding={0}>
 													<Flex justify="center" align="center" m="auto">
 														{item.icon ? (
 															<Image
-																w={40}
-																h={40}
+																w={30}
+																h={30}
 																fit="cover"
 																radius="md"
 																src={item.icon}
@@ -77,16 +77,16 @@ export default function DiscoverySettingsDiscoveryAdapters() {
 														) : null}
 													</Flex>
 												</Card>
-												<Flex direction="column" gap="2xs">
+												<Flex direction="column">
 													<Text fw="bold">{item.display_name}</Text>
 													<Text c="gray.6">{item.caption || "-"}</Text>
 												</Flex>
 											</Flex>
 											<Flex align="center" gap="xs" px="sm">
-												<Badge variant="light" color={item.is_used ? "green" : "gray"} p="md">
+												<Badge variant="light" color={item.is_used ? "green" : "gray"} p="sm">
 													<Text p="2xs">{item.is_used ? "USED" : "UNUSED"}</Text>
 												</Badge>
-												<Badge variant="light" radius="xs" p="lg">
+												<Badge variant="light" radius="xs" p="md">
 													<Text tt="capitalize" p="2xs">
 														Configure
 													</Text>

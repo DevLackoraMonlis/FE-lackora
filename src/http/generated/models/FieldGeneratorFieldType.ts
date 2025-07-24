@@ -14,7 +14,8 @@ export const FieldGeneratorFieldType = {
   Int64: 'Int64',
   String: 'String',
   IP: 'IP',
-  Datetime: 'Datetime',
+  DateTime: 'DateTime',
+  Date: 'Date',
   Boolean: 'Boolean',
   List: 'List',
 } as const;

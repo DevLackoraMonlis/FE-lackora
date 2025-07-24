@@ -5,7 +5,7 @@ export default function AdapterSingleCardSkelton({ count = 1 }) {
 		.fill(null)
 		.map((_, idx) => (
 			<Grid.Col key={`AdapterSingleCardSkelton-${idx + 1}`} span={{ xs: 12, md: 6, lg: 4 }}>
-				<Card h="160px" shadow="xs" radius="sm" bg="gray.2" bd="2px solid gray.2">
+				<Card h="150px" shadow="xs" radius="sm" bg="gray.2" bd="2px solid gray.2">
 					<Card.Section inheritPadding p="xs" withBorder>
 						<Flex gap="xs">
 							<Card w={80} h={62} variant="light" shadow="none" padding={0} pt="2xs">

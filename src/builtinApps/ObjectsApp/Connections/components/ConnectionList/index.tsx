@@ -334,7 +334,7 @@ export default function ConnectionList() {
 						<Accordion variant="separated">
 							<ScrollArea h={height - 195}>
 								{getConnectionsQuery.data?.data.results.map((item) => (
-									<Accordion.Item key={item.id} value={item.id}>
+									<Accordion.Item key={item.id} value={item.id} my="xs">
 										<Accordion.Control>
 											<Flex align="center" justify="space-between">
 												<Flex gap="xs" align={"center"}>

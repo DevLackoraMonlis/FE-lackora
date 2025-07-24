@@ -4,7 +4,6 @@ import { Grid, ScrollArea } from "@mantine/core";
 import { useViewportSize } from "@mantine/hooks";
 
 import WorkflowScanAccordion from "./components/WorkflowScanAccordion";
-import WorkflowPlayerTracking from "./components/shared/WorkflowPlayerTracking";
 
 import WorkflowAssetDiscovery from "./components/WorkflowAssetDiscovery";
 
@@ -15,7 +14,6 @@ export default function WorkflowAssetsIdentification() {
 			<Grid.Col span={8} offset={2} pos="relative">
 				<ScrollArea px="xs" h={height - 160}>
 					<WorkflowScanAccordion />
-					<WorkflowPlayerTracking statusColor="gray.4" />
 					<WorkflowAssetDiscovery />
 				</ScrollArea>
 			</Grid.Col>

@@ -76,7 +76,9 @@ export function getDynamicField<TObjectType extends string>({
 			return <NumberInput key={keyForElements} {...commonOptions} />;
 		case "Boolean":
 			return "";
-		case "Datetime":
+		case "DateTime":
+			return "";
+		case "Date":
 			return "";
 		case "Textarea":
 			return <Textarea key={keyForElements} {...commonOptions} />;
