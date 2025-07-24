@@ -11,13 +11,13 @@ const DiscoverySettingsNoneCredentialAdapters = () => {
 	const [activeAccordion, setActiveAccordion] = useState<string | null>(null);
 	const { discoveryAdapters } = useDiscoveryAdapters({ type: "none-credential" });
 	return (
-		<Grid p="sm" pt="lg" gutter="lg">
+		<Grid p="sm" pt="md">
 			<Grid.Col span={{ xs: 12, lg: 9 }} offset={{ lg: 3 }}>
 				<ScrollArea px="xs" h={height - 160}>
 					<Accordion variant="separated" onChange={setActiveAccordion}>
 						{discoveryAdapters.data?.results?.map(({ id, fields, display_name, caption, icon }) => {
 							return (
-								<Accordion.Item key={id} value={id} my="xs">
+								<Accordion.Item key={id} value={id} mb="xs">
 									<Accordion.Control h="56px">
 										<Flex align="center" justify="space-between">
 											<Flex gap="sm" align="center">

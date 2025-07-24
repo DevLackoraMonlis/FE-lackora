@@ -76,7 +76,7 @@ export default function AdapterManagementLandingPage() {
 				adapterName={selectedAdapter?.display_name}
 			/>
 			{/* UI section */}
-			<Grid p="sm" pt="lg" gutter="lg">
+			<Grid p="sm" pt="md">
 				<Grid.Col span={3}>
 					<BCSideFilter
 						height={height - 230}

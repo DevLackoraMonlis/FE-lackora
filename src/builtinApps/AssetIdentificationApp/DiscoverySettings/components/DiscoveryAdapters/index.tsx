@@ -36,7 +36,7 @@ export default function DiscoverySettingsDiscoveryAdapters() {
 	);
 
 	return (
-		<Grid p="sm" pt="lg" gutter="lg">
+		<Grid p="sm" pt="md">
 			<Grid.Col span={3}>
 				<BCSideFilter
 					height={height - 300}
@@ -59,7 +59,7 @@ export default function DiscoverySettingsDiscoveryAdapters() {
 					) : (
 						<Accordion variant="separated" onChange={setActiveAccordion}>
 							{discoveryAdapters?.data?.results?.map((item) => (
-								<Accordion.Item key={item.id} value={item.id} my="xs">
+								<Accordion.Item key={item.id} value={item.id} mb="xs">
 									<Accordion.Control h="56px">
 										<Flex align="center" justify="space-between">
 											<Flex gap="sm" align="center">
