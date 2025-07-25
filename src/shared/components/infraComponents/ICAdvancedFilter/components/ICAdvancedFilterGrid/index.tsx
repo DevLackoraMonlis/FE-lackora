@@ -7,6 +7,7 @@ import ICAdvancedFilterGridRowCellMenu, {
 } from "@/shared/components/infraComponents/ICAdvancedFilter/components/ICAdvancedFilterGrid/ICAdvancedFilterGridRow/ICAdvancedFilterGridRowCellMenu";
 import type { ICAdvancedFilterProps } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
 import { unsecuredCopyToClipboard } from "@/shared/lib/utils";
+import { Flex } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 import { type ReactNode, useDeferredValue } from "react";
 import { useStore } from "zustand";
@@ -105,7 +106,7 @@ export default function ICAdvancedFilterGrid<T extends Record<string, unknown>>(
 			),
 		}));
 
-	const allColumns: TanStackDataTableColumnColDef<T>[] = props.data?.[0]
+	const defaultColumns: TanStackDataTableColumnColDef<T>[] = props.data?.[0]
 		? Object.keys(props.data?.[0])
 				.filter((key) => !props.excludeColumns?.includes(key))
 				.map((key) => {
@@ -148,7 +149,24 @@ export default function ICAdvancedFilterGrid<T extends Record<string, unknown>>(
 				})
 		: [];
 
-	const differedColumns = useDeferredValue(allColumns);
+	const rowNumberColumn: TanStackDataTableColumnColDef<T> = {
+		accessor: "row-number",
+		title: (
+			<Flex w="100%" align={"center"} justify={"center"}>
+				#
+			</Flex>
+		),
+		render: (_record, _row, rowIndex) => (
+			<Flex w="100%" align={"center"} justify={"center"}>
+				{rowIndex}
+			</Flex>
+		),
+		width: 50,
+	};
+
+	defaultColumns.unshift(rowNumberColumn);
+
+	const differedColumns = useDeferredValue(defaultColumns);
 	const differedRecords = useDeferredValue(props.data);
 
 	return (
