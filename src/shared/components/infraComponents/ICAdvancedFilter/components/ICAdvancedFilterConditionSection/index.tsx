@@ -1,12 +1,14 @@
 import ICAdvancedFilterConditionItem from "@/shared/components/infraComponents/ICAdvancedFilter/components/ICAdvancedFilterConditionItem";
 import type { ICAdvancedFilterProps } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
-import { Box, Button, Flex, Highlight } from "@mantine/core";
+import { Button, Flex, Highlight } from "@mantine/core";
 import { IconPencil, IconX } from "@tabler/icons-react";
+import type { Ref } from "react";
 import { useStore } from "zustand/index";
 import { useShallow } from "zustand/react/shallow";
 
 type Props<T> = {
 	store: ICAdvancedFilterProps<T>["store"];
+	ref?: Ref<HTMLDivElement> | undefined;
 };
 
 export default function ICAdvancedFilterConditionSection<T>(props: Props<T>) {
@@ -25,7 +27,7 @@ export default function ICAdvancedFilterConditionSection<T>(props: Props<T>) {
 	}
 
 	return (
-		<Flex direction={"column"} gap={"xs"}>
+		<Flex direction={"column"} gap={"xs"} ref={props.ref}>
 			<Flex bg={"gray.1"} justify={"space-between"} align={"center"}>
 				<Flex gap={"xs"}>
 					<Button size={"sm"} variant={"outline"}>
@@ -59,7 +61,7 @@ export default function ICAdvancedFilterConditionSection<T>(props: Props<T>) {
 					<Button size={"sm"}>Save Filter</Button>
 				</Flex>
 			</Flex>
-			<Box bg={"gray.1"}>
+			<Flex align={"center"} bg={"gray.1"} px={"2xs"}>
 				{store.variables.conditions.map((condition, index) => (
 					<ICAdvancedFilterConditionItem<T>
 						key={condition.id}
@@ -70,15 +72,15 @@ export default function ICAdvancedFilterConditionSection<T>(props: Props<T>) {
 				))}
 				{!!store.variables.conditions.length && (
 					<Flex align={"center"}>
-						<Button size={"xs"} variant={"transparent"}>
+						<Button px={"xs"} size={"xs"} variant={"transparent"}>
 							<IconPencil size={16} />
 						</Button>
-						<Button onClick={() => store.setConditions([])} size={"xs"} variant={"transparent"}>
+						<Button px={"xs"} onClick={() => store.setConditions([])} size={"xs"} variant={"transparent"}>
 							<IconX size={16} />
 						</Button>
 					</Flex>
 				)}
-			</Box>
+			</Flex>
 		</Flex>
 	);
 }

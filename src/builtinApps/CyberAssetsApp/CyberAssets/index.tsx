@@ -127,7 +127,22 @@ export default function CyberAssetsLandingPage() {
 											value: "morteza for test default",
 											columnName: "",
 										},
-										conditions: [],
+										conditions: [
+											{
+												nextOperator: "and",
+												id: "ddsdsds",
+												values: [
+													{
+														label: "test",
+														value: "test",
+													},
+												],
+												operator: "!==",
+												columnName: "hostname",
+												closBracket: 0,
+												openBracket: 0,
+											},
+										],
 									},
 								});
 							}}

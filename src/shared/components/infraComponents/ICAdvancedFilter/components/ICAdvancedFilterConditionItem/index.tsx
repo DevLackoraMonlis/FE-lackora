@@ -22,14 +22,14 @@ export default function ICAdvancedFilterConditionItem<T>(props: Props<T>) {
 	);
 
 	return (
-		<Flex align={"center"} gap={"xs"}>
+		<Flex align={"center"} gap={"xs"} wrap={"nowrap"}>
 			<Badge
 				rightSection={
-					<ActionIcon onClick={() => store.removeCondition(props.condition.id)}>
+					<ActionIcon variant={"transparent"} onClick={() => store.removeCondition(props.condition.id)}>
 						<IconX size={12} />
 					</ActionIcon>
 				}
-				size={"xs"}
+				size={"sm"}
 				radius={"xl"}
 				variant={"light"}
 				color={"gray"}

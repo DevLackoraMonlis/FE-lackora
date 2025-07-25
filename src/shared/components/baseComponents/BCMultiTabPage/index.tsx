@@ -2,23 +2,16 @@ import type { BCMultiTabPageActions } from "@/shared/components/baseComponents/B
 import type { LabelValueType } from "@/shared/lib/general-types";
 import { ActionIcon, Box, Button, Divider, Flex, ScrollArea, Text } from "@mantine/core";
 import { IconPlus, IconX } from "@tabler/icons-react";
-import {
-	type PropsWithChildren,
-	type ReactElement,
-	type ReactNode,
-	type RefObject,
-	useImperativeHandle,
-	useState,
-} from "react";
+import { type ReactElement, type ReactNode, type RefObject, useImperativeHandle, useState } from "react";
 import classes from "./index.module.css";
 
-type Props<P> = PropsWithChildren<{
+type Props<P> = {
 	title: string;
 	subTitle: ReactNode;
 	staticPageTitle: string;
 	ref: RefObject<BCMultiTabPageActions<P> | null>;
 	mainPage: (params?: P) => ReactElement;
-}>;
+};
 
 export default function BCMultiTabPage<P>(props: Props<P>) {
 	const [pages, setPages] = useState<(LabelValueType & { page: ReactNode; params?: P })[]>([]);
@@ -110,8 +103,7 @@ export default function BCMultiTabPage<P>(props: Props<P>) {
 					</Flex>
 				</ScrollArea>
 			</Flex>
-			<Box bg={"white"} p={"sm"}>
-				{props.children}
+			<Box bg={"white"} p={"sm"} w={"100%"}>
 				<Box key={"main"} className={activePage !== "main" ? classes.hide : classes.show}>
 					{props.mainPage()}
 				</Box>
