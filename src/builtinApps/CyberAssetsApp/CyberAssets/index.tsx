@@ -101,7 +101,7 @@ export default function CyberAssetsLandingPage() {
 					}}
 					columns={CYBER_ASSETS_FORMATTED_COLUMNS}
 					allColumns={[]}
-					height={height - 200}
+					height={height - 210}
 					idAccessor={"id"}
 					isLoading={false}
 					totalRecords={100}

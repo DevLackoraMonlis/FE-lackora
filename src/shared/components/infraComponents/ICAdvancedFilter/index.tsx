@@ -14,6 +14,7 @@ export default function ICAdvancedFilter<T extends Record<string, unknown>>(prop
 		props.store,
 		useShallow((state) => ({
 			setVariables: state.setVariables,
+			openedConditionSection: state.openedConditionSection,
 		})),
 	);
 
@@ -24,13 +25,7 @@ export default function ICAdvancedFilter<T extends Record<string, unknown>>(prop
 	}, [props.defaultVariables]);
 
 	return (
-		<Flex
-			direction={"column"}
-			className={"overflowAuto"}
-			gap={"xs"}
-			h={props.height + height + 85}
-			w={"100%"}
-		>
+		<Flex direction={"column"} gap={"xs"} w={"100%"}>
 			<ICAdvancedFilterTopSection
 				store={props.store}
 				leftSection={props.leftSection}
@@ -41,9 +36,10 @@ export default function ICAdvancedFilter<T extends Record<string, unknown>>(prop
 				searchInputPlaceholder={props.searchInputPlaceholder}
 			/>
 			<ICAdvancedFilterConditionSection ref={ref} store={props.store} />
+
 			<ICAdvancedFilterGrid<T>
 				excludeColumns={props.excludeColumns}
-				height={props.height}
+				height={props.height - (store.openedConditionSection ? height + 10 : 0)}
 				idAccessor={props.idAccessor}
 				store={props.store}
 				data={props.data}
