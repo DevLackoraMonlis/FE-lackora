@@ -35,7 +35,7 @@ dev_test_pipeline:
     - npm config set registry http://172.31.100.53/repository/npm-proxy/
     - rm -f package-lock.json; rm -f .npmrc; rm -rf node_modules
     - NODE_ENV=development npm install --force
-    - NODE_ENV=production npm run buil
+    - NODE_ENV=production npm run build
   artifacts:
     paths:
       - node_modules/
