@@ -22,7 +22,7 @@ export default function ICPanelSidebarPopoverMenu(props: ICPanelSidebarPopoverMe
 								onClick={(event) => {
 									event.stopPropagation();
 									event.preventDefault();
-									router.push(item.href);
+									if (props.redirectOnTitleClick) router.push(item.href);
 								}}
 							>
 								{item.label}

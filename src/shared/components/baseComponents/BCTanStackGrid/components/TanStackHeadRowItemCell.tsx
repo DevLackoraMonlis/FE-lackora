@@ -20,7 +20,6 @@ export default function TanStackHeadRowItemCell<T extends Record<string, unknown
 					? "center"
 					: "flex-start",
 				alignItems: "center",
-				padding: "8px",
 				...titleStyle?.(),
 				//IMPORTANT: This is where the magic happens!
 				...tanStackGetCommonPinningStyles<T>(header.column),

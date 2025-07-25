@@ -80,7 +80,7 @@ export type ICAdvancedFilterRq<META_DATA extends Record<string, unknown> | unkno
 	metaData?: META_DATA;
 } & Pick<PaginationRq, "page" | "limit">;
 
-export type ICAdvancedFilterDataRs = { id: string; [key: string]: unknown };
+export type ICAdvancedFilterDataRs = { id: string; [key: string]: string };
 
 export type ICAdvancedFilterRs = PaginationRs<ICAdvancedFilterDataRs, Record<string, unknown>>;
 
@@ -148,6 +148,10 @@ export type ICAdvancedFilterProps<T> = {
 	run: VoidFunction;
 	leftSection?: ReactNode;
 	searchInputPlaceholder: string;
+	minColumnSize?: number;
+	defaultColumnSize?: number;
 	searchInputItems: LabelValueType[];
+	excludeColumns?: string[];
+	defaultVariables?: ICAdvancedFilterRq;
 	exportDataApi?: (variables: ICAdvancedFilterRq) => Promise<AxiosResponse<ICAdvancedFilterRs>>;
 };

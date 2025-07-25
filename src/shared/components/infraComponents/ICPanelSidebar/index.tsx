@@ -53,6 +53,7 @@ const generateMenuItem = (params: {
 		if (link.menuGroupProps) {
 			return (
 				<ICPanelSidebarPopoverMenu
+					redirectOnTitleClick={link.menuGroupProps.redirectOnTitleClick}
 					withoutOffset={!params.opened}
 					key={link.label}
 					target={navLink}
@@ -78,9 +79,11 @@ function generatePopoverMenuGroup(params: {
 	title: string;
 	name: string;
 	modules: string[];
+	redirectOnTitleClick: boolean;
 }): Omit<ICPanelSidebarPopoverMenuGroupProps, "target"> {
 	return {
 		title: params.title,
+		redirectOnTitleClick: params.redirectOnTitleClick,
 		dynamicMenuGroup: params.modules.map((item) => ({
 			href: AppRoutes.appModulePage(params.name, item),
 			icon: <ICPanelSidebarIconWrapper>{getSidePanelAppModuleIcon(12, item)}</ICPanelSidebarIconWrapper>,
@@ -131,6 +134,7 @@ export default function ICPanelSidebar(props: Props) {
 					menuGroupProps:
 						item.placement !== "sidebar"
 							? generatePopoverMenuGroup({
+									redirectOnTitleClick: item.has_landing,
 									modules: item.modules as string[],
 									name: item.name,
 									title: item.display_name,
@@ -161,6 +165,7 @@ export default function ICPanelSidebar(props: Props) {
 									modules: item.modules as string[],
 									name: item.name,
 									title: item.display_name,
+									redirectOnTitleClick: item.has_landing,
 								})
 							: undefined,
 				})) || [],
@@ -187,6 +192,7 @@ export default function ICPanelSidebar(props: Props) {
 									modules: item.modules as string[],
 									name: item.name,
 									title: item.display_name,
+									redirectOnTitleClick: item.has_landing,
 								})
 							: undefined,
 				})) || [],
@@ -207,6 +213,7 @@ export default function ICPanelSidebar(props: Props) {
 						{sidebarMenuItems}
 						{!!sidebarMenuItems.length && <Divider color={"var(--mantine-color-gray-7)"} />}
 						<ICPanelSidebarPopoverMenu
+							redirectOnTitleClick={false}
 							width={300}
 							withoutOffset={!props.opened}
 							target={

@@ -16,8 +16,13 @@ export default function ICAdvancedFilterConditionSection<T>(props: Props<T>) {
 			variables: state.variables,
 			resetToDefaultVariables: state.resetToDefaultVariables,
 			setConditions: state.setConditions,
+			openedConditionSection: state.openedConditionSection,
 		})),
 	);
+
+	if (!store.openedConditionSection) {
+		return null;
+	}
 
 	return (
 		<Flex direction={"column"} gap={"xs"}>
@@ -63,14 +68,16 @@ export default function ICAdvancedFilterConditionSection<T>(props: Props<T>) {
 						condition={condition}
 					/>
 				))}
-				<Flex align={"center"}>
-					<Button size={"xs"} variant={"transparent"}>
-						<IconPencil size={16} />
-					</Button>
-					<Button onClick={() => store.setConditions([])} size={"xs"} variant={"transparent"}>
-						<IconX size={16} />
-					</Button>
-				</Flex>
+				{!!store.variables.conditions.length && (
+					<Flex align={"center"}>
+						<Button size={"xs"} variant={"transparent"}>
+							<IconPencil size={16} />
+						</Button>
+						<Button onClick={() => store.setConditions([])} size={"xs"} variant={"transparent"}>
+							<IconX size={16} />
+						</Button>
+					</Flex>
+				)}
 			</Box>
 		</Flex>
 	);

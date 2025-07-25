@@ -11,7 +11,7 @@ export type AgPaginationProps = {
 	PaginationSize?: number | MantineSize | string;
 };
 
-const AgPagination: FC<AgPaginationProps> = (props) => {
+const TanStackPagination: FC<AgPaginationProps> = (props) => {
 	const { PaginationSize = "sm" } = props;
 
 	const handleChangePageSize = (selectedPageSize: string | null) => {
@@ -31,21 +31,8 @@ const AgPagination: FC<AgPaginationProps> = (props) => {
 	};
 
 	return (
-		<Flex align="center" justify="space-between" p="sm">
+		<Flex className={"tanStackTablePagination"} bg={"gray.2"} align="center" justify="space-between" p="2xs">
 			<Flex columnGap={8} align="center">
-				<Text size="xs">Rows per page</Text>
-				<Select
-					size="xs"
-					id="pagination-data-test"
-					w={100}
-					value={props.recordsPerPage?.toString()}
-					searchable={false}
-					onChange={handleChangePageSize}
-					data={props.recordsPerPageOptions?.map((item) => ({
-						value: item.toString(),
-						label: item.toString(),
-					}))}
-				/>
 				<Text size="xs">{` Showing ${showing()}-${(props.page || 0) * (props.recordsPerPage || 0)} of ${props.totalRecords} items`}</Text>
 			</Flex>
 			<Pagination
@@ -58,8 +45,22 @@ const AgPagination: FC<AgPaginationProps> = (props) => {
 				}
 				size={PaginationSize}
 			/>
+			<Flex columnGap={8} align="center">
+				<Select
+					size="xs"
+					id="pagination-data-test"
+					w={150}
+					value={props.recordsPerPage?.toString()}
+					searchable={false}
+					onChange={handleChangePageSize}
+					data={props.recordsPerPageOptions?.map((item) => ({
+						value: item.toString(),
+						label: `${item.toString()} per page`,
+					}))}
+				/>
+			</Flex>
 		</Flex>
 	);
 };
 
-export default AgPagination;
+export default TanStackPagination;

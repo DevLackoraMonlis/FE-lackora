@@ -3,6 +3,7 @@ import { Button, Flex, Select, TextInput } from "@mantine/core";
 import { IconSearch } from "@tabler/icons-react";
 import { useStore } from "zustand/index";
 import { useShallow } from "zustand/react/shallow";
+import classes from "./index.module.css";
 
 type Props<T> = {
 	searchInputPlaceholder: ICAdvancedFilterProps<T>["searchInputPlaceholder"];
@@ -23,7 +24,11 @@ export default function ICAdvancedFilterSearch<T>(props: Props<T>) {
 	return (
 		<Flex align={"center"}>
 			<Select
-				radius={"4px 0 0 4px"}
+				classNames={{
+					input: classes.select,
+				}}
+				w={150}
+				defaultValue={props.searchInputItems?.[0].value}
 				size={"sm"}
 				onChange={(value) =>
 					store.setSearch({
@@ -35,10 +40,15 @@ export default function ICAdvancedFilterSearch<T>(props: Props<T>) {
 				allowDeselect={false}
 			/>
 			<TextInput
+				classNames={{
+					input: classes.input,
+				}}
+				w={210}
 				radius={"0 4px 4px 0"}
 				size={"sm"}
+				value={store.search.value}
 				placeholder={props.searchInputPlaceholder}
-				leftSection={<IconSearch />}
+				leftSection={<IconSearch size={16} />}
 				onChange={(event) =>
 					store.setSearch({
 						columnName: store.search.columnName,
@@ -46,7 +56,7 @@ export default function ICAdvancedFilterSearch<T>(props: Props<T>) {
 					})
 				}
 			/>
-			<Button size={"lg"} onClick={props.run}>
+			<Button ml={"2xs"} px={"xs"} onClick={props.run}>
 				<IconSearch size={20} />
 			</Button>
 		</Flex>

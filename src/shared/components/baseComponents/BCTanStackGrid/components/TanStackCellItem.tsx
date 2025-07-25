@@ -29,7 +29,6 @@ export default function TanStackCellItem<T extends Record<string, unknown>>(
 					? "center"
 					: "flex-start",
 				alignItems: "center",
-				padding: "8px",
 				...cellsStyle?.(),
 				...tanStackGetCommonPinningStyles<T>(cell.column),
 			}}

@@ -1,22 +1,23 @@
-import type { TanStackDataTableColumnColDef } from "@/shared/components/baseComponents/BCTanStackGrid/index.types";
 import ICAdvancedFilterGridColumnMenuSearchValues from "@/shared/components/infraComponents/ICAdvancedFilter/components/ICAdvancedFilterGrid/ICAdvancedFilterGridColumn/ICAdvancedFilterGridColumnMenu/ICAdvancedFilterGridColumnMenuSearchValues";
 import { ICAdvancedGroupByFunctions } from "@/shared/components/infraComponents/ICAdvancedFilter/index.enum";
 import type {
 	ICAdvancedFilterProps,
 	ICAdvancedFilterStoreType,
 } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
-import { unsecuredCopyToClipboard } from "@/shared/lib/utils";
-import { ActionIcon, Menu } from "@mantine/core";
+import { ActionIcon, Box, Menu } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { IconCopy, IconDotsVertical, IconEyeOff, IconPuzzle, IconSearch } from "@tabler/icons-react";
 import { type StoreApi, useStore } from "zustand/index";
 import { useShallow } from "zustand/react/shallow";
 
 type Props<T> = {
-	column: TanStackDataTableColumnColDef<T>;
+	columnName: string;
+	columnLabel: string;
 	store: StoreApi<ICAdvancedFilterStoreType>;
 	allColumns: ICAdvancedFilterProps<T>["allColumns"];
 	run: ICAdvancedFilterProps<T>["run"];
+	visibleParent: boolean;
+	onCopy: VoidFunction;
 };
 
 export default function ICAdvancedFilterGridColumnMenu<T>(props: Props<T>) {
@@ -26,7 +27,7 @@ export default function ICAdvancedFilterGridColumnMenu<T>(props: Props<T>) {
 	const store = useStore(
 		props.store,
 		useShallow((state) => ({
-			column: state.variables.columns.find((column) => column.name === props.column.accessor),
+			column: state.variables.columns.find((column) => column.name === props.columnName),
 			updateOrder: state.updateOrder,
 			getIsGroupByFunctionColumn: state.getIsGroupByFunctionColumn,
 			hideColumn: state.hideColumn,
@@ -35,12 +36,10 @@ export default function ICAdvancedFilterGridColumnMenu<T>(props: Props<T>) {
 		})),
 	);
 
-	const getColumnOptions = props.allColumns.find((column) => column.name === props.column.accessor);
-
 	if (openedSearchValuesMenu) {
 		return (
 			<ICAdvancedFilterGridColumnMenuSearchValues
-				column={props.column}
+				columnName={props.columnName}
 				allColumns={props.allColumns}
 				store={props.store}
 				onClose={() => {
@@ -64,35 +63,39 @@ export default function ICAdvancedFilterGridColumnMenu<T>(props: Props<T>) {
 			onClose={handlers.close}
 		>
 			<Menu.Target>
-				<ActionIcon onClick={handlers.open}>
-					<IconDotsVertical />
-				</ActionIcon>
+				{props.visibleParent || opened ? (
+					<ActionIcon color={"black"} variant={"transparent"} onClick={handlers.open}>
+						<IconDotsVertical size={16} />
+					</ActionIcon>
+				) : (
+					<Box h={16} w={16} />
+				)}
 			</Menu.Target>
 			{opened && (
 				<Menu.Dropdown p={0}>
 					<Menu.Item
-						disabled={store.getIsGroupByFunctionColumn(getColumnOptions?.name || "")}
-						leftSection={<IconEyeOff />}
+						disabled={store.getIsGroupByFunctionColumn(props.columnName)}
+						leftSection={<IconEyeOff size={12} />}
 						onClick={() => {
-							store.hideColumn(getColumnOptions?.name || "");
+							store.hideColumn(props.columnName);
 							props.run();
 						}}
 					>
 						Hide Column
 					</Menu.Item>
 					<Menu.Item
-						leftSection={<IconPuzzle />}
+						leftSection={<IconPuzzle size={12} />}
 						onClick={() => {
 							store.setGroupBy({
 								function: ICAdvancedGroupByFunctions.COUNT,
 								order: null,
-								displayName: getColumnOptions?.displayName || "",
-								column: getColumnOptions?.name || "",
+								displayName: props.columnLabel,
+								column: props.columnName,
 								aggregatedConditions: [],
 							});
 							store.setColumns([
 								{
-									name: getColumnOptions?.name || "",
+									name: props.columnName,
 									orderBy: null,
 								},
 							]);
@@ -104,10 +107,7 @@ export default function ICAdvancedFilterGridColumnMenu<T>(props: Props<T>) {
 					<Menu.Item leftSection={<IconSearch size={12} />} onClick={() => searchValuesMenuHandlers.open}>
 						Search Values...
 					</Menu.Item>
-					<Menu.Item
-						leftSection={<IconCopy size={12} />}
-						onClick={() => unsecuredCopyToClipboard(getColumnOptions?.name || "")}
-					>
+					<Menu.Item leftSection={<IconCopy size={12} />} onClick={props.onCopy}>
 						Copy Column Title
 					</Menu.Item>
 				</Menu.Dropdown>

@@ -1,11 +1,10 @@
-import type { TanStackDataTableColumnColDef } from "@/shared/components/baseComponents/BCTanStackGrid/index.types";
 import type {
 	ICAdvancedFilterColumnType,
 	ICAdvancedFilterOrder,
 	ICAdvancedFilterProps,
 	ICAdvancedFilterStoreType,
 } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
-import { ActionIcon, Menu, MenuDivider } from "@mantine/core";
+import { ActionIcon, Box, Menu, MenuDivider } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import {
 	IconArrowsSort,
@@ -20,9 +19,10 @@ import { type StoreApi, useStore } from "zustand/index";
 import { useShallow } from "zustand/react/shallow";
 
 type Props<T> = {
-	column: TanStackDataTableColumnColDef<T>;
+	columnName: string;
 	store: StoreApi<ICAdvancedFilterStoreType>;
 	allColumns: ICAdvancedFilterProps<T>["allColumns"];
+	visibleParent: boolean;
 };
 
 export default function ICAdvancedFilterGridColumnSort<T>(props: Props<T>) {
@@ -31,37 +31,37 @@ export default function ICAdvancedFilterGridColumnSort<T>(props: Props<T>) {
 	const store = useStore(
 		props.store,
 		useShallow((state) => ({
-			column: state.variables.columns.find((column) => column.name === props.column.accessor),
+			column: state.variables.columns.find((column) => column.name === props.columnName),
 			updateOrder: state.updateOrder,
 		})),
 	);
 
-	const targetNumberIconMap: Record<ICAdvancedFilterOrder, ReactNode> = {
-		asc: <IconSortAscendingNumbers size={12} />,
-		desc: <IconSortDescendingNumbers size={12} />,
-	};
+	const targetNumberIconMap: (size: number) => Record<ICAdvancedFilterOrder, ReactNode> = (size = 12) => ({
+		asc: <IconSortAscendingNumbers size={size} />,
+		desc: <IconSortDescendingNumbers size={size} />,
+	});
 
-	const targetStringIconMap: Record<ICAdvancedFilterOrder, ReactNode> = {
-		asc: <IconSortAscending size={12} />,
-		desc: <IconSortDescending size={12} />,
-	};
+	const targetStringIconMap: (size: number) => Record<ICAdvancedFilterOrder, ReactNode> = (size) => ({
+		asc: <IconSortAscending size={size} />,
+		desc: <IconSortDescending size={size} />,
+	});
 
-	const getColumnOptions = props.allColumns.find((column) => column.name === props.column.accessor);
+	const getColumnOptions = props.allColumns.find((column) => column.name === props.columnName);
 
 	const numberTypes: ICAdvancedFilterColumnType[] = ["Int64", "IP"];
 
-	const getSortIcon = (order: ICAdvancedFilterOrder) => {
+	const getSortIcon = (order: ICAdvancedFilterOrder, size = 12) => {
 		if (numberTypes.includes(getColumnOptions?.type || "String")) {
-			return targetNumberIconMap[order];
+			return targetNumberIconMap(size)[order];
 		}
-		return targetStringIconMap[order];
+		return targetStringIconMap(size)[order];
 	};
 
 	const getTargetIcon = () => {
 		if (store.column?.orderBy) {
-			return getSortIcon(store.column.orderBy);
+			return getSortIcon(store.column.orderBy, 16);
 		}
-		return <IconArrowsSort size={20} />;
+		return <IconArrowsSort size={16} />;
 	};
 
 	return (
@@ -69,32 +69,39 @@ export default function ICAdvancedFilterGridColumnSort<T>(props: Props<T>) {
 			width={200}
 			radius="md"
 			shadow="md"
+			withArrow
 			opened={opened}
 			position="bottom-end"
 			closeOnClickOutside
 			onClose={handlers.close}
 		>
 			<Menu.Target>
-				<ActionIcon onClick={handlers.open}>{getTargetIcon()}</ActionIcon>
+				{props.visibleParent || opened ? (
+					<ActionIcon color={"black"} variant={"transparent"} onClick={handlers.open}>
+						{getTargetIcon()}
+					</ActionIcon>
+				) : (
+					<Box h={16} w={16} />
+				)}
 			</Menu.Target>
 			{opened && (
 				<Menu.Dropdown p={0}>
 					<Menu.Item
 						leftSection={getSortIcon("asc")}
-						onClick={() => store.updateOrder(props.column.accessor, "asc")}
+						onClick={() => store.updateOrder(props.columnName, "asc")}
 					>
 						Sort Ascending
 					</Menu.Item>
 					<Menu.Item
 						leftSection={getSortIcon("desc")}
-						onClick={() => store.updateOrder(props.column.accessor, "desc")}
+						onClick={() => store.updateOrder(props.columnName, "desc")}
 					>
 						Sort Descending
 					</Menu.Item>
 					<MenuDivider />
 					<Menu.Item
 						leftSection={<IconRotateClockwise size={12} />}
-						onClick={() => store.updateOrder(props.column.accessor, null)}
+						onClick={() => store.updateOrder(props.columnName, null)}
 					>
 						Reset to Default
 					</Menu.Item>

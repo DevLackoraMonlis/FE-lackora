@@ -14,6 +14,7 @@ export type ICPanelSidebarPopoverMenuGroupProps = {
 	target: ReactNode;
 	title: string;
 	withoutOffset?: boolean;
+	redirectOnTitleClick: boolean;
 } & Pick<MenuProps, "position" | "arrowPosition" | "trigger" | "width">;
 
 export type ICPanelSidebarPlacement = "management-center" | "sidebar" | "applications";

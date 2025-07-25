@@ -12,11 +12,14 @@ export default function ICMonoAppModulePage() {
 
 	if (module?.page) {
 		const ModulePlugin = module.page;
-		return (
-			<ICPageWrapper title={module.headerTitle}>
-				<ModulePlugin />
-			</ICPageWrapper>
-		);
+		if (module.headerType === "basic") {
+			return (
+				<ICPageWrapper title={module.name}>
+					<ModulePlugin />
+				</ICPageWrapper>
+			);
+		}
+		return <ModulePlugin />;
 	}
 
 	return null;

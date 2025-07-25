@@ -17,7 +17,7 @@ type Props<T> = {
 	run: ICAdvancedFilterProps<T>["run"];
 };
 
-export default function ICAdvancedFilterActionButtons<T extends ICAdvancedFilterDataRs>(props: Props<T>) {
+export default function ICAdvancedFilterActionButtons<T>(props: Props<T>) {
 	const { downloadCSV } = useExportCSV<ICAdvancedFilterDataRs>();
 
 	const store = useStore(
@@ -46,18 +46,19 @@ export default function ICAdvancedFilterActionButtons<T extends ICAdvancedFilter
 
 	return (
 		<Flex gap={"2xs"}>
-			<Button variant={"default"} onClick={props.run} size={"sm"}>
-				<IconRefresh size={16} />
+			<Button px={"xs"} variant={"default"} onClick={props.run} size={"sm"}>
+				<IconRefresh size={20} />
 			</Button>
 			<Button
+				px={"xs"}
 				variant={"default"}
 				onClick={() => getDataForExportMutation.mutate(store.variables)}
 				size={"sm"}
 			>
-				<IconFileExport size={16} />
+				<IconFileExport size={20} />
 			</Button>
-			<Button variant={"default"} onClick={() => store.setOpenFullScreenModal(true)} size={"sm"}>
-				<IconWindowMaximize size={16} />
+			<Button px={"xs"} variant={"default"} onClick={() => store.setOpenFullScreenModal(true)} size={"sm"}>
+				<IconWindowMaximize size={20} />
 			</Button>
 		</Flex>
 	);
