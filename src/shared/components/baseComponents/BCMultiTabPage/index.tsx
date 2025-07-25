@@ -52,7 +52,7 @@ export default function BCMultiTabPage<P>(props: Props<P>) {
 					{props.staticPageTitle}
 				</Button>
 
-				<ScrollArea scrollbarSize={2} scrollbars={"x"} w={"100%"} px={"sm"}>
+				<ScrollArea scrollbarSize={2} scrollbars={"x"} w={"100%"} pr={"sm"}>
 					<Flex wrap={"nowrap"} gap={"xs"}>
 						{pages.map((page) => (
 							<Button
