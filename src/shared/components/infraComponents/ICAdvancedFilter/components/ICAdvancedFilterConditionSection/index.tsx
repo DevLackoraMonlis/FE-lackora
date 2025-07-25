@@ -22,10 +22,6 @@ export default function ICAdvancedFilterConditionSection<T>(props: Props<T>) {
 		})),
 	);
 
-	if (!store.openedConditionSection) {
-		return null;
-	}
-
 	return (
 		<Flex direction={"column"} gap={"xs"} ref={props.ref}>
 			<Flex bg={"gray.1"} justify={"space-between"} align={"center"}>

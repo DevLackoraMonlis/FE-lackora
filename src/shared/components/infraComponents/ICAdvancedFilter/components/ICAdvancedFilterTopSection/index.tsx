@@ -16,7 +16,7 @@ type Props<T> = {
 
 export default function ICAdvancedFilterTopSection<T>(props: Props<T>) {
 	return (
-		<Flex align={"center"} justify={"space-between"} pt={"xs"}>
+		<Flex align={"center"} justify={"space-between"} py={"xs"}>
 			{props.leftSection}
 			<Flex align={"center"} gap={"xs"}>
 				<ICAdvancedFilterSearch

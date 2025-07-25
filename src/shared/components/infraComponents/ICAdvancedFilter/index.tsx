@@ -2,7 +2,7 @@ import ICAdvancedFilterConditionSection from "@/shared/components/infraComponent
 import ICAdvancedFilterGrid from "@/shared/components/infraComponents/ICAdvancedFilter/components/ICAdvancedFilterGrid";
 import ICAdvancedFilterTopSection from "@/shared/components/infraComponents/ICAdvancedFilter/components/ICAdvancedFilterTopSection";
 import type { ICAdvancedFilterProps } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
-import { Flex } from "@mantine/core";
+import { Collapse, Flex } from "@mantine/core";
 import { useElementSize } from "@mantine/hooks";
 import { useEffect } from "react";
 import { useStore } from "zustand/index";
@@ -25,7 +25,7 @@ export default function ICAdvancedFilter<T extends Record<string, unknown>>(prop
 	}, [props.defaultVariables]);
 
 	return (
-		<Flex direction={"column"} gap={"xs"} w={"100%"}>
+		<Flex direction={"column"} w={"100%"}>
 			<ICAdvancedFilterTopSection
 				store={props.store}
 				leftSection={props.leftSection}
@@ -35,8 +35,9 @@ export default function ICAdvancedFilter<T extends Record<string, unknown>>(prop
 				searchInputItems={props.searchInputItems}
 				searchInputPlaceholder={props.searchInputPlaceholder}
 			/>
-			<ICAdvancedFilterConditionSection ref={ref} store={props.store} />
-
+			<Collapse transitionDuration={500} transitionTimingFunction="linear" in={store.openedConditionSection}>
+				<ICAdvancedFilterConditionSection ref={ref} store={props.store} />
+			</Collapse>
 			<ICAdvancedFilterGrid<T>
 				excludeColumns={props.excludeColumns}
 				height={props.height - (store.openedConditionSection ? height + 10 : 0)}
