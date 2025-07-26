@@ -1,23 +1,46 @@
 "use client";
 
 import { Grid, ScrollArea } from "@mantine/core";
-import { useViewportSize } from "@mantine/hooks";
+import { useDisclosure, useViewportSize } from "@mantine/hooks";
 
-import WorkflowAssetDiscoveryAccordionItem from "./components/WorkflowAssetDiscoveryAccordion";
-import WorkflowScanAccordionItem from "./components/WorkflowScanAccordion";
-import WorkflowPlayerTracking from "./components/shared/WorkflowPlayerTracking";
+import WorkflowScanAccordion from "./components/WorkflowScanAccordion";
+
+import WorkflowAssetDiscovery from "./components/WorkflowAssetDiscovery";
+import WorkflowAssetProfiling from "./components/WorkflowAssetProfiling";
+import WorkflowChangeDetection from "./components/WorkflowChangeDetection";
+
+import WorkflowDetectedAssetsModal from "./components/shared/WorkflowDetectedAssetsModal";
 
 export default function WorkflowAssetsIdentification() {
 	const { height } = useViewportSize();
+	const [openedDetectedAssets, handleDetectedAssets] = useDisclosure();
+
+	const handleGatewayConfiguration = () => {};
+	const handleViewMatchedAssets = () => {
+		handleDetectedAssets.open();
+	};
+
+	const commonProps = {
+		handleGatewayConfiguration,
+		handleViewMatchedAssets,
+	};
 	return (
-		<Grid p="xs" pt="lg">
-			<Grid.Col span={8} offset={2} pos="relative">
-				<ScrollArea px="xs" h={height - 160}>
-					<WorkflowScanAccordionItem />
-					<WorkflowPlayerTracking statusColor="gray.4" />
-					<WorkflowAssetDiscoveryAccordionItem />
-				</ScrollArea>
-			</Grid.Col>
-		</Grid>
+		<>
+			<WorkflowDetectedAssetsModal
+				onClose={handleDetectedAssets.close}
+				opened={openedDetectedAssets}
+				enabledQuery={false}
+			/>
+			<Grid p="xs" pt="lg">
+				<Grid.Col span={8} offset={2} pos="relative">
+					<ScrollArea px="xs" h={height - 160}>
+						<WorkflowScanAccordion />
+						<WorkflowAssetDiscovery {...commonProps} />
+						<WorkflowAssetProfiling {...commonProps} />
+						<WorkflowChangeDetection {...commonProps} />
+					</ScrollArea>
+				</Grid.Col>
+			</Grid>
+		</>
 	);
 }

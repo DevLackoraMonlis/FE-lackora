@@ -1,4 +1,4 @@
-import { IconGpsDisconnected } from "@/shared/icons/components";
+import { IconGpsDisconnected } from "@/shared/icons/components/general";
 import { Button, Flex, Text } from "@mantine/core";
 import { IconPlus } from "@tabler/icons-react";
 

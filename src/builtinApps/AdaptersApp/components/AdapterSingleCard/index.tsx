@@ -44,7 +44,7 @@ export default function AdapterSingleCard(props: Props) {
 		>
 			{/* BackCard */}
 			<Card
-				h="160px"
+				h="150px"
 				shadow="xs"
 				radius="sm"
 				bg="transparent"
@@ -64,7 +64,7 @@ export default function AdapterSingleCard(props: Props) {
 			</Card>
 			{/* FrontCard */}
 			<Card
-				h="160px"
+				h="150px"
 				shadow="xs"
 				radius="sm"
 				bg="gray.2"

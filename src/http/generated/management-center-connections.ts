@@ -50,7 +50,7 @@ export const getConnections = (
       
       
       return orvalMutator<PaginatedBaseResponseEachPrivateConnectionEachListMetadataWrapper>(
-      {url: `/api/management-center/connections/`, method: 'GET',
+      {url: "/api/management-center/connections/", method: 'GET',
         params, signal
     },
       );
@@ -58,7 +58,7 @@ export const getConnections = (
   
 
 const getGetConnectionsQueryKey = (params?: GetConnectionsParams,) => {
-    return [`/api/management-center/connections/`, ...(params ? [params]: [])] as const;
+    return ["/api/management-center/connections/", ...(params ? [params]: [])] as const;
     }
 
     
@@ -138,7 +138,7 @@ export const createConnection = (
       
       
       return orvalMutator<EachConnection>(
-      {url: `/api/management-center/connections/`, method: 'POST',
+      {url: "/api/management-center/connections/", method: 'POST',
       headers: {'Content-Type': 'application/json', },
       data: createConnection, signal
     },

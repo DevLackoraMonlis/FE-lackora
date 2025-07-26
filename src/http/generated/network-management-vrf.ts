@@ -49,7 +49,7 @@ export const getVRFs = (
       
       
       return orvalMutator<PaginatedBaseResponseEachVRFEachListMetadataWrapper>(
-      {url: `/api/network-management/vrf/`, method: 'GET',
+      {url: "/api/network-management/vrf/", method: 'GET',
         params, signal
     },
       );
@@ -57,7 +57,7 @@ export const getVRFs = (
   
 
 const getGetVRFsQueryKey = (params?: GetVRFsParams,) => {
-    return [`/api/network-management/vrf/`, ...(params ? [params]: [])] as const;
+    return ["/api/network-management/vrf/", ...(params ? [params]: [])] as const;
     }
 
     
@@ -137,7 +137,7 @@ export const createVRF = (
       
       
       return orvalMutator<EachVRF>(
-      {url: `/api/network-management/vrf/`, method: 'POST',
+      {url: "/api/network-management/vrf/", method: 'POST',
       headers: {'Content-Type': 'application/json', },
       data: createVRF, signal
     },

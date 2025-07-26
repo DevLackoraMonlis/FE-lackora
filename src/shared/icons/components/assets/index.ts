@@ -1,3 +1,4 @@
+export { default as AssetProfiling } from "./AssetProfiling";
 export { default as Icons8RouterSymbol1 } from "./Icons8RouterSymbol1";
 export { default as Icons8Server1 } from "./Icons8Server1";
 export { default as Icons8Database1 } from "./Icons8Database1";
