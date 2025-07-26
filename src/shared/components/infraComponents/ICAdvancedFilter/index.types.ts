@@ -153,5 +153,6 @@ export type ICAdvancedFilterProps<T> = {
 	searchInputItems: LabelValueType[];
 	excludeColumns?: string[];
 	defaultVariables?: ICAdvancedFilterRq;
+	fullScreenTitle: string;
 	exportDataApi?: (variables: ICAdvancedFilterRq) => Promise<AxiosResponse<ICAdvancedFilterRs>>;
 };

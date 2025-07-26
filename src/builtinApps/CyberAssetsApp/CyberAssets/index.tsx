@@ -95,6 +95,7 @@ export default function CyberAssetsLandingPage() {
 			title={"Cyber Assets"}
 			mainPage={(params) => (
 				<ICAdvancedFilter<ICAdvancedFilterDataRs>
+					fullScreenTitle={"Cyber Assets"}
 					excludeColumns={["id", "classification", "related_ip"]}
 					store={params?.store || mainStore}
 					searchInputPlaceholder={"Search by hostname"}
