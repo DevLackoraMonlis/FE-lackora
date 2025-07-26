@@ -1,9 +1,14 @@
 .hide {
 	visibility: hidden;
-	height: 0;
-	width: 0;
+	max-height: 0;
+	opacity: 0;
+	transform: translateX(100%);
 }
 
 .show {
 	visibility: visible;
+	transition: transform 0.2s ease, opacity 0.5s ease-in-out;
+	max-height: 1000px;
+	opacity: 1;
+	transform: translateX(0);
 }
