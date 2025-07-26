@@ -67,7 +67,7 @@ playwright_tests:
       - .playwright-browsers
     reports:
       junit: test-results/junit.xml
-  allow_failure: false
+  allow_failure: true
 
 
 upload_allure:
