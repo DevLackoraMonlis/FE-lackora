@@ -1,8 +1,9 @@
 import { useElementSize } from "@mantine/hooks";
-import { type RowSelectionState, type Table, useReactTable } from "@tanstack/react-table";
+import { type ExpandedState, type RowSelectionState, type Table, useReactTable } from "@tanstack/react-table";
 import { useVirtualizer } from "@tanstack/react-virtual";
 import find from "lodash/find";
 import type React from "react";
+import { useMemo } from "react";
 import { useEffect, useImperativeHandle, useRef, useState } from "react";
 import { getTanStackTableOptions, tanStackGenerateColumns } from "./index.helper";
 import type { TanStackGridProps } from "./index.types";
@@ -14,6 +15,8 @@ export function useTanStack<T>(
 	} & Pick<TanStackGridProps<T>, "rowHeight" | "idAccessor">,
 ) {
 	const { rows } = params.table.getCoreRowModel();
+	const memoRows = useMemo(() => rows, [params.table.getCoreRowModel()]);
+
 	const rowVirtualizer = useVirtualizer({
 		count: rows.length,
 		estimateSize: () => params.rowHeight || 43, // Default height 43, adjusted based on expanded state
@@ -27,6 +30,7 @@ export function useTanStack<T>(
 	});
 
 	const visibleColumns = params.table.getVisibleLeafColumns();
+
 	const columnVirtualizer = useVirtualizer<HTMLDivElement, HTMLTableCellElement>({
 		count: visibleColumns.length,
 		estimateSize: (index) => visibleColumns[index].getSize(), //estimate width of each column for accurate scrollbar dragging
@@ -39,7 +43,7 @@ export function useTanStack<T>(
 	return {
 		rowVirtualizer,
 		columnVirtualizer,
-		rows,
+		rows: memoRows,
 	};
 }
 
@@ -50,6 +54,7 @@ export function useTanStackDefault<T extends Record<string, unknown>>(params: Ta
 	const isInitialRowSelection = useRef<boolean>(false);
 	const privateSelectedRecords = useRef<Map<string, T>>(new Map());
 	const [rowSelection, setRowSelection] = useState<RowSelectionState>({}); //manage your own row selection state
+	const [expanded, setExpanded] = useState<ExpandedState>({}); //manage your own row selection state
 
 	useImperativeHandle(
 		props.ref,
@@ -69,16 +74,27 @@ export function useTanStackDefault<T extends Record<string, unknown>>(params: Ta
 	const { width: viewportWidth, ref } = useElementSize();
 	const { height: bodyHeight, ref: tableBodyRef } = useElementSize();
 
-	const columns = tanStackGenerateColumns({
-		onSelectedRecordsChange: props.onSelectedRecordsChange,
-		columns: props.columns,
-		page: props.page,
-		pinLastColumn: props.pinLastColumn,
-		recordsPerPage: props.recordsPerPage,
-		rowExpansion: props.rowExpansion,
+	const columns = useMemo(() => {
+		return tanStackGenerateColumns<T>({
+			onSelectedRecordsChange: props.onSelectedRecordsChange,
+			columns: props.columns,
+			page: props.page,
+			pinLastColumn: props.pinLastColumn,
+			recordsPerPage: props.recordsPerPage,
+			rowExpansion: props.rowExpansion,
+			viewportWidth,
+			recordCount: props.records.length,
+		});
+	}, [
 		viewportWidth,
-		recordCount: props.records.length,
-	});
+		props.page,
+		props.columns,
+		props.pinLastColumn,
+		props.recordsPerPage,
+		props.records.length,
+		props.rowExpansion,
+		props.onSelectedRecordsChange,
+	]);
 
 	const convertRowSelectionToRecord = () => {
 		const selectedRecords: T[] = [];
@@ -102,32 +118,49 @@ export function useTanStackDefault<T extends Record<string, unknown>>(params: Ta
 		props.onSelectedRecordsChange?.(selectedRecords);
 	};
 
-	const table = useReactTable<T>(
-		getTanStackTableOptions<T>({
-			offsetWidth: tableContainerRef.current?.offsetWidth,
-			rowSelection,
-			records: props.records,
-			rowExpansion: props.rowExpansion,
-			pinLastColumn: props.pinLastColumn,
-			page: props.page,
-			onSelectedRecordsChange: props.onSelectedRecordsChange,
-			idAccessor: props.idAccessor,
-			columns,
-			setRowSelection: (value) => {
-				setRowSelection(value);
-				setTimeout(() => {
-					const newRecords = table.getSelectedRowModel().rows.map((item) => item.original);
-					for (let i = 0; i < newRecords.length; i++) {
-						const record = newRecords[i];
-						const id = record[props.idAccessor] as string;
-						if (!privateSelectedRecords.current.has(id)) {
-							privateSelectedRecords.current.set(id, record);
+	const options = useMemo(
+		() =>
+			getTanStackTableOptions<T>({
+				expanded,
+				setExpanded,
+				offsetWidth: tableContainerRef.current?.offsetWidth,
+				rowSelection,
+				records: props.records,
+				rowExpansion: props.rowExpansion,
+				pinLastColumn: props.pinLastColumn,
+				page: props.page,
+				onSelectedRecordsChange: props.onSelectedRecordsChange,
+				idAccessor: props.idAccessor,
+				columns,
+				setRowSelection: (value) => {
+					setRowSelection(value);
+					setTimeout(() => {
+						const newRecords = table.getSelectedRowModel().rows.map((item) => item.original);
+						for (let i = 0; i < newRecords.length; i++) {
+							const record = newRecords[i];
+							const id = record[props.idAccessor] as string;
+							if (!privateSelectedRecords.current.has(id)) {
+								privateSelectedRecords.current.set(id, record);
+							}
 						}
-					}
-				}, 0);
-			},
-		}),
+					}, 0);
+				},
+			}),
+		[
+			props.records,
+			props.rowExpansion,
+			props.pinLastColumn,
+			props.page,
+			props.idAccessor,
+			columns,
+			rowSelection,
+			props.onSelectedRecordsChange,
+			expanded,
+			setExpanded,
+		],
 	);
+
+	const table = useReactTable<T>(options);
 
 	useEffect(() => {
 		if (props.pinLastColumn) {

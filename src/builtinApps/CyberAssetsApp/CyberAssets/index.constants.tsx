@@ -55,7 +55,14 @@ export const CYBER_ASSETS_FORMATTED_COLUMNS: TanStackDataTableColumnColDef<ICAdv
 		accessor: "private_ip",
 		render: (record) => {
 			return (
-				<Flex key={`private_ip-${record.related_ip}`} p={"xs"} gap={"xs"} align={"center"}>
+				<Flex
+					w={"100%"}
+					key={`private_ip-${record.related_ip}`}
+					justify={"space-between"}
+					p={"xs"}
+					gap={"xs"}
+					align={"center"}
+				>
 					{record.private_ip}
 					{record.related_ip && (
 						<Badge variant={"light"} size={"xs"} leftSection={<IconLink size={12} />}>

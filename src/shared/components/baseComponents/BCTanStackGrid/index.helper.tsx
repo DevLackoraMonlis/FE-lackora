@@ -5,13 +5,14 @@ import {
 	type ColumnDef,
 	type ExpandedState,
 	type HeaderContext,
+	type OnChangeFn,
 	type RowSelectionState,
 	type TableOptions,
 	getCoreRowModel,
 	getExpandedRowModel,
 } from "@tanstack/react-table";
 import type React from "react";
-import { type CSSProperties, useState } from "react";
+import type { CSSProperties } from "react";
 import { TAN_STACK_DEFAULT_COLUMN_SIZE } from "./index.constants";
 import type {
 	DataTableColumnTitleFn,
@@ -215,13 +216,13 @@ export function getTanStackTableOptions<T extends Record<string, unknown>>(
 		columns: ColumnDef<T>[];
 		setRowSelection: React.Dispatch<React.SetStateAction<RowSelectionState>>;
 		rowSelection: RowSelectionState;
+		expanded: ExpandedState;
+		setExpanded: OnChangeFn<ExpandedState>;
 	} & Pick<
 		TanStackGridProps<T>,
 		"records" | "onSelectedRecordsChange" | "rowExpansion" | "page" | "idAccessor" | "pinLastColumn"
 	>,
 ): TableOptions<T> {
-	const [expanded, setExpanded] = useState<ExpandedState>({});
-
 	const getColumnCount = () => {
 		return params.columns.length - (params.pinLastColumn ? 1 : 0);
 	};
@@ -252,14 +253,14 @@ export function getTanStackTableOptions<T extends Record<string, unknown>>(
 				record: row.original,
 				index: row.index,
 			}),
-		onExpandedChange: setExpanded,
+		onExpandedChange: params.setExpanded,
 		columnResizeDirection: "ltr",
 		getCoreRowModel: getCoreRowModel(),
 		getExpandedRowModel: getExpandedRowModel(),
 		manualPagination: !!params.page,
 		state: {
 			rowSelection: params.rowSelection,
-			expanded: expanded,
+			expanded: params.expanded,
 		},
 
 		getRowId: (row) => {
