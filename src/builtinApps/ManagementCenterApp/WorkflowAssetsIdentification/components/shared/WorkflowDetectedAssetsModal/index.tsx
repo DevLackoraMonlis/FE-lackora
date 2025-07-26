@@ -23,11 +23,7 @@ type Props = Partial<ConfigurationRs> & {
 
 function WorkflowDetectedAssets(props: Props) {
 	const { height } = useViewportSize();
-	const { detectedAssets } = useWorkflowDetectedAssets(
-		props.enabledQuery,
-		props.adapterId || "",
-		props.lastExecutionId || "",
-	);
+	const { detectedAssets } = useWorkflowDetectedAssets(props.enabledQuery, {});
 
 	const results = detectedAssets.data?.results || [];
 	const status = detectedAssets.data?.status;
