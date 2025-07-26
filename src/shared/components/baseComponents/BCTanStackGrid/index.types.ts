@@ -1,5 +1,5 @@
 import type React from "react";
-import type { CSSProperties, ReactNode, RefObject } from "react";
+import type { ReactNode, RefObject } from "react";
 
 import type { MantineSize } from "@mantine/core";
 import type {
@@ -26,6 +26,7 @@ export type TanStackGridProps<T> = {
 	withColumnBorders?: boolean;
 	withRowBorders?: boolean;
 	withTableBorder?: boolean;
+	withPaddingCells?: boolean;
 	idAccessor: string;
 	rowHeight?: number;
 	fetching?: boolean;
@@ -53,19 +54,14 @@ export type TanStackDataTableRef = {
 
 export type DataTableColumnTitleFn<T> = (values: Column<T, unknown>) => ReactNode;
 
-export type TanStackColumnMeta<T> = ColumnMeta<T, unknown> & {
-	cellsStyle?: () => CSSProperties;
-	titleStyle?: () => CSSProperties;
-	wrap?: boolean;
-};
+export type TanStackColumnMeta<T> = ColumnMeta<T, unknown>;
 
 export type TanStackDataTableColumnColDef<T> = {
 	accessor: string;
 	wrap?: boolean;
 	textAlign?: DataTableColumnTextAlign;
 	width?: number;
-	cellsStyle?: () => CSSProperties;
-	titleStyle?: () => CSSProperties;
+
 	title?: DataTableColumnTitleFn<T> | ReactNode | Element;
 	render?: (record: T, row: Row<T>, rowIndex: number) => ReactNode;
 	hidden?: boolean;

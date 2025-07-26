@@ -17,6 +17,7 @@ export function TanStackTBodyNonVirtual<T extends Record<string, unknown>>(
 		| "onSelectedRecordsChange"
 		| "rowExpansion"
 		| "idAccessor"
+		| "withPaddingCells"
 	>,
 ) {
 	return (
@@ -33,6 +34,7 @@ export function TanStackTBodyNonVirtual<T extends Record<string, unknown>>(
 				// Check if current row is expanded
 				return (
 					<TanStackRowItemNonVirtual<T>
+						withPaddingCells={props.withPaddingCells}
 						tableContainerRef={props.tableContainerRef}
 						table={props.table}
 						key={row.id}

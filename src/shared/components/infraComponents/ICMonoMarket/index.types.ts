@@ -5,7 +5,6 @@ export type ICMonoMarketAppModuleType = {
 	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 	page: FC<any>;
 	headerType?: "basic";
-	headerTitle?: ReactNode;
 	// biome-ignore lint/suspicious/noExplicitAny: <explanation>
 	detailPage?: FC<any>;
 };

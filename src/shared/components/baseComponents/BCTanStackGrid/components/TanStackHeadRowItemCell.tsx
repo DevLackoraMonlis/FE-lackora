@@ -1,32 +1,39 @@
 import { type Header, type Table, flexRender } from "@tanstack/react-table";
+import { useMemo } from "react";
 import { TAN_STACK_EXCLUDE_COLUMNS_FROM_STYLES } from "../index.constants";
 import { tanStackGetCommonPinningStyles } from "../index.helper";
-import type { TanStackColumnMeta } from "../index.types";
+import type { TanStackGridProps } from "../index.types";
 
-export default function TanStackHeadRowItemCell<T extends Record<string, unknown>>(props: {
-	header: Header<T, unknown>;
-	table: Table<T>;
-}) {
+export default function TanStackHeadRowItemCell<T extends Record<string, unknown>>(
+	props: {
+		header: Header<T, unknown>;
+		table: Table<T>;
+	} & Pick<TanStackGridProps<T>, "withPaddingCells">,
+) {
 	const { header, table } = props;
-	const meta = header?.column.columnDef.meta as TanStackColumnMeta<T> | undefined;
-	const titleStyle = meta?.titleStyle;
+
+	let className = TAN_STACK_EXCLUDE_COLUMNS_FROM_STYLES.includes(header.column.id) ? "" : "ellipsis";
+
+	if (props.withPaddingCells) {
+		className += " defaultPadding";
+	}
+
+	const isCentered = TAN_STACK_EXCLUDE_COLUMNS_FROM_STYLES.includes(header.column.id);
+
+	const headStyle = useMemo(
+		() => ({
+			display: "flex",
+			width: header.getSize(),
+			justifyContent: isCentered ? "center" : "flex-start",
+			alignItems: "center",
+			...tanStackGetCommonPinningStyles<T>(header.column),
+		}),
+		[header.getSize(), header.column, isCentered],
+	);
+
 	return (
-		<th
-			key={header.id}
-			style={{
-				display: "flex",
-				width: header.getSize(),
-				justifyContent: TAN_STACK_EXCLUDE_COLUMNS_FROM_STYLES.includes(header.column.id)
-					? "center"
-					: "flex-start",
-				alignItems: "center",
-				padding: "8px",
-				...titleStyle?.(),
-				//IMPORTANT: This is where the magic happens!
-				...tanStackGetCommonPinningStyles<T>(header.column),
-			}}
-		>
-			<div className={TAN_STACK_EXCLUDE_COLUMNS_FROM_STYLES.includes(header.column.id) ? "" : "ellipsis"}>
+		<th key={header.id} style={headStyle}>
+			<div className={className}>
 				{props.header.isPlaceholder ? null : flexRender(header.column.columnDef.header, header.getContext())}
 			</div>
 			<div

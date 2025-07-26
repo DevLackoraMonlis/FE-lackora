@@ -16,6 +16,12 @@ export const AllApplications = {
 	ADAPTER_MANAGEMENT: {
 		name: "adapter_management",
 	},
+	CYBER_ASSETS: {
+		name: "cyber_asset_management",
+		modules: {
+			CYBER_ASSETS: "Cyber Assets",
+		},
+	},
 	MONO_MARKET: {
 		name: "marketplace",
 	},

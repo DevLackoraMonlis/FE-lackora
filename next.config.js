@@ -30,6 +30,7 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
     devIndicators:false,
+
   async headers() {
     return [
       {

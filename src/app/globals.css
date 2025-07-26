@@ -12,6 +12,10 @@ body {
 	cursor: alias;
 }
 
+.overflowAuto {
+	overflow: auto;
+}
+
 .h-full {
 	height: 100%;
 }

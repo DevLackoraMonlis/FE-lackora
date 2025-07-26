@@ -1,6 +1,8 @@
 import type { Row, Table } from "@tanstack/react-table";
 import type { Virtualizer } from "@tanstack/react-virtual";
 import type React from "react";
+import type { CSSProperties } from "react";
+import { useMemo } from "react";
 import type { TanStackGridProps } from "../index.types";
 import TanStackRowItem from "./TanStackRowItem";
 
@@ -20,21 +22,25 @@ export function TanStackTBody<T extends Record<string, unknown>>(
 		| "onSelectedRecordsChange"
 		| "rowExpansion"
 		| "idAccessor"
+		| "withPaddingCells"
 	>,
 ) {
+	const bodyStyle = useMemo<CSSProperties>(
+		() => ({
+			display: "grid",
+			height: `${props.rowVirtualizer.getTotalSize()}px`,
+			position: "relative",
+		}),
+		[props.rowVirtualizer.getTotalSize()],
+	);
+
 	return (
-		<tbody
-			ref={props.tableBodyRef}
-			style={{
-				display: "grid",
-				height: `${props.rowVirtualizer.getTotalSize()}px`, //tells scrollbar how big the table is
-				position: "relative", //needed for absolute positioning of rows
-			}}
-		>
+		<tbody ref={props.tableBodyRef} style={bodyStyle}>
 			{props.rowVirtualizer.getVirtualItems().map((virtualRow) => {
 				const row = props.rows[virtualRow.index] as Row<T>;
 				return (
 					<TanStackRowItem<T>
+						withPaddingCells={props.withPaddingCells}
 						columnVirtualizer={props.columnVirtualizer}
 						tableContainerRef={props.tableContainerRef}
 						table={props.table}

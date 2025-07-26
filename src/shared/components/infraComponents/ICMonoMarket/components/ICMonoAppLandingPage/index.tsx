@@ -12,11 +12,15 @@ export default function ICMonoAppLandingPage() {
 
 	if (app?.landing) {
 		const LandingPlugin = app.landing;
-		return (
-			<ICPageWrapper title={app.headerTitle}>
-				<LandingPlugin />
-			</ICPageWrapper>
-		);
+
+		if (app.headerType === "basic") {
+			return (
+				<ICPageWrapper title={app.headerTitle}>
+					<LandingPlugin />
+				</ICPageWrapper>
+			);
+		}
+		return <LandingPlugin />;
 	}
 
 	return null;

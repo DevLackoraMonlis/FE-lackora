@@ -1,5 +1,5 @@
+import TanStackPagination from "@/shared/components/baseComponents/BCTanStackGrid/TanStackPagination";
 import { LoadingOverlay } from "@mantine/core";
-import AgPagination from "./Pagination";
 import TanStackMainTableNonVirtual from "./components/TanStackMainTableNonVirtual";
 import { useTanStackDefault } from "./index.hooks";
 import type { TanStackGridProps } from "./index.types";
@@ -7,7 +7,7 @@ import type { TanStackGridProps } from "./index.types";
 export default function TanStackGridNonVirtual<T extends Record<string, unknown>>(
 	props: TanStackGridProps<T>,
 ) {
-	const { table, ref, tableBodyRef, tableContainerRef, tableRef, bodyHeight, viewportWidth, columns } =
+	const { table, ref, tableBodyRef, tableContainerRef, tableRef, bodyHeight, columns } =
 		useTanStackDefault(props);
 
 	const { rows } = table.getCoreRowModel();
@@ -26,17 +26,22 @@ export default function TanStackGridNonVirtual<T extends Record<string, unknown>
 			>
 				<LoadingOverlay
 					loaderProps={{
+						type: "oval",
 						style: {
 							display: "flex",
 							width: "100%",
-							marginLeft: viewportWidth / 2 - 100,
+							height: "100%",
+							justifyContent: "flex-start",
+							alignItems: "flex-start",
+							marginTop: "15px",
+							marginLeft: "15px",
 						},
 					}}
 					style={{
 						justifyContent: "flex-start",
 					}}
 					w={tableRef.current?.style.width || "100%"}
-					h={bodyHeight || "100%"}
+					h={bodyHeight + 40 || "100%"}
 					visible={props.fetching}
 				/>
 
@@ -57,7 +62,7 @@ export default function TanStackGridNonVirtual<T extends Record<string, unknown>
 				/>
 			</div>
 			{props.page !== undefined && (
-				<AgPagination
+				<TanStackPagination
 					onRecordsPerPageChange={props.onRecordsPerPageChange}
 					recordsPerPageOptions={props.recordsPerPageOptions}
 					onPageChange={props.onPageChange}

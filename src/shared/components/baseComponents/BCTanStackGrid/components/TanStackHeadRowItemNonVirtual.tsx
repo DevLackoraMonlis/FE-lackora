@@ -1,10 +1,13 @@
+import type { TanStackGridProps } from "@/shared/components/baseComponents/BCTanStackGrid/index.types";
 import type { HeaderGroup, Table } from "@tanstack/react-table";
 import TanStackHeadRowItemCell from "./TanStackHeadRowItemCell";
 
-export function TanStackHeadRowItemNonVirtual<T extends Record<string, unknown>>(props: {
-	headerGroup: HeaderGroup<T>;
-	table: Table<T>;
-}) {
+export function TanStackHeadRowItemNonVirtual<T extends Record<string, unknown>>(
+	props: {
+		headerGroup: HeaderGroup<T>;
+		table: Table<T>;
+	} & Pick<TanStackGridProps<T>, "withPaddingCells">,
+) {
 	const { headerGroup } = props;
 
 	const visibleHeaders = headerGroup.headers;
@@ -12,7 +15,14 @@ export function TanStackHeadRowItemNonVirtual<T extends Record<string, unknown>>
 	return (
 		<tr style={{ display: "flex", width: "100%" }}>
 			{visibleHeaders.map((header) => {
-				return <TanStackHeadRowItemCell<T> key={header.id} table={props.table} header={header} />;
+				return (
+					<TanStackHeadRowItemCell<T>
+						withPaddingCells={props.withPaddingCells}
+						key={header.id}
+						table={props.table}
+						header={header}
+					/>
+				);
 			})}
 		</tr>
 	);
