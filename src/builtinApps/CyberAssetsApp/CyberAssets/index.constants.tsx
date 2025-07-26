@@ -52,7 +52,7 @@ export const CYBER_ASSETS_FORMATTED_COLUMNS: TanStackDataTableColumnColDef<ICAdv
 		},
 	},
 	{
-		accessor: "private_ip",
+		accessor: "primary_ip",
 		render: (record) => {
 			return (
 				<Flex
@@ -63,7 +63,7 @@ export const CYBER_ASSETS_FORMATTED_COLUMNS: TanStackDataTableColumnColDef<ICAdv
 					gap={"xs"}
 					align={"center"}
 				>
-					{record.private_ip}
+					{record.primary_ip}
 					{record.related_ip && (
 						<Badge variant={"light"} size={"xs"} leftSection={<IconLink size={12} />}>
 							{record.related_ip}
@@ -107,10 +107,10 @@ export const CYBER_ASSETS_FORMATTED_COLUMNS: TanStackDataTableColumnColDef<ICAdv
 		},
 	},
 	{
-		accessor: "os",
+		accessor: "os_name",
 		render: (record) => {
 			return getCyberAssetOsTypeBadge({
-				type: record.os as CyberAssetOsType,
+				type: record.os_name as CyberAssetOsType,
 				props: {
 					m: "xs",
 				},

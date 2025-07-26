@@ -11,7 +11,7 @@ type Props<T> = {
 	store: ICAdvancedFilterProps<T>["store"];
 	run: ICAdvancedFilterProps<T>["run"];
 	data: ICAdvancedFilterProps<T>["data"];
-	exportDataApi: ICAdvancedFilterProps<T>["exportDataApi"];
+	getDataApi: ICAdvancedFilterProps<T>["getDataApi"];
 };
 
 export default function ICAdvancedFilterTopSection<T>(props: Props<T>) {
@@ -28,7 +28,7 @@ export default function ICAdvancedFilterTopSection<T>(props: Props<T>) {
 				<ICAdvancedFilterCollapseButton store={props.store} />
 				<ICAdvancedFilterActionButtons
 					data={props.data}
-					exportDataApi={props.exportDataApi}
+					getDataApi={props.getDataApi}
 					store={props.store}
 					run={props.run}
 				/>

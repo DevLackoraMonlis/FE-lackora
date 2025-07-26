@@ -38,7 +38,7 @@ export default function TanStackMainTable<T extends Record<string, unknown>>(
 				? "100%"
 				: props.table.getCenterTotalSize(),
 		}),
-		[props.table.getCenterTotalSize(), props.columns],
+		[props.table, props.columns],
 	);
 
 	return (

@@ -35,7 +35,7 @@ export type ICAdvancedFilterCondition = {
 	columnName: string;
 	operator: ICAdvancedFilterConditionOperator;
 	values: ICAdvancedConditionValueTypeRq[];
-	closBracket: number;
+	closeBracket: number;
 	nextOperator: ICAdvancedFilterOperator;
 };
 
@@ -61,7 +61,7 @@ export type ICAdvancedFilterColumnOption = {
 	value: string;
 };
 
-export type ICAdvancedFilterColumn = {
+export type ICAdvancedFilterColumnRs = {
 	name: string;
 	type: ICAdvancedFilterColumnType;
 	objectType?: string[];
@@ -80,7 +80,7 @@ export type ICAdvancedFilterRq<META_DATA extends Record<string, unknown> | unkno
 	metaData?: META_DATA;
 } & Pick<PaginationRq, "page" | "limit">;
 
-export type ICAdvancedFilterDataRs = { id: string; [key: string]: string };
+export type ICAdvancedFilterDataRs = { [key: string]: string };
 
 export type ICAdvancedFilterRs = PaginationRs<ICAdvancedFilterDataRs, Record<string, unknown>>;
 
@@ -97,7 +97,7 @@ export type ICAdvancedFilterSaveConditionRs = PaginationRs<
 export type ICAdvancedFilterStoreIncludeExcludeType = (
 	columnName: string,
 	value: unknown,
-	allColumns: ICAdvancedFilterColumn[],
+	allColumns: ICAdvancedFilterColumnRs[],
 ) => void;
 
 export type ICAdvancedFilterStoreType = {
@@ -142,7 +142,7 @@ export type ICAdvancedFilterProps<T> = {
 	data: T[];
 	isLoading: boolean;
 	columns: TanStackDataTableColumnColDef<T>[];
-	allColumns: ICAdvancedFilterColumn[];
+	allColumns: ICAdvancedFilterColumnRs[];
 	totalRecords: number;
 	recordsPerPageOptions?: number[];
 	run: VoidFunction;
@@ -154,5 +154,11 @@ export type ICAdvancedFilterProps<T> = {
 	excludeColumns?: string[];
 	defaultVariables?: ICAdvancedFilterRq;
 	fullScreenTitle: string;
-	exportDataApi?: (variables: ICAdvancedFilterRq) => Promise<AxiosResponse<ICAdvancedFilterRs>>;
+	columnsQueryKey: string;
+	dataQueryKey: string;
+	getDataApi: (
+		variables: ICAdvancedFilterRq,
+		signal?: AbortSignal,
+	) => Promise<AxiosResponse<ICAdvancedFilterRs>>;
+	getColumnsApi: (signal?: AbortSignal) => Promise<AxiosResponse<PaginationRs<ICAdvancedFilterColumnRs>>>;
 };

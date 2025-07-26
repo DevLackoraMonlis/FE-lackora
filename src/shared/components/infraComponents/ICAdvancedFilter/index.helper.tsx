@@ -1,6 +1,6 @@
 import { ICAdvancedGroupByFunctions } from "@/shared/components/infraComponents/ICAdvancedFilter/index.enum";
 import type {
-	ICAdvancedFilterColumn,
+	ICAdvancedFilterColumnRs,
 	ICAdvancedFilterCondition,
 	ICAdvancedFilterRq,
 	ICAdvancedFilterStoreType,
@@ -23,14 +23,14 @@ const defaultAdvancedVariables: ICAdvancedFilterRq = {
 function includeExcludeAction(
 	columnName: string,
 	value: unknown,
-	allColumns: ICAdvancedFilterColumn[],
+	allColumns: ICAdvancedFilterColumnRs[],
 	state: ICAdvancedFilterStoreType,
 	operator: ICAdvancedFilterCondition["operator"],
 ): Partial<ICAdvancedFilterStoreType> {
 	const isFunctionColumn = state.getIsGroupByFunctionColumn(columnName);
 	const condition: ICAdvancedFilterCondition = {
 		columnName,
-		closBracket: 0,
+		closeBracket: 0,
 		nextOperator: "and",
 		openBracket: 0,
 		operator,

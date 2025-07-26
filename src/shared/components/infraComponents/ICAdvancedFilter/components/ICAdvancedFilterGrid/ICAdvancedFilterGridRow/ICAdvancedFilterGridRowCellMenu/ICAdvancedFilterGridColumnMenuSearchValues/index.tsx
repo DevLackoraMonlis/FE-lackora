@@ -93,7 +93,7 @@ export default function ICAdvancedFilterGridColumnMenuSearchValues<T>(props: Pro
 				operator: formValues.operator as ICAdvancedFilterConditionOperator,
 				columnName: getColumnOptions.name,
 				openBracket: 0,
-				closBracket: 0,
+				closeBracket: 0,
 				nextOperator: "and",
 				values: (getColumnOptions.options?.length
 					? (formValues.values as string[]).map((item) => ({ label: item, value: item }))

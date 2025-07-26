@@ -1,7 +1,7 @@
 import ICAdvancedFilterGridColumnMenu from "@/shared/components/infraComponents/ICAdvancedFilter/components/ICAdvancedFilterGrid/ICAdvancedFilterGridColumn/ICAdvancedFilterGridColumnMenu";
 import ICAdvancedFilterGridColumnSort from "@/shared/components/infraComponents/ICAdvancedFilter/components/ICAdvancedFilterGrid/ICAdvancedFilterGridColumn/ICAdvancedFilterGridColumnSort";
 import type {
-	ICAdvancedFilterColumn,
+	ICAdvancedFilterColumnRs,
 	ICAdvancedFilterProps,
 } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
 import { Flex, Text } from "@mantine/core";
@@ -13,7 +13,7 @@ type Props<T> = {
 	allColumns: ICAdvancedFilterProps<T>["allColumns"];
 	run: ICAdvancedFilterProps<T>["run"];
 	onCopy: VoidFunction;
-	columnOption?: ICAdvancedFilterColumn;
+	columnOption?: ICAdvancedFilterColumnRs;
 };
 
 export default function ICAdvancedFilterGridColumn<T>(props: Props<T>) {

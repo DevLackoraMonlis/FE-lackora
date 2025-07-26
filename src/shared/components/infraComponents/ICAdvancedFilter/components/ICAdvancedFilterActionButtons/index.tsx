@@ -12,7 +12,7 @@ import { useShallow } from "zustand/react/shallow";
 
 type Props<T> = {
 	data: ICAdvancedFilterProps<T>["data"];
-	exportDataApi: ICAdvancedFilterProps<T>["exportDataApi"];
+	getDataApi: ICAdvancedFilterProps<T>["getDataApi"];
 	store: ICAdvancedFilterProps<T>["store"];
 	run: ICAdvancedFilterProps<T>["run"];
 };
@@ -30,7 +30,7 @@ export default function ICAdvancedFilterActionButtons<T>(props: Props<T>) {
 
 	const getDataForExportMutation = useMutation({
 		mutationKey: ["get-csv-data", store.variables],
-		mutationFn: props.exportDataApi,
+		mutationFn: props.getDataApi,
 		onSuccess: (response) => {
 			void downloadCSV({
 				data: response.data.results,
@@ -52,7 +52,7 @@ export default function ICAdvancedFilterActionButtons<T>(props: Props<T>) {
 			<Button
 				px={"xs"}
 				variant={"default"}
-				onClick={() => getDataForExportMutation.mutate(store.variables)}
+				onClick={() => getDataForExportMutation.mutate({ ...store.variables, limit: 10000 })}
 				size={"sm"}
 			>
 				<IconFileExport size={20} />
