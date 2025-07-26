@@ -24,7 +24,7 @@ export default function ICAdvancedFilterGridRow(props: ICAdvancedFilterGridRowPr
 		>
 			{props.cellRenderValue}
 
-			<Flex align={"center"} pos={"absolute"} right={0} top={-3}>
+			<Flex align={"center"} pos={"absolute"} right={0} top={5}>
 				{opened ? props.cellMenu(opened) : null}
 			</Flex>
 		</Flex>
