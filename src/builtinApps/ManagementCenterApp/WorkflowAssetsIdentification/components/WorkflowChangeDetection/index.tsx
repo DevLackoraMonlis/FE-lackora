@@ -1,14 +1,16 @@
 import { IconCheck, IconSearch, IconSettings, IconStatusChange, IconWorld } from "@tabler/icons-react";
 import { IconDeviceDesktopSearch, IconDeviceLaptop } from "@tabler/icons-react";
 
+import type { WorkflowHandles } from "../../index.types";
 import WorkflowAccordion from "../shared/WorkflowAccordion";
 import WorkflowPlayerTracking from "../shared/WorkflowPlayerTracking";
 
-export default function WorkflowChangeDetection() {
+export default function WorkflowChangeDetection(props: WorkflowHandles) {
 	return (
 		<>
 			<WorkflowPlayerTracking statusColor="blue" />
 			<WorkflowAccordion
+				{...props}
 				type="WorkflowChangeDetection"
 				title="Change Detection"
 				status="completed"

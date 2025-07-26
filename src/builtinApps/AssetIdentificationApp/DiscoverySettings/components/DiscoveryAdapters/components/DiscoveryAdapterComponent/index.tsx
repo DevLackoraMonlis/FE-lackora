@@ -17,7 +17,7 @@ import type { ConfigurationRs } from "../../../../index.types";
 import { DeleteDiscoveryAdapterModal } from "../DeleteDiscoveryAdapter";
 import DiscoveryAdapterCard from "../DiscoveryAdapterCard";
 import DiscoveryAdaptersCreateGateway from "../DiscoveryAdaptersCreate";
-import { DiscoveryIPsDrawerModal } from "../DiscoveryIPs";
+import DiscoveryIPsDrawerModal from "../DiscoveryIPs";
 import { DiscoveryQuickModal } from "../DiscoveryQuick";
 
 type Props = {

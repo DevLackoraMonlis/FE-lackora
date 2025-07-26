@@ -50,7 +50,7 @@ export default function WorkflowScanAccordionItem() {
 				</Accordion.Control>
 				<Accordion.Panel>
 					<Flex justify="space-between" px="3xl" align="center">
-						<Flex direction="column" gap="2xs">
+						<Flex direction="column" gap="2xs" miw="250px">
 							<Flex align="center" justify="space-between">
 								<Text c="white">Last Scan Time:</Text>
 								<Text c="white">-</Text>

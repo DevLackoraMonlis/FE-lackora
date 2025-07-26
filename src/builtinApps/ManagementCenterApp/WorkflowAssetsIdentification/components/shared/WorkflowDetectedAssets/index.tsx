@@ -5,29 +5,33 @@ import { sortBy } from "lodash";
 import { useState } from "react";
 
 import type { PaginationRq } from "@/http/end-points/GeneralService.types";
+import BCDrawer from "@/shared/components/baseComponents/BCDrawer";
 import BCSearchInput from "@/shared/components/baseComponents/BCSearchInput";
 import BCTanStackGrid from "@/shared/components/baseComponents/BCTanStackGrid";
 import type { TanStackGridProps } from "@/shared/components/baseComponents/BCTanStackGrid/index.types";
 import { useTableSort } from "@/shared/hooks/useTableSort";
 
-import { useDiscoverySettingLastRun } from "../../../../../../index.hooks";
-import type { ConfigurationRs } from "../../../../../../index.types";
+import { useWorkflowDetectedAssets } from "../../../index.hooks";
+
+import type { ConfigurationRs } from "@/builtinApps/AssetIdentificationApp/DiscoverySettings/index.types";
 
 type Props = Partial<ConfigurationRs> & {
+	onClose: VoidFunction;
+	opened: boolean;
 	enabledQuery: boolean;
 	hightOffset?: number;
 };
 
-export function DiscoveryLastRun(props: Props) {
+function DetectedAssets(props: Props) {
 	const { height } = useViewportSize();
-	const { discoverySettingRunNow } = useDiscoverySettingLastRun(
+	const { detectedAssets } = useWorkflowDetectedAssets(
 		props.enabledQuery,
 		props.adapterId || "",
 		props.lastExecutionId || "",
 	);
 
-	const results = discoverySettingRunNow?.data?.results || [];
-	const status = discoverySettingRunNow?.data?.status;
+	const results = detectedAssets.data?.results || [];
+	const status = detectedAssets.data?.status;
 
 	const [{ search = "", ...queryParams }, setQueryParams] = useState<PaginationRq>({ limit: 25, page: 1 });
 	const { generateSortIcons, sortStatus } = useTableSort<(typeof results)[number]>({
@@ -69,6 +73,15 @@ export function DiscoveryLastRun(props: Props) {
 			),
 		},
 		{
+			accessor: "gateway",
+			title: (
+				<Flex justify="space-between" align="center">
+					<Text>Time of Discovery</Text>
+					{generateSortIcons("gateway")}
+				</Flex>
+			),
+		},
+		{
 			accessor: "discoveryTime",
 			title: (
 				<Flex justify="space-between" align="center">
@@ -97,7 +110,7 @@ export function DiscoveryLastRun(props: Props) {
 	const tableRecords = filteredResults.slice(from, to);
 	const totalRecords = filteredResults?.length;
 
-	if (discoverySettingRunNow.isLoading && props.enabledQuery) return <LoadingOverlay visible />;
+	if (detectedAssets.isLoading && props.enabledQuery) return <LoadingOverlay visible />;
 	return (
 		<Flex direction="column" p="sm" gap="xs" w="100%">
 			<Flex gap="sm" align="center" justify="center" py="sm" bg="gray.1">
@@ -106,10 +119,10 @@ export function DiscoveryLastRun(props: Props) {
 				</Badge>
 				<Text fz="lg" fw="bold" tt="capitalize">
 					{status
-						? `${discoverySettingRunNow?.data?.total ?? "-"} IPs discovered In ${
-								discoverySettingRunNow?.data?.duration
-							} From ${props.configurationIP}`
-						: `${discoverySettingRunNow?.data?.message || "-"}`}
+						? `${detectedAssets?.data?.total ?? "-"} IPs discovered by ${
+								detectedAssets?.data?.duration
+							} in scan ${props.configurationIP}`
+						: `${detectedAssets?.data?.message || "-"}`}
 				</Text>
 			</Flex>
 			<Flex gap="sm" align="center" p="sm" bg="gray.1">
@@ -121,7 +134,7 @@ export function DiscoveryLastRun(props: Props) {
 				/>
 			</Flex>
 			<BCTanStackGrid
-				h={height - (props.hightOffset ?? 390)}
+				h={height - (props.hightOffset ?? 310)}
 				withTableBorder
 				withColumnBorders
 				withRowBorders
@@ -136,5 +149,13 @@ export function DiscoveryLastRun(props: Props) {
 				recordsPerPageOptions={[25, 50, 100]}
 			/>
 		</Flex>
+	);
+}
+
+export default function WorkflowDetectedAssets({ onClose, opened, ...configs }: Props) {
+	return (
+		<BCDrawer onClose={onClose} opened={opened} title="Detected Assets">
+			<DetectedAssets onClose={onClose} opened={opened} {...configs} />
+		</BCDrawer>
 	);
 }

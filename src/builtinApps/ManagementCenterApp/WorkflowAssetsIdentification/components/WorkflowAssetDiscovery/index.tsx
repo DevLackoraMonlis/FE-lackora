@@ -1,14 +1,16 @@
 import { IconCheck, IconSearch, IconSettings, IconWorld } from "@tabler/icons-react";
 import { IconDeviceDesktopSearch, IconDeviceLaptop } from "@tabler/icons-react";
 
+import type { WorkflowHandles } from "../../index.types";
 import WorkflowAccordion from "../shared/WorkflowAccordion";
 import WorkflowPlayerTracking from "../shared/WorkflowPlayerTracking";
 
-export default function WorkflowAssetDiscovery() {
+export default function WorkflowAssetDiscovery(props: WorkflowHandles) {
 	return (
 		<>
 			<WorkflowPlayerTracking statusColor="blue" />
 			<WorkflowAccordion
+				{...props}
 				type="WorkflowAssetDiscovery"
 				title="ASSET DISCOVERY"
 				status="completed"

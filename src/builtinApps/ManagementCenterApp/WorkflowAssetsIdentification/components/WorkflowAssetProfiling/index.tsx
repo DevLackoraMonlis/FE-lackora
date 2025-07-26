@@ -3,14 +3,16 @@ import { IconDeviceDesktopSearch, IconDeviceLaptop } from "@tabler/icons-react";
 
 import { AssetProfiling } from "@/shared/icons/components/assets";
 
+import type { WorkflowHandles } from "../../index.types";
 import WorkflowAccordion from "../shared/WorkflowAccordion";
 import WorkflowPlayerTracking from "../shared/WorkflowPlayerTracking";
 
-export default function WorkflowAssetProfiling() {
+export default function WorkflowAssetProfiling(props: WorkflowHandles) {
 	return (
 		<>
 			<WorkflowPlayerTracking statusColor="blue" />
 			<WorkflowAccordion
+				{...props}
 				type="WorkflowAssetProfiling"
 				title="Asset Profiling"
 				status="completed"

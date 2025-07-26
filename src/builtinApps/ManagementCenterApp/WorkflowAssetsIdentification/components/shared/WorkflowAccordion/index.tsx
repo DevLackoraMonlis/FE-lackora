@@ -1,43 +1,10 @@
-import { Accordion, Badge, Card, Flex, Progress, Text, Timeline, getGradient } from "@mantine/core";
-import { IconCheck } from "@tabler/icons-react";
-import type { ReactNode } from "react";
+import { Accordion, Badge, Card, Flex, Menu, Progress, Text, Timeline, getGradient } from "@mantine/core";
+import { IconCheck, IconDotsVertical, IconEye, IconSettings } from "@tabler/icons-react";
 
-type WorkflowStatus = "failed" | "completed" | "inprogress" | "idle";
+import { getWorkflowStatusColor } from "../../../index.helper";
+import type { WorkflowAccordionProps, WorkflowHandles } from "../../../index.types";
 
-type WorkflowStep = {
-	title: string;
-	status: WorkflowStatus;
-	description?: string;
-	assets?: string;
-	timeInfo?: string;
-	progress?: { value: number; label: string };
-	icon: ReactNode;
-	color?: string;
-};
-
-type WorkflowAccordionProps = {
-	icon: ReactNode;
-	type: string;
-	status: WorkflowStatus;
-	title: string;
-	description: { label: string; progress: boolean; value: number };
-	steps: WorkflowStep[];
-};
-
-function getBadgeColor(status: WorkflowStep["status"]) {
-	switch (status) {
-		case "completed":
-			return "green";
-		case "inprogress":
-			return "blue";
-		case "idle":
-			return "gray";
-		case "failed":
-			return "red";
-		default:
-			return "gray";
-	}
-}
+type Props = WorkflowAccordionProps & WorkflowHandles;
 
 export default function WorkflowAccordion({
 	type,
@@ -46,7 +13,8 @@ export default function WorkflowAccordion({
 	description,
 	icon,
 	steps,
-}: WorkflowAccordionProps) {
+	...handles
+}: Props) {
 	if (!type) return null;
 	const timelineActiveStep = steps?.findIndex(({ status }) => status === "inprogress");
 	return (
@@ -92,7 +60,7 @@ export default function WorkflowAccordion({
 							</Flex>
 						</Flex>
 						<Flex align="center" gap="xs" px="sm">
-							<Badge w="130px" variant="light" color={getBadgeColor(status)} px="sm" py="md">
+							<Badge w="130px" variant="light" color={getWorkflowStatusColor(status)} px="sm" py="md">
 								<Text p="2xs" tt="capitalize">
 									{status}
 								</Text>
@@ -111,9 +79,30 @@ export default function WorkflowAccordion({
 								title={
 									<Flex align="center" justify="space-between">
 										<Text fw="bold">{step.title}</Text>
-										<Badge color={getBadgeColor(step.status)} variant="light">
-											{step.status}
-										</Badge>
+										<Flex align="center">
+											<Badge color={getWorkflowStatusColor(step.status)} variant="light">
+												{step.status}
+											</Badge>
+											<Menu trigger="hover" shadow="md">
+												<Menu.Target>
+													<IconDotsVertical size={20} />
+												</Menu.Target>
+												<Menu.Dropdown>
+													<Menu.Item
+														leftSection={<IconSettings size={15} />}
+														onClick={() => handles.handleGatewayConfiguration()}
+													>
+														Go to Gateway Configuration
+													</Menu.Item>
+													<Menu.Item
+														leftSection={<IconEye size={15} />}
+														onClick={() => handles.handleViewMatchedAssets()}
+													>
+														View Matched Assets
+													</Menu.Item>
+												</Menu.Dropdown>
+											</Menu>
+										</Flex>
 									</Flex>
 								}
 							>
