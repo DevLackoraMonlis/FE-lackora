@@ -50,10 +50,10 @@ export const validateAdapterAdp = (
 ) => {
       
       const formData = new FormData();
-formData.append("file", bodyValidateAdapterAdp.file)
+formData.append(`file`, bodyValidateAdapterAdp.file)
 
       return orvalMutator<AdapterValidationResponse>(
-      {url: "/api/adapter-management/validate-adp", method: 'POST',
+      {url: `/api/adapter-management/validate-adp`, method: 'POST',
       headers: {'Content-Type': 'multipart/form-data', },
        data: formData, signal
     },
@@ -116,10 +116,10 @@ export const importAdapterAdp = (
 ) => {
       
       const formData = new FormData();
-formData.append("file", bodyImportAdapterAdp.file)
+formData.append(`file`, bodyImportAdapterAdp.file)
 
       return orvalMutator<AdapterValidationResponse>(
-      {url: "/api/adapter-management/import-adp", method: 'POST',
+      {url: `/api/adapter-management/import-adp`, method: 'POST',
       headers: {'Content-Type': 'multipart/form-data', },
        data: formData, signal
     },
@@ -183,7 +183,7 @@ export const getAdapters = (
       
       
       return orvalMutator<PaginatedBaseResponseEachAdapterInformationEachListMetadataWrapper>(
-      {url: "/api/adapter-management/", method: 'GET',
+      {url: `/api/adapter-management/`, method: 'GET',
         params, signal
     },
       );
@@ -191,7 +191,7 @@ export const getAdapters = (
   
 
 const getGetAdaptersQueryKey = (params?: GetAdaptersParams,) => {
-    return ["/api/adapter-management/", ...(params ? [params]: [])] as const;
+    return [`/api/adapter-management/`, ...(params ? [params]: [])] as const;
     }
 
     

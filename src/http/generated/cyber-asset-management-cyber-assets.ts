@@ -6,22 +6,29 @@
  * OpenAPI spec version: 1.0.0
  */
 import {
+  useMutation,
   useQuery
 } from '@tanstack/react-query';
 import type {
   DataTag,
   DefinedInitialDataOptions,
   DefinedUseQueryResult,
+  MutationFunction,
   QueryClient,
   QueryFunction,
   QueryKey,
   UndefinedInitialDataOptions,
+  UseMutationOptions,
+  UseMutationResult,
   UseQueryOptions,
   UseQueryResult
 } from '@tanstack/react-query';
 
 import type {
-  AssetManagementFilterColumnsResponse
+  AdvanceFilterRequestModel,
+  AssetManagementAdvancedFilterResponse,
+  AssetManagementFilterColumnsResponse,
+  HTTPValidationError
 } from './models';
 
 import { orvalMutator } from '../orval-mutator';
@@ -31,6 +38,70 @@ import { orvalMutator } from '../orval-mutator';
 
 
 /**
+ * @summary Get Cyber Assets Advance Filter
+ */
+export const getAssets = (
+    advanceFilterRequestModel: AdvanceFilterRequestModel,
+ signal?: AbortSignal
+) => {
+      
+      
+      return orvalMutator<AssetManagementAdvancedFilterResponse>(
+      {url: `/api/asset-management/cyber-assets/`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: advanceFilterRequestModel, signal
+    },
+      );
+    }
+  
+
+
+export const getGetAssetsMutationOptions = <TError = HTTPValidationError,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof getAssets>>, TError,{data: AdvanceFilterRequestModel}, TContext>, }
+): UseMutationOptions<Awaited<ReturnType<typeof getAssets>>, TError,{data: AdvanceFilterRequestModel}, TContext> => {
+
+const mutationKey = ['getAssets'];
+const {mutation: mutationOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof getAssets>>, {data: AdvanceFilterRequestModel}> = (props) => {
+          const {data} = props ?? {};
+
+          return  getAssets(data,)
+        }
+
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type GetAssetsMutationResult = NonNullable<Awaited<ReturnType<typeof getAssets>>>
+    export type GetAssetsMutationBody = AdvanceFilterRequestModel
+    export type GetAssetsMutationError = HTTPValidationError
+
+    /**
+ * @summary Get Cyber Assets Advance Filter
+ */
+export const useGetAssets = <TError = HTTPValidationError,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof getAssets>>, TError,{data: AdvanceFilterRequestModel}, TContext>, }
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof getAssets>>,
+        TError,
+        {data: AdvanceFilterRequestModel},
+        TContext
+      > => {
+
+      const mutationOptions = getGetAssetsMutationOptions(options);
+
+      return useMutation(mutationOptions , queryClient);
+    }
+    /**
  * @summary Get Cyber Asset Filter Columns
  */
 export const getAssetFilterColumns = (
@@ -40,14 +111,14 @@ export const getAssetFilterColumns = (
       
       
       return orvalMutator<AssetManagementFilterColumnsResponse>(
-      {url: "/api/asset-management/cyber-assets/filter-columns", method: 'GET', signal
+      {url: `/api/asset-management/cyber-assets/columns`, method: 'GET', signal
     },
       );
     }
   
 
 const getGetAssetFilterColumnsQueryKey = () => {
-    return ["/api/asset-management/cyber-assets/filter-columns"] as const;
+    return [`/api/asset-management/cyber-assets/columns`] as const;
     }
 
     
