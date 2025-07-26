@@ -1,19 +1,21 @@
 import { IconCheck, IconSearch, IconSettings, IconWorld } from "@tabler/icons-react";
 import { IconDeviceDesktopSearch, IconDeviceLaptop } from "@tabler/icons-react";
 
+import { AssetProfiling } from "@/shared/icons/components/assets";
+
 import WorkflowAccordion from "../shared/WorkflowAccordion";
 import WorkflowPlayerTracking from "../shared/WorkflowPlayerTracking";
 
-export default function WorkflowAssetDiscovery() {
+export default function WorkflowAssetProfiling() {
 	return (
 		<>
 			<WorkflowPlayerTracking statusColor="blue" />
 			<WorkflowAccordion
-				type="WorkflowAssetDiscovery"
-				title="ASSET DISCOVERY"
+				type="WorkflowAssetProfiling"
+				title="Asset Profiling"
 				status="completed"
 				description={{ value: 100, label: "3/7 steps | 00:15min", progress: true }}
-				icon={<IconSearch size={30} />}
+				icon={<AssetProfiling width={25} height={25} />}
 				steps={[
 					{
 						title: "IP discovery from gateways",

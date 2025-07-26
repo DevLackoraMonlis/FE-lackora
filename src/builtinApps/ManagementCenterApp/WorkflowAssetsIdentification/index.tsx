@@ -6,6 +6,8 @@ import { useViewportSize } from "@mantine/hooks";
 import WorkflowScanAccordion from "./components/WorkflowScanAccordion";
 
 import WorkflowAssetDiscovery from "./components/WorkflowAssetDiscovery";
+import WorkflowAssetProfiling from "./components/WorkflowAssetProfiling";
+import WorkflowChangeDetection from "./components/WorkflowChangeDetection";
 
 export default function WorkflowAssetsIdentification() {
 	const { height } = useViewportSize();
@@ -15,6 +17,8 @@ export default function WorkflowAssetsIdentification() {
 				<ScrollArea px="xs" h={height - 160}>
 					<WorkflowScanAccordion />
 					<WorkflowAssetDiscovery />
+					<WorkflowAssetProfiling />
+					<WorkflowChangeDetection />
 				</ScrollArea>
 			</Grid.Col>
 		</Grid>

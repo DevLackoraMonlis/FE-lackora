@@ -1,4 +1,4 @@
-import { Accordion, Badge, Card, Flex, Text } from "@mantine/core";
+import { Accordion, Badge, Button, Card, Flex, Text } from "@mantine/core";
 import { IconLineScan } from "@tabler/icons-react";
 
 export default function WorkflowScanAccordionItem() {
@@ -10,13 +10,13 @@ export default function WorkflowScanAccordionItem() {
 				chevron: { color: white },
 				panel: {
 					background: colors.main[4],
-					borderBottomLeftRadius: spacing.xs,
-					borderBottomRightRadius: spacing.xs,
+					borderBottomLeftRadius: spacing["2xs"],
+					borderBottomRightRadius: spacing["2xs"],
 				},
 				control: {
 					background: colors.main[6],
-					borderTopLeftRadius: spacing.xs,
-					borderTopRightRadius: spacing.xs,
+					borderTopLeftRadius: spacing["2xs"],
+					borderTopRightRadius: spacing["2xs"],
 				},
 			})}
 		>
@@ -49,15 +49,18 @@ export default function WorkflowScanAccordionItem() {
 					</Flex>
 				</Accordion.Control>
 				<Accordion.Panel>
-					<Flex direction="column" w="40%" px="3xl" gap="2xs">
-						<Flex align="center" justify="space-between">
-							<Text c="white">Last Scan Time:</Text>
-							<Text c="white">-</Text>
+					<Flex justify="space-between" px="3xl" align="center">
+						<Flex direction="column" gap="2xs">
+							<Flex align="center" justify="space-between">
+								<Text c="white">Last Scan Time:</Text>
+								<Text c="white">-</Text>
+							</Flex>
+							<Flex align="center" justify="space-between">
+								<Text c="white">Next Scheduled Scan:</Text>
+								<Text c="white">Today, 08:00</Text>
+							</Flex>
 						</Flex>
-						<Flex align="center" justify="space-between">
-							<Text c="white">Next Scheduled Scan:</Text>
-							<Text c="white">Today, 08:00</Text>
-						</Flex>
+						<Button variant="outline">Scan History</Button>
 					</Flex>
 				</Accordion.Panel>
 			</Accordion.Item>

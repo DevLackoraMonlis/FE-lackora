@@ -1,5 +1,5 @@
 import { Accordion, Badge, Card, Flex, Progress, Text, Timeline, getGradient } from "@mantine/core";
-import { IconCheck, IconLineScan } from "@tabler/icons-react";
+import { IconCheck } from "@tabler/icons-react";
 import type { ReactNode } from "react";
 
 type WorkflowStatus = "failed" | "completed" | "inprogress" | "idle";
@@ -16,6 +16,7 @@ type WorkflowStep = {
 };
 
 type WorkflowAccordionProps = {
+	icon: ReactNode;
 	type: string;
 	status: WorkflowStatus;
 	title: string;
@@ -43,6 +44,7 @@ export default function WorkflowAccordion({
 	status,
 	title,
 	description,
+	icon,
 	steps,
 }: WorkflowAccordionProps) {
 	if (!type) return null;
@@ -50,12 +52,12 @@ export default function WorkflowAccordion({
 	return (
 		<Accordion variant="separated" defaultValue={status === "inprogress" ? type : ""}>
 			<Accordion.Item value={type}>
-				<Accordion.Control>
+				<Accordion.Control h="56px">
 					<Flex align="center" justify="space-between">
 						<Flex gap="sm">
 							<Card
-								w={50}
-								h={50}
+								w={40}
+								h={40}
 								variant="light"
 								shadow="none"
 								padding={0}
@@ -67,10 +69,10 @@ export default function WorkflowAccordion({
 								})}
 							>
 								<Flex justify="center" align="center" m="auto">
-									<IconLineScan size={40} />
+									{icon}
 								</Flex>
 							</Card>
-							<Flex direction="column" gap="2xs">
+							<Flex direction="column">
 								<Text fw="bold" fz="md">
 									{title}
 								</Text>
@@ -90,7 +92,7 @@ export default function WorkflowAccordion({
 							</Flex>
 						</Flex>
 						<Flex align="center" gap="xs" px="sm">
-							<Badge w="130px" variant="light" color={getBadgeColor(status)} px="sm" py="lg">
+							<Badge w="130px" variant="light" color={getBadgeColor(status)} px="sm" py="md">
 								<Text p="2xs" tt="capitalize">
 									{status}
 								</Text>
