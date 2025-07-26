@@ -7,7 +7,7 @@ import type { TanStackGridProps } from "../index.types";
 export default function TanStackCellItem<T extends Record<string, unknown>>(
 	props: {
 		cell: Cell<T, unknown>;
-	} & Pick<TanStackGridProps<T>, "rowHeight">,
+	} & Pick<TanStackGridProps<T>, "rowHeight" | "withPaddingCells">,
 ) {
 	const { cell } = props;
 	const meta = cell.column.columnDef.meta as ColumnMeta<T, unknown> & {
@@ -18,6 +18,9 @@ export default function TanStackCellItem<T extends Record<string, unknown>>(
 	let className = "defaultTdChild";
 	if (TAN_STACK_EXCLUDE_COLUMNS_FROM_STYLES.includes(cell.column.id)) {
 		className = "defaultNonStyleChild";
+	}
+	if (props.withPaddingCells) {
+		className += " defaultPadding";
 	}
 	return (
 		<td

@@ -1,12 +1,15 @@
+import type { TanStackGridProps } from "@/shared/components/baseComponents/BCTanStackGrid/index.types";
 import type { HeaderGroup, Table } from "@tanstack/react-table";
 import type { Virtualizer } from "@tanstack/react-virtual";
 import TanStackHeadRowItemCell from "./TanStackHeadRowItemCell";
 
-export function TanStackHeadRowItem<T extends Record<string, unknown>>(props: {
-	headerGroup: HeaderGroup<T>;
-	table: Table<T>;
-	columnVirtualizer: Virtualizer<HTMLDivElement, HTMLTableCellElement>;
-}) {
+export function TanStackHeadRowItem<T extends Record<string, unknown>>(
+	props: {
+		headerGroup: HeaderGroup<T>;
+		table: Table<T>;
+		columnVirtualizer: Virtualizer<HTMLDivElement, HTMLTableCellElement>;
+	} & Pick<TanStackGridProps<T>, "withPaddingCells">,
+) {
 	const { headerGroup } = props;
 
 	const virtualColumns = props.columnVirtualizer.getVirtualItems();
@@ -28,7 +31,14 @@ export function TanStackHeadRowItem<T extends Record<string, unknown>>(props: {
 			) : null}
 			{virtualColumns.map((virtualColumn) => {
 				const header = headerGroup.headers[virtualColumn.index];
-				return <TanStackHeadRowItemCell<T> key={header.id} table={props.table} header={header} />;
+				return (
+					<TanStackHeadRowItemCell<T>
+						withPaddingCells={props.withPaddingCells}
+						key={header.id}
+						table={props.table}
+						header={header}
+					/>
+				);
 			})}
 			{virtualPaddingRight ? (
 				//fake empty column to the right for virtualization scroll padding

@@ -16,7 +16,12 @@ export default function TanStackRowItem<T extends Record<string, unknown>>(
 		table: Table<T>;
 	} & Pick<
 		TanStackGridProps<T>,
-		"onSelectedRecordsChange" | "onRowClick" | "onRowDoubleClick" | "rowHeight" | "rowExpansion"
+		| "onSelectedRecordsChange"
+		| "onRowClick"
+		| "onRowDoubleClick"
+		| "rowHeight"
+		| "rowExpansion"
+		| "withPaddingCells"
 	>,
 ) {
 	const { row, virtualRow, rowVirtualizer } = props;
@@ -59,7 +64,14 @@ export default function TanStackRowItem<T extends Record<string, unknown>>(
 			{virtualPaddingLeft ? <td style={{ display: "flex", width: virtualPaddingLeft }} /> : null}
 			{virtualColumns.map((vc) => {
 				const cell = visibleCells[vc.index];
-				return <TanStackCellItem<T> key={cell.id} cell={cell} rowHeight={props.rowHeight} />;
+				return (
+					<TanStackCellItem<T>
+						withPaddingCells={props.withPaddingCells}
+						key={cell.id}
+						cell={cell}
+						rowHeight={props.rowHeight}
+					/>
+				);
 			})}
 			{virtualPaddingRight ? <td style={{ display: "flex", width: virtualPaddingRight }} /> : null}
 			{row.getIsExpanded() && (

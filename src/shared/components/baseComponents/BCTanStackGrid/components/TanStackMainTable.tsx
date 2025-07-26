@@ -25,6 +25,7 @@ export default function TanStackMainTable<T extends Record<string, unknown>>(
 		| "tableClassName"
 		| "idAccessor"
 		| "onSelectedRecordsChange"
+		| "withPaddingCells"
 	>,
 ) {
 	return (
@@ -40,7 +41,11 @@ export default function TanStackMainTable<T extends Record<string, unknown>>(
 					: props.table.getCenterTotalSize(),
 			}}
 		>
-			<TanStackTHead<T> table={props.table} columnVirtualizer={props.columnVirtualizer} />
+			<TanStackTHead<T>
+				withPaddingCells={props.withPaddingCells}
+				table={props.table}
+				columnVirtualizer={props.columnVirtualizer}
+			/>
 			<TanStackTBody<T>
 				rows={props.rows}
 				tableBodyRef={props.tableBodyRef}

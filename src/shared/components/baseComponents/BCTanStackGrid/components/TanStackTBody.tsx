@@ -20,6 +20,7 @@ export function TanStackTBody<T extends Record<string, unknown>>(
 		| "onSelectedRecordsChange"
 		| "rowExpansion"
 		| "idAccessor"
+		| "withPaddingCells"
 	>,
 ) {
 	return (
@@ -35,6 +36,7 @@ export function TanStackTBody<T extends Record<string, unknown>>(
 				const row = props.rows[virtualRow.index] as Row<T>;
 				return (
 					<TanStackRowItem<T>
+						withPaddingCells={props.withPaddingCells}
 						columnVirtualizer={props.columnVirtualizer}
 						tableContainerRef={props.tableContainerRef}
 						table={props.table}

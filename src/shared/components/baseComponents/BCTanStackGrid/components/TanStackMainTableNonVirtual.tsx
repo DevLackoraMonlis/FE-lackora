@@ -22,6 +22,7 @@ export default function TanStackMainTableNonVirtual<T extends Record<string, unk
 		| "tableClassName"
 		| "idAccessor"
 		| "onSelectedRecordsChange"
+		| "withPaddingCells"
 	>,
 ) {
 	return (
@@ -37,8 +38,9 @@ export default function TanStackMainTableNonVirtual<T extends Record<string, unk
 					: props.table.getCenterTotalSize(),
 			}}
 		>
-			<TanStackTHeadNonVirtual<T> table={props.table} />
+			<TanStackTHeadNonVirtual<T> withPaddingCells={props.withPaddingCells} table={props.table} />
 			<TanStackTBodyNonVirtual<T>
+				withPaddingCells={props.withPaddingCells}
 				rows={props.rows}
 				tableBodyRef={props.tableBodyRef}
 				table={props.table}

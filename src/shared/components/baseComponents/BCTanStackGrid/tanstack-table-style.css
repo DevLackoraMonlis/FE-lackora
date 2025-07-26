@@ -73,7 +73,7 @@ th:hover {
 
 td {
 	/*border-bottom: 1px solid var(--tanstack-border-color);*/
-	/*border-left: 1px solid var(--tanstack-border-color);*/
+	border-left: 1px solid var(--tanstack-border-color);
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
@@ -142,6 +142,10 @@ td p {
 	justify-content: center;
 	align-items: center;
 	width: 100%;
+}
+
+.defaultPadding {
+	padding: 8px;
 }
 
 .resizer {
