@@ -137,7 +137,7 @@ export function useDeleteNoneCredential() {
 	const deleteDiscoverySetting = useDeleteDiscoverySettingConfiguration();
 	return { deleteDiscoverySetting };
 }
-export function useDeleteNoneCredentialDependency() {
+export function useDeleteAdapterDependency() {
 	const [dependencyLoading, toggleDependencyLoading] = useToggle([false, true]);
 
 	async function getDependency(configurationId: string) {

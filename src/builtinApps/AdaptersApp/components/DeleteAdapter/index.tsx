@@ -1,4 +1,4 @@
-import { Center, List, Loader } from "@mantine/core";
+import { Center, List, Text } from "@mantine/core";
 import { useEffect, useState } from "react";
 
 import BCDeleteModal from "@/shared/components/baseComponents/BCDeleteModal";
@@ -50,7 +50,7 @@ export function DeleteAdapterModal({ onClose, opened, refetchAdapters, ...select
 		if (adapterManagementCheckAdpDependency.dependencyLoading) {
 			return (
 				<Center>
-					<Loader size="sm" />
+					<Text>Check adapter Dependencies ...</Text>
 				</Center>
 			);
 		}
