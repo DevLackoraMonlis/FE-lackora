@@ -5,11 +5,11 @@ import ICAdvancedFilterGridRow from "@/shared/components/infraComponents/ICAdvan
 import ICAdvancedFilterGridRowCellMenu, {
 	type ICAdvancedFilterGridRowCellMenuProps,
 } from "@/shared/components/infraComponents/ICAdvancedFilter/components/ICAdvancedFilterGrid/ICAdvancedFilterGridRow/ICAdvancedFilterGridRowCellMenu";
+import { ROW_NUMBER_COLUMN } from "@/shared/components/infraComponents/ICAdvancedFilter/index.constants";
 import type { ICAdvancedFilterProps } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
 import { unsecuredCopyToClipboard } from "@/shared/lib/utils";
-import { Flex } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
-import { type ReactNode, useDeferredValue } from "react";
+import { type ReactNode, useCallback, useDeferredValue, useMemo } from "react";
 import { useStore } from "zustand";
 import { useShallow } from "zustand/react/shallow";
 
@@ -43,39 +43,49 @@ export default function ICAdvancedFilterGrid<T extends Record<string, unknown>>(
 		})),
 	);
 
-	const onCopyValue = (value: unknown) => {
+	const onCopyValue = useCallback((value: unknown) => {
 		unsecuredCopyToClipboard((value || "") as string);
 		notifications.show({
 			message: "Value copied to clipboard",
 			withBorder: true,
 		});
-	};
+	}, []);
 
-	const getColumnOption = (columnName: string) => {
-		return props.allColumns.find((column) => column.name === columnName);
-	};
+	const getColumnOption = useCallback(
+		(columnName: string) => {
+			return props.allColumns.find((column) => column.name === columnName);
+		},
+		[props.allColumns],
+	);
 
-	const cellMenu = (params: ICAdvancedFilterGridRowCellMenuProps<T>) => {
+	const cellMenu = useCallback((params: ICAdvancedFilterGridRowCellMenuProps<T>) => {
 		return <ICAdvancedFilterGridRowCellMenu {...params} />;
-	};
+	}, []);
 
-	const includeCondition = (columnName: string, value: unknown) => {
-		return store.includeCondition(columnName, value, props.allColumns);
-	};
+	const includeCondition = useCallback(
+		(columnName: string, value: unknown) => {
+			return store.includeCondition(columnName, value, props.allColumns);
+		},
+		[store.includeCondition, props.allColumns],
+	);
 
-	const excludeCondition = (columnName: string, value: unknown) => {
-		return store.excludeCondition(columnName, value, props.allColumns);
-	};
+	const excludeCondition = useCallback(
+		(columnName: string, value: unknown) => {
+			return store.excludeCondition(columnName, value, props.allColumns);
+		},
+		[store.excludeCondition, props.allColumns],
+	);
 
-	const modifiedColumns: TanStackDataTableColumnColDef<T>[] = props.columns
-		.filter((column) => !props.excludeColumns?.includes(column.accessor))
-		.map((column) => ({
-			...column,
-			minSize: props.minColumnSize,
-			width: props.defaultColumnSize,
-			render: (record, row, rowIndex) => {
-				return (
+	const modifiedColumns: TanStackDataTableColumnColDef<T>[] = useMemo(() => {
+		return props.columns
+			.filter((column) => !props.excludeColumns?.includes(column.accessor))
+			.map((column) => ({
+				...column,
+				minSize: props.minColumnSize,
+				width: props.defaultColumnSize,
+				render: (record, row, rowIndex) => (
 					<ICAdvancedFilterGridRow
+						isFormattedCell
 						cellMenu={(visibleParent) =>
 							cellMenu({
 								cellValue: record[column.accessor],
@@ -91,80 +101,99 @@ export default function ICAdvancedFilterGrid<T extends Record<string, unknown>>(
 							column.render ? column.render(record, row, rowIndex) : (record[column.accessor] as ReactNode)
 						}
 					/>
-				);
-			},
-			title: (
-				<ICAdvancedFilterGridColumn<T>
-					onCopy={() => onCopyValue(getColumnOption(column.accessor)?.displayName || column.accessor)}
-					columnOption={getColumnOption(column.accessor)}
-					key={column.accessor}
-					columnName={column.accessor}
-					store={props.store}
-					allColumns={props.allColumns}
-					run={props.run}
-				/>
-			),
-		}));
+				),
+				title: (
+					<ICAdvancedFilterGridColumn<T>
+						onCopy={() => onCopyValue(getColumnOption(column.accessor)?.displayName || column.accessor)}
+						columnOption={getColumnOption(column.accessor)}
+						key={column.accessor}
+						columnName={column.accessor}
+						store={props.store}
+						allColumns={props.allColumns}
+						run={props.run}
+					/>
+				),
+			}));
+	}, [
+		props.columns,
+		props.excludeColumns,
+		props.minColumnSize,
+		props.defaultColumnSize,
+		props.run,
+		props.store,
+		props.allColumns,
+		cellMenu,
+		excludeCondition,
+		includeCondition,
+		onCopyValue,
+		getColumnOption,
+	]);
 
-	const defaultColumns: TanStackDataTableColumnColDef<T>[] = props.data?.[0]
-		? Object.keys(props.data?.[0])
-				.filter((key) => !props.excludeColumns?.includes(key))
-				.map((key) => {
-					const findColumnInModified = modifiedColumns.find((item) => item.accessor === key);
-					if (findColumnInModified) {
-						return findColumnInModified;
-					}
-					return {
-						accessor: key,
-						minSize: props.minColumnSize,
-						width: props.defaultColumnSize,
-						render: (record) => (
-							<ICAdvancedFilterGridRow
-								cellMenu={(visibleParent) =>
-									cellMenu({
-										cellValue: record[key],
-										columnName: key,
-										excludeCondition,
-										includeCondition,
-										onCopy: () => onCopyValue(record[key]),
-										run: props.run,
-										visibleParent: visibleParent,
-									})
-								}
-								cellRenderValue={record[key] as ReactNode}
-							/>
-						),
-						title: (
-							<ICAdvancedFilterGridColumn<T>
-								onCopy={() => onCopyValue(getColumnOption(key)?.displayName || key)}
-								columnOption={getColumnOption(key)}
-								key={key}
-								columnName={key}
-								store={props.store}
-								allColumns={props.allColumns}
-								run={props.run}
-							/>
-						),
-					};
-				})
-		: [];
+	const firstDataObject = props.data?.[0];
 
-	const rowNumberColumn: TanStackDataTableColumnColDef<T> = {
-		accessor: "row-number",
-		title: (
-			<Flex w="100%" align={"center"} justify={"center"}>
-				#
-			</Flex>
-		),
-		render: (_record, _row, rowIndex) => (
-			<Flex w="100%" align={"center"} justify={"center"}>
-				{rowIndex}
-			</Flex>
-		),
-		width: 50,
-	};
+	const defaultColumns: TanStackDataTableColumnColDef<T>[] = useMemo(() => {
+		if (!firstDataObject) return [];
 
-	defaultColumns.unshift(rowNumberColumn);
+		const columns = Object.keys(firstDataObject)
+			.filter((key) => !props.excludeColumns?.includes(key))
+			.map((key) => {
+				const findColumnInModified = modifiedColumns.find((item) => item.accessor === key);
+				if (findColumnInModified) return findColumnInModified;
+
+				const column: TanStackDataTableColumnColDef<T> = {
+					accessor: key,
+					minSize: props.minColumnSize,
+					width: props.defaultColumnSize,
+					render: (record) => (
+						<ICAdvancedFilterGridRow
+							isFormattedCell={false}
+							cellMenu={(visibleParent) =>
+								cellMenu({
+									cellValue: record[key],
+									columnName: key,
+									excludeCondition,
+									includeCondition,
+									onCopy: () => onCopyValue(record[key]),
+									run: props.run,
+									visibleParent: visibleParent,
+								})
+							}
+							cellRenderValue={record[key] as ReactNode}
+						/>
+					),
+					title: (
+						<ICAdvancedFilterGridColumn<T>
+							onCopy={() => onCopyValue(getColumnOption(key)?.displayName || key)}
+							columnOption={getColumnOption(key)}
+							key={key}
+							columnName={key}
+							store={props.store}
+							allColumns={props.allColumns}
+							run={props.run}
+						/>
+					),
+				};
+
+				return column;
+			});
+
+		columns.unshift(ROW_NUMBER_COLUMN as TanStackDataTableColumnColDef<T>);
+		return columns;
+	}, [
+		firstDataObject,
+		props.excludeColumns,
+		props.minColumnSize,
+		props.defaultColumnSize,
+		props.run,
+		props.store,
+		props.allColumns,
+		cellMenu,
+		excludeCondition,
+		includeCondition,
+		onCopyValue,
+		getColumnOption,
+		modifiedColumns,
+	]);
 
 	const differedColumns = useDeferredValue(defaultColumns);
 	const differedRecords = useDeferredValue(props.data);

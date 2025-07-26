@@ -1,16 +1,20 @@
 import {
+	getCyberAssetClassificationIcon,
 	getCyberAssetCriticalityBadge,
 	getCyberAssetDiscoveryTypeBadge,
+	getCyberAssetOsTypeBadge,
 	getCyberAssetStateBadge,
 	getCyberAssetStatusBadge,
 } from "@/builtinApps/CyberAssetsApp/CyberAssets/index.helper";
 import type { TanStackDataTableColumnColDef } from "@/shared/components/baseComponents/BCTanStackGrid/index.types";
 import type { ICAdvancedFilterDataRs } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
-import { Flex, Text } from "@mantine/core";
-import { IconMoodEmpty } from "@tabler/icons-react";
+import { Badge, Divider, Flex, Text } from "@mantine/core";
+import { IconLink } from "@tabler/icons-react";
 import {
+	type CyberAssetClassification,
 	CyberAssetCriticality,
 	type CyberAssetDiscoveryType,
+	type CyberAssetOsType,
 	CyberAssetState,
 	CyberAssetStatus,
 } from "./index.enum";
@@ -20,9 +24,18 @@ export const CYBER_ASSETS_FORMATTED_COLUMNS: TanStackDataTableColumnColDef<ICAdv
 		accessor: "hostname",
 		render: (record) => {
 			return (
-				<Flex gap={"xs"}>
-					<IconMoodEmpty />
-					<Text c={"blue"}>{record.hostname}</Text>
+				<Flex key={`hostname-${record.hostname}`} justify={"flex-start"} align={"center"}>
+					<Divider
+						h={32}
+						size={4}
+						color={CYBER_ASSET_STATE_COLOR[record.state as CyberAssetState]}
+						orientation={"vertical"}
+						mr={"xs"}
+					/>
+					{getCyberAssetClassificationIcon({ type: record.classification as CyberAssetClassification })}
+					<Text fz={"xs"} fw={"bold"} c={"blue"} ml={"xs"}>
+						{record.hostname}
+					</Text>
 				</Flex>
 			);
 		},
@@ -30,31 +43,82 @@ export const CYBER_ASSETS_FORMATTED_COLUMNS: TanStackDataTableColumnColDef<ICAdv
 	{
 		accessor: "previous_status",
 		render: (record) => {
-			return getCyberAssetStatusBadge({ type: record.previous_status as CyberAssetStatus });
+			return getCyberAssetStatusBadge({
+				type: record.previous_status as CyberAssetStatus,
+				props: {
+					m: "xs",
+				},
+			});
+		},
+	},
+	{
+		accessor: "private_ip",
+		render: (record) => {
+			return (
+				<Flex key={`private_ip-${record.related_ip}`} p={"xs"} gap={"xs"} align={"center"}>
+					{record.private_ip}
+					{record.related_ip && (
+						<Badge variant={"light"} size={"xs"} leftSection={<IconLink size={12} />}>
+							{record.related_ip}
+						</Badge>
+					)}
+				</Flex>
+			);
 		},
 	},
 	{
 		accessor: "current_status",
 		render: (record) => {
-			return getCyberAssetStatusBadge({ type: record.current_status as CyberAssetStatus });
+			return getCyberAssetStatusBadge({
+				type: record.current_status as CyberAssetStatus,
+				props: {
+					m: "xs",
+				},
+			});
 		},
 	},
 	{
 		accessor: "criticality",
 		render: (record) => {
-			return getCyberAssetCriticalityBadge({ type: record.criticality as CyberAssetCriticality });
+			return getCyberAssetCriticalityBadge({
+				type: record.criticality as CyberAssetCriticality,
+				props: {
+					m: "xs",
+				},
+			});
 		},
 	},
 	{
 		accessor: "discovery_type",
 		render: (record) => {
-			return getCyberAssetDiscoveryTypeBadge({ type: record.discovery_type as CyberAssetDiscoveryType });
+			return getCyberAssetDiscoveryTypeBadge({
+				type: record.discovery_type as CyberAssetDiscoveryType,
+				props: {
+					m: "xs",
+				},
+			});
+		},
+	},
+	{
+		accessor: "os",
+		render: (record) => {
+			return getCyberAssetOsTypeBadge({
+				type: record.os as CyberAssetOsType,
+				props: {
+					m: "xs",
+				},
+			});
 		},
 	},
 	{
 		accessor: "state",
 		render: (record) => {
-			return getCyberAssetStateBadge({ type: record.state as CyberAssetState });
+			return getCyberAssetStateBadge({
+				type: record.state as CyberAssetState,
+				props: {
+					m: "xs",
+				},
+			});
 		},
 	},
 ];

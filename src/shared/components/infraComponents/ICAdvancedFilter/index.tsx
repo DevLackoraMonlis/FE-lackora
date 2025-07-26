@@ -40,7 +40,7 @@ export default function ICAdvancedFilter<T extends Record<string, unknown>>(prop
 			</Collapse>
 			<ICAdvancedFilterGrid<T>
 				excludeColumns={props.excludeColumns}
-				height={props.height - (store.openedConditionSection ? height + 10 : 0)}
+				height={props.height - (store.openedConditionSection ? height : 0)}
 				idAccessor={props.idAccessor}
 				store={props.store}
 				data={props.data}

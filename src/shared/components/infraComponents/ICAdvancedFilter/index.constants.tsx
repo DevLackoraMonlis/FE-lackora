@@ -1,4 +1,6 @@
+import type { TanStackDataTableColumnColDef } from "@/shared/components/baseComponents/BCTanStackGrid/index.types";
 import type { ICAdvancedFilterColumnType } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
+import { Flex } from "@mantine/core";
 
 export const IC_ADVANCED_FILTER_DEFAULT_OPERATORS = {
 	"=": "equal",
@@ -50,4 +52,19 @@ export const IC_ADVANCED_FILTER_OPERATORS_MAP: Record<
 	IP: IC_ADVANCED_FILTER_INT64_OPERATORS,
 	List: IC_ADVANCED_FILTER_STRING_OPERATORS,
 	String: IC_ADVANCED_FILTER_STRING_OPERATORS,
+};
+
+export const ROW_NUMBER_COLUMN: TanStackDataTableColumnColDef<unknown> = {
+	accessor: "row-number",
+	title: (
+		<Flex w="100%" align={"center"} justify={"center"}>
+			#
+		</Flex>
+	),
+	render: (_record, _row, rowIndex) => (
+		<Flex w="100%" align={"center"} justify={"center"}>
+			{rowIndex}
+		</Flex>
+	),
+	width: 50,
 };

@@ -99,57 +99,52 @@ export function tanStackGenerateColumns<T>(
 		0,
 	);
 
-	const defaultColumns = filteredColumns.map(
-		({ cellsStyle, titleStyle, hidden: _hidden, wrap, accessor, ...column }, index) => {
-			const columnTitle =
-				typeof column.title === "function" ? (column.title as DataTableColumnTitleFn<T>) : undefined;
-			const header = columnTitle
-				? (info: HeaderContext<T, unknown>) => columnTitle?.(info.column)
-				: column.title;
+	const defaultColumns = filteredColumns.map(({ hidden: _hidden, wrap, accessor, ...column }, index) => {
+		const columnTitle =
+			typeof column.title === "function" ? (column.title as DataTableColumnTitleFn<T>) : undefined;
+		const header = columnTitle
+			? (info: HeaderContext<T, unknown>) => columnTitle?.(info.column)
+			: column.title;
 
-			const extend = tanStackGetExtendedWidth<T>(
-				viewportWidth,
-				totalDefaultWidth,
-				filteredColumns,
-				index,
-				params.recordCount,
-				params.pinLastColumn,
-				!!params.rowExpansion,
-				!!params.onSelectedRecordsChange,
-			);
+		const extend = tanStackGetExtendedWidth<T>(
+			viewportWidth,
+			totalDefaultWidth,
+			filteredColumns,
+			index,
+			params.recordCount,
+			params.pinLastColumn,
+			!!params.rowExpansion,
+			!!params.onSelectedRecordsChange,
+		);
 
-			const fixedTitle = column.title
-				? (header as TanStackColumnHeader<T>)
-				: column.title === ""
-					? ""
-					: accessor;
+		const fixedTitle = column.title
+			? (header as TanStackColumnHeader<T>)
+			: column.title === ""
+				? ""
+				: accessor;
 
-			const mappedColumn: ColumnDef<T> = {
-				...column,
-				accessorKey: accessor,
-				size:
-					(column.width || TAN_STACK_DEFAULT_COLUMN_SIZE) +
-					(extend?.getExtend ? extend.extendedWidth || 0 : 0),
-				id: accessor,
-				enablePinning: index === filteredColumns.length - 1 && params.pinLastColumn,
-				meta: {
-					cellsStyle,
-					titleStyle,
-					wrap,
-				},
-				header: fixedTitle,
+		const mappedColumn: ColumnDef<T> = {
+			...column,
+			accessorKey: accessor,
+			size:
+				(column.width || TAN_STACK_DEFAULT_COLUMN_SIZE) + (extend?.getExtend ? extend.extendedWidth || 0 : 0),
+			id: accessor,
+			enablePinning: index === filteredColumns.length - 1 && params.pinLastColumn,
+			meta: {
+				wrap,
+			},
+			header: fixedTitle,
+		};
+
+		if (column.render) {
+			mappedColumn.cell = (info) => {
+				const rowIndex = info.row.index + 1 + ((params.page || 1) - 1) * (params.recordsPerPage || 0);
+				return column.render?.(info.row.original, info.row, rowIndex);
 			};
+		}
 
-			if (column.render) {
-				mappedColumn.cell = (info) => {
-					const rowIndex = info.row.index + 1 + ((params.page || 1) - 1) * (params.recordsPerPage || 0);
-					return column.render?.(info.row.original, info.row, rowIndex);
-				};
-			}
-
-			return mappedColumn;
-		},
-	);
+		return mappedColumn;
+	});
 
 	// 2. Add an "expander" column:
 	const expansionColumn: ColumnDef<T> = {

@@ -1,8 +1,10 @@
 import CyberAssetsCrudButtons from "@/builtinApps/CyberAssetsApp/CyberAssets/components/CyberAssetsCrudButtons";
 import { CYBER_ASSETS_FORMATTED_COLUMNS } from "@/builtinApps/CyberAssetsApp/CyberAssets/index.constants";
 import {
+	CyberAssetClassification,
 	CyberAssetCriticality,
 	CyberAssetDiscoveryType,
+	CyberAssetOsType,
 	CyberAssetState,
 	CyberAssetStatus,
 } from "@/builtinApps/CyberAssetsApp/CyberAssets/index.enum";
@@ -51,6 +53,12 @@ export default function CyberAssetsLandingPage() {
 			CyberAssetStatus.ASSOCIATED,
 			CyberAssetStatus.NO_POLICY,
 		]) as string,
+		classification: getRandomItem([
+			CyberAssetClassification.UPS,
+			CyberAssetClassification.WORK_STATION,
+			CyberAssetClassification.STORAGE,
+			CyberAssetClassification.SERVER,
+		]) as string,
 		current_status: getRandomItem([
 			CyberAssetStatus.PROFILED,
 			CyberAssetStatus.UNREACHABLE,
@@ -66,7 +74,7 @@ export default function CyberAssetsLandingPage() {
 			CyberAssetCriticality.HIGH,
 			CyberAssetCriticality.VERY_HIGH,
 		]) as string,
-		os: getRandomItem(["windows", "linux", "macos", "unix"]) as string,
+		os: getRandomItem([CyberAssetOsType.WINDOWS, CyberAssetOsType.LINUX]) as string,
 		discovery_type: getRandomItem([
 			CyberAssetDiscoveryType.MANUAL,
 			CyberAssetDiscoveryType.DISCOVERED,
@@ -74,6 +82,7 @@ export default function CyberAssetsLandingPage() {
 		]) as string,
 		state: getRandomItem([CyberAssetState.MANAGEABLE, CyberAssetState.UNMANAGEABLE]) as string,
 		message: `Sample message for host ${i + 1}`,
+		related_ip: "12",
 	}));
 
 	const mainStore = createDynamicICAdvancedStore();
@@ -86,7 +95,7 @@ export default function CyberAssetsLandingPage() {
 			title={"Cyber Assets"}
 			mainPage={(params) => (
 				<ICAdvancedFilter<ICAdvancedFilterDataRs>
-					excludeColumns={["id"]}
+					excludeColumns={["id", "classification", "related_ip"]}
 					store={params?.store || mainStore}
 					searchInputPlaceholder={"Search by hostname"}
 					searchInputItems={[

@@ -1,6 +1,7 @@
 import type { ColumnDef, Row, Table } from "@tanstack/react-table";
 import type { Virtualizer } from "@tanstack/react-virtual";
 import type React from "react";
+import { useMemo } from "react";
 import { TAN_STACK_EXCLUDE_COLUMNS_FROM_STYLES } from "../index.constants";
 import type { TanStackGridProps } from "../index.types";
 import { TanStackTBody } from "./TanStackTBody";
@@ -28,19 +29,20 @@ export default function TanStackMainTable<T extends Record<string, unknown>>(
 		| "withPaddingCells"
 	>,
 ) {
+	const tableStyle = useMemo(
+		() => ({
+			display: "grid",
+			width: !props.columns.filter(
+				(item) => !TAN_STACK_EXCLUDE_COLUMNS_FROM_STYLES.includes(item.id as string),
+			).length
+				? "100%"
+				: props.table.getCenterTotalSize(),
+		}),
+		[props.table.getCenterTotalSize(), props.columns],
+	);
+
 	return (
-		<table
-			ref={props.tableRef}
-			className={props.tableClassName}
-			style={{
-				display: "grid",
-				width: !props.columns.filter(
-					(item) => !TAN_STACK_EXCLUDE_COLUMNS_FROM_STYLES.includes(item.id as string),
-				).length
-					? "100%"
-					: props.table.getCenterTotalSize(),
-			}}
-		>
+		<table ref={props.tableRef} className={props.tableClassName} style={tableStyle}>
 			<TanStackTHead<T>
 				withPaddingCells={props.withPaddingCells}
 				table={props.table}

@@ -1,6 +1,8 @@
 import type { Row, Table } from "@tanstack/react-table";
 import type { VirtualItem, Virtualizer } from "@tanstack/react-virtual";
 import type React from "react";
+import type { CSSProperties } from "react";
+import { useMemo } from "react";
 import type { TanStackGridProps } from "../index.types";
 import TanStackCellItem from "./TanStackCellItem";
 import TanStackExpandedRowItem from "./TanStackExpandedRowItem";
@@ -39,6 +41,33 @@ export default function TanStackRowItem<T extends Record<string, unknown>>(
 			props.columnVirtualizer.getTotalSize() - (virtualColumns[virtualColumns.length - 1]?.end ?? 0);
 	}
 
+	const rowStyle = useMemo<CSSProperties>(
+		() => ({
+			display: "flex",
+			position: "absolute",
+			transform: `translateY(${virtualRow.start}px)`, //this should always be a `style` as it changes on scroll
+			width: "100%",
+			...(row.getIsExpanded() && { flexWrap: "wrap" }),
+		}),
+		[virtualRow.start, row.getIsExpanded()],
+	);
+
+	const trLeftStyle = useMemo<CSSProperties>(
+		() => ({
+			display: "flex",
+			width: virtualPaddingLeft,
+		}),
+		[virtualPaddingLeft],
+	);
+
+	const trRightStyle = useMemo<CSSProperties>(
+		() => ({
+			display: "flex",
+			width: virtualPaddingRight,
+		}),
+		[virtualPaddingRight],
+	);
+
 	return (
 		// biome-ignore lint/a11y/useKeyWithClickEvents: <explanation>
 		<tr
@@ -53,15 +82,9 @@ export default function TanStackRowItem<T extends Record<string, unknown>>(
 				}
 			}}
 			onDoubleClick={() => props.onRowDoubleClick?.({ record: row.original, index: row.index })}
-			style={{
-				display: "flex",
-				position: "absolute",
-				transform: `translateY(${virtualRow.start}px)`, //this should always be a `style` as it changes on scroll
-				width: "100%",
-				...(row.getIsExpanded() && { flexWrap: "wrap" }),
-			}}
+			style={rowStyle}
 		>
-			{virtualPaddingLeft ? <td style={{ display: "flex", width: virtualPaddingLeft }} /> : null}
+			{virtualPaddingLeft ? <td style={trLeftStyle} /> : null}
 			{virtualColumns.map((vc) => {
 				const cell = visibleCells[vc.index];
 				return (
@@ -73,7 +96,7 @@ export default function TanStackRowItem<T extends Record<string, unknown>>(
 					/>
 				);
 			})}
-			{virtualPaddingRight ? <td style={{ display: "flex", width: virtualPaddingRight }} /> : null}
+			{virtualPaddingRight ? <td style={trRightStyle} /> : null}
 			{row.getIsExpanded() && (
 				<TanStackExpandedRowItem<T> index={virtualRow.index} row={row} rowExpansion={props.rowExpansion} />
 			)}

@@ -1,6 +1,7 @@
 import type { TanStackGridProps } from "@/shared/components/baseComponents/BCTanStackGrid/index.types";
 import type { HeaderGroup, Table } from "@tanstack/react-table";
 import type { Virtualizer } from "@tanstack/react-virtual";
+import { useMemo } from "react";
 import TanStackHeadRowItemCell from "./TanStackHeadRowItemCell";
 
 export function TanStackHeadRowItem<T extends Record<string, unknown>>(
@@ -23,11 +24,27 @@ export function TanStackHeadRowItem<T extends Record<string, unknown>>(
 			props.columnVirtualizer.getTotalSize() - (virtualColumns[virtualColumns.length - 1]?.end ?? 0);
 	}
 
+	const thLeftStyle = useMemo(
+		() => ({
+			display: "flex",
+			width: virtualPaddingLeft,
+		}),
+		[virtualPaddingLeft],
+	);
+
+	const thRightStyle = useMemo(
+		() => ({
+			display: "flex",
+			width: virtualPaddingRight,
+		}),
+		[virtualPaddingRight],
+	);
+
 	return (
-		<tr style={{ display: "flex", width: "100%" }}>
+		<tr className={"tanStackRowItem"}>
 			{virtualPaddingLeft ? (
 				//fake empty column to the left for virtualization scroll padding
-				<th style={{ display: "flex", width: virtualPaddingLeft }} />
+				<th style={thLeftStyle} />
 			) : null}
 			{virtualColumns.map((virtualColumn) => {
 				const header = headerGroup.headers[virtualColumn.index];
@@ -42,7 +59,7 @@ export function TanStackHeadRowItem<T extends Record<string, unknown>>(
 			})}
 			{virtualPaddingRight ? (
 				//fake empty column to the right for virtualization scroll padding
-				<th style={{ display: "flex", width: virtualPaddingRight }} />
+				<th style={thRightStyle} />
 			) : null}
 		</tr>
 	);
