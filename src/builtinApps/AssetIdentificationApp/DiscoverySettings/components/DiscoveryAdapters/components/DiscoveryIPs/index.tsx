@@ -16,7 +16,6 @@ import type { ConfigurationRs } from "../../../../index.types";
 
 type DiscoveryLastRunProps = Partial<ConfigurationRs> & {
 	enabledQuery: boolean;
-	hightOffset?: number;
 };
 
 function DiscoveryLastRun(props: DiscoveryLastRunProps) {
@@ -122,10 +121,12 @@ function DiscoveryLastRun(props: DiscoveryLastRunProps) {
 				/>
 			</Flex>
 			<BCTanStackGrid
-				h={height - (props.hightOffset ?? 390)}
+				h={height - 290}
 				withTableBorder
 				withColumnBorders
 				withRowBorders
+				withPaddingCells
+				disableVirtualize
 				idAccessor="key"
 				columns={columns}
 				records={tableRecords}
@@ -148,7 +149,7 @@ type Props = Partial<ConfigurationRs> & {
 export default function DiscoveryIPsDrawerModal({ onClose, opened, ...configs }: Props) {
 	return (
 		<BCDrawer onClose={onClose} opened={opened} title="Discovered IPs">
-			<DiscoveryLastRun enabledQuery={true} hightOffset={310} {...configs} />
+			<DiscoveryLastRun enabledQuery={true} {...configs} />
 		</BCDrawer>
 	);
 }

@@ -9,7 +9,7 @@ import WorkflowAssetDiscovery from "./components/WorkflowAssetDiscovery";
 import WorkflowAssetProfiling from "./components/WorkflowAssetProfiling";
 import WorkflowChangeDetection from "./components/WorkflowChangeDetection";
 
-import WorkflowDetectedAssets from "./components/shared/WorkflowDetectedAssets";
+import WorkflowDetectedAssetsModal from "./components/shared/WorkflowDetectedAssetsModal";
 
 export default function WorkflowAssetsIdentification() {
 	const { height } = useViewportSize();
@@ -26,7 +26,7 @@ export default function WorkflowAssetsIdentification() {
 	};
 	return (
 		<>
-			<WorkflowDetectedAssets
+			<WorkflowDetectedAssetsModal
 				onClose={handleDetectedAssets.close}
 				opened={openedDetectedAssets}
 				enabledQuery={false}

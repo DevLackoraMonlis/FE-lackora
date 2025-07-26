@@ -22,7 +22,7 @@ type Props = Partial<ConfigurationRs> & {
 	hightOffset?: number;
 };
 
-function DetectedAssets(props: Props) {
+function WorkflowDetectedAssets(props: Props) {
 	const { height } = useViewportSize();
 	const { detectedAssets } = useWorkflowDetectedAssets(
 		props.enabledQuery,
@@ -134,11 +134,12 @@ function DetectedAssets(props: Props) {
 				/>
 			</Flex>
 			<BCTanStackGrid
-				h={height - (props.hightOffset ?? 310)}
+				idAccessor="key"
 				withTableBorder
 				withColumnBorders
 				withRowBorders
-				idAccessor="key"
+				withPaddingCells
+				disableVirtualize
 				columns={columns}
 				records={tableRecords}
 				totalRecords={totalRecords}
@@ -147,15 +148,16 @@ function DetectedAssets(props: Props) {
 				onPageChange={(page) => handleUpdateQueryParams({ page })}
 				onRecordsPerPageChange={(limit) => handleUpdateQueryParams({ limit })}
 				recordsPerPageOptions={[25, 50, 100]}
+				h={height - (props.hightOffset ?? 310)}
 			/>
 		</Flex>
 	);
 }
 
-export default function WorkflowDetectedAssets({ onClose, opened, ...configs }: Props) {
+export default function WorkflowDetectedAssetsModal({ onClose, opened, ...configs }: Props) {
 	return (
-		<BCDrawer onClose={onClose} opened={opened} title="Detected Assets">
-			<DetectedAssets onClose={onClose} opened={opened} {...configs} />
+		<BCDrawer size="50%" onClose={onClose} opened={opened} title="Detected Assets">
+			<WorkflowDetectedAssets onClose={onClose} opened={opened} {...configs} />
 		</BCDrawer>
 	);
 }

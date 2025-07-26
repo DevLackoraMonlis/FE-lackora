@@ -15,7 +15,6 @@ import type { ConfigurationRs } from "../../../../../../index.types";
 
 type Props = Partial<ConfigurationRs> & {
 	enabledQuery: boolean;
-	hightOffset?: number;
 };
 
 export function DiscoveryQuickResults(props: Props) {
@@ -120,10 +119,12 @@ export function DiscoveryQuickResults(props: Props) {
 				/>
 			</Flex>
 			<BCTanStackGrid
-				h={height - (props.hightOffset ?? 390)}
+				h={height - 350}
 				withTableBorder
 				withColumnBorders
 				withRowBorders
+				withPaddingCells
+				disableVirtualize
 				idAccessor="key"
 				columns={columns}
 				records={tableRecords}

@@ -128,7 +128,7 @@ export function useGetVRFs<TData = Awaited<ReturnType<typeof getVRFs>>, TError =
 
 
 /**
- * @summary Create Connection
+ * @summary Create Vrf
  */
 export const createVRF = (
     createVRF: CreateVRF,
@@ -176,7 +176,7 @@ const {mutation: mutationOptions} = options ?
     export type CreateVRFMutationError = HTTPValidationError
 
     /**
- * @summary Create Connection
+ * @summary Create Vrf
  */
 export const useCreateVRF = <TError = HTTPValidationError,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createVRF>>, TError,{data: CreateVRF}, TContext>, }
@@ -279,7 +279,7 @@ export function useGetVRF<TData = Awaited<ReturnType<typeof getVRF>>, TError = H
 
 
 /**
- * @summary Update Connection
+ * @summary Update Vrf
  */
 export const editVRF = (
     vrfId: string,
@@ -327,7 +327,7 @@ const {mutation: mutationOptions} = options ?
     export type EditVRFMutationError = HTTPValidationError
 
     /**
- * @summary Update Connection
+ * @summary Update Vrf
  */
 export const useEditVRF = <TError = HTTPValidationError,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof editVRF>>, TError,{vrfId: string;data: CreateVRF}, TContext>, }
@@ -343,7 +343,7 @@ export const useEditVRF = <TError = HTTPValidationError,
       return useMutation(mutationOptions , queryClient);
     }
     /**
- * @summary Delete Web Service
+ * @summary Delete Vrf
  */
 export const deleteVRF = (
     vrfId: string,
@@ -388,7 +388,7 @@ const {mutation: mutationOptions} = options ?
     export type DeleteVRFMutationError = HTTPValidationError
 
     /**
- * @summary Delete Web Service
+ * @summary Delete Vrf
  */
 export const useDeleteVRF = <TError = HTTPValidationError,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteVRF>>, TError,{vrfId: string}, TContext>, }
