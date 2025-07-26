@@ -5,20 +5,23 @@ import { useState } from "react";
 
 type Props = DrawerProps & {
 	withFullScreen?: boolean;
+	fullScreen?: boolean;
 };
 
 export default function BCDrawer({
 	children,
 	title,
 	onClose,
+	fullScreen,
 	withFullScreen = true,
 	size: drawerSize,
 	...otherProps
 }: Props) {
-	const [size, setSize] = useState<MantineSize | string | number>(drawerSize ?? "lg");
+	const defaultSize = fullScreen ? "100%" : (drawerSize ?? "lg");
+	const [size, setSize] = useState<MantineSize | string | number>(defaultSize);
 
 	const handleClose = () => {
-		setSize(drawerSize ?? "lg");
+		setSize(defaultSize);
 		onClose();
 	};
 
@@ -32,14 +35,14 @@ export default function BCDrawer({
 			onClose={handleClose}
 			styles={{ title: { width: "100%" } }}
 			title={
-				withFullScreen ? (
+				!fullScreen && withFullScreen ? (
 					<Flex align="center" justify="space-between">
 						<Text fw="bold">{title}</Text>
 						<ActionIcon
 							c="black"
 							variant="transparent"
 							pb="2px"
-							onClick={() => setSize(size === drawerSize || size === "lg" ? "100%" : (drawerSize ?? "lg"))}
+							onClick={() => setSize(size === drawerSize || size === "lg" ? "100%" : defaultSize)}
 						>
 							<IconMaximize size={17} />
 						</ActionIcon>

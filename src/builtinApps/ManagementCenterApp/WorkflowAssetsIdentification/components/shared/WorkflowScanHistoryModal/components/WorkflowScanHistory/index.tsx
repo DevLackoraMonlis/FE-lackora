@@ -5,15 +5,15 @@ import { sortBy } from "lodash";
 import { useState } from "react";
 
 import type { PaginationRq } from "@/http/end-points/GeneralService.types";
-import BCDrawer from "@/shared/components/baseComponents/BCDrawer";
 import BCSearchInput from "@/shared/components/baseComponents/BCSearchInput";
 import BCTanStackGrid from "@/shared/components/baseComponents/BCTanStackGrid";
 import type { TanStackGridProps } from "@/shared/components/baseComponents/BCTanStackGrid/index.types";
 import { useTableSort } from "@/shared/hooks/useTableSort";
 
-import { useWorkflowDetectedAssets } from "../../../index.hooks";
+import { useWorkflowDetectedAssets } from "../../../../../index.hooks";
 
 import type { ConfigurationRs } from "@/builtinApps/AssetIdentificationApp/DiscoverySettings/index.types";
+import { getWorkflowStatusColor } from "@/builtinApps/ManagementCenterApp/WorkflowAssetsIdentification/index.helper";
 
 type Props = Partial<ConfigurationRs> & {
 	onClose: VoidFunction;
@@ -21,7 +21,7 @@ type Props = Partial<ConfigurationRs> & {
 	enabledQuery: boolean;
 };
 
-function WorkflowDetectedAssets(props: Props) {
+export default function WorkflowScanHistory(props: Props) {
 	const { height } = useViewportSize();
 	const { detectedAssets } = useWorkflowDetectedAssets(
 		props.enabledQuery,
@@ -75,7 +75,7 @@ function WorkflowDetectedAssets(props: Props) {
 			accessor: "gateway",
 			title: (
 				<Flex justify="space-between" align="center">
-					<Text>Time of Discovery</Text>
+					<Text>Gateway</Text>
 					{generateSortIcons("gateway")}
 				</Flex>
 			),
@@ -113,16 +113,25 @@ function WorkflowDetectedAssets(props: Props) {
 	return (
 		<Flex direction="column" gap="xs">
 			<Card bg="gray.1" p={0} m={0}>
-				<Flex gap="sm" align="center" justify="center" py="sm">
-					<Badge color={status ? "green" : "red"} circle size="30px">
-						{status ? <IconCheck color="white" /> : <IconX color="white" />}
-					</Badge>
-					<Text fz="lg" fw="bold" tt="capitalize">
-						{status
-							? `${detectedAssets?.data?.total ?? "-"} IPs discovered by ${
-									detectedAssets?.data?.duration
-								} in scan ${props.configurationIP}`
-							: `${detectedAssets?.data?.message || "-"}`}
+				<Flex direction="column" gap="xs" p="sm">
+					<Flex align="center" justify="space-between">
+						<Flex gap="xs" align="center">
+							<Badge color={status ? "green" : "red"} circle size="25px">
+								{status ? <IconCheck size={19} color="white" /> : <IconX size={19} color="white" />}
+							</Badge>
+							<Text fw="bold" fz="md">
+								{"Scan #4300"}
+							</Text>
+						</Flex>
+						<Flex gap="xs" align="center">
+							<Text>{"Scan Time: 2025-07-21 12:00 | Duration: 1h 10min(s) | Status: "}</Text>
+							<Badge color={getWorkflowStatusColor("failed")} variant="light">
+								{"failed"}
+							</Badge>
+						</Flex>
+					</Flex>
+					<Text fw="bold" tt="capitalize">
+						{"Total Identified Assets: 540"}
 					</Text>
 				</Flex>
 			</Card>
@@ -151,16 +160,8 @@ function WorkflowDetectedAssets(props: Props) {
 				onPageChange={(page) => handleUpdateQueryParams({ page })}
 				onRecordsPerPageChange={(limit) => handleUpdateQueryParams({ limit })}
 				recordsPerPageOptions={[25, 50, 100]}
-				h={height - 270}
+				h={height - 300}
 			/>
 		</Flex>
-	);
-}
-
-export default function WorkflowDetectedAssetsModal({ onClose, opened, ...configs }: Props) {
-	return (
-		<BCDrawer size="50%" onClose={onClose} opened={opened} title="Detected Assets">
-			<WorkflowDetectedAssets onClose={onClose} opened={opened} {...configs} />
-		</BCDrawer>
 	);
 }
