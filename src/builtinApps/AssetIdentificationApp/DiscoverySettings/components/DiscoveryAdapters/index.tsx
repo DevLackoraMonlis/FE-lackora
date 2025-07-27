@@ -84,7 +84,7 @@ export default function DiscoverySettingsDiscoveryAdapters() {
 											</Flex>
 											<Flex align="center" gap="xs" px="sm">
 												<Badge variant="light" color={item.is_used ? "green" : "gray"} p="sm">
-													<Text p="2xs">{item.is_used ? "USED" : "UNUSED"}</Text>
+													<Text p="2xs">{item.is_used ? "INUSE" : "UNUSED"}</Text>
 												</Badge>
 												<Badge variant="light" radius="xs" p="md">
 													<Text tt="capitalize" p="2xs">

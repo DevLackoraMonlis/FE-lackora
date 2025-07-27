@@ -33,7 +33,7 @@ export default function WorkflowAssetsIdentification() {
 			/>
 			<Grid p="xs" pt="lg">
 				<Grid.Col span={8} offset={2} pos="relative">
-					<ScrollArea px="xs" h={height - 160}>
+					<ScrollArea px="xs" h={height - 130}>
 						<WorkflowScanAccordion />
 						<WorkflowAssetDiscovery {...commonProps} />
 						<WorkflowAssetProfiling {...commonProps} />
