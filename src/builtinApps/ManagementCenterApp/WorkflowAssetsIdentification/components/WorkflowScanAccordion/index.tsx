@@ -70,7 +70,7 @@ export default function WorkflowScanAccordionItem() {
 									<Text c="white">Today, 08:00</Text>
 								</Flex>
 							</Flex>
-							<Button variant="outline" onClick={handleScanHistory.open}>
+							<Button variant="outline" color="white" onClick={handleScanHistory.open}>
 								Scan History
 							</Button>
 						</Flex>

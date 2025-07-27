@@ -14,7 +14,7 @@ export default function WorkflowAssetProfiling(props: WorkflowHandles) {
 			<WorkflowAccordion
 				{...props}
 				type="WorkflowAssetProfiling"
-				title="Asset Profiling"
+				title="ASSET PROFILING"
 				status="completed"
 				description={{ value: 100, label: "3/7 steps | 00:15min", progress: true }}
 				icon={<AssetProfiling width={25} height={25} />}

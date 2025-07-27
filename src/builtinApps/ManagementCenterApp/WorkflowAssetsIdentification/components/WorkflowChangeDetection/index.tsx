@@ -12,7 +12,7 @@ export default function WorkflowChangeDetection(props: WorkflowHandles) {
 			<WorkflowAccordion
 				{...props}
 				type="WorkflowChangeDetection"
-				title="Change Detection"
+				title="CHANGE DETECTION"
 				status="completed"
 				description={{ value: 100, label: "3/7 steps | 00:15min", progress: true }}
 				icon={<IconStatusChange size={30} />}

@@ -59,7 +59,7 @@ export default function WorkflowScanHistoryList(props: Props) {
 					inputWidth="100%"
 				/>
 				<ScrollArea h={height - 200}>
-					<Flex gap="xs" direction="column" mt="xs">
+					<Flex gap="2xs" direction="column" mt="xs">
 						{results?.map(({ key, scanId, status }) => {
 							return (
 								<Card

@@ -31,16 +31,16 @@ export default function WorkflowAssetsIdentification() {
 				opened={openedDetectedAssets}
 				enabledQuery={false}
 			/>
-			<Grid p="xs" pt="lg">
-				<Grid.Col span={8} offset={2} pos="relative">
-					<ScrollArea px="xs" h={height - 130}>
+			<ScrollArea h={height - 130}>
+				<Grid p="xs" pt="lg">
+					<Grid.Col span={8} offset={2} pos="relative">
 						<WorkflowScanAccordion />
 						<WorkflowAssetDiscovery {...commonProps} />
 						<WorkflowAssetProfiling {...commonProps} />
 						<WorkflowChangeDetection {...commonProps} />
-					</ScrollArea>
-				</Grid.Col>
-			</Grid>
+					</Grid.Col>
+				</Grid>
+			</ScrollArea>
 		</>
 	);
 }

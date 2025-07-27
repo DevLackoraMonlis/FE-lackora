@@ -20,7 +20,7 @@ export default function WorkflowAccordion({
 	return (
 		<Accordion variant="separated" defaultValue={status === "inprogress" ? type : ""}>
 			<Accordion.Item value={type}>
-				<Accordion.Control h="56px">
+				<Accordion.Control h="56px" p="xs">
 					<Flex align="center" justify="space-between">
 						<Flex gap="sm">
 							<Card

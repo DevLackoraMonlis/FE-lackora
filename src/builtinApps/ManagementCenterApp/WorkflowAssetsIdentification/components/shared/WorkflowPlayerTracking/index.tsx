@@ -7,8 +7,8 @@ type Props = {
 export default function WorkflowPlayerTracking({ statusColor }: Props) {
 	return (
 		<Flex direction="column" py="2xs" c={statusColor}>
-			<IconPlayerTrackPrevFilled style={{ transform: "rotate(270deg)" }} />
-			<IconPlayerTrackPrevFilled style={{ transform: "rotate(270deg)" }} />
+			<IconPlayerTrackPrevFilled size={12} style={{ transform: "rotate(270deg)" }} />
+			<IconPlayerTrackPrevFilled size={12} style={{ transform: "rotate(270deg)" }} />
 		</Flex>
 	);
 }

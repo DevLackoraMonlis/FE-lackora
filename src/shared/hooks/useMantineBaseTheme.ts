@@ -11,6 +11,19 @@ export default function useMantineBaseTheme() {
 					}),
 				},
 			},
+			AccordionControl: {
+				defaultProps: {
+					style: {
+						transition: "all 150ms ease",
+					},
+					onMouseEnter: ({ currentTarget }: { currentTarget: HTMLDivElement }) => {
+						currentTarget.style.boxShadow = DEFAULT_THEME.shadows?.sm || "";
+					},
+					onMouseLeave: ({ currentTarget }: { currentTarget: HTMLDivElement }) => {
+						currentTarget.style.boxShadow = "none";
+					},
+				},
+			},
 			Loader: {
 				defaultProps: {
 					type: "dots",
