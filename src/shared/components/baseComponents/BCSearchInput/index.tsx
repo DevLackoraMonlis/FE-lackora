@@ -15,7 +15,7 @@ type Props = {
 export default function BCSearchInput({
 	onSubmitSearch,
 	clientSide = false,
-	inputWidth = "250px",
+	inputWidth = "240px",
 	placeholder = "",
 	inputSize,
 	iconSize,
@@ -23,7 +23,7 @@ export default function BCSearchInput({
 	const [value, setValue] = useState("");
 
 	const handleSubmit = () => {
-		onSubmitSearch(value);
+		onSubmitSearch?.(value);
 		!clientSide && setValue("");
 	};
 

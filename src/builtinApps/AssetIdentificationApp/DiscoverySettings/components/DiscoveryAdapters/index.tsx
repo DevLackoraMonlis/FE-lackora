@@ -95,9 +95,6 @@ export default function DiscoverySettingsDiscoveryAdapters() {
 										</Flex>
 									</Accordion.Control>
 									<Accordion.Panel>
-										<Text py="xs" c="gray.6">
-											Added Configurations
-										</Text>
 										<DiscoveryAdapterGateways
 											enabled={activeAccordion === item.id}
 											adapterId={item.id}

@@ -34,7 +34,7 @@ const DiscoveryAdapterCard = (props: Props) => {
 	}
 
 	const configurationIP = props.configs?.find(({ key }) => key === "ip")?.value;
-	const adapterName = props.configs?.find(({ key }) => key === "connection")?.value;
+	const adapterName = props.configs?.find(({ key }) => key === "name")?.value;
 	const configurationData = {
 		configurationIP: `${isObject(configurationIP) ? configurationIP?.label : ""}`,
 		configurationId: props.id,
@@ -46,8 +46,9 @@ const DiscoveryAdapterCard = (props: Props) => {
 		<Card bg="gray.1" w="100%" padding="xs">
 			<LoadingOverlay visible={props.loading} />
 			<Flex align="center" justify="space-between">
-				<Text fw="bold">
-					{props.configs?.map(({ value }) => (isObject(value) ? value?.label : ""))?.join(" - ")}
+				<Text component="span" fw="bold">
+					{configurationData.adapterName}{" "}
+					<Text component="span" c="dimmed">{` (${configurationData.configurationIP}) `}</Text>
 				</Text>
 				<Flex gap="2xs">
 					<Flex align="center" gap="2xs">
