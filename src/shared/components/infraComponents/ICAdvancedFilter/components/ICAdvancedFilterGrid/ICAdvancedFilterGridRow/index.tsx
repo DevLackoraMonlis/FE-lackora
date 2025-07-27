@@ -1,4 +1,5 @@
-import { Flex, Text } from "@mantine/core";
+import { IC_ADVANCED_FILTER_BLANK_TEXT } from "@/shared/components/infraComponents/ICAdvancedFilter/index.constants";
+import { Flex } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import type { ReactElement, ReactNode } from "react";
 
@@ -21,14 +22,11 @@ export default function ICAdvancedFilterGridRow(props: ICAdvancedFilterGridRowPr
 			pos={"relative"}
 			w={"100%"}
 			fz={"xs"}
+			h={"100%"}
 		>
-			{props.cellRenderValue || (
-				<Text fz={"xs"} fs={"italic"} c={"gray.5"}>
-					BLANK
-				</Text>
-			)}
+			{props.cellRenderValue || IC_ADVANCED_FILTER_BLANK_TEXT}
 
-			<Flex align={"center"} pos={"absolute"} right={0} top={props.isFormattedCell ? 5 : -5}>
+			<Flex align={"center"} pos={"absolute"} right={0} top={1}>
 				{opened ? props.cellMenu(opened) : null}
 			</Flex>
 		</Flex>

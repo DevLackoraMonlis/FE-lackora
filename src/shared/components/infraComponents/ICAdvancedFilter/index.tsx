@@ -7,7 +7,7 @@ import type { ICAdvancedFilterProps } from "@/shared/components/infraComponents/
 import { Collapse, Flex } from "@mantine/core";
 import { useElementSize } from "@mantine/hooks";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useStore } from "zustand/index";
 import { useShallow } from "zustand/react/shallow";
 
@@ -51,39 +51,68 @@ export default function ICAdvancedFilter<T>(
 
 	const isLoading = useGetDataQuery.isFetching || useGetColumnsQuery.isFetching;
 
-	const topSection = (
-		<ICAdvancedFilterTopSection
-			store={props.store}
-			leftSection={props.leftSection}
-			run={useGetDataQuery.refetch}
-			data={data}
-			getDataApi={props.getDataApi}
-			searchInputItems={props.searchInputItems}
-			searchInputPlaceholder={props.searchInputPlaceholder}
-		/>
+	const topSection = useMemo(
+		() => (
+			<ICAdvancedFilterTopSection
+				store={props.store}
+				leftSection={props.leftSection}
+				run={useGetDataQuery.refetch}
+				data={data}
+				getDataApi={props.getDataApi}
+				searchInputItems={props.searchInputItems}
+				searchInputPlaceholder={props.searchInputPlaceholder}
+			/>
+		),
+		[
+			props.store,
+			props.leftSection,
+			data,
+			props.getDataApi,
+			props.searchInputItems,
+			props.searchInputPlaceholder,
+		],
 	);
 
-	const conditionSection = (
-		<Collapse transitionDuration={500} transitionTimingFunction="linear" in={store.openedConditionSection}>
-			<ICAdvancedFilterConditionSection ref={ref} store={props.store} />
-		</Collapse>
+	const conditionSection = useMemo(
+		() => (
+			<Collapse transitionDuration={500} transitionTimingFunction="linear" in={store.openedConditionSection}>
+				<ICAdvancedFilterConditionSection ref={ref} store={props.store} />
+			</Collapse>
+		),
+		[store.openedConditionSection, props.store],
 	);
 
-	const gridSection = (
-		<ICAdvancedFilterGrid<Record<string, unknown>>
-			excludeColumns={props.excludeColumns}
-			height={props.height - (store.openedConditionSection ? height : 0)}
-			idAccessor={props.idAccessor}
-			store={props.store}
-			data={data}
-			isLoading={isLoading}
-			columns={props.columns as TanStackDataTableColumnColDef<Record<string, unknown>>[]}
-			allColumns={allColumns}
-			totalRecords={props.totalRecords}
-			run={useGetDataQuery.refetch}
-			minColumnSize={props.minColumnSize}
-			recordsPerPageOptions={props.recordsPerPageOptions}
-		/>
+	const gridSection = useMemo(
+		() => (
+			<ICAdvancedFilterGrid<Record<string, unknown>>
+				excludeColumns={props.excludeColumns}
+				height={props.height - (store.openedConditionSection ? height : 0)}
+				idAccessor={props.idAccessor}
+				store={props.store}
+				data={data}
+				isLoading={isLoading}
+				columns={props.columns as TanStackDataTableColumnColDef<Record<string, unknown>>[]}
+				allColumns={allColumns}
+				totalRecords={props.totalRecords}
+				run={useGetDataQuery.refetch}
+				minColumnSize={props.minColumnSize}
+				recordsPerPageOptions={props.recordsPerPageOptions}
+			/>
+		),
+		[
+			props.excludeColumns,
+			props.height,
+			store.openedConditionSection,
+			props.idAccessor,
+			props.store,
+			data,
+			isLoading,
+			props.columns,
+			allColumns,
+			props.totalRecords,
+			props.minColumnSize,
+			props.recordsPerPageOptions,
+		],
 	);
 
 	useEffect(() => {

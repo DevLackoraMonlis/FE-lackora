@@ -5,10 +5,14 @@ import ICAdvancedFilterGridRow from "@/shared/components/infraComponents/ICAdvan
 import ICAdvancedFilterGridRowCellMenu, {
 	type ICAdvancedFilterGridRowCellMenuProps,
 } from "@/shared/components/infraComponents/ICAdvancedFilter/components/ICAdvancedFilterGrid/ICAdvancedFilterGridRow/ICAdvancedFilterGridRowCellMenu";
-import { ROW_NUMBER_COLUMN } from "@/shared/components/infraComponents/ICAdvancedFilter/index.constants";
+import {
+	IC_ADVANCED_FILTER_BLANK_TEXT,
+	ROW_NUMBER_COLUMN,
+} from "@/shared/components/infraComponents/ICAdvancedFilter/index.constants";
 import type { ICAdvancedFilterProps } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
 import { unsecuredCopyToClipboard } from "@/shared/lib/utils";
 import { notifications } from "@mantine/notifications";
+import type { Row } from "@tanstack/react-table";
 import { type ReactNode, useCallback, useDeferredValue, useMemo } from "react";
 import { useStore } from "zustand";
 import { useShallow } from "zustand/react/shallow";
@@ -76,6 +80,26 @@ export default function ICAdvancedFilterGrid<T extends Record<string, unknown>>(
 		[store.excludeCondition, props.allColumns],
 	);
 
+	const cellRenderValue = (
+		column: TanStackDataTableColumnColDef<T>,
+		record: T,
+		row: Row<T>,
+		rowIndex: number,
+	) => {
+		if (column.render) {
+			const rendererCell = column.render(record, row, rowIndex);
+
+			if (!rendererCell) {
+				return IC_ADVANCED_FILTER_BLANK_TEXT;
+			}
+		}
+
+		if (!record[column.accessor]) {
+			return IC_ADVANCED_FILTER_BLANK_TEXT;
+		}
+		return record[column.accessor] as ReactNode;
+	};
+
 	const modifiedColumns: TanStackDataTableColumnColDef<T>[] = useMemo(() => {
 		return props.columns
 			.filter((column) => !props.excludeColumns?.includes(column.accessor))
@@ -97,9 +121,7 @@ export default function ICAdvancedFilterGrid<T extends Record<string, unknown>>(
 								visibleParent,
 							})
 						}
-						cellRenderValue={
-							column.render ? column.render(record, row, rowIndex) : (record[column.accessor] as ReactNode)
-						}
+						cellRenderValue={cellRenderValue(column, record, row, rowIndex)}
 					/>
 				),
 				title: (
