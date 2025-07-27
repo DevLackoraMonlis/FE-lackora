@@ -59,6 +59,7 @@ playwright_tests:
   dependencies:
     - dev_test_pipeline
   script:
+    - npx playwright install
     - npx playwright test
   artifacts:
     when: always
