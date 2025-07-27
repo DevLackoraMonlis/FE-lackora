@@ -104,7 +104,7 @@ export default function CyberAssetsLandingPage() {
 					columnsQueryKey={"cyber-assets-columns"}
 					dataQueryKey={`cyber-asset-data-${v4()}`}
 					fullScreenTitle={"Cyber Assets"}
-					excludeColumns={["id", "classification", "related_ip"]}
+					excludeColumns={["id", "classification", "has_related_ip"]}
 					store={params?.store || createDynamicICAdvancedStore()}
 					searchInputPlaceholder={"Search by hostname"}
 					searchInputItems={[

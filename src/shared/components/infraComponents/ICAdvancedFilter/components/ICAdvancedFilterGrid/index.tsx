@@ -11,6 +11,7 @@ import {
 } from "@/shared/components/infraComponents/ICAdvancedFilter/index.constants";
 import type { ICAdvancedFilterProps } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
 import { unsecuredCopyToClipboard } from "@/shared/lib/utils";
+import { Box } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 import type { Row } from "@tanstack/react-table";
 import { type ReactNode, useCallback, useDeferredValue, useMemo } from "react";
@@ -90,12 +91,13 @@ export default function ICAdvancedFilterGrid<T extends Record<string, unknown>>(
 			const rendererCell = column.render(record, row, rowIndex);
 
 			if (!rendererCell) {
-				return IC_ADVANCED_FILTER_BLANK_TEXT;
+				return <Box p={"xs"}>{IC_ADVANCED_FILTER_BLANK_TEXT}</Box>;
 			}
+			return rendererCell;
 		}
 
 		if (!record[column.accessor]) {
-			return IC_ADVANCED_FILTER_BLANK_TEXT;
+			return <Box p={"xs"}>{IC_ADVANCED_FILTER_BLANK_TEXT}</Box>;
 		}
 		return record[column.accessor] as ReactNode;
 	};

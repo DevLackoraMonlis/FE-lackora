@@ -21,10 +21,10 @@ import {
 
 export const CYBER_ASSETS_FORMATTED_COLUMNS: TanStackDataTableColumnColDef<ICAdvancedFilterDataRs>[] = [
 	{
-		accessor: "hostname",
+		accessor: "primary_ip",
 		render: (record) => {
 			return (
-				<Flex key={`hostname-${record.hostname}`} justify={"flex-start"} align={"center"}>
+				<Flex key={`primary_ip-${record.hostname}`} justify={"space-between"} align={"center"}>
 					<Divider
 						h={32}
 						size={4}
@@ -32,10 +32,18 @@ export const CYBER_ASSETS_FORMATTED_COLUMNS: TanStackDataTableColumnColDef<ICAdv
 						orientation={"vertical"}
 						mr={"xs"}
 					/>
-					{getCyberAssetClassificationIcon({ type: record.classification as CyberAssetClassification })}
-					<Text fz={"xs"} fw={"bold"} c={"blue"} ml={"xs"}>
-						{record.hostname}
-					</Text>
+					<Flex align={"center"} gap={"xs"}>
+						{getCyberAssetClassificationIcon({ type: record.classification as CyberAssetClassification })}
+						<Text fz={"xs"} fw={"bold"} c={"blue"} ml={"xs"}>
+							{record.primary_ip}
+						</Text>
+					</Flex>
+
+					{record.has_related_ip && (
+						<Badge variant={"light"} size={"xs"} leftSection={<IconLink size={12} />}>
+							{record.has_related_ip}
+						</Badge>
+					)}
 				</Flex>
 			);
 		},
@@ -49,28 +57,6 @@ export const CYBER_ASSETS_FORMATTED_COLUMNS: TanStackDataTableColumnColDef<ICAdv
 					m: "xs",
 				},
 			});
-		},
-	},
-	{
-		accessor: "primary_ip",
-		render: (record) => {
-			return (
-				<Flex
-					w={"100%"}
-					key={`private_ip-${record.related_ip}`}
-					justify={"space-between"}
-					p={"xs"}
-					gap={"xs"}
-					align={"center"}
-				>
-					{record.primary_ip}
-					{record.related_ip && (
-						<Badge variant={"light"} size={"xs"} leftSection={<IconLink size={12} />}>
-							{record.related_ip}
-						</Badge>
-					)}
-				</Flex>
-			);
 		},
 	},
 	{

@@ -139,6 +139,11 @@ export function getCyberAssetDiscoveryTypeBadge(params: {
 		[CyberAssetDiscoveryType.DISCOVERED]: <IconSearch size={12} />,
 		[CyberAssetDiscoveryType.MANUAL]: <IconHighlight size={12} />,
 	};
+
+	if (!iconMap[params.type]) {
+		return null;
+	}
+
 	return (
 		<Flex {...params.props} align={"center"} gap={"md"}>
 			{iconMap[params.type]}
@@ -155,6 +160,11 @@ export function getCyberAssetOsTypeBadge(params: {
 		[CyberAssetOsType.LINUX]: <LinuxSvgrepoCom1 width={16} height={16} />,
 		[CyberAssetOsType.WINDOWS]: <Icons8Windows101 width={16} height={16} />,
 	};
+
+	if (!iconMap[params.type]) {
+		return null;
+	}
+
 	return (
 		<Flex {...params.props} align={"center"} gap={"md"}>
 			{iconMap[params.type]}
