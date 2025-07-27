@@ -4,7 +4,7 @@ import { IconLineScan } from "@tabler/icons-react";
 
 import WorkflowScanHistoryModal from "../shared/WorkflowScanHistoryModal";
 
-export default function WorkflowScanAccordionItem() {
+export default function WorkflowScanAccordion() {
 	const [openedScanHistory, handleScanHistory] = useDisclosure();
 	return (
 		<>
