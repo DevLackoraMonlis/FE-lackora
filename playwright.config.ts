@@ -80,7 +80,7 @@ export default defineConfig({
 			PORT: port.toString(),
 		},
 		url: `http://localhost:${port}`,
-		reuseExistingServer: !isCI,
+		reuseExistingServer: true,
 		timeout: 60 * 10 * 1000,
 	},
 });
