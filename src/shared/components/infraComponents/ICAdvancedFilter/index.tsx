@@ -49,7 +49,7 @@ export default function ICAdvancedFilter<T>(
 	const allColumns = useGetColumnsQuery.data?.data.results || [];
 	const data = useGetDataQuery.data?.data.results || [];
 
-	const _isLoading = useGetDataQuery.isFetching || useGetColumnsQuery.isFetching;
+	const isLoading = useGetDataQuery.isFetching || useGetColumnsQuery.isFetching;
 
 	const topSection = (
 		<ICAdvancedFilterTopSection
@@ -76,7 +76,7 @@ export default function ICAdvancedFilter<T>(
 			idAccessor={props.idAccessor}
 			store={props.store}
 			data={data}
-			isLoading={true}
+			isLoading={isLoading}
 			columns={props.columns as TanStackDataTableColumnColDef<Record<string, unknown>>[]}
 			allColumns={allColumns}
 			totalRecords={props.totalRecords}
