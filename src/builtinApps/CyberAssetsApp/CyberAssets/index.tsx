@@ -13,14 +13,12 @@ import type {
 	ICAdvancedFilterProps,
 } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
 import { Text } from "@mantine/core";
-import { useViewportSize } from "@mantine/hooks";
 import { useRef } from "react";
 import { v4 } from "uuid";
 
 type AddNewPageType = Pick<ICAdvancedFilterProps<ICAdvancedFilterDataRs>, "defaultVariables" | "store">;
 
 export default function CyberAssetsLandingPage() {
-	const { height } = useViewportSize();
 	const ref = useRef<BCMultiTabPageActions<AddNewPageType> | null>(null);
 	const totalAssets = 2500;
 
@@ -30,7 +28,7 @@ export default function CyberAssetsLandingPage() {
 			staticPageTitle={"All Assets"}
 			ref={ref}
 			title={"Cyber Assets"}
-			mainPage={(params) => (
+			mainPage={({ params, height }) => (
 				<ICAdvancedFilter<ICAdvancedFilterDataRs>
 					getColumnsApi={(signal) =>
 						getAssetFilterColumns(signal).then((response) => ({

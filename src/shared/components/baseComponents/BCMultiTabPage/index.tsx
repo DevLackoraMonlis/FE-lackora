@@ -1,6 +1,7 @@
 import type { BCMultiTabPageActions } from "@/shared/components/baseComponents/BCMultiTabPage/index.types";
 import type { LabelValueType } from "@/shared/lib/general-types";
 import { ActionIcon, Box, Button, Divider, Flex, ScrollArea, Text } from "@mantine/core";
+import { useViewportSize } from "@mantine/hooks";
 import { IconPlus, IconX } from "@tabler/icons-react";
 import {
 	type ReactElement,
@@ -17,14 +18,20 @@ type Props<P> = {
 	subTitle: ReactNode;
 	staticPageTitle: string;
 	ref: RefObject<BCMultiTabPageActions<P> | null>;
-	mainPage: (params?: P) => ReactElement;
+	mainPage: (props: { params?: P; height: number }) => ReactElement;
 };
 
 export default function BCMultiTabPage<P>(props: Props<P>) {
+	const { height } = useViewportSize();
 	const [pages, setPages] = useState<(LabelValueType & { page: ReactNode; params?: P })[]>([]);
 	const [activePage, setActivePage] = useState<string>("main");
 
-	const mainPage = useMemo(() => props.mainPage(), []);
+	const mainPage = useMemo(() => {
+		if (height) {
+			return props.mainPage({ height });
+		}
+		return null;
+	}, [height]);
 
 	useImperativeHandle(props.ref, () => {
 		return {
@@ -33,7 +40,7 @@ export default function BCMultiTabPage<P>(props: Props<P>) {
 					const newPage = {
 						label: pageName,
 						value: `${prevState.length + 1}`,
-						page: props.mainPage(params),
+						page: props.mainPage({ params, height }),
 						params,
 					};
 					setActivePage(newPage.value);
@@ -97,7 +104,7 @@ export default function BCMultiTabPage<P>(props: Props<P>) {
 									const newPage = {
 										label: `${props.staticPageTitle} (${getLastPageTitle.length + 1})`,
 										value: `${prevState.length + 1}`,
-										page: props.mainPage(),
+										page: props.mainPage({ height }),
 									};
 
 									setActivePage(newPage.value);
@@ -112,13 +119,17 @@ export default function BCMultiTabPage<P>(props: Props<P>) {
 					</Flex>
 				</ScrollArea>
 			</Flex>
-			<Box bg={"white"} p={"sm"} w={"100%"}>
-				<Box key={"main"} className={activePage !== "main" ? classes.hide : classes.show}>
+			<Box bg={"white"} h={"100%"} p={"sm"} w={"100%"}>
+				<Box h={"100%"} key={"main"} className={activePage !== "main" ? classes.hide : classes.show}>
 					{mainPage}
 				</Box>
 				{pages.map((page) => {
 					return (
-						<Box className={activePage !== page.value ? classes.hide : classes.show} key={page.value}>
+						<Box
+							h={"100%"}
+							className={activePage !== page.value ? classes.hide : classes.show}
+							key={page.value}
+						>
 							{page?.page}
 						</Box>
 					);

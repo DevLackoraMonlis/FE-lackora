@@ -129,7 +129,9 @@ export default function ICAdvancedFilterGrid<T extends Record<string, unknown>>(
 		getColumnOption,
 	]);
 
-	const firstDataObject = props.data?.[0];
+	const firstDataObject = useMemo(() => {
+		return props.data?.[0];
+	}, [props.data?.[0]]);
 
 	const defaultColumns: TanStackDataTableColumnColDef<T>[] = useMemo(() => {
 		if (!firstDataObject) return [];

@@ -34,9 +34,6 @@ export default function ICAdvancedFilter<T>(
 	const hasEverFetched =
 		(state?.dataUpdatedAt || 0) > 0 || state?.status === "success" || state?.status === "error";
 
-	console.log(state, "sttr");
-	console.log(hasEverFetched, "hasEverFetched");
-
 	const useGetColumnsQuery = useQuery({
 		queryKey: ["get-columns", props.columnsQueryKey],
 		queryFn: ({ signal }) => props.getColumnsApi(signal),
@@ -52,7 +49,7 @@ export default function ICAdvancedFilter<T>(
 	const allColumns = useGetColumnsQuery.data?.data.results || [];
 	const data = useGetDataQuery.data?.data.results || [];
 
-	const isLoading = useGetDataQuery.isFetching || useGetColumnsQuery.isFetching;
+	const _isLoading = useGetDataQuery.isFetching || useGetColumnsQuery.isFetching;
 
 	const topSection = (
 		<ICAdvancedFilterTopSection
@@ -79,7 +76,7 @@ export default function ICAdvancedFilter<T>(
 			idAccessor={props.idAccessor}
 			store={props.store}
 			data={data}
-			isLoading={isLoading}
+			isLoading={true}
 			columns={props.columns as TanStackDataTableColumnColDef<Record<string, unknown>>[]}
 			allColumns={allColumns}
 			totalRecords={props.totalRecords}
@@ -102,7 +99,7 @@ export default function ICAdvancedFilter<T>(
 	}, [allColumns]);
 
 	return (
-		<Flex direction={"column"} w={"100%"}>
+		<Flex h={"100%"} direction={"column"} w={"100%"}>
 			<ICAdvancedFilterFullScreenModal
 				title={props.fullScreenTitle}
 				onClose={() => store.setOpenFullScreenModal(false)}
