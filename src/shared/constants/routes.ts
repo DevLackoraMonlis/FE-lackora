@@ -28,6 +28,7 @@ export const AllApplications = {
 	ASSET_IDENTIFICATION: {
 		name: "asset_identification",
 		modules: {
+			WORKFLOW: "Workflow", // "Cyber Assets Identification Workflow",
 			DISCOVERY_SETTINGS: "Discovery Settings",
 			PROFILING_SETTINGS: "Profiling Settings",
 		},
@@ -36,12 +37,6 @@ export const AllApplications = {
 		name: "object_management",
 		modules: {
 			CONNECTIONS: "Connections",
-		},
-	},
-	MANAGEMENT_CENTER: {
-		name: "management_center",
-		modules: {
-			WORKFLOW: "Cyber Assets Identification Workflow",
 		},
 	},
 } as const;

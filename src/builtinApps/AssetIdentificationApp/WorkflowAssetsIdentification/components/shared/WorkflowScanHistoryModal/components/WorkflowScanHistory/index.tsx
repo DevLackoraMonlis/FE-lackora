@@ -13,7 +13,7 @@ import { useTableSort } from "@/shared/hooks/useTableSort";
 import { useWorkflowDetectedAssets } from "../../../../../index.hooks";
 
 import type { ConfigurationRs } from "@/builtinApps/AssetIdentificationApp/DiscoverySettings/index.types";
-import { getWorkflowStatusColor } from "@/builtinApps/ManagementCenterApp/WorkflowAssetsIdentification/index.helper";
+import { getWorkflowStatusColor } from "@/builtinApps/AssetIdentificationApp/WorkflowAssetsIdentification/index.helper";
 
 type Props = Partial<ConfigurationRs> & {
 	onClose: VoidFunction;

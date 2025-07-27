@@ -9,8 +9,8 @@ import AdapterManagementLandingPage from "@/builtinApps/AdaptersApp";
 import AssetIdentificationAppConfig from "@/builtinApps/AssetIdentificationApp/AssetIdentificationAppConfig";
 import AssetIdentificationDiscoverySettingsPage from "@/builtinApps/AssetIdentificationApp/DiscoverySettings";
 import AssetIdentificationProfilingSettingsPage from "@/builtinApps/AssetIdentificationApp/ProfillngSettings";
+import WorkflowAssetsIdentification from "@/builtinApps/AssetIdentificationApp/WorkflowAssetsIdentification";
 import CyberAssetsLandingPage from "@/builtinApps/CyberAssetsApp/CyberAssets";
-import WorkflowAssetsIdentification from "@/builtinApps/ManagementCenterApp/WorkflowAssetsIdentification";
 import ObjectsConnectionsPage from "@/builtinApps/ObjectsApp/Connections";
 import ICMonoMarket from "@/shared/components/infraComponents/ICMonoMarket/components/ICMonoMarket";
 
@@ -40,13 +40,18 @@ const apps: ICMonoMarketAppType[] = [
 		headerType: "basic",
 		modules: [
 			{
+				name: AllApplications.ASSET_IDENTIFICATION.modules.WORKFLOW,
+				page: WorkflowAssetsIdentification,
+				headerType: "basic",
+			},
+			{
 				name: AllApplications.ASSET_IDENTIFICATION.modules.DISCOVERY_SETTINGS,
 				page: AssetIdentificationDiscoverySettingsPage,
 				headerType: "basic",
 			},
 			{
 				name: AllApplications.ASSET_IDENTIFICATION.modules.PROFILING_SETTINGS,
-				page: WorkflowAssetsIdentification, // AssetIdentificationProfilingSettingsPage
+				page: AssetIdentificationProfilingSettingsPage,
 				headerType: "basic",
 			},
 		],
@@ -54,7 +59,6 @@ const apps: ICMonoMarketAppType[] = [
 	{
 		name: AllApplications.OBJECTS.name,
 		headerType: "basic",
-
 		modules: [
 			{
 				name: AllApplications.OBJECTS.modules.CONNECTIONS,
@@ -69,18 +73,6 @@ const apps: ICMonoMarketAppType[] = [
 		headerTitle: "Mono Market",
 		headerType: "basic",
 		modules: [],
-	},
-	{
-		name: AllApplications.MANAGEMENT_CENTER.name,
-		headerTitle: "Management Center",
-		headerType: "basic",
-		modules: [
-			{
-				name: AllApplications.MANAGEMENT_CENTER.modules.WORKFLOW,
-				page: AssetIdentificationProfilingSettingsPage,
-				headerType: "basic",
-			},
-		],
 	},
 ];
 
