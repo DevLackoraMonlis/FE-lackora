@@ -59,7 +59,7 @@ playwright_tests:
   dependencies:
     - dev_test_pipeline
   script:
-    - npx playwright install --skip-download
+    - npx playwright install
     - node .next/standalone/server.js
     - npx playwright test
   artifacts:
