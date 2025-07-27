@@ -44,7 +44,7 @@ export default function BCMultiTabPage<P>(props: Props<P>) {
 	});
 
 	return (
-		<Flex direction={"column"} w={"100%"}>
+		<Flex direction={"column"} h={"100%"} w={"100%"}>
 			<Flex w="100%" pl={"xs"} gap={"xs"} align={"center"} bg={"gray.2"} h={48}>
 				<Text fz={"lg"} fw={"bolder"} miw={"fit-content"}>
 					{props.title}
