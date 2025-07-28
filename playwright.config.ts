@@ -81,7 +81,7 @@ export default defineConfig({
 			PORT: port.toString(),
 		},
 		url: `http://172.17.0.2:${port}`,
-		reuseExistingServer: false,
+		reuseExistingServer: true,
 		timeout: 60 * 10 * 1000,
 	},
 });
