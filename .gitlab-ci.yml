@@ -61,8 +61,8 @@ playwright_tests:
   script:
     - ls -la
     - npx playwright install chromium
-    - nohup node .next/standalone/server.js > server.log 2>&1 &
-    - sleep 120
+    - node .next/standalone/server.js > server.log 2>&1 &
+    - sleep 60
     - npx playwright test
   artifacts:
     when: always
