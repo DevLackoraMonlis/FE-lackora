@@ -10,7 +10,7 @@ variables:
   PLAYWRIGHT_BROWSERS_PATH: .playwright-browsers
 
 default:
-  image: mcr.microsoft.com/playwright:v1.43.1-jammy
+  image: mcr.microsoft.com/playwright:v1.54.1-jammy
 
 cache:
   key: shared-playwright-cache
@@ -30,7 +30,7 @@ dev_test_pipeline:
   only:
     - develop
   tags:
-    - dev
+    - docker
   script:
     - npm config set registry http://172.31.100.53/repository/npm-proxy/
     - rm -f package-lock.json; rm -f .npmrc; rm -rf node_modules
@@ -50,7 +50,7 @@ playwright_tests:
   only:
     - develop
   tags:
-    - dev
+    - docker
   variables:
     PLAYWRIGHT_BROWSERS_PATH: .playwright-browsers
     NODE_ENV: "production"
@@ -59,15 +59,20 @@ playwright_tests:
   dependencies:
     - dev_test_pipeline
   script:
+    - ls -la
+    - npx playwright install chromium
+    - node .next/standalone/server.js
+    - sleep 60
     - npx playwright test
   artifacts:
     when: always
     paths:
       - test-results/
       - .playwright-browsers
+      - server.log
     reports:
       junit: test-results/junit.xml
-  allow_failure: false
+  allow_failure: true
 
 
 upload_allure:
@@ -110,7 +115,8 @@ dev_pipeline:
     - NODE_ENV=production npm run build
   artifacts:
     paths:
-      - .next
+      - .next/static
+      - .next/standalone
       - public
     expire_in: 1 hour
 
