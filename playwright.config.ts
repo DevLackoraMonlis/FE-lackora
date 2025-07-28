@@ -72,7 +72,8 @@ export default defineConfig({
 		//   use: { ...devices['Desktop Chrome'], channel: 'chrome' },
 		// },
 	],
-
+	//     - nohup node .next/standalone/server.js > server.log 2>&1 &
+	// - npx wait-on http://localhost:4000
 	/* Run your local dev server before starting the tests */
 	webServer: {
 		command: isProd ? "node .next/standalone/server.js" : "npm run dev",
@@ -80,7 +81,7 @@ export default defineConfig({
 			PORT: port.toString(),
 		},
 		url: `http://localhost:${port}`,
-		reuseExistingServer: true,
+		reuseExistingServer: false,
 		timeout: 60 * 10 * 1000,
 	},
 });
