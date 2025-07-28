@@ -38,7 +38,7 @@ dev_test_pipeline:
     - rm -f package-lock.json; rm -f .npmrc; rm -rf node_modules
     - NODE_ENV=development npm install --force
     - NODE_ENV=production npm run build
-    - npx playwright test
+    - NODE_ENV=production npx playwright test
   artifacts:
     when: always
     paths:
