@@ -76,12 +76,14 @@ export default defineConfig({
 	// - npx wait-on http://localhost:4000
 	/* Run your local dev server before starting the tests */
 	webServer: {
-		command: isProd ? "node .next/standalone/server.js" : "npm run dev",
+		command: isProd ? "npm run start" : "npm run dev",
 		env: {
 			PORT: port.toString(),
 		},
 		url: `http://localhost:${port}`,
 		reuseExistingServer: true,
 		timeout: 60 * 10 * 1000,
+		stdout: "ignore",
+		stderr: "pipe",
 	},
 });
