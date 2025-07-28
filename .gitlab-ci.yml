@@ -98,6 +98,8 @@ dev_pipeline:
     expire_in: 1 hour
 
 dev_deploy:
+  dependencies:
+    - dev_pipeline
   stage: deploy
   variables:
     NODE_ENV: "production"
@@ -108,6 +110,7 @@ dev_deploy:
   script:
     - echo "Deploying with NODE_ENV=$NODE_ENV..."
     - mkdir -p $DEPLOY_DIR
+    - ls -la
     - cp -r .next $DEPLOY_DIR/
     - cp -r public $DEPLOY_DIR/
     - /bin/cp -rf $DEPLOY_DIR/.next/static/ $DEPLOY_DIR/.next/standalone/.next/
