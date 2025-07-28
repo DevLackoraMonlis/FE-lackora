@@ -11,7 +11,7 @@ import type {
 } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
 import { validateInput } from "@/shared/lib/utils";
 import type { ModalDefaultProps } from "@/shared/types/index.types";
-import { Button, Flex, Menu, NumberInput, Select, Switch, TextInput } from "@mantine/core";
+import { Button, Flex, NumberInput, Select, Switch, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { v4 } from "uuid";
 import { useStore } from "zustand/index";
@@ -109,49 +109,44 @@ export default function ICAdvancedFilterGridColumnMenuSearchValues<T>(props: Pro
 		}
 	};
 
-	if (props.opened) {
-		return (
-			<Menu.Dropdown>
-				<form onSubmit={form.onSubmit(onSubmit)}>
-					<Flex p={"md"} direction={"column"}>
-						<Select
-							data={
-								!getColumnOptions?.type || getColumnOptions?.type === "Boolean"
-									? Object.entries(IC_ADVANCED_FILTER_OPERATORS_MAP.String).map(([key, value]) => ({
-											label: key,
-											value,
-										}))
-									: Object.entries(IC_ADVANCED_FILTER_OPERATORS_MAP[getColumnOptions.type]).map(
-											([key, value]) => ({
-												label: key,
-												value,
-											}),
-										)
-							}
-							{...form.getInputProps("operator")}
-							allowDeselect={false}
-							label={"Operation"}
-						/>
-						{getOperatorInput()}
-						<Flex justify={"flex-end"}>
-							<Button type={"submit"} size={"xs"}>
-								Apply
-							</Button>
-							<Button
-								onClick={() => {
-									form.reset();
-									props.onClose();
-								}}
-								variant={"default"}
-								size={"xs"}
-							>
-								Cancel
-							</Button>
-						</Flex>
-					</Flex>
-				</form>
-			</Menu.Dropdown>
-		);
-	}
-	return null;
+	return (
+		<form onSubmit={form.onSubmit(onSubmit)}>
+			<Flex p={"md"} direction={"column"} gap={"xs"}>
+				<Select
+					data={
+						!getColumnOptions?.type || getColumnOptions?.type === "Boolean"
+							? Object.entries(IC_ADVANCED_FILTER_OPERATORS_MAP.String).map(([key, value]) => ({
+									label: key,
+									value,
+								}))
+							: Object.entries(IC_ADVANCED_FILTER_OPERATORS_MAP[getColumnOptions.type]).map(
+									([key, value]) => ({
+										label: key,
+										value,
+									}),
+								)
+					}
+					{...form.getInputProps("operator")}
+					allowDeselect={false}
+					label={"Operation"}
+				/>
+				{getOperatorInput()}
+				<Flex justify={"flex-end"} gap={"xs"}>
+					<Button type={"submit"} size={"xs"}>
+						Apply
+					</Button>
+					<Button
+						onClick={() => {
+							form.reset();
+							props.onClose();
+						}}
+						variant={"default"}
+						size={"xs"}
+					>
+						Cancel
+					</Button>
+				</Flex>
+			</Flex>
+		</form>
+	);
 }

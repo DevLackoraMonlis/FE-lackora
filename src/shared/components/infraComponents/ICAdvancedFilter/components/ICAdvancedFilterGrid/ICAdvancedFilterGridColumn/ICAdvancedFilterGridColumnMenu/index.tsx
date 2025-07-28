@@ -36,30 +36,15 @@ export default function ICAdvancedFilterGridColumnMenu<T>(props: Props<T>) {
 		})),
 	);
 
-	if (openedSearchValuesMenu) {
-		return (
-			<ICAdvancedFilterGridColumnMenuSearchValues
-				columnName={props.columnName}
-				allColumns={props.allColumns}
-				store={props.store}
-				onClose={() => {
-					searchValuesMenuHandlers.close();
-					handlers.close();
-				}}
-				opened={openedSearchValuesMenu}
-				run={props.run}
-			/>
-		);
-	}
-
 	return (
 		<Menu
-			width={200}
+			width={openedSearchValuesMenu ? 240 : 200}
 			radius="md"
 			shadow="md"
 			opened={opened}
 			position="bottom-end"
-			closeOnClickOutside
+			closeOnClickOutside={false}
+			closeOnItemClick={false}
 			onClose={handlers.close}
 		>
 			<Menu.Target>
@@ -73,43 +58,73 @@ export default function ICAdvancedFilterGridColumnMenu<T>(props: Props<T>) {
 			</Menu.Target>
 			{opened && (
 				<Menu.Dropdown p={0}>
-					<Menu.Item
-						disabled={store.getIsGroupByFunctionColumn(props.columnName)}
-						leftSection={<IconEyeOff size={12} />}
-						onClick={() => {
-							store.hideColumn(props.columnName);
-							props.run();
-						}}
-					>
-						Hide Column
-					</Menu.Item>
-					<Menu.Item
-						leftSection={<IconPuzzle size={12} />}
-						onClick={() => {
-							store.setGroupBy({
-								function: ICAdvancedGroupByFunctions.COUNT,
-								order: null,
-								displayName: props.columnLabel,
-								column: "*",
-								aggregatedConditions: [],
-							});
-							store.setColumns([
-								{
-									name: props.columnName,
-									orderBy: null,
-								},
-							]);
-							props.run();
-						}}
-					>
-						Group by this Column
-					</Menu.Item>
-					<Menu.Item leftSection={<IconSearch size={12} />} onClick={() => searchValuesMenuHandlers.open}>
-						Search Values...
-					</Menu.Item>
-					<Menu.Item leftSection={<IconCopy size={12} />} onClick={props.onCopy}>
-						Copy Column Title
-					</Menu.Item>
+					<Box darkHidden={!openedSearchValuesMenu} lightHidden={!openedSearchValuesMenu}>
+						{openedSearchValuesMenu && (
+							<ICAdvancedFilterGridColumnMenuSearchValues
+								columnName={props.columnName}
+								allColumns={props.allColumns}
+								store={props.store}
+								onClose={() => {
+									searchValuesMenuHandlers.close();
+									handlers.close();
+								}}
+								opened={openedSearchValuesMenu}
+								run={props.run}
+							/>
+						)}
+					</Box>
+					<Box darkHidden={openedSearchValuesMenu} lightHidden={openedSearchValuesMenu}>
+						<Menu.Item
+							disabled={store.getIsGroupByFunctionColumn(props.columnName)}
+							leftSection={<IconEyeOff size={12} />}
+							onClick={() => {
+								store.hideColumn(props.columnName);
+								props.run();
+							}}
+						>
+							Hide Column
+						</Menu.Item>
+						<Menu.Item
+							leftSection={<IconPuzzle size={12} />}
+							onClick={() => {
+								store.setGroupBy({
+									function: ICAdvancedGroupByFunctions.COUNT,
+									order: null,
+									displayName: props.columnLabel,
+									column: "*",
+									aggregatedConditions: [],
+								});
+								store.setColumns([
+									{
+										name: props.columnName,
+										orderBy: null,
+									},
+								]);
+								props.run();
+							}}
+						>
+							Group by this Column
+						</Menu.Item>
+						<Menu.Item
+							leftSection={<IconSearch size={12} />}
+							onClick={(event) => {
+								event.preventDefault();
+								event.stopPropagation();
+								searchValuesMenuHandlers.open();
+							}}
+						>
+							Search Values...
+						</Menu.Item>
+						<Menu.Item
+							leftSection={<IconCopy size={12} />}
+							onClick={() => {
+								props.onCopy();
+								handlers.close();
+							}}
+						>
+							Copy Column Title
+						</Menu.Item>
+					</Box>
 				</Menu.Dropdown>
 			)}
 		</Menu>
