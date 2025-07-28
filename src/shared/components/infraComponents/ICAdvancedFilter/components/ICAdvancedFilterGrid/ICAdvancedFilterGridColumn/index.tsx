@@ -6,7 +6,6 @@ import type {
 	ICAdvancedFilterProps,
 } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
 import { Flex, Text } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
 
 type Props<T> = {
 	columnName: string;
@@ -19,7 +18,6 @@ type Props<T> = {
 };
 
 export default function ICAdvancedFilterGridColumn<T>(props: Props<T>) {
-	const [opened, handlers] = useDisclosure(false);
 	let columnTitle = props.columnOption?.displayName || props.columnName;
 
 	if (props.groupBy && !props.columnOption) {
@@ -27,26 +25,20 @@ export default function ICAdvancedFilterGridColumn<T>(props: Props<T>) {
 	}
 
 	return (
-		<Flex
-			px={"xs"}
-			justify={"space-between"}
-			align={"center"}
-			onMouseEnter={handlers.open}
-			onMouseLeave={handlers.close}
-			pos={"relative"}
-		>
+		<Flex px={"xs"} justify={"space-between"} align={"center"} pos={"relative"}>
 			<Text fw={"bold"}>{columnTitle}</Text>
 			<Flex align={"center"} pos={"absolute"} right={0} top={-2}>
 				<ICAdvancedFilterGridColumnSort
-					visibleParent={opened}
+					visibleParent={true}
 					columnName={props.columnName}
 					store={props.store}
 					allColumns={props.allColumns}
+					run={props.run}
 				/>
 				<ICAdvancedFilterGridColumnMenu
 					columnLabel={columnTitle}
 					onCopy={props.onCopy}
-					visibleParent={opened}
+					visibleParent={true}
 					columnName={props.columnName}
 					store={props.store}
 					allColumns={props.allColumns}
