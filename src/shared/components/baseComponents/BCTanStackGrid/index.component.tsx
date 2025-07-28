@@ -32,6 +32,7 @@ export default function TanStackGridComponent<T extends Record<string, unknown>>
 				<LoadingOverlay
 					loaderProps={{
 						type: "oval",
+						size: "xs",
 						style: {
 							display: "flex",
 							width: "100%",
