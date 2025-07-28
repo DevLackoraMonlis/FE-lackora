@@ -53,6 +53,8 @@ export default function ICAdvancedFilterGrid<T extends Record<string, unknown>>(
 			includeCondition: state.includeCondition,
 			excludeCondition: state.excludeCondition,
 			getIsGroupByFunctionColumn: state.getIsGroupByFunctionColumn,
+			openedFullScreenModal: state.openedFullScreenModal,
+			setOpenFullScreenModal: state.setOpenFullScreenModal,
 		})),
 	);
 
@@ -141,6 +143,9 @@ export default function ICAdvancedFilterGrid<T extends Record<string, unknown>>(
 								conditions: newConditions,
 							};
 
+							if (store.openedFullScreenModal) {
+								store.setOpenFullScreenModal(false);
+							}
 							props.onGroupByExpand(newVariables, getColumnOption);
 						}}
 					>
@@ -163,7 +168,7 @@ export default function ICAdvancedFilterGrid<T extends Record<string, unknown>>(
 			}
 			return record[columnName] as ReactNode;
 		},
-		[store.getIsGroupByFunctionColumn],
+		[store.getIsGroupByFunctionColumn, store.openedFullScreenModal, store.setOpenFullScreenModal],
 	);
 
 	const modifiedColumns: TanStackDataTableColumnColDef<T>[] = useMemo(() => {
