@@ -43,11 +43,7 @@ export default defineConfig({
 		actionTimeout: 10000,
 		navigationTimeout: 30000,
 	},
-	reporter: [
-		["line"],
-		["allure-playwright", { outputFolder: "test-results" }],
-		["junit", { outputFile: "test-results/junit.xml" }],
-	],
+	reporter: [["list"], ["allure-playwright"], ["junit"]],
 
 	/* Configure projects for major browsers */
 	projects: [

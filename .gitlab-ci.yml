@@ -46,7 +46,7 @@ dev_test_pipeline:
       - node_modules/
       - .next
       - public
-      - test-results/
+      - allure-results/
       - .playwright-browsers
     reports:
       junit: test-results/junit.xml
@@ -66,7 +66,7 @@ upload_allure:
     - chmod 600 id_rsa
     - mkdir -p ~/.ssh
     - ssh-keyscan -H 172.31.100.98 >> ~/.ssh/known_hosts
-    - scp -i id_rsa -r test-results/ root@172.31.100.98:/tmp/allure-results
+    - scp -i id_rsa -r allure-results/ root@172.31.100.98:/tmp/allure-results
     - ssh -i id_rsa root@172.31.100.98 'allure generate /tmp/allure-results -o /var/www/allure --clean'
   when: always
 
