@@ -2,6 +2,7 @@ import ICAdvancedFilterGridColumnMenu from "@/shared/components/infraComponents/
 import ICAdvancedFilterGridColumnSort from "@/shared/components/infraComponents/ICAdvancedFilter/components/ICAdvancedFilterGrid/ICAdvancedFilterGridColumn/ICAdvancedFilterGridColumnSort";
 import type {
 	ICAdvancedFilterColumnRs,
+	ICAdvancedFilterGroupByRq,
 	ICAdvancedFilterProps,
 } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
 import { Flex, Text } from "@mantine/core";
@@ -14,11 +15,16 @@ type Props<T> = {
 	run: ICAdvancedFilterProps<T>["run"];
 	onCopy: VoidFunction;
 	columnOption?: ICAdvancedFilterColumnRs;
+	groupBy?: ICAdvancedFilterGroupByRq;
 };
 
 export default function ICAdvancedFilterGridColumn<T>(props: Props<T>) {
 	const [opened, handlers] = useDisclosure(false);
-	const columnTitle = props.columnOption?.displayName || props.columnName;
+	let columnTitle = props.columnOption?.displayName || props.columnName;
+
+	if (props.groupBy && !props.columnOption) {
+		columnTitle = `${props.columnName} (${props.groupBy?.column})`;
+	}
 
 	return (
 		<Flex

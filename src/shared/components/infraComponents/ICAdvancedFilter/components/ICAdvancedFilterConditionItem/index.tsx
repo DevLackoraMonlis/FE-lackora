@@ -1,4 +1,6 @@
+import { findAllOperatorKeyByValue } from "@/shared/components/infraComponents/ICAdvancedFilter/index.helper";
 import type {
+	ICAdvancedFilterColumnRs,
 	ICAdvancedFilterCondition,
 	ICAdvancedFilterProps,
 } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
@@ -10,7 +12,9 @@ import { useShallow } from "zustand/react/shallow";
 type Props<T> = {
 	condition: ICAdvancedFilterCondition;
 	store: ICAdvancedFilterProps<T>["store"];
+	run: ICAdvancedFilterProps<T>["run"];
 	showNextOperator: boolean;
+	getColumnOption: (columnName: string) => ICAdvancedFilterColumnRs | undefined;
 };
 
 export default function ICAdvancedFilterConditionItem<T>(props: Props<T>) {
@@ -21,11 +25,19 @@ export default function ICAdvancedFilterConditionItem<T>(props: Props<T>) {
 		})),
 	);
 
+	const getColumnOption = props.getColumnOption(props.condition.columnName);
+
 	return (
 		<Flex align={"center"} gap={"xs"} wrap={"nowrap"}>
 			<Badge
 				rightSection={
-					<ActionIcon variant={"transparent"} onClick={() => store.removeCondition(props.condition.id)}>
+					<ActionIcon
+						variant={"transparent"}
+						onClick={() => {
+							store.removeCondition(props.condition.id);
+							props.run();
+						}}
+					>
 						<IconX size={12} />
 					</ActionIcon>
 				}
@@ -33,7 +45,7 @@ export default function ICAdvancedFilterConditionItem<T>(props: Props<T>) {
 				radius={"xl"}
 				variant={"light"}
 				color={"gray"}
-			>{`${props.condition.columnName}${props.condition.operator}${props.condition.values.map((item) => item.label).join(",")}`}</Badge>
+			>{`${getColumnOption?.displayName || props.condition.columnName} ${findAllOperatorKeyByValue(props.condition.operator) || props.condition.operator} ${props.condition.values.map((item) => item.label).join(",")}`}</Badge>
 			{props.showNextOperator && <Text fz={"xs"}>{props.condition.nextOperator}</Text>}
 		</Flex>
 	);

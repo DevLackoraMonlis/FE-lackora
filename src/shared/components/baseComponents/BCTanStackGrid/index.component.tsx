@@ -50,6 +50,7 @@ export default function TanStackGridComponent<T extends Record<string, unknown>>
 					visible={props.fetching}
 				/>
 				<TanStackMainTable<T>
+					fetching={props.fetching}
 					rows={rows}
 					columnVirtualizer={columnVirtualizer}
 					rowVirtualizer={rowVirtualizer}

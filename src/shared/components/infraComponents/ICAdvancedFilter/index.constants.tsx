@@ -80,3 +80,5 @@ export const IC_ADVANCED_FILTER_BLANK_TEXT = (
 		BLANK
 	</Text>
 );
+
+export const GET_ADVANCED_FILTER_DATA = "get-advanced-filter-data";

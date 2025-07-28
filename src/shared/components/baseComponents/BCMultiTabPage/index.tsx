@@ -57,7 +57,6 @@ export default function BCMultiTabPage<P>(props: Props<P>) {
 					{props.title}
 				</Text>
 				<Box miw={"fit-content"}>{props.subTitle}</Box>
-
 				<Divider mt={12} h={26} color={"gray"} orientation={"vertical"} />
 				<Button
 					miw={"fit-content"}

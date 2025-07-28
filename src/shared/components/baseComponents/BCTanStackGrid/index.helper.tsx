@@ -45,40 +45,44 @@ export function tanStackGetCommonPinningStyles<T>(column: Column<T>): CSSPropert
 	};
 }
 
-export function tanStackGetExtendedWidth<T>(
-	viewportWidth: number,
-	totalDefaultWidth: number,
-	columns: TanStackDataTableColumnColDef<T>[],
-	index: number,
-	recordCount: number,
-	pinLastColumn?: boolean,
-	hasRowExpansion?: boolean,
-	hasRowSelection?: boolean,
-) {
-	if (viewportWidth > totalDefaultWidth) {
-		let remainWidth = viewportWidth - totalDefaultWidth - (recordCount > 15 ? 18 : 0);
+export function tanStackGetExtendedWidth<T>(params: {
+	viewportWidth: number;
+	totalDefaultWidth: number;
+	columns: TanStackDataTableColumnColDef<T>[];
+	index: number;
+	recordCount: number;
+	pinLastColumn?: boolean;
+	hasRowExpansion?: boolean;
+	hasRowSelection?: boolean;
+	hasHorizontalScroll?: boolean;
+	hasVerticalScroll?: boolean;
+}) {
+	if (params.viewportWidth > params.totalDefaultWidth) {
+		let remainWidth = params.viewportWidth - params.totalDefaultWidth - (params.hasVerticalScroll ? 14 : 2);
 
-		if (hasRowExpansion) {
+		if (params.hasRowExpansion) {
 			remainWidth -= 50;
 		}
 
-		if (hasRowSelection) {
+		if (params.hasRowSelection) {
 			remainWidth -= 50;
 		}
 
-		let emptyWidthColumCount = columns.filter((item) => !item.width).length;
+		let emptyWidthColumCount = params.columns.filter((item) => !item.width).length;
 
 		if (!emptyWidthColumCount) {
-			emptyWidthColumCount = columns.length;
+			emptyWidthColumCount = params.columns.length;
 		}
 
-		if (pinLastColumn) {
+		if (params.pinLastColumn) {
 			emptyWidthColumCount -= 1;
 		}
 
 		return {
 			extendedWidth: Math.floor(remainWidth / emptyWidthColumCount),
-			getExtend: !(pinLastColumn && index === columns.length - 1) && !columns[index].width,
+			getExtend:
+				!(params.pinLastColumn && params.index === params.columns.length - 1) &&
+				!params.columns[params.index].width,
 		};
 	}
 }
@@ -87,6 +91,8 @@ export function tanStackGenerateColumns<T>(
 	params: {
 		viewportWidth: number;
 		recordCount: number;
+		hasHorizontalScroll: boolean;
+		hasVerticalScroll: boolean;
 	} & Pick<
 		Props<T>,
 		"columns" | "pinLastColumn" | "recordsPerPage" | "page" | "rowExpansion" | "onSelectedRecordsChange"
@@ -107,16 +113,18 @@ export function tanStackGenerateColumns<T>(
 			? (info: HeaderContext<T, unknown>) => columnTitle?.(info.column)
 			: column.title;
 
-		const extend = tanStackGetExtendedWidth<T>(
+		const extend = tanStackGetExtendedWidth<T>({
 			viewportWidth,
 			totalDefaultWidth,
-			filteredColumns,
+			columns: filteredColumns,
 			index,
-			params.recordCount,
-			params.pinLastColumn,
-			!!params.rowExpansion,
-			!!params.onSelectedRecordsChange,
-		);
+			recordCount: params.recordCount,
+			pinLastColumn: params.pinLastColumn,
+			hasRowExpansion: !!params.rowExpansion,
+			hasRowSelection: !!params.onSelectedRecordsChange,
+			hasHorizontalScroll: params.hasHorizontalScroll,
+			hasVerticalScroll: params.hasVerticalScroll,
+		});
 
 		const fixedTitle = column.title
 			? (header as TanStackColumnHeader<T>)

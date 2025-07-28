@@ -90,7 +90,7 @@ export default function ICAdvancedFilterGridColumnMenu<T>(props: Props<T>) {
 								function: ICAdvancedGroupByFunctions.COUNT,
 								order: null,
 								displayName: props.columnLabel,
-								column: props.columnName,
+								column: "*",
 								aggregatedConditions: [],
 							});
 							store.setColumns([

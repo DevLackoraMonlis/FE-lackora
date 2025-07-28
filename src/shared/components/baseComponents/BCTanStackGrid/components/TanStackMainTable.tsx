@@ -27,6 +27,7 @@ export default function TanStackMainTable<T extends Record<string, unknown>>(
 		| "idAccessor"
 		| "onSelectedRecordsChange"
 		| "withPaddingCells"
+		| "fetching"
 	>,
 ) {
 	const tableStyle = useMemo(
@@ -49,6 +50,7 @@ export default function TanStackMainTable<T extends Record<string, unknown>>(
 				columnVirtualizer={props.columnVirtualizer}
 			/>
 			<TanStackTBody<T>
+				fetching={props.fetching}
 				rows={props.rows}
 				tableBodyRef={props.tableBodyRef}
 				columnVirtualizer={props.columnVirtualizer}

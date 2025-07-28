@@ -2,7 +2,7 @@ import ICAdvancedFilterActionButtons from "@/shared/components/infraComponents/I
 import ICAdvancedFilterCollapseButton from "@/shared/components/infraComponents/ICAdvancedFilter/components/ICAdvancedFilterCollapseButton";
 import ICAdvancedFilterSearch from "@/shared/components/infraComponents/ICAdvancedFilter/components/ICAdvancedFilterSearch";
 import type { ICAdvancedFilterProps } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
-import { Flex } from "@mantine/core";
+import { Flex, ScrollArea } from "@mantine/core";
 
 type Props<T> = {
 	leftSection: ICAdvancedFilterProps<T>["leftSection"];
@@ -16,23 +16,25 @@ type Props<T> = {
 
 export default function ICAdvancedFilterTopSection<T>(props: Props<T>) {
 	return (
-		<Flex align={"center"} justify={"space-between"} py={"xs"}>
-			{props.leftSection}
-			<Flex align={"center"} gap={"xs"}>
-				<ICAdvancedFilterSearch
-					searchInputPlaceholder={props.searchInputPlaceholder}
-					searchInputItems={props.searchInputItems}
-					store={props.store}
-					run={props.run}
-				/>
-				<ICAdvancedFilterCollapseButton store={props.store} />
-				<ICAdvancedFilterActionButtons
-					data={props.data}
-					getDataApi={props.getDataApi}
-					store={props.store}
-					run={props.run}
-				/>
+		<ScrollArea scrollbars={"x"} scrollbarSize={2} w={"100%"}>
+			<Flex align={"center"} justify={"space-between"} py={"xs"}>
+				{props.leftSection}
+				<Flex pl={"xs"} align={"center"} gap={"xs"}>
+					<ICAdvancedFilterSearch
+						searchInputPlaceholder={props.searchInputPlaceholder}
+						searchInputItems={props.searchInputItems}
+						store={props.store}
+						run={props.run}
+					/>
+					<ICAdvancedFilterCollapseButton store={props.store} />
+					<ICAdvancedFilterActionButtons
+						data={props.data}
+						getDataApi={props.getDataApi}
+						store={props.store}
+						run={props.run}
+					/>
+				</Flex>
 			</Flex>
-		</Flex>
+		</ScrollArea>
 	);
 }

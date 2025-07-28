@@ -13,23 +13,24 @@ import type {
 	ICAdvancedFilterProps,
 } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
 import { Text } from "@mantine/core";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { v4 } from "uuid";
 
 type AddNewPageType = Pick<ICAdvancedFilterProps<ICAdvancedFilterDataRs>, "defaultVariables" | "store">;
 
 export default function CyberAssetsLandingPage() {
+	const [total, setTotal] = useState(0);
 	const ref = useRef<BCMultiTabPageActions<AddNewPageType> | null>(null);
-	const totalAssets = 2500;
 
 	return (
 		<BCMultiTabPage<AddNewPageType>
-			subTitle={<Text c={"gray.7"} fz={"xs"}>{`(Result for last Scan: ${totalAssets})`}</Text>}
+			subTitle={<Text mt={"2xs"} c={"gray.7"} fz={"xs"}>{`(Result for last Scan: ${total})`}</Text>}
 			staticPageTitle={"All Assets"}
 			ref={ref}
 			title={"Cyber Assets"}
 			mainPage={({ params, height }) => (
 				<ICAdvancedFilter<ICAdvancedFilterDataRs>
+					onChangeTotalRecords={setTotal}
 					getColumnsApi={(signal) =>
 						getAssetFilterColumns(signal).then((response) => ({
 							...response,
@@ -53,7 +54,6 @@ export default function CyberAssetsLandingPage() {
 						getAssets(
 							{
 								columns: variables.columns.map((column) => ({
-									display_name: column.name,
 									name: column.name,
 									order: column.orderBy,
 								})),
@@ -75,8 +75,8 @@ export default function CyberAssetsLandingPage() {
 												operator: agg.operator,
 												values: agg.values,
 											})),
+											display_name: "",
 											column: variables.groupBy.column,
-											display_name: variables.groupBy.displayName,
 											function: variables.groupBy.function,
 											order: variables.groupBy.order,
 										}
@@ -101,24 +101,26 @@ export default function CyberAssetsLandingPage() {
 							},
 						}))
 					}
-					columnsQueryKey={"cyber-assets-columns"}
-					dataQueryKey={`cyber-asset-data-${v4()}`}
+					columnsQueryKey={["cyber-assets-columns"]}
+					dataQueryKey={["cyber-asset-data", v4()]}
 					fullScreenTitle={"Cyber Assets"}
 					excludeColumns={["id", "classification", "has_related_ip"]}
 					store={params?.store || createDynamicICAdvancedStore()}
 					searchInputPlaceholder={"Search by hostname"}
-					searchInputItems={[
-						{
-							label: "Host Name",
-							value: "hostname",
-						},
-					]}
 					columns={CYBER_ASSETS_FORMATTED_COLUMNS}
-					height={height - 210}
+					tableHeight={height - 210}
 					idAccessor={"id"}
-					totalRecords={100}
 					minColumnSize={180}
 					defaultColumnSize={200}
+					onGroupByExpand={(variables, getColumnOption) => {
+						ref.current?.addNewPage(
+							`Group by ${variables.conditions.map((item) => getColumnOption(item.columnName)?.displayName || item.columnName).join(",")}`,
+							{
+								store: createDynamicICAdvancedStore(),
+								defaultVariables: variables,
+							},
+						);
+					}}
 					leftSection={
 						<CyberAssetsCrudButtons
 							onDelete={() => {
@@ -129,34 +131,6 @@ export default function CyberAssetsLandingPage() {
 							}}
 							onNew={() => {
 								console.log("edit");
-								ref.current?.addNewPage("new Asset", {
-									store: createDynamicICAdvancedStore(),
-									defaultVariables: {
-										page: 1,
-										limit: 1000,
-										columns: [],
-										search: {
-											value: "morteza for test default",
-											columnName: "",
-										},
-										conditions: [
-											{
-												nextOperator: "and",
-												id: "ddsdsds",
-												values: [
-													{
-														label: "test",
-														value: "test",
-													},
-												],
-												operator: "!==",
-												columnName: "hostname",
-												closeBracket: 0,
-												openBracket: 0,
-											},
-										],
-									},
-								});
 							}}
 						/>
 					}

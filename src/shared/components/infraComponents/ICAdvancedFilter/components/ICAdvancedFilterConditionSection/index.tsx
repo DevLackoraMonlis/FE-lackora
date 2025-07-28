@@ -2,12 +2,14 @@ import ICAdvancedFilterConditionItem from "@/shared/components/infraComponents/I
 import type { ICAdvancedFilterProps } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
 import { Button, Flex, Highlight } from "@mantine/core";
 import { IconPencil, IconX } from "@tabler/icons-react";
-import type { Ref } from "react";
+import { type Ref, useCallback } from "react";
 import { useStore } from "zustand/index";
 import { useShallow } from "zustand/react/shallow";
 
 type Props<T> = {
 	store: ICAdvancedFilterProps<T>["store"];
+	run: ICAdvancedFilterProps<T>["run"];
+	allColumns: ICAdvancedFilterProps<T>["allColumns"];
 	ref?: Ref<HTMLDivElement> | undefined;
 };
 
@@ -20,6 +22,13 @@ export default function ICAdvancedFilterConditionSection<T>(props: Props<T>) {
 			setConditions: state.setConditions,
 			openedConditionSection: state.openedConditionSection,
 		})),
+	);
+
+	const getColumnOption = useCallback(
+		(columnName: string) => {
+			return props.allColumns.find((column) => column.name === columnName);
+		},
+		[props.allColumns],
 	);
 
 	return (
@@ -48,7 +57,10 @@ export default function ICAdvancedFilterConditionSection<T>(props: Props<T>) {
 				<Flex>
 					<Button
 						size={"sm"}
-						onClick={store.resetToDefaultVariables}
+						onClick={() => {
+							store.resetToDefaultVariables(props.allColumns);
+							props.run();
+						}}
 						leftSection={<IconX size={16} />}
 						variant={"transparent"}
 					>
@@ -57,9 +69,11 @@ export default function ICAdvancedFilterConditionSection<T>(props: Props<T>) {
 					<Button size={"sm"}>Save Filter</Button>
 				</Flex>
 			</Flex>
-			<Flex align={"center"} bg={"gray.1"} px={"2xs"}>
+			<Flex align={"center"} bg={"gray.1"} px={"2xs"} pb={store.variables.conditions.length ? "xs" : 0}>
 				{store.variables.conditions.map((condition, index) => (
 					<ICAdvancedFilterConditionItem<T>
+						run={props.run}
+						getColumnOption={getColumnOption}
 						key={condition.id}
 						showNextOperator={index !== store.variables.conditions.length - 1}
 						store={props.store}
@@ -71,7 +85,15 @@ export default function ICAdvancedFilterConditionSection<T>(props: Props<T>) {
 						<Button px={"xs"} size={"xs"} variant={"transparent"}>
 							<IconPencil size={16} />
 						</Button>
-						<Button px={"xs"} onClick={() => store.setConditions([])} size={"xs"} variant={"transparent"}>
+						<Button
+							px={"xs"}
+							onClick={() => {
+								store.setConditions([]);
+								props.run();
+							}}
+							size={"xs"}
+							variant={"transparent"}
+						>
 							<IconX size={16} />
 						</Button>
 					</Flex>

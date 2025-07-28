@@ -20,6 +20,8 @@ export const EachAdvanceFilterConditionOperator = {
   start_with: 'start_with',
   end_with: 'end_with',
   not_start_with: 'not_start_with',
+  is_null: 'is_null',
+  is_not_null: 'is_not_null',
   not_end_with: 'not_end_with',
   greater_than: 'greater_than',
   greater_than_or_equal: 'greater_than_or_equal',

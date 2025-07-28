@@ -73,6 +73,9 @@ export function getCyberAssetStatusBadge(params: {
 	type: CyberAssetStatus;
 	props?: BadgeProps;
 }) {
+	if (!params.type) {
+		return null;
+	}
 	return (
 		<Badge
 			{...params.props}

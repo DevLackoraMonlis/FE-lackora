@@ -7,14 +7,14 @@ import type {
 	SetStateStore,
 } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
 import { v4 } from "uuid";
-import { IC_ADVANCED_FILTER_DEFAULT_OPERATORS } from "./index.constants";
+import { IC_ADVANCED_FILTER_DEFAULT_OPERATORS, IC_ADVANCED_FILTER_STRING_OPERATORS } from "./index.constants";
 
 const defaultAdvancedVariables: ICAdvancedFilterRq = {
 	search: {
 		columnName: "",
 		value: "",
 	},
-	limit: 25,
+	limit: 35,
 	page: 1,
 	columns: [],
 	conditions: [],
@@ -66,8 +66,8 @@ function includeExcludeAction(
 				: IC_ADVANCED_FILTER_DEFAULT_OPERATORS["Is Not Null"];
 	}
 
-	if (isFunctionColumn && state.groupBy) {
-		const groupBy = { ...state.groupBy };
+	if (isFunctionColumn && state.variables.groupBy) {
+		const groupBy = { ...state.variables.groupBy };
 		if (groupBy?.aggregatedConditions?.length) {
 			const findWithOperator = groupBy?.aggregatedConditions?.find(
 				(item) => item.operator === condition.operator,
@@ -89,7 +89,10 @@ function includeExcludeAction(
 		}
 
 		return {
-			groupBy,
+			variables: {
+				...state.variables,
+				groupBy,
+			},
 		};
 	}
 
@@ -126,6 +129,8 @@ export function getDefaultICAdvancedStore(params: {
 	const { defaultVariables, set } = params;
 
 	return {
+		runToken: "",
+		setRunToken: (runToken) => set({ runToken }),
 		openedGroupByModal: false,
 		openedConditionSection: false,
 		openedFullScreenModal: false,
@@ -157,7 +162,14 @@ export function getDefaultICAdvancedStore(params: {
 			});
 		},
 		setGroupBy: (groupBy) => {
-			set({ groupBy });
+			set((state) => {
+				return {
+					variables: {
+						...state.variables,
+						groupBy,
+					},
+				};
+			});
 		},
 		removeCondition: (id) => {
 			set((state) => {
@@ -176,8 +188,8 @@ export function getDefaultICAdvancedStore(params: {
 				const isGroupByColumn = state.getIsGroupByFunctionColumn(columnName);
 
 				if (isGroupByColumn) {
-					if (state.groupBy) {
-						const groupBy = { ...state.groupBy };
+					if (state.variables.groupBy) {
+						const groupBy = { ...state.variables.groupBy };
 						groupBy.order = order;
 						return {
 							groupBy,
@@ -218,7 +230,13 @@ export function getDefaultICAdvancedStore(params: {
 		setSearch: (search) => set((state) => ({ variables: { ...state.variables, search } })),
 		variables: defaultVariables || defaultAdvancedVariables,
 		setVariables: (variables) => set({ variables }),
-		resetToDefaultVariables: () => set({ variables: defaultVariables || defaultAdvancedVariables }),
+		resetToDefaultVariables: (allColumns) =>
+			set({
+				variables: defaultVariables || {
+					...defaultAdvancedVariables,
+					columns: allColumns.filter((item) => item.isDefault),
+				},
+			}),
 		setColumns: (columns) => {
 			set((state) => ({ variables: { ...state.variables, columns } }));
 		},
@@ -253,4 +271,13 @@ export function getDefaultICAdvancedStore(params: {
 		setPage: (page: number) => set((state) => ({ variables: { ...state.variables, page } })),
 		setLimit: (limit: number) => set((state) => ({ variables: { ...state.variables, limit } })),
 	};
+}
+
+export function findAllOperatorKeyByValue(valueToFind: string): string | undefined {
+	for (const [key, value] of Object.entries(IC_ADVANCED_FILTER_STRING_OPERATORS)) {
+		if (value === valueToFind) {
+			return key;
+		}
+	}
+	return undefined; // if not found
 }

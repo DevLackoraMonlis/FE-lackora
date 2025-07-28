@@ -1,5 +1,6 @@
 import type { ICAdvancedFilterProps } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
 import { Button, Flex, Select, TextInput } from "@mantine/core";
+import { getHotkeyHandler } from "@mantine/hooks";
 import { IconSearch } from "@tabler/icons-react";
 import { useStore } from "zustand/index";
 import { useShallow } from "zustand/react/shallow";
@@ -23,22 +24,37 @@ export default function ICAdvancedFilterSearch<T>(props: Props<T>) {
 
 	return (
 		<Flex align={"center"}>
-			<Select
-				classNames={{
-					input: classes.select,
-				}}
-				w={150}
-				defaultValue={props.searchInputItems?.[0].value}
-				size={"sm"}
-				onChange={(value) =>
-					store.setSearch({
-						columnName: value,
-						value: store.search.value || "",
-					})
-				}
-				data={props.searchInputItems}
-				allowDeselect={false}
-			/>
+			{props.searchInputItems?.[0]?.value ? (
+				<Select
+					key={"has-default-value"}
+					classNames={{
+						input: classes.select,
+					}}
+					w={150}
+					defaultValue={props.searchInputItems[0].value}
+					size={"sm"}
+					onChange={(value) =>
+						store.setSearch({
+							columnName: value,
+							value: store.search.value || "",
+						})
+					}
+					data={props.searchInputItems}
+					allowDeselect={false}
+				/>
+			) : (
+				<Select
+					key={"no-default-value"}
+					disabled
+					classNames={{
+						input: classes.select,
+					}}
+					w={150}
+					size={"sm"}
+					allowDeselect={false}
+				/>
+			)}
+
 			<TextInput
 				classNames={{
 					input: classes.input,
@@ -55,8 +71,9 @@ export default function ICAdvancedFilterSearch<T>(props: Props<T>) {
 						value: event.target.value,
 					})
 				}
+				onKeyDown={getHotkeyHandler([["Enter", props.run]])}
 			/>
-			<Button ml={"2xs"} px={"xs"} onClick={props.run}>
+			<Button ml={"2xs"} px={"xs"} onClick={() => props.run()}>
 				<IconSearch size={20} />
 			</Button>
 		</Flex>

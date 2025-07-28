@@ -7,8 +7,9 @@ import {
 	getCyberAssetStatusBadge,
 } from "@/builtinApps/CyberAssetsApp/CyberAssets/index.helper";
 import type { TanStackDataTableColumnColDef } from "@/shared/components/baseComponents/BCTanStackGrid/index.types";
+import { IC_ADVANCED_FILTER_BLANK_TEXT } from "@/shared/components/infraComponents/ICAdvancedFilter/index.constants";
 import type { ICAdvancedFilterDataRs } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
-import { Badge, Divider, Flex, Text } from "@mantine/core";
+import { Badge, Box, Divider, Flex, Text } from "@mantine/core";
 import { IconLink } from "@tabler/icons-react";
 import {
 	type CyberAssetClassification,
@@ -24,7 +25,7 @@ export const CYBER_ASSETS_FORMATTED_COLUMNS: TanStackDataTableColumnColDef<ICAdv
 		accessor: "primary_ip",
 		render: (record) => {
 			return (
-				<Flex key={`primary_ip-${record.hostname}`} justify={"space-between"} align={"center"}>
+				<Flex key={`primary_ip-${record.primary_ip}`} justify={"space-between"} align={"center"}>
 					<Divider
 						h={32}
 						size={4}
@@ -38,8 +39,24 @@ export const CYBER_ASSETS_FORMATTED_COLUMNS: TanStackDataTableColumnColDef<ICAdv
 							{record.primary_ip}
 						</Text>
 					</Flex>
+				</Flex>
+			);
+		},
+	},
+	{
+		accessor: "hostname",
+		render: (record) => {
+			return (
+				<Flex w={"100%"} key={`hostname-${record.hostname}`} justify={"space-between"} align={"center"}>
+					{record.hostname ? (
+						<Text fz={"xs"} fw={"bold"} ml={"xs"}>
+							{record.hostname}
+						</Text>
+					) : (
+						<Box ml={"xs"}>{IC_ADVANCED_FILTER_BLANK_TEXT}</Box>
+					)}
 
-					{record.has_related_ip && (
+					{!!record.has_related_ip && (
 						<Badge variant={"light"} size={"xs"} leftSection={<IconLink size={12} />}>
 							{record.has_related_ip}
 						</Badge>
@@ -60,10 +77,10 @@ export const CYBER_ASSETS_FORMATTED_COLUMNS: TanStackDataTableColumnColDef<ICAdv
 		},
 	},
 	{
-		accessor: "current_status",
+		accessor: "status",
 		render: (record) => {
 			return getCyberAssetStatusBadge({
-				type: record.current_status as CyberAssetStatus,
+				type: record.status as CyberAssetStatus,
 				props: {
 					m: "xs",
 				},

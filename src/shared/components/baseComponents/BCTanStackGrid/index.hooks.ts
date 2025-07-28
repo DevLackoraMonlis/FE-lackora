@@ -3,6 +3,7 @@ import { type ExpandedState, type RowSelectionState, type Table, useReactTable }
 import { useVirtualizer } from "@tanstack/react-virtual";
 import find from "lodash/find";
 import type React from "react";
+import type { RefObject } from "react";
 import { useMemo } from "react";
 import { useEffect, useImperativeHandle, useRef, useState } from "react";
 import { getTanStackTableOptions, tanStackGenerateColumns } from "./index.helper";
@@ -56,6 +57,8 @@ export function useTanStackDefault<T extends Record<string, unknown>>(params: Ta
 	const [rowSelection, setRowSelection] = useState<RowSelectionState>({}); //manage your own row selection state
 	const [expanded, setExpanded] = useState<ExpandedState>({}); //manage your own row selection state
 
+	const { hasHorizontalScroll, hasVerticalScroll } = useScrollCheck(tableContainerRef);
+
 	useImperativeHandle(
 		props.ref,
 		() => {
@@ -84,8 +87,12 @@ export function useTanStackDefault<T extends Record<string, unknown>>(params: Ta
 			rowExpansion: props.rowExpansion,
 			viewportWidth,
 			recordCount: props.records.length,
+			hasHorizontalScroll,
+			hasVerticalScroll,
 		});
 	}, [
+		hasHorizontalScroll,
+		hasVerticalScroll,
 		viewportWidth,
 		props.page,
 		props.columns,
@@ -214,4 +221,29 @@ export function useTanStackDefault<T extends Record<string, unknown>>(params: Ta
 		viewportWidth,
 		columns,
 	};
+}
+
+export function useScrollCheck(ref: RefObject<HTMLDivElement | null>) {
+	const [hasHorizontalScroll, setHasHorizontalScroll] = useState(false);
+	const [hasVerticalScroll, setHasVerticalScroll] = useState(false);
+
+	useEffect(() => {
+		const el = ref.current;
+		if (!el) return;
+
+		const checkScroll = () => {
+			setHasHorizontalScroll(el.scrollWidth > el.clientWidth);
+			setHasVerticalScroll(el.scrollHeight > el.clientHeight);
+		};
+
+		checkScroll();
+
+		// optionally listen to resize or content changes
+		const resizeObserver = new ResizeObserver(checkScroll);
+		resizeObserver.observe(el);
+
+		return () => resizeObserver.disconnect();
+	}, [ref]);
+
+	return { hasHorizontalScroll, hasVerticalScroll };
 }

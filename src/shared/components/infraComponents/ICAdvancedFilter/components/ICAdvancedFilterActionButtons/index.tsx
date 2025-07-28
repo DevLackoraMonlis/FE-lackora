@@ -46,7 +46,7 @@ export default function ICAdvancedFilterActionButtons<T>(props: Props<T>) {
 
 	return (
 		<Flex gap={"2xs"}>
-			<Button px={"xs"} variant={"default"} onClick={props.run} size={"sm"}>
+			<Button px={"xs"} variant={"default"} onClick={() => props.run()} size={"sm"}>
 				<IconRefresh size={20} />
 			</Button>
 			<Button

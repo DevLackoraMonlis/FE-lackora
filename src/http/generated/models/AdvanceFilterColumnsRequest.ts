@@ -5,10 +5,11 @@
  * MonoWatch Security Asset Management
  * OpenAPI spec version: 1.0.0
  */
+import type { AdvanceFilterColumnsRequestDisplayName } from './AdvanceFilterColumnsRequestDisplayName';
 import type { AdvanceFilterColumnsRequestOrder } from './AdvanceFilterColumnsRequestOrder';
 
 export interface AdvanceFilterColumnsRequest {
   name: string;
-  display_name: string;
+  display_name?: AdvanceFilterColumnsRequestDisplayName;
   order?: AdvanceFilterColumnsRequestOrder;
 }

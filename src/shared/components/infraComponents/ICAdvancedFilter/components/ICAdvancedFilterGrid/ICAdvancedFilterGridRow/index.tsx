@@ -5,8 +5,8 @@ import type { ReactElement, ReactNode } from "react";
 
 export type ICAdvancedFilterGridRowProps = {
 	cellRenderValue: ReactNode;
-	cellMenu: (visibleParent: boolean) => ReactElement;
-	isFormattedCell: boolean;
+	cellMenu: (visibleParent: boolean, onClose: VoidFunction) => ReactElement;
+	withPaddingLeft?: boolean;
 };
 
 export default function ICAdvancedFilterGridRow(props: ICAdvancedFilterGridRowProps) {
@@ -14,7 +14,7 @@ export default function ICAdvancedFilterGridRow(props: ICAdvancedFilterGridRowPr
 
 	return (
 		<Flex
-			px={props.isFormattedCell ? 0 : "xs"}
+			pl={props.withPaddingLeft ? "xs" : 0}
 			justify={"space-between"}
 			align={"center"}
 			onMouseEnter={handlers.open}
@@ -27,7 +27,7 @@ export default function ICAdvancedFilterGridRow(props: ICAdvancedFilterGridRowPr
 			{props.cellRenderValue || IC_ADVANCED_FILTER_BLANK_TEXT}
 
 			<Flex align={"center"} pos={"absolute"} right={0} top={1}>
-				{opened ? props.cellMenu(opened) : null}
+				{opened ? props.cellMenu(opened, handlers.close) : null}
 			</Flex>
 		</Flex>
 	);

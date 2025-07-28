@@ -3,25 +3,32 @@ import ICAdvancedFilterConditionSection from "@/shared/components/infraComponent
 import ICAdvancedFilterFullScreenModal from "@/shared/components/infraComponents/ICAdvancedFilter/components/ICAdvancedFilterFullScreenModal";
 import ICAdvancedFilterGrid from "@/shared/components/infraComponents/ICAdvancedFilter/components/ICAdvancedFilterGrid";
 import ICAdvancedFilterTopSection from "@/shared/components/infraComponents/ICAdvancedFilter/components/ICAdvancedFilterTopSection";
+import { GET_ADVANCED_FILTER_DATA } from "@/shared/components/infraComponents/ICAdvancedFilter/index.constants";
 import type { ICAdvancedFilterProps } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
 import { Collapse, Flex } from "@mantine/core";
 import { useElementSize } from "@mantine/hooks";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useEffect, useMemo } from "react";
+import { startTransition, useEffect, useMemo } from "react";
+import { v4 } from "uuid";
 import { useStore } from "zustand/index";
 import { useShallow } from "zustand/react/shallow";
 
 export default function ICAdvancedFilter<T>(
-	props: Omit<ICAdvancedFilterProps<T>, "run" | "allColumns" | "data" | "isLoading">,
+	props: Omit<
+		ICAdvancedFilterProps<T>,
+		"run" | "allColumns" | "data" | "isLoading" | "totalRecords" | "searchInputItems"
+	>,
 ) {
 	const queryClient = useQueryClient();
-
 	const { ref, height } = useElementSize();
 	const store = useStore(
 		props.store,
 		useShallow((state) => ({
 			setVariables: state.setVariables,
 			variables: state.variables,
+			runToken: state.runToken,
+			setRunToken: state.setRunToken,
+			setPage: state.setPage,
 			openedConditionSection: state.openedConditionSection,
 			openedFullScreenModal: state.openedFullScreenModal,
 			setOpenFullScreenModal: state.setOpenFullScreenModal,
@@ -29,54 +36,60 @@ export default function ICAdvancedFilter<T>(
 		})),
 	);
 
-	const state = queryClient.getQueryState(["get-advanced-filter-data", props.dataQueryKey]);
+	const getDataQueryKey = [GET_ADVANCED_FILTER_DATA, ...props.dataQueryKey];
+
+	const state = queryClient.getQueryState(getDataQueryKey);
 
 	const hasEverFetched =
 		(state?.dataUpdatedAt || 0) > 0 || state?.status === "success" || state?.status === "error";
 
 	const useGetColumnsQuery = useQuery({
-		queryKey: ["get-columns", props.columnsQueryKey],
+		queryKey: ["get-columns", ...props.columnsQueryKey],
 		queryFn: ({ signal }) => props.getColumnsApi(signal),
 		staleTime: 5 * 60 * 1000,
 	});
 
 	const useGetDataQuery = useQuery({
-		queryKey: ["get-advanced-filter-data", props.dataQueryKey, store.variables.columns.length],
+		queryKey: [...getDataQueryKey, store.variables.columns.length, store.runToken],
 		queryFn: ({ signal }) => props.getDataApi(store.variables, signal),
 		enabled: !!store.variables.columns.length && !hasEverFetched,
 	});
 
 	const allColumns = useGetColumnsQuery.data?.data.results || [];
 	const data = useGetDataQuery.data?.data.results || [];
-
+	const totalRecords = useGetDataQuery.data?.data.total || 0;
+	const total = useGetDataQuery.data?.data?.metadata?.total;
+	const searchInputItems = allColumns.map((item) => ({ label: item.displayName, value: item.name }));
 	const isLoading = useGetDataQuery.isFetching || useGetColumnsQuery.isFetching;
+
+	const run = (disableResetPage = false) => {
+		if (!disableResetPage) {
+			store.setPage(1);
+		}
+		startTransition(() => {
+			store.setRunToken(v4());
+		});
+	};
 
 	const topSection = useMemo(
 		() => (
 			<ICAdvancedFilterTopSection
 				store={props.store}
 				leftSection={props.leftSection}
-				run={useGetDataQuery.refetch}
+				run={run}
 				data={data}
 				getDataApi={props.getDataApi}
-				searchInputItems={props.searchInputItems}
+				searchInputItems={searchInputItems}
 				searchInputPlaceholder={props.searchInputPlaceholder}
 			/>
 		),
-		[
-			props.store,
-			props.leftSection,
-			data,
-			props.getDataApi,
-			props.searchInputItems,
-			props.searchInputPlaceholder,
-		],
+		[props.store, props.leftSection, data, props.getDataApi, searchInputItems, props.searchInputPlaceholder],
 	);
 
 	const conditionSection = useMemo(
 		() => (
 			<Collapse transitionDuration={500} transitionTimingFunction="linear" in={store.openedConditionSection}>
-				<ICAdvancedFilterConditionSection ref={ref} store={props.store} />
+				<ICAdvancedFilterConditionSection run={run} allColumns={allColumns} ref={ref} store={props.store} />
 			</Collapse>
 		),
 		[store.openedConditionSection, props.store],
@@ -85,23 +98,25 @@ export default function ICAdvancedFilter<T>(
 	const gridSection = useMemo(
 		() => (
 			<ICAdvancedFilterGrid<Record<string, unknown>>
+				onGroupByExpand={props.onGroupByExpand}
 				excludeColumns={props.excludeColumns}
-				height={props.height - (store.openedConditionSection ? height : 0)}
+				tableHeight={props.tableHeight - (store.openedConditionSection ? height : 0)}
 				idAccessor={props.idAccessor}
 				store={props.store}
 				data={data}
 				isLoading={isLoading}
 				columns={props.columns as TanStackDataTableColumnColDef<Record<string, unknown>>[]}
 				allColumns={allColumns}
-				totalRecords={props.totalRecords}
-				run={useGetDataQuery.refetch}
+				totalRecords={totalRecords}
+				run={run}
 				minColumnSize={props.minColumnSize}
 				recordsPerPageOptions={props.recordsPerPageOptions}
 			/>
 		),
 		[
+			height,
 			props.excludeColumns,
-			props.height,
+			props.tableHeight,
 			store.openedConditionSection,
 			props.idAccessor,
 			props.store,
@@ -109,7 +124,7 @@ export default function ICAdvancedFilter<T>(
 			isLoading,
 			props.columns,
 			allColumns,
-			props.totalRecords,
+			totalRecords,
 			props.minColumnSize,
 			props.recordsPerPageOptions,
 		],
@@ -126,6 +141,12 @@ export default function ICAdvancedFilter<T>(
 			store.setColumns(allColumns.filter((column) => column.isDefault));
 		}
 	}, [allColumns]);
+
+	useEffect(() => {
+		if (total) {
+			props.onChangeTotalRecords?.(total);
+		}
+	}, [total]);
 
 	return (
 		<Flex h={"100%"} direction={"column"} w={"100%"}>
