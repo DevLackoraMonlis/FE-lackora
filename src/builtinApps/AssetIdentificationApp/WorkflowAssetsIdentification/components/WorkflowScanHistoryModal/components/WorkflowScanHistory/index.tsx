@@ -10,7 +10,7 @@ import BCTanStackGrid from "@/shared/components/baseComponents/BCTanStackGrid";
 import type { TanStackGridProps } from "@/shared/components/baseComponents/BCTanStackGrid/index.types";
 import { useTableSort } from "@/shared/hooks/useTableSort";
 
-import { useWorkflowDetectedAssets } from "../../../../../index.hooks";
+import { useWorkflowDetectedAssets } from "../../../../index.hooks";
 
 import type { ConfigurationRs } from "@/builtinApps/AssetIdentificationApp/DiscoverySettings/index.types";
 import { getWorkflowStatusColor } from "@/builtinApps/AssetIdentificationApp/WorkflowAssetsIdentification/index.helper";
@@ -18,12 +18,11 @@ import { getWorkflowStatusColor } from "@/builtinApps/AssetIdentificationApp/Wor
 type Props = Partial<ConfigurationRs> & {
 	onClose: VoidFunction;
 	opened: boolean;
-	enabledQuery: boolean;
 };
 
-export default function WorkflowScanHistory(props: Props) {
+export default function WorkflowScanHistory(_props: Props) {
 	const { height } = useViewportSize();
-	const { detectedAssets } = useWorkflowDetectedAssets(props.enabledQuery, {});
+	const { detectedAssets } = useWorkflowDetectedAssets(false, {});
 
 	const results = detectedAssets.data?.results || [];
 	const status = detectedAssets.data?.status;
@@ -105,7 +104,7 @@ export default function WorkflowScanHistory(props: Props) {
 	const tableRecords = filteredResults.slice(from, to);
 	const totalRecords = filteredResults?.length;
 
-	if (detectedAssets.isLoading && props.enabledQuery) return <LoadingOverlay visible />;
+	if (detectedAssets.isLoading) return <LoadingOverlay visible />;
 	return (
 		<Flex direction="column" gap="xs">
 			<Card bg="gray.1" p={0} m={0}>

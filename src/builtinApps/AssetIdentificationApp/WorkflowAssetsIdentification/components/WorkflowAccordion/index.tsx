@@ -1,31 +1,30 @@
 import { Accordion, Badge, Card, Flex, Menu, Progress, Text, Timeline, getGradient } from "@mantine/core";
 import { IconCheck, IconDotsVertical, IconEye, IconSettings } from "@tabler/icons-react";
 
-import { getWorkflowStatusColor } from "../../../index.helper";
-import type { WorkflowAccordionProps, WorkflowHandles } from "../../../index.types";
+import { useMemo } from "react";
+import { workflowIcons } from "../../index.constants";
+import { getWorkflowStatusColor } from "../../index.helper";
+import type { WorkflowAccordionProps, WorkflowHandles } from "../../index.types";
 
 type Props = WorkflowAccordionProps & WorkflowHandles;
 
-export default function WorkflowAccordion({
-	type,
-	status,
-	title,
-	description,
-	icon,
-	steps,
-	...handles
-}: Props) {
+export default function WorkflowAccordion({ type, status, title, description, steps, ...handles }: Props) {
 	if (!type) return null;
-	const timelineActiveStep = steps?.findIndex(({ status }) => status === "inprogress");
+	const timelineActiveStep = useMemo(
+		() =>
+			status === "completed" ? steps?.length : steps?.findIndex(({ status }) => status === "inprogress"),
+		[status, steps],
+	);
+
 	return (
 		<Accordion variant="separated" defaultValue={status === "inprogress" ? type : ""}>
 			<Accordion.Item value={type}>
-				<Accordion.Control h="56px" p="xs">
+				<Accordion.Control h="66px">
 					<Flex align="center" justify="space-between">
 						<Flex gap="sm">
 							<Card
-								w={40}
-								h={40}
+								w={45}
+								h={45}
 								variant="light"
 								shadow="none"
 								padding={0}
@@ -37,11 +36,11 @@ export default function WorkflowAccordion({
 								})}
 							>
 								<Flex justify="center" align="center" m="auto">
-									{icon}
+									{workflowIcons[type as keyof typeof workflowIcons]}
 								</Flex>
 							</Card>
 							<Flex direction="column">
-								<Text fw="bold" fz="md">
+								<Text fw="bold" fz="md" tt="uppercase">
 									{title}
 								</Text>
 								{description.progress ? (
@@ -71,11 +70,11 @@ export default function WorkflowAccordion({
 				{/* Panel */}
 				<Accordion.Panel px="3xl">
 					<Timeline active={timelineActiveStep} bulletSize={25} lineWidth={3} mt="md" color="green">
-						{steps.map((step) => (
+						{steps?.map((step) => (
 							<Timeline.Item
 								key={step.title}
-								bullet={step.icon}
-								color={step.color || "gray"}
+								bullet={workflowIcons[step.status as keyof typeof workflowIcons]}
+								color={getWorkflowStatusColor(step.status)}
 								title={
 									<Flex align="center" justify="space-between">
 										<Text fw="bold">{step.title}</Text>
@@ -106,29 +105,28 @@ export default function WorkflowAccordion({
 									</Flex>
 								}
 							>
-								{step.assets && (
-									<Text size="sm" c="blue">
-										{step.assets}
-									</Text>
-								)}
-								{step.progress && (
+								{step.description.progress ? (
 									<Flex gap="xs" align="center">
-										<Progress value={step.progress.value} size="md" style={{ flex: 4 }} />
+										<Progress value={step.description.value} size="md" style={{ flex: 4 }} />
 										<Text fz="xs" style={{ flex: 1 }}>
-											{step.progress.label}
+											{step.description.label}
 										</Text>
 									</Flex>
-								)}
-								{step.timeInfo && (
-									<Text fz="xs" c="dimmed">
-										{step.timeInfo}
+								) : (
+									<Text size="sm" c="dimmed">
+										{step.description.label}
 									</Text>
 								)}
-								{step.description && (
-									<Text fz="xs" c="dimmed" mt={4} w="50%">
-										{step.description}
-									</Text>
-								)}
+								{/* {step.timeInfo && (
+                  <Text fz="xs" c="dimmed">
+                    {step.timeInfo}
+                  </Text>
+                )}
+                {step.description && (
+                  <Text fz="xs" c="dimmed" mt={4} w="50%">
+                    {step.description}
+                  </Text>
+                )} */}
 							</Timeline.Item>
 						))}
 					</Timeline>

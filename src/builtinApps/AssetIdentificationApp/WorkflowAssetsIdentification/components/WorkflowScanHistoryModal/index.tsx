@@ -9,10 +9,10 @@ import WorkflowScanHistoryList from "./components/WorkflowScanHistoryList";
 type Props = Partial<ConfigurationRs> & {
 	onClose: VoidFunction;
 	opened: boolean;
-	enabledQuery: boolean;
+	scanId?: string;
 };
 
-export default function WorkflowScanHistoryModal({ onClose, opened, ...configs }: Props) {
+export default function WorkflowScanHistoryModal({ onClose, opened, scanId, ...configs }: Props) {
 	return (
 		<BCDrawer fullScreen onClose={onClose} opened={opened} title="Scan History">
 			<Grid gutter="xs">

@@ -11,7 +11,7 @@ import BCTanStackGrid from "@/shared/components/baseComponents/BCTanStackGrid";
 import type { TanStackGridProps } from "@/shared/components/baseComponents/BCTanStackGrid/index.types";
 import { useTableSort } from "@/shared/hooks/useTableSort";
 
-import { useWorkflowDetectedAssets } from "../../../index.hooks";
+import { useWorkflowDetectedAssets } from "../../index.hooks";
 
 import type { ConfigurationRs } from "@/builtinApps/AssetIdentificationApp/DiscoverySettings/index.types";
 

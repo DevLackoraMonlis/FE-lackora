@@ -7,15 +7,14 @@ import type { PaginationRq } from "@/http/end-points/GeneralService.types";
 import BCSearchInput from "@/shared/components/baseComponents/BCSearchInput";
 import { useTablePagination } from "@/shared/hooks/useTablePagination";
 
-import { getWorkflowStatusColor } from "../../../../../index.helper";
-import { useWorkflowScanHistory } from "../../../../../index.hooks";
+import { getWorkflowStatusColor } from "../../../../index.helper";
+import { useWorkflowScanHistory } from "../../../../index.hooks";
 
 import type { ConfigurationRs } from "@/builtinApps/AssetIdentificationApp/DiscoverySettings/index.types";
 
 type Props = Partial<ConfigurationRs> & {
 	onClose: VoidFunction;
 	opened: boolean;
-	enabledQuery: boolean;
 };
 
 const data = Array(200)
@@ -25,14 +24,14 @@ const data = Array(200)
 	})
 	.map((item, idx) => ({ ...item, scanId: idx, key: `${item.key + idx.toString()}` }));
 
-export default function WorkflowScanHistoryList(props: Props) {
+export default function WorkflowScanHistoryList(_props: Props) {
 	const { height } = useViewportSize();
 
 	const [{ search = "", ...queryParams }, setQueryParams] = useState<PaginationRq & { scanId?: string }>({
 		limit: 25,
 		page: 1,
 	});
-	const { detectedAssets } = useWorkflowScanHistory(props.enabledQuery, queryParams);
+	const { detectedAssets } = useWorkflowScanHistory(true, queryParams);
 	const results = detectedAssets.data?.results || [...data];
 	const total = detectedAssets?.data?.total || results?.length;
 
@@ -49,7 +48,7 @@ export default function WorkflowScanHistoryList(props: Props) {
 		setTotalRecords(total || 0);
 	}, [total]);
 
-	if (detectedAssets.isLoading && props.enabledQuery) return <LoadingOverlay visible />;
+	if (detectedAssets.isLoading) return <LoadingOverlay visible />;
 	return (
 		<Card m={0} p="xs" bg="gray.1" h="100%" pos="relative">
 			<Flex direction="column">
