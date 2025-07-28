@@ -11,7 +11,7 @@ export function useWorkflow() {
 			gcTime: 0,
 		},
 	});
-	return { ...workflows, data: allMockData?.completed };
+	return { ...workflows, data: allMockData?.failed };
 }
 
 export function useWorkflowScanHistory(enabled: boolean, _queryParams: Record<string, unknown>) {

@@ -1,16 +1,21 @@
-export type WorkflowStatus = "failed" | "completed" | "inprogress" | "idle" | "partial";
-
 export type WorkflowStep = {
 	type: string;
-	status: WorkflowStatus;
+	status: string; // WorkflowStatus;
 	title: string;
 	progressStatus: string;
-	description: { label: string; progress: boolean; value: number };
+	description: {
+		message: string;
+		description: string;
+		isProgress: boolean;
+		value: number;
+		resultMessage: string | null;
+		resultCount: number | null;
+	};
 };
 
 export type WorkflowAccordionProps = {
 	type: string;
-	status: WorkflowStatus;
+	status: string; // WorkflowStatus;
 	title: string;
 	description: { label: string; progress: boolean; value: number };
 	steps: WorkflowStep[];

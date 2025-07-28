@@ -1,14 +1,18 @@
 import { Accordion, Badge, Card, Flex, Menu, Progress, Text, Timeline, getGradient } from "@mantine/core";
-import { IconCheck, IconDotsVertical, IconEye, IconSettings } from "@tabler/icons-react";
-
+import { IconCheck, IconDotsVertical, IconEye, IconSettings, IconX } from "@tabler/icons-react";
 import { useMemo } from "react";
+
 import { workflowIcons } from "../../index.constants";
 import { getWorkflowStatusColor } from "../../index.helper";
 import type { WorkflowAccordionProps, WorkflowHandles } from "../../index.types";
+import AccordionStepDescription from "./components/AccordionStepDescription";
 
-type Props = WorkflowAccordionProps & WorkflowHandles;
+type Props = WorkflowAccordionProps &
+	WorkflowHandles & {
+		failed: boolean;
+	};
 
-export default function WorkflowAccordion({ type, status, title, description, steps, ...handles }: Props) {
+export default function WorkflowAccordion({ type, status, title, description, steps, ...props }: Props) {
 	if (!type) return null;
 	const timelineActiveStep = useMemo(
 		() =>
@@ -19,7 +23,7 @@ export default function WorkflowAccordion({ type, status, title, description, st
 	return (
 		<Accordion variant="separated" defaultValue={status === "inprogress" ? type : ""}>
 			<Accordion.Item value={type}>
-				<Accordion.Control h="66px">
+				<Accordion.Control h="66px" disabled={props.failed}>
 					<Flex align="center" justify="space-between">
 						<Flex gap="sm">
 							<Card
@@ -52,7 +56,7 @@ export default function WorkflowAccordion({ type, status, title, description, st
 									</Flex>
 								) : (
 									<Flex align="center" gap="2xs">
-										<IconCheck color="green" size={18} />
+										{props.failed ? <IconX color="red" size={18} /> : <IconCheck color="green" size={18} />}
 										<Text fz="xs">{description.label}</Text>
 									</Flex>
 								)}
@@ -89,13 +93,13 @@ export default function WorkflowAccordion({ type, status, title, description, st
 												<Menu.Dropdown>
 													<Menu.Item
 														leftSection={<IconSettings size={15} />}
-														onClick={() => handles.handleGatewayConfiguration()}
+														onClick={() => props.handleGatewayConfiguration()}
 													>
 														Go to Gateway Configuration
 													</Menu.Item>
 													<Menu.Item
 														leftSection={<IconEye size={15} />}
-														onClick={() => handles.handleViewMatchedAssets()}
+														onClick={() => props.handleViewMatchedAssets()}
 													>
 														View Matched Assets
 													</Menu.Item>
@@ -105,28 +109,10 @@ export default function WorkflowAccordion({ type, status, title, description, st
 									</Flex>
 								}
 							>
-								{step.description.progress ? (
-									<Flex gap="xs" align="center">
-										<Progress value={step.description.value} size="md" style={{ flex: 4 }} />
-										<Text fz="xs" style={{ flex: 1 }}>
-											{step.description.label}
-										</Text>
-									</Flex>
-								) : (
-									<Text size="sm" c="dimmed">
-										{step.description.label}
-									</Text>
-								)}
-								{/* {step.timeInfo && (
-                  <Text fz="xs" c="dimmed">
-                    {step.timeInfo}
-                  </Text>
-                )}
-                {step.description && (
-                  <Text fz="xs" c="dimmed" mt={4} w="50%">
-                    {step.description}
-                  </Text>
-                )} */}
+								<AccordionStepDescription
+									step={step}
+									handleViewMatchedAssets={() => props.handleViewMatchedAssets()}
+								/>
 							</Timeline.Item>
 						))}
 					</Timeline>

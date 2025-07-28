@@ -1,6 +1,9 @@
 import dayjs from "dayjs";
 
-import type { WorkflowStep } from "./index.types";
+import { WORKFLOW_STATUS } from "@/shared/constants/workflow";
+import type { WorkflowStatus } from "@/shared/enums/index.enums";
+
+import { toFormattedDate } from "@/shared/lib/dayJs";
 
 export function calculateScheduledScanDate(date: string) {
 	if (!date) return "-";
@@ -15,7 +18,7 @@ export function calculateScheduledScanDate(date: string) {
 			return `Yesterday ${dayjs(date).format("HH:mm")}`;
 		}
 		return dayjs(date).format("YYYY-MM-DD, HH:mm");
-	} catch (_e) {
+	} catch (_) {
 		return "-";
 	}
 }
@@ -26,24 +29,22 @@ export function calculateNextScheduledScan(date: string) {
 		const inputDate = dayjs(date).startOf("day");
 		const diff = inputDate.diff(today, "day");
 		return `Scheduled scan will start in ${dayjs(diff).get("minutes")} minutes`;
-	} catch (_e) {
+	} catch (_) {
 		return "Scheduled scan will start in - minutes";
 	}
 }
-
-export function getWorkflowStatusColor(status: WorkflowStep["status"]) {
-	switch (status) {
-		case "completed":
-			return "green";
-		case "partial":
-			return "orange";
-		case "inprogress":
-			return "blue";
-		case "idle":
-			return "gray";
-		case "failed":
-			return "red";
-		default:
-			return "gray";
+export function stepDescription(step: Record<string, unknown>, isProgressOrFailed: boolean) {
+	if (!step) return "-";
+	const { start_time, end_time, duration } = step;
+	if (isProgressOrFailed) {
+		const start = toFormattedDate(start_time as string, "HH:mm") || "-";
+		return `Start at ${start}`;
 	}
+	const start = toFormattedDate(start_time as string, "HH:mm") || "-";
+	const end = toFormattedDate(end_time as string, "HH:mm") || "-";
+	return `Start at ${start} - End at ${end}  |  Duration: ${duration}`;
+}
+
+export function getWorkflowStatusColor(status: string) {
+	return WORKFLOW_STATUS[status as WorkflowStatus]?.color;
 }

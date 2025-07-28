@@ -10,9 +10,11 @@ import {
 	calculateNextScheduledScan,
 	calculateScheduledScanDate,
 	getWorkflowStatusColor,
+	stepDescription,
 } from "./index.helper";
 import { useWorkflow } from "./index.hooks";
 
+import { WorkflowStatus } from "@/shared/enums/index.enums";
 import WorkflowAccordion from "./components/WorkflowAccordion";
 import WorkflowDetectedAssetsModal from "./components/WorkflowDetectedAssetsModal";
 import WorkflowPlayerTracking from "./components/WorkflowPlayerTracking";
@@ -79,7 +81,9 @@ export default function WorkflowAssetsIdentification() {
 												<Text fz="md" c="white">
 													SCAN
 												</Text>
-												<Text c="gray.5">{workflows.data?.message || "-"}</Text>
+												<Text c={getWorkflowStatusColor(workflows.data?.status)}>
+													{workflows.data?.message || "-"}
+												</Text>
 											</Flex>
 										</Flex>
 										<Flex align="center" gap="xs" px="sm">
@@ -117,31 +121,45 @@ export default function WorkflowAssetsIdentification() {
 						</Accordion>
 						{/* PHASES */}
 						{workflows.data?.phases?.map(({ steps, ...phase }) => {
+							console.log({ phase });
 							const progressPhase = (phase.current_processed / phase.total_processing) * 100;
+							const failed = (phase.status as string) === WorkflowStatus.Failed;
 							return (
 								<Fragment key={phase.id}>
 									<WorkflowPlayerTracking status={phase.status} />
 									<WorkflowAccordion
 										{...commonProps}
+										failed={failed}
 										type={phase.name}
 										title={phase.display_name}
 										status={phase.status}
 										description={{
-											label: `Completed: ${phase.progress} | Duration: ${phase.duration}`,
-											progress: isNumber(progressPhase) && progressPhase !== 100,
+											label: failed
+												? `${phase.progress} | Duration: ${phase.duration}`
+												: `Completed: ${phase.progress} | Duration: ${phase.duration}`,
+											progress: isNumber(progressPhase) && progressPhase < 100,
 											value: progressPhase,
 										}}
 										steps={steps?.map((step) => {
 											const progressStepValue = (step.current_processed / step.total_processing) * 100;
+											const isProgress = isNumber(progressStepValue) && progressStepValue < 100;
+											const description = stepDescription(
+												step,
+												isProgress || (step.status as string) === WorkflowStatus.Failed,
+											);
+											console.log({ step });
 											return {
 												type: step.name,
 												progressStatus: step.progress_status,
 												title: step.display_name,
 												status: step.status,
 												description: {
-													label: step.message,
-													progress: isNumber(progressStepValue) && progressStepValue !== 100,
+													isProgress,
+													description,
 													value: progressStepValue,
+													resultMessage: step.result_message,
+													resultCount: step.result_count,
+													message: `${step.progress} |  Duration: ${step.duration}`,
 												},
 											};
 										})}

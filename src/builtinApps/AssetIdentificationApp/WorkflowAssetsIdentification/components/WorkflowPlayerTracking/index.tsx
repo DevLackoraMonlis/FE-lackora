@@ -2,10 +2,9 @@ import { Flex } from "@mantine/core";
 import { IconPlayerTrackPrevFilled } from "@tabler/icons-react";
 
 import { getWorkflowStatusColor } from "../../index.helper";
-import type { WorkflowStatus } from "../../index.types";
 
 type Props = {
-	status: WorkflowStatus;
+	status: string;
 };
 export default function WorkflowPlayerTracking({ status }: Props) {
 	const color = getWorkflowStatusColor(status);
