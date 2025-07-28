@@ -93,8 +93,7 @@ dev_pipeline:
     - NODE_ENV=production npm run build
   artifacts:
     paths:
-      - .next/static
-      - .next/standalone
+      - .next
       - public
     expire_in: 1 hour
 
