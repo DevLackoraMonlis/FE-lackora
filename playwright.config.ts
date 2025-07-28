@@ -36,7 +36,7 @@ export default defineConfig({
 	/* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
 	use: {
 		/* Base URL to use in actions like `await page.goto('/')`. */
-		baseURL: `http://172.17.0.2:${port}`,
+		baseURL: `http://localhost:${port}`,
 		headless: isCI,
 		/* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
 		trace: "on-first-retry",
@@ -80,7 +80,7 @@ export default defineConfig({
 		env: {
 			PORT: port.toString(),
 		},
-		url: `http://172.17.0.2:${port}`,
+		url: `http://localhost:${port}`,
 		reuseExistingServer: true,
 		timeout: 60 * 10 * 1000,
 	},
