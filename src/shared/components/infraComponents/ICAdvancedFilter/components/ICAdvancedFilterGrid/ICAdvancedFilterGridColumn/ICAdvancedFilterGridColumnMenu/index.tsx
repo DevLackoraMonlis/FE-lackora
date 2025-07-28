@@ -43,7 +43,7 @@ export default function ICAdvancedFilterGridColumnMenu<T>(props: Props<T>) {
 			shadow="md"
 			opened={opened}
 			position="bottom-end"
-			closeOnClickOutside={false}
+			closeOnClickOutside={!openedSearchValuesMenu}
 			closeOnItemClick={false}
 			onClose={handlers.close}
 		>
