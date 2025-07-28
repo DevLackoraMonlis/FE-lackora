@@ -60,7 +60,7 @@ playwright_tests:
     - dev_test_pipeline
   script:
     - ls -la
-    - npx playwright install
+    - npx playwright install chromium
     - node .next/standalone/server.js
     - npx playwright test
   artifacts:
