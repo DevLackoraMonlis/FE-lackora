@@ -1,6 +1,5 @@
 import { Badge, Card, Flex, Highlight, LoadingOverlay, Text } from "@mantine/core";
 import { useViewportSize } from "@mantine/hooks";
-import { IconCheck, IconX } from "@tabler/icons-react";
 import { sortBy } from "lodash";
 import { useState } from "react";
 
@@ -11,6 +10,7 @@ import BCTanStackGrid from "@/shared/components/baseComponents/BCTanStackGrid";
 import type { TanStackGridProps } from "@/shared/components/baseComponents/BCTanStackGrid/index.types";
 import { useTableSort } from "@/shared/hooks/useTableSort";
 
+import { getWorkflowStatus } from "../../index.helper";
 import { useWorkflowStep } from "../../index.hooks";
 
 type Props = {
@@ -25,12 +25,11 @@ function WorkflowDetectedStep({ stepId = "" }: Props) {
 
 	const { stepDetails } = useWorkflowStep(stepId);
 	const results = stepDetails.data?.results || [];
-	const status = "failed";
+	const status = "completed";
 	const { generateSortIcons, sortStatus } = useTableSort<(typeof results)[number]>({
 		columnAccessor: "discoveryTime",
 		direction: "des",
 	});
-
 	const handleUpdateQueryParams = (params: Partial<PaginationRq>) => {
 		setQueryParams((perParams) => ({ ...perParams, page: 1, ...params }));
 	};
@@ -68,7 +67,7 @@ function WorkflowDetectedStep({ stepId = "" }: Props) {
 			accessor: "gateway",
 			title: (
 				<Flex justify="space-between" align="center">
-					<Text>Time of Discovery</Text>
+					<Text>Gateway</Text>
 					{generateSortIcons("gateway")}
 				</Flex>
 			),
@@ -88,13 +87,12 @@ function WorkflowDetectedStep({ stepId = "" }: Props) {
 			),
 		},
 	];
-
 	// data sorting
 	const sortedData = sortBy(results, (record) => record[sortStatus.columnAccessor]);
 	if (sortStatus.direction === "des") sortedData.reverse();
 	const filteredResults = sortedData.filter(
 		({ macAddress, ipAddress, discoveryTime }) =>
-			macAddress.includes(search) || ipAddress.includes(search) || discoveryTime.includes(search),
+			macAddress?.includes(search) || ipAddress?.includes(search) || discoveryTime?.includes(search),
 	);
 	// pagination options
 	const from = (queryParams.page - 1) * queryParams.limit;
@@ -103,17 +101,17 @@ function WorkflowDetectedStep({ stepId = "" }: Props) {
 	const totalRecords = filteredResults?.length;
 
 	if (stepDetails.isLoading) return <LoadingOverlay visible />;
+	const statusParams = getWorkflowStatus(status || "");
+	const Icon = statusParams?.icon;
 	return (
 		<Flex direction="column" gap="xs">
 			<Card bg="gray.1" p={0} m={0}>
 				<Flex gap="sm" align="center" justify="center" py="sm">
-					<Badge color={status ? "green" : "red"} circle size="30px">
-						{status ? <IconCheck color="white" /> : <IconX color="white" />}
+					<Badge color={statusParams?.color} circle size="30px">
+						{Icon && <Icon />}
 					</Badge>
 					<Text fz="lg" fw="bold" tt="capitalize">
-						{status
-							? `${stepDetails?.data?.total ?? "-"} IPs discovered by ${stepDetails?.data} in scan ${"---"}`
-							: `${stepDetails?.data?.message || "-"}`}
+						{stepDetails?.data?.message}
 					</Text>
 				</Flex>
 			</Card>

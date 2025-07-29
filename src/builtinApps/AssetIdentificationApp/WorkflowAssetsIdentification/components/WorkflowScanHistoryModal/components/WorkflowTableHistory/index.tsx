@@ -92,7 +92,7 @@ export default function WorkflowScanHistory({ selectedScan }: { selectedScan?: W
 	const tableRecords = filteredResults.slice(from, to);
 	const totalRecords = filteredResults?.length;
 
-	if (historyDetail.isLoading) return <LoadingOverlay visible />;
+	if (historyDetail.isLoading || !selectedScan?.id) return <LoadingOverlay visible />;
 	const scanDetail = historyDetail.data;
 	const statusParams = getWorkflowStatus(selectedScan?.status || "");
 	const Icon = statusParams?.icon;

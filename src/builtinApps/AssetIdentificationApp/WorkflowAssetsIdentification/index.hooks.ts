@@ -5,17 +5,17 @@ import {
 	useGetWorkflows,
 } from "@/http/generated/workflow-management";
 
-export function useWorkflow() {
+export function useWorkflow(refetchInterval: false | number = false) {
 	const workflows = useGetWorkflows({
 		query: {
 			refetchOnMount: true,
 			staleTime: 0,
 			gcTime: 0,
-			refetchInterval: 5_000,
+			refetchInterval,
 			select: (res) => res.data,
 		},
 	});
-	return { workflows };
+	return { workflows, isLoading: workflows?.isLoading };
 }
 
 export function useWorkflowScanHistory(queryParams: Record<string, unknown>) {

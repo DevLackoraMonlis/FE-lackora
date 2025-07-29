@@ -18,7 +18,7 @@ export function calculateScheduledScanDate(date?: string | null) {
 		if (diff === -1) {
 			return `Yesterday ${dayjs(date).format("HH:mm")}`;
 		}
-		return dayjs(date).format("YYYY-MM-DD, HH:mm");
+		return date;
 	} catch (_) {
 		return "-";
 	}
@@ -26,12 +26,13 @@ export function calculateScheduledScanDate(date?: string | null) {
 export function calculateNextScheduledScan(date?: string | null) {
 	if (!date) return "Scheduled scan will start in - minutes";
 	try {
+		if (!dayjs(date).isValid()) return `Scheduled scan will start in ${date}`;
 		const today = dayjs().startOf("day");
 		const inputDate = dayjs(date).startOf("day");
 		const diff = inputDate.diff(today, "day");
 		return `Scheduled scan will start in ${dayjs(diff).get("minutes")} minutes`;
 	} catch (_) {
-		return "Scheduled scan will start in - minutes";
+		return `Scheduled scan will start in ${date}`;
 	}
 }
 
@@ -72,16 +73,17 @@ export function stepDescription<T extends Record<string, unknown>>(step: T) {
 	const failed = (step.status as string) === WorkflowStatus.Failed;
 	const start = toFormattedDate(step.start_time as string, "HH:mm") || "-";
 	const end = toFormattedDate(step.end_time as string, "HH:mm") || "-";
+	console.log(step);
 	return {
 		description:
 			isProgress || failed
 				? `Start at ${start}`
-				: `Start at ${start} - End at ${end}  |  Duration: ${step.duration}`,
+				: `Start at ${start} - End at ${end}  |  Duration: ${step.duration || "-"}`,
 		isProgress,
 		value: progressStepValue,
 		resultMessage: step.result_message as string,
 		resultCount: step.result_count as number,
-		message: `${step.progress} |  Duration: ${step.duration}`,
+		message: `${step.progress} |  Duration: ${step.duration || "-"}`,
 	};
 }
 
