@@ -6,7 +6,7 @@ import { WorkflowStatus } from "@/shared/enums/index.enums";
 
 import { toFormattedDate } from "@/shared/lib/dayJs";
 
-export function calculateScheduledScanDate(date: string) {
+export function calculateScheduledScanDate(date?: string | null) {
 	if (!date) return "-";
 	try {
 		const today = dayjs().startOf("day");
@@ -23,7 +23,7 @@ export function calculateScheduledScanDate(date: string) {
 		return "-";
 	}
 }
-export function calculateNextScheduledScan(date: string) {
+export function calculateNextScheduledScan(date?: string | null) {
 	if (!date) return "Scheduled scan will start in - minutes";
 	try {
 		const today = dayjs().startOf("day");
@@ -85,6 +85,6 @@ export function stepDescription<T extends Record<string, unknown>>(step: T) {
 	};
 }
 
-export function getWorkflowStatus(status: string) {
+export function getWorkflowStatus(status?: string) {
 	return WORKFLOW_STATUS[status as WorkflowStatus];
 }

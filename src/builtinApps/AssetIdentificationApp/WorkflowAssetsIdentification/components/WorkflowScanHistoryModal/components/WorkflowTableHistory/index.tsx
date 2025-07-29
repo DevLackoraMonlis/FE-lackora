@@ -1,6 +1,5 @@
 import { Badge, Card, Flex, Highlight, LoadingOverlay, Text } from "@mantine/core";
 import { useViewportSize } from "@mantine/hooks";
-import { IconCheck, IconX } from "@tabler/icons-react";
 import { sortBy } from "lodash";
 import { useState } from "react";
 
@@ -10,28 +9,17 @@ import BCTanStackGrid from "@/shared/components/baseComponents/BCTanStackGrid";
 import type { TanStackGridProps } from "@/shared/components/baseComponents/BCTanStackGrid/index.types";
 import { useTableSort } from "@/shared/hooks/useTableSort";
 
-import { useWorkflowDetectedAssets } from "../../../../index.hooks";
+import { getWorkflowStatus } from "../../../../index.helper";
+import { useWorkflowHistoryDetail } from "../../../../index.hooks";
+import type { WorkflowScan } from "../../../../index.types";
 
-import type { ConfigurationRs } from "@/builtinApps/AssetIdentificationApp/DiscoverySettings/index.types";
-import { getWorkflowStatus } from "@/builtinApps/AssetIdentificationApp/WorkflowAssetsIdentification/index.helper";
-
-type Props = Partial<ConfigurationRs> & {
-	onClose: VoidFunction;
-	opened: boolean;
-};
-
-export default function WorkflowScanHistory(_props: Props) {
+export default function WorkflowScanHistory({ selectedScan }: { selectedScan?: WorkflowScan }) {
 	const { height } = useViewportSize();
-	const { detectedAssets } = useWorkflowDetectedAssets(false, {});
-
-	const results = detectedAssets.data?.results || [];
-	const status = detectedAssets.data?.status;
-
 	const [{ search = "", ...queryParams }, setQueryParams] = useState<PaginationRq>({ limit: 25, page: 1 });
-	const { generateSortIcons, sortStatus } = useTableSort<(typeof results)[number]>({
-		columnAccessor: "discoveryTime",
-		direction: "des",
-	});
+	const { historyDetail } = useWorkflowHistoryDetail(selectedScan?.id || "", queryParams);
+	const results = historyDetail.data?.results || [];
+
+	const { generateSortIcons, sortStatus } = useTableSort<(typeof results)[number]>();
 
 	const handleUpdateQueryParams = (params: Partial<PaginationRq>) => {
 		setQueryParams((perParams) => ({ ...perParams, page: 1, ...params }));
@@ -104,29 +92,32 @@ export default function WorkflowScanHistory(_props: Props) {
 	const tableRecords = filteredResults.slice(from, to);
 	const totalRecords = filteredResults?.length;
 
-	if (detectedAssets.isLoading) return <LoadingOverlay visible />;
+	if (historyDetail.isLoading) return <LoadingOverlay visible />;
+	const scanDetail = historyDetail.data;
+	const statusParams = getWorkflowStatus(selectedScan?.status || "");
+	const Icon = statusParams?.icon;
 	return (
 		<Flex direction="column" gap="xs">
 			<Card bg="gray.1" p={0} m={0}>
 				<Flex direction="column" gap="xs" p="sm">
 					<Flex align="center" justify="space-between">
 						<Flex gap="xs" align="center">
-							<Badge color={status ? "green" : "red"} circle size="25px">
-								{status ? <IconCheck size={19} color="white" /> : <IconX size={19} color="white" />}
+							<Badge color={statusParams?.color} circle size="25px">
+								{Icon ? <Icon size={19} color="white" /> : null}
 							</Badge>
 							<Text fw="bold" fz="md">
-								{"Scan #4300"}
+								{`Scan: #${selectedScan?.scanId}`}
 							</Text>
 						</Flex>
 						<Flex gap="xs" align="center">
-							<Text>{"Scan Time: 2025-07-21 12:00 | Duration: 1h 10min(s) | Status: "}</Text>
-							<Badge color={getWorkflowStatus("failed")?.color} variant="light">
-								{"failed"}
+							<Text>{`Scan Time: ${scanDetail?.scan_time} | Duration: ${scanDetail?.duration} | Status:`}</Text>
+							<Badge color={statusParams?.color} variant="light">
+								{statusParams?.label}
 							</Badge>
 						</Flex>
 					</Flex>
 					<Text fw="bold" tt="capitalize">
-						{"Total Identified Assets: 540"}
+						{scanDetail?.message}
 					</Text>
 				</Flex>
 			</Card>

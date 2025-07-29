@@ -1,7 +1,9 @@
-import { useGetDiscoverySettingLastRun } from "@/http/generated/asset-identification-discovery-settings";
-import { useGetWorkflows } from "@/http/generated/work-flow";
-
-import { allMockData } from "./data";
+import {
+	useGetWorkflowHistory,
+	useGetWorkflowHistoryDetail,
+	useGetWorkflowStep,
+	useGetWorkflows,
+} from "@/http/generated/workflow-management";
 
 export function useWorkflow() {
 	const workflows = useGetWorkflows({
@@ -9,57 +11,72 @@ export function useWorkflow() {
 			refetchOnMount: true,
 			staleTime: 0,
 			gcTime: 0,
+			refetchInterval: 5_000,
+			select: (res) => res.data,
 		},
 	});
-	return { ...workflows, data: allMockData?.running };
+	return { workflows };
 }
 
-export function useWorkflowScanHistory(enabled: boolean, _queryParams: Record<string, unknown>) {
-	const detectedAssets = useGetDiscoverySettingLastRun("adapterId", "lastExecutionId", {
+export function useWorkflowScanHistory(queryParams: Record<string, unknown>) {
+	const scanHistoryList = useGetWorkflowHistory(queryParams, {
 		query: {
-			refetchOnMount: true,
-			staleTime: 0,
-			gcTime: 0,
-			enabled: enabled,
 			select: (res) => {
 				const results =
-					res?.data?.results?.map((item = {}) => {
-						const record = item as Record<string, string>;
+					res?.data?.results?.map((record) => {
 						return {
-							key: record.ip,
-							scanId: record.ip,
-							status: "complete",
+							id: record.id || "",
+							scanId: record.scan_id || "",
+							status: record.status,
 						};
 					}) || [];
 				return { ...res.data, results };
 			},
 		},
 	});
-	return { detectedAssets };
+	return { scanHistoryList };
 }
 
-export function useWorkflowDetectedAssets(enabled: boolean, _queryParams: Record<string, unknown>) {
-	const detectedAssets = useGetDiscoverySettingLastRun("adapterId", "lastExecutionId", {
+export function useWorkflowHistoryDetail(stepId: string, _queryParams: Record<string, unknown>) {
+	const historyDetail = useGetWorkflowHistoryDetail(stepId, {
 		query: {
-			refetchOnMount: true,
-			staleTime: 0,
-			gcTime: 0,
-			enabled: enabled,
+			enabled: !!stepId,
 			select: (res) => {
 				const results =
-					res?.data?.results?.map((item = {}) => {
-						const record = item as Record<string, string>;
+					res?.data?.results?.map((record) => {
 						return {
-							key: `${record.ip}-${record.mac}-${record.created_time}`,
+							key: `${record.ip}-${record.mac}-${record.gateway_name}`,
 							ipAddress: record.ip,
 							macAddress: record.mac,
-							discoveryTime: record.created_time,
-							gateway: record.gateway,
+							discoveryTime: record.discovery_time,
+							gateway: record.gateway_name,
 						};
 					}) || [];
 				return { ...res.data, results };
 			},
 		},
 	});
-	return { detectedAssets };
+	return { historyDetail };
+}
+
+export function useWorkflowStep(stepId: string) {
+	const stepDetails = useGetWorkflowStep(stepId, {
+		query: {
+			enabled: !!stepId,
+			select: (res) => {
+				const results =
+					res?.data?.results?.map((record) => {
+						return {
+							key: `${record.ip}-${record.mac}-${record.gateway_name}`,
+							ipAddress: record.ip as string,
+							macAddress: record.mac as string,
+							discoveryTime: record.discovery_time as string,
+							gateway: record.gateway_name as string,
+						};
+					}) || [];
+				return { ...res.data, results };
+			},
+		},
+	});
+	return { stepDetails };
 }

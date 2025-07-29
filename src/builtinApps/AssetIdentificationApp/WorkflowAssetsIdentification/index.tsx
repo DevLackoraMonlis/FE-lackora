@@ -3,7 +3,7 @@
 import { Accordion, Badge, Button, Card, Flex, Grid, ScrollArea, Text } from "@mantine/core";
 import { useDisclosure, useViewportSize } from "@mantine/hooks";
 import { IconLineScan } from "@tabler/icons-react";
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 
 import {
 	calculateNextScheduledScan,
@@ -15,7 +15,7 @@ import {
 import { useWorkflow } from "./index.hooks";
 
 import WorkflowAccordion from "./components/WorkflowAccordion";
-import WorkflowDetectedAssetsModal from "./components/WorkflowDetectedAssetsModal";
+import WorkflowDetectedStepModal from "./components/WorkflowDetectedStepModal";
 import WorkflowPlayerTracking from "./components/WorkflowPlayerTracking";
 import WorkflowScanHistoryModal from "./components/WorkflowScanHistoryModal";
 
@@ -23,10 +23,12 @@ export default function WorkflowAssetsIdentification() {
 	const { height } = useViewportSize();
 	const [openedDetectedAssets, handleDetectedAssets] = useDisclosure();
 	const [openedScanHistory, handleScanHistory] = useDisclosure();
-	const workflows = useWorkflow();
+	const { workflows } = useWorkflow();
 
+	const [selectedStepId, setSelectedStepId] = useState<string>("");
 	const handleGatewayConfiguration = () => {};
-	const handleViewMatchedAssets = () => {
+	const handleViewMatchedAssets = (id: string) => {
+		setSelectedStepId(id);
 		handleDetectedAssets.open();
 	};
 
@@ -36,15 +38,14 @@ export default function WorkflowAssetsIdentification() {
 	};
 	return (
 		<>
-			<WorkflowDetectedAssetsModal
-				onClose={handleDetectedAssets.close}
+			<WorkflowScanHistoryModal onClose={handleScanHistory.close} opened={openedScanHistory} />
+			<WorkflowDetectedStepModal
+				onClose={() => {
+					setSelectedStepId("");
+					handleDetectedAssets.close();
+				}}
 				opened={openedDetectedAssets}
-				enabledQuery={false}
-			/>
-			<WorkflowScanHistoryModal
-				onClose={handleScanHistory.close}
-				opened={openedScanHistory}
-				scanId={workflows.data?.id}
+				stepId={selectedStepId}
 			/>
 			<ScrollArea h={height - 130}>
 				<Grid p="xs" pt="lg">
@@ -131,8 +132,9 @@ export default function WorkflowAssetsIdentification() {
 										status={phase.status}
 										description={description}
 										steps={steps?.map((step) => {
-											const description = stepDescription(step);
+											const description = stepDescription(step as unknown as Record<string, unknown>);
 											return {
+												id: step.id || "",
 												type: step.name,
 												progressStatus: step.progress_status,
 												title: step.display_name,

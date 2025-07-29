@@ -1,4 +1,4 @@
-import { Center, LoadingOverlay, Pagination, ScrollArea } from "@mantine/core";
+import { Center, Pagination, ScrollArea } from "@mantine/core";
 import { Badge, Card, Flex, Text } from "@mantine/core";
 import { useViewportSize } from "@mantine/hooks";
 import { useEffect, useState } from "react";
@@ -9,46 +9,40 @@ import { useTablePagination } from "@/shared/hooks/useTablePagination";
 
 import { getWorkflowStatus } from "../../../../index.helper";
 import { useWorkflowScanHistory } from "../../../../index.hooks";
+import type { WorkflowScan } from "../../../../index.types";
+import WorkflowScanHistoryListSkelton from "../WorkflowScanHistoryListSkelton";
 
-import type { ConfigurationRs } from "@/builtinApps/AssetIdentificationApp/DiscoverySettings/index.types";
-
-type Props = Partial<ConfigurationRs> & {
-	onClose: VoidFunction;
-	opened: boolean;
+type Props = {
+	setSelectedScan: (id: WorkflowScan) => void;
+	selectedScan?: WorkflowScan;
 };
-
-const data = Array(200)
-	.fill({
-		key: "record.ip",
-		status: "completed",
-	})
-	.map((item, idx) => ({ ...item, scanId: idx, key: `${item.key + idx.toString()}` }));
-
-export default function WorkflowScanHistoryList(_props: Props) {
+export default function WorkflowScanHistoryList({ setSelectedScan, selectedScan }: Props) {
 	const { height } = useViewportSize();
-
-	const [{ search = "", ...queryParams }, setQueryParams] = useState<PaginationRq & { scanId?: string }>({
-		limit: 25,
+	const [{ search = "", ...queryParams }, setQueryParams] = useState<PaginationRq>({
+		limit: 10,
 		page: 1,
 	});
-	const { detectedAssets } = useWorkflowScanHistory(true, queryParams);
-	const results = detectedAssets.data?.results || [...data];
-	const total = detectedAssets?.data?.total || results?.length;
+	const { scanHistoryList } = useWorkflowScanHistory(queryParams);
+	const results = scanHistoryList.data?.results || [];
+	const total = scanHistoryList?.data?.total;
 
 	const { tablePagination, page, pageSize, totalRecords, setTotalRecords } = useTablePagination({
-		defaultPageSize: 12,
+		defaultPageSize: 10,
 	});
 	const showPagination = totalRecords > pageSize;
 
-	const handleUpdateQueryParams = (params: Partial<PaginationRq & { scanId: string }>) => {
+	const handleUpdateQueryParams = (params: Partial<PaginationRq>) => {
 		setQueryParams((perParams) => ({ ...perParams, page: 1, ...params }));
 	};
 
 	useEffect(() => {
-		setTotalRecords(total || 0);
+		const lastScan = results?.[0];
+		if (lastScan) {
+			setTotalRecords(total || 0);
+			setSelectedScan(lastScan);
+		}
 	}, [total]);
 
-	if (detectedAssets.isLoading) return <LoadingOverlay visible />;
 	return (
 		<Card m={0} p="xs" bg="gray.1" h="100%" pos="relative">
 			<Flex direction="column">
@@ -59,26 +53,32 @@ export default function WorkflowScanHistoryList(_props: Props) {
 				/>
 				<ScrollArea h={height - 200}>
 					<Flex gap="2xs" direction="column" mt="xs">
-						{results?.map(({ key, scanId, status }) => {
-							return (
-								<Card
-									key={key}
-									m={0}
-									p="xs"
-									radius="md"
-									bd="1px solid gray.4"
-									className="cursor-pointer"
-									onClick={() => handleUpdateQueryParams({ scanId })}
-								>
-									<Flex justify="space-between" align="center">
-										<Text fw="bold">{`Scan #${scanId}`}</Text>
-										<Badge variant="light" color={getWorkflowStatus(status)?.color}>
-											{status}
-										</Badge>
-									</Flex>
-								</Card>
-							);
-						})}
+						{scanHistoryList.isLoading ? (
+							<WorkflowScanHistoryListSkelton />
+						) : (
+							results?.map(({ id, scanId, status }) => {
+								const statusParams = getWorkflowStatus(status);
+								return (
+									<Card
+										key={id}
+										m={0}
+										p="xs"
+										radius="md"
+										shadow={selectedScan?.id === id ? "md" : "xs"}
+										bd={`2px solid ${selectedScan?.id === id ? "primary.3" : "gray.4"}`}
+										className="cursor-pointer"
+										onClick={() => setSelectedScan({ id, scanId, status })}
+									>
+										<Flex justify="space-between" align="center">
+											<Text fw="bold">{`Scan #${scanId}`}</Text>
+											<Badge variant="light" color={statusParams?.color}>
+												{statusParams?.label}
+											</Badge>
+										</Flex>
+									</Card>
+								);
+							})
+						)}
 					</Flex>
 				</ScrollArea>
 				{showPagination && (

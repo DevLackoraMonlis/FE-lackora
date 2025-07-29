@@ -11,24 +11,21 @@ import BCTanStackGrid from "@/shared/components/baseComponents/BCTanStackGrid";
 import type { TanStackGridProps } from "@/shared/components/baseComponents/BCTanStackGrid/index.types";
 import { useTableSort } from "@/shared/hooks/useTableSort";
 
-import { useWorkflowDetectedAssets } from "../../index.hooks";
+import { useWorkflowStep } from "../../index.hooks";
 
-import type { ConfigurationRs } from "@/builtinApps/AssetIdentificationApp/DiscoverySettings/index.types";
-
-type Props = Partial<ConfigurationRs> & {
+type Props = {
 	onClose: VoidFunction;
 	opened: boolean;
-	enabledQuery: boolean;
+	stepId?: string;
 };
 
-function WorkflowDetectedAssets(props: Props) {
+function WorkflowDetectedStep({ stepId = "" }: Props) {
 	const { height } = useViewportSize();
-	const { detectedAssets } = useWorkflowDetectedAssets(props.enabledQuery, {});
-
-	const results = detectedAssets.data?.results || [];
-	const status = detectedAssets.data?.status;
-
 	const [{ search = "", ...queryParams }, setQueryParams] = useState<PaginationRq>({ limit: 25, page: 1 });
+
+	const { stepDetails } = useWorkflowStep(stepId);
+	const results = stepDetails.data?.results || [];
+	const status = "failed";
 	const { generateSortIcons, sortStatus } = useTableSort<(typeof results)[number]>({
 		columnAccessor: "discoveryTime",
 		direction: "des",
@@ -105,7 +102,7 @@ function WorkflowDetectedAssets(props: Props) {
 	const tableRecords = filteredResults.slice(from, to);
 	const totalRecords = filteredResults?.length;
 
-	if (detectedAssets.isLoading && props.enabledQuery) return <LoadingOverlay visible />;
+	if (stepDetails.isLoading) return <LoadingOverlay visible />;
 	return (
 		<Flex direction="column" gap="xs">
 			<Card bg="gray.1" p={0} m={0}>
@@ -115,10 +112,8 @@ function WorkflowDetectedAssets(props: Props) {
 					</Badge>
 					<Text fz="lg" fw="bold" tt="capitalize">
 						{status
-							? `${detectedAssets?.data?.total ?? "-"} IPs discovered by ${
-									detectedAssets?.data?.duration
-								} in scan ${props.configurationIP}`
-							: `${detectedAssets?.data?.message || "-"}`}
+							? `${stepDetails?.data?.total ?? "-"} IPs discovered by ${stepDetails?.data} in scan ${"---"}`
+							: `${stepDetails?.data?.message || "-"}`}
 					</Text>
 				</Flex>
 			</Card>
@@ -153,10 +148,10 @@ function WorkflowDetectedAssets(props: Props) {
 	);
 }
 
-export default function WorkflowDetectedAssetsModal({ onClose, opened, ...configs }: Props) {
+export default function WorkflowDetectedStepModal({ onClose, opened, stepId }: Props) {
 	return (
 		<BCDrawer size="50%" onClose={onClose} opened={opened} title="Detected Assets">
-			<WorkflowDetectedAssets onClose={onClose} opened={opened} {...configs} />
+			<WorkflowDetectedStep onClose={onClose} opened={opened} stepId={stepId} />
 		</BCDrawer>
 	);
 }

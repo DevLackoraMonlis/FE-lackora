@@ -1,11 +1,11 @@
 import { Flex, Progress, Text } from "@mantine/core";
 
 import { WorkflowStatus } from "@/shared/enums/index.enums";
-import type { WorkflowHandles, WorkflowStep } from "../../../../index.types";
+import type { WorkflowStep } from "../../../../index.types";
 
 type Props = {
 	step: WorkflowStep;
-	handleViewMatchedAssets: WorkflowHandles["handleViewMatchedAssets"];
+	handleViewMatchedAssets: VoidFunction;
 };
 
 export default function AccordionStepDescription({ step, handleViewMatchedAssets }: Props) {

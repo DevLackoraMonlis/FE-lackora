@@ -13,6 +13,7 @@ type Props = WorkflowPhase & WorkflowHandles;
 
 export default function WorkflowAccordion({ type, status, title, description, steps, ...props }: Props) {
 	if (!type) return null;
+	const phaseParams = useMemo(() => getWorkflowStatus(status), [status]);
 	const timelineActiveStep = useMemo(
 		() =>
 			status === "completed" ? steps?.length : steps?.findIndex(({ status }) => status === "inprogress"),
@@ -67,9 +68,9 @@ export default function WorkflowAccordion({ type, status, title, description, st
 							</Flex>
 						</Flex>
 						<Flex align="center" gap="xs" px="sm">
-							<Badge w="130px" variant="light" color={getWorkflowStatus(status)?.color} px="sm" py="md">
+							<Badge w="130px" variant="light" color={phaseParams?.color} px="sm" py="md">
 								<Text p="2xs" tt="capitalize">
-									{getWorkflowStatus(status)?.label}
+									{phaseParams?.label}
 								</Text>
 							</Badge>
 						</Flex>
@@ -78,47 +79,51 @@ export default function WorkflowAccordion({ type, status, title, description, st
 				{/* Panel */}
 				<Accordion.Panel px="3xl">
 					<Timeline active={timelineActiveStep} bulletSize={25} lineWidth={3} mt="md" color="green">
-						{steps?.map((step) => (
-							<Timeline.Item
-								key={step.title}
-								bullet={workflowIcons[step.status as keyof typeof workflowIcons]}
-								color={getWorkflowStatus(step.status)?.color}
-								title={
-									<Flex align="center" justify="space-between">
-										<Text fw="bold">{step.title}</Text>
-										<Flex align="center">
-											<Badge color={getWorkflowStatus(step.status)?.color} variant="light">
-												{step.status}
-											</Badge>
-											<Menu trigger="hover" shadow="md">
-												<Menu.Target>
-													<IconDotsVertical size={20} />
-												</Menu.Target>
-												<Menu.Dropdown>
-													<Menu.Item
-														leftSection={<IconSettings size={15} />}
-														onClick={() => props.handleGatewayConfiguration()}
-													>
-														Go to Gateway Configuration
-													</Menu.Item>
-													<Menu.Item
-														leftSection={<IconEye size={15} />}
-														onClick={() => props.handleViewMatchedAssets()}
-													>
-														View Matched Assets
-													</Menu.Item>
-												</Menu.Dropdown>
-											</Menu>
+						{steps?.map((step) => {
+							const stepParams = getWorkflowStatus(step.status || "");
+							const Icon = stepParams?.icon;
+							return (
+								<Timeline.Item
+									key={step.title}
+									bullet={Icon ? <Icon size={15} /> : null}
+									color={stepParams?.color}
+									title={
+										<Flex align="center" justify="space-between">
+											<Text fw="bold">{step.title}</Text>
+											<Flex align="center">
+												<Badge color={stepParams?.color} variant="light">
+													{step.status}
+												</Badge>
+												<Menu trigger="hover" shadow="md">
+													<Menu.Target>
+														<IconDotsVertical size={20} />
+													</Menu.Target>
+													<Menu.Dropdown>
+														<Menu.Item
+															leftSection={<IconSettings size={15} />}
+															onClick={() => props.handleGatewayConfiguration(step.id)}
+														>
+															Go to Gateway Configuration
+														</Menu.Item>
+														<Menu.Item
+															leftSection={<IconEye size={15} />}
+															onClick={() => props.handleViewMatchedAssets(step.id)}
+														>
+															View Matched Assets
+														</Menu.Item>
+													</Menu.Dropdown>
+												</Menu>
+											</Flex>
 										</Flex>
-									</Flex>
-								}
-							>
-								<AccordionStepDescription
-									step={step}
-									handleViewMatchedAssets={() => props.handleViewMatchedAssets()}
-								/>
-							</Timeline.Item>
-						))}
+									}
+								>
+									<AccordionStepDescription
+										step={step}
+										handleViewMatchedAssets={() => props.handleViewMatchedAssets(step.id)}
+									/>
+								</Timeline.Item>
+							);
+						})}
 					</Timeline>
 				</Accordion.Panel>
 			</Accordion.Item>
