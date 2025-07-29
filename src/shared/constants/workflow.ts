@@ -11,7 +11,7 @@ export const WORKFLOW_STATUS: Record<WorkflowStatus, WorkflowStatusParams> = {
 	[WorkflowStatus.Idle]: {
 		label: "Idle",
 		color: "gray",
-		c: "gray",
+		c: "gray.5",
 		bg: "gray.1",
 	},
 	[WorkflowStatus.Failed]: {

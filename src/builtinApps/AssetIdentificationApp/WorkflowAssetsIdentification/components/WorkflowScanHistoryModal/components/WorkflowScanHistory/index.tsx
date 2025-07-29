@@ -13,7 +13,7 @@ import { useTableSort } from "@/shared/hooks/useTableSort";
 import { useWorkflowDetectedAssets } from "../../../../index.hooks";
 
 import type { ConfigurationRs } from "@/builtinApps/AssetIdentificationApp/DiscoverySettings/index.types";
-import { getWorkflowStatusColor } from "@/builtinApps/AssetIdentificationApp/WorkflowAssetsIdentification/index.helper";
+import { getWorkflowStatus } from "@/builtinApps/AssetIdentificationApp/WorkflowAssetsIdentification/index.helper";
 
 type Props = Partial<ConfigurationRs> & {
 	onClose: VoidFunction;
@@ -120,7 +120,7 @@ export default function WorkflowScanHistory(_props: Props) {
 						</Flex>
 						<Flex gap="xs" align="center">
 							<Text>{"Scan Time: 2025-07-21 12:00 | Duration: 1h 10min(s) | Status: "}</Text>
-							<Badge color={getWorkflowStatusColor("failed")} variant="light">
+							<Badge color={getWorkflowStatus("failed")?.color} variant="light">
 								{"failed"}
 							</Badge>
 						</Flex>

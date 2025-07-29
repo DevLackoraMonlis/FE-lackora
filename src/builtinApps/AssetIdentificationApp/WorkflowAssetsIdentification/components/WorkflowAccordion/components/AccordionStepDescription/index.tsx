@@ -16,7 +16,7 @@ export default function AccordionStepDescription({ step, handleViewMatchedAssets
 				<>
 					<Flex gap="xs" align="center">
 						<Progress value={description.value} size="md" style={{ flex: 3 }} />
-						<Text fz="xs" style={{ flex: 1 }}>
+						<Text fz="xs" style={{ flex: 1 }} tw="nowrap">
 							{description.message}
 						</Text>
 					</Flex>

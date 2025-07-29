@@ -9,7 +9,7 @@ export enum AssetsStatus {
 export enum WorkflowStatus {
 	Failed = "failed",
 	Completed = "completed",
-	Inprogress = "inprogress",
+	Inprogress = "in_progress",
 	Idle = "idle",
 	PartialSuccess = "partial_success",
 }

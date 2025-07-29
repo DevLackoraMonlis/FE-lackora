@@ -168,6 +168,7 @@ export const allMockData = {
 		message: "Started processing workflow",
 		description: null,
 		schedule: "2h",
+		status: "in_progress",
 		last_scan_time: null,
 		next_runtime: "2025-07-27 19:24:15",
 		start_time: "2025-07-27 17:26:43",

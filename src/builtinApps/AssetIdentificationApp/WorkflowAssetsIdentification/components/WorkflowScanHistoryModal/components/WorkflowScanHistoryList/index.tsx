@@ -7,7 +7,7 @@ import type { PaginationRq } from "@/http/end-points/GeneralService.types";
 import BCSearchInput from "@/shared/components/baseComponents/BCSearchInput";
 import { useTablePagination } from "@/shared/hooks/useTablePagination";
 
-import { getWorkflowStatusColor } from "../../../../index.helper";
+import { getWorkflowStatus } from "../../../../index.helper";
 import { useWorkflowScanHistory } from "../../../../index.hooks";
 
 import type { ConfigurationRs } from "@/builtinApps/AssetIdentificationApp/DiscoverySettings/index.types";
@@ -72,7 +72,7 @@ export default function WorkflowScanHistoryList(_props: Props) {
 								>
 									<Flex justify="space-between" align="center">
 										<Text fw="bold">{`Scan #${scanId}`}</Text>
-										<Badge variant="light" color={getWorkflowStatusColor(status)}>
+										<Badge variant="light" color={getWorkflowStatus(status)?.color}>
 											{status}
 										</Badge>
 									</Flex>

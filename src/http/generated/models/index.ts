@@ -14,6 +14,7 @@ export * from './AdapterValidationStatus';
 export * from './AdaptersDependencyCheckResponse';
 export * from './AdaptersDependencyCheckResponseResults';
 export * from './AdvanceFilterColumnsRequest';
+export * from './AdvanceFilterColumnsRequestDisplayName';
 export * from './AdvanceFilterColumnsRequestOrder';
 export * from './AdvanceFilterGroupByRequest';
 export * from './AdvanceFilterGroupByRequestColumn';

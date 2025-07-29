@@ -1,24 +1,32 @@
+export type WorkflowDescription = {
+	message: string;
+	description: string;
+	isProgress: boolean;
+	value: number;
+	resultMessage: string | null;
+	resultCount: number | null;
+};
+
 export type WorkflowStep = {
 	type: string;
 	status: string; // WorkflowStatus;
 	title: string;
 	progressStatus: string;
-	description: {
-		message: string;
-		description: string;
-		isProgress: boolean;
-		value: number;
-		resultMessage: string | null;
-		resultCount: number | null;
-	};
+	description: WorkflowDescription;
 };
 
-export type WorkflowAccordionProps = {
+export type WorkflowPhase = {
 	type: string;
 	status: string; // WorkflowStatus;
 	title: string;
-	description: { label: string; progress: boolean; value: number };
 	steps: WorkflowStep[];
+	description: WorkflowDescription & {
+		failed: boolean;
+		inprogress: boolean;
+		completed: boolean;
+		partial: boolean;
+		idle: boolean;
+	};
 };
 
 export type WorkflowHandles = {
