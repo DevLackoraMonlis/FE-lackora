@@ -2,7 +2,7 @@ import type { ICAdvancedFilterProps } from "@/shared/components/infraComponents/
 import { Button, Flex, Select, TextInput } from "@mantine/core";
 import { getHotkeyHandler } from "@mantine/hooks";
 import { IconSearch } from "@tabler/icons-react";
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { useStore } from "zustand/index";
 import { useShallow } from "zustand/react/shallow";
 import classes from "./index.module.css";
@@ -30,6 +30,15 @@ export default function ICAdvancedFilterSearch<T>(props: Props<T>) {
 		},
 		[props.allColumns],
 	);
+
+	useEffect(() => {
+		if (props.searchInputItems?.[0]?.value) {
+			store.setSearch({
+				columnName: props.searchInputItems?.[0]?.value,
+				value: "",
+			});
+		}
+	}, [props.searchInputItems?.[0]?.value]);
 
 	return (
 		<Flex align={"center"}>
