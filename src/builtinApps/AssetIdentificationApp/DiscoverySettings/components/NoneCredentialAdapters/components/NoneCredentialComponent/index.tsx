@@ -21,7 +21,7 @@ type Props = {
 };
 
 const NoneCredentialServices = ({ enabled, adapterId, fields, refetchDiscoveryAdapters }: Props) => {
-	const { discoverySettingConfigurations } = useDiscoveryAdapterById(adapterId, enabled);
+	const discoverySettingConfigurations = useDiscoveryAdapterById(adapterId, enabled);
 
 	const { deleteDiscoverySetting } = useDeleteNoneCredential();
 	const handleDeleteAdapterConfigurations = (configuration_id: string) => {

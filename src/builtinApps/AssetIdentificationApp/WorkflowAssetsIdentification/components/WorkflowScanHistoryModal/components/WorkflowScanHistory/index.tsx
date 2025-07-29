@@ -1,34 +1,28 @@
-import { Badge, Flex, Highlight, LoadingOverlay, Text } from "@mantine/core";
+import { Badge, Card, Flex, Highlight, LoadingOverlay, Text } from "@mantine/core";
 import { useViewportSize } from "@mantine/hooks";
 import { IconCheck, IconX } from "@tabler/icons-react";
 import { sortBy } from "lodash";
 import { useState } from "react";
 
 import type { PaginationRq } from "@/http/end-points/GeneralService.types";
-import BCDrawer from "@/shared/components/baseComponents/BCDrawer";
 import BCSearchInput from "@/shared/components/baseComponents/BCSearchInput";
 import BCTanStackGrid from "@/shared/components/baseComponents/BCTanStackGrid";
 import type { TanStackGridProps } from "@/shared/components/baseComponents/BCTanStackGrid/index.types";
 import { useTableSort } from "@/shared/hooks/useTableSort";
 
-import { useWorkflowDetectedAssets } from "../../../index.hooks";
+import { useWorkflowDetectedAssets } from "../../../../index.hooks";
 
 import type { ConfigurationRs } from "@/builtinApps/AssetIdentificationApp/DiscoverySettings/index.types";
+import { getWorkflowStatus } from "@/builtinApps/AssetIdentificationApp/WorkflowAssetsIdentification/index.helper";
 
 type Props = Partial<ConfigurationRs> & {
 	onClose: VoidFunction;
 	opened: boolean;
-	enabledQuery: boolean;
-	hightOffset?: number;
 };
 
-function WorkflowDetectedAssets(props: Props) {
+export default function WorkflowScanHistory(_props: Props) {
 	const { height } = useViewportSize();
-	const { detectedAssets } = useWorkflowDetectedAssets(
-		props.enabledQuery,
-		props.adapterId || "",
-		props.lastExecutionId || "",
-	);
+	const { detectedAssets } = useWorkflowDetectedAssets(false, {});
 
 	const results = detectedAssets.data?.results || [];
 	const status = detectedAssets.data?.status;
@@ -76,7 +70,7 @@ function WorkflowDetectedAssets(props: Props) {
 			accessor: "gateway",
 			title: (
 				<Flex justify="space-between" align="center">
-					<Text>Time of Discovery</Text>
+					<Text>Gateway</Text>
 					{generateSortIcons("gateway")}
 				</Flex>
 			),
@@ -110,29 +104,42 @@ function WorkflowDetectedAssets(props: Props) {
 	const tableRecords = filteredResults.slice(from, to);
 	const totalRecords = filteredResults?.length;
 
-	if (detectedAssets.isLoading && props.enabledQuery) return <LoadingOverlay visible />;
+	if (detectedAssets.isLoading) return <LoadingOverlay visible />;
 	return (
-		<Flex direction="column" p="sm" gap="xs" w="100%">
-			<Flex gap="sm" align="center" justify="center" py="sm" bg="gray.1">
-				<Badge color={status ? "green" : "red"} circle size="30px">
-					{status ? <IconCheck color="white" /> : <IconX color="white" />}
-				</Badge>
-				<Text fz="lg" fw="bold" tt="capitalize">
-					{status
-						? `${detectedAssets?.data?.total ?? "-"} IPs discovered by ${
-								detectedAssets?.data?.duration
-							} in scan ${props.configurationIP}`
-						: `${detectedAssets?.data?.message || "-"}`}
-				</Text>
-			</Flex>
-			<Flex gap="sm" align="center" p="sm" bg="gray.1">
-				<BCSearchInput
-					clientSide
-					onSubmitSearch={(value) => handleUpdateQueryParams({ search: value })}
-					placeholder="Search by IP , MAC address or Time of Discovery"
-					inputWidth="360px"
-				/>
-			</Flex>
+		<Flex direction="column" gap="xs">
+			<Card bg="gray.1" p={0} m={0}>
+				<Flex direction="column" gap="xs" p="sm">
+					<Flex align="center" justify="space-between">
+						<Flex gap="xs" align="center">
+							<Badge color={status ? "green" : "red"} circle size="25px">
+								{status ? <IconCheck size={19} color="white" /> : <IconX size={19} color="white" />}
+							</Badge>
+							<Text fw="bold" fz="md">
+								{"Scan #4300"}
+							</Text>
+						</Flex>
+						<Flex gap="xs" align="center">
+							<Text>{"Scan Time: 2025-07-21 12:00 | Duration: 1h 10min(s) | Status: "}</Text>
+							<Badge color={getWorkflowStatus("failed")?.color} variant="light">
+								{"failed"}
+							</Badge>
+						</Flex>
+					</Flex>
+					<Text fw="bold" tt="capitalize">
+						{"Total Identified Assets: 540"}
+					</Text>
+				</Flex>
+			</Card>
+			<Card bg="gray.1" p={0} m={0}>
+				<Flex gap="sm" align="center" p="sm">
+					<BCSearchInput
+						clientSide
+						onSubmitSearch={(value) => handleUpdateQueryParams({ search: value })}
+						placeholder="Search by IP , MAC address or Time of Discovery"
+						inputWidth="360px"
+					/>
+				</Flex>
+			</Card>
 			<BCTanStackGrid
 				idAccessor="key"
 				withTableBorder
@@ -148,16 +155,8 @@ function WorkflowDetectedAssets(props: Props) {
 				onPageChange={(page) => handleUpdateQueryParams({ page })}
 				onRecordsPerPageChange={(limit) => handleUpdateQueryParams({ limit })}
 				recordsPerPageOptions={[25, 50, 100]}
-				h={height - (props.hightOffset ?? 310)}
+				h={height - 300}
 			/>
 		</Flex>
-	);
-}
-
-export default function WorkflowDetectedAssetsModal({ onClose, opened, ...configs }: Props) {
-	return (
-		<BCDrawer size="50%" onClose={onClose} opened={opened} title="Detected Assets">
-			<WorkflowDetectedAssets onClose={onClose} opened={opened} {...configs} />
-		</BCDrawer>
 	);
 }

@@ -18,7 +18,7 @@ const DiscoverySettingsNoneCredentialAdapters = () => {
 						{discoveryAdapters.data?.results?.map(({ id, fields, display_name, caption, icon }) => {
 							return (
 								<Accordion.Item key={id} value={id} mb="xs">
-									<Accordion.Control h="56px">
+									<Accordion.Control h="56px" p="xs">
 										<Flex align="center" justify="space-between">
 											<Flex gap="sm" align="center">
 												<Card w={40} h={40} variant="light" shadow="none" padding={0}>

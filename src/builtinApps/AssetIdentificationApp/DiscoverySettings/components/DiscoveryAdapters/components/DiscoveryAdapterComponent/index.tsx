@@ -1,4 +1,4 @@
-import { Flex, LoadingOverlay } from "@mantine/core";
+import { Flex, LoadingOverlay, Text } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useState } from "react";
 
@@ -14,6 +14,7 @@ import {
 } from "../../../../index.hooks";
 import type { ConfigurationRs } from "../../../../index.types";
 
+import BCSearchInput from "@/shared/components/baseComponents/BCSearchInput";
 import { DeleteDiscoveryAdapterModal } from "../DeleteDiscoveryAdapter";
 import DiscoveryAdapterCard from "../DiscoveryAdapterCard";
 import DiscoveryAdaptersCreateGateway from "../DiscoveryAdaptersCreate";
@@ -34,7 +35,8 @@ const DiscoveryAdapterGateways = ({ enabled, adapterId, fields, refetchDiscovery
 	const [openedDiscoveryQuick, handlersDiscoveryQuick] = useDisclosure(false);
 	const [openedDelete, handlersDelete] = useDisclosure(false);
 
-	const { discoverySettingConfigurations } = useDiscoveryAdapterById(adapterId, enabled);
+	const [search, setSearch] = useState<string>("");
+	const discoverySettingConfigurations = useDiscoveryAdapterById(adapterId, enabled, search);
 	const handleDiscoverySettingQuickDiscovery = (adapter: ConfigurationRs) => {
 		setSelectedId(adapter.configurationId);
 		setSelectedRecord(adapter);
@@ -102,7 +104,16 @@ const DiscoveryAdapterGateways = ({ enabled, adapterId, fields, refetchDiscovery
 				{...(selectedRecord || {})}
 			/>
 			{/* UI section */}
+			<Flex align="center" justify="space-between">
+				<Text py="xs" c="gray.6">
+					Added Configurations
+				</Text>
+				{!!discoverySettingConfigurations.data?.results?.length && (
+					<BCSearchInput clientSide onSubmitSearch={setSearch} placeholder="Search by Name or IP" />
+				)}
+			</Flex>
 			<Flex
+				pt="xs"
 				gap="xs"
 				direction="column"
 				pos="relative"
