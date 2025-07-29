@@ -5,3 +5,11 @@ export enum AssetsStatus {
 	Unreachable = "unreachable",
 	Defective = "defective",
 }
+
+export enum WorkflowStatus {
+	Failed = "failed",
+	Completed = "completed",
+	Inprogress = "in_progress",
+	Idle = "idle",
+	PartialSuccess = "partial_success",
+}

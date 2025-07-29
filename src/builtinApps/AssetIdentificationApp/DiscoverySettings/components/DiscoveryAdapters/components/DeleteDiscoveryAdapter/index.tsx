@@ -1,11 +1,11 @@
-import { Alert, Button, Center, Flex, Highlight, List, Loader } from "@mantine/core";
+import { Alert, Button, Center, Flex, Highlight, List, Text } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { IconInfoTriangleFilled } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 
 import BCDeleteModal from "@/shared/components/baseComponents/BCDeleteModal";
 
-import { useDeleteDiscoverySetting, useDeleteNoneCredentialDependency } from "../../../../index.hooks";
+import { useDeleteAdapterDependency, useDeleteDiscoverySetting } from "../../../../index.hooks";
 import type { ConfigurationRs, DeleteDependencyAssets } from "../../../../index.types";
 import { DeleteAssetsDependencyTable } from "./components/DeleteAssetsDependencyTable";
 
@@ -26,7 +26,7 @@ export function DeleteDiscoveryAdapterModal({
 	const [deleteStatus, setDeleteStatus] = useState<DeleteDependencyAssets | null>(null);
 	const [showAssetsResult, handlersShowAssetsResult] = useDisclosure(false);
 
-	const deleteNoneCredentialDependency = useDeleteNoneCredentialDependency();
+	const deleteAdapterDependency = useDeleteAdapterDependency();
 	const { deleteDiscoverySetting } = useDeleteDiscoverySetting(deleteStatus?.status === false);
 	const onDelete = () => {
 		deleteDiscoverySetting.mutate(
@@ -40,7 +40,7 @@ export function DeleteDiscoveryAdapterModal({
 		);
 	};
 	const deleteRestrict = async () => {
-		const response = await deleteNoneCredentialDependency.getDependency(configurationId);
+		const response = await deleteAdapterDependency.getDependency(configurationId);
 		setDeleteStatus(response);
 	};
 
@@ -54,10 +54,10 @@ export function DeleteDiscoveryAdapterModal({
 	}, [configurationId, opened]);
 
 	const description = () => {
-		if (deleteNoneCredentialDependency.dependencyLoading) {
+		if (deleteAdapterDependency.dependencyLoading) {
 			return (
 				<Center>
-					<Loader color="red" size="sm" />
+					<Text>Check adapter Dependencies ...</Text>
 				</Center>
 			);
 		}
@@ -112,7 +112,7 @@ export function DeleteDiscoveryAdapterModal({
 				opened={opened}
 				description={description()}
 				disabled={!!deleteStatus?.disabledDeletion}
-				loading={deleteDiscoverySetting.isPending || deleteNoneCredentialDependency.dependencyLoading}
+				loading={deleteDiscoverySetting.isPending || deleteAdapterDependency.dependencyLoading}
 			/>
 		</>
 	);

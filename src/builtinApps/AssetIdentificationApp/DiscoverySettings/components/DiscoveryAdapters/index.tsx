@@ -60,7 +60,7 @@ export default function DiscoverySettingsDiscoveryAdapters() {
 						<Accordion variant="separated" onChange={setActiveAccordion}>
 							{discoveryAdapters?.data?.results?.map((item) => (
 								<Accordion.Item key={item.id} value={item.id} mb="xs">
-									<Accordion.Control h="56px">
+									<Accordion.Control h="56px" p="xs">
 										<Flex align="center" justify="space-between">
 											<Flex gap="sm" align="center">
 												<Card w={40} h={40} variant="light" shadow="none" padding={0}>
@@ -84,7 +84,7 @@ export default function DiscoverySettingsDiscoveryAdapters() {
 											</Flex>
 											<Flex align="center" gap="xs" px="sm">
 												<Badge variant="light" color={item.is_used ? "green" : "gray"} p="sm">
-													<Text p="2xs">{item.is_used ? "USED" : "UNUSED"}</Text>
+													<Text p="2xs">{item.is_used ? "INUSE" : "UNUSED"}</Text>
 												</Badge>
 												<Badge variant="light" radius="xs" p="md">
 													<Text tt="capitalize" p="2xs">
@@ -95,9 +95,6 @@ export default function DiscoverySettingsDiscoveryAdapters() {
 										</Flex>
 									</Accordion.Control>
 									<Accordion.Panel>
-										<Text py="xs" c="gray.6">
-											Added Configurations
-										</Text>
 										<DiscoveryAdapterGateways
 											enabled={activeAccordion === item.id}
 											adapterId={item.id}

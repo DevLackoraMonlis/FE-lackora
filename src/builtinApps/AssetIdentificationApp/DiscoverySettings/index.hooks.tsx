@@ -71,7 +71,7 @@ export function useDiscoveryAdapters({ type, ...clientSideParams }: DiscoveryAda
 	return { discoveryAdapters };
 }
 
-export function useDiscoveryAdapterById(adapterId: string, enabled: boolean) {
+export function useDiscoveryAdapterById(adapterId: string, enabled: boolean, search?: string) {
 	const discoverySettingConfigurations = useGetDiscoverySettingConfigurations(adapterId, {
 		query: {
 			enabled: !!adapterId && enabled,
@@ -106,7 +106,19 @@ export function useDiscoveryAdapterById(adapterId: string, enabled: boolean) {
 			},
 		},
 	});
-	return { discoverySettingConfigurations };
+
+	const data = discoverySettingConfigurations.data;
+	const results = data?.results?.filter(({ configs }) => {
+		if (!search) return true;
+		const ip = configs?.find(({ key }) => key === "ip")?.value;
+		const name = configs?.find(({ key }) => key === "name")?.value;
+		const configurationIP = `${isObject(ip) ? ip?.label : ""}`.toLowerCase();
+		const configurationName = `${isObject(name) ? name?.label : ""}`.toLowerCase();
+		const content = search.toLowerCase();
+		return configurationIP.includes(content) || configurationName.includes(content);
+	});
+
+	return { ...discoverySettingConfigurations, data: { ...data, results } };
 }
 
 export function useDeleteDiscoverySetting(showCustomMessage?: boolean) {
@@ -137,7 +149,7 @@ export function useDeleteNoneCredential() {
 	const deleteDiscoverySetting = useDeleteDiscoverySettingConfiguration();
 	return { deleteDiscoverySetting };
 }
-export function useDeleteNoneCredentialDependency() {
+export function useDeleteAdapterDependency() {
 	const [dependencyLoading, toggleDependencyLoading] = useToggle([false, true]);
 
 	async function getDependency(configurationId: string) {
