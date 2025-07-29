@@ -12,6 +12,7 @@ type Props<T> = {
 	run: ICAdvancedFilterProps<T>["run"];
 	data: ICAdvancedFilterProps<T>["data"];
 	getDataApi: ICAdvancedFilterProps<T>["getDataApi"];
+	allColumns: ICAdvancedFilterProps<T>["allColumns"];
 };
 
 export default function ICAdvancedFilterTopSection<T>(props: Props<T>) {
@@ -21,6 +22,7 @@ export default function ICAdvancedFilterTopSection<T>(props: Props<T>) {
 				{props.leftSection}
 				<Flex pl={"xs"} align={"center"} gap={"xs"}>
 					<ICAdvancedFilterSearch
+						allColumns={props.allColumns}
 						searchInputPlaceholder={props.searchInputPlaceholder}
 						searchInputItems={props.searchInputItems}
 						store={props.store}

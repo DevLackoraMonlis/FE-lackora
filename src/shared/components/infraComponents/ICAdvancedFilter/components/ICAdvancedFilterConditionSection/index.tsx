@@ -1,8 +1,7 @@
-import ICAdvancedFilterConditionItem from "@/shared/components/infraComponents/ICAdvancedFilter/components/ICAdvancedFilterConditionItem";
 import type { ICAdvancedFilterProps } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
-import { Button, Flex, Highlight } from "@mantine/core";
-import { IconPencil, IconX } from "@tabler/icons-react";
-import { type Ref, useCallback } from "react";
+import { Button, Collapse, Flex, Highlight } from "@mantine/core";
+import { IconX } from "@tabler/icons-react";
+import type { Ref } from "react";
 import { useStore } from "zustand/index";
 import { useShallow } from "zustand/react/shallow";
 
@@ -19,27 +18,14 @@ export default function ICAdvancedFilterConditionSection<T>(props: Props<T>) {
 		useShallow((state) => ({
 			variables: state.variables,
 			resetToDefaultVariables: state.resetToDefaultVariables,
-			setConditions: state.setConditions,
 			openedConditionSection: state.openedConditionSection,
 		})),
 	);
 
-	const getColumnOption = useCallback(
-		(columnName: string) => {
-			return props.allColumns.find((column) => column.name === columnName);
-		},
-		[props.allColumns],
-	);
-
 	return (
-		<Flex direction={"column"} gap={"xs"} ref={props.ref}>
-			<Flex bg={"gray.1"} justify={"space-between"} align={"center"}>
+		<Collapse transitionDuration={500} transitionTimingFunction="linear" in={store.openedConditionSection}>
+			<Flex mb={"xs"} bg={"gray.1"} justify={"space-between"} align={"center"} ref={props.ref}>
 				<Flex gap={"xs"}>
-					<Button size={"sm"} variant={"outline"}>
-						<Highlight highlight={[store.variables.columns.length.toString()]}>
-							{`Manage Columns (${store.variables.columns.length})`}
-						</Highlight>
-					</Button>
 					<Button size={"sm"} variant={"outline"}>
 						<Highlight highlight={[store.variables.conditions.length.toString()]}>
 							{`Conditions (${store.variables.conditions.length})`}
@@ -54,51 +40,25 @@ export default function ICAdvancedFilterConditionSection<T>(props: Props<T>) {
 						Aggregated Conditions
 					</Button>
 				</Flex>
-				<Flex>
-					<Button
-						size={"sm"}
-						onClick={() => {
-							store.resetToDefaultVariables(props.allColumns);
-							props.run();
-						}}
-						leftSection={<IconX size={16} />}
-						variant={"transparent"}
-					>
-						Clear All Filters
-					</Button>
+				<Flex align={"center"}>
+					{store.variables.conditions.length ||
+						(store.variables.groupBy && (
+							<Button
+								size={"sm"}
+								onClick={() => {
+									store.resetToDefaultVariables(props.allColumns);
+									props.run();
+								}}
+								leftSection={<IconX size={16} />}
+								variant={"transparent"}
+							>
+								Clear All Filters
+							</Button>
+						))}
+
 					<Button size={"sm"}>Save Filter</Button>
 				</Flex>
 			</Flex>
-			<Flex align={"center"} bg={"gray.1"} px={"2xs"} pb={store.variables.conditions.length ? "xs" : 0}>
-				{store.variables.conditions.map((condition, index) => (
-					<ICAdvancedFilterConditionItem<T>
-						run={props.run}
-						getColumnOption={getColumnOption}
-						key={condition.id}
-						showNextOperator={index !== store.variables.conditions.length - 1}
-						store={props.store}
-						condition={condition}
-					/>
-				))}
-				{!!store.variables.conditions.length && (
-					<Flex align={"center"}>
-						<Button px={"xs"} size={"xs"} variant={"transparent"}>
-							<IconPencil size={16} />
-						</Button>
-						<Button
-							px={"xs"}
-							onClick={() => {
-								store.setConditions([]);
-								props.run();
-							}}
-							size={"xs"}
-							variant={"transparent"}
-						>
-							<IconX size={16} />
-						</Button>
-					</Flex>
-				)}
-			</Flex>
-		</Flex>
+		</Collapse>
 	);
 }

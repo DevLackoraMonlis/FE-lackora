@@ -2,6 +2,7 @@ import type { ICAdvancedFilterProps } from "@/shared/components/infraComponents/
 import { Button, Flex, Select, TextInput } from "@mantine/core";
 import { getHotkeyHandler } from "@mantine/hooks";
 import { IconSearch } from "@tabler/icons-react";
+import { useCallback } from "react";
 import { useStore } from "zustand/index";
 import { useShallow } from "zustand/react/shallow";
 import classes from "./index.module.css";
@@ -11,6 +12,7 @@ type Props<T> = {
 	searchInputItems: ICAdvancedFilterProps<T>["searchInputItems"];
 	store: ICAdvancedFilterProps<T>["store"];
 	run: ICAdvancedFilterProps<T>["run"];
+	allColumns: ICAdvancedFilterProps<T>["allColumns"];
 };
 
 export default function ICAdvancedFilterSearch<T>(props: Props<T>) {
@@ -20,6 +22,13 @@ export default function ICAdvancedFilterSearch<T>(props: Props<T>) {
 			search: state.variables.search,
 			setSearch: state.setSearch,
 		})),
+	);
+
+	const getColumnOption = useCallback(
+		(columnName: string) => {
+			return props.allColumns.find((column) => column.name === columnName);
+		},
+		[props.allColumns],
 	);
 
 	return (
@@ -33,12 +42,12 @@ export default function ICAdvancedFilterSearch<T>(props: Props<T>) {
 					w={150}
 					defaultValue={props.searchInputItems[0].value}
 					size={"sm"}
-					onChange={(value) =>
+					onChange={(value) => {
 						store.setSearch({
 							columnName: value,
 							value: store.search.value || "",
-						})
-					}
+						});
+					}}
 					data={props.searchInputItems}
 					allowDeselect={false}
 				/>
@@ -63,7 +72,7 @@ export default function ICAdvancedFilterSearch<T>(props: Props<T>) {
 				radius={"0 4px 4px 0"}
 				size={"sm"}
 				value={store.search.value}
-				placeholder={props.searchInputPlaceholder}
+				placeholder={`Search by ${getColumnOption(store.search.columnName || props.searchInputItems?.[0]?.value || "")?.displayName || store.search.columnName}`}
 				leftSection={<IconSearch size={16} />}
 				onChange={(event) =>
 					store.setSearch({

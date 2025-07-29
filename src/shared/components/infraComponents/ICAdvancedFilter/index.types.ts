@@ -104,7 +104,7 @@ export type ICAdvancedFilterStoreType = {
 	updateOrder: (columnName: string, order: ICAdvancedFilterOrder | null) => void;
 	includeCondition: ICAdvancedFilterStoreIncludeExcludeType;
 	excludeCondition: ICAdvancedFilterStoreIncludeExcludeType;
-	setGroupBy: (groupBy: ICAdvancedFilterGroupByRq) => void;
+	setGroupBy: (groupBy?: ICAdvancedFilterGroupByRq) => void;
 	variables: ICAdvancedFilterRq;
 	setVariables: (variables: ICAdvancedFilterRq) => void;
 	setColumns: (columns: ICAdvancedFilterDataColumnRq[]) => void;
@@ -138,6 +138,7 @@ export type SetStateStore<T> = (
 
 export type ICAdvancedFilterProps<T> = {
 	tableHeight: number;
+	tableMinusHeight: number;
 	idAccessor: string;
 	store: StoreApi<ICAdvancedFilterStoreType>;
 	data: T[];

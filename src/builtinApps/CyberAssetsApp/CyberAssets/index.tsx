@@ -28,8 +28,9 @@ export default function CyberAssetsLandingPage() {
 			staticPageTitle={"All Assets"}
 			ref={ref}
 			title={"Cyber Assets"}
-			mainPage={({ params, height }) => (
+			mainPage={(values) => (
 				<ICAdvancedFilter<ICAdvancedFilterDataRs>
+					tableMinusHeight={100}
 					onChangeTotalRecords={setTotal}
 					getColumnsApi={(signal) =>
 						getAssetFilterColumns(signal).then((response) => ({
@@ -105,10 +106,9 @@ export default function CyberAssetsLandingPage() {
 					dataQueryKey={["cyber-asset-data", v4()]}
 					fullScreenTitle={"Cyber Assets"}
 					excludeColumns={["id", "classification", "has_related_ip"]}
-					store={params?.store || createDynamicICAdvancedStore()}
+					store={values?.params?.store || createDynamicICAdvancedStore()}
 					searchInputPlaceholder={"Search by hostname"}
 					columns={CYBER_ASSETS_FORMATTED_COLUMNS}
-					tableHeight={height - 210}
 					idAccessor={"id"}
 					minColumnSize={180}
 					defaultColumnSize={200}
@@ -134,7 +134,7 @@ export default function CyberAssetsLandingPage() {
 							}}
 						/>
 					}
-					defaultVariables={params?.defaultVariables}
+					defaultVariables={values?.params?.defaultVariables}
 				/>
 			)}
 		/>

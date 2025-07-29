@@ -1,14 +1,13 @@
 import type { BCMultiTabPageActions } from "@/shared/components/baseComponents/BCMultiTabPage/index.types";
 import type { LabelValueType } from "@/shared/lib/general-types";
 import { ActionIcon, Box, Button, Divider, Flex, ScrollArea, Text } from "@mantine/core";
-import { useViewportSize } from "@mantine/hooks";
 import { IconPlus, IconX } from "@tabler/icons-react";
 import {
 	type ReactElement,
 	type ReactNode,
 	type RefObject,
 	useImperativeHandle,
-	useMemo,
+	useRef,
 	useState,
 } from "react";
 import classes from "./index.module.css";
@@ -18,20 +17,13 @@ type Props<P> = {
 	subTitle: ReactNode;
 	staticPageTitle: string;
 	ref: RefObject<BCMultiTabPageActions<P> | null>;
-	mainPage: (props: { params?: P; height: number }) => ReactElement;
+	mainPage: (props?: { params?: P }) => ReactElement;
 };
 
 export default function BCMultiTabPage<P>(props: Props<P>) {
-	const { height } = useViewportSize();
 	const [pages, setPages] = useState<(LabelValueType & { page: ReactNode; params?: P })[]>([]);
 	const [activePage, setActivePage] = useState<string>("main");
-
-	const mainPage = useMemo(() => {
-		if (height) {
-			return props.mainPage({ height });
-		}
-		return null;
-	}, [height]);
+	const mainPage = useRef<ReactElement>(props.mainPage());
 
 	useImperativeHandle(props.ref, () => {
 		return {
@@ -40,7 +32,7 @@ export default function BCMultiTabPage<P>(props: Props<P>) {
 					const newPage = {
 						label: pageName,
 						value: `${prevState.length + 1}`,
-						page: props.mainPage({ params, height }),
+						page: props.mainPage({ params }),
 						params,
 					};
 					setActivePage(newPage.value);
@@ -103,7 +95,7 @@ export default function BCMultiTabPage<P>(props: Props<P>) {
 									const newPage = {
 										label: `${props.staticPageTitle} (${getLastPageTitle.length + 1})`,
 										value: `${prevState.length + 1}`,
-										page: props.mainPage({ height }),
+										page: props.mainPage(),
 									};
 
 									setActivePage(newPage.value);
@@ -120,7 +112,7 @@ export default function BCMultiTabPage<P>(props: Props<P>) {
 			</Flex>
 			<Box bg={"white"} h={"100%"} p={"sm"} w={"100%"}>
 				<Box h={"100%"} key={"main"} className={activePage !== "main" ? classes.hide : classes.show}>
-					{mainPage}
+					{mainPage.current}
 				</Box>
 				{pages.map((page) => {
 					return (
