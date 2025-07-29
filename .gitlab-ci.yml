@@ -114,3 +114,87 @@ dev_deploy:
     - cp -r public $DEPLOY_DIR/
     - /bin/cp -rf $DEPLOY_DIR/.next/static/ $DEPLOY_DIR/.next/standalone/.next/
     - sudo systemctl restart front-dev
+
+
+uat_pipeline:
+  stage: install
+  variables:
+    BASE_URL: "http://172.31.100.58:8080"
+    NEXTAUTH_URL: "http://172.31.100.58:3000"
+    HOST_URL: "http://172.31.100.58:3000"
+    NODE_TLS_REJECT_UNAUTHORIZED: "0"
+    X_NONCE_AUTHENTICATE: "Ewi5To8Pf2rbIINNFp9i9g"
+    CSRF_SECRET: "50FaWgdOhi9M9wyna8taR1k3ODOR8d6u"
+    PORT: "3000"
+    CI: false
+  only:
+    - uat
+  tags:
+    - stg
+  script:
+    - NODE_ENV=production npm run build
+  artifacts:
+    paths:
+      - .next
+      - public
+    expire_in: 1 hour
+
+uat_deploy:
+  stage: deploy
+  dependencies:
+    - uat_pipeline
+  variables:
+    NODE_ENV: "production"
+    DEPLOY_DIR: "/sources/app/front"
+  only:
+    - uat
+  tags:
+    - stg
+  script:
+    - echo "Deploying with NODE_ENV=$NODE_ENV..."
+    - mkdir -p $DEPLOY_DIR
+    - cp -r .next $DEPLOY_DIR/
+    - cp -r public $DEPLOY_DIR/
+    - /bin/cp -rf $DEPLOY_DIR/.next/static/ $DEPLOY_DIR/.next/standalone/.next/
+    - sudo systemctl restart frontend
+
+prod_pipeline:
+  stage: install
+  variables:
+    BASE_URL: "http://172.31.100.58:8080"
+    NEXTAUTH_URL: "http://172.31.100.58:3000"
+    HOST_URL: "http://172.31.100.58:3000"
+    NODE_TLS_REJECT_UNAUTHORIZED: "0"
+    X_NONCE_AUTHENTICATE: "Ewi5To8Pf2rbIINNFp9i9g"
+    CSRF_SECRET: "50FaWgdOhi9M9wyna8taR1k3ODOR8d6u"
+    PORT: "3000"
+    CI: false
+  only:
+    - main
+  tags:
+    - prd
+  script:
+    - NODE_ENV=production npm run build
+  artifacts:
+    paths:
+      - .next
+      - public
+    expire_in: 1 hour
+
+prod_deploy:
+  stage: deploy
+  dependencies:
+    - prod_pipeline
+  variables:
+    NODE_ENV: "production"
+  only:
+    - main
+  tags:
+    - prd
+  script:
+    - echo "Deploying with NODE_ENV=$NODE_ENV..."
+    - mkdir -p $DEPLOY_DIR
+    - cp -r .next $DEPLOY_DIR/
+    - cp -r public $DEPLOY_DIR/
+    - /bin/cp -rf $DEPLOY_DIR/.next/static/ $DEPLOY_DIR/.next/standalone/.next/
+    - sudo systemctl restart frontend
