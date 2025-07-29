@@ -19,12 +19,12 @@ import {
 } from "@/shared/icons/components/assets";
 import { Badge, type BadgeProps, Flex, type FlexProps, Text } from "@mantine/core";
 import {
-	IconAlertTriangle,
 	IconArchive,
-	IconCircleCheck,
-	IconCircleDot,
+	IconArrowBadgeDown,
+	IconArrowBadgeUp,
+	IconBadges,
 	IconDeviceDesktop,
-	IconFlame,
+	IconEqual,
 	IconHighlight,
 	IconSearch,
 } from "@tabler/icons-react";
@@ -48,10 +48,10 @@ export function getCyberAssetCriticalityBadge(params: {
 	props?: BadgeProps;
 }) {
 	const iconMaps: Record<CyberAssetCriticality, ReactNode> = {
-		[CyberAssetCriticality.HIGH]: <IconAlertTriangle size={12} />,
-		[CyberAssetCriticality.LOW]: <IconCircleCheck size={12} />,
-		[CyberAssetCriticality.MEDIUM]: <IconCircleDot size={12} />,
-		[CyberAssetCriticality.VERY_HIGH]: <IconFlame size={12} />,
+		[CyberAssetCriticality.HIGH]: <IconArrowBadgeUp size={12} />,
+		[CyberAssetCriticality.LOW]: <IconArrowBadgeDown size={12} />,
+		[CyberAssetCriticality.MEDIUM]: <IconEqual size={12} />,
+		[CyberAssetCriticality.VERY_HIGH]: <IconBadges size={12} />,
 	};
 
 	return (
