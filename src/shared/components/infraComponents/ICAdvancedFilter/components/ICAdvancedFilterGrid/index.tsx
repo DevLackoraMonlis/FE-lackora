@@ -168,7 +168,12 @@ export default function ICAdvancedFilterGrid<T extends Record<string, unknown>>(
 			}
 			return record[columnName] as ReactNode;
 		},
-		[store.getIsGroupByFunctionColumn, store.openedFullScreenModal, store.setOpenFullScreenModal],
+		[
+			store.getIsGroupByFunctionColumn,
+			store.openedFullScreenModal,
+			store.setOpenFullScreenModal,
+			getColumnOption,
+		],
 	);
 
 	const modifiedColumns: TanStackDataTableColumnColDef<T>[] = useMemo(() => {

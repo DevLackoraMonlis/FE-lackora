@@ -91,7 +91,15 @@ export default function ICAdvancedFilter<T>(
 				searchInputPlaceholder={props.searchInputPlaceholder}
 			/>
 		),
-		[props.store, props.leftSection, data, props.getDataApi, searchInputItems, props.searchInputPlaceholder],
+		[
+			props.store,
+			props.leftSection,
+			data,
+			props.getDataApi,
+			searchInputItems,
+			props.searchInputPlaceholder,
+			allColumns,
+		],
 	);
 
 	const conditionFixedSection = useMemo(
@@ -158,6 +166,7 @@ export default function ICAdvancedFilter<T>(
 			totalRecords,
 			props.minColumnSize,
 			props.recordsPerPageOptions,
+			props.onGroupByExpand,
 		],
 	);
 
