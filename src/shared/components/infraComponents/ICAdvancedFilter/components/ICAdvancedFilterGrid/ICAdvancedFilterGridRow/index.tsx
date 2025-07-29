@@ -5,7 +5,7 @@ import type { ReactElement, ReactNode } from "react";
 
 export type ICAdvancedFilterGridRowProps = {
 	cellRenderValue: ReactNode;
-	cellMenu: (visibleParent: boolean, onClose: VoidFunction) => ReactElement;
+	cellMenu: (visibleParent: boolean, onClose: VoidFunction) => ReactElement | undefined;
 	withPaddingLeft?: boolean;
 };
 

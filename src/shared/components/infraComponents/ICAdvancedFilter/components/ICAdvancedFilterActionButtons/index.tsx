@@ -15,6 +15,7 @@ type Props<T> = {
 	getDataApi: ICAdvancedFilterProps<T>["getDataApi"];
 	store: ICAdvancedFilterProps<T>["store"];
 	run: ICAdvancedFilterProps<T>["run"];
+	hideManageColumnButton: ICAdvancedFilterProps<T>["hideManageColumnButton"];
 };
 
 export default function ICAdvancedFilterActionButtons<T>(props: Props<T>) {
@@ -60,11 +61,13 @@ export default function ICAdvancedFilterActionButtons<T>(props: Props<T>) {
 			<Button px={"xs"} variant={"default"} onClick={() => store.setOpenFullScreenModal(true)} size={"sm"}>
 				<IconWindowMaximize size={20} />
 			</Button>
-			<Tooltip label={"Manage Columns"}>
-				<Button px={"xs"} variant={"default"} size={"sm"}>
-					<IconSettings size={20} />
-				</Button>
-			</Tooltip>
+			{!props.hideManageColumnButton && (
+				<Tooltip label={"Manage Columns"}>
+					<Button px={"xs"} variant={"default"} size={"sm"}>
+						<IconSettings size={20} />
+					</Button>
+				</Tooltip>
+			)}
 		</Flex>
 	);
 }

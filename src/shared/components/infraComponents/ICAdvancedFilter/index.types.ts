@@ -137,6 +137,12 @@ export type SetStateStore<T> = (
 ) => void;
 
 export type ICAdvancedFilterProps<T> = {
+	hideCellMenu?: boolean;
+	hideColumnMenu?: boolean;
+	hideCollapseButton?: boolean;
+	hideConditionSection?: boolean;
+	hideManageColumnButton?: boolean;
+	hideExpandGroupByButton?: boolean;
 	tableHeight: number;
 	tableMinusHeight: number;
 	idAccessor: string;

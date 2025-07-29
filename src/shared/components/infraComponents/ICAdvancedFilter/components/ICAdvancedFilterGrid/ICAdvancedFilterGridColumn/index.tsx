@@ -12,6 +12,7 @@ type Props<T> = {
 	store: ICAdvancedFilterProps<T>["store"];
 	allColumns: ICAdvancedFilterProps<T>["allColumns"];
 	run: ICAdvancedFilterProps<T>["run"];
+	hideColumnMenu: ICAdvancedFilterProps<T>["hideColumnMenu"];
 	onCopy: VoidFunction;
 	columnOption?: ICAdvancedFilterColumnRs;
 	groupBy?: ICAdvancedFilterGroupByRq;
@@ -35,15 +36,17 @@ export default function ICAdvancedFilterGridColumn<T>(props: Props<T>) {
 					allColumns={props.allColumns}
 					run={props.run}
 				/>
-				<ICAdvancedFilterGridColumnMenu
-					columnLabel={columnTitle}
-					onCopy={props.onCopy}
-					visibleParent={true}
-					columnName={props.columnName}
-					store={props.store}
-					allColumns={props.allColumns}
-					run={props.run}
-				/>
+				{!props.hideColumnMenu && (
+					<ICAdvancedFilterGridColumnMenu
+						columnLabel={columnTitle}
+						onCopy={props.onCopy}
+						visibleParent={true}
+						columnName={props.columnName}
+						store={props.store}
+						allColumns={props.allColumns}
+						run={props.run}
+					/>
+				)}
 			</Flex>
 		</Flex>
 	);

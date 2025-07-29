@@ -41,6 +41,9 @@ type Props<T> = Pick<
 	| "defaultColumnSize"
 	| "excludeColumns"
 	| "onGroupByExpand"
+	| "hideCellMenu"
+	| "hideColumnMenu"
+	| "hideExpandGroupByButton"
 >;
 
 export default function ICAdvancedFilterGrid<T extends Record<string, unknown>>(props: Props<T>) {
@@ -73,9 +76,12 @@ export default function ICAdvancedFilterGrid<T extends Record<string, unknown>>(
 		[props.allColumns],
 	);
 
-	const cellMenu = useCallback((params: ICAdvancedFilterGridRowCellMenuProps<T>) => {
-		return <ICAdvancedFilterGridRowCellMenu {...params} />;
-	}, []);
+	const cellMenu = useCallback(
+		(params: ICAdvancedFilterGridRowCellMenuProps<T>) => {
+			return !props.hideCellMenu ? <ICAdvancedFilterGridRowCellMenu {...params} /> : undefined;
+		},
+		[props.hideCellMenu],
+	);
 
 	const includeCondition = useCallback(
 		(columnName: string, value: unknown) => {
@@ -105,49 +111,51 @@ export default function ICAdvancedFilterGrid<T extends Record<string, unknown>>(
 					<Button
 						px={"xs"}
 						variant={"transparent"}
-						onClick={() => {
-							const newConditions: ICAdvancedFilterCondition[] = [];
-							Object.entries(row.original).forEach(([key, value]) => {
-								const columnOption = getColumnOption(key);
-								if (columnOption) {
-									const condition: ICAdvancedFilterCondition = {
-										columnName: key,
-										operator: value
-											? IC_ADVANCED_FILTER_DEFAULT_OPERATORS["="]
-											: IC_ADVANCED_FILTER_DEFAULT_OPERATORS["Is Null"],
-										openBracket: 0,
-										nextOperator: "and",
-										id: v4(),
-										closeBracket: 0,
-										values: [
-											{
-												label: value as string,
-												value: value as string,
-											},
-										],
-									};
-									newConditions.push(condition);
-								}
-							});
-							const newVariables: ICAdvancedFilterRq = {
-								search: {
-									columnName: "",
-									value: "",
-								},
-								page: 1,
-								limit: 35,
-								columns: uniqBy(
-									[...store.variables.columns, ...props.allColumns.filter((item) => item.isDefault)],
-									(item) => item.name,
-								),
-								conditions: newConditions,
-							};
+						{...(!props.hideExpandGroupByButton && {
+							onClick: () => {
+								const newConditions: ICAdvancedFilterCondition[] = [];
+								Object.entries(row.original).forEach(([key, value]) => {
+									const columnOption = getColumnOption(key);
+									if (columnOption) {
+										const condition: ICAdvancedFilterCondition = {
+											columnName: key,
+											operator: value
+												? IC_ADVANCED_FILTER_DEFAULT_OPERATORS["="]
+												: IC_ADVANCED_FILTER_DEFAULT_OPERATORS["Is Null"],
+											openBracket: 0,
+											nextOperator: "and",
+											id: v4(),
+											closeBracket: 0,
+											values: [
+												{
+													label: value as string,
+													value: value as string,
+												},
+											],
+										};
+										newConditions.push(condition);
+									}
+								});
+								const newVariables: ICAdvancedFilterRq = {
+									search: {
+										columnName: "",
+										value: "",
+									},
+									page: 1,
+									limit: 35,
+									columns: uniqBy(
+										[...store.variables.columns, ...props.allColumns.filter((item) => item.isDefault)],
+										(item) => item.name,
+									),
+									conditions: newConditions,
+								};
 
-							if (store.openedFullScreenModal) {
-								store.setOpenFullScreenModal(false);
-							}
-							props.onGroupByExpand(newVariables, getColumnOption);
-						}}
+								if (store.openedFullScreenModal) {
+									store.setOpenFullScreenModal(false);
+								}
+								props.onGroupByExpand(newVariables, getColumnOption);
+							},
+						})}
 					>
 						{record[columnName] as string}
 					</Button>
@@ -173,6 +181,7 @@ export default function ICAdvancedFilterGrid<T extends Record<string, unknown>>(
 			store.openedFullScreenModal,
 			store.setOpenFullScreenModal,
 			getColumnOption,
+			props.hideExpandGroupByButton,
 		],
 	);
 
@@ -202,6 +211,7 @@ export default function ICAdvancedFilterGrid<T extends Record<string, unknown>>(
 				),
 				title: (
 					<ICAdvancedFilterGridColumn<T>
+						hideColumnMenu={props.hideColumnMenu}
 						onCopy={() => onCopyValue(getColumnOption(column.accessor)?.displayName || column.accessor)}
 						columnOption={getColumnOption(column.accessor)}
 						key={column.accessor}
@@ -265,6 +275,7 @@ export default function ICAdvancedFilterGrid<T extends Record<string, unknown>>(
 					),
 					title: (
 						<ICAdvancedFilterGridColumn<T>
+							hideColumnMenu={props.hideColumnMenu}
 							onCopy={() => onCopyValue(getColumnOption(key)?.displayName || key)}
 							columnOption={getColumnOption(key)}
 							key={key}

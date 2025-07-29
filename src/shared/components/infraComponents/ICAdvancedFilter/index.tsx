@@ -81,6 +81,8 @@ export default function ICAdvancedFilter<T>(
 	const topSection = useMemo(
 		() => (
 			<ICAdvancedFilterTopSection
+				hideCollapseButton={props.hideCollapseButton}
+				hideManageColumnButton={props.hideManageColumnButton}
 				allColumns={allColumns}
 				store={props.store}
 				leftSection={props.leftSection}
@@ -92,6 +94,8 @@ export default function ICAdvancedFilter<T>(
 			/>
 		),
 		[
+			props.hideCollapseButton,
+			props.hideManageColumnButton,
 			props.store,
 			props.leftSection,
 			data,
@@ -197,14 +201,14 @@ export default function ICAdvancedFilter<T>(
 			>
 				<Flex direction={"column"} w={"100%"} p={"xs"}>
 					{topSection}
-					{conditionFixedSection}
-					{conditionItemsSection}
+					{!props.hideConditionSection && conditionFixedSection}
+					{!props.hideConditionSection && conditionItemsSection}
 					{gridSection}
 				</Flex>
 			</ICAdvancedFilterFullScreenModal>
 			{topSection}
-			{conditionFixedSection}
-			{conditionItemsSection}
+			{!props.hideConditionSection && conditionFixedSection}
+			{!props.hideConditionSection && conditionItemsSection}
 			{gridSection}
 		</Flex>
 	);
