@@ -35,7 +35,6 @@ export default function WorkflowScanHistoryList({ setSelectedScan, selectedScan 
 	});
 	const showPagination = totalRecords > pageSize;
 	const handleUpdateQueryParams = (params: Partial<Filters>) => {
-		console.log(params);
 		setQueryParams((perParams) => ({ ...perParams, page: 1, ...params }));
 	};
 

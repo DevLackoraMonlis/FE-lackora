@@ -53,7 +53,7 @@ export default function WorkflowAssetsIdentification() {
 					<Grid.Col span={8} offset={2} pos="relative">
 						{/* Workflow */}
 						<Accordion
-							defaultValue="scan"
+							value="scan"
 							variant="separated"
 							styles={({ colors, white, spacing }) => ({
 								chevron: { color: white },
