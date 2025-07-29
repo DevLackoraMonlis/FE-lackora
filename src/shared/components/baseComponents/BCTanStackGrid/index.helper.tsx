@@ -5,13 +5,14 @@ import {
 	type ColumnDef,
 	type ExpandedState,
 	type HeaderContext,
+	type OnChangeFn,
 	type RowSelectionState,
 	type TableOptions,
 	getCoreRowModel,
 	getExpandedRowModel,
 } from "@tanstack/react-table";
 import type React from "react";
-import { type CSSProperties, useState } from "react";
+import type { CSSProperties } from "react";
 import { TAN_STACK_DEFAULT_COLUMN_SIZE } from "./index.constants";
 import type {
 	DataTableColumnTitleFn,
@@ -44,40 +45,44 @@ export function tanStackGetCommonPinningStyles<T>(column: Column<T>): CSSPropert
 	};
 }
 
-export function tanStackGetExtendedWidth<T>(
-	viewportWidth: number,
-	totalDefaultWidth: number,
-	columns: TanStackDataTableColumnColDef<T>[],
-	index: number,
-	recordCount: number,
-	pinLastColumn?: boolean,
-	hasRowExpansion?: boolean,
-	hasRowSelection?: boolean,
-) {
-	if (viewportWidth > totalDefaultWidth) {
-		let remainWidth = viewportWidth - totalDefaultWidth - (recordCount > 15 ? 18 : 0);
+export function tanStackGetExtendedWidth<T>(params: {
+	viewportWidth: number;
+	totalDefaultWidth: number;
+	columns: TanStackDataTableColumnColDef<T>[];
+	index: number;
+	recordCount: number;
+	pinLastColumn?: boolean;
+	hasRowExpansion?: boolean;
+	hasRowSelection?: boolean;
+	hasHorizontalScroll?: boolean;
+	hasVerticalScroll?: boolean;
+}) {
+	if (params.viewportWidth > params.totalDefaultWidth) {
+		let remainWidth = params.viewportWidth - params.totalDefaultWidth - (params.hasVerticalScroll ? 14 : 2);
 
-		if (hasRowExpansion) {
+		if (params.hasRowExpansion) {
 			remainWidth -= 50;
 		}
 
-		if (hasRowSelection) {
+		if (params.hasRowSelection) {
 			remainWidth -= 50;
 		}
 
-		let emptyWidthColumCount = columns.filter((item) => !item.width).length;
+		let emptyWidthColumCount = params.columns.filter((item) => !item.width).length;
 
 		if (!emptyWidthColumCount) {
-			emptyWidthColumCount = columns.length;
+			emptyWidthColumCount = params.columns.length;
 		}
 
-		if (pinLastColumn) {
+		if (params.pinLastColumn) {
 			emptyWidthColumCount -= 1;
 		}
 
 		return {
 			extendedWidth: Math.floor(remainWidth / emptyWidthColumCount),
-			getExtend: !(pinLastColumn && index === columns.length - 1) && !columns[index].width,
+			getExtend:
+				!(params.pinLastColumn && params.index === params.columns.length - 1) &&
+				!params.columns[params.index].width,
 		};
 	}
 }
@@ -86,6 +91,8 @@ export function tanStackGenerateColumns<T>(
 	params: {
 		viewportWidth: number;
 		recordCount: number;
+		hasHorizontalScroll: boolean;
+		hasVerticalScroll: boolean;
 	} & Pick<
 		Props<T>,
 		"columns" | "pinLastColumn" | "recordsPerPage" | "page" | "rowExpansion" | "onSelectedRecordsChange"
@@ -106,16 +113,18 @@ export function tanStackGenerateColumns<T>(
 			? (info: HeaderContext<T, unknown>) => columnTitle?.(info.column)
 			: column.title;
 
-		const extend = tanStackGetExtendedWidth<T>(
+		const extend = tanStackGetExtendedWidth<T>({
 			viewportWidth,
 			totalDefaultWidth,
-			filteredColumns,
+			columns: filteredColumns,
 			index,
-			params.recordCount,
-			params.pinLastColumn,
-			!!params.rowExpansion,
-			!!params.onSelectedRecordsChange,
-		);
+			recordCount: params.recordCount,
+			pinLastColumn: params.pinLastColumn,
+			hasRowExpansion: !!params.rowExpansion,
+			hasRowSelection: !!params.onSelectedRecordsChange,
+			hasHorizontalScroll: params.hasHorizontalScroll,
+			hasVerticalScroll: params.hasVerticalScroll,
+		});
 
 		const fixedTitle = column.title
 			? (header as TanStackColumnHeader<T>)
@@ -215,13 +224,13 @@ export function getTanStackTableOptions<T extends Record<string, unknown>>(
 		columns: ColumnDef<T>[];
 		setRowSelection: React.Dispatch<React.SetStateAction<RowSelectionState>>;
 		rowSelection: RowSelectionState;
+		expanded: ExpandedState;
+		setExpanded: OnChangeFn<ExpandedState>;
 	} & Pick<
 		TanStackGridProps<T>,
 		"records" | "onSelectedRecordsChange" | "rowExpansion" | "page" | "idAccessor" | "pinLastColumn"
 	>,
 ): TableOptions<T> {
-	const [expanded, setExpanded] = useState<ExpandedState>({});
-
 	const getColumnCount = () => {
 		return params.columns.length - (params.pinLastColumn ? 1 : 0);
 	};
@@ -252,14 +261,14 @@ export function getTanStackTableOptions<T extends Record<string, unknown>>(
 				record: row.original,
 				index: row.index,
 			}),
-		onExpandedChange: setExpanded,
+		onExpandedChange: params.setExpanded,
 		columnResizeDirection: "ltr",
 		getCoreRowModel: getCoreRowModel(),
 		getExpandedRowModel: getExpandedRowModel(),
 		manualPagination: !!params.page,
 		state: {
 			rowSelection: params.rowSelection,
-			expanded: expanded,
+			expanded: params.expanded,
 		},
 
 		getRowId: (row) => {

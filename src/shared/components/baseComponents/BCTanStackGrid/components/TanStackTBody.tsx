@@ -23,6 +23,7 @@ export function TanStackTBody<T extends Record<string, unknown>>(
 		| "rowExpansion"
 		| "idAccessor"
 		| "withPaddingCells"
+		| "fetching"
 	>,
 ) {
 	const bodyStyle = useMemo<CSSProperties>(

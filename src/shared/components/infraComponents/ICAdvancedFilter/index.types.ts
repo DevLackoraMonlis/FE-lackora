@@ -35,7 +35,7 @@ export type ICAdvancedFilterCondition = {
 	columnName: string;
 	operator: ICAdvancedFilterConditionOperator;
 	values: ICAdvancedConditionValueTypeRq[];
-	closBracket: number;
+	closeBracket: number;
 	nextOperator: ICAdvancedFilterOperator;
 };
 
@@ -61,7 +61,7 @@ export type ICAdvancedFilterColumnOption = {
 	value: string;
 };
 
-export type ICAdvancedFilterColumn = {
+export type ICAdvancedFilterColumnRs = {
 	name: string;
 	type: ICAdvancedFilterColumnType;
 	objectType?: string[];
@@ -80,9 +80,9 @@ export type ICAdvancedFilterRq<META_DATA extends Record<string, unknown> | unkno
 	metaData?: META_DATA;
 } & Pick<PaginationRq, "page" | "limit">;
 
-export type ICAdvancedFilterDataRs = { id: string; [key: string]: string };
+export type ICAdvancedFilterDataRs = { [key: string]: string };
 
-export type ICAdvancedFilterRs = PaginationRs<ICAdvancedFilterDataRs, Record<string, unknown>>;
+export type ICAdvancedFilterRs = PaginationRs<ICAdvancedFilterDataRs, { total: number }>;
 
 export type ICAdvancedFilterSaveConditionCreateRq = {
 	name: string;
@@ -97,15 +97,14 @@ export type ICAdvancedFilterSaveConditionRs = PaginationRs<
 export type ICAdvancedFilterStoreIncludeExcludeType = (
 	columnName: string,
 	value: unknown,
-	allColumns: ICAdvancedFilterColumn[],
+	allColumns: ICAdvancedFilterColumnRs[],
 ) => void;
 
 export type ICAdvancedFilterStoreType = {
 	updateOrder: (columnName: string, order: ICAdvancedFilterOrder | null) => void;
 	includeCondition: ICAdvancedFilterStoreIncludeExcludeType;
 	excludeCondition: ICAdvancedFilterStoreIncludeExcludeType;
-	groupBy?: ICAdvancedFilterGroupByRq;
-	setGroupBy: (groupBy: ICAdvancedFilterGroupByRq) => void;
+	setGroupBy: (groupBy?: ICAdvancedFilterGroupByRq) => void;
 	variables: ICAdvancedFilterRq;
 	setVariables: (variables: ICAdvancedFilterRq) => void;
 	setColumns: (columns: ICAdvancedFilterDataColumnRq[]) => void;
@@ -116,7 +115,7 @@ export type ICAdvancedFilterStoreType = {
 	setPage: (page: number) => void;
 	setLimit: (limit: number) => void;
 	setSearch: (search: ICAdvancedFilterSearchRq) => void;
-	resetToDefaultVariables: () => void;
+	resetToDefaultVariables: (allColumns: ICAdvancedFilterColumnRs[]) => void;
 	openedFilterConditionModal: boolean;
 	setOpenFilterConditionModal: (opened: boolean) => void;
 	openedFullScreenModal: boolean;
@@ -128,6 +127,8 @@ export type ICAdvancedFilterStoreType = {
 	removeCondition: (id: string) => void;
 	hideColumn: (columnName: string) => void;
 	getIsGroupByFunctionColumn: (columnName: string) => boolean;
+	setRunToken: (runToken: string) => void;
+	runToken: string;
 };
 
 export type SetStateStore<T> = (
@@ -136,16 +137,17 @@ export type SetStateStore<T> = (
 ) => void;
 
 export type ICAdvancedFilterProps<T> = {
-	height: number;
+	tableHeight: number;
+	tableMinusHeight: number;
 	idAccessor: string;
 	store: StoreApi<ICAdvancedFilterStoreType>;
 	data: T[];
 	isLoading: boolean;
 	columns: TanStackDataTableColumnColDef<T>[];
-	allColumns: ICAdvancedFilterColumn[];
+	allColumns: ICAdvancedFilterColumnRs[];
 	totalRecords: number;
 	recordsPerPageOptions?: number[];
-	run: VoidFunction;
+	run: (disableResetPage?: boolean) => void;
 	leftSection?: ReactNode;
 	searchInputPlaceholder: string;
 	minColumnSize?: number;
@@ -153,5 +155,17 @@ export type ICAdvancedFilterProps<T> = {
 	searchInputItems: LabelValueType[];
 	excludeColumns?: string[];
 	defaultVariables?: ICAdvancedFilterRq;
-	exportDataApi?: (variables: ICAdvancedFilterRq) => Promise<AxiosResponse<ICAdvancedFilterRs>>;
+	fullScreenTitle: string;
+	columnsQueryKey: string[];
+	onChangeTotalRecords?: (total: number) => void;
+	onGroupByExpand: (
+		variables: ICAdvancedFilterRq,
+		getColumnOption: (columnName: string) => ICAdvancedFilterColumnRs | undefined,
+	) => void;
+	dataQueryKey: string[];
+	getDataApi: (
+		variables: ICAdvancedFilterRq,
+		signal?: AbortSignal,
+	) => Promise<AxiosResponse<ICAdvancedFilterRs>>;
+	getColumnsApi: (signal?: AbortSignal) => Promise<AxiosResponse<PaginationRs<ICAdvancedFilterColumnRs>>>;
 };

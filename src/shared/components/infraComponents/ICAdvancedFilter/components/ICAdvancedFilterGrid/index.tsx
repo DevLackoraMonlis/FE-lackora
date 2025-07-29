@@ -5,11 +5,23 @@ import ICAdvancedFilterGridRow from "@/shared/components/infraComponents/ICAdvan
 import ICAdvancedFilterGridRowCellMenu, {
 	type ICAdvancedFilterGridRowCellMenuProps,
 } from "@/shared/components/infraComponents/ICAdvancedFilter/components/ICAdvancedFilterGrid/ICAdvancedFilterGridRow/ICAdvancedFilterGridRowCellMenu";
-import { ROW_NUMBER_COLUMN } from "@/shared/components/infraComponents/ICAdvancedFilter/index.constants";
-import type { ICAdvancedFilterProps } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
+import {
+	IC_ADVANCED_FILTER_BLANK_TEXT,
+	IC_ADVANCED_FILTER_DEFAULT_OPERATORS,
+	ROW_NUMBER_COLUMN,
+} from "@/shared/components/infraComponents/ICAdvancedFilter/index.constants";
+import type {
+	ICAdvancedFilterCondition,
+	ICAdvancedFilterProps,
+	ICAdvancedFilterRq,
+} from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
 import { unsecuredCopyToClipboard } from "@/shared/lib/utils";
+import { Box, Button } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
+import type { Row } from "@tanstack/react-table";
+import { uniqBy } from "lodash";
 import { type ReactNode, useCallback, useDeferredValue, useMemo } from "react";
+import { v4 } from "uuid";
 import { useStore } from "zustand";
 import { useShallow } from "zustand/react/shallow";
 
@@ -23,23 +35,26 @@ type Props<T> = Pick<
 	| "run"
 	| "idAccessor"
 	| "totalRecords"
-	| "height"
+	| "tableHeight"
 	| "recordsPerPageOptions"
 	| "isLoading"
 	| "defaultColumnSize"
 	| "excludeColumns"
+	| "onGroupByExpand"
 >;
 
 export default function ICAdvancedFilterGrid<T extends Record<string, unknown>>(props: Props<T>) {
 	const store = useStore(
 		props.store,
 		useShallow((state) => ({
-			page: state.variables.page,
-			limit: state.variables.limit,
+			variables: state.variables,
 			setPage: state.setPage,
 			setLimit: state.setLimit,
 			includeCondition: state.includeCondition,
 			excludeCondition: state.excludeCondition,
+			getIsGroupByFunctionColumn: state.getIsGroupByFunctionColumn,
+			openedFullScreenModal: state.openedFullScreenModal,
+			setOpenFullScreenModal: state.setOpenFullScreenModal,
 		})),
 	);
 
@@ -76,6 +91,91 @@ export default function ICAdvancedFilterGrid<T extends Record<string, unknown>>(
 		[store.excludeCondition, props.allColumns],
 	);
 
+	const cellRenderValue = useCallback(
+		(
+			record: T,
+			row: Row<T>,
+			rowIndex: number,
+			columnName: string,
+			column?: TanStackDataTableColumnColDef<T>,
+		) => {
+			const isGroupByColumn = store.getIsGroupByFunctionColumn(column?.accessor || columnName);
+			if (isGroupByColumn) {
+				return (
+					<Button
+						px={"xs"}
+						variant={"transparent"}
+						onClick={() => {
+							const newConditions: ICAdvancedFilterCondition[] = [];
+							Object.entries(row.original).forEach(([key, value]) => {
+								const columnOption = getColumnOption(key);
+								if (columnOption) {
+									const condition: ICAdvancedFilterCondition = {
+										columnName: key,
+										operator: value
+											? IC_ADVANCED_FILTER_DEFAULT_OPERATORS["="]
+											: IC_ADVANCED_FILTER_DEFAULT_OPERATORS["Is Null"],
+										openBracket: 0,
+										nextOperator: "and",
+										id: v4(),
+										closeBracket: 0,
+										values: [
+											{
+												label: value as string,
+												value: value as string,
+											},
+										],
+									};
+									newConditions.push(condition);
+								}
+							});
+							const newVariables: ICAdvancedFilterRq = {
+								search: {
+									columnName: "",
+									value: "",
+								},
+								page: 1,
+								limit: 35,
+								columns: uniqBy(
+									[...store.variables.columns, ...props.allColumns.filter((item) => item.isDefault)],
+									(item) => item.name,
+								),
+								conditions: newConditions,
+							};
+
+							if (store.openedFullScreenModal) {
+								store.setOpenFullScreenModal(false);
+							}
+							props.onGroupByExpand(newVariables, getColumnOption);
+						}}
+					>
+						{record[columnName] as string}
+					</Button>
+				);
+			}
+
+			if (column?.render) {
+				const rendererCell = column.render(record, row, rowIndex);
+
+				if (!rendererCell) {
+					return <Box p={"xs"}>{IC_ADVANCED_FILTER_BLANK_TEXT}</Box>;
+				}
+				return rendererCell;
+			}
+
+			if (!record[columnName]) {
+				return <Box p={"xs"}>{IC_ADVANCED_FILTER_BLANK_TEXT}</Box>;
+			}
+			return record[columnName] as ReactNode;
+		},
+		[
+			store.getIsGroupByFunctionColumn,
+			store.openedFullScreenModal,
+			store.setOpenFullScreenModal,
+			getColumnOption,
+		],
+	);
+
 	const modifiedColumns: TanStackDataTableColumnColDef<T>[] = useMemo(() => {
 		return props.columns
 			.filter((column) => !props.excludeColumns?.includes(column.accessor))
@@ -85,8 +185,7 @@ export default function ICAdvancedFilterGrid<T extends Record<string, unknown>>(
 				width: props.defaultColumnSize,
 				render: (record, row, rowIndex) => (
 					<ICAdvancedFilterGridRow
-						isFormattedCell
-						cellMenu={(visibleParent) =>
+						cellMenu={(visibleParent, onClose) =>
 							cellMenu({
 								cellValue: record[column.accessor],
 								columnName: column.accessor,
@@ -95,11 +194,10 @@ export default function ICAdvancedFilterGrid<T extends Record<string, unknown>>(
 								onCopy: () => onCopyValue(record[column.accessor]),
 								run: props.run,
 								visibleParent,
+								onClose,
 							})
 						}
-						cellRenderValue={
-							column.render ? column.render(record, row, rowIndex) : (record[column.accessor] as ReactNode)
-						}
+						cellRenderValue={cellRenderValue(record, row, rowIndex, column.accessor, column)}
 					/>
 				),
 				title: (
@@ -111,6 +209,7 @@ export default function ICAdvancedFilterGrid<T extends Record<string, unknown>>(
 						store={props.store}
 						allColumns={props.allColumns}
 						run={props.run}
+						groupBy={store.variables.groupBy}
 					/>
 				),
 			}));
@@ -129,7 +228,9 @@ export default function ICAdvancedFilterGrid<T extends Record<string, unknown>>(
 		getColumnOption,
 	]);
 
-	const firstDataObject = props.data?.[0];
+	const firstDataObject = useMemo(() => {
+		return props.data?.[0];
+	}, [props.data?.[0]]);
 
 	const defaultColumns: TanStackDataTableColumnColDef<T>[] = useMemo(() => {
 		if (!firstDataObject) return [];
@@ -144,10 +245,10 @@ export default function ICAdvancedFilterGrid<T extends Record<string, unknown>>(
 					accessor: key,
 					minSize: props.minColumnSize,
 					width: props.defaultColumnSize,
-					render: (record) => (
+					render: (record, row, rowIndex) => (
 						<ICAdvancedFilterGridRow
-							isFormattedCell={false}
-							cellMenu={(visibleParent) =>
+							withPaddingLeft={!!record[key]}
+							cellMenu={(visibleParent, onClose) =>
 								cellMenu({
 									cellValue: record[key],
 									columnName: key,
@@ -156,9 +257,10 @@ export default function ICAdvancedFilterGrid<T extends Record<string, unknown>>(
 									onCopy: () => onCopyValue(record[key]),
 									run: props.run,
 									visibleParent: visibleParent,
+									onClose,
 								})
 							}
-							cellRenderValue={record[key] as ReactNode}
+							cellRenderValue={cellRenderValue(record, row, rowIndex, key)}
 						/>
 					),
 					title: (
@@ -170,6 +272,7 @@ export default function ICAdvancedFilterGrid<T extends Record<string, unknown>>(
 							store={props.store}
 							allColumns={props.allColumns}
 							run={props.run}
+							groupBy={store.variables.groupBy}
 						/>
 					),
 				};
@@ -200,7 +303,7 @@ export default function ICAdvancedFilterGrid<T extends Record<string, unknown>>(
 
 	return (
 		<BCTanStackGrid<T>
-			h={props.height}
+			h={props.tableHeight}
 			withTableBorder
 			withColumnBorders
 			fetching={props.isLoading}
@@ -210,11 +313,17 @@ export default function ICAdvancedFilterGrid<T extends Record<string, unknown>>(
 			columns={differedColumns}
 			records={differedRecords}
 			totalRecords={props.totalRecords}
-			page={store.page}
-			recordsPerPage={store.limit}
-			onPageChange={(page) => store.setPage(page)}
-			onRecordsPerPageChange={(limit) => store.setLimit(limit)}
-			recordsPerPageOptions={props.recordsPerPageOptions || [25, 50, 100]}
+			page={store.variables.page}
+			recordsPerPage={store.variables.limit}
+			onPageChange={(page) => {
+				store.setPage(page);
+				props.run(true);
+			}}
+			onRecordsPerPageChange={(limit) => {
+				store.setLimit(limit);
+				props.run();
+			}}
+			recordsPerPageOptions={props.recordsPerPageOptions || [35, 100, 200]}
 		/>
 	);
 }

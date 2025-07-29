@@ -7,8 +7,9 @@ import {
 	getCyberAssetStatusBadge,
 } from "@/builtinApps/CyberAssetsApp/CyberAssets/index.helper";
 import type { TanStackDataTableColumnColDef } from "@/shared/components/baseComponents/BCTanStackGrid/index.types";
+import { IC_ADVANCED_FILTER_BLANK_TEXT } from "@/shared/components/infraComponents/ICAdvancedFilter/index.constants";
 import type { ICAdvancedFilterDataRs } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
-import { Badge, Divider, Flex, Text } from "@mantine/core";
+import { Badge, Box, Divider, Flex, Text } from "@mantine/core";
 import { IconLink } from "@tabler/icons-react";
 import {
 	type CyberAssetClassification,
@@ -21,10 +22,10 @@ import {
 
 export const CYBER_ASSETS_FORMATTED_COLUMNS: TanStackDataTableColumnColDef<ICAdvancedFilterDataRs>[] = [
 	{
-		accessor: "hostname",
+		accessor: "primary_ip",
 		render: (record) => {
 			return (
-				<Flex key={`hostname-${record.hostname}`} justify={"flex-start"} align={"center"}>
+				<Flex key={`primary_ip-${record.primary_ip}`} justify={"space-between"} align={"center"}>
 					<Divider
 						h={32}
 						size={4}
@@ -32,10 +33,34 @@ export const CYBER_ASSETS_FORMATTED_COLUMNS: TanStackDataTableColumnColDef<ICAdv
 						orientation={"vertical"}
 						mr={"xs"}
 					/>
-					{getCyberAssetClassificationIcon({ type: record.classification as CyberAssetClassification })}
-					<Text fz={"xs"} fw={"bold"} c={"blue"} ml={"xs"}>
-						{record.hostname}
-					</Text>
+					<Flex align={"center"} gap={"xs"}>
+						{getCyberAssetClassificationIcon({ type: record.classification as CyberAssetClassification })}
+						<Text fz={"xs"} fw={"bold"} c={"blue"} ml={"xs"}>
+							{record.primary_ip}
+						</Text>
+					</Flex>
+				</Flex>
+			);
+		},
+	},
+	{
+		accessor: "hostname",
+		render: (record) => {
+			return (
+				<Flex w={"100%"} key={`hostname-${record.hostname}`} justify={"space-between"} align={"center"}>
+					{record.hostname ? (
+						<Text fz={"xs"} fw={"bold"} ml={"xs"}>
+							{record.hostname}
+						</Text>
+					) : (
+						<Box ml={"xs"}>{IC_ADVANCED_FILTER_BLANK_TEXT}</Box>
+					)}
+
+					{!!record.has_related_ip && (
+						<Badge variant={"light"} size={"xs"} leftSection={<IconLink size={12} />}>
+							{record.has_related_ip}
+						</Badge>
+					)}
 				</Flex>
 			);
 		},
@@ -52,25 +77,10 @@ export const CYBER_ASSETS_FORMATTED_COLUMNS: TanStackDataTableColumnColDef<ICAdv
 		},
 	},
 	{
-		accessor: "private_ip",
-		render: (record) => {
-			return (
-				<Flex key={`private_ip-${record.related_ip}`} p={"xs"} gap={"xs"} align={"center"}>
-					{record.private_ip}
-					{record.related_ip && (
-						<Badge variant={"light"} size={"xs"} leftSection={<IconLink size={12} />}>
-							{record.related_ip}
-						</Badge>
-					)}
-				</Flex>
-			);
-		},
-	},
-	{
-		accessor: "current_status",
+		accessor: "status",
 		render: (record) => {
 			return getCyberAssetStatusBadge({
-				type: record.current_status as CyberAssetStatus,
+				type: record.status as CyberAssetStatus,
 				props: {
 					m: "xs",
 				},
@@ -100,10 +110,10 @@ export const CYBER_ASSETS_FORMATTED_COLUMNS: TanStackDataTableColumnColDef<ICAdv
 		},
 	},
 	{
-		accessor: "os",
+		accessor: "os_name",
 		render: (record) => {
 			return getCyberAssetOsTypeBadge({
-				type: record.os as CyberAssetOsType,
+				type: record.os_name as CyberAssetOsType,
 				props: {
 					m: "xs",
 				},

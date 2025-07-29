@@ -11,6 +11,7 @@ export type ICAdvancedFilterGridRowCellMenuProps<T> = {
 	includeCondition: (columnName: string, value: unknown) => void;
 	excludeCondition: (columnName: string, value: unknown) => void;
 	onCopy: VoidFunction;
+	onClose: VoidFunction;
 };
 
 export default function ICAdvancedFilterGridRowCellMenu<T>(props: ICAdvancedFilterGridRowCellMenuProps<T>) {
@@ -24,7 +25,10 @@ export default function ICAdvancedFilterGridRowCellMenu<T>(props: ICAdvancedFilt
 			opened={opened}
 			position="bottom-end"
 			closeOnClickOutside
-			onClose={handlers.close}
+			onClose={() => {
+				handlers.close();
+				props.onClose();
+			}}
 		>
 			<Menu.Target>
 				<Box h={20}>

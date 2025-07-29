@@ -1,121 +1,126 @@
 import CyberAssetsCrudButtons from "@/builtinApps/CyberAssetsApp/CyberAssets/components/CyberAssetsCrudButtons";
 import { CYBER_ASSETS_FORMATTED_COLUMNS } from "@/builtinApps/CyberAssetsApp/CyberAssets/index.constants";
-import {
-	CyberAssetClassification,
-	CyberAssetCriticality,
-	CyberAssetDiscoveryType,
-	CyberAssetOsType,
-	CyberAssetState,
-	CyberAssetStatus,
-} from "@/builtinApps/CyberAssetsApp/CyberAssets/index.enum";
+import { getAssetFilterColumns, getAssets } from "@/http/generated/cyber-asset-management-cyber-assets";
+import type { EachAdvanceFilterConditionOperator } from "@/http/generated/models";
 import BCMultiTabPage from "@/shared/components/baseComponents/BCMultiTabPage";
 import type { BCMultiTabPageActions } from "@/shared/components/baseComponents/BCMultiTabPage/index.types";
 import ICAdvancedFilter from "@/shared/components/infraComponents/ICAdvancedFilter";
 import { createDynamicICAdvancedStore } from "@/shared/components/infraComponents/ICAdvancedFilter/index.store";
 import type {
+	ICAdvancedFilterColumnRs,
+	ICAdvancedFilterColumnType,
 	ICAdvancedFilterDataRs,
 	ICAdvancedFilterProps,
 } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
 import { Text } from "@mantine/core";
-import { useViewportSize } from "@mantine/hooks";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { v4 } from "uuid";
-
-const randomIP = () => `192.168.${Math.floor(Math.random() * 256)}.${Math.floor(Math.random() * 256)}`;
-
-const randomMAC = () =>
-	Array.from({ length: 6 }, () =>
-		Math.floor(Math.random() * 256)
-			.toString(16)
-			.padStart(2, "0"),
-	).join(":");
 
 type AddNewPageType = Pick<ICAdvancedFilterProps<ICAdvancedFilterDataRs>, "defaultVariables" | "store">;
 
 export default function CyberAssetsLandingPage() {
-	const { height } = useViewportSize();
+	const [total, setTotal] = useState(0);
 	const ref = useRef<BCMultiTabPageActions<AddNewPageType> | null>(null);
-
-	const totalAssets = 2500;
-	const getRandomItem = (arr: unknown[]) => arr[Math.floor(Math.random() * arr.length)];
-
-	const data: ICAdvancedFilterDataRs[] = Array.from({ length: 50 }, (_, i) => ({
-		id: v4(),
-		hostname: `Host-${i + 1}`,
-		private_ip: randomIP(),
-		mac_address: randomMAC(),
-		previous_status: getRandomItem([
-			CyberAssetStatus.PROFILED,
-			CyberAssetStatus.UNREACHABLE,
-			CyberAssetStatus.DEFECTIVE,
-			CyberAssetStatus.EXTERNAL,
-			CyberAssetStatus.GUEST,
-			CyberAssetStatus.ASSOCIATED,
-			CyberAssetStatus.NO_POLICY,
-		]) as string,
-		classification: getRandomItem([
-			CyberAssetClassification.UPS,
-			CyberAssetClassification.WORK_STATION,
-			CyberAssetClassification.STORAGE,
-			CyberAssetClassification.SERVER,
-		]) as string,
-		current_status: getRandomItem([
-			CyberAssetStatus.PROFILED,
-			CyberAssetStatus.UNREACHABLE,
-			CyberAssetStatus.DEFECTIVE,
-			CyberAssetStatus.EXTERNAL,
-			CyberAssetStatus.GUEST,
-			CyberAssetStatus.ASSOCIATED,
-			CyberAssetStatus.NO_POLICY,
-		]) as string,
-		criticality: getRandomItem([
-			CyberAssetCriticality.LOW,
-			CyberAssetCriticality.MEDIUM,
-			CyberAssetCriticality.HIGH,
-			CyberAssetCriticality.VERY_HIGH,
-		]) as string,
-		os: getRandomItem([CyberAssetOsType.WINDOWS, CyberAssetOsType.LINUX]) as string,
-		discovery_type: getRandomItem([
-			CyberAssetDiscoveryType.MANUAL,
-			CyberAssetDiscoveryType.DISCOVERED,
-			CyberAssetDiscoveryType.BY_INVENTORY,
-		]) as string,
-		state: getRandomItem([CyberAssetState.MANAGEABLE, CyberAssetState.UNMANAGEABLE]) as string,
-		message: `Sample message for host ${i + 1}`,
-		related_ip: "12",
-	}));
-
-	const mainStore = createDynamicICAdvancedStore();
 
 	return (
 		<BCMultiTabPage<AddNewPageType>
-			subTitle={<Text c={"gray.7"} fz={"xs"}>{`(Result for last Scan: ${totalAssets})`}</Text>}
+			subTitle={<Text mt={"2xs"} c={"gray.7"} fz={"xs"}>{`(Result for last Scan: ${total})`}</Text>}
 			staticPageTitle={"All Assets"}
 			ref={ref}
 			title={"Cyber Assets"}
-			mainPage={(params) => (
+			mainPage={(values) => (
 				<ICAdvancedFilter<ICAdvancedFilterDataRs>
-					excludeColumns={["id", "classification", "related_ip"]}
-					store={params?.store || mainStore}
+					tableMinusHeight={100}
+					onChangeTotalRecords={setTotal}
+					getColumnsApi={(signal) =>
+						getAssetFilterColumns(signal).then((response) => ({
+							...response,
+							data: {
+								...response.data,
+								results: response.data.results.map((item) => {
+									const newItem: ICAdvancedFilterColumnRs = {
+										displayName: item.display_name,
+										isDefault: item.is_default,
+										name: item.name,
+										objectType: item.object_type || [],
+										options: item.options?.map((opt) => ({ label: opt, value: opt })),
+										type: item.type as ICAdvancedFilterColumnType,
+									};
+									return newItem;
+								}),
+							},
+						}))
+					}
+					getDataApi={(variables, signal) =>
+						getAssets(
+							{
+								columns: variables.columns.map((column) => ({
+									name: column.name,
+									order: column.orderBy,
+								})),
+								conditions: variables.conditions.map((item) => ({
+									close_bracket: item.closeBracket,
+									column_name: item.columnName,
+									next_operator: item.nextOperator,
+									open_bracket: item.openBracket,
+									operator: item.operator as EachAdvanceFilterConditionOperator,
+									values: item.values,
+								})),
+								end_date: variables.endDate || null,
+								group_by: variables.groupBy
+									? {
+											aggregated_conditions: variables.groupBy.aggregatedConditions.map((agg) => ({
+												close_bracket: agg.closeBracket,
+												next_operator: agg.nextOperator,
+												open_bracket: agg.openBracket,
+												operator: agg.operator,
+												values: agg.values,
+											})),
+											display_name: "",
+											column: variables.groupBy.column,
+											function: variables.groupBy.function,
+											order: variables.groupBy.order,
+										}
+									: null,
+								limit: variables.limit,
+								page: variables.page,
+								search:
+									variables.search.columnName && variables.search.value
+										? {
+												column_name: variables.search.columnName,
+												value: variables.search.value,
+											}
+										: null,
+								start_date: variables.startDate || null,
+							},
+							signal,
+						).then((response) => ({
+							...response,
+							data: {
+								...response.data,
+								results: response.data.results?.map((item) => item as ICAdvancedFilterDataRs) || [],
+							},
+						}))
+					}
+					columnsQueryKey={["cyber-assets-columns"]}
+					dataQueryKey={["cyber-asset-data", v4()]}
+					fullScreenTitle={"Cyber Assets"}
+					excludeColumns={["id", "classification", "has_related_ip"]}
+					store={values?.params?.store || createDynamicICAdvancedStore()}
 					searchInputPlaceholder={"Search by hostname"}
-					searchInputItems={[
-						{
-							label: "Host Name",
-							value: "hostname",
-						},
-					]}
-					data={data}
-					run={() => {
-						console.log("run");
-					}}
 					columns={CYBER_ASSETS_FORMATTED_COLUMNS}
-					allColumns={[]}
-					height={height - 210}
 					idAccessor={"id"}
-					isLoading={false}
-					totalRecords={100}
 					minColumnSize={180}
 					defaultColumnSize={200}
+					onGroupByExpand={(variables, getColumnOption) => {
+						ref.current?.addNewPage(
+							`Group by ${variables.conditions.map((item) => getColumnOption(item.columnName)?.displayName || item.columnName).join(",")}`,
+							{
+								store: createDynamicICAdvancedStore(),
+								defaultVariables: variables,
+							},
+						);
+					}}
 					leftSection={
 						<CyberAssetsCrudButtons
 							onDelete={() => {
@@ -126,38 +131,10 @@ export default function CyberAssetsLandingPage() {
 							}}
 							onNew={() => {
 								console.log("edit");
-								ref.current?.addNewPage("new Asset", {
-									store: createDynamicICAdvancedStore(),
-									defaultVariables: {
-										page: 1,
-										limit: 1000,
-										columns: [],
-										search: {
-											value: "morteza for test default",
-											columnName: "",
-										},
-										conditions: [
-											{
-												nextOperator: "and",
-												id: "ddsdsds",
-												values: [
-													{
-														label: "test",
-														value: "test",
-													},
-												],
-												operator: "!==",
-												columnName: "hostname",
-												closBracket: 0,
-												openBracket: 0,
-											},
-										],
-									},
-								});
 							}}
 						/>
 					}
-					defaultVariables={params?.defaultVariables}
+					defaultVariables={values?.params?.defaultVariables}
 				/>
 			)}
 		/>

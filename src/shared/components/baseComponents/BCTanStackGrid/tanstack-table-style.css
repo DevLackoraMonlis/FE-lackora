@@ -200,3 +200,10 @@ td p {
 .tanStackNoWrap {
 	white-space: nowrap;
 }
+
+.tanStackHead {
+	display: grid;
+	position: sticky;
+	top: 0;
+	z-index: 1;
+}

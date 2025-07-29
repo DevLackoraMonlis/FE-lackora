@@ -2,7 +2,6 @@ import type {
 	ICAdvancedFilterColumnType,
 	ICAdvancedFilterOrder,
 	ICAdvancedFilterProps,
-	ICAdvancedFilterStoreType,
 } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
 import { ActionIcon, Box, Menu, MenuDivider } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
@@ -15,13 +14,14 @@ import {
 	IconSortDescendingNumbers,
 } from "@tabler/icons-react";
 import type { ReactNode } from "react";
-import { type StoreApi, useStore } from "zustand/index";
+import { useStore } from "zustand/index";
 import { useShallow } from "zustand/react/shallow";
 
 type Props<T> = {
 	columnName: string;
-	store: StoreApi<ICAdvancedFilterStoreType>;
 	allColumns: ICAdvancedFilterProps<T>["allColumns"];
+	store: ICAdvancedFilterProps<T>["store"];
+	run: ICAdvancedFilterProps<T>["run"];
 	visibleParent: boolean;
 };
 
@@ -88,20 +88,29 @@ export default function ICAdvancedFilterGridColumnSort<T>(props: Props<T>) {
 				<Menu.Dropdown p={0}>
 					<Menu.Item
 						leftSection={getSortIcon("asc")}
-						onClick={() => store.updateOrder(props.columnName, "asc")}
+						onClick={() => {
+							store.updateOrder(props.columnName, "asc");
+							props.run(true);
+						}}
 					>
 						Sort Ascending
 					</Menu.Item>
 					<Menu.Item
 						leftSection={getSortIcon("desc")}
-						onClick={() => store.updateOrder(props.columnName, "desc")}
+						onClick={() => {
+							store.updateOrder(props.columnName, "desc");
+							props.run(true);
+						}}
 					>
 						Sort Descending
 					</Menu.Item>
 					<MenuDivider />
 					<Menu.Item
 						leftSection={<IconRotateClockwise size={12} />}
-						onClick={() => store.updateOrder(props.columnName, null)}
+						onClick={() => {
+							store.updateOrder(props.columnName, null);
+							props.run(true);
+						}}
 					>
 						Reset to Default
 					</Menu.Item>

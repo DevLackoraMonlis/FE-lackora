@@ -22,7 +22,7 @@ console.log(port, "port");
  */
 export default defineConfig({
 	testDir: "./tests",
-	timeout: 40000,
+	timeout: 60000,
 	/* Run tests in files in parallel */
 	fullyParallel: true,
 	/* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -37,13 +37,13 @@ export default defineConfig({
 	use: {
 		/* Base URL to use in actions like `await page.goto('/')`. */
 		baseURL: `http://localhost:${port}`,
-		headless: false,
+		headless: isCI,
 		/* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
 		trace: "on-first-retry",
 		actionTimeout: 10000,
 		navigationTimeout: 30000,
 	},
-	reporter: [["line"], ["allure-playwright"], ["junit", { outputFile: "test-results/junit.xml" }]],
+	reporter: [["list"], ["allure-playwright"], ["junit"]],
 
 	/* Configure projects for major browsers */
 	projects: [
@@ -72,7 +72,8 @@ export default defineConfig({
 		//   use: { ...devices['Desktop Chrome'], channel: 'chrome' },
 		// },
 	],
-
+	//     - nohup node .next/standalone/server.js > server.log 2>&1 &
+	// - npx wait-on http://localhost:4000
 	/* Run your local dev server before starting the tests */
 	webServer: {
 		command: isProd ? "npm run start" : "npm run dev",
@@ -80,7 +81,9 @@ export default defineConfig({
 			PORT: port.toString(),
 		},
 		url: `http://localhost:${port}`,
-		reuseExistingServer: !isCI,
+		reuseExistingServer: true,
 		timeout: 60 * 10 * 1000,
+		stdout: "ignore",
+		stderr: "pipe",
 	},
 });

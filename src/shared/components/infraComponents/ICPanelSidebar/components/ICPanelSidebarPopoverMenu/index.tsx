@@ -19,11 +19,13 @@ export default function ICPanelSidebarPopoverMenu(props: ICPanelSidebarPopoverMe
 						c={"white"}
 						label={
 							<Text
-								onClick={(event) => {
-									event.stopPropagation();
-									event.preventDefault();
-									if (props.redirectOnTitleClick) router.push(item.href);
-								}}
+								{...(props.redirectOnTitleClick && {
+									onClick: (event) => {
+										event.stopPropagation();
+										event.preventDefault();
+										if (props.redirectOnTitleClick) router.push(item.href);
+									},
+								})}
 							>
 								{item.label}
 							</Text>

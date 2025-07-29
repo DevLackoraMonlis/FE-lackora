@@ -32,6 +32,7 @@ export default function TanStackGridComponent<T extends Record<string, unknown>>
 				<LoadingOverlay
 					loaderProps={{
 						type: "oval",
+						size: "xs",
 						style: {
 							display: "flex",
 							width: "100%",
@@ -50,6 +51,7 @@ export default function TanStackGridComponent<T extends Record<string, unknown>>
 					visible={props.fetching}
 				/>
 				<TanStackMainTable<T>
+					fetching={props.fetching}
 					rows={rows}
 					columnVirtualizer={columnVirtualizer}
 					rowVirtualizer={rowVirtualizer}

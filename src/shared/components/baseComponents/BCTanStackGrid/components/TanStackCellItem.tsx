@@ -27,7 +27,7 @@ export default function TanStackCellItem<T extends Record<string, unknown>>(
 			justifyContent: isCentered ? "center" : "flex-start",
 			...tanStackGetCommonPinningStyles<T>(cell.column),
 		}),
-		[props.rowHeight, cell.column, isCentered],
+		[props.rowHeight, cell.column.getSize(), isCentered],
 	);
 
 	return (
