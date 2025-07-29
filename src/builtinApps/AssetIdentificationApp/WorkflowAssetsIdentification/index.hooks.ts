@@ -34,7 +34,12 @@ export function useWorkflowScanHistory(queryParams: Record<string, unknown>) {
 			},
 		},
 	});
-	return { scanHistoryList };
+	const filters = scanHistoryList.data?.metadata?.filters.map((item) => ({
+		...item,
+		items: item.items?.map(({ label, value }) => ({ label, value: value as string })),
+	}));
+
+	return { scanHistoryList, filters };
 }
 
 export function useWorkflowHistoryDetail(stepId: string, _queryParams: Record<string, unknown>) {

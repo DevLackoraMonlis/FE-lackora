@@ -9,6 +9,7 @@ import BCTanStackGrid from "@/shared/components/baseComponents/BCTanStackGrid";
 import type { TanStackGridProps } from "@/shared/components/baseComponents/BCTanStackGrid/index.types";
 import { useTableSort } from "@/shared/hooks/useTableSort";
 
+import BCEmpty from "@/shared/components/baseComponents/BCEmpty";
 import { getWorkflowStatus } from "../../../../index.helper";
 import { useWorkflowHistoryDetail } from "../../../../index.hooks";
 import type { WorkflowScan } from "../../../../index.types";
@@ -92,7 +93,9 @@ export default function WorkflowScanHistory({ selectedScan }: { selectedScan?: W
 	const tableRecords = filteredResults.slice(from, to);
 	const totalRecords = filteredResults?.length;
 
-	if (historyDetail.isLoading || !selectedScan?.id) return <LoadingOverlay visible />;
+	if (historyDetail.isFetching) return <LoadingOverlay visible />;
+	if (!historyDetail?.data) return <BCEmpty />;
+
 	const scanDetail = historyDetail.data;
 	const statusParams = getWorkflowStatus(selectedScan?.status || "");
 	const Icon = statusParams?.icon;

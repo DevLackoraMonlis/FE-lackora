@@ -1,4 +1,4 @@
-import { Center, Pagination, ScrollArea } from "@mantine/core";
+import { Center, Pagination, ScrollArea, Select } from "@mantine/core";
 import { Badge, Card, Flex, Text } from "@mantine/core";
 import { useViewportSize } from "@mantine/hooks";
 import { useEffect, useState } from "react";
@@ -7,10 +7,13 @@ import type { PaginationRq } from "@/http/end-points/GeneralService.types";
 import BCSearchInput from "@/shared/components/baseComponents/BCSearchInput";
 import { useTablePagination } from "@/shared/hooks/useTablePagination";
 
+import { useStableData } from "@/shared/hooks/useStableData";
 import { getWorkflowStatus } from "../../../../index.helper";
 import { useWorkflowScanHistory } from "../../../../index.hooks";
 import type { WorkflowScan } from "../../../../index.types";
 import WorkflowScanHistoryListSkelton from "../WorkflowScanHistoryListSkelton";
+
+type Filters = PaginationRq & Record<string, unknown>;
 
 type Props = {
 	setSelectedScan: (id: WorkflowScan) => void;
@@ -18,41 +21,52 @@ type Props = {
 };
 export default function WorkflowScanHistoryList({ setSelectedScan, selectedScan }: Props) {
 	const { height } = useViewportSize();
-	const [{ search = "", ...queryParams }, setQueryParams] = useState<PaginationRq>({
+	const [queryParams, setQueryParams] = useState<Filters>({
 		limit: 10,
 		page: 1,
 	});
-	const { scanHistoryList } = useWorkflowScanHistory(queryParams);
+	const { scanHistoryList, filters } = useWorkflowScanHistory(queryParams);
 	const results = scanHistoryList.data?.results || [];
 	const total = scanHistoryList?.data?.total;
+	const stableFilters = useStableData<typeof filters>(filters);
 
 	const { tablePagination, page, pageSize, totalRecords, setTotalRecords } = useTablePagination({
 		defaultPageSize: 10,
 	});
 	const showPagination = totalRecords > pageSize;
-
-	const handleUpdateQueryParams = (params: Partial<PaginationRq>) => {
+	const handleUpdateQueryParams = (params: Partial<Filters>) => {
+		console.log(params);
 		setQueryParams((perParams) => ({ ...perParams, page: 1, ...params }));
 	};
 
 	useEffect(() => {
 		const lastScan = results?.[0];
-		if (lastScan) {
-			setTotalRecords(total || 0);
-			setSelectedScan(lastScan);
-		}
+		setTotalRecords(total || 0);
+		setSelectedScan(lastScan);
 	}, [total]);
 
 	return (
 		<Card m={0} p="xs" bg="gray.1" h="100%" pos="relative">
-			<Flex direction="column">
+			<Flex direction="column" gap="xs">
 				<BCSearchInput
 					onSubmitSearch={(value) => handleUpdateQueryParams({ search: value })}
 					placeholder="Search by scan ID"
 					inputWidth="100%"
 				/>
-				<ScrollArea h={height - 200}>
-					<Flex gap="2xs" direction="column" mt="xs">
+				<Flex gap="2xs">
+					{stableFilters?.map(({ items, label, param }) => (
+						<Select
+							key={label}
+							clearable
+							w="140px"
+							placeholder={`All ${label}`}
+							data={items}
+							onChange={(value) => handleUpdateQueryParams({ [param]: value })}
+						/>
+					))}
+				</Flex>
+				<ScrollArea h={height - 220}>
+					<Flex gap="2xs" direction="column">
 						{scanHistoryList.isLoading ? (
 							<WorkflowScanHistoryListSkelton />
 						) : (
