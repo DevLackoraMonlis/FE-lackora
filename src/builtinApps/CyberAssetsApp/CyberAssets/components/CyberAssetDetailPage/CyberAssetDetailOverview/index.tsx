@@ -1,20 +1,83 @@
 import CyberAssetDetailOverviewApplications from "@/builtinApps/CyberAssetsApp/CyberAssets/components/CyberAssetDetailPage/CyberAssetDetailOverview/CyberAssetDetailOverviewApplications";
+import CyberAssetDetailOverviewAvailabilityAndActivity from "@/builtinApps/CyberAssetsApp/CyberAssets/components/CyberAssetDetailPage/CyberAssetDetailOverview/CyberAssetDetailOverviewAvailabilityAndActivity";
 import CyberAssetDetailOverviewCPU from "@/builtinApps/CyberAssetsApp/CyberAssets/components/CyberAssetDetailPage/CyberAssetDetailOverview/CyberAssetDetailOverviewCPU";
 import CyberAssetDetailOverviewCard from "@/builtinApps/CyberAssetsApp/CyberAssets/components/CyberAssetDetailPage/CyberAssetDetailOverview/CyberAssetDetailOverviewCard";
 import CyberAssetDetailOverviewChanges from "@/builtinApps/CyberAssetsApp/CyberAssets/components/CyberAssetDetailPage/CyberAssetDetailOverview/CyberAssetDetailOverviewChanges";
 import CyberAssetDetailOverviewConfigurationItems from "@/builtinApps/CyberAssetsApp/CyberAssets/components/CyberAssetDetailPage/CyberAssetDetailOverview/CyberAssetDetailOverviewConfigurationItems";
 import CyberAssetDetailOverviewDisk from "@/builtinApps/CyberAssetsApp/CyberAssets/components/CyberAssetDetailPage/CyberAssetDetailOverview/CyberAssetDetailOverviewDisk";
 import CyberAssetDetailOverviewNetwork from "@/builtinApps/CyberAssetsApp/CyberAssets/components/CyberAssetDetailPage/CyberAssetDetailOverview/CyberAssetDetailOverviewNetwork";
+import CyberAssetDetailOverviewNotifications from "@/builtinApps/CyberAssetsApp/CyberAssets/components/CyberAssetDetailPage/CyberAssetDetailOverview/CyberAssetDetailOverviewNotifications";
 import CyberAssetDetailOverviewOperatingSystem from "@/builtinApps/CyberAssetsApp/CyberAssets/components/CyberAssetDetailPage/CyberAssetDetailOverview/CyberAssetDetailOverviewOperatingSystem";
 import CyberAssetDetailOverviewRAM from "@/builtinApps/CyberAssetsApp/CyberAssets/components/CyberAssetDetailPage/CyberAssetDetailOverview/CyberAssetDetailOverviewRAM";
 import CyberAssetDetailOverviewTopServices from "@/builtinApps/CyberAssetsApp/CyberAssets/components/CyberAssetDetailPage/CyberAssetDetailOverview/CyberAssetDetailOverviewTopServices";
 import { CyberAssetCriticality, CyberAssetOsType } from "@/builtinApps/CyberAssetsApp/CyberAssets/index.enum";
 import type { CyberAssetDetailOverviewProps } from "@/builtinApps/CyberAssetsApp/CyberAssets/index.types";
 import { Box, Button, Grid, Tooltip } from "@mantine/core";
+import { useViewportSize } from "@mantine/hooks";
 import { IconArrowNarrowRight, IconInfoCircle } from "@tabler/icons-react";
 
+const ArrowButton = (props: { onClick?: VoidFunction }) => {
+	return (
+		<Button onClick={props.onClick} p={0} size={"xs"} variant={"transparent"}>
+			<IconArrowNarrowRight size={20} />
+		</Button>
+	);
+};
+
 export default function CyberAssetDetailOverview(_props: { id?: string }) {
+	const { height } = useViewportSize();
 	const data: CyberAssetDetailOverviewProps = {
+		notifications: [
+			{
+				type: "AVAILABILITY",
+				date: "Jul 25, 14:22",
+				description: "System unreachable from 10.0.1.5",
+				source: "system",
+				title: "Asset went offline",
+			},
+			{
+				type: "CONFLICT",
+				date: "Jul 25, 14:22",
+				description: "System unreachable from 10.0.1.5",
+				source: "system",
+				title: "Asset went offline",
+			},
+			{
+				type: "FAILED",
+				date: "Jul 25, 14:22",
+				description: "System unreachable from 10.0.1.5",
+				source: "system",
+				title: "Multiple failed login attempts",
+			},
+			{
+				type: "PATCH",
+				date: "Jul 25, 14:22",
+				description: "System unreachable from 10.0.1.5",
+				source: "system",
+				title: "Asset went offline",
+			},
+			{
+				type: "CONFLICT",
+				date: "Jul 25, 14:22",
+				description: "System unreachable from 10.0.1.5",
+				source: "system",
+				title: "Asset went offline",
+			},
+			{
+				type: "CONFLICT",
+				date: "Jul 25, 14:22",
+				description: "System unreachable from 10.0.1.5",
+				source: "system",
+				title: "Asset went offline",
+			},
+			{
+				type: "AVAILABILITY",
+				date: "Jul 25, 14:22",
+				description: "System unreachable from 10.0.1.5",
+				source: "system",
+				title: "Asset went offline",
+			},
+		],
 		serviceStartTypes: {
 			summary: {
 				Automatic: 45,
@@ -121,23 +184,44 @@ export default function CyberAssetDetailOverview(_props: { id?: string }) {
 		availabilityAndActivity: {
 			activity: [
 				{
-					name: "Agent Updated",
+					title: "Agent Updated",
+					time: "Jul 25, 13:10",
+					description: "v1.4.2 -> v1.5.0 by System",
+				},
+				{
+					title: "Agent Updated2",
 					time: "Jul 25, 13:10",
 					description: "v1.4.2 -> v1.5.0 by System",
 				},
 			],
 			timeline: [
 				{
-					description: "Jul 25, 14:22 (for 3h 15m)",
+					description: "Jul 25, 14:30 (for 3h 15m)",
 					type: "Online",
 				},
 				{
-					description: "Jul 25, 14:22 (for 3h 15m)",
+					description: "Jul 25, 14:31 (for 3h 15m)",
 					type: "Offline",
 				},
 				{
-					description: "Jul 25, 14:22 (for 3h 15m)",
+					description: "Jul 25, 14:32 (for 3h 15m)",
 					type: "Unmanaged",
+				},
+				{
+					description: "Jul 25, 14:33 (for 3h 15m)",
+					type: "Offline",
+				},
+				{
+					description: "Jul 25, 14:35 (for 3h 15m)",
+					type: "Online",
+				},
+				{
+					description: "Jul 25, 14:25 (for 3h 15m)",
+					type: "Offline",
+				},
+				{
+					description: "Jul 25, 14:26 (for 3h 15m)",
+					type: "Offline",
 				},
 			],
 		},
@@ -218,41 +302,20 @@ export default function CyberAssetDetailOverview(_props: { id?: string }) {
 
 			<Grid gutter={"xs"}>
 				<Grid.Col span={6}>
-					<CyberAssetDetailOverviewCard
-						title={"Network"}
-						rightSection={
-							<Button p={0} variant={"transparent"}>
-								<IconArrowNarrowRight />
-							</Button>
-						}
-					>
+					<CyberAssetDetailOverviewCard title={"Network"} rightSection={<ArrowButton />}>
 						<CyberAssetDetailOverviewNetwork network={data.network} />
 					</CyberAssetDetailOverviewCard>
 				</Grid.Col>
 
 				<Grid.Col span={6}>
-					<CyberAssetDetailOverviewCard
-						title={"Changes"}
-						rightSection={
-							<Button p={0} variant={"transparent"}>
-								<IconArrowNarrowRight />
-							</Button>
-						}
-					>
+					<CyberAssetDetailOverviewCard title={"Changes"} rightSection={<ArrowButton />}>
 						<CyberAssetDetailOverviewChanges changes={data.changes} />
 					</CyberAssetDetailOverviewCard>
 				</Grid.Col>
 			</Grid>
 			<Grid gutter={"xs"}>
 				<Grid.Col span={6}>
-					<CyberAssetDetailOverviewCard
-						title={"Top Services"}
-						rightSection={
-							<Button p={0} variant={"transparent"}>
-								<IconArrowNarrowRight />
-							</Button>
-						}
-					>
+					<CyberAssetDetailOverviewCard title={"Top Services"} rightSection={<ArrowButton />}>
 						<CyberAssetDetailOverviewTopServices
 							serviceStartTypes={data.serviceStartTypes}
 							topServices={data.topServices}
@@ -260,15 +323,29 @@ export default function CyberAssetDetailOverview(_props: { id?: string }) {
 					</CyberAssetDetailOverviewCard>
 				</Grid.Col>
 				<Grid.Col span={6}>
-					<CyberAssetDetailOverviewCard
-						title={"Applications"}
-						rightSection={
-							<Button p={0} variant={"transparent"}>
-								<IconArrowNarrowRight />
-							</Button>
-						}
-					>
+					<CyberAssetDetailOverviewCard title={"Applications"} rightSection={<ArrowButton />}>
 						<CyberAssetDetailOverviewApplications applications={data.applications} />
+					</CyberAssetDetailOverviewCard>
+				</Grid.Col>
+			</Grid>
+
+			<Grid>
+				<Grid.Col span={4}>
+					<CyberAssetDetailOverviewCard title={"Security"} rightSection={<ArrowButton />}>
+						1
+					</CyberAssetDetailOverviewCard>
+				</Grid.Col>
+				<Grid.Col span={4}>
+					<CyberAssetDetailOverviewCard title={"Availability & Activity"} rightSection={<ArrowButton />}>
+						<CyberAssetDetailOverviewAvailabilityAndActivity
+							height={height}
+							availabilityAndActivity={data.availabilityAndActivity}
+						/>
+					</CyberAssetDetailOverviewCard>
+				</Grid.Col>
+				<Grid.Col span={4}>
+					<CyberAssetDetailOverviewCard title={"Notifications"}>
+						<CyberAssetDetailOverviewNotifications height={height} notifications={data.notifications} />
 					</CyberAssetDetailOverviewCard>
 				</Grid.Col>
 			</Grid>

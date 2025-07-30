@@ -136,7 +136,7 @@ export type CyberAssetDetailOverviewAvailabilityAndActivityTimeline = {
 };
 
 export type CyberAssetDetailOverviewAvailabilityAndActivityActivity = {
-	name: string;
+	title: string;
 	time: string;
 	description: string;
 };
@@ -144,6 +144,16 @@ export type CyberAssetDetailOverviewAvailabilityAndActivityActivity = {
 export type CyberAssetDetailOverviewAvailabilityAndActivity = {
 	timeline: CyberAssetDetailOverviewAvailabilityAndActivityTimeline[];
 	activity: CyberAssetDetailOverviewAvailabilityAndActivityActivity[];
+};
+
+export type CyberAssetDetailOverviewNotificationType = "AVAILABILITY" | "FAILED" | "PATCH" | "CONFLICT";
+
+export type CyberAssetDetailOverviewNotification = {
+	title: string;
+	description: string;
+	date: string;
+	source: string;
+	type: CyberAssetDetailOverviewNotificationType;
 };
 
 export type CyberAssetDetailOverviewProps = {
@@ -160,4 +170,5 @@ export type CyberAssetDetailOverviewProps = {
 	applications: CyberAssetDetailOverviewApplication;
 	security: CyberAssetDetailOverviewApplicationSecurity;
 	availabilityAndActivity: CyberAssetDetailOverviewAvailabilityAndActivity;
+	notifications: CyberAssetDetailOverviewNotification[];
 };

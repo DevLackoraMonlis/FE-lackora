@@ -1,5 +1,6 @@
 import type {
 	CyberAssetDetailOverviewChangeType,
+	CyberAssetDetailOverviewNotificationType,
 	CyberAssetDetailOverviewTopServiceStatus,
 } from "@/builtinApps/CyberAssetsApp/CyberAssets/index.types";
 import {
@@ -23,6 +24,7 @@ import {
 } from "@/shared/icons/components/assets";
 import { Badge, type BadgeProps, Flex, type FlexProps, Text } from "@mantine/core";
 import {
+	IconAlertTriangle,
 	IconArchive,
 	IconArrowBadgeDown,
 	IconArrowBadgeUp,
@@ -30,9 +32,11 @@ import {
 	IconDeviceDesktop,
 	IconEqual,
 	IconHighlight,
+	IconInfoSquare,
 	IconPencil,
 	IconPlus,
 	IconSearch,
+	IconTool,
 	IconTrash,
 } from "@tabler/icons-react";
 import type { ReactNode } from "react";
@@ -173,6 +177,22 @@ export function getCyberAssetChangeIcon({
 		ADD: <IconPlus width={size} height={size} />,
 		MODIFY: <IconTrash width={size} height={size} />,
 		DELETE: <IconPencil width={size} height={size} />,
+	};
+	return icons[type];
+}
+
+export function getCyberAssetNotificationIcon({
+	type,
+	size = 16,
+}: {
+	type: CyberAssetDetailOverviewNotificationType;
+	size?: number;
+}) {
+	const icons: Record<CyberAssetDetailOverviewNotificationType, ReactNode> = {
+		AVAILABILITY: <IconInfoSquare color={"blue"} width={size} height={size} />,
+		CONFLICT: <IconAlertTriangle color={"yellow"} width={size} height={size} />,
+		FAILED: <IconAlertTriangle color={"red"} width={size} height={size} />,
+		PATCH: <IconTool color={"gray"} width={size} height={size} />,
 	};
 	return icons[type];
 }
