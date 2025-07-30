@@ -173,7 +173,7 @@ export function getCyberAssetOsTypeBadge(params: {
 	}
 
 	return (
-		<Flex {...params.props} align={"center"} gap={"md"}>
+		<Flex {...params.props} align={"center"} gap={"xs"}>
 			{iconMap[params.type]}
 			<Text fz={"xs"}>{params.customType || params.type}</Text>
 		</Flex>

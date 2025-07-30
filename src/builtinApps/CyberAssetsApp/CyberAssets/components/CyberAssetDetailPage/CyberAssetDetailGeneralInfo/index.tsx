@@ -22,10 +22,10 @@ const CyberAssetDetailGeneralInfoCard = (props: CyberAssetDetailGeneralInfoCardP
 				<Grid gutter={0} bg={"gray.2"} p={"xs"} align={"center"}>
 					{props.items.map((item) => (
 						<Fragment key={item.label}>
-							<Grid.Col span={4}>
+							<Grid.Col span={5}>
 								<Text fw={"bold"}>{item.label}</Text>
 							</Grid.Col>
-							<Grid.Col span={8}>{item.value}</Grid.Col>
+							<Grid.Col span={7}>{item.value}</Grid.Col>
 						</Fragment>
 					))}
 				</Grid>

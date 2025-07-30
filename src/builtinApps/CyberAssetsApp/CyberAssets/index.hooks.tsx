@@ -1,10 +1,4 @@
-import {
-	CyberAssetClassification,
-	CyberAssetDiscoveryType,
-	CyberAssetOsType,
-	CyberAssetState,
-	CyberAssetStatus,
-} from "@/builtinApps/CyberAssetsApp/CyberAssets/index.enum";
+import { CyberAssetClassification } from "@/builtinApps/CyberAssetsApp/CyberAssets/index.enum";
 import {
 	getCyberAssetClassificationIcon,
 	getCyberAssetDiscoveryTypeBadge,
@@ -13,13 +7,14 @@ import {
 	getCyberAssetStatusBadge,
 } from "@/builtinApps/CyberAssetsApp/CyberAssets/index.helper";
 import type {
+	CuberAssetDetailGeneralInfoData,
 	CyberAssetDetailGeneralInfoCardProps,
 	CyberAssetDetailGeneralInfoProps,
 } from "@/builtinApps/CyberAssetsApp/CyberAssets/index.types";
-import { Text } from "@mantine/core";
+import { Flex, Text } from "@mantine/core";
 import { IconAlarm, IconDevices2, IconMapPin, IconNetwork, IconUserCircle } from "@tabler/icons-react";
 
-export const useGetCyberAssetDetailGeneralInfo = () => {
+export const useGetCyberAssetDetailGeneralInfo = (params: { data: CuberAssetDetailGeneralInfoData }) => {
 	const assetIdentificationCard: CyberAssetDetailGeneralInfoCardProps = {
 		title: "Asset Identification",
 		icon: <IconDevices2 color={"blue"} size={24} />,
@@ -27,7 +22,7 @@ export const useGetCyberAssetDetailGeneralInfo = () => {
 			{
 				label: "OS Type:",
 				value: getCyberAssetOsTypeBadge({
-					type: CyberAssetOsType.WINDOWS,
+					type: params.data.osType,
 					props: {
 						fz: "xs",
 					},
@@ -35,22 +30,23 @@ export const useGetCyberAssetDetailGeneralInfo = () => {
 			},
 			{
 				label: "OS Family:",
-				value: getCyberAssetOsTypeBadge({
-					type: CyberAssetOsType.WINDOWS,
-					props: {
-						fz: "xs",
-					},
-					customType: "Windows Server 2019 Standard",
-				}),
+				value: (
+					<Flex gap={"xs"}>
+						{getCyberAssetClassificationIcon({
+							type: params.data.classification,
+						})}
+						<Text fz={"xs"}>{params.data.osFamily}</Text>
+					</Flex>
+				),
 			},
 			{
 				label: "OS Version:",
-				value: <Text fz={"xs"}>10.0.17763</Text>,
+				value: <Text fz={"xs"}>{params.data.osVersion}</Text>,
 			},
 			{
 				label: "Discovery Type:",
 				value: getCyberAssetDiscoveryTypeBadge({
-					type: CyberAssetDiscoveryType.DISCOVERED,
+					type: params.data.discoveryType,
 					size: 16,
 				}),
 			},
@@ -63,19 +59,19 @@ export const useGetCyberAssetDetailGeneralInfo = () => {
 		items: [
 			{
 				label: "IP Address:",
-				value: <Text fz={"xs"}>192.168.10.15</Text>,
+				value: <Text fz={"xs"}>{params.data.ipAddress}</Text>,
 			},
 			{
 				label: "MAC Address:",
-				value: <Text fz={"xs"}>00-14-22-01-23-45</Text>,
+				value: <Text fz={"xs"}>{params.data.macAddress}</Text>,
 			},
 			{
 				label: "Gateway IP:",
-				value: <Text fz={"xs"}>192.168.10.1</Text>,
+				value: <Text fz={"xs"}>{params.data.gateway}</Text>,
 			},
 			{
 				label: "VLAN:",
-				value: <Text fz={"xs"}>Production-VLAN (ID: 20)</Text>,
+				value: <Text fz={"xs"}>{params.data.vLan}</Text>,
 			},
 		],
 	};
@@ -85,15 +81,15 @@ export const useGetCyberAssetDetailGeneralInfo = () => {
 		items: [
 			{
 				label: "Last Logon User:",
-				value: <Text fz={"xs"}>Mahya.sh</Text>,
+				value: <Text fz={"xs"}>{params.data.lastLogonUser}</Text>,
 			},
 			{
 				label: "Owner:",
-				value: <Text fz={"xs"}>Saman.ha</Text>,
+				value: <Text fz={"xs"}>{params.data.owner}</Text>,
 			},
 			{
 				label: "User Group:",
-				value: <Text fz={"xs"}>Product</Text>,
+				value: <Text fz={"xs"}>{params.data.userGroup}</Text>,
 			},
 		],
 	};
@@ -104,15 +100,15 @@ export const useGetCyberAssetDetailGeneralInfo = () => {
 		items: [
 			{
 				label: "Location:",
-				value: <Text fz={"xs"}>Tehran Milad DC - Rack 3U</Text>,
+				value: <Text fz={"xs"}>{params.data.location}</Text>,
 			},
 			{
 				label: "Latitude:",
-				value: <Text fz={"xs"}>35.5501° N</Text>,
+				value: <Text fz={"xs"}>{params.data.latitude}</Text>,
 			},
 			{
 				label: "Longitude:",
-				value: <Text fz={"xs"}>51.388974</Text>,
+				value: <Text fz={"xs"}>{params.data.longitude}</Text>,
 			},
 		],
 	};
@@ -123,23 +119,23 @@ export const useGetCyberAssetDetailGeneralInfo = () => {
 		items: [
 			{
 				label: "Last Reboot Time:",
-				value: <Text fz={"xs"}>2025-03-12, 18:30</Text>,
+				value: <Text fz={"xs"}>{params.data.lastRebootTime}</Text>,
 			},
 			{
 				label: "Last Scan ID:",
-				value: <Text fz={"xs"}>#4300</Text>,
+				value: <Text fz={"xs"}>{params.data.lastScanId}</Text>,
 			},
 			{
 				label: "Last Seen:",
-				value: <Text fz={"xs"}>2025-06-06, 14:30</Text>,
+				value: <Text fz={"xs"}>{params.data.lastSeen}</Text>,
 			},
 			{
 				label: "Current State:",
-				value: getCyberAssetStateBadge({ type: CyberAssetState.MANAGEABLE }),
+				value: getCyberAssetStateBadge({ type: params.data.currentState }),
 			},
 			{
 				label: "Current Status:",
-				value: getCyberAssetStatusBadge({ type: CyberAssetStatus.PROFILED }),
+				value: getCyberAssetStatusBadge({ type: params.data.currentStatus }),
 			},
 		],
 	};
