@@ -20,7 +20,7 @@ export default function ICMonoAppLandingPage() {
 				</ICPageWrapper>
 			);
 		}
-		return <LandingPlugin />;
+		return <LandingPlugin appName={app.name} />;
 	}
 
 	return null;

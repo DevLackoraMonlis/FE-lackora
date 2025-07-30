@@ -11,6 +11,7 @@ import AssetIdentificationDiscoverySettingsPage from "@/builtinApps/AssetIdentif
 import AssetIdentificationProfilingSettingsPage from "@/builtinApps/AssetIdentificationApp/ProfillngSettings";
 import WorkflowAssetsIdentification from "@/builtinApps/AssetIdentificationApp/WorkflowAssetsIdentification";
 import CyberAssetsLandingPage from "@/builtinApps/CyberAssetsApp/CyberAssets";
+import CyberAssetDetailPage from "@/builtinApps/CyberAssetsApp/CyberAssets/components/CyberAssetDetailPage";
 import ObjectsConnectionsPage from "@/builtinApps/ObjectsApp/Connections";
 import ICMonoMarket from "@/shared/components/infraComponents/ICMonoMarket/components/ICMonoMarket";
 
@@ -22,6 +23,7 @@ const apps: ICMonoMarketAppType[] = [
 			{
 				name: AllApplications.CYBER_ASSETS.modules.CYBER_ASSETS,
 				page: CyberAssetsLandingPage,
+				detailPage: CyberAssetDetailPage,
 			},
 		],
 	},

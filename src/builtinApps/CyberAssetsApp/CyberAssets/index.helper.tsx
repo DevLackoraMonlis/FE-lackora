@@ -136,11 +136,12 @@ export function getCyberAssetClassificationIcon({
 export function getCyberAssetDiscoveryTypeBadge(params: {
 	type: CyberAssetDiscoveryType;
 	props?: FlexProps;
+	size?: number;
 }) {
 	const iconMap: Record<CyberAssetDiscoveryType, ReactNode> = {
-		[CyberAssetDiscoveryType.BY_INVENTORY]: <IconArchive size={12} />,
-		[CyberAssetDiscoveryType.DISCOVERED]: <IconSearch size={12} />,
-		[CyberAssetDiscoveryType.MANUAL]: <IconHighlight size={12} />,
+		[CyberAssetDiscoveryType.BY_INVENTORY]: <IconArchive size={params?.size || 12} />,
+		[CyberAssetDiscoveryType.DISCOVERED]: <IconSearch size={params?.size || 12} />,
+		[CyberAssetDiscoveryType.MANUAL]: <IconHighlight size={params?.size || 12} />,
 	};
 
 	if (!iconMap[params.type]) {
@@ -148,9 +149,11 @@ export function getCyberAssetDiscoveryTypeBadge(params: {
 	}
 
 	return (
-		<Flex {...params.props} align={"center"} gap={"md"}>
+		<Flex {...params.props} align={"center"} gap={"sm"}>
 			{iconMap[params.type]}
-			<Text fz={"xs"}>{params.type}</Text>
+			<Text fz={"xs"} tt={"capitalize"}>
+				{params.type}
+			</Text>
 		</Flex>
 	);
 }
@@ -158,6 +161,7 @@ export function getCyberAssetDiscoveryTypeBadge(params: {
 export function getCyberAssetOsTypeBadge(params: {
 	type: CyberAssetOsType;
 	props?: FlexProps;
+	customType?: string;
 }) {
 	const iconMap: Record<CyberAssetOsType, ReactNode> = {
 		[CyberAssetOsType.LINUX]: <LinuxSvgrepoCom1 width={16} height={16} />,
@@ -171,7 +175,7 @@ export function getCyberAssetOsTypeBadge(params: {
 	return (
 		<Flex {...params.props} align={"center"} gap={"md"}>
 			{iconMap[params.type]}
-			<Text fz={"xs"}>{params.type}</Text>
+			<Text fz={"xs"}>{params.customType || params.type}</Text>
 		</Flex>
 	);
 }

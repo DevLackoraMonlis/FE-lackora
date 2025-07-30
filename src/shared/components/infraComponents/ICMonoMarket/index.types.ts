@@ -18,3 +18,13 @@ export type ICMonoMarketAppType = {
 	landing?: FC<any>;
 	modules: ICMonoMarketAppModuleType[];
 };
+
+export type ICMonoAppPagesDefaultProps<T = null> = T extends Record<string, unknown>
+	? {
+			appName?: string;
+			moduleName?: string;
+		} & T
+	: {
+			appName?: string;
+			moduleName?: string;
+		};

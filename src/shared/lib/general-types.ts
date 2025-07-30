@@ -1,6 +1,8 @@
-export type LabelValueType = {
+import type { ReactNode } from "react";
+
+export type LabelValueType<T extends ReactNode = string> = {
 	label: string;
-	value: string;
+	value: T;
 };
 
 export type LabelValueFilter = {

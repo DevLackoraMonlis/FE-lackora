@@ -9,8 +9,10 @@ import {
 import type { TanStackDataTableColumnColDef } from "@/shared/components/baseComponents/BCTanStackGrid/index.types";
 import { IC_ADVANCED_FILTER_BLANK_TEXT } from "@/shared/components/infraComponents/ICAdvancedFilter/index.constants";
 import type { ICAdvancedFilterDataRs } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
+import { AppRoutes } from "@/shared/constants/routes";
 import { Badge, Box, Divider, Flex, Text } from "@mantine/core";
 import { IconLink } from "@tabler/icons-react";
+import Link from "next/link";
 import {
 	type CyberAssetClassification,
 	CyberAssetCriticality,
@@ -20,7 +22,10 @@ import {
 	CyberAssetStatus,
 } from "./index.enum";
 
-export const CYBER_ASSETS_FORMATTED_COLUMNS: TanStackDataTableColumnColDef<ICAdvancedFilterDataRs>[] = [
+export const getCyberAssetsFormattedColumns: (
+	appName?: string,
+	moduleName?: string,
+) => TanStackDataTableColumnColDef<ICAdvancedFilterDataRs>[] = (appName, moduleName) => [
 	{
 		accessor: "primary_ip",
 		render: (record) => {
@@ -35,7 +40,16 @@ export const CYBER_ASSETS_FORMATTED_COLUMNS: TanStackDataTableColumnColDef<ICAdv
 					/>
 					<Flex align={"center"} gap={"xs"}>
 						{getCyberAssetClassificationIcon({ type: record.classification as CyberAssetClassification })}
-						<Text fz={"xs"} fw={"bold"} c={"blue"} ml={"xs"}>
+						<Text
+							href={
+								appName && moduleName ? AppRoutes.appModuleDetailPage(appName, moduleName, record.id) : "#"
+							}
+							component={Link}
+							fz={"xs"}
+							fw={"bold"}
+							c={"blue"}
+							ml={"xs"}
+						>
 							{record.primary_ip}
 						</Text>
 					</Flex>

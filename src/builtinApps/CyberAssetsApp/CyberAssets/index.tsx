@@ -1,5 +1,5 @@
 import CyberAssetsCrudButtons from "@/builtinApps/CyberAssetsApp/CyberAssets/components/CyberAssetsCrudButtons";
-import { CYBER_ASSETS_FORMATTED_COLUMNS } from "@/builtinApps/CyberAssetsApp/CyberAssets/index.constants";
+import { getCyberAssetsFormattedColumns } from "@/builtinApps/CyberAssetsApp/CyberAssets/index.constants";
 import { getAssetFilterColumns, getAssets } from "@/http/generated/cyber-asset-management-cyber-assets";
 import type { EachAdvanceFilterConditionOperator } from "@/http/generated/models";
 import BCMultiTabPage from "@/shared/components/baseComponents/BCMultiTabPage";
@@ -12,13 +12,14 @@ import type {
 	ICAdvancedFilterDataRs,
 	ICAdvancedFilterProps,
 } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
+import type { ICMonoAppPagesDefaultProps } from "@/shared/components/infraComponents/ICMonoMarket/index.types";
 import { Text } from "@mantine/core";
 import { useRef, useState } from "react";
 import { v4 } from "uuid";
 
 type AddNewPageType = Pick<ICAdvancedFilterProps<ICAdvancedFilterDataRs>, "defaultVariables" | "store">;
 
-export default function CyberAssetsLandingPage() {
+export default function CyberAssetsLandingPage(props: ICMonoAppPagesDefaultProps) {
 	const [total, setTotal] = useState(0);
 	const ref = useRef<BCMultiTabPageActions<AddNewPageType> | null>(null);
 
@@ -108,7 +109,7 @@ export default function CyberAssetsLandingPage() {
 					excludeColumns={["id", "classification", "has_related_ip"]}
 					store={values?.params?.store || createDynamicICAdvancedStore()}
 					searchInputPlaceholder={"Search by hostname"}
-					columns={CYBER_ASSETS_FORMATTED_COLUMNS}
+					columns={getCyberAssetsFormattedColumns(props.appName, props.moduleName)}
 					idAccessor={"id"}
 					minColumnSize={180}
 					defaultColumnSize={200}

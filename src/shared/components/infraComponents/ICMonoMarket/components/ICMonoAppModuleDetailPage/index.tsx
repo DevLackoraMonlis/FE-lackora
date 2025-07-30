@@ -4,23 +4,24 @@ import { useMonoApp } from "@/shared/components/infraComponents/ICMonoMarket/ind
 import ICPageWrapper from "@/shared/components/infraComponents/ICPageWrapper";
 
 export default function ICMonoAppModuleDetailPage() {
-	const { module, showRestrictAccessApp, showRestrictAccessModule, restrictAccessElement } = useMonoApp();
+	const { app, module, showRestrictAccessApp, showRestrictAccessModule, restrictAccessElement } =
+		useMonoApp();
 
 	if (showRestrictAccessApp || showRestrictAccessModule) {
 		return restrictAccessElement;
 	}
 
 	if (module?.detailPage) {
-		const ModulePlugin = module.detailPage;
+		const ModuleDetailPage = module.detailPage;
 
 		if (module.headerType === "basic") {
 			return (
 				<ICPageWrapper title={module.name}>
-					<ModulePlugin />
+					<ModuleDetailPage />
 				</ICPageWrapper>
 			);
 		}
-		return <ModulePlugin />;
+		return <ModuleDetailPage appName={app?.name} moduleName={module.name} />;
 	}
 
 	return null;
