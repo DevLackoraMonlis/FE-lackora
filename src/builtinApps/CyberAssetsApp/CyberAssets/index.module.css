@@ -1,0 +1,7 @@
+.cyberAssetDetailDeActiveTab[data-active] {
+	background-color: var(--mantine-color-white);
+}
+
+.cyberAssetDetailDeActiveTab {
+	background-color: var(--mantine-color-gray-2);
+}
