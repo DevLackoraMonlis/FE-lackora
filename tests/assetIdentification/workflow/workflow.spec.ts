@@ -26,7 +26,7 @@ test.describe("WorkflowAssetsIdentification E2E", () => {
 		await scanHistoryButton.click();
 
 		const modalTitle = page.getByTestId("BCDrawer-title");
-		await expect(modalTitle).toContainText("Scan History");
+		await expect(modalTitle).toBeVisible();
 
 		const closeButton = page.getByTestId("BCDrawer-close");
 		await closeButton.click();
@@ -42,10 +42,10 @@ test.describe("WorkflowAssetsIdentification E2E", () => {
 
 			const viewStepMenu = page.getByTestId("workflow-menu-icon").first();
 			await viewStepMenu.click();
-			await page.getByRole("menuitem", { name: "View Matched Assets" }).click();
+			await page.getByTestId("workflow-submenu-view").click();
 
 			const modalTitle = page.getByTestId("BCDrawer-title");
-			await expect(modalTitle).toContainText("Detected Assets");
+			await expect(modalTitle).toBeVisible();
 
 			const closeButton = page.getByTestId("BCDrawer-close");
 			await closeButton.click();

@@ -107,12 +107,14 @@ export default function WorkflowAccordion({ type, status, title, description, st
 													</Menu.Target>
 													<Menu.Dropdown>
 														<Menu.Item
+															data-testid="workflow-submenu-redirect"
 															leftSection={<IconSettings size={15} />}
 															onClick={() => props.handleGatewayConfiguration(step.id)}
 														>
 															Go to Gateway Configuration
 														</Menu.Item>
 														<Menu.Item
+															data-testid="workflow-submenu-view"
 															leftSection={<IconEye size={15} />}
 															onClick={() => props.handleViewMatchedAssets(step.id)}
 														>
