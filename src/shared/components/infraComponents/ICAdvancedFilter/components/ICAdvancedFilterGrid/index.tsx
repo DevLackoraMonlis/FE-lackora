@@ -16,7 +16,7 @@ import type {
 	ICAdvancedFilterRq,
 } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
 import { unsecuredCopyToClipboard } from "@/shared/lib/utils";
-import { Box, Button } from "@mantine/core";
+import { Box, Button, Pill, PillGroup } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 import type { Row } from "@tanstack/react-table";
 import { uniqBy } from "lodash";
@@ -173,6 +173,23 @@ export default function ICAdvancedFilterGrid<T extends Record<string, unknown>>(
 
 			if (!record[columnName]) {
 				return <Box p={"xs"}>{IC_ADVANCED_FILTER_BLANK_TEXT}</Box>;
+			}
+
+			const columnOption = getColumnOption(columnName);
+
+			if (columnOption?.type === "List") {
+				const maxDisplay = 5;
+				const arrayValue = record[columnName] as string[];
+				return (
+					<PillGroup>
+						{arrayValue.slice(0, maxDisplay).map((item) => (
+							<Pill bg={"gray.2"} size={"xs"} key={item}>
+								{item}
+							</Pill>
+						))}
+						{arrayValue.length > maxDisplay && <Pill>+{arrayValue.length - maxDisplay} more</Pill>}
+					</PillGroup>
+				);
 			}
 			return record[columnName] as ReactNode;
 		},
