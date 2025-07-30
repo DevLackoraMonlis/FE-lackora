@@ -25,8 +25,6 @@ test.describe("WorkflowAssetsIdentification E2E", () => {
 		const scanHistoryButton = page.getByTestId("workflow-button-scan-history");
 		await scanHistoryButton.click();
 
-		await page.waitForSelector(".mantine-Skeleton-root", { state: "detached" });
-
 		const modalTitle = page.getByTestId("BCDrawer-title");
 		await expect(modalTitle).toContainText("Scan History");
 
@@ -45,8 +43,6 @@ test.describe("WorkflowAssetsIdentification E2E", () => {
 			const viewStepMenu = page.getByTestId("workflow-menu-icon").first();
 			await viewStepMenu.click();
 			await page.getByRole("menuitem", { name: "View Matched Assets" }).click();
-
-			await page.waitForSelector(".mantine-Skeleton-root", { state: "detached" });
 
 			const modalTitle = page.getByTestId("BCDrawer-title");
 			await expect(modalTitle).toContainText("Detected Assets");
