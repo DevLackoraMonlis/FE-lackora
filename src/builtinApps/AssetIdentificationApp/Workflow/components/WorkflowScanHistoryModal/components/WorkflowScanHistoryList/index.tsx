@@ -5,9 +5,9 @@ import { useEffect, useState } from "react";
 
 import type { PaginationRq } from "@/http/end-points/GeneralService.types";
 import BCSearchInput from "@/shared/components/baseComponents/BCSearchInput";
+import { useStableData } from "@/shared/hooks/useStableData";
 import { useTablePagination } from "@/shared/hooks/useTablePagination";
 
-import { useStableData } from "@/shared/hooks/useStableData";
 import { getWorkflowStatus } from "../../../../index.helper";
 import { useWorkflowScanHistory } from "../../../../index.hooks";
 import type { WorkflowScan } from "../../../../index.types";
@@ -84,8 +84,8 @@ export default function WorkflowScanHistoryList({ setSelectedScan, selectedScan 
 									>
 										<Flex justify="space-between" align="center">
 											<Text fw="bold">{`Scan #${scanId}`}</Text>
-											<Badge variant="light" color={statusParams?.color}>
-												{statusParams?.label}
+											<Badge variant="light" color={statusParams.color}>
+												{statusParams.label}
 											</Badge>
 										</Flex>
 									</Card>

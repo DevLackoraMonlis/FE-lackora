@@ -98,14 +98,14 @@ export default function WorkflowScanHistory({ selectedScan }: { selectedScan?: W
 
 	const scanDetail = historyDetail.data;
 	const statusParams = getWorkflowStatus(selectedScan?.status || "");
-	const Icon = statusParams?.icon;
+	const Icon = statusParams.icon;
 	return (
 		<Flex direction="column" gap="xs">
 			<Card bg="gray.1" p={0} m={0}>
 				<Flex direction="column" gap="xs" p="sm">
 					<Flex align="center" justify="space-between">
 						<Flex gap="xs" align="center">
-							<Badge color={statusParams?.color} circle size="25px">
+							<Badge color={statusParams.color} circle size="25px">
 								{Icon ? <Icon size={19} color="white" /> : null}
 							</Badge>
 							<Text fw="bold" fz="md">
@@ -114,8 +114,8 @@ export default function WorkflowScanHistory({ selectedScan }: { selectedScan?: W
 						</Flex>
 						<Flex gap="xs" align="center">
 							<Text>{`Scan Time: ${scanDetail?.scan_time} | Duration: ${scanDetail?.duration} | Status:`}</Text>
-							<Badge color={statusParams?.color} variant="light">
-								{statusParams?.label}
+							<Badge color={statusParams.color} variant="light">
+								{statusParams.label}
 							</Badge>
 						</Flex>
 					</Flex>

@@ -102,12 +102,12 @@ function WorkflowDetectedStep({ stepId = "" }: Props) {
 
 	if (stepDetails.isLoading) return <LoadingOverlay visible />;
 	const statusParams = getWorkflowStatus(status || "");
-	const Icon = statusParams?.icon;
+	const Icon = statusParams.icon;
 	return (
 		<Flex direction="column" gap="xs">
 			<Card bg="gray.1" p={0} m={0}>
 				<Flex gap="sm" align="center" justify="center" py="sm">
-					<Badge color={statusParams?.color} circle size="30px">
+					<Badge color={statusParams.color} circle size="30px">
 						{Icon && <Icon />}
 					</Badge>
 					<Text fz="lg" fw="bold" tt="capitalize">
