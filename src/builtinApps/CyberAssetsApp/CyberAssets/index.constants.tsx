@@ -6,6 +6,7 @@ import {
 	getCyberAssetStateBadge,
 	getCyberAssetStatusBadge,
 } from "@/builtinApps/CyberAssetsApp/CyberAssets/index.helper";
+import type { CyberAssetDetailOverviewTopServiceStatus } from "@/builtinApps/CyberAssetsApp/CyberAssets/index.types";
 import type { TanStackDataTableColumnColDef } from "@/shared/components/baseComponents/BCTanStackGrid/index.types";
 import { IC_ADVANCED_FILTER_BLANK_TEXT } from "@/shared/components/infraComponents/ICAdvancedFilter/index.constants";
 import type { ICAdvancedFilterDataRs } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
@@ -128,7 +129,7 @@ export const getCyberAssetsFormattedColumns: (
 		render: (record) => {
 			return getCyberAssetOsTypeBadge({
 				type: record.os_name as CyberAssetOsType,
-				props: {
+				wrapperProps: {
 					m: "xs",
 				},
 			});
@@ -152,6 +153,7 @@ export const CYBER_ASSET_CRITICALITY_COLOR: Record<CyberAssetCriticality, string
 	[CyberAssetCriticality.LOW]: "#12B886",
 	[CyberAssetCriticality.MEDIUM]: "#FAB005",
 	[CyberAssetCriticality.VERY_HIGH]: "#FA5252",
+	[CyberAssetCriticality.CRITICAL]: "#FA5252",
 };
 
 export const CYBER_ASSET_STATUS_COLOR: Record<CyberAssetStatus, string> = {
@@ -162,6 +164,11 @@ export const CYBER_ASSET_STATUS_COLOR: Record<CyberAssetStatus, string> = {
 	[CyberAssetStatus.UNREACHABLE]: "#868E96",
 	[CyberAssetStatus.PROFILED]: "#087F5B",
 	[CyberAssetStatus.NO_POLICY]: "#000000",
+};
+
+export const CYBER_ASSET_SERVICE_STATUS_COLOR: Record<CyberAssetDetailOverviewTopServiceStatus, string> = {
+	RUNNING: "#087F5B",
+	STOPPED: "#F03E3E",
 };
 
 export const CYBER_ASSET_STATE_COLOR: Record<CyberAssetState, string> = {

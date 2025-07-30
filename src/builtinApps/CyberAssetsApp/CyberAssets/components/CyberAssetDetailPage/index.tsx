@@ -1,6 +1,13 @@
 "use client";
 
+import CyberAssetDetailChanges from "@/builtinApps/CyberAssetsApp/CyberAssets/components/CyberAssetDetailPage/CyberAssetDetailChanges";
+import CyberAssetDetailFiles from "@/builtinApps/CyberAssetsApp/CyberAssets/components/CyberAssetDetailPage/CyberAssetDetailFiles";
 import CyberAssetDetailGeneralInfo from "@/builtinApps/CyberAssetsApp/CyberAssets/components/CyberAssetDetailPage/CyberAssetDetailGeneralInfo";
+import CyberAssetDetailHistory from "@/builtinApps/CyberAssetsApp/CyberAssets/components/CyberAssetDetailPage/CyberAssetDetailHistory";
+import CyberAssetDetailInventory from "@/builtinApps/CyberAssetsApp/CyberAssets/components/CyberAssetDetailPage/CyberAssetDetailInventory";
+import CyberAssetDetailOverview from "@/builtinApps/CyberAssetsApp/CyberAssets/components/CyberAssetDetailPage/CyberAssetDetailOverview";
+import CyberAssetDetailRelations from "@/builtinApps/CyberAssetsApp/CyberAssets/components/CyberAssetDetailPage/CyberAssetDetailRelations";
+import CyberAssetDetailSecurity from "@/builtinApps/CyberAssetsApp/CyberAssets/components/CyberAssetDetailPage/CyberAssetDetailSecurity";
 import {
 	CyberAssetClassification,
 	CyberAssetDiscoveryType,
@@ -117,9 +124,27 @@ export default function CyberAssetDetailPage(props: Props) {
 								History
 							</Tabs.Tab>
 						</Tabs.List>
-						<Tabs.Panel value="gallery">Gallery tab content</Tabs.Panel>
-						<Tabs.Panel value="messages">Messages tab content</Tabs.Panel>
-						<Tabs.Panel value="settings">Settings tab content</Tabs.Panel>
+						<Tabs.Panel value={TabTypes.OVERVIEW}>
+							<CyberAssetDetailOverview id={props.id} />
+						</Tabs.Panel>
+						<Tabs.Panel value={TabTypes.INVENTORY}>
+							<CyberAssetDetailInventory />
+						</Tabs.Panel>
+						<Tabs.Panel value={TabTypes.CHANGES}>
+							<CyberAssetDetailChanges />
+						</Tabs.Panel>
+						<Tabs.Panel value={TabTypes.SECURITY}>
+							<CyberAssetDetailSecurity />
+						</Tabs.Panel>
+						<Tabs.Panel value={TabTypes.RELATIONS}>
+							<CyberAssetDetailRelations />
+						</Tabs.Panel>
+						<Tabs.Panel value={TabTypes.FILES}>
+							<CyberAssetDetailFiles />
+						</Tabs.Panel>
+						<Tabs.Panel value={TabTypes.HISTORY}>
+							<CyberAssetDetailHistory />
+						</Tabs.Panel>
 					</Tabs>
 				</Grid.Col>
 			</Grid>

@@ -19,12 +19,12 @@ export type ICMonoMarketAppType = {
 	modules: ICMonoMarketAppModuleType[];
 };
 
+type ICMonoAppPagesDefaultType = {
+	appName?: string;
+	moduleName?: string;
+	id?: string;
+};
+
 export type ICMonoAppPagesDefaultProps<T = null> = T extends Record<string, unknown>
-	? {
-			appName?: string;
-			moduleName?: string;
-		} & T
-	: {
-			appName?: string;
-			moduleName?: string;
-		};
+	? ICMonoAppPagesDefaultType & T
+	: ICMonoAppPagesDefaultType;

@@ -3,6 +3,7 @@ export enum CyberAssetCriticality {
 	MEDIUM = "medium",
 	VERY_HIGH = "very high",
 	HIGH = "high",
+	CRITICAL = "Critical",
 }
 
 export enum CyberAssetStatus {

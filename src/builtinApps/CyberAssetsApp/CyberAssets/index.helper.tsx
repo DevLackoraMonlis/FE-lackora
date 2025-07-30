@@ -1,3 +1,7 @@
+import type {
+	CyberAssetDetailOverviewChangeType,
+	CyberAssetDetailOverviewTopServiceStatus,
+} from "@/builtinApps/CyberAssetsApp/CyberAssets/index.types";
 import {
 	Icons8Database1,
 	Icons8DatabaseServer11,
@@ -26,11 +30,15 @@ import {
 	IconDeviceDesktop,
 	IconEqual,
 	IconHighlight,
+	IconPencil,
+	IconPlus,
 	IconSearch,
+	IconTrash,
 } from "@tabler/icons-react";
 import type { ReactNode } from "react";
 import {
 	CYBER_ASSET_CRITICALITY_COLOR,
+	CYBER_ASSET_SERVICE_STATUS_COLOR,
 	CYBER_ASSET_STATE_COLOR,
 	CYBER_ASSET_STATUS_COLOR,
 } from "./index.constants";
@@ -52,6 +60,7 @@ export function getCyberAssetCriticalityBadge(params: {
 		[CyberAssetCriticality.LOW]: <IconArrowBadgeDown size={12} />,
 		[CyberAssetCriticality.MEDIUM]: <IconEqual size={12} />,
 		[CyberAssetCriticality.VERY_HIGH]: <IconBadges size={12} />,
+		[CyberAssetCriticality.CRITICAL]: <IconBadges size={12} />,
 	};
 
 	return (
@@ -83,6 +92,26 @@ export function getCyberAssetStatusBadge(params: {
 			radius={"xl"}
 			size={"sm"}
 			color={CYBER_ASSET_STATUS_COLOR[params.type]}
+		>
+			{params.type}
+		</Badge>
+	);
+}
+
+export function getCyberAssetServiceStatusBadge(params: {
+	type: CyberAssetDetailOverviewTopServiceStatus;
+	props?: BadgeProps;
+}) {
+	if (!params.type) {
+		return null;
+	}
+	return (
+		<Badge
+			{...params.props}
+			variant={"dot"}
+			radius={"xl"}
+			size={"sm"}
+			color={CYBER_ASSET_SERVICE_STATUS_COLOR[params.type]}
 		>
 			{params.type}
 		</Badge>
@@ -133,6 +162,21 @@ export function getCyberAssetClassificationIcon({
 	return icons[type] || <IconDeviceDesktop size={size} />;
 }
 
+export function getCyberAssetChangeIcon({
+	type,
+	size = 16,
+}: {
+	type: CyberAssetDetailOverviewChangeType;
+	size?: number;
+}) {
+	const icons: Record<CyberAssetDetailOverviewChangeType, ReactNode> = {
+		ADD: <IconPlus width={size} height={size} />,
+		MODIFY: <IconTrash width={size} height={size} />,
+		DELETE: <IconPencil width={size} height={size} />,
+	};
+	return icons[type];
+}
+
 export function getCyberAssetDiscoveryTypeBadge(params: {
 	type: CyberAssetDiscoveryType;
 	props?: FlexProps;
@@ -160,12 +204,13 @@ export function getCyberAssetDiscoveryTypeBadge(params: {
 
 export function getCyberAssetOsTypeBadge(params: {
 	type: CyberAssetOsType;
-	props?: FlexProps;
-	customType?: string;
+	wrapperProps?: FlexProps;
+	customType?: ReactNode;
+	size?: number;
 }) {
 	const iconMap: Record<CyberAssetOsType, ReactNode> = {
-		[CyberAssetOsType.LINUX]: <LinuxSvgrepoCom1 width={16} height={16} />,
-		[CyberAssetOsType.WINDOWS]: <Icons8Windows101 width={16} height={16} />,
+		[CyberAssetOsType.LINUX]: <LinuxSvgrepoCom1 width={params.size || 16} height={params.size || 16} />,
+		[CyberAssetOsType.WINDOWS]: <Icons8Windows101 width={params.size || 16} height={params.size || 16} />,
 	};
 
 	if (!iconMap[params.type]) {
@@ -173,9 +218,9 @@ export function getCyberAssetOsTypeBadge(params: {
 	}
 
 	return (
-		<Flex {...params.props} align={"center"} gap={"xs"}>
+		<Flex {...params.wrapperProps} align={"center"} gap={"xs"}>
 			{iconMap[params.type]}
-			<Text fz={"xs"}>{params.customType || params.type}</Text>
+			{params.customType || <Text fz={"xs"}>{params.type}</Text>}
 		</Flex>
 	);
 }

@@ -1,5 +1,6 @@
 import type {
 	CyberAssetClassification,
+	CyberAssetCriticality,
 	CyberAssetDiscoveryType,
 	CyberAssetOsType,
 	CyberAssetState,
@@ -53,4 +54,110 @@ export type CuberAssetDetailGeneralInfoData = {
 	currentState: CyberAssetState;
 	currentStatus: CyberAssetStatus;
 	classification: CyberAssetClassification;
+};
+
+export type CyberAssetDetailOverviewCpu = {
+	cores: number;
+	processors: number;
+};
+
+export type CyberAssetDetailOverviewNetworkOpen = "HTTP" | "HTTPS";
+
+export type CyberAssetDetailOverviewNetworkOpenPort = {
+	name: string;
+	type: CyberAssetDetailOverviewNetworkOpen;
+};
+
+export type CyberAssetDetailOverviewNetworkType = "STATIC" | "DHCP";
+
+export type CyberAssetDetailOverviewNetwork = {
+	ip: string;
+	type: CyberAssetDetailOverviewNetworkType;
+	openPorts: CyberAssetDetailOverviewNetworkOpenPort[];
+};
+
+export type CyberAssetDetailOverviewChangeType = "MODIFY" | "DELETE" | "ADD";
+
+export type CyberAssetDetailOverviewChange = {
+	total: number;
+	summary: Record<CyberAssetDetailOverviewChangeType, number>;
+};
+
+export type CyberAssetDetailOverviewTopServiceStatus = "RUNNING" | "STOPPED";
+
+export type CyberAssetDetailOverviewTopService = {
+	name: string;
+	status: CyberAssetDetailOverviewTopServiceStatus;
+};
+
+export type CyberAssetDetailOverviewServiceStartType = "Automatic" | "Manual" | "Disabled";
+
+export type CyberAssetDetailOverviewServiceStart = {
+	total: number;
+	type: CyberAssetDetailOverviewServiceStartType;
+	summary: Record<CyberAssetDetailOverviewServiceStartType, number>;
+};
+
+export type CyberAssetDetailOverviewApplicationItem = {
+	name: string;
+	installDate: string;
+};
+
+export type CyberAssetDetailOverviewApplication = {
+	total: number;
+	items: CyberAssetDetailOverviewApplicationItem[];
+};
+
+export type CyberAssetDetailOverviewApplicationSecurityStatus =
+	| "MC EXPIRED"
+	| "FAILED"
+	| "UPGRADE"
+	| "ACTIVE"
+	| "DE ACTIVE";
+
+export type CyberAssetDetailOverviewApplicationSecurity = {
+	riskScore: number | null;
+	criticality: CyberAssetCriticality;
+	totalVulnerabilities: number;
+	summary: Record<CyberAssetCriticality, number>;
+	topVulnerabilities: {
+		name: string;
+		criticality: CyberAssetCriticality;
+	}[];
+	onActivateVulnerabilitiesAssessment: VoidFunction;
+	status: CyberAssetDetailOverviewApplicationSecurityStatus;
+};
+
+export type CyberAssetDetailOverviewAvailabilityAndActivityTimelineType = "Online" | "Offline" | "Unmanaged";
+
+export type CyberAssetDetailOverviewAvailabilityAndActivityTimeline = {
+	description: string;
+	type: CyberAssetDetailOverviewAvailabilityAndActivityTimelineType;
+};
+
+export type CyberAssetDetailOverviewAvailabilityAndActivityActivity = {
+	name: string;
+	time: string;
+	description: string;
+};
+
+export type CyberAssetDetailOverviewAvailabilityAndActivity = {
+	timeline: CyberAssetDetailOverviewAvailabilityAndActivityTimeline[];
+	activity: CyberAssetDetailOverviewAvailabilityAndActivityActivity[];
+};
+
+export type CyberAssetDetailOverviewProps = {
+	configurationItemsCount: number;
+	osName: string;
+	osType: CyberAssetOsType;
+	cpu: CyberAssetDetailOverviewCpu;
+	ram: number;
+	disk: number;
+	network: CyberAssetDetailOverviewNetwork;
+	changes: CyberAssetDetailOverviewChange;
+	topServices: CyberAssetDetailOverviewTopService[];
+	serviceStartTypes: CyberAssetDetailOverviewServiceStart;
+	applications: CyberAssetDetailOverviewApplication;
+	security: CyberAssetDetailOverviewApplicationSecurity;
+	availabilityAndActivity: CyberAssetDetailOverviewAvailabilityAndActivity;
 };

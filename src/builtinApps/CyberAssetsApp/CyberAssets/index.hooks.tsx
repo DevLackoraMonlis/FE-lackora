@@ -23,7 +23,7 @@ export const useGetCyberAssetDetailGeneralInfo = (params: { data: CuberAssetDeta
 				label: "OS Type:",
 				value: getCyberAssetOsTypeBadge({
 					type: params.data.osType,
-					props: {
+					wrapperProps: {
 						fz: "xs",
 					},
 				}),
