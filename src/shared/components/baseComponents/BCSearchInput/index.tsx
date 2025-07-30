@@ -21,14 +21,12 @@ export default function BCSearchInput({
 	iconSize,
 }: Props) {
 	const [value, setValue] = useState("");
-
 	const handleSubmit = () => {
 		onSubmitSearch?.(value);
-		!clientSide && setValue("");
 	};
 
 	useEffect(() => {
-		if (clientSide) {
+		if (clientSide || !value) {
 			handleSubmit();
 		}
 	}, [value]);

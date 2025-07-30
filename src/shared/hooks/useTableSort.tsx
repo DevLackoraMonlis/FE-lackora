@@ -8,7 +8,7 @@ type SortState<TableDatasource extends Record<string, unknown>> = {
 };
 
 export function useTableSort<TableDatasource extends Record<string, unknown>>(
-	defaultSortState: SortState<TableDatasource>,
+	defaultSortState?: SortState<TableDatasource>,
 ) {
 	const [sortStatus, setSortStatus] = useState<SortState<TableDatasource>>(
 		defaultSortState || {
