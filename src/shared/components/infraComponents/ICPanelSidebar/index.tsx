@@ -40,6 +40,7 @@ const generateMenuItem = (params: {
 	return params.items.map((link) => {
 		const navLink = (
 			<BCNavLink
+				data-testid={`BCNavLink-${link.label}`}
 				onMouseLeave={() => params.onMouseLeave(link.href)}
 				onMouseEnter={() => params.onMouseEnter(link.href)}
 				leftSection={link.icon}
@@ -218,6 +219,7 @@ export default function ICPanelSidebar(props: Props) {
 							withoutOffset={!props.opened}
 							target={
 								<BCNavLink
+									data-testid={"BCNavLink-Management Center"}
 									onMouseEnter={() => setColorManagementCenter(hoverColor)}
 									onMouseLeave={() => setColorManagementCenter(baseColor)}
 									leftSection={<IconSettings color={colorManagementCenter} />}

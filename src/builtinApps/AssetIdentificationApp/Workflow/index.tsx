@@ -79,7 +79,7 @@ export default function WorkflowAssetsIdentification() {
 												</Flex>
 											</Card>
 											<Flex direction="column" gap="2xs">
-												<Text fz="md" c="white">
+												<Text fz="md" c="white" data-testid="workflow-card-title">
 													SCAN
 												</Text>
 												{isLoading ? (
@@ -136,6 +136,7 @@ export default function WorkflowAssetsIdentification() {
 											</Flex>
 										</Flex>
 										<Button
+											data-testid="workflow-button-scan-history"
 											loading={isLoading}
 											variant="outline"
 											color="white"
