@@ -9,16 +9,12 @@ test.describe("WorkflowAssetsIdentification E2E", () => {
 	});
 
 	test("should display accordion with SCAN title", async ({ page }) => {
-		await page.waitForSelector(".mantine-Skeleton-root", { state: "detached" });
-
-		await expect(page.getByTestId("workflow-card-title")).toBeVisible();
-		await expect(page.getByText("Last Scan Time:")).toBeVisible();
-		await expect(page.getByText("Next Scheduled Scan:")).toBeVisible();
+		await expect(page.getByTestId("workflow-title")).toBeVisible();
+		await expect(page.getByTestId("workflow-title-next-scan")).toBeVisible();
+		await expect(page.getByTestId("workflow-title-last-scan")).toBeVisible();
 	});
 
 	test("should show workflow phases when data is loaded", async ({ page }) => {
-		await page.waitForSelector(".mantine-Skeleton-root", { state: "detached" });
-
 		const viewAssetButton = page.getByTestId("workflow-accordion-phase").first();
 		if (await viewAssetButton.isVisible()) {
 			await viewAssetButton.click();
@@ -26,8 +22,6 @@ test.describe("WorkflowAssetsIdentification E2E", () => {
 	});
 
 	test("should open and close Scan History modal", async ({ page }) => {
-		await page.waitForSelector(".mantine-Skeleton-root", { state: "detached" });
-
 		const scanHistoryButton = page.getByTestId("workflow-button-scan-history");
 		await scanHistoryButton.click();
 
@@ -43,8 +37,6 @@ test.describe("WorkflowAssetsIdentification E2E", () => {
 	});
 
 	test("should open and close Step Scan History modal", async ({ page }) => {
-		await page.waitForSelector(".mantine-Skeleton-root", { state: "detached" });
-
 		const viewAssetButton = page.getByTestId("workflow-accordion-phase").first();
 
 		if (await viewAssetButton.isVisible()) {
