@@ -12,9 +12,9 @@ export type WorkFlowStatus = typeof WorkFlowStatus[keyof typeof WorkFlowStatus];
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const WorkFlowStatus = {
   idle: 'idle',
-  running: 'running',
+  in_progress: 'in_progress',
   failed: 'failed',
   pending: 'pending',
   completed: 'completed',
-  partial_completed: 'partial_completed',
+  partial_success: 'partial_success',
 } as const;
