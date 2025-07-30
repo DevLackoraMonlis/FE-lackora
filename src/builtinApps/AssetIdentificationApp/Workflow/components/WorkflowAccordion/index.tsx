@@ -1,15 +1,5 @@
-import {
-	Accordion,
-	Badge,
-	Box,
-	Card,
-	Flex,
-	Menu,
-	Progress,
-	Text,
-	Timeline,
-	getGradient,
-} from "@mantine/core";
+import { Badge, Box, Card, Flex, Menu, Text, Timeline } from "@mantine/core";
+import { Accordion, Progress, getGradient } from "@mantine/core";
 import { IconCheck, IconDotsVertical, IconEye, IconSettings, IconX } from "@tabler/icons-react";
 import { useMemo } from "react";
 

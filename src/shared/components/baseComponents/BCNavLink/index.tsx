@@ -8,7 +8,6 @@ type Props = Omit<NavLinkProps, "classNames"> & {
 };
 
 export default function BCNavLink(props: Props) {
-	console.log(props);
 	return (
 		<NavLink
 			{...props}
