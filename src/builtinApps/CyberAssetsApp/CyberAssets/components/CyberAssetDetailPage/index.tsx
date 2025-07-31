@@ -125,7 +125,7 @@ export default function CyberAssetDetailPage(props: Props) {
 							</Tabs.Tab>
 						</Tabs.List>
 						<Tabs.Panel value={TabTypes.OVERVIEW}>
-							<CyberAssetDetailOverview id={props.id} />
+							<CyberAssetDetailOverview id={props.id} appName={"Nessus"} />
 						</Tabs.Panel>
 						<Tabs.Panel value={TabTypes.INVENTORY}>
 							<CyberAssetDetailInventory />

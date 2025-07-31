@@ -58,6 +58,7 @@ import {
 export function getCyberAssetCriticalityBadge(params: {
 	type: CyberAssetCriticality;
 	props?: BadgeProps;
+	value?: number;
 }) {
 	const iconMaps: Record<CyberAssetCriticality, ReactNode> = {
 		[CyberAssetCriticality.HIGH]: <IconArrowBadgeUp size={12} />,
@@ -77,7 +78,16 @@ export function getCyberAssetCriticalityBadge(params: {
 			c={"black"}
 			color={CYBER_ASSET_CRITICALITY_COLOR[params.type]}
 		>
-			{params.type}
+			{params.value ? (
+				<Flex gap={"2xs"} align={"center"}>
+					<Text fz={"xs"} c={CYBER_ASSET_CRITICALITY_COLOR[params.type]}>
+						{params.value}
+					</Text>
+					{params.type}
+				</Flex>
+			) : (
+				params.type
+			)}
 		</Badge>
 	);
 }

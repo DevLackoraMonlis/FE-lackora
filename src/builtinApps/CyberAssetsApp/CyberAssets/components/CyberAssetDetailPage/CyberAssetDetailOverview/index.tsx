@@ -9,11 +9,11 @@ import CyberAssetDetailOverviewNetwork from "@/builtinApps/CyberAssetsApp/CyberA
 import CyberAssetDetailOverviewNotifications from "@/builtinApps/CyberAssetsApp/CyberAssets/components/CyberAssetDetailPage/CyberAssetDetailOverview/CyberAssetDetailOverviewNotifications";
 import CyberAssetDetailOverviewOperatingSystem from "@/builtinApps/CyberAssetsApp/CyberAssets/components/CyberAssetDetailPage/CyberAssetDetailOverview/CyberAssetDetailOverviewOperatingSystem";
 import CyberAssetDetailOverviewRAM from "@/builtinApps/CyberAssetsApp/CyberAssets/components/CyberAssetDetailPage/CyberAssetDetailOverview/CyberAssetDetailOverviewRAM";
+import CyberAssetDetailOverviewSecurity from "@/builtinApps/CyberAssetsApp/CyberAssets/components/CyberAssetDetailPage/CyberAssetDetailOverview/CyberAssetDetailOverviewSecurity";
 import CyberAssetDetailOverviewTopServices from "@/builtinApps/CyberAssetsApp/CyberAssets/components/CyberAssetDetailPage/CyberAssetDetailOverview/CyberAssetDetailOverviewTopServices";
 import { CyberAssetCriticality, CyberAssetOsType } from "@/builtinApps/CyberAssetsApp/CyberAssets/index.enum";
 import type { CyberAssetDetailOverviewProps } from "@/builtinApps/CyberAssetsApp/CyberAssets/index.types";
-import { Box, Button, Grid, Tooltip } from "@mantine/core";
-import { useViewportSize } from "@mantine/hooks";
+import { Box, Button, Grid, ScrollArea, Tooltip } from "@mantine/core";
 import { IconArrowNarrowRight, IconInfoCircle } from "@tabler/icons-react";
 
 const ArrowButton = (props: { onClick?: VoidFunction }) => {
@@ -24,27 +24,26 @@ const ArrowButton = (props: { onClick?: VoidFunction }) => {
 	);
 };
 
-export default function CyberAssetDetailOverview(_props: { id?: string }) {
-	const { height } = useViewportSize();
+export default function CyberAssetDetailOverview(props: { id?: string; appName?: string }) {
 	const data: CyberAssetDetailOverviewProps = {
 		notifications: [
 			{
 				type: "AVAILABILITY",
-				date: "Jul 25, 14:22",
+				date: "Jul 25, 14:19",
 				description: "System unreachable from 10.0.1.5",
 				source: "system",
 				title: "Asset went offline",
 			},
 			{
 				type: "CONFLICT",
-				date: "Jul 25, 14:22",
+				date: "Jul 25, 14:20",
 				description: "System unreachable from 10.0.1.5",
 				source: "system",
 				title: "Asset went offline",
 			},
 			{
 				type: "FAILED",
-				date: "Jul 25, 14:22",
+				date: "Jul 25, 14:21",
 				description: "System unreachable from 10.0.1.5",
 				source: "system",
 				title: "Multiple failed login attempts",
@@ -58,21 +57,28 @@ export default function CyberAssetDetailOverview(_props: { id?: string }) {
 			},
 			{
 				type: "CONFLICT",
-				date: "Jul 25, 14:22",
+				date: "Jul 25, 14:23",
 				description: "System unreachable from 10.0.1.5",
 				source: "system",
 				title: "Asset went offline",
 			},
 			{
 				type: "CONFLICT",
-				date: "Jul 25, 14:22",
+				date: "Jul 25, 14:24",
 				description: "System unreachable from 10.0.1.5",
 				source: "system",
 				title: "Asset went offline",
 			},
 			{
 				type: "AVAILABILITY",
-				date: "Jul 25, 14:22",
+				date: "Jul 25, 14:25",
+				description: "System unreachable from 10.0.1.5",
+				source: "system",
+				title: "Asset went offline",
+			},
+			{
+				type: "AVAILABILITY",
+				date: "Jul 25, 14:26",
 				description: "System unreachable from 10.0.1.5",
 				source: "system",
 				title: "Asset went offline",
@@ -223,15 +229,33 @@ export default function CyberAssetDetailOverview(_props: { id?: string }) {
 					description: "Jul 25, 14:26 (for 3h 15m)",
 					type: "Offline",
 				},
+				{
+					description: "Jul 25, 14:50 (for 3h 15m)",
+					type: "Offline",
+				},
+				{
+					description: "Jul 25, 14:51 (for 3h 15m)",
+					type: "Offline",
+				},
 			],
 		},
 		security: {
+			appName: props.appName || "",
 			criticality: CyberAssetCriticality.VERY_HIGH,
 			onActivateVulnerabilitiesAssessment: () => {
 				console.log("onActivateVulnerabilitiesAssessment");
 			},
+			onMCExpired: () => {
+				console.log("onActivateVulnerabilitiesAssessment");
+			},
+			onUpgradeLicense: () => {
+				console.log("onActivateVulnerabilitiesAssessment");
+			},
+			onFailed: () => {
+				console.log("onActivateVulnerabilitiesAssessment");
+			},
 			riskScore: 95,
-			status: "DE ACTIVE",
+			status: "UPGRADE",
 			summary: {
 				[CyberAssetCriticality.CRITICAL]: 5,
 				[CyberAssetCriticality.HIGH]: 4,
@@ -251,6 +275,10 @@ export default function CyberAssetDetailOverview(_props: { id?: string }) {
 				{
 					name: "CVE-2020-1472(ZeroLogon)3",
 					criticality: CyberAssetCriticality.VERY_HIGH,
+				},
+				{
+					name: "CVE-2020-1472(ZeroLogon)4",
+					criticality: CyberAssetCriticality.LOW,
 				},
 			],
 			totalVulnerabilities: 12,
@@ -315,7 +343,7 @@ export default function CyberAssetDetailOverview(_props: { id?: string }) {
 			</Grid>
 			<Grid gutter={"xs"}>
 				<Grid.Col span={6}>
-					<CyberAssetDetailOverviewCard title={"Top Services"} rightSection={<ArrowButton />}>
+					<CyberAssetDetailOverviewCard mih={300} title={"Top Services"} rightSection={<ArrowButton />}>
 						<CyberAssetDetailOverviewTopServices
 							serviceStartTypes={data.serviceStartTypes}
 							topServices={data.topServices}
@@ -323,32 +351,32 @@ export default function CyberAssetDetailOverview(_props: { id?: string }) {
 					</CyberAssetDetailOverviewCard>
 				</Grid.Col>
 				<Grid.Col span={6}>
-					<CyberAssetDetailOverviewCard title={"Applications"} rightSection={<ArrowButton />}>
+					<CyberAssetDetailOverviewCard mih={300} title={"Applications"} rightSection={<ArrowButton />}>
 						<CyberAssetDetailOverviewApplications applications={data.applications} />
 					</CyberAssetDetailOverviewCard>
 				</Grid.Col>
 			</Grid>
-
-			<Grid>
-				<Grid.Col span={4}>
-					<CyberAssetDetailOverviewCard title={"Security"} rightSection={<ArrowButton />}>
-						1
-					</CyberAssetDetailOverviewCard>
-				</Grid.Col>
-				<Grid.Col span={4}>
-					<CyberAssetDetailOverviewCard title={"Availability & Activity"} rightSection={<ArrowButton />}>
-						<CyberAssetDetailOverviewAvailabilityAndActivity
-							height={height}
-							availabilityAndActivity={data.availabilityAndActivity}
-						/>
-					</CyberAssetDetailOverviewCard>
-				</Grid.Col>
-				<Grid.Col span={4}>
-					<CyberAssetDetailOverviewCard title={"Notifications"}>
-						<CyberAssetDetailOverviewNotifications height={height} notifications={data.notifications} />
-					</CyberAssetDetailOverviewCard>
-				</Grid.Col>
-			</Grid>
+			<ScrollArea h={590} mt={"xs"} scrollbars={"y"} scrollbarSize={2}>
+				<Grid>
+					<Grid.Col span={4}>
+						<CyberAssetDetailOverviewCard title={"Security"} rightSection={<ArrowButton />}>
+							<CyberAssetDetailOverviewSecurity security={data.security} />
+						</CyberAssetDetailOverviewCard>
+					</Grid.Col>
+					<Grid.Col span={4}>
+						<CyberAssetDetailOverviewCard title={"Availability & Activity"} rightSection={<ArrowButton />}>
+							<CyberAssetDetailOverviewAvailabilityAndActivity
+								availabilityAndActivity={data.availabilityAndActivity}
+							/>
+						</CyberAssetDetailOverviewCard>
+					</Grid.Col>
+					<Grid.Col span={4}>
+						<CyberAssetDetailOverviewCard title={"Notifications"}>
+							<CyberAssetDetailOverviewNotifications notifications={data.notifications} />
+						</CyberAssetDetailOverviewCard>
+					</Grid.Col>
+				</Grid>
+			</ScrollArea>
 		</Box>
 	);
 }

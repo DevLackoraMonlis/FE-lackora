@@ -4,13 +4,12 @@ import { Flex, ScrollArea, Text } from "@mantine/core";
 
 type Props = {
 	notifications: CyberAssetDetailOverviewProps["notifications"];
-	height: number;
 };
 
 export default function CyberAssetDetailOverviewNotifications(props: Props) {
 	return (
-		<Flex direction={"column"} gap={"2xs"} w={"100%"} p={"sm"}>
-			<ScrollArea h={props.height - 805} scrollbars={"y"} scrollbarSize={2}>
+		<Flex mah={600} h={600} direction={"column"} gap={"2xs"} w={"100%"} p={"sm"}>
+			<ScrollArea h={600} scrollbars={"y"} scrollbarSize={2}>
 				{props.notifications.map((notification) => (
 					<Flex p={"xs"} gap={"xs"} key={`${notification.title}-${notification.type}`} align={"flex-start"}>
 						<Flex bg={"gray.1"} p={"2xs"} justify={"center"} align={"center"}>

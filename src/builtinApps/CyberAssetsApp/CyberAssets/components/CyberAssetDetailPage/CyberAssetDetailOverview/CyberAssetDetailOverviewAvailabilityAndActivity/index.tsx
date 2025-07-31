@@ -8,7 +8,6 @@ import { type ReactElement, useState } from "react";
 
 type Props = {
 	availabilityAndActivity: CyberAssetDetailOverviewProps["availabilityAndActivity"];
-	height: number;
 };
 
 type SelectPanelType = "Availability Timeline" | "Activity Timeline";
@@ -55,7 +54,7 @@ export default function CyberAssetDetailOverviewAvailabilityAndActivity(props: P
 		),
 	};
 	return (
-		<Flex direction={"column"} gap={"2xs"} w={"100%"} p={"sm"}>
+		<Flex mah={600} h={600} direction={"column"} gap={"2xs"} w={"100%"} p={"sm"}>
 			<SegmentedControl
 				size={"xs"}
 				value={panel}
@@ -65,7 +64,7 @@ export default function CyberAssetDetailOverviewAvailabilityAndActivity(props: P
 					{ label: "Activity Timeline", value: "Activity Timeline" },
 				]}
 			/>
-			<ScrollArea py={"2xs"} h={props.height - 845} scrollbars={"y"} scrollbarSize={2}>
+			<ScrollArea py={"2xs"} h={600} scrollbars={"y"} scrollbarSize={2}>
 				{selectedPanel[panel]}
 			</ScrollArea>
 		</Flex>

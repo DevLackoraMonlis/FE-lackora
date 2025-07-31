@@ -1,4 +1,4 @@
-import { Card, Flex, Text } from "@mantine/core";
+import { Box, Card, Flex, Text } from "@mantine/core";
 import type { PropsWithChildren, ReactNode } from "react";
 
 type Props = PropsWithChildren<{
@@ -6,11 +6,12 @@ type Props = PropsWithChildren<{
 	titleRight?: ReactNode;
 	title: string;
 	rightSection?: ReactNode;
+	mih?: number;
 }>;
 
 export default function CyberAssetDetailOverviewCard(props: Props) {
 	return (
-		<Card bg={"gray.1"} p={"xs"}>
+		<Card bg={"gray.1"} p={"xs"} mih={props.mih}>
 			<Flex align={"center"} justify={"space-between"}>
 				<Flex align={"center"} gap={"2xs"} mb={"2xs"}>
 					{props.titleLeft}
@@ -20,7 +21,7 @@ export default function CyberAssetDetailOverviewCard(props: Props) {
 					{props.titleRight}
 				</Flex>
 
-				{props.rightSection}
+				{props.rightSection || <Box w={10} h={30} />}
 			</Flex>
 
 			<Flex bg={"white"} align={"center"} justify={"center"}>

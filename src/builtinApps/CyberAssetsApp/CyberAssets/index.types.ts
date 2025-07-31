@@ -125,7 +125,11 @@ export type CyberAssetDetailOverviewApplicationSecurity = {
 		criticality: CyberAssetCriticality;
 	}[];
 	onActivateVulnerabilitiesAssessment: VoidFunction;
+	onFailed: VoidFunction;
+	onMCExpired: VoidFunction;
+	onUpgradeLicense: VoidFunction;
 	status: CyberAssetDetailOverviewApplicationSecurityStatus;
+	appName: string;
 };
 
 export type CyberAssetDetailOverviewAvailabilityAndActivityTimelineType = "Online" | "Offline" | "Unmanaged";

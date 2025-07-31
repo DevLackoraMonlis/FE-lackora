@@ -153,7 +153,7 @@ export const CYBER_ASSET_CRITICALITY_COLOR: Record<CyberAssetCriticality, string
 	[CyberAssetCriticality.LOW]: "#12B886",
 	[CyberAssetCriticality.MEDIUM]: "#FAB005",
 	[CyberAssetCriticality.VERY_HIGH]: "#FA5252",
-	[CyberAssetCriticality.CRITICAL]: "#FA5252",
+	[CyberAssetCriticality.CRITICAL]: "#b12c2c",
 };
 
 export const CYBER_ASSET_STATUS_COLOR: Record<CyberAssetStatus, string> = {
