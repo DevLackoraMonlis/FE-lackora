@@ -71,6 +71,8 @@ export default function CyberAssetDetailPage(props: Props) {
 			classification: CyberAssetClassification.SERVER,
 		},
 	});
+
+	const isLoading = false;
 	return (
 		<Flex direction={"column"}>
 			<Flex bg={"gray.2"} p={"2xs"}>
@@ -88,7 +90,7 @@ export default function CyberAssetDetailPage(props: Props) {
 			</Flex>
 			<Grid gutter={0}>
 				<Grid.Col span={3}>
-					<CyberAssetDetailGeneralInfo {...generalInfo} />
+					<CyberAssetDetailGeneralInfo isLoading={isLoading} {...generalInfo} />
 				</Grid.Col>
 				<Grid.Col span={9}>
 					<Tabs

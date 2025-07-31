@@ -285,11 +285,15 @@ export default function CyberAssetDetailOverview(props: { id?: string; appName?:
 		},
 	};
 
+	const isLoading = false;
+
 	return (
 		<Box p={"sm"}>
 			<Grid gutter={"xs"}>
 				<Grid.Col span={3}>
 					<CyberAssetDetailOverviewCard
+						mih={105}
+						isLoading={isLoading}
 						title={"Configuration Items"}
 						titleRight={
 							<Tooltip label={"Description"}>
@@ -303,24 +307,24 @@ export default function CyberAssetDetailOverview(props: { id?: string; appName?:
 					</CyberAssetDetailOverviewCard>
 				</Grid.Col>
 				<Grid.Col span={3}>
-					<CyberAssetDetailOverviewCard title={"Operating System"}>
+					<CyberAssetDetailOverviewCard isLoading={isLoading} mih={105} title={"Operating System"}>
 						<CyberAssetDetailOverviewOperatingSystem osName={data.osName} osType={data.osType} />
 					</CyberAssetDetailOverviewCard>
 				</Grid.Col>
 				<Grid.Col span={3}>
-					<CyberAssetDetailOverviewCard title={"CPU"}>
+					<CyberAssetDetailOverviewCard isLoading={isLoading} mih={105} title={"CPU"}>
 						<CyberAssetDetailOverviewCPU cpu={data.cpu} />
 					</CyberAssetDetailOverviewCard>
 				</Grid.Col>
 				<Grid.Col span={3}>
 					<Grid gutter={"xs"}>
 						<Grid.Col span={6}>
-							<CyberAssetDetailOverviewCard title={"RAM"}>
+							<CyberAssetDetailOverviewCard isLoading={isLoading} mih={105} title={"RAM"}>
 								<CyberAssetDetailOverviewRAM ram={data.ram} />
 							</CyberAssetDetailOverviewCard>
 						</Grid.Col>
 						<Grid.Col span={6}>
-							<CyberAssetDetailOverviewCard title={"Disk"}>
+							<CyberAssetDetailOverviewCard isLoading={isLoading} mih={105} title={"Disk"}>
 								<CyberAssetDetailOverviewDisk disk={data.disk} />
 							</CyberAssetDetailOverviewCard>
 						</Grid.Col>
@@ -330,20 +334,35 @@ export default function CyberAssetDetailOverview(props: { id?: string; appName?:
 
 			<Grid gutter={"xs"}>
 				<Grid.Col span={6}>
-					<CyberAssetDetailOverviewCard title={"Network"} rightSection={<ArrowButton />}>
+					<CyberAssetDetailOverviewCard
+						isLoading={isLoading}
+						mih={120}
+						title={"Network"}
+						rightSection={<ArrowButton />}
+					>
 						<CyberAssetDetailOverviewNetwork network={data.network} />
 					</CyberAssetDetailOverviewCard>
 				</Grid.Col>
 
 				<Grid.Col span={6}>
-					<CyberAssetDetailOverviewCard title={"Changes"} rightSection={<ArrowButton />}>
+					<CyberAssetDetailOverviewCard
+						isLoading={isLoading}
+						mih={120}
+						title={"Changes"}
+						rightSection={<ArrowButton />}
+					>
 						<CyberAssetDetailOverviewChanges changes={data.changes} />
 					</CyberAssetDetailOverviewCard>
 				</Grid.Col>
 			</Grid>
 			<Grid gutter={"xs"}>
 				<Grid.Col span={6}>
-					<CyberAssetDetailOverviewCard mih={300} title={"Top Services"} rightSection={<ArrowButton />}>
+					<CyberAssetDetailOverviewCard
+						isLoading={isLoading}
+						mih={300}
+						title={"Top Services"}
+						rightSection={<ArrowButton />}
+					>
 						<CyberAssetDetailOverviewTopServices
 							serviceStartTypes={data.serviceStartTypes}
 							topServices={data.topServices}
@@ -351,7 +370,12 @@ export default function CyberAssetDetailOverview(props: { id?: string; appName?:
 					</CyberAssetDetailOverviewCard>
 				</Grid.Col>
 				<Grid.Col span={6}>
-					<CyberAssetDetailOverviewCard mih={300} title={"Applications"} rightSection={<ArrowButton />}>
+					<CyberAssetDetailOverviewCard
+						isLoading={isLoading}
+						mih={300}
+						title={"Applications"}
+						rightSection={<ArrowButton />}
+					>
 						<CyberAssetDetailOverviewApplications applications={data.applications} />
 					</CyberAssetDetailOverviewCard>
 				</Grid.Col>
@@ -359,19 +383,29 @@ export default function CyberAssetDetailOverview(props: { id?: string; appName?:
 			<ScrollArea h={590} mt={"xs"} scrollbars={"y"} scrollbarSize={2}>
 				<Grid>
 					<Grid.Col span={4}>
-						<CyberAssetDetailOverviewCard title={"Security"} rightSection={<ArrowButton />}>
+						<CyberAssetDetailOverviewCard
+							mih={590}
+							isLoading={isLoading}
+							title={"Security"}
+							rightSection={<ArrowButton />}
+						>
 							<CyberAssetDetailOverviewSecurity security={data.security} />
 						</CyberAssetDetailOverviewCard>
 					</Grid.Col>
 					<Grid.Col span={4}>
-						<CyberAssetDetailOverviewCard title={"Availability & Activity"} rightSection={<ArrowButton />}>
+						<CyberAssetDetailOverviewCard
+							mih={590}
+							isLoading={isLoading}
+							title={"Availability & Activity"}
+							rightSection={<ArrowButton />}
+						>
 							<CyberAssetDetailOverviewAvailabilityAndActivity
 								availabilityAndActivity={data.availabilityAndActivity}
 							/>
 						</CyberAssetDetailOverviewCard>
 					</Grid.Col>
 					<Grid.Col span={4}>
-						<CyberAssetDetailOverviewCard title={"Notifications"}>
+						<CyberAssetDetailOverviewCard mih={590} isLoading={isLoading} title={"Notifications"}>
 							<CyberAssetDetailOverviewNotifications notifications={data.notifications} />
 						</CyberAssetDetailOverviewCard>
 					</Grid.Col>

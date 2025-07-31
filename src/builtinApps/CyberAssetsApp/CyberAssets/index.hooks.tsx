@@ -15,7 +15,7 @@ import { Flex, Text } from "@mantine/core";
 import { IconAlarm, IconDevices2, IconMapPin, IconNetwork, IconUserCircle } from "@tabler/icons-react";
 
 export const useGetCyberAssetDetailGeneralInfo = (params: { data: CuberAssetDetailGeneralInfoData }) => {
-	const assetIdentificationCard: CyberAssetDetailGeneralInfoCardProps = {
+	const assetIdentificationCard: Omit<CyberAssetDetailGeneralInfoCardProps, "isLoading"> = {
 		title: "Asset Identification",
 		icon: <IconDevices2 color={"blue"} size={24} />,
 		items: [
@@ -53,7 +53,7 @@ export const useGetCyberAssetDetailGeneralInfo = (params: { data: CuberAssetDeta
 		],
 	};
 
-	const networkInformationCard: CyberAssetDetailGeneralInfoCardProps = {
+	const networkInformationCard: Omit<CyberAssetDetailGeneralInfoCardProps, "isLoading"> = {
 		title: "Network Information",
 		icon: <IconNetwork color={"blue"} size={24} />,
 		items: [
@@ -75,7 +75,7 @@ export const useGetCyberAssetDetailGeneralInfo = (params: { data: CuberAssetDeta
 			},
 		],
 	};
-	const ownershipAndUsageCard: CyberAssetDetailGeneralInfoCardProps = {
+	const ownershipAndUsageCard: Omit<CyberAssetDetailGeneralInfoCardProps, "isLoading"> = {
 		title: "Ownership & Usage",
 		icon: <IconUserCircle color={"blue"} size={24} />,
 		items: [
@@ -94,7 +94,7 @@ export const useGetCyberAssetDetailGeneralInfo = (params: { data: CuberAssetDeta
 		],
 	};
 
-	const locationCard: CyberAssetDetailGeneralInfoCardProps = {
+	const locationCard: Omit<CyberAssetDetailGeneralInfoCardProps, "isLoading"> = {
 		title: "Location",
 		icon: <IconMapPin color={"blue"} size={24} />,
 		items: [
@@ -113,7 +113,7 @@ export const useGetCyberAssetDetailGeneralInfo = (params: { data: CuberAssetDeta
 		],
 	};
 
-	const statusAndActivityCard: CyberAssetDetailGeneralInfoCardProps = {
+	const statusAndActivityCard: Omit<CyberAssetDetailGeneralInfoCardProps, "isLoading"> = {
 		title: "Status & Activity",
 		icon: <IconAlarm color={"blue"} size={24} />,
 		items: [

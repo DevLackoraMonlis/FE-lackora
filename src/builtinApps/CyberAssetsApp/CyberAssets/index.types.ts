@@ -16,6 +16,7 @@ export type CyberAssetDetailGeneralInfoCardProps = {
 	title: string;
 	items: LabelValueType<ReactNode>[];
 	icon: ReactNode;
+	isLoading: boolean;
 };
 
 export type CyberAssetDetailGeneralInfoProps = {
@@ -25,7 +26,7 @@ export type CyberAssetDetailGeneralInfoProps = {
 	upTimeTitle: string;
 	onEdit: VoidFunction;
 	onCheckConnection: VoidFunction;
-	items: CyberAssetDetailGeneralInfoCardProps[];
+	items: Omit<CyberAssetDetailGeneralInfoCardProps, "isLoading">[];
 	indicatorColor: "green" | "red" | "yellow";
 };
 
