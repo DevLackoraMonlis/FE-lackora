@@ -1,3 +1,4 @@
+import CyberAssetDetailInventoryDynamicGrid from "@/builtinApps/CyberAssetsApp/CyberAssets/components/CyberAssetDetailPage/CyberAssetDetailInventory/CyberAssetDetailInventoryDynamicGrid";
 import { CyberAssetClassification } from "@/builtinApps/CyberAssetsApp/CyberAssets/index.enum";
 import {
 	getCyberAssetClassificationIcon,
@@ -10,9 +11,13 @@ import type {
 	CuberAssetDetailGeneralInfoData,
 	CyberAssetDetailGeneralInfoCardProps,
 	CyberAssetDetailGeneralInfoProps,
+	CyberAssetDetailInventoryType,
 } from "@/builtinApps/CyberAssetsApp/CyberAssets/index.types";
+import { createDynamicICAdvancedStore } from "@/shared/components/infraComponents/ICAdvancedFilter/index.store";
+import type { ICAdvancedFilterDynamicStoreType } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
 import { Flex, Text } from "@mantine/core";
 import { IconAlarm, IconDevices2, IconMapPin, IconNetwork, IconUserCircle } from "@tabler/icons-react";
+import { useEffect, useRef } from "react";
 
 export const useGetCyberAssetDetailGeneralInfo = (params: { data: CuberAssetDetailGeneralInfoData }) => {
 	const assetIdentificationCard: Omit<CyberAssetDetailGeneralInfoCardProps, "isLoading"> = {
@@ -163,3 +168,34 @@ export const useGetCyberAssetDetailGeneralInfo = (params: { data: CuberAssetDeta
 
 	return { generalInfo };
 };
+
+export function useCyberAssetDynamicStores(types: CyberAssetDetailInventoryType[]) {
+	const storesRef = useRef<ICAdvancedFilterDynamicStoreType[]>([]); // name => store
+
+	useEffect(() => {
+		if (types.length) {
+			types.forEach((type) => {
+				const findStore = storesRef.current.find((item) => item.name === type.type);
+				if (!findStore) {
+					const newStore = createDynamicICAdvancedStore();
+
+					const page = () => (
+						<CyberAssetDetailInventoryDynamicGrid
+							store={newStore}
+							type={type.type}
+							items={type.items || []}
+						/>
+					);
+					storesRef.current.push({
+						name: type.type,
+						store: newStore,
+						types,
+						mainPage: page(),
+					});
+				}
+			});
+		}
+	}, [types]);
+
+	return { storesRef };
+}

@@ -11,6 +11,7 @@ type Props<T> = {
 	store: ICAdvancedFilterProps<T>["store"];
 	run: ICAdvancedFilterProps<T>["run"];
 	allColumns: ICAdvancedFilterProps<T>["allColumns"];
+	hideConditionSection: ICAdvancedFilterProps<T>["hideConditionSection"];
 	ref?: Ref<HTMLDivElement> | undefined;
 };
 
@@ -45,12 +46,13 @@ export default function ICAdvancedFilterConditionSectionItems<T>(props: Props<T>
 		[props.allColumns],
 	);
 
-	if (!store.variables.conditions.length && !store.variables.groupBy) {
+	if (props.hideConditionSection) {
 		return null;
 	}
 
 	return (
 		<Flex
+			h={!store.variables.conditions.length && !store.variables.groupBy ? 0 : "auto"}
 			ref={props.ref}
 			align={"center"}
 			bg={"gray.1"}

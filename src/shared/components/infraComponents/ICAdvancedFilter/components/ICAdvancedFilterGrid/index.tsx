@@ -6,6 +6,7 @@ import ICAdvancedFilterGridRowCellMenu, {
 	type ICAdvancedFilterGridRowCellMenuProps,
 } from "@/shared/components/infraComponents/ICAdvancedFilter/components/ICAdvancedFilterGrid/ICAdvancedFilterGridRow/ICAdvancedFilterGridRowCellMenu";
 import {
+	GET_ADVANCED_FILTER_DATA,
 	IC_ADVANCED_FILTER_BLANK_TEXT,
 	IC_ADVANCED_FILTER_DEFAULT_OPERATORS,
 	ROW_NUMBER_COLUMN,
@@ -17,10 +18,12 @@ import type {
 } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
 import { unsecuredCopyToClipboard } from "@/shared/lib/utils";
 import { Box, Button, Pill, PillGroup } from "@mantine/core";
+import { useViewportSize } from "@mantine/hooks";
 import { notifications } from "@mantine/notifications";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import type { Row } from "@tanstack/react-table";
 import { uniqBy } from "lodash";
-import { type ReactNode, useCallback, useDeferredValue, useMemo } from "react";
+import { type ReactNode, useCallback, useDeferredValue, useEffect, useMemo } from "react";
 import { v4 } from "uuid";
 import { useStore } from "zustand";
 import { useShallow } from "zustand/react/shallow";
@@ -28,14 +31,11 @@ import { useShallow } from "zustand/react/shallow";
 type Props<T> = Pick<
 	ICAdvancedFilterProps<T>,
 	| "minColumnSize"
-	| "data"
 	| "store"
 	| "columns"
 	| "allColumns"
 	| "run"
 	| "idAccessor"
-	| "totalRecords"
-	| "tableHeight"
 	| "recordsPerPageOptions"
 	| "isLoading"
 	| "defaultColumnSize"
@@ -44,9 +44,19 @@ type Props<T> = Pick<
 	| "hideCellMenu"
 	| "hideColumnMenu"
 	| "hideExpandGroupByButton"
->;
+	| "tableMinusHeight"
+	| "onChangeTotalRecords"
+	| "getDataApi"
+	| "dataQueryKey"
+> & {
+	conditionFixedSectionHeight: number;
+	conditionItemsSectionHeight: number;
+};
 
 export default function ICAdvancedFilterGrid<T extends Record<string, unknown>>(props: Props<T>) {
+	const queryClient = useQueryClient();
+	const { height } = useViewportSize();
+
 	const store = useStore(
 		props.store,
 		useShallow((state) => ({
@@ -56,10 +66,39 @@ export default function ICAdvancedFilterGrid<T extends Record<string, unknown>>(
 			includeCondition: state.includeCondition,
 			excludeCondition: state.excludeCondition,
 			getIsGroupByFunctionColumn: state.getIsGroupByFunctionColumn,
+			getExistAnyGroupByColumn: state.getExistAnyGroupByColumn,
 			openedFullScreenModal: state.openedFullScreenModal,
 			setOpenFullScreenModal: state.setOpenFullScreenModal,
+			openedConditionSection: state.openedConditionSection,
+			runToken: state.runToken,
 		})),
 	);
+
+	const getDataQueryKey = [GET_ADVANCED_FILTER_DATA, ...props.dataQueryKey];
+
+	const state = queryClient.getQueryState(getDataQueryKey);
+
+	const hasEverFetched =
+		(state?.dataUpdatedAt || 0) > 0 || state?.status === "success" || state?.status === "error";
+
+	const useGetDataQuery = useQuery({
+		queryKey: [...getDataQueryKey, store.variables.columns.length, store.runToken],
+		queryFn: ({ signal }) => props.getDataApi(store.variables, signal),
+		enabled: !!store.variables.columns.length && !hasEverFetched,
+	});
+
+	const data = useGetDataQuery.data?.data.results || [];
+	const totalRecords = useGetDataQuery.data?.data.total || 0;
+	const total = useGetDataQuery.data?.data?.metadata?.total;
+	const isLoading = useGetDataQuery.isFetching || props.isLoading;
+
+	const conditionFixedHeight = store.openedConditionSection ? props.conditionFixedSectionHeight : 0;
+	const conditionItemsHeight =
+		store.variables.conditions.length || store.variables.groupBy ? props.conditionItemsSectionHeight + 10 : 0;
+	const fixedTopSectionHeight = 110;
+
+	const tableHeight =
+		height - fixedTopSectionHeight - props.tableMinusHeight - conditionFixedHeight - conditionItemsHeight;
 
 	const onCopyValue = useCallback((value: unknown) => {
 		unsecuredCopyToClipboard((value || "") as string);
@@ -153,7 +192,7 @@ export default function ICAdvancedFilterGrid<T extends Record<string, unknown>>(
 								if (store.openedFullScreenModal) {
 									store.setOpenFullScreenModal(false);
 								}
-								props.onGroupByExpand(newVariables, getColumnOption);
+								props.onGroupByExpand?.(newVariables, getColumnOption);
 							},
 						})}
 					>
@@ -202,13 +241,17 @@ export default function ICAdvancedFilterGrid<T extends Record<string, unknown>>(
 		],
 	);
 
+	const firstDataObject = useMemo(() => {
+		return data?.[0];
+	}, [data?.[0]]);
+
 	const modifiedColumns: TanStackDataTableColumnColDef<T>[] = useMemo(() => {
 		return props.columns
 			.filter((column) => !props.excludeColumns?.includes(column.accessor))
 			.map((column) => ({
 				...column,
 				minSize: props.minColumnSize,
-				width: props.defaultColumnSize,
+				width: store.getExistAnyGroupByColumn(firstDataObject) ? undefined : props.defaultColumnSize,
 				render: (record, row, rowIndex) => (
 					<ICAdvancedFilterGridRow
 						cellMenu={(visibleParent, onClose) =>
@@ -253,11 +296,8 @@ export default function ICAdvancedFilterGrid<T extends Record<string, unknown>>(
 		includeCondition,
 		onCopyValue,
 		getColumnOption,
+		firstDataObject,
 	]);
-
-	const firstDataObject = useMemo(() => {
-		return props.data?.[0];
-	}, [props.data?.[0]]);
 
 	const defaultColumns: TanStackDataTableColumnColDef<T>[] = useMemo(() => {
 		if (!firstDataObject) return [];
@@ -271,7 +311,7 @@ export default function ICAdvancedFilterGrid<T extends Record<string, unknown>>(
 				const column: TanStackDataTableColumnColDef<T> = {
 					accessor: key,
 					minSize: props.minColumnSize,
-					width: props.defaultColumnSize,
+					width: store.getExistAnyGroupByColumn(firstDataObject) ? undefined : props.defaultColumnSize,
 					render: (record, row, rowIndex) => (
 						<ICAdvancedFilterGridRow
 							withPaddingLeft={!!record[key]}
@@ -318,6 +358,7 @@ export default function ICAdvancedFilterGrid<T extends Record<string, unknown>>(
 		props.run,
 		props.store,
 		props.allColumns,
+		store.getIsGroupByFunctionColumn,
 		cellMenu,
 		excludeCondition,
 		includeCondition,
@@ -327,20 +368,26 @@ export default function ICAdvancedFilterGrid<T extends Record<string, unknown>>(
 	]);
 
 	const differedColumns = useDeferredValue(defaultColumns);
-	const differedRecords = useDeferredValue(props.data);
+	const differedRecords = useDeferredValue(data);
+
+	useEffect(() => {
+		if (total) {
+			props.onChangeTotalRecords?.(total);
+		}
+	}, [total]);
 
 	return (
 		<BCTanStackGrid<T>
-			h={props.tableHeight}
+			h={tableHeight}
 			withTableBorder
 			withColumnBorders
-			fetching={props.isLoading}
+			fetching={isLoading}
 			withRowBorders
 			rowHeight={32}
 			idAccessor={props.idAccessor}
 			columns={differedColumns}
-			records={differedRecords}
-			totalRecords={props.totalRecords}
+			records={differedRecords as T[]}
+			totalRecords={totalRecords}
 			page={store.variables.page}
 			recordsPerPage={store.variables.limit}
 			onPageChange={(page) => {

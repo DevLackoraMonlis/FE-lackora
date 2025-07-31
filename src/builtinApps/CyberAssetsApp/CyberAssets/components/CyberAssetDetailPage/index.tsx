@@ -74,7 +74,7 @@ export default function CyberAssetDetailPage(props: Props) {
 
 	const isLoading = false;
 	return (
-		<Flex direction={"column"}>
+		<Flex direction={"column"} h={"100%"}>
 			<Flex bg={"gray.2"} p={"2xs"}>
 				<Button
 					size={"xs"}
@@ -88,7 +88,7 @@ export default function CyberAssetDetailPage(props: Props) {
 					Back To assets
 				</Button>
 			</Flex>
-			<Grid gutter={0}>
+			<Grid gutter={0} h={"100%"} classNames={{ inner: "h-full" }}>
 				<Grid.Col span={3}>
 					<CyberAssetDetailGeneralInfo isLoading={isLoading} {...generalInfo} />
 				</Grid.Col>
@@ -127,10 +127,12 @@ export default function CyberAssetDetailPage(props: Props) {
 							</Tabs.Tab>
 						</Tabs.List>
 						<Tabs.Panel value={TabTypes.OVERVIEW}>
-							<CyberAssetDetailOverview id={props.id} appName={"Nessus"} />
+							{activeTab === TabTypes.OVERVIEW && (
+								<CyberAssetDetailOverview id={props.id} appName={"Nessus"} />
+							)}
 						</Tabs.Panel>
 						<Tabs.Panel value={TabTypes.INVENTORY}>
-							<CyberAssetDetailInventory />
+							{activeTab === TabTypes.INVENTORY && <CyberAssetDetailInventory id={props.id} />}
 						</Tabs.Panel>
 						<Tabs.Panel value={TabTypes.CHANGES}>
 							<CyberAssetDetailChanges />

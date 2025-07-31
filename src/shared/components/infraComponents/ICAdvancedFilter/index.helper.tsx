@@ -210,6 +210,12 @@ export function getDefaultICAdvancedStore(params: {
 		getIsGroupByFunctionColumn: (columnName) => {
 			return Object.keys(ICAdvancedGroupByFunctions).some((fn) => columnName.startsWith(fn));
 		},
+		getExistAnyGroupByColumn: (row) => {
+			if (!row) return false;
+			return Object.keys(ICAdvancedGroupByFunctions).some((fn) =>
+				Object.keys(row).some((r) => r.startsWith(fn)),
+			);
+		},
 		hideColumn: (columnName) => {
 			set((state) => {
 				const variables = { ...state.variables };

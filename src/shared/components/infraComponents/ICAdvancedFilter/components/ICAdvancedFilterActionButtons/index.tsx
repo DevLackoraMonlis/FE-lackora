@@ -11,7 +11,6 @@ import { useStore } from "zustand/index";
 import { useShallow } from "zustand/react/shallow";
 
 type Props<T> = {
-	data: ICAdvancedFilterProps<T>["data"];
 	getDataApi: ICAdvancedFilterProps<T>["getDataApi"];
 	store: ICAdvancedFilterProps<T>["store"];
 	run: ICAdvancedFilterProps<T>["run"];

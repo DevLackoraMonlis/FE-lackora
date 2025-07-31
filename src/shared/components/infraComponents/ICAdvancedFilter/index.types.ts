@@ -1,3 +1,4 @@
+import type { CyberAssetDetailInventoryType } from "@/builtinApps/CyberAssetsApp/CyberAssets/index.types";
 import type { PaginationRq, PaginationRs } from "@/http/end-points/GeneralService.types";
 import type { TanStackDataTableColumnColDef } from "@/shared/components/baseComponents/BCTanStackGrid/index.types";
 import type {
@@ -127,6 +128,7 @@ export type ICAdvancedFilterStoreType = {
 	removeCondition: (id: string) => void;
 	hideColumn: (columnName: string) => void;
 	getIsGroupByFunctionColumn: (columnName: string) => boolean;
+	getExistAnyGroupByColumn: (row?: Record<string, unknown>) => boolean;
 	setRunToken: (runToken: string) => void;
 	runToken: string;
 };
@@ -164,7 +166,7 @@ export type ICAdvancedFilterProps<T> = {
 	fullScreenTitle: string;
 	columnsQueryKey: string[];
 	onChangeTotalRecords?: (total: number) => void;
-	onGroupByExpand: (
+	onGroupByExpand?: (
 		variables: ICAdvancedFilterRq,
 		getColumnOption: (columnName: string) => ICAdvancedFilterColumnRs | undefined,
 	) => void;
@@ -174,4 +176,11 @@ export type ICAdvancedFilterProps<T> = {
 		signal?: AbortSignal,
 	) => Promise<AxiosResponse<ICAdvancedFilterRs>>;
 	getColumnsApi: (signal?: AbortSignal) => Promise<AxiosResponse<PaginationRs<ICAdvancedFilterColumnRs>>>;
+};
+
+export type ICAdvancedFilterDynamicStoreType = {
+	name: string;
+	store: StoreApi<ICAdvancedFilterStoreType>;
+	types: CyberAssetDetailInventoryType[];
+	mainPage: ReactNode;
 };

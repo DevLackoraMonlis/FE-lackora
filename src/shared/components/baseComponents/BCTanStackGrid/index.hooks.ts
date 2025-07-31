@@ -16,7 +16,6 @@ export function useTanStack<T>(
 	} & Pick<TanStackGridProps<T>, "rowHeight" | "idAccessor">,
 ) {
 	const { rows } = params.table.getCoreRowModel();
-	const memoRows = useMemo(() => rows, [params.table.getCoreRowModel()]);
 
 	const rowVirtualizer = useVirtualizer({
 		count: rows.length,
@@ -44,7 +43,7 @@ export function useTanStack<T>(
 	return {
 		rowVirtualizer,
 		columnVirtualizer,
-		rows: memoRows,
+		rows,
 	};
 }
 

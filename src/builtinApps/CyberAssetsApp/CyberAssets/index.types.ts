@@ -6,9 +6,13 @@ import type {
 	CyberAssetState,
 	CyberAssetStatus,
 } from "@/builtinApps/CyberAssetsApp/CyberAssets/index.enum";
-import type { ICAdvancedFilterRq } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
+import type {
+	ICAdvancedFilterRq,
+	ICAdvancedFilterStoreType,
+} from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
 import type { LabelValueType } from "@/shared/lib/general-types";
 import type { ReactNode } from "react";
+import type { StoreApi } from "zustand/index";
 
 export type CyberAssetsDefaultProps = { defaultFilterParams?: ICAdvancedFilterRq };
 
@@ -176,4 +180,11 @@ export type CyberAssetDetailOverviewProps = {
 	security: CyberAssetDetailOverviewApplicationSecurity;
 	availabilityAndActivity: CyberAssetDetailOverviewAvailabilityAndActivity;
 	notifications: CyberAssetDetailOverviewNotification[];
+};
+
+export type CyberAssetDetailInventoryType = { type: string; items: string[] };
+export type CyberAssetDetailInventoryStoreData = { type: string; store: StoreApi<ICAdvancedFilterStoreType> };
+
+export type CyberAssetDetailInventoryProps = {
+	id?: string;
 };

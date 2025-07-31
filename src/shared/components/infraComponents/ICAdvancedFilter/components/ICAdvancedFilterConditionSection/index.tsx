@@ -9,6 +9,7 @@ type Props<T> = {
 	store: ICAdvancedFilterProps<T>["store"];
 	run: ICAdvancedFilterProps<T>["run"];
 	allColumns: ICAdvancedFilterProps<T>["allColumns"];
+	hideConditionSection: ICAdvancedFilterProps<T>["hideConditionSection"];
 	ref?: Ref<HTMLDivElement> | undefined;
 };
 
@@ -21,6 +22,10 @@ export default function ICAdvancedFilterConditionSection<T>(props: Props<T>) {
 			openedConditionSection: state.openedConditionSection,
 		})),
 	);
+
+	if (props.hideConditionSection) {
+		return null;
+	}
 
 	return (
 		<Collapse transitionDuration={500} transitionTimingFunction="linear" in={store.openedConditionSection}>

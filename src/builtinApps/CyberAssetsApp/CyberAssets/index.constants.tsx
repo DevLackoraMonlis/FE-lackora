@@ -148,6 +148,22 @@ export const getCyberAssetsFormattedColumns: (
 	},
 ];
 
+export const getCyberAssetsInventoryFormattedColumns: () => TanStackDataTableColumnColDef<ICAdvancedFilterDataRs>[] =
+	() => [
+		{
+			accessor: "os_name",
+			render: (record) => {
+				return getCyberAssetOsTypeBadge({
+					type: record.os_name as CyberAssetOsType,
+					wrapperProps: {
+						m: "xs",
+					},
+					customType: record.os_version,
+				});
+			},
+		},
+	];
+
 export const CYBER_ASSET_CRITICALITY_COLOR: Record<CyberAssetCriticality, string> = {
 	[CyberAssetCriticality.HIGH]: "#F76707",
 	[CyberAssetCriticality.LOW]: "#12B886",
