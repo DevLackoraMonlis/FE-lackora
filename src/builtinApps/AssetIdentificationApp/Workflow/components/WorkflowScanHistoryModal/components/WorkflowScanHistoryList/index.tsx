@@ -1,4 +1,4 @@
-import { Center, Pagination, ScrollArea, Select } from "@mantine/core";
+import { Center, Grid, Pagination, ScrollArea, Select } from "@mantine/core";
 import { Badge, Card, Flex, Text } from "@mantine/core";
 import { useViewportSize } from "@mantine/hooks";
 import { useEffect, useState } from "react";
@@ -52,18 +52,18 @@ export default function WorkflowScanHistoryList({ setSelectedScan, selectedScan 
 					placeholder="Search by scan ID"
 					inputWidth="100%"
 				/>
-				<Flex gap="2xs">
+				<Grid gutter={4}>
 					{stableFilters?.map(({ items, label, param }) => (
-						<Select
-							key={label}
-							clearable
-							w="140px"
-							placeholder={`All ${label}`}
-							data={items}
-							onChange={(value) => handleUpdateQueryParams({ [param]: value })}
-						/>
+						<Grid.Col span={6} key={label}>
+							<Select
+								clearable
+								placeholder={`All ${label}`}
+								data={items}
+								onChange={(value) => handleUpdateQueryParams({ [param]: value })}
+							/>
+						</Grid.Col>
 					))}
-				</Flex>
+				</Grid>
 				<ScrollArea h={height - 220}>
 					<Flex gap="2xs" direction="column">
 						{scanHistoryList.isLoading ? (
