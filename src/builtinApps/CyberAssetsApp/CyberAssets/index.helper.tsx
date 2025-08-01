@@ -38,9 +38,11 @@ import {
 	IconSearch,
 	IconTool,
 	IconTrash,
+	IconX,
 } from "@tabler/icons-react";
 import type { ReactNode } from "react";
 import {
+	CYBER_ASSET_CHANGE_TYPE_COLOR,
 	CYBER_ASSET_CRITICALITY_COLOR,
 	CYBER_ASSET_SERVICE_STATUS_COLOR,
 	CYBER_ASSET_STATE_COLOR,
@@ -143,6 +145,29 @@ export function getCyberAssetStateBadge(params: {
 			radius={"xl"}
 			size={"sm"}
 			color={CYBER_ASSET_STATE_COLOR[params.type]}
+		>
+			{params.type}
+		</Badge>
+	);
+}
+
+export function getCyberAssetChangeTypeBadge(params: {
+	type: CyberAssetDetailOverviewChangeType;
+	props?: BadgeProps;
+}) {
+	const iconMap: Record<CyberAssetDetailOverviewChangeType, ReactNode> = {
+		DELETE: <IconX size={12} />,
+		MODIFY: <IconX size={12} />,
+		ADD: <IconPlus size={12} />,
+	};
+	return (
+		<Badge
+			leftSection={iconMap[params.type]}
+			{...params.props}
+			variant={"light"}
+			radius={"xl"}
+			size={"sm"}
+			color={CYBER_ASSET_CHANGE_TYPE_COLOR[params.type]}
 		>
 			{params.type}
 		</Badge>

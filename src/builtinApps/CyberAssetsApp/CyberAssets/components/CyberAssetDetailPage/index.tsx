@@ -135,7 +135,7 @@ export default function CyberAssetDetailPage(props: Props) {
 							{activeTab === TabTypes.INVENTORY && <CyberAssetDetailInventory id={props.id} />}
 						</Tabs.Panel>
 						<Tabs.Panel value={TabTypes.CHANGES}>
-							<CyberAssetDetailChanges />
+							{activeTab === TabTypes.CHANGES && <CyberAssetDetailChanges id={props.id} />}
 						</Tabs.Panel>
 						<Tabs.Panel value={TabTypes.SECURITY}>
 							<CyberAssetDetailSecurity />
@@ -147,7 +147,7 @@ export default function CyberAssetDetailPage(props: Props) {
 							<CyberAssetDetailFiles />
 						</Tabs.Panel>
 						<Tabs.Panel value={TabTypes.HISTORY}>
-							<CyberAssetDetailHistory />
+							{activeTab === TabTypes.HISTORY && <CyberAssetDetailHistory id={props.id} />}
 						</Tabs.Panel>
 					</Tabs>
 				</Grid.Col>

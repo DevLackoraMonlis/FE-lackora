@@ -1,4 +1,5 @@
 import {
+	getCyberAssetChangeTypeBadge,
 	getCyberAssetClassificationIcon,
 	getCyberAssetCriticalityBadge,
 	getCyberAssetDiscoveryTypeBadge,
@@ -6,7 +7,10 @@ import {
 	getCyberAssetStateBadge,
 	getCyberAssetStatusBadge,
 } from "@/builtinApps/CyberAssetsApp/CyberAssets/index.helper";
-import type { CyberAssetDetailOverviewTopServiceStatus } from "@/builtinApps/CyberAssetsApp/CyberAssets/index.types";
+import type {
+	CyberAssetDetailOverviewChangeType,
+	CyberAssetDetailOverviewTopServiceStatus,
+} from "@/builtinApps/CyberAssetsApp/CyberAssets/index.types";
 import type { TanStackDataTableColumnColDef } from "@/shared/components/baseComponents/BCTanStackGrid/index.types";
 import { IC_ADVANCED_FILTER_BLANK_TEXT } from "@/shared/components/infraComponents/ICAdvancedFilter/index.constants";
 import type { ICAdvancedFilterDataRs } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
@@ -164,6 +168,21 @@ export const getCyberAssetsInventoryFormattedColumns: () => TanStackDataTableCol
 		},
 	];
 
+export const getCyberAssetsChangesFormattedColumns: () => TanStackDataTableColumnColDef<ICAdvancedFilterDataRs>[] =
+	() => [
+		{
+			accessor: "change_type",
+			render: (record) => {
+				return getCyberAssetChangeTypeBadge({
+					type: record.change_type as CyberAssetDetailOverviewChangeType,
+					props: {
+						m: "xs",
+					},
+				});
+			},
+		},
+	];
+
 export const CYBER_ASSET_CRITICALITY_COLOR: Record<CyberAssetCriticality, string> = {
 	[CyberAssetCriticality.HIGH]: "#F76707",
 	[CyberAssetCriticality.LOW]: "#12B886",
@@ -190,4 +209,10 @@ export const CYBER_ASSET_SERVICE_STATUS_COLOR: Record<CyberAssetDetailOverviewTo
 export const CYBER_ASSET_STATE_COLOR: Record<CyberAssetState, string> = {
 	[CyberAssetState.MANAGEABLE]: "#4C6EF5",
 	[CyberAssetState.UNMANAGEABLE]: "#868E96",
+};
+
+export const CYBER_ASSET_CHANGE_TYPE_COLOR: Record<CyberAssetDetailOverviewChangeType, string> = {
+	MODIFY: "#12B886",
+	ADD: "#228BE6",
+	DELETE: "#FA5252",
 };
