@@ -6,6 +6,33 @@ import { WorkflowStatus } from "@/shared/enums/index.enums";
 
 import { toFormattedDate } from "@/shared/lib/dayJs";
 
+export const getDifferenceDateTime = (date?: string | Date) => {
+	let remainingTime = {
+		Hours: { first: "0", second: "0" },
+		Minutes: { first: "0", second: "0" },
+		Seconds: { first: "0", second: "0" },
+	};
+	if (date) {
+		try {
+			const getTime = dayjs(date).diff(dayjs());
+			const getDifference = dayjs(getTime).subtract(3.5, "hours").format("HH:mm:ss"); // .tz("Asia/Tehran")
+			const [hh, mm, ss] = getDifference.split(":");
+			remainingTime = {
+				Hours: { first: hh[0], second: hh[1] },
+				Minutes: { first: mm[0], second: mm[1] },
+				Seconds: { first: ss[0], second: ss[1] },
+			};
+			return {
+				remainingTime,
+				getDifference,
+				resetTimer: Math.abs(getTime) <= 300,
+				isMessage: !dayjs(date).isValid(),
+			};
+		} catch (_error) {}
+	}
+	return { remainingTime, getDifference: "", resetTimer: false, isMessage: true };
+};
+
 export function calculateScheduledScanDate(date?: string | null) {
 	if (!date) return "-";
 	try {
@@ -23,6 +50,7 @@ export function calculateScheduledScanDate(date?: string | null) {
 		return "-";
 	}
 }
+
 export function calculateNextScheduledScan(date?: string | null) {
 	if (!date) return "Scheduled scan will start in - minutes";
 	try {
@@ -87,5 +115,5 @@ export function stepDescription<T extends Record<string, unknown>>(step: T) {
 }
 
 export function getWorkflowStatus(status?: string) {
-	return WORKFLOW_STATUS[status as WorkflowStatus];
+	return WORKFLOW_STATUS[status as WorkflowStatus] || {};
 }

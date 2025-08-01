@@ -79,7 +79,7 @@ export default function WorkflowAssetsIdentification() {
 												</Flex>
 											</Card>
 											<Flex direction="column" gap="2xs">
-												<Text fz="md" c="white">
+												<Text fz="md" c="white" data-testid="workflow-title">
 													SCAN
 												</Text>
 												{isLoading ? (
@@ -115,7 +115,9 @@ export default function WorkflowAssetsIdentification() {
 									<Flex justify="space-between" px="3xl" align="center">
 										<Flex direction="column" gap="2xs" miw="280px">
 											<Flex align="center" justify="space-between">
-												<Text c="white">Last Scan Time:</Text>
+												<Text c="white" data-testid="workflow-title-last-scan">
+													Last Scan Time:
+												</Text>
 												{isLoading ? (
 													<Skeleton w="100px" h="10px" opacity={0.5} mt="2xs" />
 												) : (
@@ -125,7 +127,9 @@ export default function WorkflowAssetsIdentification() {
 												)}
 											</Flex>
 											<Flex align="center" justify="space-between">
-												<Text c="white">Next Scheduled Scan:</Text>
+												<Text c="white" data-testid="workflow-title-next-scan">
+													Next Scheduled Scan:
+												</Text>
 												{isLoading ? (
 													<Skeleton w="100px" h="10px" opacity={0.5} mt="2xs" />
 												) : (
@@ -136,6 +140,7 @@ export default function WorkflowAssetsIdentification() {
 											</Flex>
 										</Flex>
 										<Button
+											data-testid="workflow-button-scan-history"
 											loading={isLoading}
 											variant="outline"
 											color="white"

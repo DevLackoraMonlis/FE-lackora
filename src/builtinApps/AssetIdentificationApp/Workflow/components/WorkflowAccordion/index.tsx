@@ -1,4 +1,5 @@
-import { Accordion, Badge, Card, Flex, Menu, Progress, Text, Timeline, getGradient } from "@mantine/core";
+import { Badge, Box, Card, Flex, Menu, Text, Timeline } from "@mantine/core";
+import { Accordion, Progress, getGradient } from "@mantine/core";
 import { IconCheck, IconDotsVertical, IconEye, IconSettings, IconX } from "@tabler/icons-react";
 import { useMemo } from "react";
 
@@ -22,7 +23,11 @@ export default function WorkflowAccordion({ type, status, title, description, st
 	return (
 		<Accordion variant="separated" defaultValue={status === "inprogress" ? type : ""}>
 			<Accordion.Item value={type}>
-				<Accordion.Control h="66px" disabled={description.failed || description.idle}>
+				<Accordion.Control
+					h="66px"
+					disabled={description.failed || description.idle}
+					data-testid="workflow-accordion-phase"
+				>
 					<Flex align="center" justify="space-between">
 						<Flex gap="sm">
 							<Card
@@ -96,16 +101,20 @@ export default function WorkflowAccordion({ type, status, title, description, st
 												</Badge>
 												<Menu trigger="hover" shadow="md">
 													<Menu.Target>
-														<IconDotsVertical size={20} />
+														<Box data-testid="workflow-menu-icon">
+															<IconDotsVertical size={20} />
+														</Box>
 													</Menu.Target>
 													<Menu.Dropdown>
 														<Menu.Item
+															data-testid="workflow-submenu-redirect"
 															leftSection={<IconSettings size={15} />}
 															onClick={() => props.handleGatewayConfiguration(step.id)}
 														>
 															Go to Gateway Configuration
 														</Menu.Item>
 														<Menu.Item
+															data-testid="workflow-submenu-view"
 															leftSection={<IconEye size={15} />}
 															onClick={() => props.handleViewMatchedAssets(step.id)}
 														>

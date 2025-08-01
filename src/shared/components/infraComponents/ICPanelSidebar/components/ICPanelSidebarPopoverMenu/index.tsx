@@ -17,6 +17,7 @@ export default function ICPanelSidebarPopoverMenu(props: ICPanelSidebarPopoverMe
 					<BCNavLink
 						p={0}
 						c={"white"}
+						data-testid={`BCNavLink-${item.label}`}
 						label={
 							<Text
 								{...(props.redirectOnTitleClick && {
@@ -35,6 +36,7 @@ export default function ICPanelSidebarPopoverMenu(props: ICPanelSidebarPopoverMe
 					>
 						{item.childrenItems.map((subMenu) => (
 							<BCNavLink
+								data-testid={`BCNavLink-${subMenu.label}`}
 								className={classes.subMenu}
 								c={"white"}
 								label={subMenu.label}
@@ -49,6 +51,7 @@ export default function ICPanelSidebarPopoverMenu(props: ICPanelSidebarPopoverMe
 			return (
 				<BCNavLink
 					c={"white"}
+					data-testid={`BCNavLink-${item.label}`}
 					label={item.label}
 					key={item.label}
 					href={item.href}

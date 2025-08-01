@@ -1,6 +1,7 @@
 import {
 	IconAlertTriangle,
 	IconCheck,
+	IconHourglassEmpty,
 	IconLoader,
 	IconPercentage50,
 	IconPlayerPause,
@@ -44,5 +45,12 @@ export const WORKFLOW_STATUS: Record<WorkflowStatus, WorkflowStatusParams> = {
 		c: "blue",
 		bg: "blue.1",
 		icon: IconLoader,
+	},
+	[WorkflowStatus.Pending]: {
+		label: "Pending",
+		color: "blue",
+		c: "blue",
+		bg: "blue.1",
+		icon: IconHourglassEmpty,
 	},
 };

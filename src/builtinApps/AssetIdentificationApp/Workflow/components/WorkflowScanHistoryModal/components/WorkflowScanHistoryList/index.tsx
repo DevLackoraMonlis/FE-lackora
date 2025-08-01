@@ -1,13 +1,13 @@
-import { Center, Pagination, ScrollArea, Select } from "@mantine/core";
+import { Center, Grid, Pagination, ScrollArea, Select } from "@mantine/core";
 import { Badge, Card, Flex, Text } from "@mantine/core";
 import { useViewportSize } from "@mantine/hooks";
 import { useEffect, useState } from "react";
 
 import type { PaginationRq } from "@/http/end-points/GeneralService.types";
 import BCSearchInput from "@/shared/components/baseComponents/BCSearchInput";
+import { useStableData } from "@/shared/hooks/useStableData";
 import { useTablePagination } from "@/shared/hooks/useTablePagination";
 
-import { useStableData } from "@/shared/hooks/useStableData";
 import { getWorkflowStatus } from "../../../../index.helper";
 import { useWorkflowScanHistory } from "../../../../index.hooks";
 import type { WorkflowScan } from "../../../../index.types";
@@ -52,18 +52,18 @@ export default function WorkflowScanHistoryList({ setSelectedScan, selectedScan 
 					placeholder="Search by scan ID"
 					inputWidth="100%"
 				/>
-				<Flex gap="2xs">
+				<Grid gutter={4}>
 					{stableFilters?.map(({ items, label, param }) => (
-						<Select
-							key={label}
-							clearable
-							w="140px"
-							placeholder={`All ${label}`}
-							data={items}
-							onChange={(value) => handleUpdateQueryParams({ [param]: value })}
-						/>
+						<Grid.Col span={6} key={label}>
+							<Select
+								clearable
+								placeholder={`All ${label}`}
+								data={items}
+								onChange={(value) => handleUpdateQueryParams({ [param]: value })}
+							/>
+						</Grid.Col>
 					))}
-				</Flex>
+				</Grid>
 				<ScrollArea h={height - 220}>
 					<Flex gap="2xs" direction="column">
 						{scanHistoryList.isLoading ? (
@@ -84,8 +84,8 @@ export default function WorkflowScanHistoryList({ setSelectedScan, selectedScan 
 									>
 										<Flex justify="space-between" align="center">
 											<Text fw="bold">{`Scan #${scanId}`}</Text>
-											<Badge variant="light" color={statusParams?.color}>
-												{statusParams?.label}
+											<Badge variant="light" color={statusParams.color}>
+												{statusParams.label}
 											</Badge>
 										</Flex>
 									</Card>

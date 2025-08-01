@@ -3,7 +3,6 @@ import { AppRoutes } from "@/shared/constants/routes";
 import { test as baseTest } from "@playwright/test";
 
 export const test = baseTest.extend({
-	// `page` رو override می‌کنیم تا همیشه لاگین‌شده باشه
 	page: async ({ page }, use) => {
 		await page.goto(AppRoutes.login);
 		await page.getByTestId("login-username").click();
