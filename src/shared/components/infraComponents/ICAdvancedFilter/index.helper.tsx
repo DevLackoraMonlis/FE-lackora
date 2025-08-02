@@ -54,8 +54,12 @@ function includeExcludeAction(
 		];
 	}
 	const isEmptyCondition = () => {
-		if (!Array.isArray(value) || value.length === 0) return true;
-		return value.some((item) => [undefined, null, ""].includes(item?.value));
+		if (findColumn?.type === "List") {
+			if ((value as unknown[])?.length === 0) return true;
+			return (value as unknown[]).some((item) => [undefined, null, ""].includes(item as string));
+		}
+
+		if (!value) return true;
 	};
 
 	if (isEmptyCondition()) {
