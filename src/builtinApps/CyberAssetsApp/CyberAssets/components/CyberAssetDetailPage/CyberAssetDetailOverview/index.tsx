@@ -14,6 +14,7 @@ import CyberAssetDetailOverviewTopServices from "@/builtinApps/CyberAssetsApp/Cy
 import { CyberAssetCriticality, CyberAssetOsType } from "@/builtinApps/CyberAssetsApp/CyberAssets/index.enum";
 import type { CyberAssetDetailOverviewProps } from "@/builtinApps/CyberAssetsApp/CyberAssets/index.types";
 import { Box, Button, Grid, ScrollArea, Tooltip } from "@mantine/core";
+import { useViewportSize } from "@mantine/hooks";
 import { IconArrowNarrowRight, IconInfoCircle } from "@tabler/icons-react";
 
 const ArrowButton = (props: { onClick?: VoidFunction }) => {
@@ -25,6 +26,7 @@ const ArrowButton = (props: { onClick?: VoidFunction }) => {
 };
 
 export default function CyberAssetDetailOverview(props: { id?: string; appName?: string }) {
+	const { height } = useViewportSize();
 	const data: CyberAssetDetailOverviewProps = {
 		notifications: [
 			{
@@ -380,7 +382,7 @@ export default function CyberAssetDetailOverview(props: { id?: string; appName?:
 					</CyberAssetDetailOverviewCard>
 				</Grid.Col>
 			</Grid>
-			<ScrollArea h={590} mt={"xs"} scrollbars={"y"} scrollbarSize={2}>
+			<ScrollArea h={height - 730} mt={"xs"} scrollbars={"y"} scrollbarSize={2}>
 				<Grid>
 					<Grid.Col span={4}>
 						<CyberAssetDetailOverviewCard
