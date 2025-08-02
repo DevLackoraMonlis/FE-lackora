@@ -13,16 +13,19 @@ const WorkflowOnHeader = () => {
 	const message = workflows?.data?.message || workflows?.data?.description || "Unhandled error message!";
 	const scanId = workflows?.data?.scan_id || 0;
 	const nextScan = workflows?.data?.next_runtime || "";
+	const estimatedTime = workflows?.data?.next_runtime || ""; // estimated_end_time
 	const status = isLoading ? "" : workflows?.data?.status;
 	const statusParams = getWorkflowStatus(status);
 
 	const [timer, setTimer] = useState<string>("loading...");
 	const interval = useInterval(() => {
-		const { getDifference } = getDifferenceDateTime(nextScan);
+		const { getDifference } = getDifferenceDateTime({
+			date: status === "in_progress" ? estimatedTime : nextScan,
+		});
 		setTimer(getDifference);
 	}, 1000);
 	useEffect(() => {
-		if (nextScan && status === "completed") {
+		if (nextScan && (status === "completed" || status === "in_progress")) {
 			interval.start();
 		}
 		return interval.stop;
@@ -71,7 +74,7 @@ const WorkflowOnHeader = () => {
 						</Flex>
 					</Badge>
 					<Badge variant="light" color="gray.4" tt="capitalize" p="md">
-						Time remaining: ~00:00:00
+						{`Time remaining: ${timer}`}
 					</Badge>
 				</Flex>
 			);

@@ -23,6 +23,7 @@ import type {
 import type {
   EachWorkFlowPhaseMoreInformation,
   EachWorkflowInformation,
+  EachWorkflowInformationSummary,
   GetWorkflowHistoryParams,
   HTTPValidationError,
   MessageOnlyResponse,
@@ -113,6 +114,93 @@ export function useGetWorkflows<TData = Awaited<ReturnType<typeof getWorkflows>>
  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
   const queryOptions = getGetWorkflowsQueryOptions(options)
+
+  const query = useQuery(queryOptions , queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+/**
+ * @summary Get Workflow Summary
+ */
+export const getWorkflowsSummary = (
+    
+ signal?: AbortSignal
+) => {
+      
+      
+      return orvalMutator<EachWorkflowInformationSummary>(
+      {url: "/api/workflow-management/summary", method: 'GET', signal
+    },
+      );
+    }
+  
+
+const getGetWorkflowsSummaryQueryKey = () => {
+    return ["/api/workflow-management/summary"] as const;
+    }
+
+    
+export const getGetWorkflowsSummaryQueryOptions = <TData = Awaited<ReturnType<typeof getWorkflowsSummary>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getWorkflowsSummary>>, TError, TData>>, }
+) => {
+
+const {query: queryOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetWorkflowsSummaryQueryKey();
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getWorkflowsSummary>>> = ({ signal }) => getWorkflowsSummary(signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getWorkflowsSummary>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetWorkflowsSummaryQueryResult = NonNullable<Awaited<ReturnType<typeof getWorkflowsSummary>>>
+export type GetWorkflowsSummaryQueryError = unknown
+
+
+export function useGetWorkflowsSummary<TData = Awaited<ReturnType<typeof getWorkflowsSummary>>, TError = unknown>(
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getWorkflowsSummary>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getWorkflowsSummary>>,
+          TError,
+          Awaited<ReturnType<typeof getWorkflowsSummary>>
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetWorkflowsSummary<TData = Awaited<ReturnType<typeof getWorkflowsSummary>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getWorkflowsSummary>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getWorkflowsSummary>>,
+          TError,
+          Awaited<ReturnType<typeof getWorkflowsSummary>>
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetWorkflowsSummary<TData = Awaited<ReturnType<typeof getWorkflowsSummary>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getWorkflowsSummary>>, TError, TData>>, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary Get Workflow Summary
+ */
+
+export function useGetWorkflowsSummary<TData = Awaited<ReturnType<typeof getWorkflowsSummary>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getWorkflowsSummary>>, TError, TData>>, }
+ , queryClient?: QueryClient 
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetWorkflowsSummaryQueryOptions(options)
 
   const query = useQuery(queryOptions , queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 

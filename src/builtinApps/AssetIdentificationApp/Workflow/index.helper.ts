@@ -6,7 +6,7 @@ import { WorkflowStatus } from "@/shared/enums/index.enums";
 
 import { toFormattedDate } from "@/shared/lib/dayJs";
 
-export const getDifferenceDateTime = (date?: string | Date) => {
+export const getDifferenceDateTime = ({ date = "", format = "HH:mm:ss" }) => {
 	let remainingTime = {
 		Hours: { first: "0", second: "0" },
 		Minutes: { first: "0", second: "0" },
@@ -15,12 +15,12 @@ export const getDifferenceDateTime = (date?: string | Date) => {
 	if (date) {
 		try {
 			const getTime = dayjs(date).diff(dayjs());
-			const getDifference = dayjs(getTime).subtract(3.5, "hours").format("HH:mm:ss"); // .tz("Asia/Tehran")
+			const getDifference = dayjs(getTime).subtract(3.5, "hours").format(format); // .tz("Asia/Tehran")
 			const [hh, mm, ss] = getDifference.split(":");
 			remainingTime = {
-				Hours: { first: hh[0], second: hh[1] },
-				Minutes: { first: mm[0], second: mm[1] },
-				Seconds: { first: ss[0], second: ss[1] },
+				Hours: { first: hh?.[0], second: hh?.[1] },
+				Minutes: { first: mm?.[0], second: mm?.[1] },
+				Seconds: { first: ss?.[0], second: ss?.[1] },
 			};
 			return {
 				remainingTime,
@@ -55,18 +55,8 @@ export function calculateNextScheduledScan(date?: string | null) {
 	if (!date) return "Scheduled scan will start in - minutes";
 	try {
 		if (!dayjs(date).isValid()) return `Scheduled scan will start in ${date}`;
-
-		const today = dayjs();
-		const inputDate = dayjs(date).subtract(3.5, "hours");
-		const diff = inputDate.diff(today);
-		const absDuration = dayjs.duration(Math.abs(diff));
-
-		const hours = String(absDuration.hours()).padStart(2, "0");
-		const minutes = String(absDuration.minutes()).padStart(2, "0");
-
-		return diff >= 0
-			? `Scheduled scan will start in ${hours}:${minutes}`
-			: `Scheduled scan started ${hours}:${minutes} ago`;
+		const { getDifference } = getDifferenceDateTime({ date, format: "HH:mm" });
+		return `Scheduled scan started ${getDifference} ago`;
 	} catch (_) {
 		return `Scheduled scan will start in ${date}`;
 	}

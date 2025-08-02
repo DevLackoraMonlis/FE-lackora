@@ -88,17 +88,17 @@ export default function WorkflowAccordion({ type, status, title, description, st
 					<Timeline active={timelineActiveStep} bulletSize={25} lineWidth={3} mt="md" color="green">
 						{steps?.map((step) => {
 							const stepParams = getWorkflowStatus(step.status || "");
-							const Icon = stepParams?.icon;
+							const Icon = stepParams.icon;
 							return (
 								<Timeline.Item
 									key={step.title}
 									bullet={Icon ? <Icon size={15} /> : null}
-									color={stepParams?.color}
+									color={stepParams.color}
 									title={
 										<Flex align="center" justify="space-between">
 											<Text fw="bold">{step.title}</Text>
 											<Flex align="center">
-												<Badge color={stepParams?.color} variant="light">
+												<Badge color={stepParams.color} variant="light">
 													{stepParams.label}
 												</Badge>
 												<Menu trigger="hover" shadow="md">
@@ -116,6 +116,7 @@ export default function WorkflowAccordion({ type, status, title, description, st
 															Go to Gateway Configuration
 														</Menu.Item>
 														<Menu.Item
+															disabled={stepParams.value !== WorkflowStatus.Completed}
 															data-testid="workflow-submenu-view"
 															leftSection={<IconEye size={15} />}
 															onClick={() => props.handleViewMatchedAssets(step.id)}
