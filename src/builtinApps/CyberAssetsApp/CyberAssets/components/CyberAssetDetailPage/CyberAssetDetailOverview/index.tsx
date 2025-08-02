@@ -29,6 +29,7 @@ import {
 import { Box, Button, Grid, ScrollArea, Tooltip } from "@mantine/core";
 import { useViewportSize } from "@mantine/hooks";
 import { IconArrowNarrowRight, IconInfoCircle } from "@tabler/icons-react";
+import { maxBy } from "lodash";
 
 const ArrowButton = (props: { onClick?: VoidFunction }) => {
 	return (
@@ -111,13 +112,12 @@ export default function CyberAssetDetailOverview(props: {
 					serviceStartTypes: {
 						summary: {
 							Unknown: response.data.start_mode?.Unknown,
-							Total: response.data.start_mode?.Total,
 							Manual: response.data.start_mode?.Manual,
 							Auto: response.data.start_mode?.Auto,
 							Disabled: response.data.start_mode?.Disabled,
 						},
-						type: "Auto",
-						total: response.data.start_mode?.Total,
+						type: maxBy(Object.entries(response.data.start_mode), (item) => item[1])?.[0]?.toString() || "",
+						total: maxBy(Object.entries(response.data.start_mode), (item) => item[1])?.[1] || 0,
 					},
 				};
 				return {
@@ -251,7 +251,6 @@ export default function CyberAssetDetailOverview(props: {
 				Auto: 45,
 				Disabled: 35,
 				Manual: 20,
-				Total: 100,
 				Unknown: 100,
 			},
 			total: 45,
@@ -301,11 +300,9 @@ export default function CyberAssetDetailOverview(props: {
 			openPorts: [
 				{
 					name: "80",
-					type: "HTTPS",
 				},
 				{
 					name: "8080",
-					type: "HTTP",
 				},
 			],
 			type: "STATIC",
@@ -455,121 +452,122 @@ export default function CyberAssetDetailOverview(props: {
 
 	return (
 		<Box p={"sm"}>
-			<Grid gutter={"xs"}>
-				<Grid.Col span={3}>
-					<CyberAssetDetailOverviewCard
-						mih={105}
-						isLoading={isLoading}
-						title={"Configuration Items"}
-						titleRight={
-							<Tooltip label={"Description"}>
-								<IconInfoCircle size={20} />
-							</Tooltip>
-						}
-					>
-						<CyberAssetDetailOverviewConfigurationItems
-							configurationItemsCount={data.configurationItemsCount}
-						/>
-					</CyberAssetDetailOverviewCard>
-				</Grid.Col>
-				<Grid.Col span={3}>
-					<CyberAssetDetailOverviewCard
-						isLoading={getAssetOverviewBaseDataQuery.isFetching}
-						mih={105}
-						title={"Operating System"}
-					>
-						<CyberAssetDetailOverviewOperatingSystem
-							osName={getAssetOverviewBaseDataQuery.data?.data.osName}
-							osType={props.osType}
-						/>
-					</CyberAssetDetailOverviewCard>
-				</Grid.Col>
-				<Grid.Col span={3}>
-					<CyberAssetDetailOverviewCard
-						isLoading={getAssetOverviewBaseDataQuery.isFetching}
-						mih={105}
-						title={"CPU"}
-					>
-						<CyberAssetDetailOverviewCPU cpu={getAssetOverviewBaseDataQuery.data?.data.cpu} />
-					</CyberAssetDetailOverviewCard>
-				</Grid.Col>
-				<Grid.Col span={3}>
-					<Grid gutter={"xs"}>
-						<Grid.Col span={6}>
-							<CyberAssetDetailOverviewCard
-								isLoading={getAssetOverviewBaseDataQuery.isFetching}
-								mih={105}
-								title={"RAM"}
-							>
-								<CyberAssetDetailOverviewRAM ram={getAssetOverviewBaseDataQuery.data?.data.ram} />
-							</CyberAssetDetailOverviewCard>
-						</Grid.Col>
-						<Grid.Col span={6}>
-							<CyberAssetDetailOverviewCard
-								isLoading={getAssetOverviewBaseDataQuery.isFetching}
-								mih={105}
-								title={"Disk"}
-							>
-								<CyberAssetDetailOverviewDisk disk={getAssetOverviewBaseDataQuery.data?.data.disk} />
-							</CyberAssetDetailOverviewCard>
-						</Grid.Col>
-					</Grid>
-				</Grid.Col>
-			</Grid>
+			<ScrollArea h={height - 145} mt={"xs"} scrollbars={"y"} scrollbarSize={2}>
+				<Grid gutter={"xs"}>
+					<Grid.Col span={3}>
+						<CyberAssetDetailOverviewCard
+							mih={105}
+							isLoading={getAssetOverviewBaseDataQuery.isFetching}
+							title={"Configuration Items"}
+							titleRight={
+								<Tooltip label={"Description"}>
+									<IconInfoCircle size={20} />
+								</Tooltip>
+							}
+						>
+							<CyberAssetDetailOverviewConfigurationItems
+								configurationItemsCount={getAssetOverviewBaseDataQuery.data?.data.configurationItemsCount}
+							/>
+						</CyberAssetDetailOverviewCard>
+					</Grid.Col>
+					<Grid.Col span={3}>
+						<CyberAssetDetailOverviewCard
+							isLoading={getAssetOverviewBaseDataQuery.isFetching}
+							mih={105}
+							title={"Operating System"}
+						>
+							<CyberAssetDetailOverviewOperatingSystem
+								osName={getAssetOverviewBaseDataQuery.data?.data.osName}
+								osType={props.osType}
+							/>
+						</CyberAssetDetailOverviewCard>
+					</Grid.Col>
+					<Grid.Col span={3}>
+						<CyberAssetDetailOverviewCard
+							isLoading={getAssetOverviewBaseDataQuery.isFetching}
+							mih={105}
+							title={"CPU"}
+						>
+							<CyberAssetDetailOverviewCPU cpu={getAssetOverviewBaseDataQuery.data?.data.cpu} />
+						</CyberAssetDetailOverviewCard>
+					</Grid.Col>
+					<Grid.Col span={3}>
+						<Grid gutter={"xs"}>
+							<Grid.Col span={6}>
+								<CyberAssetDetailOverviewCard
+									isLoading={getAssetOverviewBaseDataQuery.isFetching}
+									mih={105}
+									title={"RAM"}
+								>
+									<CyberAssetDetailOverviewRAM ram={getAssetOverviewBaseDataQuery.data?.data.ram} />
+								</CyberAssetDetailOverviewCard>
+							</Grid.Col>
+							<Grid.Col span={6}>
+								<CyberAssetDetailOverviewCard
+									isLoading={getAssetOverviewBaseDataQuery.isFetching}
+									mih={105}
+									title={"Disk"}
+								>
+									<CyberAssetDetailOverviewDisk disk={getAssetOverviewBaseDataQuery.data?.data.disk} />
+								</CyberAssetDetailOverviewCard>
+							</Grid.Col>
+						</Grid>
+					</Grid.Col>
+				</Grid>
 
-			<Grid gutter={"xs"}>
-				<Grid.Col span={6}>
-					<CyberAssetDetailOverviewCard
-						isLoading={isLoading}
-						mih={120}
-						title={"Network"}
-						rightSection={<ArrowButton />}
-					>
-						<CyberAssetDetailOverviewNetwork network={getAssetOverviewBaseDataQuery.data?.data.network} />
-					</CyberAssetDetailOverviewCard>
-				</Grid.Col>
+				<Grid gutter={"xs"}>
+					<Grid.Col span={6}>
+						<CyberAssetDetailOverviewCard
+							isLoading={getAssetOverviewBaseDataQuery.isFetching}
+							mih={120}
+							title={"Network"}
+							rightSection={<ArrowButton />}
+						>
+							<CyberAssetDetailOverviewNetwork network={getAssetOverviewBaseDataQuery.data?.data.network} />
+						</CyberAssetDetailOverviewCard>
+					</Grid.Col>
 
-				<Grid.Col span={6}>
-					<CyberAssetDetailOverviewCard
-						isLoading={getAssetOverviewLatestChangesDataQuery.isFetching}
-						mih={120}
-						title={"Changes"}
-						rightSection={<ArrowButton />}
-					>
-						<CyberAssetDetailOverviewChanges
-							changes={getAssetOverviewLatestChangesDataQuery.data?.data.changes}
-						/>
-					</CyberAssetDetailOverviewCard>
-				</Grid.Col>
-			</Grid>
-			<Grid gutter={"xs"}>
-				<Grid.Col span={6}>
-					<CyberAssetDetailOverviewCard
-						isLoading={getAssetOverviewTopServicesDataQuery.isFetching}
-						mih={300}
-						title={"Top Services"}
-						rightSection={<ArrowButton />}
-					>
-						<CyberAssetDetailOverviewTopServices
-							serviceStartTypes={getAssetOverviewTopServicesDataQuery.data?.data.serviceStartTypes}
-							topServices={getAssetOverviewTopServicesDataQuery.data?.data.topServices}
-						/>
-					</CyberAssetDetailOverviewCard>
-				</Grid.Col>
-				<Grid.Col span={6}>
-					<CyberAssetDetailOverviewCard
-						isLoading={getAssetOverviewApplicationsDataQuery.isFetching}
-						mih={300}
-						title={"Applications"}
-						rightSection={<ArrowButton />}
-					>
-						<CyberAssetDetailOverviewApplications
-							applications={getAssetOverviewApplicationsDataQuery.data?.data.applications}
-						/>
-					</CyberAssetDetailOverviewCard>
-				</Grid.Col>
-			</Grid>
-			<ScrollArea h={height - 730} mt={"xs"} scrollbars={"y"} scrollbarSize={2}>
+					<Grid.Col span={6}>
+						<CyberAssetDetailOverviewCard
+							isLoading={getAssetOverviewLatestChangesDataQuery.isFetching}
+							mih={120}
+							title={"Changes"}
+							rightSection={<ArrowButton />}
+						>
+							<CyberAssetDetailOverviewChanges
+								changes={getAssetOverviewLatestChangesDataQuery.data?.data.changes}
+							/>
+						</CyberAssetDetailOverviewCard>
+					</Grid.Col>
+				</Grid>
+				<Grid gutter={"xs"}>
+					<Grid.Col span={6}>
+						<CyberAssetDetailOverviewCard
+							isLoading={getAssetOverviewTopServicesDataQuery.isFetching}
+							mih={300}
+							title={"Top Services"}
+							rightSection={<ArrowButton />}
+						>
+							<CyberAssetDetailOverviewTopServices
+								serviceStartTypes={getAssetOverviewTopServicesDataQuery.data?.data.serviceStartTypes}
+								topServices={getAssetOverviewTopServicesDataQuery.data?.data.topServices}
+							/>
+						</CyberAssetDetailOverviewCard>
+					</Grid.Col>
+					<Grid.Col span={6}>
+						<CyberAssetDetailOverviewCard
+							isLoading={getAssetOverviewApplicationsDataQuery.isFetching}
+							mih={300}
+							title={"Applications"}
+							rightSection={<ArrowButton />}
+						>
+							<CyberAssetDetailOverviewApplications
+								applications={getAssetOverviewApplicationsDataQuery.data?.data.applications}
+							/>
+						</CyberAssetDetailOverviewCard>
+					</Grid.Col>
+				</Grid>
+
 				<Grid>
 					<Grid.Col span={4}>
 						<CyberAssetDetailOverviewCard

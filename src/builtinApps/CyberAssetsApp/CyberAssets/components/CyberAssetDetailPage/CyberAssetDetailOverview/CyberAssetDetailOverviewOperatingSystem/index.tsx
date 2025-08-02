@@ -14,7 +14,7 @@ export default function CyberAssetDetailOverviewOperatingSystem(props: Props) {
 				type: props.osType,
 				size: 35,
 				customType: (
-					<Text maw={"100%"} truncate={"end"} fz={"sm"} fw={"bolder"}>
+					<Text maw={"100%"} lineClamp={2} fz={"sm"} fw={"bolder"}>
 						{props.osName}
 					</Text>
 				),

@@ -248,7 +248,7 @@ export function getCyberAssetDiscoveryTypeBadge(params: {
 	}
 
 	return (
-		<Flex {...params.props} align={"center"} gap={"sm"}>
+		<Flex {...params.props} align={"center"} gap={"xs"}>
 			{iconMap[params.type]}
 			<Text fz={"xs"} tt={"capitalize"}>
 				{params.type}
@@ -275,7 +275,11 @@ export function getCyberAssetOsTypeBadge(params: {
 	return (
 		<Flex {...params.wrapperProps} align={"center"} gap={"xs"}>
 			{iconMap[params.type]}
-			{params.customType || <Text fz={"xs"}>{params.type}</Text>}
+			{params.customType || (
+				<Text fz={"xs"} tt={"capitalize"}>
+					{params.type}
+				</Text>
+			)}
 		</Flex>
 	);
 }

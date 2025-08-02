@@ -3,7 +3,7 @@ import type {
 	CyberAssetDetailOverviewProps,
 	CyberAssetDetailOverviewServiceStartType,
 } from "@/builtinApps/CyberAssetsApp/CyberAssets/index.types";
-import { Badge, Divider, Flex, Grid, RingProgress, ScrollArea, Text } from "@mantine/core";
+import { Badge, Divider, Flex, Grid, RingProgress, ScrollArea, Text, Tooltip } from "@mantine/core";
 import take from "lodash/take";
 import { Fragment } from "react";
 
@@ -17,7 +17,6 @@ export default function CyberAssetDetailOverviewTopServices(props: Props) {
 		Disabled: "#495057",
 		Auto: "#228BE6",
 		Manual: "#FAB005",
-		Total: "#3737e5",
 		Unknown: "#e0c9c9",
 	};
 	return (
@@ -28,7 +27,11 @@ export default function CyberAssetDetailOverviewTopServices(props: Props) {
 						{take(props.topServices || [], 10).map((service, index) => (
 							<Fragment key={`${service.name}-${service.status}`}>
 								<Flex key={service.name} justify={"space-between"} align={"center"}>
-									<Text c={"gray.7"}>{service.name}</Text>
+									<Tooltip label={service.name}>
+										<Text c={"gray.7"} maw={"70%"} truncate={"end"}>
+											{service.name}
+										</Text>
+									</Tooltip>
 									{getCyberAssetServiceStatusBadge({
 										type: service.status,
 										props: {

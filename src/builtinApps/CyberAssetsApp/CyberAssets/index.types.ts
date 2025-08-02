@@ -66,11 +66,8 @@ export type CyberAssetDetailOverviewCpu = {
 	processors: number;
 };
 
-export type CyberAssetDetailOverviewNetworkOpen = "HTTP" | "HTTPS";
-
 export type CyberAssetDetailOverviewNetworkOpenPort = {
 	name: string;
-	type: CyberAssetDetailOverviewNetworkOpen;
 };
 
 export type CyberAssetDetailOverviewNetworkType = "STATIC" | "DHCP";
@@ -95,10 +92,10 @@ export type CyberAssetDetailOverviewTopService = {
 	status: CyberAssetDetailOverviewTopServiceStatus;
 };
 
-export type CyberAssetDetailOverviewServiceStartType = "Manual" | "Auto" | "Disabled" | "Unknown" | "Total";
+export type CyberAssetDetailOverviewServiceStartType = "Manual" | "Auto" | "Disabled" | "Unknown";
 export type CyberAssetDetailOverviewServiceStart = {
 	total: number;
-	type: CyberAssetDetailOverviewServiceStartType;
+	type: string;
 	summary: Record<CyberAssetDetailOverviewServiceStartType, number>;
 };
 

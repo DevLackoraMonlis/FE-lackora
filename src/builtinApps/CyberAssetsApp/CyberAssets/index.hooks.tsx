@@ -14,8 +14,15 @@ import type {
 import { useGetAssetGeneralInfo } from "@/http/generated/cyber-asset-management-cyber-assets";
 import { createDynamicICAdvancedStore } from "@/shared/components/infraComponents/ICAdvancedFilter/index.store";
 import type { ICAdvancedFilterDynamicStoreType } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
-import { Flex, Text, Tooltip } from "@mantine/core";
-import { IconAlarm, IconDevices2, IconMapPin, IconNetwork, IconUserCircle } from "@tabler/icons-react";
+import { Badge, Flex, Text, Tooltip } from "@mantine/core";
+import {
+	IconAlarm,
+	IconDevices2,
+	IconLink,
+	IconMapPin,
+	IconNetwork,
+	IconUserCircle,
+} from "@tabler/icons-react";
 import { useEffect, useRef } from "react";
 import type {
 	CyberAssetClassificationEnum,
@@ -93,21 +100,28 @@ export const useGetCyberAssetDetailGeneralInfo = (params: {
 				value:
 					getCyberAssetsGeneralInfoQuery.data?.data.network_information?.ip_address &&
 					getCyberAssetsGeneralInfoQuery.data?.data.network_information?.ip_address.length > 1 ? (
-						<Tooltip
-							label={
-								<Flex direction={"column"}>
-									{getCyberAssetsGeneralInfoQuery.data?.data.network_information.ip_address.map((item) => (
-										<Text key={item} fz={"xs"}>
-											{item}
-										</Text>
-									))}
-								</Flex>
-							}
-						>
+						<Flex gap={"xs"}>
 							<Text fz={"xs"}>
-								{getCyberAssetsGeneralInfoQuery.data?.data.network_information.ip_address?.[0]}
+								{getCyberAssetsGeneralInfoQuery.data?.data.network_information.ip_address[0]}
 							</Text>
-						</Tooltip>
+							<Tooltip
+								label={
+									<Flex direction={"column"}>
+										{getCyberAssetsGeneralInfoQuery.data?.data.network_information.ip_address
+											.slice(1)
+											.map((item) => (
+												<Text key={`ip-address-${item}`} fz={"xs"}>
+													{item}
+												</Text>
+											))}
+									</Flex>
+								}
+							>
+								<Badge size={"xs"} leftSection={<IconLink size={12} />} variant={"light"}>
+									{getCyberAssetsGeneralInfoQuery.data?.data.network_information?.ip_address.length}
+								</Badge>
+							</Tooltip>
+						</Flex>
 					) : (
 						<Text fz={"xs"}>
 							{getCyberAssetsGeneralInfoQuery.data?.data.network_information.ip_address?.[0] || ""}
@@ -119,21 +133,28 @@ export const useGetCyberAssetDetailGeneralInfo = (params: {
 				value:
 					getCyberAssetsGeneralInfoQuery.data?.data.network_information?.mac_address &&
 					getCyberAssetsGeneralInfoQuery.data?.data.network_information?.mac_address.length > 1 ? (
-						<Tooltip
-							label={
-								<Flex direction={"column"}>
-									{getCyberAssetsGeneralInfoQuery.data?.data.network_information.mac_address.map((item) => (
-										<Text key={item} fz={"xs"}>
-											{item}
-										</Text>
-									))}
-								</Flex>
-							}
-						>
+						<Flex gap={"xs"}>
 							<Text fz={"xs"}>
 								{getCyberAssetsGeneralInfoQuery.data?.data.network_information.mac_address[0]}
 							</Text>
-						</Tooltip>
+							<Tooltip
+								label={
+									<Flex direction={"column"}>
+										{getCyberAssetsGeneralInfoQuery.data?.data.network_information.mac_address
+											.slice(1)
+											.map((item) => (
+												<Text key={`mac-address-${item}`} fz={"xs"}>
+													{item}
+												</Text>
+											))}
+									</Flex>
+								}
+							>
+								<Badge size={"xs"} leftSection={<IconLink size={12} />} variant={"light"}>
+									{getCyberAssetsGeneralInfoQuery.data?.data.network_information?.mac_address.length}
+								</Badge>
+							</Tooltip>
+						</Flex>
 					) : (
 						<Text fz={"xs"}>
 							{getCyberAssetsGeneralInfoQuery.data?.data.network_information.mac_address?.[0] || ""}
