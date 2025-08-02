@@ -40,14 +40,14 @@ export const getLocationTree = (
       
       
       return orvalMutator<LocationTreeResponse>(
-      {url: `/api/location-management/tree`, method: 'GET', signal
+      {url: "/api/location-management/tree", method: 'GET', signal
     },
       );
     }
   
 
 const getGetLocationTreeQueryKey = () => {
-    return [`/api/location-management/tree`] as const;
+    return ["/api/location-management/tree"] as const;
     }
 
     

@@ -102,8 +102,9 @@ export function stepDescription<T extends Record<string, unknown>>(step: T) {
 	const start = toFormattedDate(step.start_time as string, "HH:mm") || "-";
 	const end = toFormattedDate(step.end_time as string, "HH:mm") || "-";
 	return {
-		description:
-			isProgress || failed
+		description: failed
+			? `${step.message}`
+			: isProgress
 				? `Start at ${start}`
 				: `Start at ${start} - End at ${end}  |  Duration: ${step.duration || "-"}`,
 		isProgress,
@@ -116,4 +117,26 @@ export function stepDescription<T extends Record<string, unknown>>(step: T) {
 
 export function getWorkflowStatus(status?: string) {
 	return WORKFLOW_STATUS[status as WorkflowStatus] || {};
+}
+
+export function getValueFromDynamicColumnRecord(record: { [key: string]: unknown }, key: string) {
+	const value = record[key];
+	const type = typeof value;
+
+	switch (type) {
+		case "string":
+			return value as string;
+		case "object": {
+			const joinValue = Array.isArray(value)
+				? typeof value?.[0] === "string" || typeof value?.[0] === "number"
+					? value.join(" - ")
+					: Object.entries(value?.[0] || {})
+							.map(([_, value]) => value)
+							.join(" - ")
+				: "unknown";
+			return joinValue;
+		}
+		default:
+			return value as string;
+	}
 }

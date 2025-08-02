@@ -6,22 +6,22 @@
  * OpenAPI spec version: 1.0.0
  */
 import type { ApplicationVendorName } from './ApplicationVendorName';
-import type { EachApplicationsResponseIcon } from './EachApplicationsResponseIcon';
-import type { EachApplicationsResponseKeyCapabilities } from './EachApplicationsResponseKeyCapabilities';
 import type { EachApplicationsResponseBusinessValue } from './EachApplicationsResponseBusinessValue';
-import type { EachApplicationsResponseConfigurationRequirements } from './EachApplicationsResponseConfigurationRequirements';
-import type { EachApplicationsResponseStatus } from './EachApplicationsResponseStatus';
-import type { EachApplicationsResponseIsActive } from './EachApplicationsResponseIsActive';
 import type { EachApplicationsResponseCategory } from './EachApplicationsResponseCategory';
+import type { EachApplicationsResponseConfiguration } from './EachApplicationsResponseConfiguration';
+import type { EachApplicationsResponseConfigurationRequirements } from './EachApplicationsResponseConfigurationRequirements';
+import type { EachApplicationsResponseIcon } from './EachApplicationsResponseIcon';
+import type { EachApplicationsResponseIsActive } from './EachApplicationsResponseIsActive';
+import type { EachApplicationsResponseIsAvailable } from './EachApplicationsResponseIsAvailable';
+import type { EachApplicationsResponseKeyCapabilities } from './EachApplicationsResponseKeyCapabilities';
+import type { EachApplicationsResponseLastView } from './EachApplicationsResponseLastView';
+import type { EachApplicationsResponseStatus } from './EachApplicationsResponseStatus';
 import type { EachApplicationsResponseSupportLicense } from './EachApplicationsResponseSupportLicense';
 import type { EachApplicationsResponseSupportLicenseExpirationTime } from './EachApplicationsResponseSupportLicenseExpirationTime';
 import type { EachApplicationsResponseType } from './EachApplicationsResponseType';
-import type { EachApplicationsResponseIsAvailable } from './EachApplicationsResponseIsAvailable';
-import type { EachApplicationsResponseConfiguration } from './EachApplicationsResponseConfiguration';
-import type { EachApplicationsResponseUpdater } from './EachApplicationsResponseUpdater';
 import type { EachApplicationsResponseUpdatedTime } from './EachApplicationsResponseUpdatedTime';
+import type { EachApplicationsResponseUpdater } from './EachApplicationsResponseUpdater';
 import type { EachApplicationsResponseViewer } from './EachApplicationsResponseViewer';
-import type { EachApplicationsResponseLastView } from './EachApplicationsResponseLastView';
 
 export interface EachApplicationsResponse {
   id: string;
