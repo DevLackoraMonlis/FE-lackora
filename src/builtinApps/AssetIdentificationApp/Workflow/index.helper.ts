@@ -56,7 +56,7 @@ export function calculateNextScheduledScan(date?: string | null) {
 	try {
 		if (!dayjs(date).isValid()) return `Scheduled scan will start in ${date}`;
 		const { getDifference } = getDifferenceDateTime({ date, format: "HH:mm" });
-		return `Scheduled scan started ${getDifference} ago`;
+		return `Scheduled scan will start in ${getDifference}`;
 	} catch (_) {
 		return `Scheduled scan will start in ${date}`;
 	}

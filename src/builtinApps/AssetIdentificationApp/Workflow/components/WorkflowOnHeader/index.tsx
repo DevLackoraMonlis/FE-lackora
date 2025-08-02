@@ -74,7 +74,12 @@ const WorkflowOnHeader = () => {
 						</Flex>
 					</Badge>
 					<Badge variant="light" color="gray.4" tt="capitalize" p="md">
-						{`Time remaining: ${timer}`}
+						<Flex align="center">
+							<Text fz="xs">Time remaining:</Text>
+							<Text fz="xs" w="55px">
+								{timer}
+							</Text>
+						</Flex>
 					</Badge>
 				</Flex>
 			);

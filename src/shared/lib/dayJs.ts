@@ -3,7 +3,6 @@ import dayjs from "dayjs";
 
 import advancedFormat from "dayjs/plugin/advancedFormat";
 import customParseFormat from "dayjs/plugin/customParseFormat";
-import duration from "dayjs/plugin/duration";
 import quarterOfYear from "dayjs/plugin/quarterOfYear";
 import relativeTime from "dayjs/plugin/relativeTime";
 import timezone from "dayjs/plugin/timezone";
@@ -17,7 +16,6 @@ dayjs.extend(advancedFormat);
 dayjs.extend(customParseFormat);
 dayjs.extend(relativeTime);
 dayjs.extend(quarterOfYear);
-dayjs.extend(duration);
 
 export function toFormattedDate(
 	date?: string | Date | null,
