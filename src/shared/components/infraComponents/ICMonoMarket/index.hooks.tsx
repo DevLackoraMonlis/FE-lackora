@@ -13,6 +13,7 @@ import { useStore } from "zustand/index";
 import { useShallow } from "zustand/react/shallow";
 
 export function useMonoApp(): {
+	appModuleDetailId?: string;
 	app?: ICMonoMarketAppType;
 	module?: ICMonoMarketAppModuleType;
 	showRestrictAccessModule: boolean;
@@ -26,6 +27,7 @@ export function useMonoApp(): {
 
 	const appName = ((params.appName as string) || "").replaceAll("%20", " ");
 	const appModuleName = ((params.appModuleName as string) || "").replaceAll("%20", " ");
+	const appModuleDetailId = (params.appModuleDetailId as string) || "";
 
 	const store = useStore(
 		activeAppsStore,
@@ -40,6 +42,7 @@ export function useMonoApp(): {
 	const userAvailableModule = userAvailableApp?.modules.find((module) => module === appModuleName);
 
 	return {
+		appModuleDetailId,
 		app,
 		module,
 		showRestrictAccessModule: !module || !userAvailableModule,

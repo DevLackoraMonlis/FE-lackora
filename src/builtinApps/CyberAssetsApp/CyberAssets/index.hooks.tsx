@@ -11,6 +11,7 @@ import type {
 	CyberAssetDetailGeneralInfoProps,
 	CyberAssetDetailInventoryType,
 } from "@/builtinApps/CyberAssetsApp/CyberAssets/index.types";
+import { useGetAssetGeneralInfo } from "@/http/generated/cyber-asset-management-cyber-assets";
 import { createDynamicICAdvancedStore } from "@/shared/components/infraComponents/ICAdvancedFilter/index.store";
 import type { ICAdvancedFilterDynamicStoreType } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
 import { Flex, Text, Tooltip } from "@mantine/core";
@@ -20,6 +21,7 @@ import type {
 	CyberAssetClassificationEnum,
 	CyberAssetDiscoveryTypeEnum,
 	CyberAssetOsTypeEnum,
+	CyberAssetStateEnum,
 	CyberAssetStatusEnum,
 } from "./index.enum";
 
@@ -308,7 +310,4 @@ export function useCyberAssetDynamicStores(types: CyberAssetDetailInventoryType[
 	}, [types]);
 
 	return { storesRef };
-}
-function useGetAssetGeneralInfo(arg0: string, arg1: { query: { enabled: boolean } }) {
-	throw new Error("Function not implemented.");
 }
