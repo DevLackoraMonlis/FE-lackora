@@ -48,11 +48,14 @@ export default function ICAdvancedFilterTopSection<T>(props: Props<T>) {
 		<ScrollArea scrollbars={"x"} scrollbarSize={2} w={"100%"}>
 			<Flex align={"center"} justify={"space-between"} py={"xs"}>
 				{props.leftSection ? (
-					<Flex pl={"xs"} align={"center"} gap={"xs"}>
-						{search}
-						{!props.hideCollapseButton && <ICAdvancedFilterCollapseButton store={props.store} />}
-						{actionButtons}
-					</Flex>
+					<>
+						{props.leftSection}
+						<Flex pl={"xs"} align={"center"} gap={"xs"}>
+							{search}
+							{!props.hideCollapseButton && <ICAdvancedFilterCollapseButton store={props.store} />}
+							{actionButtons}
+						</Flex>
+					</>
 				) : (
 					<>
 						{search}

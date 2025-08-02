@@ -17,7 +17,7 @@ import type {
 	ICAdvancedFilterRq,
 } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
 import { unsecuredCopyToClipboard } from "@/shared/lib/utils";
-import { Box, Button, Pill, PillGroup } from "@mantine/core";
+import { Box, Button, Flex, Pill, ScrollArea } from "@mantine/core";
 import { useViewportSize } from "@mantine/hooks";
 import { notifications } from "@mantine/notifications";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
@@ -220,14 +220,16 @@ export default function ICAdvancedFilterGrid<T extends Record<string, unknown>>(
 				const maxDisplay = 5;
 				const arrayValue = record[columnName] as string[];
 				return (
-					<PillGroup>
-						{arrayValue.slice(0, maxDisplay).map((item) => (
-							<Pill bg={"gray.2"} size={"xs"} key={item}>
-								{item}
-							</Pill>
-						))}
-						{arrayValue.length > maxDisplay && <Pill>+{arrayValue.length - maxDisplay} more</Pill>}
-					</PillGroup>
+					<ScrollArea h={"100%"} scrollbarSize={1} scrollbars={"x"}>
+						<Flex h={32} gap={"xs"} align={"center"}>
+							{arrayValue.slice(0, maxDisplay).map((item) => (
+								<Pill bg={"gray.2"} size={"xs"} key={item}>
+									{item}
+								</Pill>
+							))}
+							{arrayValue.length > maxDisplay && <Pill>+{arrayValue.length - maxDisplay} more</Pill>}
+						</Flex>
+					</ScrollArea>
 				);
 			}
 			return record[columnName] as ReactNode;
