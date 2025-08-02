@@ -15,12 +15,16 @@ import {
 	CyberAssetCriticalityEnum,
 	CyberAssetOsTypeEnum,
 } from "@/builtinApps/CyberAssetsApp/CyberAssets/index.enum";
-import type { CyberAssetDetailOverviewProps } from "@/builtinApps/CyberAssetsApp/CyberAssets/index.types";
+import type {
+	CyberAssetDetailOverviewApplicationSecurityStatus,
+	CyberAssetDetailOverviewProps,
+} from "@/builtinApps/CyberAssetsApp/CyberAssets/index.types";
 import {
 	useGetAssetBaseOverview,
 	useGetAssetLatestChanges,
 	useGetAssetLatestSoftwares,
 	useGetAssetTopServices,
+	useGetAssetVulnerabilityDetails,
 } from "@/http/generated/cyber-asset-management-cyber-assets";
 import { Box, Button, Grid, ScrollArea, Tooltip } from "@mantine/core";
 import { useViewportSize } from "@mantine/hooks";
@@ -142,6 +146,46 @@ export default function CyberAssetDetailOverview(props: {
 			},
 		},
 	});
+
+	const getAssetOverviewSecurityDataQuery = useGetAssetVulnerabilityDetails(props.id || "", {
+		query: {
+			enabled: !!props.id,
+			select: (response) => {
+				const data: Pick<CyberAssetDetailOverviewProps, "security"> = {
+					security: {
+						status: response.data.status as CyberAssetDetailOverviewApplicationSecurityStatus,
+						appName: props.appName || "",
+						onUpgradeLicense: () => {
+							console.log("upgrade");
+						},
+						onMCExpired: () => {
+							console.log("onMCExpired");
+						},
+						onActivateVulnerabilitiesAssessment: () => {
+							console.log("onActivateVulnerabilitiesAssessment");
+						},
+						onFailed: () => {
+							console.log("onFailed");
+						},
+						summary: response.data.metadata as Record<CyberAssetCriticalityEnum, number>,
+						criticality: response.data.criticality as CyberAssetCriticalityEnum,
+						riskScore: response.data.cyber_risk_score || null,
+						totalVulnerabilities: 0,
+						topVulnerabilities:
+							response.data.top_vulnerability?.map((item) => ({
+								name: Object.entries(item)[0][0] as string,
+								criticality: Object.entries(item)[0][1] as CyberAssetCriticalityEnum,
+							})) || [],
+					},
+				};
+				return {
+					data,
+				};
+			},
+		},
+	});
+
+	console.log(getAssetOverviewSecurityDataQuery.data);
 
 	const data: CyberAssetDetailOverviewProps = {
 		notifications: [
