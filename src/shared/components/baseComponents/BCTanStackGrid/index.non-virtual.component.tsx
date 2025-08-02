@@ -46,6 +46,7 @@ export default function TanStackGridNonVirtual<T extends Record<string, unknown>
 				/>
 
 				<TanStackMainTableNonVirtual
+					withPaddingCells={props.withPaddingCells}
 					rows={rows}
 					tableRef={tableRef}
 					tableBodyRef={tableBodyRef}

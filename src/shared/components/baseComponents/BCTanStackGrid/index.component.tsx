@@ -51,6 +51,7 @@ export default function TanStackGridComponent<T extends Record<string, unknown>>
 					visible={props.fetching}
 				/>
 				<TanStackMainTable<T>
+					withPaddingCells={props.withPaddingCells}
 					fetching={props.fetching}
 					rows={rows}
 					columnVirtualizer={columnVirtualizer}

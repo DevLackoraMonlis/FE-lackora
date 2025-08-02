@@ -145,7 +145,7 @@ td p {
 }
 
 .defaultPadding {
-	padding: 8px;
+	padding-left: var(--mantine-spacing-xs);
 }
 
 .resizer {

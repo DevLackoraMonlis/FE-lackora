@@ -50,6 +50,7 @@ export default function TanStackMainTable<T extends Record<string, unknown>>(
 				columnVirtualizer={props.columnVirtualizer}
 			/>
 			<TanStackTBody<T>
+				withPaddingCells={props.withPaddingCells}
 				fetching={props.fetching}
 				rows={props.rows}
 				tableBodyRef={props.tableBodyRef}

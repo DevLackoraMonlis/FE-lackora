@@ -18,6 +18,7 @@ export default function TanStackCellItem<T extends Record<string, unknown>>(
 	if (props.withPaddingCells) {
 		className += " defaultPadding";
 	}
+
 	const isCentered = TAN_STACK_EXCLUDE_COLUMNS_FROM_STYLES.includes(cell.column.id);
 
 	const cellStyle = useMemo(
