@@ -55,10 +55,18 @@ export function calculateNextScheduledScan(date?: string | null) {
 	if (!date) return "Scheduled scan will start in - minutes";
 	try {
 		if (!dayjs(date).isValid()) return `Scheduled scan will start in ${date}`;
+
 		const today = dayjs();
-		const inputDate = dayjs(date).subtract(3.5, "hours"); // .tz("Asia/Tehran")
+		const inputDate = dayjs(date).subtract(3.5, "hours");
 		const diff = inputDate.diff(today);
-		return `Scheduled scan will start in ${dayjs(diff).format("HH:mm")} ago`;
+		const absDuration = dayjs.duration(Math.abs(diff));
+
+		const hours = String(absDuration.hours()).padStart(2, "0");
+		const minutes = String(absDuration.minutes()).padStart(2, "0");
+
+		return diff >= 0
+			? `Scheduled scan will start in ${hours}:${minutes}`
+			: `Scheduled scan started ${hours}:${minutes} ago`;
 	} catch (_) {
 		return `Scheduled scan will start in ${date}`;
 	}
@@ -111,7 +119,7 @@ export function stepDescription<T extends Record<string, unknown>>(step: T) {
 		value: progressStepValue,
 		resultMessage: step.result_message as string,
 		resultCount: step.result_count as number,
-		message: `${step.progress || step.status} |  Duration: ${step.duration || "-"}`,
+		message: `${step.progress ? `${step.progress} |` : ""} Duration: ${step.duration || "-"}`,
 	};
 }
 

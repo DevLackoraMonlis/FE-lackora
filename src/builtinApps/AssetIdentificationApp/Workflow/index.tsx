@@ -160,13 +160,14 @@ export default function WorkflowAssetsIdentification() {
 						{isLoading ? (
 							<WorkflowAccordionSkelton count={3} />
 						) : (
-							workflows.data?.phases?.map(({ steps, ...phase }) => {
+							workflows.data?.phases?.map(({ steps, ...phase }, _, array) => {
 								const description = phaseDescription<typeof phase>(phase);
 								return (
 									<Fragment key={phase.id}>
 										<WorkflowPlayerTracking status={phase.status} />
 										<WorkflowAccordion
 											{...commonProps}
+											defaultOpened={array?.length === 1}
 											type={phase.name}
 											title={phase.display_name}
 											status={phase.status}

@@ -10,14 +10,14 @@ import { getWorkflowStatus } from "../../index.helper";
 import type { WorkflowHandles, WorkflowPhase } from "../../index.types";
 import AccordionStepDescription from "./components/AccordionStepDescription";
 
-type Props = WorkflowPhase & WorkflowHandles;
+type Props = WorkflowPhase & WorkflowHandles & { defaultOpened: boolean };
 
 export default function WorkflowAccordion({ type, status, title, description, steps, ...props }: Props) {
 	if (!type) return null;
 	const phaseParams = useMemo(() => getWorkflowStatus(status), [status]);
 	const timelineActiveStep = steps?.length;
 	return (
-		<Accordion variant="separated" defaultValue={status === "inprogress" ? type : ""}>
+		<Accordion variant="separated" defaultValue={status === "inprogress" || props.defaultOpened ? type : ""}>
 			<Accordion.Item value={type}>
 				<Accordion.Control
 					h="66px"
@@ -49,7 +49,13 @@ export default function WorkflowAccordion({ type, status, title, description, st
 								</Text>
 								{description.isProgress ? (
 									<Flex gap="xs" w="550px" align="center">
-										<Progress value={Number(description.value)} size="md" style={{ flex: 3 }} bg="white" />
+										<Progress
+											value={Number(description.value)}
+											size="md"
+											style={{ flex: 3 }}
+											bg="white"
+											animated
+										/>
 										<Text fz="xs" style={{ flex: 1 }} tw="nowrap">
 											{description.message}
 										</Text>
