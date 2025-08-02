@@ -10,6 +10,7 @@ export enum WorkflowStatus {
 	Failed = "failed",
 	Completed = "completed",
 	Inprogress = "in_progress",
+	Pending = "pending",
 	Idle = "idle",
 	PartialSuccess = "partial_success",
 }
