@@ -26,7 +26,7 @@ export function useWorkflowScanHistory(queryParams: Record<string, unknown>) {
 					res?.data?.results?.map((record) => {
 						return {
 							id: record.id || "",
-							scanId: record.scan_id || "",
+							scanId: `${record.scan_id || ""}`,
 							status: record.status,
 						};
 					}) || [];

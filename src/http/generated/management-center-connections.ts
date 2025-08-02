@@ -344,7 +344,7 @@ export const useEditConnection = <TError = HTTPValidationError,
       return useMutation(mutationOptions , queryClient);
     }
     /**
- * @summary Delete Web Service
+ * @summary Delete Connection By Id
  */
 export const deleteConnection = (
     connectionId: string,
@@ -389,7 +389,7 @@ const {mutation: mutationOptions} = options ?
     export type DeleteConnectionMutationError = HTTPValidationError
 
     /**
- * @summary Delete Web Service
+ * @summary Delete Connection By Id
  */
 export const useDeleteConnection = <TError = HTTPValidationError,
     TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteConnection>>, TError,{connectionId: string}, TContext>, }
