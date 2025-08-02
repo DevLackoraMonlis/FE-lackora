@@ -2,15 +2,14 @@ import { Badge, Flex, Loader, Text, Tooltip } from "@mantine/core";
 import { useInterval } from "@mantine/hooks";
 import { useEffect, useState } from "react";
 
-import { getDifferenceDateTime, getWorkflowStatus } from "../../../../index.helper";
-import { calculateNextScheduledScan } from "../../../../index.helper";
-import { useWorkflow } from "../../../../index.hooks";
+import { WORKFLOW_REFETCH_INTERVAL_HEADER } from "../../index.constants";
+import { getDifferenceDateTime, getWorkflowStatus } from "../../index.helper";
+import { calculateNextScheduledScan } from "../../index.helper";
+import { useWorkflow } from "../../index.hooks";
 import { WorkflowLoader, WorkflowPending } from "./components/WorkflowLoader";
 
-const refetchInterval = 10_000;
-
 const WorkflowOnHeader = () => {
-	const { workflows, isLoading } = useWorkflow(refetchInterval);
+	const { workflows, isLoading } = useWorkflow(WORKFLOW_REFETCH_INTERVAL_HEADER);
 	const message = workflows?.data?.message || workflows?.data?.description || "Unhandled error message!";
 	const scanId = workflows?.data?.scan_id || 0;
 	const nextScan = workflows?.data?.next_runtime || "";

@@ -5,9 +5,7 @@ import { useDisclosure, useViewportSize } from "@mantine/hooks";
 import { IconLineScan } from "@tabler/icons-react";
 import { Fragment, useState } from "react";
 
-import { useAppRedirect } from "@/shared/hooks/useAppRedirect";
-
-import { WORKFLOW_REDIRECT_PATH } from "./index.constants";
+import { WORKFLOW_REDIRECT_PATH, WORKFLOW_REFETCH_INTERVAL } from "./index.constants";
 import {
 	calculateNextScheduledScan,
 	calculateScheduledScanDate,
@@ -17,6 +15,7 @@ import {
 } from "./index.helper";
 import { useWorkflow } from "./index.hooks";
 
+import { useAppRedirect } from "@/shared/hooks/useAppRedirect";
 import WorkflowAccordion from "./components/WorkflowAccordion";
 import WorkflowAccordionSkelton from "./components/WorkflowAccordionSkelton";
 import WorkflowDetectedStepModal from "./components/WorkflowDetectedStepModal";
@@ -28,7 +27,7 @@ export default function WorkflowAssetsIdentification() {
 	const [openedDetectedAssets, handleDetectedAssets] = useDisclosure();
 	const [openedScanHistory, handleScanHistory] = useDisclosure();
 	const { onOpenApp } = useAppRedirect();
-	const { workflows, isLoading } = useWorkflow();
+	const { workflows, isLoading } = useWorkflow(WORKFLOW_REFETCH_INTERVAL);
 
 	const [selectedStepId, setSelectedStepId] = useState<string>("");
 	const handleGatewayConfiguration = () => {};
