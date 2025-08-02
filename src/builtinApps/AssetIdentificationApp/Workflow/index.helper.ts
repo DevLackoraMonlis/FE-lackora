@@ -55,9 +55,9 @@ export function calculateNextScheduledScan(date?: string | null) {
 	if (!date) return "Scheduled scan will start in - minutes";
 	try {
 		if (!dayjs(date).isValid()) return `Scheduled scan will start in ${date}`;
-		const today = dayjs().startOf("day");
-		const inputDate = dayjs(date).startOf("day");
-		const diff = inputDate.diff(today, "day");
+		const today = dayjs();
+		const inputDate = dayjs(date);
+		const diff = inputDate.diff(today);
 		return `Scheduled scan will start in ${dayjs(diff).get("minutes")} minutes`;
 	} catch (_) {
 		return `Scheduled scan will start in ${date}`;
