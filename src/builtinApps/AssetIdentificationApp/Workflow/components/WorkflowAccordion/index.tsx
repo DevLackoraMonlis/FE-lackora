@@ -97,7 +97,7 @@ export default function WorkflowAccordion({ type, status, title, description, st
 											<Text fw="bold">{step.title}</Text>
 											<Flex align="center">
 												<Badge color={stepParams?.color} variant="light">
-													{step.status}
+													{stepParams.label}
 												</Badge>
 												<Menu trigger="hover" shadow="md">
 													<Menu.Target>

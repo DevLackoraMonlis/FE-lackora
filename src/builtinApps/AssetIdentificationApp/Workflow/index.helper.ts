@@ -97,10 +97,11 @@ export function phaseDescription<T extends Record<string, unknown>>(phase: T) {
 
 export function stepDescription<T extends Record<string, unknown>>(step: T) {
 	const progressStepValue = ((step?.current_processed as number) / (step?.total_processing as number)) * 100;
-	const isProgress = isNumber(progressStepValue) && progressStepValue < 100;
+	const isProgress = (step.status as string) === WorkflowStatus.Inprogress;
 	const failed = (step.status as string) === WorkflowStatus.Failed;
 	const start = toFormattedDate(step.start_time as string, "HH:mm") || "-";
 	const end = toFormattedDate(step.end_time as string, "HH:mm") || "-";
+	console.log({ step });
 	return {
 		description: failed
 			? `${step.message}`
@@ -111,7 +112,7 @@ export function stepDescription<T extends Record<string, unknown>>(step: T) {
 		value: progressStepValue,
 		resultMessage: step.result_message as string,
 		resultCount: step.result_count as number,
-		message: `${step.progress} |  Duration: ${step.duration || "-"}`,
+		message: `${step.progress || step.status} |  Duration: ${step.duration || "-"}`,
 	};
 }
 
