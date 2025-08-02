@@ -16,6 +16,7 @@ import type { EachWorkflowInformationLastScanTime } from './EachWorkflowInformat
 import type { EachWorkflowInformationMessage } from './EachWorkflowInformationMessage';
 import type { EachWorkflowInformationMode } from './EachWorkflowInformationMode';
 import type { EachWorkflowInformationNextRuntime } from './EachWorkflowInformationNextRuntime';
+import type { EachWorkflowInformationNextScanId } from './EachWorkflowInformationNextScanId';
 import type { EachWorkflowInformationPhases } from './EachWorkflowInformationPhases';
 import type { EachWorkflowInformationProgress } from './EachWorkflowInformationProgress';
 import type { EachWorkflowInformationProgressStatus } from './EachWorkflowInformationProgressStatus';
@@ -36,6 +37,7 @@ export interface EachWorkflowInformation {
   status: WorkFlowStatus;
   last_scan_time?: EachWorkflowInformationLastScanTime;
   next_runtime?: EachWorkflowInformationNextRuntime;
+  next_scan_id?: EachWorkflowInformationNextScanId;
   start_time?: EachWorkflowInformationStartTime;
   end_time?: EachWorkflowInformationEndTime;
   duration?: EachWorkflowInformationDuration;

@@ -2,7 +2,7 @@
 
 import { Divider, Flex } from "@mantine/core";
 
-import WorkflowOnHeader from "@/builtinApps/AssetIdentificationApp/Workflow/components/WorkflowScanHistoryModal/components/WorkflowOnHeader";
+import WorkflowOnHeader from "@/builtinApps/AssetIdentificationApp/Workflow/components/WorkflowOnHeader";
 
 import ICPanelHeaderAvatarMenu from "./components/ICPanelHeaderAvatarMenu";
 import ICPanelHeaderThemeModeSelect from "./components/ICPanelHeaderThemeModeSelect";

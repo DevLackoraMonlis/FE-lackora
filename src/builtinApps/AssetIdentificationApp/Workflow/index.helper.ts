@@ -6,7 +6,7 @@ import { WorkflowStatus } from "@/shared/enums/index.enums";
 
 import { toFormattedDate } from "@/shared/lib/dayJs";
 
-export const getDifferenceDateTime = (date?: string | Date) => {
+export const getDifferenceDateTime = ({ date = "", format = "HH:mm:ss" }) => {
 	let remainingTime = {
 		Hours: { first: "0", second: "0" },
 		Minutes: { first: "0", second: "0" },
@@ -15,12 +15,12 @@ export const getDifferenceDateTime = (date?: string | Date) => {
 	if (date) {
 		try {
 			const getTime = dayjs(date).diff(dayjs());
-			const getDifference = dayjs(getTime).subtract(3.5, "hours").format("HH:mm:ss"); // .tz("Asia/Tehran")
+			const getDifference = dayjs(getTime).subtract(3.5, "hours").format(format); // .tz("Asia/Tehran")
 			const [hh, mm, ss] = getDifference.split(":");
 			remainingTime = {
-				Hours: { first: hh[0], second: hh[1] },
-				Minutes: { first: mm[0], second: mm[1] },
-				Seconds: { first: ss[0], second: ss[1] },
+				Hours: { first: hh?.[0], second: hh?.[1] },
+				Minutes: { first: mm?.[0], second: mm?.[1] },
+				Seconds: { first: ss?.[0], second: ss?.[1] },
 			};
 			return {
 				remainingTime,
@@ -55,10 +55,8 @@ export function calculateNextScheduledScan(date?: string | null) {
 	if (!date) return "Scheduled scan will start in - minutes";
 	try {
 		if (!dayjs(date).isValid()) return `Scheduled scan will start in ${date}`;
-		const today = dayjs().startOf("day");
-		const inputDate = dayjs(date).startOf("day");
-		const diff = inputDate.diff(today, "day");
-		return `Scheduled scan will start in ${dayjs(diff).get("minutes")} minutes`;
+		const { getDifference } = getDifferenceDateTime({ date, format: "HH:mm" });
+		return `Scheduled scan will start in ${getDifference}`;
 	} catch (_) {
 		return `Scheduled scan will start in ${date}`;
 	}
@@ -99,7 +97,7 @@ export function stepDescription<T extends Record<string, unknown>>(step: T) {
 	const progressStepValue = ((step?.current_processed as number) / (step?.total_processing as number)) * 100;
 	const isProgress = (step.status as string) === WorkflowStatus.Inprogress;
 	const failed = (step.status as string) === WorkflowStatus.Failed;
-	const start = toFormattedDate(step.start_time as string, "HH:mm") || "-";
+	const start = toFormattedDate(step.start_time as string, "HH:mm") || "";
 	const end = toFormattedDate(step.end_time as string, "HH:mm") || "-";
 	return {
 		description: failed
@@ -111,7 +109,7 @@ export function stepDescription<T extends Record<string, unknown>>(step: T) {
 		value: progressStepValue,
 		resultMessage: step.result_message as string,
 		resultCount: step.result_count as number,
-		message: `${step.progress || step.status} |  Duration: ${step.duration || "-"}`,
+		message: `${step.progress ? `${step.progress} |` : ""} Duration: ${step.duration || "-"}`,
 	};
 }
 

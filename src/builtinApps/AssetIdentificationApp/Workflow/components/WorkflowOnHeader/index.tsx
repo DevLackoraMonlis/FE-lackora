@@ -2,28 +2,30 @@ import { Badge, Flex, Loader, Text, Tooltip } from "@mantine/core";
 import { useInterval } from "@mantine/hooks";
 import { useEffect, useState } from "react";
 
-import { getDifferenceDateTime, getWorkflowStatus } from "../../../../index.helper";
-import { calculateNextScheduledScan } from "../../../../index.helper";
-import { useWorkflow } from "../../../../index.hooks";
+import { WORKFLOW_REFETCH_INTERVAL_HEADER } from "../../index.constants";
+import { getDifferenceDateTime, getWorkflowStatus } from "../../index.helper";
+import { calculateNextScheduledScan } from "../../index.helper";
+import { useWorkflow } from "../../index.hooks";
 import { WorkflowLoader, WorkflowPending } from "./components/WorkflowLoader";
 
-const refetchInterval = 10_000;
-
 const WorkflowOnHeader = () => {
-	const { workflows, isLoading } = useWorkflow(refetchInterval);
+	const { workflows, isLoading } = useWorkflow(WORKFLOW_REFETCH_INTERVAL_HEADER);
 	const message = workflows?.data?.message || workflows?.data?.description || "Unhandled error message!";
 	const scanId = workflows?.data?.scan_id || 0;
 	const nextScan = workflows?.data?.next_runtime || "";
+	const estimatedTime = workflows?.data?.next_runtime || ""; // estimated_end_time
 	const status = isLoading ? "" : workflows?.data?.status;
 	const statusParams = getWorkflowStatus(status);
 
 	const [timer, setTimer] = useState<string>("loading...");
 	const interval = useInterval(() => {
-		const { getDifference } = getDifferenceDateTime(nextScan);
+		const { getDifference } = getDifferenceDateTime({
+			date: status === "in_progress" ? estimatedTime : nextScan,
+		});
 		setTimer(getDifference);
 	}, 1000);
 	useEffect(() => {
-		if (nextScan && status === "completed") {
+		if (nextScan && (status === "completed" || status === "in_progress")) {
 			interval.start();
 		}
 		return interval.stop;
@@ -72,7 +74,12 @@ const WorkflowOnHeader = () => {
 						</Flex>
 					</Badge>
 					<Badge variant="light" color="gray.4" tt="capitalize" p="md">
-						Time remaining: ~00:00:00
+						<Flex align="center">
+							<Text fz="xs">Time remaining:</Text>
+							<Text fz="xs" w="55px">
+								{timer}
+							</Text>
+						</Flex>
 					</Badge>
 				</Flex>
 			);

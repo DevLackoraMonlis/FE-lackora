@@ -63,6 +63,11 @@ export default function WorkflowScanHistory({ selectedScan }: { selectedScan?: W
 					{generateSortIcons("gateway")}
 				</Flex>
 			),
+			render: ({ gateway }) => (
+				<Highlight highlight={[search]} highlightStyles={{}}>
+					{gateway}
+				</Highlight>
+			),
 		},
 		{
 			accessor: "discoveryTime",
@@ -83,9 +88,8 @@ export default function WorkflowScanHistory({ selectedScan }: { selectedScan?: W
 	// data sorting
 	const sortedData = sortBy(results, (record) => record[sortStatus.columnAccessor]);
 	if (sortStatus.direction === "des") sortedData.reverse();
-	const filteredResults = sortedData.filter(
-		({ macAddress, ipAddress, discoveryTime }) =>
-			macAddress.includes(search) || ipAddress.includes(search) || discoveryTime.includes(search),
+	const filteredResults = sortedData.filter((record) =>
+		Object.entries(record).some(([_, value = ""]) => (value as string)?.toLowerCase()?.includes(search)),
 	);
 	// pagination options
 	const from = (queryParams.page - 1) * queryParams.limit;
@@ -129,7 +133,7 @@ export default function WorkflowScanHistory({ selectedScan }: { selectedScan?: W
 					<BCSearchInput
 						clientSide
 						onSubmitSearch={(value) => handleUpdateQueryParams({ search: value })}
-						placeholder="Search by IP , MAC address or Time of Discovery"
+						placeholder="Search on columns"
 						inputWidth="360px"
 					/>
 				</Flex>
