@@ -10,7 +10,7 @@ import type { EachAdvanceFilterConditionValueObjectType } from './EachAdvanceFil
 import type { EachAdvanceFilterConditionValueValue } from './EachAdvanceFilterConditionValueValue';
 
 export interface EachAdvanceFilterConditionValue {
-  objectType?: EachAdvanceFilterConditionValueObjectType;
+  object_type?: EachAdvanceFilterConditionValueObjectType;
   label: EachAdvanceFilterConditionValueLabel;
   value: EachAdvanceFilterConditionValueValue;
 }

@@ -101,6 +101,10 @@ function WorkflowDetectedStep({ stepId = "" }: Props) {
 	const totalRecords = filteredResults?.length;
 
 	if (stepDetails.isLoading) return <LoadingOverlay visible />;
+	const dynamicColumns = columns.filter(({ accessor }) => {
+		const record = tableRecords?.at(0);
+		return !!record?.[accessor as keyof typeof record];
+	});
 	const statusParams = getWorkflowStatus(status || "");
 	const Icon = statusParams.icon;
 	return (
@@ -132,7 +136,7 @@ function WorkflowDetectedStep({ stepId = "" }: Props) {
 				withRowBorders
 				withPaddingCells
 				disableVirtualize
-				columns={columns}
+				columns={dynamicColumns}
 				records={tableRecords}
 				totalRecords={totalRecords}
 				page={queryParams.page}

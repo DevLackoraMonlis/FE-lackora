@@ -25,6 +25,7 @@ import type {
   EachWorkflowInformation,
   GetWorkflowHistoryParams,
   HTTPValidationError,
+  MessageOnlyResponse,
   PaginatedBaseResponseEachWorkFlowHistoryEachListMetadataWrapper,
   WorkFlowHistoryDetails
 } from './models';
@@ -112,6 +113,93 @@ export function useGetWorkflows<TData = Awaited<ReturnType<typeof getWorkflows>>
  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
   const queryOptions = getGetWorkflowsQueryOptions(options)
+
+  const query = useQuery(queryOptions , queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+/**
+ * @summary Run Workflow
+ */
+export const runWorkflow = (
+    
+ signal?: AbortSignal
+) => {
+      
+      
+      return orvalMutator<MessageOnlyResponse>(
+      {url: "/api/workflow-management/run-now", method: 'GET', signal
+    },
+      );
+    }
+  
+
+const getRunWorkflowQueryKey = () => {
+    return ["/api/workflow-management/run-now"] as const;
+    }
+
+    
+export const getRunWorkflowQueryOptions = <TData = Awaited<ReturnType<typeof runWorkflow>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof runWorkflow>>, TError, TData>>, }
+) => {
+
+const {query: queryOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getRunWorkflowQueryKey();
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof runWorkflow>>> = ({ signal }) => runWorkflow(signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof runWorkflow>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type RunWorkflowQueryResult = NonNullable<Awaited<ReturnType<typeof runWorkflow>>>
+export type RunWorkflowQueryError = unknown
+
+
+export function useRunWorkflow<TData = Awaited<ReturnType<typeof runWorkflow>>, TError = unknown>(
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof runWorkflow>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof runWorkflow>>,
+          TError,
+          Awaited<ReturnType<typeof runWorkflow>>
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useRunWorkflow<TData = Awaited<ReturnType<typeof runWorkflow>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof runWorkflow>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof runWorkflow>>,
+          TError,
+          Awaited<ReturnType<typeof runWorkflow>>
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useRunWorkflow<TData = Awaited<ReturnType<typeof runWorkflow>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof runWorkflow>>, TError, TData>>, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary Run Workflow
+ */
+
+export function useRunWorkflow<TData = Awaited<ReturnType<typeof runWorkflow>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof runWorkflow>>, TError, TData>>, }
+ , queryClient?: QueryClient 
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getRunWorkflowQueryOptions(options)
 
   const query = useQuery(queryOptions , queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 

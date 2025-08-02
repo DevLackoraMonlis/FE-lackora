@@ -5,5 +5,6 @@
  * MonoWatch Security Asset Management
  * OpenAPI spec version: 1.0.0
  */
+import type { EachAdvanceFilterConditionValueValueAnyOfItem } from './EachAdvanceFilterConditionValueValueAnyOfItem';
 
-export type EachAdvanceFilterConditionValueValue = string | number | number | boolean;
+export type EachAdvanceFilterConditionValueValue = string | number | number | boolean | EachAdvanceFilterConditionValueValueAnyOfItem[];
