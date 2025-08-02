@@ -1,5 +1,4 @@
 import CyberAssetDetailInventoryDynamicGrid from "@/builtinApps/CyberAssetsApp/CyberAssets/components/CyberAssetDetailPage/CyberAssetDetailInventory/CyberAssetDetailInventoryDynamicGrid";
-import { CyberAssetClassification } from "@/builtinApps/CyberAssetsApp/CyberAssets/index.enum";
 import {
 	getCyberAssetClassificationIcon,
 	getCyberAssetDiscoveryTypeBadge,
@@ -8,52 +7,72 @@ import {
 	getCyberAssetStatusBadge,
 } from "@/builtinApps/CyberAssetsApp/CyberAssets/index.helper";
 import type {
-	CuberAssetDetailGeneralInfoData,
 	CyberAssetDetailGeneralInfoCardProps,
 	CyberAssetDetailGeneralInfoProps,
 	CyberAssetDetailInventoryType,
 } from "@/builtinApps/CyberAssetsApp/CyberAssets/index.types";
 import { createDynamicICAdvancedStore } from "@/shared/components/infraComponents/ICAdvancedFilter/index.store";
 import type { ICAdvancedFilterDynamicStoreType } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
-import { Flex, Text } from "@mantine/core";
+import { Flex, Text, Tooltip } from "@mantine/core";
 import { IconAlarm, IconDevices2, IconMapPin, IconNetwork, IconUserCircle } from "@tabler/icons-react";
 import { useEffect, useRef } from "react";
+import type {
+	CyberAssetClassificationEnum,
+	CyberAssetDiscoveryTypeEnum,
+	CyberAssetOsTypeEnum,
+	CyberAssetStatusEnum,
+} from "./index.enum";
 
-export const useGetCyberAssetDetailGeneralInfo = (params: { data: CuberAssetDetailGeneralInfoData }) => {
+export const useGetCyberAssetDetailGeneralInfo = (params: {
+	id?: string;
+}) => {
+	const getCyberAssetsGeneralInfoQuery = useGetAssetGeneralInfo(params.id || "", {
+		query: {
+			enabled: !!params.id,
+		},
+	});
+
 	const assetIdentificationCard: Omit<CyberAssetDetailGeneralInfoCardProps, "isLoading"> = {
 		title: "Asset Identification",
 		icon: <IconDevices2 color={"blue"} size={24} />,
 		items: [
 			{
 				label: "OS Type:",
-				value: getCyberAssetOsTypeBadge({
-					type: params.data.osType,
-					wrapperProps: {
-						fz: "xs",
-					},
-				}),
+				value: getCyberAssetsGeneralInfoQuery.data?.data.os_name
+					? getCyberAssetOsTypeBadge({
+							type: getCyberAssetsGeneralInfoQuery.data?.data.os_name as CyberAssetOsTypeEnum,
+							wrapperProps: {
+								fz: "xs",
+							},
+						})
+					: "",
 			},
 			{
 				label: "OS Family:",
 				value: (
 					<Flex gap={"xs"}>
-						{getCyberAssetClassificationIcon({
-							type: params.data.classification,
-						})}
-						<Text fz={"xs"}>{params.data.osFamily}</Text>
+						{getCyberAssetsGeneralInfoQuery.data?.data.classification
+							? getCyberAssetClassificationIcon({
+									type: getCyberAssetsGeneralInfoQuery.data?.data
+										.classification as CyberAssetClassificationEnum,
+								})
+							: ""}
+						<Text fz={"xs"}>{getCyberAssetsGeneralInfoQuery.data?.data.os_family}</Text>
 					</Flex>
 				),
 			},
 			{
 				label: "OS Version:",
-				value: <Text fz={"xs"}>{params.data.osVersion}</Text>,
+				value: <Text fz={"xs"}>{getCyberAssetsGeneralInfoQuery.data?.data.os_family || ""}</Text>,
 			},
 			{
 				label: "Discovery Type:",
-				value: getCyberAssetDiscoveryTypeBadge({
-					type: params.data.discoveryType,
-					size: 16,
-				}),
+				value: getCyberAssetsGeneralInfoQuery.data?.data.discovery_type
+					? getCyberAssetDiscoveryTypeBadge({
+							type: getCyberAssetsGeneralInfoQuery.data?.data.discovery_type as CyberAssetDiscoveryTypeEnum,
+							size: 16,
+						})
+					: "",
 			},
 		],
 	};
@@ -64,37 +83,88 @@ export const useGetCyberAssetDetailGeneralInfo = (params: { data: CuberAssetDeta
 		items: [
 			{
 				label: "IP Address:",
-				value: <Text fz={"xs"}>{params.data.ipAddress}</Text>,
+				value:
+					getCyberAssetsGeneralInfoQuery.data?.data.network_information?.ip_address &&
+					getCyberAssetsGeneralInfoQuery.data?.data.network_information?.ip_address.length > 1 ? (
+						<Tooltip
+							label={
+								<Flex direction={"column"}>
+									{getCyberAssetsGeneralInfoQuery.data?.data.network_information.ip_address.map((item) => (
+										<Text key={item} fz={"xs"}>
+											{item}
+										</Text>
+									))}
+								</Flex>
+							}
+						>
+							<Text fz={"xs"}>
+								{getCyberAssetsGeneralInfoQuery.data?.data.network_information.ip_address}
+							</Text>
+						</Tooltip>
+					) : (
+						<Text fz={"xs"}>
+							{getCyberAssetsGeneralInfoQuery.data?.data.network_information.ip_address || ""}
+						</Text>
+					),
 			},
 			{
 				label: "MAC Address:",
-				value: <Text fz={"xs"}>{params.data.macAddress}</Text>,
+				value:
+					getCyberAssetsGeneralInfoQuery.data?.data.network_information?.mac_address &&
+					getCyberAssetsGeneralInfoQuery.data?.data.network_information?.mac_address.length > 1 ? (
+						<Tooltip
+							label={
+								<Flex direction={"column"}>
+									{getCyberAssetsGeneralInfoQuery.data?.data.network_information.mac_address.map((item) => (
+										<Text key={item} fz={"xs"}>
+											{item}
+										</Text>
+									))}
+								</Flex>
+							}
+						>
+							<Text fz={"xs"}>
+								{getCyberAssetsGeneralInfoQuery.data?.data.network_information.mac_address}
+							</Text>
+						</Tooltip>
+					) : (
+						<Text fz={"xs"}>
+							{getCyberAssetsGeneralInfoQuery.data?.data.network_information.mac_address || ""}
+						</Text>
+					),
 			},
 			{
 				label: "Gateway IP:",
-				value: <Text fz={"xs"}>{params.data.gateway}</Text>,
+				value: <Text fz={"xs"}>{getCyberAssetsGeneralInfoQuery.data?.data.gateway_name || ""}</Text>,
 			},
 			{
 				label: "VLAN:",
-				value: <Text fz={"xs"}>{params.data.vLan}</Text>,
+				value: <Text fz={"xs"}>{getCyberAssetsGeneralInfoQuery.data?.data.vlan_id || ""}</Text>,
 			},
 		],
 	};
+
 	const ownershipAndUsageCard: Omit<CyberAssetDetailGeneralInfoCardProps, "isLoading"> = {
 		title: "Ownership & Usage",
 		icon: <IconUserCircle color={"blue"} size={24} />,
 		items: [
 			{
 				label: "Last Logon User:",
-				value: <Text fz={"xs"}>{params.data.lastLogonUser}</Text>,
+				value: (
+					<Text fz={"xs"}>
+						{getCyberAssetsGeneralInfoQuery.data?.data.ownership_information.owner_name || ""}
+					</Text>
+				),
 			},
 			{
 				label: "Owner:",
-				value: <Text fz={"xs"}>{params.data.owner}</Text>,
+				value: (
+					<Text fz={"xs"}>{getCyberAssetsGeneralInfoQuery.data?.data.ownership_information.owner || ""}</Text>
+				),
 			},
 			{
 				label: "User Group:",
-				value: <Text fz={"xs"}>{params.data.userGroup}</Text>,
+				value: <Text fz={"xs"}>Blank</Text>,
 			},
 		],
 	};
@@ -105,15 +175,27 @@ export const useGetCyberAssetDetailGeneralInfo = (params: { data: CuberAssetDeta
 		items: [
 			{
 				label: "Location:",
-				value: <Text fz={"xs"}>{params.data.location}</Text>,
+				value: (
+					<Text fz={"xs"}>
+						{getCyberAssetsGeneralInfoQuery.data?.data.location_information.location || ""}
+					</Text>
+				),
 			},
 			{
 				label: "Latitude:",
-				value: <Text fz={"xs"}>{params.data.latitude}</Text>,
+				value: (
+					<Text fz={"xs"}>
+						{getCyberAssetsGeneralInfoQuery.data?.data.location_information.latitude || ""}
+					</Text>
+				),
 			},
 			{
 				label: "Longitude:",
-				value: <Text fz={"xs"}>{params.data.longitude}</Text>,
+				value: (
+					<Text fz={"xs"}>
+						{getCyberAssetsGeneralInfoQuery.data?.data.location_information.longitude || ""}
+					</Text>
+				),
 			},
 		],
 	};
@@ -124,23 +206,44 @@ export const useGetCyberAssetDetailGeneralInfo = (params: { data: CuberAssetDeta
 		items: [
 			{
 				label: "Last Reboot Time:",
-				value: <Text fz={"xs"}>{params.data.lastRebootTime}</Text>,
+				value: (
+					<Text fz={"xs"}>
+						{getCyberAssetsGeneralInfoQuery.data?.data.status_and_activity.last_reboot_time || ""}
+					</Text>
+				),
 			},
 			{
 				label: "Last Scan ID:",
-				value: <Text fz={"xs"}>{params.data.lastScanId}</Text>,
+				value: (
+					<Text fz={"xs"}>
+						{getCyberAssetsGeneralInfoQuery.data?.data.status_and_activity.last_scan_id || ""}
+					</Text>
+				),
 			},
 			{
 				label: "Last Seen:",
-				value: <Text fz={"xs"}>{params.data.lastSeen}</Text>,
+				value: (
+					<Text fz={"xs"}>
+						{getCyberAssetsGeneralInfoQuery.data?.data.status_and_activity.last_seen || ""}
+					</Text>
+				),
 			},
 			{
 				label: "Current State:",
-				value: getCyberAssetStateBadge({ type: params.data.currentState }),
+				value: getCyberAssetsGeneralInfoQuery.data?.data.status_and_activity.current_state
+					? getCyberAssetStateBadge({
+							type: getCyberAssetsGeneralInfoQuery.data?.data.status_and_activity
+								.current_state as CyberAssetStateEnum,
+						})
+					: "",
 			},
 			{
 				label: "Current Status:",
-				value: getCyberAssetStatusBadge({ type: params.data.currentStatus }),
+				value: getCyberAssetStatusBadge({
+					type:
+						(getCyberAssetsGeneralInfoQuery.data?.data.status_and_activity
+							.current_status as CyberAssetStatusEnum) || "no policy",
+				}),
 			},
 		],
 	};
@@ -160,13 +263,20 @@ export const useGetCyberAssetDetailGeneralInfo = (params: { data: CuberAssetDeta
 		onCheckConnection: () => {
 			console.log("check");
 		},
-		upTimeTitle: "Uptime Since 10hrs, 32mins",
-		icon: getCyberAssetClassificationIcon({ type: CyberAssetClassification.SERVER, size: 60 }),
-		subTitle: "Windows Server2019 Standard",
-		title: "WIN-SERVER-01",
+		upTimeTitle: getCyberAssetsGeneralInfoQuery.data?.data.asset_identification.uptime_since || "",
+		icon: getCyberAssetClassificationIcon({
+			type: getCyberAssetsGeneralInfoQuery.data?.data.classification as CyberAssetClassificationEnum,
+			size: 60,
+		}),
+		subTitle: getCyberAssetsGeneralInfoQuery.data?.data.asset_identification.os_family || "",
+		title: getCyberAssetsGeneralInfoQuery.data?.data.asset_identification.os_version || "",
 	};
 
-	return { generalInfo };
+	return {
+		generalInfo,
+		isLoading: getCyberAssetsGeneralInfoQuery.isFetching,
+		osType: getCyberAssetsGeneralInfoQuery.data?.data.asset_identification.os_type as CyberAssetOsTypeEnum,
+	};
 };
 
 export function useCyberAssetDynamicStores(types: CyberAssetDetailInventoryType[]) {
@@ -198,4 +308,7 @@ export function useCyberAssetDynamicStores(types: CyberAssetDetailInventoryType[
 	}, [types]);
 
 	return { storesRef };
+}
+function useGetAssetGeneralInfo(arg0: string, arg1: { query: { enabled: boolean } }) {
+	throw new Error("Function not implemented.");
 }

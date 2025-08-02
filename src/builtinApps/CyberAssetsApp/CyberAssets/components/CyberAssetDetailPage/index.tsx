@@ -8,13 +8,6 @@ import CyberAssetDetailInventory from "@/builtinApps/CyberAssetsApp/CyberAssets/
 import CyberAssetDetailOverview from "@/builtinApps/CyberAssetsApp/CyberAssets/components/CyberAssetDetailPage/CyberAssetDetailOverview";
 import CyberAssetDetailRelations from "@/builtinApps/CyberAssetsApp/CyberAssets/components/CyberAssetDetailPage/CyberAssetDetailRelations";
 import CyberAssetDetailSecurity from "@/builtinApps/CyberAssetsApp/CyberAssets/components/CyberAssetDetailPage/CyberAssetDetailSecurity";
-import {
-	CyberAssetClassification,
-	CyberAssetDiscoveryType,
-	CyberAssetOsType,
-	CyberAssetState,
-	CyberAssetStatus,
-} from "@/builtinApps/CyberAssetsApp/CyberAssets/index.enum";
 import { useGetCyberAssetDetailGeneralInfo } from "@/builtinApps/CyberAssetsApp/CyberAssets/index.hooks";
 import type { ICMonoAppPagesDefaultProps } from "@/shared/components/infraComponents/ICMonoMarket/index.types";
 import { AppRoutes } from "@/shared/constants/routes";
@@ -47,32 +40,8 @@ enum TabTypes {
 
 export default function CyberAssetDetailPage(props: Props) {
 	const [activeTab, setActiveTab] = useState<TabTypes>(TabTypes.OVERVIEW);
-	const { generalInfo } = useGetCyberAssetDetailGeneralInfo({
-		data: {
-			currentState: CyberAssetState.MANAGEABLE,
-			currentStatus: CyberAssetStatus.PROFILED,
-			discoveryType: CyberAssetDiscoveryType.DISCOVERED,
-			gateway: "192.168.10.1",
-			ipAddress: "192.168.10.1",
-			lastLogonUser: "Mahya.sh",
-			userGroup: "Product",
-			lastRebootTime: "2025-03-12, 18:30",
-			lastScanId: "#4300",
-			lastSeen: "2025-03-12, 18:30",
-			latitude: "35.5501° N",
-			longitude: "35.5501° N",
-			location: "Tehran Milad DC - Rack 3U",
-			macAddress: "00-14-22-01-23-45",
-			osFamily: "Windows Server 2019 Standard",
-			osType: CyberAssetOsType.LINUX,
-			osVersion: "10.0.17763",
-			owner: "Saman.ha",
-			vLan: "Production-VLAN (ID: 20)",
-			classification: CyberAssetClassification.SERVER,
-		},
-	});
+	const { generalInfo, osType, isLoading } = useGetCyberAssetDetailGeneralInfo({ id: props.id });
 
-	const isLoading = false;
 	return (
 		<Flex direction={"column"} h={"100%"}>
 			<Flex bg={"gray.2"} p={"2xs"}>
@@ -128,7 +97,7 @@ export default function CyberAssetDetailPage(props: Props) {
 						</Tabs.List>
 						<Tabs.Panel value={TabTypes.OVERVIEW}>
 							{activeTab === TabTypes.OVERVIEW && (
-								<CyberAssetDetailOverview id={props.id} appName={"Nessus"} />
+								<CyberAssetDetailOverview osType={osType} id={props.id} appName={"Nessus"} />
 							)}
 						</Tabs.Panel>
 						<Tabs.Panel value={TabTypes.INVENTORY}>

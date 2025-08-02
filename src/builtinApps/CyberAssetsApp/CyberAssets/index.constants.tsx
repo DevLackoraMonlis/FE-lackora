@@ -19,12 +19,12 @@ import { Badge, Box, Divider, Flex, Text } from "@mantine/core";
 import { IconLink } from "@tabler/icons-react";
 import Link from "next/link";
 import {
-	type CyberAssetClassification,
-	CyberAssetCriticality,
-	type CyberAssetDiscoveryType,
-	type CyberAssetOsType,
-	CyberAssetState,
-	CyberAssetStatus,
+	type CyberAssetClassificationEnum,
+	CyberAssetCriticalityEnum,
+	type CyberAssetDiscoveryTypeEnum,
+	type CyberAssetOsTypeEnum,
+	CyberAssetStateEnum,
+	CyberAssetStatusEnum,
 } from "./index.enum";
 
 export const getCyberAssetsFormattedColumns: (
@@ -39,12 +39,12 @@ export const getCyberAssetsFormattedColumns: (
 					<Divider
 						h={32}
 						size={4}
-						color={CYBER_ASSET_STATE_COLOR[record.state as CyberAssetState]}
+						color={CYBER_ASSET_STATE_COLOR[record.state as CyberAssetStateEnum]}
 						orientation={"vertical"}
 						mr={"xs"}
 					/>
 					<Flex align={"center"} gap={"xs"}>
-						{getCyberAssetClassificationIcon({ type: record.classification as CyberAssetClassification })}
+						{getCyberAssetClassificationIcon({ type: record.classification as CyberAssetClassificationEnum })}
 						<Text
 							href={
 								appName && moduleName ? AppRoutes.appModuleDetailPage(appName, moduleName, record.id) : "#"
@@ -88,7 +88,7 @@ export const getCyberAssetsFormattedColumns: (
 		accessor: "previous_status",
 		render: (record) => {
 			return getCyberAssetStatusBadge({
-				type: record.previous_status as CyberAssetStatus,
+				type: record.previous_status as CyberAssetStatusEnum,
 				props: {
 					m: "xs",
 				},
@@ -99,7 +99,7 @@ export const getCyberAssetsFormattedColumns: (
 		accessor: "status",
 		render: (record) => {
 			return getCyberAssetStatusBadge({
-				type: record.status as CyberAssetStatus,
+				type: record.status as CyberAssetStatusEnum,
 				props: {
 					m: "xs",
 				},
@@ -110,7 +110,7 @@ export const getCyberAssetsFormattedColumns: (
 		accessor: "criticality",
 		render: (record) => {
 			return getCyberAssetCriticalityBadge({
-				type: record.criticality as CyberAssetCriticality,
+				type: record.criticality as CyberAssetCriticalityEnum,
 				props: {
 					m: "xs",
 				},
@@ -121,7 +121,7 @@ export const getCyberAssetsFormattedColumns: (
 		accessor: "discovery_type",
 		render: (record) => {
 			return getCyberAssetDiscoveryTypeBadge({
-				type: record.discovery_type as CyberAssetDiscoveryType,
+				type: record.discovery_type as CyberAssetDiscoveryTypeEnum,
 				props: {
 					m: "xs",
 				},
@@ -132,7 +132,7 @@ export const getCyberAssetsFormattedColumns: (
 		accessor: "os_name",
 		render: (record) => {
 			return getCyberAssetOsTypeBadge({
-				type: record.os_name as CyberAssetOsType,
+				type: record.os_name as CyberAssetOsTypeEnum,
 				wrapperProps: {
 					m: "xs",
 				},
@@ -143,7 +143,7 @@ export const getCyberAssetsFormattedColumns: (
 		accessor: "state",
 		render: (record) => {
 			return getCyberAssetStateBadge({
-				type: record.state as CyberAssetState,
+				type: record.state as CyberAssetStateEnum,
 				props: {
 					m: "xs",
 				},
@@ -158,7 +158,7 @@ export const getCyberAssetsInventoryFormattedColumns: () => TanStackDataTableCol
 			accessor: "os_name",
 			render: (record) => {
 				return getCyberAssetOsTypeBadge({
-					type: record.os_name as CyberAssetOsType,
+					type: record.os_name as CyberAssetOsTypeEnum,
 					wrapperProps: {
 						m: "xs",
 					},
@@ -183,22 +183,22 @@ export const getCyberAssetsChangesFormattedColumns: () => TanStackDataTableColum
 		},
 	];
 
-export const CYBER_ASSET_CRITICALITY_COLOR: Record<CyberAssetCriticality, string> = {
-	[CyberAssetCriticality.HIGH]: "#F76707",
-	[CyberAssetCriticality.LOW]: "#12B886",
-	[CyberAssetCriticality.MEDIUM]: "#FAB005",
-	[CyberAssetCriticality.VERY_HIGH]: "#FA5252",
-	[CyberAssetCriticality.CRITICAL]: "#b12c2c",
+export const CYBER_ASSET_CRITICALITY_COLOR: Record<CyberAssetCriticalityEnum, string> = {
+	[CyberAssetCriticalityEnum.HIGH]: "#F76707",
+	[CyberAssetCriticalityEnum.LOW]: "#12B886",
+	[CyberAssetCriticalityEnum.MEDIUM]: "#FAB005",
+	[CyberAssetCriticalityEnum.VERY_HIGH]: "#FA5252",
+	[CyberAssetCriticalityEnum.CRITICAL]: "#b12c2c",
 };
 
-export const CYBER_ASSET_STATUS_COLOR: Record<CyberAssetStatus, string> = {
-	[CyberAssetStatus.ASSOCIATED]: "#3BC9DB",
-	[CyberAssetStatus.DEFECTIVE]: "#C92A2A",
-	[CyberAssetStatus.EXTERNAL]: "#FAB005",
-	[CyberAssetStatus.GUEST]: "#7950F2",
-	[CyberAssetStatus.UNREACHABLE]: "#868E96",
-	[CyberAssetStatus.PROFILED]: "#087F5B",
-	[CyberAssetStatus.NO_POLICY]: "#000000",
+export const CYBER_ASSET_STATUS_COLOR: Record<CyberAssetStatusEnum, string> = {
+	[CyberAssetStatusEnum.ASSOCIATED]: "#3BC9DB",
+	[CyberAssetStatusEnum.DEFECTIVE]: "#C92A2A",
+	[CyberAssetStatusEnum.EXTERNAL]: "#FAB005",
+	[CyberAssetStatusEnum.GUEST]: "#7950F2",
+	[CyberAssetStatusEnum.UNREACHABLE]: "#868E96",
+	[CyberAssetStatusEnum.PROFILED]: "#087F5B",
+	[CyberAssetStatusEnum.NO_POLICY]: "#000000",
 };
 
 export const CYBER_ASSET_SERVICE_STATUS_COLOR: Record<CyberAssetDetailOverviewTopServiceStatus, string> = {
@@ -206,9 +206,9 @@ export const CYBER_ASSET_SERVICE_STATUS_COLOR: Record<CyberAssetDetailOverviewTo
 	STOPPED: "#F03E3E",
 };
 
-export const CYBER_ASSET_STATE_COLOR: Record<CyberAssetState, string> = {
-	[CyberAssetState.MANAGEABLE]: "#4C6EF5",
-	[CyberAssetState.UNMANAGEABLE]: "#868E96",
+export const CYBER_ASSET_STATE_COLOR: Record<CyberAssetStateEnum, string> = {
+	[CyberAssetStateEnum.MANAGEABLE]: "#4C6EF5",
+	[CyberAssetStateEnum.UNMANAGEABLE]: "#868E96",
 };
 
 export const CYBER_ASSET_CHANGE_TYPE_COLOR: Record<CyberAssetDetailOverviewChangeType, string> = {

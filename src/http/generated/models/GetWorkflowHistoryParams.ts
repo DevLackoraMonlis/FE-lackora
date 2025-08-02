@@ -12,13 +12,9 @@ export type GetWorkflowHistoryParams = {
  */
 status?: string | null;
 /**
- * Start time of workflow
+ * timeframe of workflow
  */
-start_time?: string | null;
-/**
- * End time of workflow
- */
-end_time?: string | null;
+timeframe?: string | null;
 /**
  * @minimum 1
  */

@@ -1,6 +1,6 @@
 import CyberAssetDetailOverviewSecurityGaugeChart from "@/builtinApps/CyberAssetsApp/CyberAssets/components/CyberAssetDetailPage/CyberAssetDetailOverview/CyberAssetDetailOverviewSecurity/CyberAssetDetailOverviewSecurityGuageChart";
 import { CYBER_ASSET_CRITICALITY_COLOR } from "@/builtinApps/CyberAssetsApp/CyberAssets/index.constants";
-import { CyberAssetCriticality } from "@/builtinApps/CyberAssetsApp/CyberAssets/index.enum";
+import { CyberAssetCriticalityEnum } from "@/builtinApps/CyberAssetsApp/CyberAssets/index.enum";
 import { getCyberAssetCriticalityBadge } from "@/builtinApps/CyberAssetsApp/CyberAssets/index.helper";
 import type {
 	CyberAssetDetailOverviewApplicationSecurityStatus,
@@ -19,12 +19,12 @@ const RiskScoreChart = (props: { riskScore: number | null }) => {
 	const getRiskScoreColor = () => {
 		if (!props.riskScore) return "white";
 		if (props.riskScore > 0 && props.riskScore <= 33) {
-			return CYBER_ASSET_CRITICALITY_COLOR[CyberAssetCriticality.LOW];
+			return CYBER_ASSET_CRITICALITY_COLOR[CyberAssetCriticalityEnum.LOW];
 		}
 		if (props.riskScore > 33 && props.riskScore <= 66) {
-			return CYBER_ASSET_CRITICALITY_COLOR[CyberAssetCriticality.MEDIUM];
+			return CYBER_ASSET_CRITICALITY_COLOR[CyberAssetCriticalityEnum.MEDIUM];
 		}
-		return CYBER_ASSET_CRITICALITY_COLOR[CyberAssetCriticality.CRITICAL];
+		return CYBER_ASSET_CRITICALITY_COLOR[CyberAssetCriticalityEnum.CRITICAL];
 	};
 
 	const riskValue = Number(((props.riskScore || 0) * 0.01).toFixed(1));
@@ -32,9 +32,9 @@ const RiskScoreChart = (props: { riskScore: number | null }) => {
 	return (
 		<CyberAssetDetailOverviewSecurityGaugeChart
 			items={[
-				[0.33, CYBER_ASSET_CRITICALITY_COLOR[CyberAssetCriticality.LOW]],
-				[0.66, CYBER_ASSET_CRITICALITY_COLOR[CyberAssetCriticality.MEDIUM]],
-				[1, CYBER_ASSET_CRITICALITY_COLOR[CyberAssetCriticality.CRITICAL]],
+				[0.33, CYBER_ASSET_CRITICALITY_COLOR[CyberAssetCriticalityEnum.LOW]],
+				[0.66, CYBER_ASSET_CRITICALITY_COLOR[CyberAssetCriticalityEnum.MEDIUM]],
+				[1, CYBER_ASSET_CRITICALITY_COLOR[CyberAssetCriticalityEnum.CRITICAL]],
 			]}
 			value={riskValue}
 			chartId={"risk-score-chart"}
@@ -57,32 +57,32 @@ const RiskScoreChart = (props: { riskScore: number | null }) => {
 };
 
 const CriticalityChart = (props: {
-	criticalityColorMap: Record<CyberAssetCriticality, number>;
-	criticalityValueMap: Record<CyberAssetCriticality, number>;
-	criticality: CyberAssetCriticality;
+	criticalityColorMap: Record<CyberAssetCriticalityEnum, number>;
+	criticalityValueMap: Record<CyberAssetCriticalityEnum, number>;
+	criticality: CyberAssetCriticalityEnum;
 }) => {
 	return (
 		<CyberAssetDetailOverviewSecurityGaugeChart
 			items={[
 				[
-					props.criticalityColorMap[CyberAssetCriticality.LOW],
-					CYBER_ASSET_CRITICALITY_COLOR[CyberAssetCriticality.LOW],
+					props.criticalityColorMap[CyberAssetCriticalityEnum.LOW],
+					CYBER_ASSET_CRITICALITY_COLOR[CyberAssetCriticalityEnum.LOW],
 				],
 				[
-					props.criticalityColorMap[CyberAssetCriticality.MEDIUM],
-					CYBER_ASSET_CRITICALITY_COLOR[CyberAssetCriticality.MEDIUM],
+					props.criticalityColorMap[CyberAssetCriticalityEnum.MEDIUM],
+					CYBER_ASSET_CRITICALITY_COLOR[CyberAssetCriticalityEnum.MEDIUM],
 				],
 				[
-					props.criticalityColorMap[CyberAssetCriticality.HIGH],
-					CYBER_ASSET_CRITICALITY_COLOR[CyberAssetCriticality.HIGH],
+					props.criticalityColorMap[CyberAssetCriticalityEnum.HIGH],
+					CYBER_ASSET_CRITICALITY_COLOR[CyberAssetCriticalityEnum.HIGH],
 				],
 				[
-					props.criticalityColorMap[CyberAssetCriticality.VERY_HIGH],
-					CYBER_ASSET_CRITICALITY_COLOR[CyberAssetCriticality.VERY_HIGH],
+					props.criticalityColorMap[CyberAssetCriticalityEnum.VERY_HIGH],
+					CYBER_ASSET_CRITICALITY_COLOR[CyberAssetCriticalityEnum.VERY_HIGH],
 				],
 				[
-					props.criticalityColorMap[CyberAssetCriticality.CRITICAL],
-					CYBER_ASSET_CRITICALITY_COLOR[CyberAssetCriticality.CRITICAL],
+					props.criticalityColorMap[CyberAssetCriticalityEnum.CRITICAL],
+					CYBER_ASSET_CRITICALITY_COLOR[CyberAssetCriticalityEnum.CRITICAL],
 				],
 			]}
 			value={props.criticalityValueMap[props.criticality]}
@@ -96,7 +96,7 @@ const CriticalityChart = (props: {
 					tt={"capitalize"}
 					fz={"xs"}
 					fw={"bolder"}
-					c={CYBER_ASSET_CRITICALITY_COLOR[CyberAssetCriticality.CRITICAL]}
+					c={CYBER_ASSET_CRITICALITY_COLOR[CyberAssetCriticalityEnum.CRITICAL]}
 				>
 					{props.criticality}
 				</Text>
@@ -137,20 +137,20 @@ const CustomAlert = (props: {
 };
 
 export default function CyberAssetDetailOverviewSecurity(props: Props) {
-	const criticalityColorMap: Record<CyberAssetCriticality, number> = {
-		[CyberAssetCriticality.LOW]: 0.2,
-		[CyberAssetCriticality.MEDIUM]: 0.4,
-		[CyberAssetCriticality.HIGH]: 0.6,
-		[CyberAssetCriticality.VERY_HIGH]: 0.8,
-		[CyberAssetCriticality.CRITICAL]: 1,
+	const criticalityColorMap: Record<CyberAssetCriticalityEnum, number> = {
+		[CyberAssetCriticalityEnum.LOW]: 0.2,
+		[CyberAssetCriticalityEnum.MEDIUM]: 0.4,
+		[CyberAssetCriticalityEnum.HIGH]: 0.6,
+		[CyberAssetCriticalityEnum.VERY_HIGH]: 0.8,
+		[CyberAssetCriticalityEnum.CRITICAL]: 1,
 	};
 
-	const criticalityValueMap: Record<CyberAssetCriticality, number> = {
-		[CyberAssetCriticality.LOW]: 0.1,
-		[CyberAssetCriticality.MEDIUM]: 0.3,
-		[CyberAssetCriticality.HIGH]: 0.5,
-		[CyberAssetCriticality.VERY_HIGH]: 0.7,
-		[CyberAssetCriticality.CRITICAL]: 1,
+	const criticalityValueMap: Record<CyberAssetCriticalityEnum, number> = {
+		[CyberAssetCriticalityEnum.LOW]: 0.1,
+		[CyberAssetCriticalityEnum.MEDIUM]: 0.3,
+		[CyberAssetCriticalityEnum.HIGH]: 0.5,
+		[CyberAssetCriticalityEnum.VERY_HIGH]: 0.7,
+		[CyberAssetCriticalityEnum.CRITICAL]: 1,
 	};
 
 	const alertMap: Record<CyberAssetDetailOverviewApplicationSecurityStatus, ReactNode> = {
@@ -232,7 +232,7 @@ export default function CyberAssetDetailOverviewSecurity(props: Props) {
 						</Flex>
 						<Flex gap={"xs"} wrap={"wrap"}>
 							{Object.entries(props.security.summary).map(([key, value]) =>
-								getCyberAssetCriticalityBadge({ type: key as CyberAssetCriticality, value }),
+								getCyberAssetCriticalityBadge({ type: key as CyberAssetCriticalityEnum, value }),
 							)}
 						</Flex>
 						<Text mt={"sm"} fw={500}>

@@ -2,7 +2,7 @@ import type { CyberAssetDetailOverviewProps } from "@/builtinApps/CyberAssetsApp
 import { Flex, Text } from "@mantine/core";
 
 type Props = {
-	cpu: CyberAssetDetailOverviewProps["cpu"];
+	cpu?: CyberAssetDetailOverviewProps["cpu"];
 };
 
 const Item = (props: {
@@ -24,8 +24,8 @@ const Item = (props: {
 export default function CyberAssetDetailOverviewCPU(props: Props) {
 	return (
 		<Flex bg={"gray.1"} gap={"xs"} w={"100%"} h={"100%"}>
-			<Item label={"cores"} value={props.cpu.cores} />
-			<Item label={"processors"} value={props.cpu.processors} />
+			<Item label={"cores"} value={props.cpu?.cores || 0} />
+			<Item label={"processors"} value={props.cpu?.processors || 0} />
 		</Flex>
 	);
 }

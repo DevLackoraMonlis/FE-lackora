@@ -7,8 +7,8 @@
  */
 import type { EachAdapterInformationDescription } from './EachAdapterInformationDescription';
 import type { EachAdapterInformationIcon } from './EachAdapterInformationIcon';
-import type { EachAdapterInformationUpdatedTime } from './EachAdapterInformationUpdatedTime';
 import type { EachAdapterInformationUpdater } from './EachAdapterInformationUpdater';
+import type { EachAdapterInformationUpdatedTime } from './EachAdapterInformationUpdatedTime';
 
 export interface EachAdapterInformation {
   id: string;

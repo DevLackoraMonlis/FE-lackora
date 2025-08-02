@@ -8,6 +8,7 @@
 import type { EachAdvanceFilterConditionOperator } from './EachAdvanceFilterConditionOperator';
 import type { EachAdvanceFilterConditionValue } from './EachAdvanceFilterConditionValue';
 import type { EachAdvancedFilterLogicalOperator } from './EachAdvancedFilterLogicalOperator';
+import type { EachAdvanceFilterConditionItemCast } from './EachAdvanceFilterConditionItemCast';
 
 export interface EachAdvanceFilterConditionItem {
   open_bracket: number;
@@ -16,4 +17,5 @@ export interface EachAdvanceFilterConditionItem {
   values: EachAdvanceFilterConditionValue[];
   close_bracket: number;
   next_operator: EachAdvancedFilterLogicalOperator;
+  cast?: EachAdvanceFilterConditionItemCast;
 }

@@ -1,10 +1,10 @@
 import type {
-	CyberAssetClassification,
-	CyberAssetCriticality,
-	CyberAssetDiscoveryType,
-	CyberAssetOsType,
-	CyberAssetState,
-	CyberAssetStatus,
+	CyberAssetClassificationEnum,
+	CyberAssetCriticalityEnum,
+	CyberAssetDiscoveryTypeEnum,
+	CyberAssetOsTypeEnum,
+	CyberAssetStateEnum,
+	CyberAssetStatusEnum,
 } from "@/builtinApps/CyberAssetsApp/CyberAssets/index.enum";
 import type {
 	ICAdvancedFilterRq,
@@ -39,10 +39,10 @@ export type CyberAssetDetailProps = {
 };
 
 export type CuberAssetDetailGeneralInfoData = {
-	osType: CyberAssetOsType;
+	osType: CyberAssetOsTypeEnum;
 	osFamily: string;
 	osVersion: string;
-	discoveryType: CyberAssetDiscoveryType;
+	discoveryType: CyberAssetDiscoveryTypeEnum;
 	ipAddress: string;
 	macAddress: string;
 	gateway: string;
@@ -56,9 +56,9 @@ export type CuberAssetDetailGeneralInfoData = {
 	lastRebootTime: string;
 	lastScanId: string;
 	lastSeen: string;
-	currentState: CyberAssetState;
-	currentStatus: CyberAssetStatus;
-	classification: CyberAssetClassification;
+	currentState: CyberAssetStateEnum;
+	currentStatus: CyberAssetStatusEnum;
+	classification: CyberAssetClassificationEnum;
 };
 
 export type CyberAssetDetailOverviewCpu = {
@@ -122,12 +122,12 @@ export type CyberAssetDetailOverviewApplicationSecurityStatus =
 
 export type CyberAssetDetailOverviewApplicationSecurity = {
 	riskScore: number | null;
-	criticality: CyberAssetCriticality;
+	criticality: CyberAssetCriticalityEnum;
 	totalVulnerabilities: number;
-	summary: Record<CyberAssetCriticality, number>;
+	summary: Record<CyberAssetCriticalityEnum, number>;
 	topVulnerabilities: {
 		name: string;
-		criticality: CyberAssetCriticality;
+		criticality: CyberAssetCriticalityEnum;
 	}[];
 	onActivateVulnerabilitiesAssessment: VoidFunction;
 	onFailed: VoidFunction;
@@ -168,7 +168,7 @@ export type CyberAssetDetailOverviewNotification = {
 export type CyberAssetDetailOverviewProps = {
 	configurationItemsCount: number;
 	osName: string;
-	osType: CyberAssetOsType;
+	osType: CyberAssetOsTypeEnum;
 	cpu: CyberAssetDetailOverviewCpu;
 	ram: number;
 	disk: number;

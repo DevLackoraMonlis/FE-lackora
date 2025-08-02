@@ -1,4 +1,4 @@
-export enum CyberAssetCriticality {
+export enum CyberAssetCriticalityEnum {
 	LOW = "low",
 	MEDIUM = "medium",
 	VERY_HIGH = "very high",
@@ -6,7 +6,7 @@ export enum CyberAssetCriticality {
 	CRITICAL = "Critical",
 }
 
-export enum CyberAssetStatus {
+export enum CyberAssetStatusEnum {
 	PROFILED = "profiled",
 	UNREACHABLE = "unreachable",
 	DEFECTIVE = "defective",
@@ -16,7 +16,7 @@ export enum CyberAssetStatus {
 	NO_POLICY = "no policy",
 }
 
-export enum CyberAssetClassification {
+export enum CyberAssetClassificationEnum {
 	SERVER = "server",
 	WORK_STATION = "work_station",
 	IP_PRINTER = "IP_PRINTER",
@@ -34,18 +34,18 @@ export enum CyberAssetClassification {
 	IP_PHONE = "ip_phone",
 }
 
-export enum CyberAssetOsType {
+export enum CyberAssetOsTypeEnum {
 	LINUX = "linux",
 	WINDOWS = "windows",
 }
 
-export enum CyberAssetDiscoveryType {
+export enum CyberAssetDiscoveryTypeEnum {
 	MANUAL = "manual",
 	DISCOVERED = "discovered",
 	BY_INVENTORY = "by inventory",
 }
 
-export enum CyberAssetState {
+export enum CyberAssetStateEnum {
 	MANAGEABLE = "manageable",
 	UNMANAGEABLE = "unmanageable",
 }

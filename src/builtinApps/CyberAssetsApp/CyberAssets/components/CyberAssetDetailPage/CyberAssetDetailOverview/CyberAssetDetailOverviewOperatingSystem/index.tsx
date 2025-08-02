@@ -4,7 +4,7 @@ import { Flex, Text } from "@mantine/core";
 
 type Props = {
 	osType: CyberAssetDetailOverviewProps["osType"];
-	osName: CyberAssetDetailOverviewProps["osName"];
+	osName?: CyberAssetDetailOverviewProps["osName"];
 };
 
 export default function CyberAssetDetailOverviewOperatingSystem(props: Props) {

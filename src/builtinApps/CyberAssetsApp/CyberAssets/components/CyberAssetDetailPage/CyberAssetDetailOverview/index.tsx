@@ -11,8 +11,17 @@ import CyberAssetDetailOverviewOperatingSystem from "@/builtinApps/CyberAssetsAp
 import CyberAssetDetailOverviewRAM from "@/builtinApps/CyberAssetsApp/CyberAssets/components/CyberAssetDetailPage/CyberAssetDetailOverview/CyberAssetDetailOverviewRAM";
 import CyberAssetDetailOverviewSecurity from "@/builtinApps/CyberAssetsApp/CyberAssets/components/CyberAssetDetailPage/CyberAssetDetailOverview/CyberAssetDetailOverviewSecurity";
 import CyberAssetDetailOverviewTopServices from "@/builtinApps/CyberAssetsApp/CyberAssets/components/CyberAssetDetailPage/CyberAssetDetailOverview/CyberAssetDetailOverviewTopServices";
-import { CyberAssetCriticality, CyberAssetOsType } from "@/builtinApps/CyberAssetsApp/CyberAssets/index.enum";
+import {
+	CyberAssetCriticalityEnum,
+	CyberAssetOsTypeEnum,
+} from "@/builtinApps/CyberAssetsApp/CyberAssets/index.enum";
 import type { CyberAssetDetailOverviewProps } from "@/builtinApps/CyberAssetsApp/CyberAssets/index.types";
+import {
+	useGetAssetBaseOverview,
+	useGetAssetLatestChanges,
+	useGetAssetLatestSoftwares,
+	useGetAssetTopServices,
+} from "@/http/generated/cyber-asset-management-cyber-assets";
 import { Box, Button, Grid, ScrollArea, Tooltip } from "@mantine/core";
 import { useViewportSize } from "@mantine/hooks";
 import { IconArrowNarrowRight, IconInfoCircle } from "@tabler/icons-react";
@@ -25,8 +34,109 @@ const ArrowButton = (props: { onClick?: VoidFunction }) => {
 	);
 };
 
-export default function CyberAssetDetailOverview(props: { id?: string; appName?: string }) {
-	const { height } = useViewportSize();
+export default function CyberAssetDetailOverview(props: {
+	id?: string;
+	appName?: string;
+	osType: CyberAssetOsTypeEnum;
+}) {
+	const getAssetOverviewBaseDataQuery = useGetAssetBaseOverview(props.id || "", {
+		query: {
+			enabled: !!props.id,
+			select: (response) => {
+				const data: Pick<
+					CyberAssetDetailOverviewProps,
+					"disk" | "ram" | "cpu" | "network" | "configurationItemsCount" | "osName"
+				> = {
+					configurationItemsCount: response.data.configuration_items,
+					cpu: {
+						cores: response.data.cpu?.cores || 0,
+						processors: response.data.cpu?.processor || 0,
+					},
+					disk: response.data.disk?.total_capacity || 0,
+					network: {
+						ip: response.data.network?.primary_ip || "",
+						openPorts:
+							response.data.network?.open_ports?.map((item) => ({
+								name: item,
+								type: "HTTPS",
+							})) || [],
+						type: "STATIC",
+					},
+					osName: response.data.operating_system || "",
+					ram: response.data.ram?.total_capacity || 0,
+				};
+
+				return {
+					data,
+				};
+			},
+		},
+	});
+
+	const getAssetOverviewLatestChangesDataQuery = useGetAssetLatestChanges(props.id || "", {
+		query: {
+			enabled: !!props.id,
+			select: (response) => {
+				const data: Pick<CyberAssetDetailOverviewProps, "changes"> = {
+					changes: {
+						summary: {
+							MODIFY: response.data.modify,
+							ADD: response.data.add,
+							DELETE: response.data.delete,
+						},
+						total: response.data.total,
+					},
+				};
+
+				return {
+					data,
+				};
+			},
+		},
+	});
+
+	const getAssetOverviewTopServicesDataQuery = useGetAssetTopServices(props.id || "", {
+		query: {
+			enabled: !!props.id,
+			select: (response) => {
+				const data: Pick<CyberAssetDetailOverviewProps, "topServices" | "serviceStartTypes"> = {
+					topServices: response.data.top_services.map((item) => ({
+						name: item.display_name,
+						status: item.state === "Running" ? "RUNNING" : "STOPPED",
+					})),
+					serviceStartTypes: {
+						summary: response.data.start_mode,
+						type: "Automatic",
+						total: response.data.start_mode["Automatic"],
+					},
+				};
+				return {
+					data,
+				};
+			},
+		},
+	});
+
+	const getAssetOverviewApplicationsDataQuery = useGetAssetLatestSoftwares(props.id || "", {
+		query: {
+			enabled: !!props.id,
+			select: (response) => {
+				const data: Pick<CyberAssetDetailOverviewProps, "applications"> = {
+					applications: {
+						items: response.data.latest_softwares.map((item) => ({
+							name: item.name,
+							installDate: item.install_date,
+						})),
+						total: response.data.total,
+					},
+				};
+				return {
+					data,
+				};
+			},
+		},
+	});
+
 	const data: CyberAssetDetailOverviewProps = {
 		notifications: [
 			{
@@ -149,7 +259,7 @@ export default function CyberAssetDetailOverview(props: { id?: string; appName?:
 			type: "STATIC",
 		},
 		osName: "Windows Server 2019",
-		osType: CyberAssetOsType.WINDOWS,
+		osType: CyberAssetOsTypeEnum.WINDOWS,
 		ram: 640000000,
 		topServices: [
 			{
@@ -243,7 +353,7 @@ export default function CyberAssetDetailOverview(props: { id?: string; appName?:
 		},
 		security: {
 			appName: props.appName || "",
-			criticality: CyberAssetCriticality.VERY_HIGH,
+			criticality: CyberAssetCriticalityEnum.VERY_HIGH,
 			onActivateVulnerabilitiesAssessment: () => {
 				console.log("onActivateVulnerabilitiesAssessment");
 			},
@@ -259,33 +369,35 @@ export default function CyberAssetDetailOverview(props: { id?: string; appName?:
 			riskScore: 95,
 			status: "UPGRADE",
 			summary: {
-				[CyberAssetCriticality.CRITICAL]: 5,
-				[CyberAssetCriticality.HIGH]: 4,
-				[CyberAssetCriticality.LOW]: 10,
-				[CyberAssetCriticality.MEDIUM]: 4,
-				[CyberAssetCriticality.VERY_HIGH]: 3,
+				[CyberAssetCriticalityEnum.CRITICAL]: 5,
+				[CyberAssetCriticalityEnum.HIGH]: 4,
+				[CyberAssetCriticalityEnum.LOW]: 10,
+				[CyberAssetCriticalityEnum.MEDIUM]: 4,
+				[CyberAssetCriticalityEnum.VERY_HIGH]: 3,
 			},
 			topVulnerabilities: [
 				{
 					name: "CVE-2020-1472(ZeroLogon)1",
-					criticality: CyberAssetCriticality.MEDIUM,
+					criticality: CyberAssetCriticalityEnum.MEDIUM,
 				},
 				{
 					name: "CVE-2020-1472(ZeroLogon)2",
-					criticality: CyberAssetCriticality.CRITICAL,
+					criticality: CyberAssetCriticalityEnum.CRITICAL,
 				},
 				{
 					name: "CVE-2020-1472(ZeroLogon)3",
-					criticality: CyberAssetCriticality.VERY_HIGH,
+					criticality: CyberAssetCriticalityEnum.VERY_HIGH,
 				},
 				{
 					name: "CVE-2020-1472(ZeroLogon)4",
-					criticality: CyberAssetCriticality.LOW,
+					criticality: CyberAssetCriticalityEnum.LOW,
 				},
 			],
 			totalVulnerabilities: 12,
 		},
 	};
+
+	const { height } = useViewportSize();
 
 	const isLoading = false;
 
@@ -309,25 +421,44 @@ export default function CyberAssetDetailOverview(props: { id?: string; appName?:
 					</CyberAssetDetailOverviewCard>
 				</Grid.Col>
 				<Grid.Col span={3}>
-					<CyberAssetDetailOverviewCard isLoading={isLoading} mih={105} title={"Operating System"}>
-						<CyberAssetDetailOverviewOperatingSystem osName={data.osName} osType={data.osType} />
+					<CyberAssetDetailOverviewCard
+						isLoading={getAssetOverviewBaseDataQuery.isFetching}
+						mih={105}
+						title={"Operating System"}
+					>
+						<CyberAssetDetailOverviewOperatingSystem
+							osName={getAssetOverviewBaseDataQuery.data?.data.osName}
+							osType={props.osType}
+						/>
 					</CyberAssetDetailOverviewCard>
 				</Grid.Col>
 				<Grid.Col span={3}>
-					<CyberAssetDetailOverviewCard isLoading={isLoading} mih={105} title={"CPU"}>
-						<CyberAssetDetailOverviewCPU cpu={data.cpu} />
+					<CyberAssetDetailOverviewCard
+						isLoading={getAssetOverviewBaseDataQuery.isFetching}
+						mih={105}
+						title={"CPU"}
+					>
+						<CyberAssetDetailOverviewCPU cpu={getAssetOverviewBaseDataQuery.data?.data.cpu} />
 					</CyberAssetDetailOverviewCard>
 				</Grid.Col>
 				<Grid.Col span={3}>
 					<Grid gutter={"xs"}>
 						<Grid.Col span={6}>
-							<CyberAssetDetailOverviewCard isLoading={isLoading} mih={105} title={"RAM"}>
-								<CyberAssetDetailOverviewRAM ram={data.ram} />
+							<CyberAssetDetailOverviewCard
+								isLoading={getAssetOverviewBaseDataQuery.isFetching}
+								mih={105}
+								title={"RAM"}
+							>
+								<CyberAssetDetailOverviewRAM ram={getAssetOverviewBaseDataQuery.data?.data.ram} />
 							</CyberAssetDetailOverviewCard>
 						</Grid.Col>
 						<Grid.Col span={6}>
-							<CyberAssetDetailOverviewCard isLoading={isLoading} mih={105} title={"Disk"}>
-								<CyberAssetDetailOverviewDisk disk={data.disk} />
+							<CyberAssetDetailOverviewCard
+								isLoading={getAssetOverviewBaseDataQuery.isFetching}
+								mih={105}
+								title={"Disk"}
+							>
+								<CyberAssetDetailOverviewDisk disk={getAssetOverviewBaseDataQuery.data?.data.disk} />
 							</CyberAssetDetailOverviewCard>
 						</Grid.Col>
 					</Grid>
@@ -342,43 +473,47 @@ export default function CyberAssetDetailOverview(props: { id?: string; appName?:
 						title={"Network"}
 						rightSection={<ArrowButton />}
 					>
-						<CyberAssetDetailOverviewNetwork network={data.network} />
+						<CyberAssetDetailOverviewNetwork network={getAssetOverviewBaseDataQuery.data?.data.network} />
 					</CyberAssetDetailOverviewCard>
 				</Grid.Col>
 
 				<Grid.Col span={6}>
 					<CyberAssetDetailOverviewCard
-						isLoading={isLoading}
+						isLoading={getAssetOverviewLatestChangesDataQuery.isFetching}
 						mih={120}
 						title={"Changes"}
 						rightSection={<ArrowButton />}
 					>
-						<CyberAssetDetailOverviewChanges changes={data.changes} />
+						<CyberAssetDetailOverviewChanges
+							changes={getAssetOverviewLatestChangesDataQuery.data?.data.changes}
+						/>
 					</CyberAssetDetailOverviewCard>
 				</Grid.Col>
 			</Grid>
 			<Grid gutter={"xs"}>
 				<Grid.Col span={6}>
 					<CyberAssetDetailOverviewCard
-						isLoading={isLoading}
+						isLoading={getAssetOverviewTopServicesDataQuery.isFetching}
 						mih={300}
 						title={"Top Services"}
 						rightSection={<ArrowButton />}
 					>
 						<CyberAssetDetailOverviewTopServices
-							serviceStartTypes={data.serviceStartTypes}
-							topServices={data.topServices}
+							serviceStartTypes={getAssetOverviewTopServicesDataQuery.data?.data.serviceStartTypes}
+							topServices={getAssetOverviewTopServicesDataQuery.data?.data.topServices}
 						/>
 					</CyberAssetDetailOverviewCard>
 				</Grid.Col>
 				<Grid.Col span={6}>
 					<CyberAssetDetailOverviewCard
-						isLoading={isLoading}
+						isLoading={getAssetOverviewApplicationsDataQuery.isFetching}
 						mih={300}
 						title={"Applications"}
 						rightSection={<ArrowButton />}
 					>
-						<CyberAssetDetailOverviewApplications applications={data.applications} />
+						<CyberAssetDetailOverviewApplications
+							applications={getAssetOverviewApplicationsDataQuery.data?.data.applications}
+						/>
 					</CyberAssetDetailOverviewCard>
 				</Grid.Col>
 			</Grid>

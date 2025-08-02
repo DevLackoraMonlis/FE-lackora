@@ -3,13 +3,13 @@ import type {
 	CyberAssetDetailOverviewProps,
 	CyberAssetDetailOverviewServiceStartType,
 } from "@/builtinApps/CyberAssetsApp/CyberAssets/index.types";
-import { Badge, Divider, Flex, Grid, RingProgress, Text } from "@mantine/core";
+import { Badge, Divider, Flex, Grid, RingProgress, ScrollArea, Text } from "@mantine/core";
 import take from "lodash/take";
 import { Fragment } from "react";
 
 type Props = {
-	topServices: CyberAssetDetailOverviewProps["topServices"];
-	serviceStartTypes: CyberAssetDetailOverviewProps["serviceStartTypes"];
+	topServices?: CyberAssetDetailOverviewProps["topServices"];
+	serviceStartTypes?: CyberAssetDetailOverviewProps["serviceStartTypes"];
 };
 
 export default function CyberAssetDetailOverviewTopServices(props: Props) {
@@ -21,17 +21,24 @@ export default function CyberAssetDetailOverviewTopServices(props: Props) {
 	return (
 		<Grid gutter={"xs"} w={"100%"} bg={"gray.1"}>
 			<Grid.Col span={7}>
-				<Flex h={"100%"} direction={"column"} bg={"white"} gap={"2xs"} w={"100%"} p={"sm"}>
-					{take(props.topServices, 10).map((service, index) => (
-						<Fragment key={`${service.name}-${service.status}`}>
-							<Flex key={service.name} justify={"space-between"} align={"center"}>
-								<Text c={"gray.7"}>{service.name}</Text>
-								{getCyberAssetServiceStatusBadge({ type: service.status })}
-							</Flex>
-							{props.topServices.length - 1 !== index && <Divider />}
-						</Fragment>
-					))}
-				</Flex>
+				<ScrollArea h={290} scrollbars={"y"} scrollbarSize={2}>
+					<Flex h={"100%"} direction={"column"} bg={"white"} gap={"2xs"} w={"100%"} p={"sm"}>
+						{take(props.topServices || [], 10).map((service, index) => (
+							<Fragment key={`${service.name}-${service.status}`}>
+								<Flex key={service.name} justify={"space-between"} align={"center"}>
+									<Text c={"gray.7"}>{service.name}</Text>
+									{getCyberAssetServiceStatusBadge({
+										type: service.status,
+										props: {
+											miw: 80,
+										},
+									})}
+								</Flex>
+								{(props.topServices?.length || 0) - 1 !== index && <Divider />}
+							</Fragment>
+						))}
+					</Flex>
+				</ScrollArea>
 			</Grid.Col>
 			<Grid.Col span={5}>
 				<Flex
@@ -51,29 +58,35 @@ export default function CyberAssetDetailOverviewTopServices(props: Props) {
 							label={
 								<Fragment>
 									<Text fw={"bolder"} fz={"xl"} ta="center">
-										{`${props.serviceStartTypes.total}%`}
+										{`${props.serviceStartTypes?.total || 0}%`}
 									</Text>
-									<Text fz={"2xs"} ta="center">{`${props.serviceStartTypes.type} start`}</Text>
+									<Text fz={"2xs"} ta="center">{`${props.serviceStartTypes?.type || ""} start`}</Text>
 								</Fragment>
 							}
-							sections={Object.entries(props.serviceStartTypes.summary).map(([key, value]) => ({
-								value: value,
-								color: startServiceColorMap[key as CyberAssetDetailOverviewServiceStartType],
-							}))}
+							sections={
+								props.serviceStartTypes?.summary
+									? Object.entries(props.serviceStartTypes?.summary).map(([key, value]) => ({
+											value: value,
+											color: startServiceColorMap[key as CyberAssetDetailOverviewServiceStartType],
+										}))
+									: []
+							}
 						/>
+
 						<Flex direction={"column"}>
-							{Object.entries(props.serviceStartTypes.summary).map(([key, value]) => (
-								<Badge
-									fz={"xs"}
-									fw={400}
-									key={key}
-									color={startServiceColorMap[key as CyberAssetDetailOverviewServiceStartType]}
-									variant={"dot"}
-									bd={0}
-								>
-									{`${key} ${value}%`}
-								</Badge>
-							))}
+							{props.serviceStartTypes?.summary &&
+								Object.entries(props.serviceStartTypes.summary).map(([key, value]) => (
+									<Badge
+										fz={"xs"}
+										fw={400}
+										key={key}
+										color={startServiceColorMap[key as CyberAssetDetailOverviewServiceStartType]}
+										variant={"dot"}
+										bd={0}
+									>
+										{`${key} ${value}%`}
+									</Badge>
+								))}
 						</Flex>
 					</Flex>
 				</Flex>

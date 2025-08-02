@@ -49,25 +49,25 @@ import {
 	CYBER_ASSET_STATUS_COLOR,
 } from "./index.constants";
 import {
-	CyberAssetClassification,
-	CyberAssetCriticality,
-	CyberAssetDiscoveryType,
-	CyberAssetOsType,
-	type CyberAssetState,
-	type CyberAssetStatus,
+	CyberAssetClassificationEnum,
+	CyberAssetCriticalityEnum,
+	CyberAssetDiscoveryTypeEnum,
+	CyberAssetOsTypeEnum,
+	type CyberAssetStateEnum,
+	type CyberAssetStatusEnum,
 } from "./index.enum";
 
 export function getCyberAssetCriticalityBadge(params: {
-	type: CyberAssetCriticality;
+	type: CyberAssetCriticalityEnum;
 	props?: BadgeProps;
 	value?: number;
 }) {
-	const iconMaps: Record<CyberAssetCriticality, ReactNode> = {
-		[CyberAssetCriticality.HIGH]: <IconArrowBadgeUp size={12} />,
-		[CyberAssetCriticality.LOW]: <IconArrowBadgeDown size={12} />,
-		[CyberAssetCriticality.MEDIUM]: <IconEqual size={12} />,
-		[CyberAssetCriticality.VERY_HIGH]: <IconBadges size={12} />,
-		[CyberAssetCriticality.CRITICAL]: <IconBadges size={12} />,
+	const iconMaps: Record<CyberAssetCriticalityEnum, ReactNode> = {
+		[CyberAssetCriticalityEnum.HIGH]: <IconArrowBadgeUp size={12} />,
+		[CyberAssetCriticalityEnum.LOW]: <IconArrowBadgeDown size={12} />,
+		[CyberAssetCriticalityEnum.MEDIUM]: <IconEqual size={12} />,
+		[CyberAssetCriticalityEnum.VERY_HIGH]: <IconBadges size={12} />,
+		[CyberAssetCriticalityEnum.CRITICAL]: <IconBadges size={12} />,
 	};
 
 	return (
@@ -95,7 +95,7 @@ export function getCyberAssetCriticalityBadge(params: {
 }
 
 export function getCyberAssetStatusBadge(params: {
-	type: CyberAssetStatus;
+	type: CyberAssetStatusEnum;
 	props?: BadgeProps;
 }) {
 	if (!params.type) {
@@ -135,7 +135,7 @@ export function getCyberAssetServiceStatusBadge(params: {
 }
 
 export function getCyberAssetStateBadge(params: {
-	type: CyberAssetState;
+	type: CyberAssetStateEnum;
 	props?: BadgeProps;
 }) {
 	return (
@@ -178,25 +178,25 @@ export function getCyberAssetClassificationIcon({
 	type,
 	size = 16,
 }: {
-	type: CyberAssetClassification;
+	type: CyberAssetClassificationEnum;
 	size?: number;
 }) {
-	const icons: Record<CyberAssetClassification, ReactNode> = {
-		[CyberAssetClassification.ACCESS_POINT]: <Icons8WiFiRouter1 width={size} height={size} />,
-		[CyberAssetClassification.CAMERA_IP]: <Icons8PtzCamera1 width={size} height={size} />,
-		[CyberAssetClassification.FIREWALL]: <Icons8Firewall1 width={size} height={size} />,
-		[CyberAssetClassification.IP_PRINTER]: <Icons8Printer1 width={size} height={size} />,
-		[CyberAssetClassification.MOBILE]: <Icons8MobilePhone1 width={size} height={size} />,
-		[CyberAssetClassification.NVR_DVR]: <Icons8Dvr1 width={size} height={size} />,
-		[CyberAssetClassification.ROUTER]: <Icons8RouterSymbol1 width={size} height={size} />,
-		[CyberAssetClassification.SERVER]: <Icons8Server1 width={size} height={size} />,
-		[CyberAssetClassification.SWITCH]: <Icons8Switch1 width={size} height={size} />,
-		[CyberAssetClassification.STORAGE]: <Icons8Database1 width={size} height={size} />,
-		[CyberAssetClassification.PHYSICAL_HOST]: <Icons8DatabaseServer11 width={size} height={size} />,
-		[CyberAssetClassification.WORK_STATION]: <Icons8Workstation1 width={size} height={size} />,
-		[CyberAssetClassification.UPS]: <Icons8MediumChargingBattery1 width={size} height={size} />,
-		[CyberAssetClassification.IOT]: <Icons8InternetOfThings1 width={size} height={size} />,
-		[CyberAssetClassification.IP_PHONE]: <Icons8Voip1 width={size} height={size} />,
+	const icons: Record<CyberAssetClassificationEnum, ReactNode> = {
+		[CyberAssetClassificationEnum.ACCESS_POINT]: <Icons8WiFiRouter1 width={size} height={size} />,
+		[CyberAssetClassificationEnum.CAMERA_IP]: <Icons8PtzCamera1 width={size} height={size} />,
+		[CyberAssetClassificationEnum.FIREWALL]: <Icons8Firewall1 width={size} height={size} />,
+		[CyberAssetClassificationEnum.IP_PRINTER]: <Icons8Printer1 width={size} height={size} />,
+		[CyberAssetClassificationEnum.MOBILE]: <Icons8MobilePhone1 width={size} height={size} />,
+		[CyberAssetClassificationEnum.NVR_DVR]: <Icons8Dvr1 width={size} height={size} />,
+		[CyberAssetClassificationEnum.ROUTER]: <Icons8RouterSymbol1 width={size} height={size} />,
+		[CyberAssetClassificationEnum.SERVER]: <Icons8Server1 width={size} height={size} />,
+		[CyberAssetClassificationEnum.SWITCH]: <Icons8Switch1 width={size} height={size} />,
+		[CyberAssetClassificationEnum.STORAGE]: <Icons8Database1 width={size} height={size} />,
+		[CyberAssetClassificationEnum.PHYSICAL_HOST]: <Icons8DatabaseServer11 width={size} height={size} />,
+		[CyberAssetClassificationEnum.WORK_STATION]: <Icons8Workstation1 width={size} height={size} />,
+		[CyberAssetClassificationEnum.UPS]: <Icons8MediumChargingBattery1 width={size} height={size} />,
+		[CyberAssetClassificationEnum.IOT]: <Icons8InternetOfThings1 width={size} height={size} />,
+		[CyberAssetClassificationEnum.IP_PHONE]: <Icons8Voip1 width={size} height={size} />,
 	};
 	return icons[type] || <IconDeviceDesktop size={size} />;
 }
@@ -233,14 +233,14 @@ export function getCyberAssetNotificationIcon({
 }
 
 export function getCyberAssetDiscoveryTypeBadge(params: {
-	type: CyberAssetDiscoveryType;
+	type: CyberAssetDiscoveryTypeEnum;
 	props?: FlexProps;
 	size?: number;
 }) {
-	const iconMap: Record<CyberAssetDiscoveryType, ReactNode> = {
-		[CyberAssetDiscoveryType.BY_INVENTORY]: <IconArchive size={params?.size || 12} />,
-		[CyberAssetDiscoveryType.DISCOVERED]: <IconSearch size={params?.size || 12} />,
-		[CyberAssetDiscoveryType.MANUAL]: <IconHighlight size={params?.size || 12} />,
+	const iconMap: Record<CyberAssetDiscoveryTypeEnum, ReactNode> = {
+		[CyberAssetDiscoveryTypeEnum.BY_INVENTORY]: <IconArchive size={params?.size || 12} />,
+		[CyberAssetDiscoveryTypeEnum.DISCOVERED]: <IconSearch size={params?.size || 12} />,
+		[CyberAssetDiscoveryTypeEnum.MANUAL]: <IconHighlight size={params?.size || 12} />,
 	};
 
 	if (!iconMap[params.type]) {
@@ -258,14 +258,14 @@ export function getCyberAssetDiscoveryTypeBadge(params: {
 }
 
 export function getCyberAssetOsTypeBadge(params: {
-	type: CyberAssetOsType;
+	type: CyberAssetOsTypeEnum;
 	wrapperProps?: FlexProps;
 	customType?: ReactNode;
 	size?: number;
 }) {
-	const iconMap: Record<CyberAssetOsType, ReactNode> = {
-		[CyberAssetOsType.LINUX]: <LinuxSvgrepoCom1 width={params.size || 16} height={params.size || 16} />,
-		[CyberAssetOsType.WINDOWS]: <Icons8Windows101 width={params.size || 16} height={params.size || 16} />,
+	const iconMap: Record<CyberAssetOsTypeEnum, ReactNode> = {
+		[CyberAssetOsTypeEnum.LINUX]: <LinuxSvgrepoCom1 width={params.size || 16} height={params.size || 16} />,
+		[CyberAssetOsTypeEnum.WINDOWS]: <Icons8Windows101 width={params.size || 16} height={params.size || 16} />,
 	};
 
 	if (!iconMap[params.type]) {

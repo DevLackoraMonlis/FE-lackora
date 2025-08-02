@@ -13,6 +13,8 @@ export type EachAdvanceFilterConditionOperator = typeof EachAdvanceFilterConditi
 export const EachAdvanceFilterConditionOperator = {
   equal: 'equal',
   not_equal: 'not_equal',
+  in: 'in',
+  not_in: 'not_in',
   contains: 'contains',
   not_contains: 'not_contains',
   like: 'like',
