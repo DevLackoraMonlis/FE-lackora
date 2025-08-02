@@ -97,23 +97,46 @@ export function phaseDescription<T extends Record<string, unknown>>(phase: T) {
 
 export function stepDescription<T extends Record<string, unknown>>(step: T) {
 	const progressStepValue = ((step?.current_processed as number) / (step?.total_processing as number)) * 100;
-	const isProgress = isNumber(progressStepValue) && progressStepValue < 100;
+	const isProgress = (step.status as string) === WorkflowStatus.Inprogress;
 	const failed = (step.status as string) === WorkflowStatus.Failed;
 	const start = toFormattedDate(step.start_time as string, "HH:mm") || "-";
 	const end = toFormattedDate(step.end_time as string, "HH:mm") || "-";
 	return {
-		description:
-			isProgress || failed
+		description: failed
+			? `${step.message}`
+			: isProgress
 				? `Start at ${start}`
 				: `Start at ${start} - End at ${end}  |  Duration: ${step.duration || "-"}`,
 		isProgress,
 		value: progressStepValue,
 		resultMessage: step.result_message as string,
 		resultCount: step.result_count as number,
-		message: `${step.progress} |  Duration: ${step.duration || "-"}`,
+		message: `${step.progress || step.status} |  Duration: ${step.duration || "-"}`,
 	};
 }
 
 export function getWorkflowStatus(status?: string) {
 	return WORKFLOW_STATUS[status as WorkflowStatus] || {};
+}
+
+export function getValueFromDynamicColumnRecord(record: { [key: string]: unknown }, key: string) {
+	const value = record[key];
+	const type = typeof value;
+
+	switch (type) {
+		case "string":
+			return value as string;
+		case "object": {
+			const joinValue = Array.isArray(value)
+				? typeof value?.[0] === "string" || typeof value?.[0] === "number"
+					? value.join(" - ")
+					: Object.entries(value?.[0] || {})
+							.map(([_, value]) => value)
+							.join(" - ")
+				: "unknown";
+			return joinValue;
+		}
+		default:
+			return value as string;
+	}
 }

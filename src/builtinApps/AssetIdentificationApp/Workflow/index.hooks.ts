@@ -4,6 +4,7 @@ import {
 	useGetWorkflowStep,
 	useGetWorkflows,
 } from "@/http/generated/workflow-management";
+import { getValueFromDynamicColumnRecord } from "./index.helper";
 
 export function useWorkflow(refetchInterval: false | number = false) {
 	const workflows = useGetWorkflows({
@@ -71,17 +72,20 @@ export function useWorkflowStep(stepId: string) {
 			select: (res) => {
 				const results =
 					res?.data?.results?.map((record) => {
-						return {
-							key: `${record.ip}-${record.mac}-${record.gateway_name}`,
-							ipAddress: record.ip as string,
-							macAddress: record.mac as string,
-							discoveryTime: record.discovery_time as string,
-							gateway: record.gateway_name as string,
-						};
+						return Object.entries(record).reduce(
+							(acc, [key]) => {
+								acc[key] = getValueFromDynamicColumnRecord(record, key);
+								return acc;
+							},
+							{
+								key: `${record.ip}-${record.mac}-${record.discovery_time}`,
+							} as Record<string, unknown>,
+						);
 					}) || [];
 				return { ...res.data, results };
 			},
 		},
 	});
+
 	return { stepDetails };
 }

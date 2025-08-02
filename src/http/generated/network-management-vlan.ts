@@ -50,7 +50,7 @@ export const getVLANs = (
       
       
       return orvalMutator<PaginatedBaseResponseEachVLANEachListMetadataWrapper>(
-      {url: `/api/network-management/vlan/`, method: 'GET',
+      {url: "/api/network-management/vlan/", method: 'GET',
         params, signal
     },
       );
@@ -58,7 +58,7 @@ export const getVLANs = (
   
 
 const getGetVLANsQueryKey = (params?: GetVLANsParams,) => {
-    return [`/api/network-management/vlan/`, ...(params ? [params]: [])] as const;
+    return ["/api/network-management/vlan/", ...(params ? [params]: [])] as const;
     }
 
     
@@ -138,7 +138,7 @@ export const createVLAN = (
       
       
       return orvalMutator<EachVLAN>(
-      {url: `/api/network-management/vlan/`, method: 'POST',
+      {url: "/api/network-management/vlan/", method: 'POST',
       headers: {'Content-Type': 'application/json', },
       data: createVLAN, signal
     },

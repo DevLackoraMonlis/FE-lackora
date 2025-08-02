@@ -6,9 +6,9 @@
  * OpenAPI spec version: 1.0.0
  */
 import type { CyberAssetBaseOverviewResponseCpu } from './CyberAssetBaseOverviewResponseCpu';
-import type { CyberAssetBaseOverviewResponseRam } from './CyberAssetBaseOverviewResponseRam';
 import type { CyberAssetBaseOverviewResponseDisk } from './CyberAssetBaseOverviewResponseDisk';
 import type { CyberAssetBaseOverviewResponseNetwork } from './CyberAssetBaseOverviewResponseNetwork';
+import type { CyberAssetBaseOverviewResponseRam } from './CyberAssetBaseOverviewResponseRam';
 
 export interface CyberAssetBaseOverviewResponse {
   configuration_items: number;
