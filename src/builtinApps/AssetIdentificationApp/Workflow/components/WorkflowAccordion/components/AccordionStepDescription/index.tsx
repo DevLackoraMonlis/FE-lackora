@@ -40,12 +40,18 @@ export default function AccordionStepDescription({ step, handleViewMatchedAssets
 						{description.description}
 					</Text>
 				</>
+			) : step.status === WorkflowStatus.Failed ? (
+				<>
+					<Flex align="center" gap="2xs">
+						<Text c="red" component="span">
+							{description.description}
+						</Text>
+					</Flex>
+				</>
 			) : (
 				<>
 					<Flex align="center" gap="2xs">
-						<Text c={step.status === WorkflowStatus.Failed ? "red" : ""} component="span">
-							{description.message}
-						</Text>
+						<Text component="span">{description.message}</Text>
 					</Flex>
 					<Text fz="xs" c="dimmed" component="span">
 						{description.description}
