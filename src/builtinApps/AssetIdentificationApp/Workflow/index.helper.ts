@@ -97,7 +97,7 @@ export function stepDescription<T extends Record<string, unknown>>(step: T) {
 	const progressStepValue = ((step?.current_processed as number) / (step?.total_processing as number)) * 100;
 	const isProgress = (step.status as string) === WorkflowStatus.Inprogress;
 	const failed = (step.status as string) === WorkflowStatus.Failed;
-	const start = toFormattedDate(step.start_time as string, "HH:mm") || "-";
+	const start = toFormattedDate(step.start_time as string, "HH:mm") || "";
 	const end = toFormattedDate(step.end_time as string, "HH:mm") || "-";
 	return {
 		description: failed
