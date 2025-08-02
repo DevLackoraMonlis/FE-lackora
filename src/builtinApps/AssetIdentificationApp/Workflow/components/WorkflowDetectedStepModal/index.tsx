@@ -25,74 +25,40 @@ function WorkflowDetectedStep({ stepId = "" }: Props) {
 
 	const { stepDetails } = useWorkflowStep(stepId);
 	const results = stepDetails.data?.results || [];
+	const recordKeys = Object.entries(results.at(0) || {}).map(([key]) => key);
 	const status = "completed";
-	const { generateSortIcons, sortStatus } = useTableSort<(typeof results)[number]>({
-		columnAccessor: "discoveryTime",
-		direction: "des",
-	});
+	const { generateSortIcons, sortStatus } = useTableSort<(typeof results)[number]>();
 	const handleUpdateQueryParams = (params: Partial<PaginationRq>) => {
 		setQueryParams((perParams) => ({ ...perParams, page: 1, ...params }));
 	};
 
-	const columns: TanStackGridProps<(typeof results)[number]>["columns"] = [
-		{
-			accessor: "ipAddress",
+	const columns: TanStackGridProps<(typeof results)[number]>["columns"] = recordKeys
+		.filter((key) => key !== "key")
+		.map((key) => ({
+			accessor: key,
 			title: (
 				<Flex justify="space-between" align="center">
-					<Text>IP Address</Text>
-					{generateSortIcons("ipAddress")}
+					<Text tt="capitalize">{key?.replaceAll("_", " ")}</Text>
+					{generateSortIcons(key)}
 				</Flex>
 			),
-			render: ({ ipAddress }) => (
-				<Highlight c="blue" highlight={[search]} highlightStyles={{}}>
-					{ipAddress}
-				</Highlight>
-			),
-		},
-		{
-			accessor: "macAddress",
-			title: (
-				<Flex justify="space-between" align="center">
-					<Text>MAC Address</Text>
-					{generateSortIcons("macAddress")}
-				</Flex>
-			),
-			render: ({ macAddress }) => (
-				<Highlight highlight={[search]} highlightStyles={{}}>
-					{macAddress}
-				</Highlight>
-			),
-		},
-		{
-			accessor: "gateway",
-			title: (
-				<Flex justify="space-between" align="center">
-					<Text>Gateway</Text>
-					{generateSortIcons("gateway")}
-				</Flex>
-			),
-		},
-		{
-			accessor: "discoveryTime",
-			title: (
-				<Flex justify="space-between" align="center">
-					<Text>Time of Discovery</Text>
-					{generateSortIcons("discoveryTime")}
-				</Flex>
-			),
-			render: ({ discoveryTime }) => (
-				<Highlight highlight={[search]} highlightStyles={{}}>
-					{discoveryTime}
-				</Highlight>
-			),
-		},
-	];
+			render: (record) => {
+				return (
+					<Highlight c={key === "ip" ? "blue" : ""} highlight={[search]} highlightStyles={{}}>
+						{record[key] as string}
+					</Highlight>
+				);
+			},
+		}));
+
 	// data sorting
-	const sortedData = sortBy(results, (record) => record[sortStatus.columnAccessor]);
+	const sortedData = sortBy(
+		results,
+		(record) => (record as Record<string, string>)[sortStatus.columnAccessor],
+	);
 	if (sortStatus.direction === "des") sortedData.reverse();
-	const filteredResults = sortedData.filter(
-		({ macAddress, ipAddress, discoveryTime }) =>
-			macAddress?.includes(search) || ipAddress?.includes(search) || discoveryTime?.includes(search),
+	const filteredResults = sortedData.filter((record) =>
+		Object.entries(record).some(([_, value = ""]) => (value as string)?.toLowerCase()?.includes(search)),
 	);
 	// pagination options
 	const from = (queryParams.page - 1) * queryParams.limit;
@@ -101,10 +67,6 @@ function WorkflowDetectedStep({ stepId = "" }: Props) {
 	const totalRecords = filteredResults?.length;
 
 	if (stepDetails.isLoading) return <LoadingOverlay visible />;
-	const dynamicColumns = columns.filter(({ accessor }) => {
-		const record = tableRecords?.at(0);
-		return !!record?.[accessor as keyof typeof record];
-	});
 	const statusParams = getWorkflowStatus(status || "");
 	const Icon = statusParams.icon;
 	return (
@@ -124,8 +86,7 @@ function WorkflowDetectedStep({ stepId = "" }: Props) {
 					<BCSearchInput
 						clientSide
 						onSubmitSearch={(value) => handleUpdateQueryParams({ search: value })}
-						placeholder="Search by IP , MAC address or Time of Discovery"
-						inputWidth="360px"
+						placeholder="Search on columns"
 					/>
 				</Flex>
 			</Card>
@@ -136,7 +97,7 @@ function WorkflowDetectedStep({ stepId = "" }: Props) {
 				withRowBorders
 				withPaddingCells
 				disableVirtualize
-				columns={dynamicColumns}
+				columns={columns}
 				records={tableRecords}
 				totalRecords={totalRecords}
 				page={queryParams.page}

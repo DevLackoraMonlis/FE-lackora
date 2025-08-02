@@ -46,14 +46,14 @@ export const getWorkflows = (
       
       
       return orvalMutator<EachWorkflowInformation>(
-      {url: `/api/workflow-management/`, method: 'GET', signal
+      {url: "/api/workflow-management/", method: 'GET', signal
     },
       );
     }
   
 
 const getGetWorkflowsQueryKey = () => {
-    return [`/api/workflow-management/`] as const;
+    return ["/api/workflow-management/"] as const;
     }
 
     
@@ -133,14 +133,14 @@ export const runWorkflow = (
       
       
       return orvalMutator<MessageOnlyResponse>(
-      {url: `/api/workflow-management/run-now`, method: 'GET', signal
+      {url: "/api/workflow-management/run-now", method: 'GET', signal
     },
       );
     }
   
 
 const getRunWorkflowQueryKey = () => {
-    return [`/api/workflow-management/run-now`] as const;
+    return ["/api/workflow-management/run-now"] as const;
     }
 
     
@@ -307,7 +307,7 @@ export const getWorkflowHistory = (
       
       
       return orvalMutator<PaginatedBaseResponseEachWorkFlowHistoryEachListMetadataWrapper>(
-      {url: `/api/workflow-management/histories`, method: 'GET',
+      {url: "/api/workflow-management/histories", method: 'GET',
         params, signal
     },
       );
@@ -315,7 +315,7 @@ export const getWorkflowHistory = (
   
 
 const getGetWorkflowHistoryQueryKey = (params?: GetWorkflowHistoryParams,) => {
-    return [`/api/workflow-management/histories`, ...(params ? [params]: [])] as const;
+    return ["/api/workflow-management/histories", ...(params ? [params]: [])] as const;
     }
 
     

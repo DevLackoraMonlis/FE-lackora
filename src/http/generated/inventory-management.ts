@@ -36,14 +36,14 @@ export const testInventoryBulkInsertApiInventoryManagementBulkInsertTestGet = (
       
       
       return orvalMutator<unknown>(
-      {url: `/api/inventory-management/bulk-insert-test`, method: 'GET', signal
+      {url: "/api/inventory-management/bulk-insert-test", method: 'GET', signal
     },
       );
     }
   
 
 const getTestInventoryBulkInsertApiInventoryManagementBulkInsertTestGetQueryKey = () => {
-    return [`/api/inventory-management/bulk-insert-test`] as const;
+    return ["/api/inventory-management/bulk-insert-test"] as const;
     }
 
     

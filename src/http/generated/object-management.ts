@@ -42,7 +42,7 @@ export const getObjectRelatedRecords = (
       
       
       return orvalMutator<PaginatedBaseResponseEachObjectManagementNoneType>(
-      {url: `/api/core/object-management/`, method: 'GET',
+      {url: "/api/core/object-management/", method: 'GET',
         params, signal
     },
       );
@@ -50,7 +50,7 @@ export const getObjectRelatedRecords = (
   
 
 const getGetObjectRelatedRecordsQueryKey = (params: GetObjectRelatedRecordsParams,) => {
-    return [`/api/core/object-management/`, ...(params ? [params]: [])] as const;
+    return ["/api/core/object-management/", ...(params ? [params]: [])] as const;
     }
 
     
