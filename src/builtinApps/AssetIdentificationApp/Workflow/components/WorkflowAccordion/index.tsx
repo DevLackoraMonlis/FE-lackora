@@ -15,11 +15,7 @@ type Props = WorkflowPhase & WorkflowHandles;
 export default function WorkflowAccordion({ type, status, title, description, steps, ...props }: Props) {
 	if (!type) return null;
 	const phaseParams = useMemo(() => getWorkflowStatus(status), [status]);
-	const timelineActiveStep = useMemo(
-		() =>
-			status === "completed" ? steps?.length : steps?.findIndex(({ status }) => status === "inprogress"),
-		[status, steps],
-	);
+	const timelineActiveStep = steps?.length;
 	return (
 		<Accordion variant="separated" defaultValue={status === "inprogress" ? type : ""}>
 			<Accordion.Item value={type}>
