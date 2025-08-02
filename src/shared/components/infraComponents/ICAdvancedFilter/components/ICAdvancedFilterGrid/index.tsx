@@ -148,7 +148,7 @@ export default function ICAdvancedFilterGrid<T extends Record<string, unknown>>(
 			if (isGroupByColumn) {
 				return (
 					<Button
-						px={"xs"}
+						pl={0}
 						variant={"transparent"}
 						{...(!props.hideExpandGroupByButton && {
 							onClick: () => {
