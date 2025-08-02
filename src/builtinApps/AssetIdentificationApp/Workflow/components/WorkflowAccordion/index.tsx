@@ -73,7 +73,7 @@ export default function WorkflowAccordion({ type, status, title, description, st
 							</Flex>
 						</Flex>
 						<Flex align="center" gap="xs" px="sm">
-							<Badge w="130px" variant="light" color={phaseParams?.color} px="sm" py="md">
+							<Badge variant="light" color={phaseParams?.color} px="sm" py="md">
 								<Text p="2xs" tt="capitalize">
 									{phaseParams?.label}
 								</Text>
@@ -109,7 +109,7 @@ export default function WorkflowAccordion({ type, status, title, description, st
 														<Menu.Item
 															data-testid="workflow-submenu-redirect"
 															leftSection={<IconSettings size={15} />}
-															onClick={() => props.handleGatewayConfiguration(step.id)}
+															onClick={props.onOpenApp}
 														>
 															Go to Gateway Configuration
 														</Menu.Item>
