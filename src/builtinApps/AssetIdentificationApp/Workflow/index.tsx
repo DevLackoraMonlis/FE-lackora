@@ -5,6 +5,9 @@ import { useDisclosure, useViewportSize } from "@mantine/hooks";
 import { IconLineScan } from "@tabler/icons-react";
 import { Fragment, useState } from "react";
 
+import { useAppRedirect } from "@/shared/hooks/useAppRedirect";
+
+import { WORKFLOW_REDIRECT_PATH } from "./index.constants";
 import {
 	calculateNextScheduledScan,
 	calculateScheduledScanDate,
@@ -24,6 +27,7 @@ export default function WorkflowAssetsIdentification() {
 	const { height } = useViewportSize();
 	const [openedDetectedAssets, handleDetectedAssets] = useDisclosure();
 	const [openedScanHistory, handleScanHistory] = useDisclosure();
+	const { onOpenApp } = useAppRedirect();
 	const { workflows, isLoading } = useWorkflow();
 
 	const [selectedStepId, setSelectedStepId] = useState<string>("");
@@ -36,6 +40,7 @@ export default function WorkflowAssetsIdentification() {
 	const commonProps = {
 		handleGatewayConfiguration,
 		handleViewMatchedAssets,
+		onOpenApp: () => onOpenApp(WORKFLOW_REDIRECT_PATH),
 	};
 	return (
 		<>

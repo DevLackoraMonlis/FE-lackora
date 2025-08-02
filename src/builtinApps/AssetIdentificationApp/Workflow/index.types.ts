@@ -39,4 +39,5 @@ export type WorkflowScan = {
 export type WorkflowHandles = {
 	handleViewMatchedAssets: (id: string) => void;
 	handleGatewayConfiguration: (id: string) => void;
+	onOpenApp: VoidFunction;
 };

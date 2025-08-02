@@ -1,5 +1,13 @@
-import { AssetProfiling } from "@/shared/icons/components/assets";
 import { IconSearch, IconStatusChange } from "@tabler/icons-react";
+
+import { AllApplications } from "@/shared/constants/routes";
+import { AssetProfiling } from "@/shared/icons/components/assets";
+
+const {
+	ASSET_IDENTIFICATION: { modules, name },
+} = AllApplications;
+
+export const WORKFLOW_REDIRECT_PATH = `${name}/${modules.DISCOVERY_SETTINGS}`;
 
 export const workflowIcons = {
 	asset_discovery: <IconSearch size={30} />,
