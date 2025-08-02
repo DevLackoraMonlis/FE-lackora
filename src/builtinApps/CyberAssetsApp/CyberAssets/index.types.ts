@@ -95,8 +95,7 @@ export type CyberAssetDetailOverviewTopService = {
 	status: CyberAssetDetailOverviewTopServiceStatus;
 };
 
-export type CyberAssetDetailOverviewServiceStartType = "Automatic" | "Manual" | "Disabled";
-
+export type CyberAssetDetailOverviewServiceStartType = "Manual" | "Auto" | "Disabled" | "Unknown" | "Total";
 export type CyberAssetDetailOverviewServiceStart = {
 	total: number;
 	type: CyberAssetDetailOverviewServiceStartType;

@@ -40,9 +40,10 @@ export const useGetCyberAssetDetailGeneralInfo = (params: {
 		items: [
 			{
 				label: "OS Type:",
-				value: getCyberAssetsGeneralInfoQuery.data?.data.os_name
+				value: getCyberAssetsGeneralInfoQuery.data?.data.asset_identification.os_type
 					? getCyberAssetOsTypeBadge({
-							type: getCyberAssetsGeneralInfoQuery.data?.data.os_name as CyberAssetOsTypeEnum,
+							type: getCyberAssetsGeneralInfoQuery.data?.data.asset_identification
+								.os_type as CyberAssetOsTypeEnum,
 							wrapperProps: {
 								fz: "xs",
 							},
@@ -59,13 +60,17 @@ export const useGetCyberAssetDetailGeneralInfo = (params: {
 										.classification as CyberAssetClassificationEnum,
 								})
 							: ""}
-						<Text fz={"xs"}>{getCyberAssetsGeneralInfoQuery.data?.data.os_family}</Text>
+						<Text fz={"xs"}>{getCyberAssetsGeneralInfoQuery.data?.data.asset_identification.os_family}</Text>
 					</Flex>
 				),
 			},
 			{
 				label: "OS Version:",
-				value: <Text fz={"xs"}>{getCyberAssetsGeneralInfoQuery.data?.data.os_family || ""}</Text>,
+				value: (
+					<Text fz={"xs"}>
+						{getCyberAssetsGeneralInfoQuery.data?.data.asset_identification.os_version || ""}
+					</Text>
+				),
 			},
 			{
 				label: "Discovery Type:",
@@ -100,12 +105,12 @@ export const useGetCyberAssetDetailGeneralInfo = (params: {
 							}
 						>
 							<Text fz={"xs"}>
-								{getCyberAssetsGeneralInfoQuery.data?.data.network_information.ip_address}
+								{getCyberAssetsGeneralInfoQuery.data?.data.network_information.ip_address?.[0]}
 							</Text>
 						</Tooltip>
 					) : (
 						<Text fz={"xs"}>
-							{getCyberAssetsGeneralInfoQuery.data?.data.network_information.ip_address || ""}
+							{getCyberAssetsGeneralInfoQuery.data?.data.network_information.ip_address?.[0] || ""}
 						</Text>
 					),
 			},
@@ -126,12 +131,12 @@ export const useGetCyberAssetDetailGeneralInfo = (params: {
 							}
 						>
 							<Text fz={"xs"}>
-								{getCyberAssetsGeneralInfoQuery.data?.data.network_information.mac_address}
+								{getCyberAssetsGeneralInfoQuery.data?.data.network_information.mac_address[0]}
 							</Text>
 						</Tooltip>
 					) : (
 						<Text fz={"xs"}>
-							{getCyberAssetsGeneralInfoQuery.data?.data.network_information.mac_address || ""}
+							{getCyberAssetsGeneralInfoQuery.data?.data.network_information.mac_address?.[0] || ""}
 						</Text>
 					),
 			},
@@ -271,7 +276,7 @@ export const useGetCyberAssetDetailGeneralInfo = (params: {
 			size: 60,
 		}),
 		subTitle: getCyberAssetsGeneralInfoQuery.data?.data.asset_identification.os_family || "",
-		title: getCyberAssetsGeneralInfoQuery.data?.data.asset_identification.os_version || "",
+		title: getCyberAssetsGeneralInfoQuery.data?.data.asset_identification.hostname || "",
 	};
 
 	return {

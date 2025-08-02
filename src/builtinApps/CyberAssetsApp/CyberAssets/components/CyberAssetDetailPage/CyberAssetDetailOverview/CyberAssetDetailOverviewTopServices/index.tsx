@@ -15,8 +15,10 @@ type Props = {
 export default function CyberAssetDetailOverviewTopServices(props: Props) {
 	const startServiceColorMap: Record<CyberAssetDetailOverviewServiceStartType, string> = {
 		Disabled: "#495057",
-		Automatic: "#228BE6",
+		Auto: "#228BE6",
 		Manual: "#FAB005",
+		Total: "#3737e5",
+		Unknown: "#e0c9c9",
 	};
 	return (
 		<Grid gutter={"xs"} w={"100%"} bg={"gray.1"}>

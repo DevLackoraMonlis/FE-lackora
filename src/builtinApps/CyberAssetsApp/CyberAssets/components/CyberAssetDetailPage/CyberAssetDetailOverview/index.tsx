@@ -105,9 +105,15 @@ export default function CyberAssetDetailOverview(props: {
 						status: item.state === "Running" ? "RUNNING" : "STOPPED",
 					})),
 					serviceStartTypes: {
-						summary: response.data.start_mode,
-						type: "Automatic",
-						total: response.data.start_mode["Automatic"],
+						summary: {
+							Unknown: response.data.start_mode?.Unknown,
+							Total: response.data.start_mode?.Total,
+							Manual: response.data.start_mode?.Manual,
+							Auto: response.data.start_mode?.Auto,
+							Disabled: response.data.start_mode?.Disabled,
+						},
+						type: "Auto",
+						total: response.data.start_mode?.Total,
 					},
 				};
 				return {
@@ -198,12 +204,14 @@ export default function CyberAssetDetailOverview(props: {
 		],
 		serviceStartTypes: {
 			summary: {
-				Automatic: 45,
+				Auto: 45,
 				Disabled: 35,
 				Manual: 20,
+				Total: 100,
+				Unknown: 100,
 			},
 			total: 45,
-			type: "Automatic",
+			type: "Auto",
 		},
 		configurationItemsCount: 365,
 		applications: {
