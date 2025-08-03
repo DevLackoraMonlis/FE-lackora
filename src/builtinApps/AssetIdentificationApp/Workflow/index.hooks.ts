@@ -104,14 +104,17 @@ export function useWorkflowRunNow(workflowCallback: VoidFunction) {
 		toggleLoading(true);
 		runWorkflow()
 			.then(() => {
-				workflowCallback();
-				toggleLoading(false);
-				notifications.show({
-					title: "Successfully Run",
-					message: "The workflow has been successfully triggered manually.",
-					color: "green",
-					withBorder: true,
-				});
+				const debouncedWorkflowCallback = setTimeout(() => {
+					workflowCallback();
+					toggleLoading(false);
+					notifications.show({
+						title: "Successfully Run",
+						message: "The workflow has been successfully triggered manually.",
+						color: "green",
+						withBorder: true,
+					});
+					clearTimeout(debouncedWorkflowCallback);
+				}, 3000);
 			})
 			.catch((error: CustomError) => {
 				toggleLoading(false);
