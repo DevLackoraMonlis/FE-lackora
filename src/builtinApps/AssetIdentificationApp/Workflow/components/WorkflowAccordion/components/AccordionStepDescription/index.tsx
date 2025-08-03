@@ -16,11 +16,13 @@ export default function AccordionStepDescription({ step, handleViewMatchedAssets
 				<>
 					<Flex gap="xs" align="center">
 						<Progress value={100} size="md" style={{ flex: 3 }} animated />
-						<Text fz="xs" style={{ flex: 1 }} tw="nowrap">
+						<Text fz="xs" style={{ flex: 1 }} component="span">
 							{/* {description.message} */}
 						</Text>
 					</Flex>
-					<Text c="dimmed">{description.description}</Text>
+					<Text c="dimmed" fz="xs" pt="2xs">
+						{description.description}
+					</Text>
 				</>
 			) : step.status === WorkflowStatus.Completed ? (
 				<>
