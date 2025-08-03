@@ -122,7 +122,7 @@ export default function WorkflowAccordion({ type, status, title, description, st
 															leftSection={<IconEye size={15} />}
 															onClick={() => props.handleViewMatchedAssets(step.id)}
 														>
-															View Result Assets
+															View Detected Assets
 														</Menu.Item>
 													</Menu.Dropdown>
 												</Menu>
