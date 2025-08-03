@@ -43,6 +43,7 @@ export default function WorkflowAssetsIdentification() {
 		handleViewMatchedAssets,
 		onOpenApp: () => onOpenApp(WORKFLOW_REDIRECT_PATH),
 	};
+	console.log(workflows.data);
 	return (
 		<>
 			<WorkflowRunNowModal
@@ -96,8 +97,11 @@ export default function WorkflowAssetsIdentification() {
 												{isLoading ? (
 													<Skeleton w="250px" h="10px" opacity={0.5} mt="2xs" />
 												) : (
-													<Text c={getWorkflowStatus(workflows.data?.status)?.c}>
-														{workflows.data?.message || "-"}
+													<Text c={getWorkflowStatus(workflows.data?.status)?.bg} fz="xs">
+														{workflows.data?.result_count
+															? `Identified ${workflows.data?.result_count} assets in ${workflows.data?.duration}`
+															: workflows.data?.message || "-"}
+														{}
 													</Text>
 												)}
 											</Flex>
