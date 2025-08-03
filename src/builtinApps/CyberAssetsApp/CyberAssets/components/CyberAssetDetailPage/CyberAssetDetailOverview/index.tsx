@@ -167,7 +167,13 @@ export default function CyberAssetDetailOverview(props: {
 						onFailed: () => {
 							console.log("onFailed");
 						},
-						summary: response.data.metadata as Record<CyberAssetCriticalityEnum, number>,
+						summary: {
+							[CyberAssetCriticalityEnum.LOW]: 10,
+							[CyberAssetCriticalityEnum.HIGH]: 10,
+							[CyberAssetCriticalityEnum.CRITICAL]: 10,
+							[CyberAssetCriticalityEnum.MEDIUM]: 10,
+							[CyberAssetCriticalityEnum.VERY_HIGH]: 10,
+						} as Record<CyberAssetCriticalityEnum, number>,
 						criticality: response.data.criticality as CyberAssetCriticalityEnum,
 						riskScore: response.data.cyber_risk_score || null,
 						totalVulnerabilities: 0,
