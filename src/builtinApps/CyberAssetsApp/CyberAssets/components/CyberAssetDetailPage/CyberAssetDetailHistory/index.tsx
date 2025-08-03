@@ -1,7 +1,9 @@
 import { getCyberAssetsChangesFormattedColumns } from "@/builtinApps/CyberAssetsApp/CyberAssets/index.constants";
 import type { CyberAssetDetailInventoryProps } from "@/builtinApps/CyberAssetsApp/CyberAssets/index.types";
-import { getAssets } from "@/http/generated/cyber-asset-management-cyber-assets";
-import { getCyberAssetHistoryFilterColumns } from "@/http/generated/cyber-asset-management-history";
+import {
+	getAssetActivityHistory,
+	getCyberAssetHistoryFilterColumns,
+} from "@/http/generated/cyber-asset-management-history";
 import ICAdvancedFilter from "@/shared/components/infraComponents/ICAdvancedFilter";
 import {
 	convertICAdvancedFilterResponseColumns,
@@ -33,7 +35,10 @@ export default function CyberAssetDetailHistory(props: CyberAssetDetailInventory
 				})}
 				{...(props.id && {
 					getDataApi: (variables, signal) =>
-						getAssets(convertICAdvancedFilterToDefaultVariables(variables), signal).then((response) => ({
+						getAssetActivityHistory(
+							{ ...convertICAdvancedFilterToDefaultVariables(variables), asset_id: props.id || "" },
+							signal,
+						).then((response) => ({
 							...response,
 							data: {
 								...response.data,

@@ -97,11 +97,16 @@ export const useGetCyberAssetDetailGeneralInfo = (params: {
 			},
 			{
 				label: "OS Version:",
-				value: (
-					<Text fz={"xs"}>
-						{getCyberAssetsGeneralInfoQuery.data?.data.asset_identification.os_version || ""}
-					</Text>
-				),
+				value: getCyberAssetsGeneralInfoQuery.data?.data.asset_identification.os_type
+					? getCyberAssetOsTypeBadge({
+							type: getCyberAssetsGeneralInfoQuery.data?.data.asset_identification
+								.os_type as CyberAssetOsTypeEnum,
+							wrapperProps: {
+								fz: "xs",
+							},
+							customType: getCyberAssetsGeneralInfoQuery.data?.data.asset_identification.os_version || "",
+						})
+					: "",
 			},
 			{
 				label: "Discovery Type:",
@@ -504,8 +509,8 @@ export const useCyberAssetDetailOverview = (id?: string, appName?: string) => {
 							: 0,
 						topVulnerabilities:
 							response.data.top_vulnerability?.map((item) => ({
-								name: Object.entries(item)[0][0] as string,
-								criticality: Object.entries(item)[0][1] as CyberAssetCriticalityEnum,
+								name: item.vulnerability,
+								criticality: item.criticality as CyberAssetCriticalityEnum,
 							})) || [],
 					},
 				};
