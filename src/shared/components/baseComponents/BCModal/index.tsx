@@ -38,14 +38,19 @@ BCModal.Footer = function Footer(props: {
 	return (
 		<Flex p={16} gap="sm" justify="flex-end" className={classes.footer}>
 			<Button
-				id="data-test-modal-apply"
+				data-testid="BCModal-apply"
 				onClick={props.onApply}
 				disabled={props.disabled}
 				loading={props.loading}
 			>
 				{props.applyLabel || "Apply"}
 			</Button>
-			<Button id="data-test-modal-cancel" onClick={props.onCancel} variant="default" disabled={props.loading}>
+			<Button
+				data-testid="BCModal-cancel"
+				onClick={props.onCancel}
+				variant="default"
+				disabled={props.loading}
+			>
 				Cancel
 			</Button>
 		</Flex>
@@ -55,7 +60,7 @@ BCModal.Footer = function Footer(props: {
 BCModal.FooterSingleButton = function Footer(props: { onOk: () => void; okLabel?: string }) {
 	return (
 		<Flex p={16} gap="sm" justify="flex-end" className={classes.footer}>
-			<Button id="data-test-modal-ok" onClick={props.onOk}>
+			<Button data-testid="BCModal-ok" onClick={props.onOk}>
 				{props.okLabel || "Ok"}
 			</Button>
 		</Flex>
@@ -71,10 +76,10 @@ BCModal.FooterTwoButton = function Footer(props: {
 }) {
 	return (
 		<Flex p={16} gap="sm" justify="flex-end" className={classes.footer}>
-			<Button id="data-test-modal-ok" loading={props.loading} {...props.okButtonProps} onClick={props.onOk}>
+			<Button data-testid="BCModal-ok" loading={props.loading} {...props.okButtonProps} onClick={props.onOk}>
 				{props.okLabel || "Ok"}
 			</Button>
-			<Button id="data-test-modal-cencel" loading={props.loading} onClick={props.onCancel} variant="default">
+			<Button data-testid="BCModal-cancel" loading={props.loading} onClick={props.onCancel} variant="default">
 				Cancel
 			</Button>
 		</Flex>
@@ -94,7 +99,7 @@ BCModal.FooterThreeButtons = function Footer(props: {
 	return (
 		<Flex p={16} gap="sm" justify="flex-end" className={classes.footer}>
 			<Button
-				id="data-test-set-and-apply"
+				data-testid="BCModal-apply"
 				loading={props.loading}
 				disabled={props.setAndApplyDisabled}
 				size="xs"
@@ -103,7 +108,7 @@ BCModal.FooterThreeButtons = function Footer(props: {
 				{props.setAndApplyLabel || "Set and Apply"}
 			</Button>
 			<Button
-				id="data-test-modal-set"
+				data-testid="BCModal-set"
 				loading={props.loading}
 				disabled={props.setDisabled}
 				variant="outline"
@@ -113,7 +118,7 @@ BCModal.FooterThreeButtons = function Footer(props: {
 				{props.setLabel || "Set"}
 			</Button>
 			<Button
-				id="data-test-modal-cencel"
+				data-testid="BCModal-cancel"
 				loading={props.loading}
 				size="xs"
 				onClick={props.onCancel}

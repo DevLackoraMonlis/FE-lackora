@@ -34,6 +34,19 @@ test.describe("WorkflowAssetsIdentification E2E", () => {
 		await expect(modalTitle).not.toBeVisible();
 	});
 
+	test("should open and close Run Workflow modal", async ({ page }) => {
+		const scanHistoryButton = page.getByTestId("workflow-button-run-manually");
+		await scanHistoryButton.click();
+
+		const modalTitle = page.getByTestId("BCModal-title");
+		await expect(modalTitle).toBeVisible();
+
+		const closeButton = page.getByTestId("BCModal-close");
+		await closeButton.click();
+
+		await expect(modalTitle).not.toBeVisible();
+	});
+
 	test("should open and close Step Scan History modal", async ({ page }) => {
 		const viewAssetButton = page.getByTestId("workflow-accordion-phase").first();
 

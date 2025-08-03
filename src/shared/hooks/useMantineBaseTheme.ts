@@ -11,8 +11,14 @@ export default function useMantineBaseTheme() {
 					}),
 				},
 			},
+			AccordionPanel: {
+				defaultProps: {
+					component: "div",
+				},
+			},
 			AccordionControl: {
 				defaultProps: {
+					component: "div",
 					style: {
 						transition: "all 150ms ease",
 					},

@@ -2,15 +2,17 @@ import { Badge, Flex, Text } from "@mantine/core";
 import { IconInfoCircle } from "@tabler/icons-react";
 
 import BCModal from "@/shared/components/baseComponents/BCModal";
+import { calculateRunNextScan } from "../../index.helper";
 import { useWorkflowRunNow } from "../../index.hooks";
 
 type Props = {
 	refetchWorkflow: VoidFunction;
 	onClose: VoidFunction;
 	opened: boolean;
+	nextRuntime?: string | null;
 };
 
-export function WorkflowRunNowModal({ opened, onClose, refetchWorkflow }: Props) {
+export function WorkflowRunNowModal({ opened, onClose, refetchWorkflow, nextRuntime }: Props) {
 	const workflowCallback = () => {
 		refetchWorkflow();
 		onClose();
@@ -25,12 +27,12 @@ export function WorkflowRunNowModal({ opened, onClose, refetchWorkflow }: Props)
 							<IconInfoCircle />
 						</Flex>
 					</Badge>
-					<Text fz="lg" fw="bold">
+					<Text fz="lg" fw="bold" data-testid="BCModal-title">
 						Run Workflow Manually?
 					</Text>
 				</Flex>
 				<Text bg="gray.1" w="90%" mx="auto" py="sm" px="md">
-					The workflow will run in 1 hour and 24 minutes. Are you sure you want to run it now?
+					{calculateRunNextScan(nextRuntime)} Are you sure you want to run it now?
 				</Text>
 			</Flex>
 			<BCModal.Footer applyLabel="OK" onApply={workflowRunNow} onCancel={onClose} loading={loading} />
