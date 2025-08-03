@@ -307,25 +307,26 @@ export const useGetCyberAssetDetailGeneralInfo = (params: {
 	};
 };
 
-export function useCyberAssetDynamicStores(types: CyberAssetDetailInventoryType[]) {
+export function useCyberAssetDynamicStores(types: CyberAssetDetailInventoryType[], assetId?: string) {
 	const storesRef = useRef<ICAdvancedFilterDynamicStoreType[]>([]); // name => store
 
 	useEffect(() => {
-		if (types.length) {
+		if (types.length && assetId) {
 			types.forEach((type) => {
-				const findStore = storesRef.current.find((item) => item.name === type.type);
+				const findStore = storesRef.current.find((item) => item.name === type.type.value);
 				if (!findStore) {
 					const newStore = createDynamicICAdvancedStore();
 
 					const page = () => (
 						<CyberAssetDetailInventoryDynamicGrid
 							store={newStore}
-							type={type.type}
-							items={type.items || []}
+							type={type.type.value}
+							items={type.items}
+							id={assetId}
 						/>
 					);
 					storesRef.current.push({
-						name: type.type,
+						name: type.type.value,
 						store: newStore,
 						types,
 						mainPage: page(),
@@ -333,7 +334,7 @@ export function useCyberAssetDynamicStores(types: CyberAssetDetailInventoryType[
 				}
 			});
 		}
-	}, [types]);
+	}, [types, assetId]);
 
 	return { storesRef };
 }

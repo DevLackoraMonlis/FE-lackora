@@ -178,7 +178,7 @@ export type CyberAssetDetailOverviewProps = {
 	notifications: CyberAssetDetailOverviewNotification[];
 };
 
-export type CyberAssetDetailInventoryType = { type: string; items: string[] };
+export type CyberAssetDetailInventoryType = { type: LabelValueType; items: LabelValueType[] };
 export type CyberAssetDetailInventoryStoreData = { type: string; store: StoreApi<ICAdvancedFilterStoreType> };
 
 export type CyberAssetDetailInventoryProps = {

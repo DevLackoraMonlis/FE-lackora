@@ -403,4 +403,3 @@ export const useDeleteVRF = <TError = HTTPValidationError,
 
       return useMutation(mutationOptions , queryClient);
     }
-    

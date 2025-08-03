@@ -46,13 +46,16 @@ function includeExcludeAction(
 			value: item,
 		}));
 	} else {
-		condition.values = [
-			{
-				label: condition as unknown as string,
-				value: condition as unknown as string,
-			},
-		];
+		Object.assign(condition, {
+			values: [
+				{
+					label: value as unknown as string,
+					value: value as unknown as string,
+				},
+			],
+		});
 	}
+
 	const isEmptyCondition = () => {
 		if (findColumn?.type === "List") {
 			if ((value as unknown[])?.length === 0) return true;

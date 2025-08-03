@@ -171,11 +171,11 @@ export type ICAdvancedFilterProps<T> = {
 		getColumnOption: (columnName: string) => ICAdvancedFilterColumnRs | undefined,
 	) => void;
 	dataQueryKey: string[];
-	getDataApi: (
+	getDataApi?: (
 		variables: ICAdvancedFilterRq,
 		signal?: AbortSignal,
 	) => Promise<AxiosResponse<ICAdvancedFilterRs>>;
-	getColumnsApi: (signal?: AbortSignal) => Promise<AxiosResponse<PaginationRs<ICAdvancedFilterColumnRs>>>;
+	getColumnsApi?: (signal?: AbortSignal) => Promise<AxiosResponse<PaginationRs<ICAdvancedFilterColumnRs>>>;
 };
 
 export type ICAdvancedFilterDynamicStoreType = {

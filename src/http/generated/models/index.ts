@@ -465,6 +465,7 @@ export * from './InventoryCategoryResponseHardware';
 export * from './InventoryCategoryResponseNetwork';
 export * from './InventoryCategoryResponseSoftware';
 export * from './InventoryCategoryResponseSystemDetails';
+export * from './InventoryCategoryResponseTypes';
 export * from './InventoryCategoryResponseUsers';
 export * from './InventoryDataAdvanceFilterRequestModel';
 export * from './InventoryDataAdvanceFilterRequestModelConditions';

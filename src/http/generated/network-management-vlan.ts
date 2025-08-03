@@ -404,4 +404,3 @@ export const useDeleteVLAN = <TError = HTTPValidationError,
 
       return useMutation(mutationOptions , queryClient);
     }
-    

@@ -1,5 +1,5 @@
 import { getCyberAssetsInventoryFormattedColumns } from "@/builtinApps/CyberAssetsApp/CyberAssets/index.constants";
-import { getAssetFilterColumns, getAssets } from "@/http/generated/cyber-asset-management-cyber-assets";
+import { getAssetInventoryData, getInventoryFilterColumns } from "@/http/generated/inventory-management";
 import type { EachAdvanceFilterConditionOperator } from "@/http/generated/models";
 import ICAdvancedFilter from "@/shared/components/infraComponents/ICAdvancedFilter";
 import type {
@@ -8,14 +8,16 @@ import type {
 	ICAdvancedFilterDataRs,
 	ICAdvancedFilterStoreType,
 } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
+import type { LabelValueType } from "@/shared/lib/general-types";
 import { Select } from "@mantine/core";
 import { useEffect, useState } from "react";
 import type { StoreApi } from "zustand/index";
 
 type Props = {
 	type: string;
-	items: string[];
+	items: LabelValueType[];
 	store?: StoreApi<ICAdvancedFilterStoreType>;
+	id?: string;
 };
 
 export default function CyberAssetDetailInventoryDynamicGrid(props: Props) {
@@ -27,7 +29,7 @@ export default function CyberAssetDetailInventoryDynamicGrid(props: Props) {
 
 	useEffect(() => {
 		if (props.items.length && !selectedItem) {
-			setSelectedItem(props.items[0]);
+			setSelectedItem(props.items[0].value);
 		}
 	}, [props.items]);
 
@@ -40,28 +42,31 @@ export default function CyberAssetDetailInventoryDynamicGrid(props: Props) {
 			hideConditionSection
 			hideExpandGroupByButton
 			tableMinusHeight={160}
-			getColumnsApi={(signal) =>
-				getAssetFilterColumns(signal).then((response) => ({
-					...response,
-					data: {
-						...response.data,
-						results: response.data.results.map((item) => {
-							const newItem: ICAdvancedFilterColumnRs = {
-								displayName: item.display_name,
-								isDefault: item.is_default,
-								name: item.name,
-								objectType: item.object_type || [],
-								options: item.options?.map((opt) => ({ label: opt, value: opt })),
-								type: item.type as ICAdvancedFilterColumnType,
-							};
-							return newItem;
-						}),
-					},
-				}))
-			}
+			{...(selectedItem && {
+				getColumnsApi: (signal) =>
+					getInventoryFilterColumns(selectedItem || "", signal).then((response) => ({
+						...response,
+						data: {
+							...response.data,
+							results: response.data.results.map((item) => {
+								const newItem: ICAdvancedFilterColumnRs = {
+									displayName: item.display_name,
+									isDefault: item.is_default,
+									name: item.name,
+									objectType: item.object_type || [],
+									options: item.options?.map((opt) => ({ label: opt, value: opt })),
+									type: item.type as ICAdvancedFilterColumnType,
+								};
+								return newItem;
+							}),
+						},
+					})),
+			})}
 			getDataApi={(variables, signal) =>
-				getAssets(
+				getAssetInventoryData(
+					selectedItem || "",
 					{
+						asset_id: props.id || "",
 						columns: variables.columns.map((column) => ({
 							name: column.name,
 							order: column.orderBy,
@@ -121,12 +126,7 @@ export default function CyberAssetDetailInventoryDynamicGrid(props: Props) {
 			minColumnSize={180}
 			defaultColumnSize={200}
 			leftSection={
-				<Select
-					value={selectedItem}
-					onChange={setSelectedItem}
-					allowDeselect={false}
-					data={props.items.map((item) => ({ label: item, value: item }))}
-				/>
+				<Select value={selectedItem} onChange={setSelectedItem} allowDeselect={false} data={props.items} />
 			}
 		/>
 	);

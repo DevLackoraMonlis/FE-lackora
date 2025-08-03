@@ -409,4 +409,3 @@ export const useDeleteAdapter = <TError = HTTPValidationError,
 
       return useMutation(mutationOptions , queryClient);
     }
-    

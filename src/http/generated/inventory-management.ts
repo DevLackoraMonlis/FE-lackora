@@ -134,7 +134,7 @@ export const getInventoryTypes = (
 ) => {
       
       
-      return orvalMutator<InventoryCategoryResponse>(
+      return orvalMutator<InventoryCategoryResponse[]>(
       {url: "/api/inventory-management/available-types", method: 'GET', signal
     },
       );
@@ -364,4 +364,3 @@ export const useGetAssetInventoryData = <TError = HTTPValidationError,
 
       return useMutation(mutationOptions , queryClient);
     }
-    

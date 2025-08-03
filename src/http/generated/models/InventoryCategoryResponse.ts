@@ -5,18 +5,10 @@
  * MonoWatch Security Asset Management
  * OpenAPI spec version: 1.0.0
  */
-import type { InventoryCategoryResponseAssetInformation } from './InventoryCategoryResponseAssetInformation';
-import type { InventoryCategoryResponseHardware } from './InventoryCategoryResponseHardware';
-import type { InventoryCategoryResponseNetwork } from './InventoryCategoryResponseNetwork';
-import type { InventoryCategoryResponseSoftware } from './InventoryCategoryResponseSoftware';
-import type { InventoryCategoryResponseSystemDetails } from './InventoryCategoryResponseSystemDetails';
-import type { InventoryCategoryResponseUsers } from './InventoryCategoryResponseUsers';
+import type { InventoryCategoryResponseTypes } from './InventoryCategoryResponseTypes';
 
 export interface InventoryCategoryResponse {
-  asset_information?: InventoryCategoryResponseAssetInformation;
-  system_details?: InventoryCategoryResponseSystemDetails;
-  hardware?: InventoryCategoryResponseHardware;
-  software?: InventoryCategoryResponseSoftware;
-  network?: InventoryCategoryResponseNetwork;
-  users?: InventoryCategoryResponseUsers;
+  name: string;
+  display_name: string;
+  types?: InventoryCategoryResponseTypes;
 }

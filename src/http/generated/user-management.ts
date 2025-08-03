@@ -236,4 +236,3 @@ export const useLogoutSystem = <TError = HTTPValidationError,
 
       return useMutation(mutationOptions , queryClient);
     }
-    

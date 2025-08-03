@@ -3,89 +3,46 @@ import type {
 	CyberAssetDetailInventoryProps,
 	CyberAssetDetailInventoryType,
 } from "@/builtinApps/CyberAssetsApp/CyberAssets/index.types";
+import { useGetInventoryTypes } from "@/http/generated/inventory-management";
 import { Box, Flex, SegmentedControl } from "@mantine/core";
 import { useEffect, useState } from "react";
 import classes from "./index.module.css";
 
-export default function CyberAssetDetailInventory(_props: CyberAssetDetailInventoryProps) {
-	const [selectedType, setSelectedType] = useState<string>("");
+export default function CyberAssetDetailInventory(props: CyberAssetDetailInventoryProps) {
+	const [selectedType, setSelectedType] = useState<string | undefined>();
 
-	const dataTypes: CyberAssetDetailInventoryType[] = [
-		{
-			type: "Asset Information",
-			items: [
-				"Applications",
-				"Services",
-				"System Drivers",
-				"Startup Commands",
-				"Patches",
-				"Printer Configuration",
-			],
-		},
-		{
-			type: "System Details",
-			items: [
-				"Applications",
-				"Services",
-				"System Drivers",
-				"Startup Commands",
-				"Patches",
-				"Printer Configuration",
-			],
-		},
-		{
-			type: "Hardware",
-			items: [
-				"Applications",
-				"Services",
-				"System Drivers",
-				"Startup Commands",
-				"Patches",
-				"Printer Configuration",
-			],
-		},
-		{
-			type: "Software",
-			items: [
-				"Applications",
-				"Services",
-				"System Drivers",
-				"Startup Commands",
-				"Patches",
-				"Printer Configuration",
-			],
-		},
-		{
-			type: "Network",
-			items: [
-				"Applications",
-				"Services",
-				"System Drivers",
-				"Startup Commands",
-				"Patches",
-				"Printer Configuration",
-			],
-		},
-		{
-			type: "Users",
-			items: [
-				"Applications",
-				"Services",
-				"System Drivers",
-				"Startup Commands",
-				"Patches",
-				"Printer Configuration",
-			],
-		},
-	];
+	const getAssetOverviewSecurityDataQuery = useGetInventoryTypes({
+		query: {
+			enabled: !!props.id,
+			select: (response) => {
+				const dataTypes: CyberAssetDetailInventoryType[] = response.data.map((item) => {
+					const newDataType: CyberAssetDetailInventoryType = {
+						type: {
+							label: item.display_name,
+							value: item.name,
+						},
+						items: item.types?.map((type) => ({ label: type.display_name, value: type.name })) || [],
+					};
 
-	const dynamicStores = useCyberAssetDynamicStores(dataTypes);
+					return newDataType;
+				});
+				return {
+					dataTypes,
+				};
+			},
+		},
+	});
+
+	const dynamicStores = useCyberAssetDynamicStores(
+		getAssetOverviewSecurityDataQuery.data?.dataTypes || [],
+		props.id,
+	);
 
 	useEffect(() => {
-		if (dataTypes.length && !selectedType) {
-			setSelectedType(dataTypes[0].type);
+		if (getAssetOverviewSecurityDataQuery.data?.dataTypes.length && !selectedType) {
+			setSelectedType(getAssetOverviewSecurityDataQuery.data?.dataTypes[0].type.value);
 		}
-	}, [dataTypes]);
+	}, [getAssetOverviewSecurityDataQuery.data?.dataTypes]);
 
 	return (
 		<Box p={"sm"} w={"100%"}>
@@ -94,7 +51,7 @@ export default function CyberAssetDetailInventory(_props: CyberAssetDetailInvent
 					size={"xs"}
 					value={selectedType}
 					onChange={setSelectedType}
-					data={dataTypes.map((item) => ({ label: item.type, value: item.type }))}
+					data={getAssetOverviewSecurityDataQuery.data?.dataTypes.map((item) => item.type) || []}
 				/>
 			</Flex>
 

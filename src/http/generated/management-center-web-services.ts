@@ -404,4 +404,3 @@ export const useDeleteWebService = <TError = HTTPValidationError,
 
       return useMutation(mutationOptions , queryClient);
     }
-    

@@ -33,7 +33,7 @@ export default function ICAdvancedFilterComponent<T>(
 
 	const useGetColumnsQuery = useQuery({
 		queryKey: ["get-columns", ...props.columnsQueryKey],
-		queryFn: ({ signal }) => props.getColumnsApi(signal),
+		queryFn: ({ signal }) => props.getColumnsApi?.(signal),
 		staleTime: 5 * 60 * 1000,
 	});
 
