@@ -15,15 +15,16 @@ type Props = WorkflowPhase & WorkflowHandles & { defaultOpened: boolean };
 export default function WorkflowAccordion({ type, status, title, description, steps, ...props }: Props) {
 	if (!type) return null;
 	const phaseParams = useMemo(() => getWorkflowStatus(status), [status]);
-	const timelineActiveStep = steps?.length;
+	const timelineActiveStep = useMemo(() => steps?.length, [status]);
+	const disabledAccordion = useMemo(() => description.failed || description.idle, [description]);
+	const openedAccordionType = useMemo(
+		() => (status === "inprogress" || props.defaultOpened ? (disabledAccordion ? "" : type) : ""),
+		[status, type, disabledAccordion, props.defaultOpened],
+	);
 	return (
-		<Accordion variant="separated" defaultValue={status === "inprogress" || props.defaultOpened ? type : ""}>
+		<Accordion variant="separated" defaultValue={openedAccordionType}>
 			<Accordion.Item value={type}>
-				<Accordion.Control
-					h="66px"
-					disabled={description.failed || description.idle}
-					data-testid="workflow-accordion-phase"
-				>
+				<Accordion.Control h="66px" disabled={disabledAccordion} data-testid="workflow-accordion-phase">
 					<Flex align="center" justify="space-between">
 						<Flex gap="sm">
 							<Card

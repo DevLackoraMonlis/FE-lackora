@@ -3,8 +3,7 @@ import { useInterval } from "@mantine/hooks";
 import { useEffect, useState } from "react";
 
 import { WORKFLOW_REFETCH_INTERVAL_HEADER } from "../../index.constants";
-import { getDifferenceDateTime, getWorkflowStatus } from "../../index.helper";
-import { calculateNextScheduledScan } from "../../index.helper";
+import { calculatePendingScheduledScan, getDifferenceDateTime, getWorkflowStatus } from "../../index.helper";
 import { useWorkflow } from "../../index.hooks";
 import { WorkflowLoader, WorkflowPending } from "./components/WorkflowLoader";
 
@@ -44,7 +43,7 @@ const WorkflowOnHeader = () => {
 							</Text>
 						</Flex>
 					</Badge>
-					<Badge variant="light" color="green" p="md" tt="capitalize">
+					<Badge variant="light" color={statusParams.bg} p="md" tt="capitalize">
 						<Flex align="center" gap="2xs">
 							{Icon && <Icon size={15} />}
 							<Text fz="xs">{`Scan #${scanId} is Completed`}</Text>
@@ -54,12 +53,13 @@ const WorkflowOnHeader = () => {
 			);
 		}
 		case "idle":
+			return "";
 		case "pending": {
 			return (
-				<Badge variant="light" color="gray.4" p="md" tt="capitalize">
+				<Badge variant="light" color={statusParams.c} p="md" tt="capitalize">
 					<Flex align="center" gap="xs">
-						<Loader loaders={{ custom: WorkflowPending }} type="custom" c="gray.4" size={15} />
-						<Text fz="xs">{calculateNextScheduledScan(nextScan)}</Text>
+						<Loader loaders={{ custom: WorkflowPending }} type="custom" c={statusParams.c} size={15} />
+						<Text fz="xs">{calculatePendingScheduledScan(nextScan)}</Text>
 					</Flex>
 				</Badge>
 			);
@@ -67,9 +67,9 @@ const WorkflowOnHeader = () => {
 		case "in_progress": {
 			return (
 				<Flex gap="xs" align="center">
-					<Badge variant="light" color={statusParams.color} p="md" tt="capitalize">
+					<Badge variant="light" color={statusParams.bg} p="md" tt="capitalize">
 						<Flex align="center" gap="2xs">
-							<Loader loaders={{ custom: WorkflowLoader }} type="custom" c={statusParams.color} size={15} />
+							<Loader loaders={{ custom: WorkflowLoader }} type="custom" color={statusParams.bg} size={15} />
 							<Text fz="xs">{`Scan #${scanId} is ${statusParams.label}.... `}</Text>
 						</Flex>
 					</Badge>
@@ -102,9 +102,9 @@ const WorkflowOnHeader = () => {
 		}
 		default:
 			return (
-				<Badge variant="light" color="blue" tt="capitalize" p="md">
+				<Badge variant="light" color={statusParams.bg} tt="capitalize" p="md">
 					<Flex align="center" gap="2xs">
-						<Loader loaders={{ custom: WorkflowLoader }} type="custom" c={statusParams.color} size={15} />
+						<Loader loaders={{ custom: WorkflowLoader }} type="custom" color={statusParams.bg} size={15} />
 						<Text fz="xs">check workflow status...</Text>
 					</Flex>
 				</Badge>
