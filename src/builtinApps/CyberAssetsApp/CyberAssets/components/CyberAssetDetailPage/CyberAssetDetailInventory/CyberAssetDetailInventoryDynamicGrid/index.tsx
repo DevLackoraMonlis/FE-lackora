@@ -1,10 +1,11 @@
 import { getCyberAssetsInventoryFormattedColumns } from "@/builtinApps/CyberAssetsApp/CyberAssets/index.constants";
 import { getAssetInventoryData, getInventoryFilterColumns } from "@/http/generated/inventory-management";
-import type { EachAdvanceFilterConditionOperator } from "@/http/generated/models";
 import ICAdvancedFilter from "@/shared/components/infraComponents/ICAdvancedFilter";
+import {
+	convertICAdvancedFilterResponseColumns,
+	convertICAdvancedFilterToDefaultVariables,
+} from "@/shared/components/infraComponents/ICAdvancedFilter/index.helper";
 import type {
-	ICAdvancedFilterColumnRs,
-	ICAdvancedFilterColumnType,
 	ICAdvancedFilterDataRs,
 	ICAdvancedFilterStoreType,
 } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
@@ -44,78 +45,25 @@ export default function CyberAssetDetailInventoryDynamicGrid(props: Props) {
 			tableMinusHeight={160}
 			{...(selectedItem && {
 				getColumnsApi: (signal) =>
-					getInventoryFilterColumns(selectedItem || "", signal).then((response) => ({
+					getInventoryFilterColumns(selectedItem || "", signal).then((response) =>
+						convertICAdvancedFilterResponseColumns(response),
+					),
+			})}
+			{...(selectedItem && {
+				getDataApi: (variables, signal) =>
+					getAssetInventoryData(
+						selectedItem || "",
+						{ ...convertICAdvancedFilterToDefaultVariables(variables), asset_id: props.id || "" },
+						signal,
+					).then((response) => ({
 						...response,
 						data: {
 							...response.data,
-							results: response.data.results.map((item) => {
-								const newItem: ICAdvancedFilterColumnRs = {
-									displayName: item.display_name,
-									isDefault: item.is_default,
-									name: item.name,
-									objectType: item.object_type || [],
-									options: item.options?.map((opt) => ({ label: opt, value: opt })),
-									type: item.type as ICAdvancedFilterColumnType,
-								};
-								return newItem;
-							}),
+							results: response.data.results?.map((item) => item as ICAdvancedFilterDataRs) || [],
 						},
 					})),
 			})}
-			getDataApi={(variables, signal) =>
-				getAssetInventoryData(
-					selectedItem || "",
-					{
-						asset_id: props.id || "",
-						columns: variables.columns.map((column) => ({
-							name: column.name,
-							order: column.orderBy,
-						})),
-						conditions: variables.conditions.map((item) => ({
-							close_bracket: item.closeBracket,
-							column_name: item.columnName,
-							next_operator: item.nextOperator,
-							open_bracket: item.openBracket,
-							operator: item.operator as EachAdvanceFilterConditionOperator,
-							values: item.values,
-						})),
-						end_date: variables.endDate || null,
-						group_by: variables.groupBy
-							? {
-									aggregated_conditions: variables.groupBy.aggregatedConditions.map((agg) => ({
-										close_bracket: agg.closeBracket,
-										next_operator: agg.nextOperator,
-										open_bracket: agg.openBracket,
-										operator: agg.operator,
-										values: agg.values,
-									})),
-									display_name: "",
-									column: variables.groupBy.column,
-									function: variables.groupBy.function,
-									order: variables.groupBy.order,
-								}
-							: null,
-						limit: variables.limit,
-						page: variables.page,
-						search:
-							variables.search.columnName && variables.search.value
-								? {
-										column_name: variables.search.columnName,
-										value: variables.search.value,
-									}
-								: null,
-						start_date: variables.startDate || null,
-					},
-					signal,
-				).then((response) => ({
-					...response,
-					data: {
-						...response.data,
-						results: response.data.results?.map((item) => item as ICAdvancedFilterDataRs) || [],
-					},
-				}))
-			}
-			columnsQueryKey={["cyber-assets-inventory-columns"]}
+			columnsQueryKey={["cyber-assets-inventory-columns", selectedItem || ""]}
 			dataQueryKey={["cyber-assets-inventory-data", selectedItem || "", props.type]}
 			fullScreenTitle={"Cyber Asset Inventory"}
 			excludeColumns={["id"]}

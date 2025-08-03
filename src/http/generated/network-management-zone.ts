@@ -403,3 +403,4 @@ export const useDeleteZone = <TError = HTTPValidationError,
 
       return useMutation(mutationOptions , queryClient);
     }
+    

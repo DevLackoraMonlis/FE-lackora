@@ -78,7 +78,7 @@ export type CyberAssetDetailOverviewNetwork = {
 	openPorts: CyberAssetDetailOverviewNetworkOpenPort[];
 };
 
-export type CyberAssetDetailOverviewChangeType = "MODIFY" | "DELETE" | "ADD";
+export type CyberAssetDetailOverviewChangeType = "modify" | "delete" | "add";
 
 export type CyberAssetDetailOverviewChange = {
 	total: number;

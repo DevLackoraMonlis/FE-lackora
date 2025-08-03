@@ -84,9 +84,9 @@ export default function CyberAssetDetailOverview(props: {
 				const data: Pick<CyberAssetDetailOverviewProps, "changes"> = {
 					changes: {
 						summary: {
-							MODIFY: response.data.modify,
-							ADD: response.data.add,
-							DELETE: response.data.delete,
+							modify: response.data.modify,
+							add: response.data.add,
+							delete: response.data.delete,
 						},
 						total: response.data.total,
 					},
@@ -290,9 +290,9 @@ export default function CyberAssetDetailOverview(props: {
 		changes: {
 			total: 52,
 			summary: {
-				MODIFY: 5,
-				DELETE: 12,
-				ADD: 35,
+				modify: 5,
+				delete: 12,
+				add: 35,
 			},
 		},
 		cpu: {

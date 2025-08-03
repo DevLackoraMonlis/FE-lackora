@@ -1,11 +1,19 @@
+import type { PaginationRs } from "@/http/end-points/GeneralService.types";
+import type {
+	AdvanceFilterRequestModel,
+	AdvancedFilterColumnInformation,
+	EachAdvanceFilterConditionOperator,
+} from "@/http/generated/models";
 import { ICAdvancedGroupByFunctions } from "@/shared/components/infraComponents/ICAdvancedFilter/index.enum";
 import type {
 	ICAdvancedFilterColumnRs,
+	ICAdvancedFilterColumnType,
 	ICAdvancedFilterCondition,
 	ICAdvancedFilterRq,
 	ICAdvancedFilterStoreType,
 	SetStateStore,
 } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
+import type { AxiosResponse } from "axios";
 import { v4 } from "uuid";
 import { IC_ADVANCED_FILTER_DEFAULT_OPERATORS, IC_ADVANCED_FILTER_STRING_OPERATORS } from "./index.constants";
 
@@ -293,4 +301,71 @@ export function findAllOperatorKeyByValue(valueToFind: string): string | undefin
 		}
 	}
 	return undefined; // if not found
+}
+
+export function convertICAdvancedFilterResponseColumns<META_DATA>(
+	response: AxiosResponse<PaginationRs<AdvancedFilterColumnInformation, META_DATA>, unknown>,
+) {
+	return {
+		...response,
+		data: {
+			...response.data,
+			results: response.data.results.map((item) => {
+				const newItem: ICAdvancedFilterColumnRs = {
+					displayName: item.display_name,
+					isDefault: item.is_default,
+					name: item.name,
+					objectType: item.object_type || [],
+					options: item.options?.map((opt) => ({ label: opt, value: opt })),
+					type: item.type as ICAdvancedFilterColumnType,
+				};
+				return newItem;
+			}),
+		},
+	};
+}
+
+export function convertICAdvancedFilterToDefaultVariables(
+	variables: ICAdvancedFilterRq,
+): AdvanceFilterRequestModel {
+	return {
+		columns: variables.columns.map((column) => ({
+			name: column.name,
+			order: column.orderBy,
+		})),
+		conditions: variables.conditions.map((item) => ({
+			close_bracket: item.closeBracket,
+			column_name: item.columnName,
+			next_operator: item.nextOperator,
+			open_bracket: item.openBracket,
+			operator: item.operator as EachAdvanceFilterConditionOperator,
+			values: item.values,
+		})),
+		end_date: variables.endDate || null,
+		group_by: variables.groupBy
+			? {
+					aggregated_conditions: variables.groupBy.aggregatedConditions.map((agg) => ({
+						close_bracket: agg.closeBracket,
+						next_operator: agg.nextOperator,
+						open_bracket: agg.openBracket,
+						operator: agg.operator,
+						values: agg.values,
+					})),
+					display_name: "",
+					column: variables.groupBy.column,
+					function: variables.groupBy.function,
+					order: variables.groupBy.order,
+				}
+			: null,
+		limit: variables.limit,
+		page: variables.page,
+		search:
+			variables.search.columnName && variables.search.value
+				? {
+						column_name: variables.search.columnName,
+						value: variables.search.value,
+					}
+				: null,
+		start_date: variables.startDate || null,
+	};
 }

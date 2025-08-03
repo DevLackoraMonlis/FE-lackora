@@ -301,6 +301,7 @@ export const useGetCyberAssetDetailGeneralInfo = (params: {
 	};
 
 	return {
+		assetId: getCyberAssetsGeneralInfoQuery.data?.data.id,
 		generalInfo,
 		isLoading: getCyberAssetsGeneralInfoQuery.isFetching,
 		osType: getCyberAssetsGeneralInfoQuery.data?.data.asset_identification.os_type as CyberAssetOsTypeEnum,

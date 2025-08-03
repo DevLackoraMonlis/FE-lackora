@@ -171,10 +171,10 @@ export const getCyberAssetsInventoryFormattedColumns: () => TanStackDataTableCol
 export const getCyberAssetsChangesFormattedColumns: () => TanStackDataTableColumnColDef<ICAdvancedFilterDataRs>[] =
 	() => [
 		{
-			accessor: "change_type",
+			accessor: "action",
 			render: (record) => {
 				return getCyberAssetChangeTypeBadge({
-					type: record.change_type as CyberAssetDetailOverviewChangeType,
+					type: record.action as CyberAssetDetailOverviewChangeType,
 					props: {
 						m: "xs",
 					},
@@ -212,7 +212,7 @@ export const CYBER_ASSET_STATE_COLOR: Record<CyberAssetStateEnum, string> = {
 };
 
 export const CYBER_ASSET_CHANGE_TYPE_COLOR: Record<CyberAssetDetailOverviewChangeType, string> = {
-	MODIFY: "#12B886",
-	ADD: "#228BE6",
-	DELETE: "#FA5252",
+	modify: "#12B886",
+	add: "#228BE6",
+	delete: "#FA5252",
 };

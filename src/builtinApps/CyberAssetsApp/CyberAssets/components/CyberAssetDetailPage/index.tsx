@@ -40,7 +40,7 @@ enum TabTypes {
 
 export default function CyberAssetDetailPage(props: Props) {
 	const [activeTab, setActiveTab] = useState<TabTypes>(TabTypes.OVERVIEW);
-	const { generalInfo, osType, isLoading } = useGetCyberAssetDetailGeneralInfo({ id: props.id });
+	const { generalInfo, osType, isLoading, assetId } = useGetCyberAssetDetailGeneralInfo({ id: props.id });
 
 	return (
 		<Flex direction={"column"} h={"100%"}>
@@ -97,14 +97,14 @@ export default function CyberAssetDetailPage(props: Props) {
 						</Tabs.List>
 						<Tabs.Panel value={TabTypes.OVERVIEW}>
 							{activeTab === TabTypes.OVERVIEW && (
-								<CyberAssetDetailOverview osType={osType} id={props.id} appName={"Nessus"} />
+								<CyberAssetDetailOverview osType={osType} id={assetId} appName={"Nessus"} />
 							)}
 						</Tabs.Panel>
 						<Tabs.Panel value={TabTypes.INVENTORY}>
-							{activeTab === TabTypes.INVENTORY && <CyberAssetDetailInventory id={props.id} />}
+							{activeTab === TabTypes.INVENTORY && <CyberAssetDetailInventory id={assetId} />}
 						</Tabs.Panel>
 						<Tabs.Panel value={TabTypes.CHANGES}>
-							{activeTab === TabTypes.CHANGES && <CyberAssetDetailChanges id={props.id} />}
+							{activeTab === TabTypes.CHANGES && <CyberAssetDetailChanges id={assetId} />}
 						</Tabs.Panel>
 						<Tabs.Panel value={TabTypes.SECURITY}>
 							<CyberAssetDetailSecurity />
@@ -116,7 +116,7 @@ export default function CyberAssetDetailPage(props: Props) {
 							<CyberAssetDetailFiles />
 						</Tabs.Panel>
 						<Tabs.Panel value={TabTypes.HISTORY}>
-							{activeTab === TabTypes.HISTORY && <CyberAssetDetailHistory id={props.id} />}
+							{activeTab === TabTypes.HISTORY && <CyberAssetDetailHistory id={assetId} />}
 						</Tabs.Panel>
 					</Tabs>
 				</Grid.Col>

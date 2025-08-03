@@ -1,41 +1,44 @@
 import { getCyberAssetsChangesFormattedColumns } from "@/builtinApps/CyberAssetsApp/CyberAssets/index.constants";
 import type { CyberAssetDetailInventoryProps } from "@/builtinApps/CyberAssetsApp/CyberAssets/index.types";
-import { getAssetFilterColumns, getAssets } from "@/http/generated/cyber-asset-management-cyber-assets";
-import type { EachAdvanceFilterConditionOperator } from "@/http/generated/models";
+import { getChangeColumns, getChanges } from "@/http/generated/change-management";
+import type { ChangeDataAdvanceFilterRequestModelAction } from "@/http/generated/models";
 import ICAdvancedFilter from "@/shared/components/infraComponents/ICAdvancedFilter";
+import {
+	convertICAdvancedFilterResponseColumns,
+	convertICAdvancedFilterToDefaultVariables,
+} from "@/shared/components/infraComponents/ICAdvancedFilter/index.helper";
 import { createDynamicICAdvancedStore } from "@/shared/components/infraComponents/ICAdvancedFilter/index.store";
-import type {
-	ICAdvancedFilterColumnRs,
-	ICAdvancedFilterColumnType,
-	ICAdvancedFilterDataRs,
-} from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
+import type { ICAdvancedFilterDataRs } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
 import type { LabelValueType } from "@/shared/lib/general-types";
 import { Box, Flex, SegmentedControl } from "@mantine/core";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
-export default function CyberAssetDetailChanges(_props: CyberAssetDetailInventoryProps) {
+export default function CyberAssetDetailChanges(props: CyberAssetDetailInventoryProps) {
 	const [status, setStatus] = useState<string>("");
 
 	const store = useRef(createDynamicICAdvancedStore());
 
-	const statues: LabelValueType[] = [
-		{
-			label: "All Changes",
-			value: "ALL",
-		},
-		{
-			label: "Modify Changes",
-			value: "MODIFY",
-		},
-		{
-			label: "Add Changes",
-			value: "ADD",
-		},
-		{
-			label: "Delete Changes",
-			value: "DELETE",
-		},
-	];
+	const statues: LabelValueType[] = useMemo(
+		() => [
+			{
+				label: "All Changes",
+				value: "all",
+			},
+			{
+				label: "Modify Changes",
+				value: "modify",
+			},
+			{
+				label: "Add Changes",
+				value: "add",
+			},
+			{
+				label: "Delete Changes",
+				value: "delete",
+			},
+		],
+		[],
+	);
 
 	useEffect(() => {
 		if (statues.length && !status) {
@@ -56,76 +59,27 @@ export default function CyberAssetDetailChanges(_props: CyberAssetDetailInventor
 				hideConditionSection
 				hideExpandGroupByButton
 				tableMinusHeight={160}
-				getColumnsApi={(signal) =>
-					getAssetFilterColumns(signal).then((response) => ({
-						...response,
-						data: {
-							...response.data,
-							results: response.data.results.map((item) => {
-								const newItem: ICAdvancedFilterColumnRs = {
-									displayName: item.display_name,
-									isDefault: item.is_default,
-									name: item.name,
-									objectType: item.object_type || [],
-									options: item.options?.map((opt) => ({ label: opt, value: opt })),
-									type: item.type as ICAdvancedFilterColumnType,
-								};
-								return newItem;
-							}),
-						},
-					}))
-				}
-				getDataApi={(variables, signal) =>
-					getAssets(
-						{
-							columns: variables.columns.map((column) => ({
-								name: column.name,
-								order: column.orderBy,
-							})),
-							conditions: variables.conditions.map((item) => ({
-								close_bracket: item.closeBracket,
-								column_name: item.columnName,
-								next_operator: item.nextOperator,
-								open_bracket: item.openBracket,
-								operator: item.operator as EachAdvanceFilterConditionOperator,
-								values: item.values,
-							})),
-							end_date: variables.endDate || null,
-							group_by: variables.groupBy
-								? {
-										aggregated_conditions: variables.groupBy.aggregatedConditions.map((agg) => ({
-											close_bracket: agg.closeBracket,
-											next_operator: agg.nextOperator,
-											open_bracket: agg.openBracket,
-											operator: agg.operator,
-											values: agg.values,
-										})),
-										display_name: "",
-										column: variables.groupBy.column,
-										function: variables.groupBy.function,
-										order: variables.groupBy.order,
-									}
-								: null,
-							limit: variables.limit,
-							page: variables.page,
-							search:
-								variables.search.columnName && variables.search.value
-									? {
-											column_name: variables.search.columnName,
-											value: variables.search.value,
-										}
-									: null,
-							start_date: variables.startDate || null,
-						},
-						signal,
-					).then((response) => ({
-						...response,
-						data: {
-							...response.data,
-							results: response.data.results?.map((item) => item as ICAdvancedFilterDataRs) || [],
-						},
-					}))
-				}
+				{...(props.id && {
+					getColumnsApi: (signal) =>
+						getChangeColumns(signal).then((response) => convertICAdvancedFilterResponseColumns(response)),
+				})}
+				{...(props.id && {
+					getDataApi: (variables, signal) =>
+						getChanges(
+							{
+								...convertICAdvancedFilterToDefaultVariables(variables),
+								asset_id: props.id || "",
+								action: status as ChangeDataAdvanceFilterRequestModelAction,
+							},
+							signal,
+						).then((response) => ({
+							...response,
+							data: {
+								...response.data,
+								results: response.data.results?.map((item) => item as ICAdvancedFilterDataRs) || [],
+							},
+						})),
+				})}
 				columnsQueryKey={["cyber-assets-changes-columns"]}
 				dataQueryKey={["cyber-assets-changes-data", status]}
 				fullScreenTitle={"Cyber Asset Inventory"}

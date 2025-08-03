@@ -156,9 +156,9 @@ export function getCyberAssetChangeTypeBadge(params: {
 	props?: BadgeProps;
 }) {
 	const iconMap: Record<CyberAssetDetailOverviewChangeType, ReactNode> = {
-		DELETE: <IconX size={12} />,
-		MODIFY: <IconX size={12} />,
-		ADD: <IconPlus size={12} />,
+		delete: <IconX size={12} />,
+		modify: <IconX size={12} />,
+		add: <IconPlus size={12} />,
 	};
 	return (
 		<Badge
@@ -209,9 +209,9 @@ export function getCyberAssetChangeIcon({
 	size?: number;
 }) {
 	const icons: Record<CyberAssetDetailOverviewChangeType, ReactNode> = {
-		ADD: <IconPlus width={size} height={size} />,
-		MODIFY: <IconTrash width={size} height={size} />,
-		DELETE: <IconPencil width={size} height={size} />,
+		add: <IconPlus width={size} height={size} />,
+		modify: <IconTrash width={size} height={size} />,
+		delete: <IconPencil width={size} height={size} />,
 	};
 	return icons[type];
 }

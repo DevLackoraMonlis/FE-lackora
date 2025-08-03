@@ -1,14 +1,15 @@
 import CyberAssetsCrudButtons from "@/builtinApps/CyberAssetsApp/CyberAssets/components/CyberAssetsCrudButtons";
 import { getCyberAssetsFormattedColumns } from "@/builtinApps/CyberAssetsApp/CyberAssets/index.constants";
 import { getAssetFilterColumns, getAssets } from "@/http/generated/cyber-asset-management-cyber-assets";
-import type { EachAdvanceFilterConditionOperator } from "@/http/generated/models";
 import BCMultiTabPage from "@/shared/components/baseComponents/BCMultiTabPage";
 import type { BCMultiTabPageActions } from "@/shared/components/baseComponents/BCMultiTabPage/index.types";
 import ICAdvancedFilter from "@/shared/components/infraComponents/ICAdvancedFilter";
+import {
+	convertICAdvancedFilterResponseColumns,
+	convertICAdvancedFilterToDefaultVariables,
+} from "@/shared/components/infraComponents/ICAdvancedFilter/index.helper";
 import { createDynamicICAdvancedStore } from "@/shared/components/infraComponents/ICAdvancedFilter/index.store";
 import type {
-	ICAdvancedFilterColumnRs,
-	ICAdvancedFilterColumnType,
 	ICAdvancedFilterDataRs,
 	ICAdvancedFilterProps,
 } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
@@ -34,68 +35,10 @@ export default function CyberAssetsLandingPage(props: ICMonoAppPagesDefaultProps
 					tableMinusHeight={100}
 					onChangeTotalRecords={setTotal}
 					getColumnsApi={(signal) =>
-						getAssetFilterColumns(signal).then((response) => ({
-							...response,
-							data: {
-								...response.data,
-								results: response.data.results.map((item) => {
-									const newItem: ICAdvancedFilterColumnRs = {
-										displayName: item.display_name,
-										isDefault: item.is_default,
-										name: item.name,
-										objectType: item.object_type || [],
-										options: item.options?.map((opt) => ({ label: opt, value: opt })),
-										type: item.type as ICAdvancedFilterColumnType,
-									};
-									return newItem;
-								}),
-							},
-						}))
+						getAssetFilterColumns(signal).then((response) => convertICAdvancedFilterResponseColumns(response))
 					}
 					getDataApi={(variables, signal) =>
-						getAssets(
-							{
-								columns: variables.columns.map((column) => ({
-									name: column.name,
-									order: column.orderBy,
-								})),
-								conditions: variables.conditions.map((item) => ({
-									close_bracket: item.closeBracket,
-									column_name: item.columnName,
-									next_operator: item.nextOperator,
-									open_bracket: item.openBracket,
-									operator: item.operator as EachAdvanceFilterConditionOperator,
-									values: item.values,
-								})),
-								end_date: variables.endDate || null,
-								group_by: variables.groupBy
-									? {
-											aggregated_conditions: variables.groupBy.aggregatedConditions.map((agg) => ({
-												close_bracket: agg.closeBracket,
-												next_operator: agg.nextOperator,
-												open_bracket: agg.openBracket,
-												operator: agg.operator,
-												values: agg.values,
-											})),
-											display_name: "",
-											column: variables.groupBy.column,
-											function: variables.groupBy.function,
-											order: variables.groupBy.order,
-										}
-									: null,
-								limit: variables.limit,
-								page: variables.page,
-								search:
-									variables.search.columnName && variables.search.value
-										? {
-												column_name: variables.search.columnName,
-												value: variables.search.value,
-											}
-										: null,
-								start_date: variables.startDate || null,
-							},
-							signal,
-						).then((response) => ({
+						getAssets(convertICAdvancedFilterToDefaultVariables(variables), signal).then((response) => ({
 							...response,
 							data: {
 								...response.data,

@@ -25,8 +25,8 @@ import type {
 } from '@tanstack/react-query';
 
 import type {
+  EachInventoryCategoryResponse,
   HTTPValidationError,
-  InventoryCategoryResponse,
   InventoryDataAdvanceFilterRequestModel,
   InventoryDataAdvancedFilterResponse,
   InventoryManagementFilterColumnsResponse
@@ -134,7 +134,7 @@ export const getInventoryTypes = (
 ) => {
       
       
-      return orvalMutator<InventoryCategoryResponse[]>(
+      return orvalMutator<EachInventoryCategoryResponse[]>(
       {url: "/api/inventory-management/available-types", method: 'GET', signal
     },
       );
@@ -364,3 +364,4 @@ export const useGetAssetInventoryData = <TError = HTTPValidationError,
 
       return useMutation(mutationOptions , queryClient);
     }
+    
