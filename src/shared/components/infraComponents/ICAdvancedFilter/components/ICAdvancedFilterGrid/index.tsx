@@ -55,7 +55,7 @@ type Props<T> = Pick<
 
 export default function ICAdvancedFilterGrid<T extends Record<string, unknown>>(props: Props<T>) {
 	const queryClient = useQueryClient();
-	const { height } = useViewportSize();
+	const { height, width } = useViewportSize();
 
 	const store = useStore(
 		props.store,
@@ -299,6 +299,7 @@ export default function ICAdvancedFilterGrid<T extends Record<string, unknown>>(
 		onCopyValue,
 		getColumnOption,
 		firstDataObject,
+		cellRenderValue,
 	]);
 
 	const defaultColumns: TanStackDataTableColumnColDef<T>[] = useMemo(() => {
@@ -367,6 +368,7 @@ export default function ICAdvancedFilterGrid<T extends Record<string, unknown>>(
 		onCopyValue,
 		getColumnOption,
 		modifiedColumns,
+		cellRenderValue,
 	]);
 
 	const differedColumns = useDeferredValue(defaultColumns);
@@ -380,6 +382,7 @@ export default function ICAdvancedFilterGrid<T extends Record<string, unknown>>(
 
 	return (
 		<BCTanStackGrid<T>
+			{...(store.openedFullScreenModal && { parentWidth: width })}
 			h={tableHeight}
 			withTableBorder
 			withColumnBorders

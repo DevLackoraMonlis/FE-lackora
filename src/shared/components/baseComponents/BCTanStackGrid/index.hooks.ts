@@ -84,7 +84,7 @@ export function useTanStackDefault<T extends Record<string, unknown>>(params: Ta
 			pinLastColumn: props.pinLastColumn,
 			recordsPerPage: props.recordsPerPage,
 			rowExpansion: props.rowExpansion,
-			viewportWidth,
+			viewportWidth: props.parentWidth || viewportWidth,
 			recordCount: props.records.length,
 			hasHorizontalScroll,
 			hasVerticalScroll,
@@ -100,6 +100,7 @@ export function useTanStackDefault<T extends Record<string, unknown>>(params: Ta
 		props.records.length,
 		props.rowExpansion,
 		props.onSelectedRecordsChange,
+		props.parentWidth,
 	]);
 
 	const convertRowSelectionToRecord = () => {
@@ -217,7 +218,7 @@ export function useTanStackDefault<T extends Record<string, unknown>>(params: Ta
 		tableContainerRef,
 		tableRef,
 		bodyHeight,
-		viewportWidth,
+		viewportWidth: props.parentWidth || viewportWidth,
 		columns,
 	};
 }

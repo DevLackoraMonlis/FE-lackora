@@ -1,4 +1,3 @@
-import { getCyberAssetsChangesFormattedColumns } from "@/builtinApps/CyberAssetsApp/CyberAssets/index.constants";
 import type { CyberAssetDetailInventoryProps } from "@/builtinApps/CyberAssetsApp/CyberAssets/index.types";
 import {
 	getAssetActivityHistory,
@@ -52,10 +51,9 @@ export default function CyberAssetDetailHistory(props: CyberAssetDetailInventory
 				excludeColumns={["id"]}
 				store={store.current}
 				searchInputPlaceholder={"Search by hostname"}
-				columns={getCyberAssetsChangesFormattedColumns()}
+				columns={[]}
 				idAccessor={"id"}
 				minColumnSize={180}
-				defaultColumnSize={200}
 			/>
 		</Box>
 	);

@@ -99,6 +99,7 @@ export function tanStackGenerateColumns<T>(
 	>,
 ): ColumnDef<T>[] {
 	const { viewportWidth } = params;
+
 	const filteredColumns = params.columns.filter((item) => !item.hidden);
 
 	const totalDefaultWidth = filteredColumns.reduce(

@@ -20,7 +20,10 @@ export default function ICAdvancedFilter<T>(
 		})),
 	);
 
-	const MainComponent = useCallback(() => <ICAdvancedFilterComponent<T> {...props} />, [props]);
+	const MainComponent = useCallback(
+		() => <ICAdvancedFilterComponent<T> {...props} />,
+		[props, store.openedFullScreenModal],
+	);
 
 	return (
 		<Flex h={"100%"} direction={"column"} w={"100%"}>
