@@ -30,6 +30,7 @@ export default function WorkflowAssetsIdentification() {
 	const [openedRunNow, handleRunNow] = useDisclosure();
 	const { onOpenApp } = useAppRedirect();
 	const { workflows, isLoading } = useWorkflow(WORKFLOW_REFETCH_INTERVAL);
+	const workflowStatus = getWorkflowStatus(workflows.data?.status);
 
 	const [selectedStepId, setSelectedStepId] = useState<string>("");
 	const handleGatewayConfiguration = () => {};
@@ -43,7 +44,6 @@ export default function WorkflowAssetsIdentification() {
 		handleViewMatchedAssets,
 		onOpenApp: () => onOpenApp(WORKFLOW_REDIRECT_PATH),
 	};
-	console.log(workflows.data);
 	return (
 		<>
 			<WorkflowRunNowModal
@@ -97,7 +97,7 @@ export default function WorkflowAssetsIdentification() {
 												{isLoading ? (
 													<Skeleton w="250px" h="10px" opacity={0.5} mt="2xs" />
 												) : (
-													<Text c={getWorkflowStatus(workflows.data?.status)?.bg} fz="xs">
+													<Text c={workflowStatus?.bg} fz="xs">
 														{workflows.data?.result_count
 															? `Identified ${workflows.data?.result_count} assets in ${workflows.data?.duration}`
 															: workflows.data?.message || "-"}
@@ -116,11 +116,11 @@ export default function WorkflowAssetsIdentification() {
 													</Text>
 												)}
 											</Badge>
-											<Badge variant="light" color={getWorkflowStatus(workflows.data?.status)?.bg} p="md">
+											<Badge variant="light" color={workflowStatus?.bg} p="md">
 												{isLoading ? (
 													<Skeleton w="100px" h="10px" opacity={0.5} mt="2xs" />
 												) : (
-													<Text p="2xs">{workflows.data?.mode || "-"}</Text>
+													<Text p="2xs">{workflowStatus.label || "-"}</Text>
 												)}
 											</Badge>
 											<Button
