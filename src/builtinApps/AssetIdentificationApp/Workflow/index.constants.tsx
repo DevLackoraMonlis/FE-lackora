@@ -11,7 +11,7 @@ export const WORKFLOW_REDIRECT_PATH = `${name}/${modules.DISCOVERY_SETTINGS}`;
 
 export const WORKFLOW_REFETCH_INTERVAL = 5_000;
 
-export const WORKFLOW_REFETCH_INTERVAL_HEADER = 10_000;
+export const WORKFLOW_REFETCH_INTERVAL_HEADER = 5_000;
 
 export const workflowIcons = {
 	asset_discovery: <IconSearch size={30} />,

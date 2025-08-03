@@ -14,7 +14,7 @@ type Props = WorkflowPhase & WorkflowHandles & { defaultOpened: boolean };
 
 export default function WorkflowAccordion({ type, status, title, description, steps, ...props }: Props) {
 	if (!type) return null;
-	const phaseParams = useMemo(() => getWorkflowStatus(status), [status]);
+	const phaseStatus = useMemo(() => getWorkflowStatus(status), [status]);
 	const timelineActiveStep = useMemo(() => steps?.length, [status]);
 	const disabledAccordion = useMemo(() => description.failed || description.idle, [description]);
 	const openedAccordionType = useMemo(
@@ -76,9 +76,9 @@ export default function WorkflowAccordion({ type, status, title, description, st
 							</Flex>
 						</Flex>
 						<Flex align="center" gap="xs" px="sm">
-							<Badge variant="light" color={phaseParams?.color} px="sm" py="md">
+							<Badge variant="light" color={phaseStatus?.color} px="sm" py="md">
 								<Text p="2xs" tt="capitalize">
-									{phaseParams?.label}
+									{phaseStatus?.label}
 								</Text>
 							</Badge>
 						</Flex>
@@ -122,7 +122,7 @@ export default function WorkflowAccordion({ type, status, title, description, st
 															leftSection={<IconEye size={15} />}
 															onClick={() => props.handleViewMatchedAssets(step.id)}
 														>
-															View Matched Assets
+															View Results
 														</Menu.Item>
 													</Menu.Dropdown>
 												</Menu>

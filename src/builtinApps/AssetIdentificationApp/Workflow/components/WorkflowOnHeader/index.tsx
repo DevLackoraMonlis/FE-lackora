@@ -73,12 +73,12 @@ const WorkflowOnHeader = () => {
 							<Text fz="xs">{`Scan #${scanId} is ${statusParams.label}.... `}</Text>
 						</Flex>
 					</Badge>
-					<Badge variant="light" color="gray.4" tt="capitalize" p="md">
-						<Flex align="center">
-							<Text fz="xs">Time remaining:</Text>
+					<Badge variant="light" color="gray.4" tt="none" p="md">
+						<Flex align="center" gap="xs">
 							<Text fz="xs" w="55px">
-								{timer}
+								~{timer}
 							</Text>
+							<Text fz="xs">to complete scan</Text>
 						</Flex>
 					</Badge>
 				</Flex>

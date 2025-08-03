@@ -113,7 +113,7 @@ function WorkflowDetectedStep({ stepId = "" }: Props) {
 
 export default function WorkflowDetectedStepModal({ onClose, opened, stepId }: Props) {
 	return (
-		<BCDrawer size="50%" onClose={onClose} opened={opened} title="Detected Assets">
+		<BCDrawer size="50%" onClose={onClose} opened={opened} title="Results">
 			<WorkflowDetectedStep onClose={onClose} opened={opened} stepId={stepId} />
 		</BCDrawer>
 	);
