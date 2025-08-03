@@ -51,12 +51,41 @@ export function calculateScheduledScanDate(date?: string | null) {
 	}
 }
 
+export function calculateRunNextScan(date?: string | null) {
+	if (!date) return "";
+	try {
+		if (!dayjs(date).isValid()) return `The workflow will run in ${date}.`;
+		const start = dayjs();
+		const end = dayjs(date);
+
+		const diff = end.diff(start, "minutes");
+		const d = dayjs.duration(diff, "minutes");
+
+		const hours = d.hours();
+		const minutes = d.minutes();
+
+		return `The workflow will run in  ${
+			hours ? `${hours} hour${hours > 1 ? "s" : ""} and ` : ""
+		}${minutes} minute${minutes !== 1 ? "s" : ""}.`;
+	} catch (_) {
+		return `The workflow will run in ${date}.`;
+	}
+}
 export function calculateNextScheduledScan(date?: string | null) {
-	if (!date) return "Scheduled scan will start in - minutes";
+	if (!date) return "Scheduled scan will start in -";
 	try {
 		if (!dayjs(date).isValid()) return `Scheduled scan will start in ${date}`;
-		const { getDifference } = getDifferenceDateTime({ date, format: "HH:mm" });
-		return `Scheduled scan will start in ${getDifference}`;
+		const start = dayjs();
+		const end = dayjs(date);
+
+		const diff = end.diff(start, "minutes");
+		const d = dayjs.duration(diff, "minutes");
+
+		const hours = d.hours();
+		const minutes = d.minutes();
+		return `Scheduled scan will start in ${
+			hours ? `${hours} hour${hours > 1 ? "s" : ""} and ` : ""
+		}${minutes} minute${minutes !== 1 ? "s" : ""}`;
 	} catch (_) {
 		return `Scheduled scan will start in ${date}`;
 	}
@@ -137,10 +166,10 @@ export function getValueFromDynamicColumnRecord(record: { [key: string]: unknown
 		case "object": {
 			const joinValue = Array.isArray(value)
 				? typeof value?.[0] === "string" || typeof value?.[0] === "number"
-					? value.join(" - ")
+					? value.join(", ")
 					: Object.entries(value?.[0] || {})
 							.map(([_, value]) => value)
-							.join(" - ")
+							.join(", ")
 				: "unknown";
 			return joinValue;
 		}

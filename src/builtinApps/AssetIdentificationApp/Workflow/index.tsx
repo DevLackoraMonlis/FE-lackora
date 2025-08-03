@@ -5,7 +5,7 @@ import { useDisclosure, useViewportSize } from "@mantine/hooks";
 import { IconBolt, IconLineScan } from "@tabler/icons-react";
 import { Fragment, useState } from "react";
 
-import { WORKFLOW_REDIRECT_PATH, WORKFLOW_REFETCH_INTERVAL } from "./index.constants";
+import { DISCOVERY_SETTINGS_REDIRECT_PATH, WORKFLOW_REFETCH_INTERVAL } from "./index.constants";
 import {
 	calculateNextScheduledScan,
 	calculateScheduledScanDate,
@@ -42,15 +42,15 @@ export default function WorkflowAssetsIdentification() {
 	const commonProps = {
 		handleGatewayConfiguration,
 		handleViewMatchedAssets,
-		onOpenApp: () => onOpenApp(WORKFLOW_REDIRECT_PATH),
+		onOpenApp: () => onOpenApp(DISCOVERY_SETTINGS_REDIRECT_PATH),
 	};
 	return (
 		<>
-			<WorkflowScanHistoryModal onClose={handleScanHistory.close} opened={openedScanHistory} />
 			<WorkflowRunNowModal
 				onClose={handleRunNow.close}
 				opened={openedRunNow}
 				refetchWorkflow={workflows.refetch}
+				nextRuntime={workflows.data?.next_runtime}
 			/>
 			<WorkflowDetectedStepModal
 				onClose={() => {
@@ -60,6 +60,7 @@ export default function WorkflowAssetsIdentification() {
 				opened={openedDetectedAssets}
 				stepId={selectedStepId}
 			/>
+			<WorkflowScanHistoryModal onClose={handleScanHistory.close} opened={openedScanHistory} />
 			<ScrollArea h={height - 130}>
 				<Grid p="xs" pt="lg">
 					<Grid.Col span={8} offset={2} pos="relative">
@@ -111,7 +112,7 @@ export default function WorkflowAssetsIdentification() {
 												{isLoading ? (
 													<Skeleton w="200px" h="10px" opacity={0.5} mt="2xs" />
 												) : (
-													<Text p="2xs" tt="none">
+													<Text p="2xs" tt="none" fz="xs">
 														{calculateNextScheduledScan(workflows.data?.next_runtime)}
 													</Text>
 												)}
@@ -125,10 +126,9 @@ export default function WorkflowAssetsIdentification() {
 											</Badge>
 											<Button
 												data-testid="workflow-button-run-manually"
-												disabled={isLoading}
 												variant="outline"
 												color="gray.4"
-												onClick={handleRunNow.open}
+												onClick={() => !isLoading && handleRunNow.open()}
 												leftSection={<IconBolt size={15} />}
 											>
 												Run Manually

@@ -7,10 +7,10 @@ const {
 	ASSET_IDENTIFICATION: { modules, name },
 } = AllApplications;
 
-export const WORKFLOW_REDIRECT_PATH = `${name}/${modules.DISCOVERY_SETTINGS}`;
+export const DISCOVERY_SETTINGS_REDIRECT_PATH = `${name}/${modules.DISCOVERY_SETTINGS}`;
+export const WORKFLOW_REDIRECT_PATH = `${name}/${modules.WORKFLOW}`;
 
 export const WORKFLOW_REFETCH_INTERVAL = 5_000;
-
 export const WORKFLOW_REFETCH_INTERVAL_HEADER = 5_000;
 
 export const workflowIcons = {

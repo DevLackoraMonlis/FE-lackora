@@ -2,12 +2,15 @@ import { Badge, Flex, Loader, Text, Tooltip } from "@mantine/core";
 import { useInterval } from "@mantine/hooks";
 import { useEffect, useState } from "react";
 
-import { WORKFLOW_REFETCH_INTERVAL_HEADER } from "../../index.constants";
+import { useAppRedirect } from "@/shared/hooks/useAppRedirect";
+import { WORKFLOW_REDIRECT_PATH, WORKFLOW_REFETCH_INTERVAL_HEADER } from "../../index.constants";
 import { calculatePendingScheduledScan, getDifferenceDateTime, getWorkflowStatus } from "../../index.helper";
 import { useWorkflow } from "../../index.hooks";
 import { WorkflowLoader, WorkflowPending } from "./components/WorkflowLoader";
 
 const WorkflowOnHeader = () => {
+	const { onOpenApp } = useAppRedirect();
+	const onRedirect = () => onOpenApp(WORKFLOW_REDIRECT_PATH);
 	const { workflows, isLoading } = useWorkflow(WORKFLOW_REFETCH_INTERVAL_HEADER);
 	const message = workflows?.data?.message || workflows?.data?.description || "Unhandled error message!";
 	const scanId = workflows?.data?.scan_id || 0;
@@ -43,8 +46,8 @@ const WorkflowOnHeader = () => {
 							</Text>
 						</Flex>
 					</Badge>
-					<Badge variant="light" color={statusParams.bg} p="md" tt="capitalize">
-						<Flex align="center" gap="2xs">
+					<Badge variant="light" color={statusParams.bg} p="md" tt="capitalize" onClick={onRedirect}>
+						<Flex align="center" gap="2xs" className="cursor-pointer">
 							{Icon && <Icon size={15} />}
 							<Text fz="xs">{`Scan #${scanId} is Completed`}</Text>
 						</Flex>
@@ -56,8 +59,8 @@ const WorkflowOnHeader = () => {
 			return "";
 		case "pending": {
 			return (
-				<Badge variant="light" color={statusParams.c} p="md" tt="capitalize">
-					<Flex align="center" gap="xs">
+				<Badge variant="light" color={statusParams.c} p="md" tt="capitalize" onClick={onRedirect}>
+					<Flex align="center" gap="xs" className="cursor-pointer">
 						<Loader loaders={{ custom: WorkflowPending }} type="custom" c={statusParams.c} size={15} />
 						<Text fz="xs">{calculatePendingScheduledScan(nextScan)}</Text>
 					</Flex>
@@ -67,8 +70,8 @@ const WorkflowOnHeader = () => {
 		case "in_progress": {
 			return (
 				<Flex gap="xs" align="center">
-					<Badge variant="light" color={statusParams.bg} p="md" tt="capitalize">
-						<Flex align="center" gap="2xs">
+					<Badge variant="light" color={statusParams.bg} p="md" tt="capitalize" onClick={onRedirect}>
+						<Flex align="center" gap="2xs" className="cursor-pointer">
 							<Loader loaders={{ custom: WorkflowLoader }} type="custom" color={statusParams.bg} size={15} />
 							<Text fz="xs">{`Scan #${scanId} is ${statusParams.label}.... `}</Text>
 						</Flex>
@@ -89,8 +92,8 @@ const WorkflowOnHeader = () => {
 			const Icon = statusParams.icon;
 			return (
 				<Flex gap="2xs" align="center">
-					<Badge variant="light" color={statusParams.color} p="md" tt="capitalize">
-						<Text fz="xs">{`Scan #${scanId} is ${statusParams.label}`}</Text>
+					<Badge variant="light" color={statusParams.color} p="md" tt="capitalize" onClick={onRedirect}>
+						<Text className="cursor-pointer" fz="xs">{`Scan #${scanId} is ${statusParams.label}`}</Text>
 					</Badge>
 					<Tooltip label={message}>
 						<Badge variant="light" color={statusParams.color} p="sm" pt="md">
