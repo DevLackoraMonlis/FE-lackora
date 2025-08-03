@@ -153,7 +153,7 @@ export function getDefaultICAdvancedStore(params: {
 					value,
 					allColumns,
 					state,
-					IC_ADVANCED_FILTER_DEFAULT_OPERATORS["="],
+					IC_ADVANCED_FILTER_DEFAULT_OPERATORS["!="],
 				);
 			});
 		},
@@ -164,7 +164,7 @@ export function getDefaultICAdvancedStore(params: {
 					value,
 					allColumns,
 					state,
-					IC_ADVANCED_FILTER_DEFAULT_OPERATORS["!="],
+					IC_ADVANCED_FILTER_DEFAULT_OPERATORS["="],
 				);
 			});
 		},
