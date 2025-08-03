@@ -6,22 +6,29 @@
  * OpenAPI spec version: 1.0.0
  */
 import {
+  useMutation,
   useQuery
 } from '@tanstack/react-query';
 import type {
   DataTag,
   DefinedInitialDataOptions,
   DefinedUseQueryResult,
+  MutationFunction,
   QueryClient,
   QueryFunction,
   QueryKey,
   UndefinedInitialDataOptions,
+  UseMutationOptions,
+  UseMutationResult,
   UseQueryOptions,
   UseQueryResult
 } from '@tanstack/react-query';
 
 import type {
-  CyberAssetHistoryFilterColumnsResponse
+  CyberAssetHistoryDataAdvanceFilterRequestModel,
+  CyberAssetHistoryDataAdvancedFilterResponse,
+  CyberAssetHistoryFilterColumnsResponse,
+  HTTPValidationError
 } from './models';
 
 import { orvalMutator } from '../orval-mutator';
@@ -117,3 +124,68 @@ export function useGetCyberAssetHistoryFilterColumns<TData = Awaited<ReturnType<
 
 
 
+/**
+ * @summary Get Cyber Asset History Related Data
+ */
+export const getAssetActivityHistory = (
+    cyberAssetHistoryDataAdvanceFilterRequestModel: CyberAssetHistoryDataAdvanceFilterRequestModel,
+ signal?: AbortSignal
+) => {
+      
+      
+      return orvalMutator<CyberAssetHistoryDataAdvancedFilterResponse>(
+      {url: "/api/asset-management/history/", method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: cyberAssetHistoryDataAdvanceFilterRequestModel, signal
+    },
+      );
+    }
+  
+
+
+export const getGetAssetActivityHistoryMutationOptions = <TError = HTTPValidationError,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof getAssetActivityHistory>>, TError,{data: CyberAssetHistoryDataAdvanceFilterRequestModel}, TContext>, }
+): UseMutationOptions<Awaited<ReturnType<typeof getAssetActivityHistory>>, TError,{data: CyberAssetHistoryDataAdvanceFilterRequestModel}, TContext> => {
+
+const mutationKey = ['getAssetActivityHistory'];
+const {mutation: mutationOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof getAssetActivityHistory>>, {data: CyberAssetHistoryDataAdvanceFilterRequestModel}> = (props) => {
+          const {data} = props ?? {};
+
+          return  getAssetActivityHistory(data,)
+        }
+
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type GetAssetActivityHistoryMutationResult = NonNullable<Awaited<ReturnType<typeof getAssetActivityHistory>>>
+    export type GetAssetActivityHistoryMutationBody = CyberAssetHistoryDataAdvanceFilterRequestModel
+    export type GetAssetActivityHistoryMutationError = HTTPValidationError
+
+    /**
+ * @summary Get Cyber Asset History Related Data
+ */
+export const useGetAssetActivityHistory = <TError = HTTPValidationError,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof getAssetActivityHistory>>, TError,{data: CyberAssetHistoryDataAdvanceFilterRequestModel}, TContext>, }
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof getAssetActivityHistory>>,
+        TError,
+        {data: CyberAssetHistoryDataAdvanceFilterRequestModel},
+        TContext
+      > => {
+
+      const mutationOptions = getGetAssetActivityHistoryMutationOptions(options);
+
+      return useMutation(mutationOptions , queryClient);
+    }
+    
