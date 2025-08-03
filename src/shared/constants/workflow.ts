@@ -14,8 +14,8 @@ type WorkflowStatusParams = {
 	color: string;
 	c: string;
 	bg: string;
-	icon: typeof IconCheck;
 	value: string;
+	icon: typeof IconCheck;
 };
 export const WORKFLOW_STATUS: Record<WorkflowStatus, WorkflowStatusParams> = {
 	[WorkflowStatus.Completed]: {
