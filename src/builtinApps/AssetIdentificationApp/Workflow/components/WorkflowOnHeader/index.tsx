@@ -12,7 +12,7 @@ const WorkflowOnHeader = () => {
 	const message = workflows?.data?.message || workflows?.data?.description || "Unhandled error message!";
 	const scanId = workflows?.data?.scan_id || 0;
 	const nextScan = workflows?.data?.next_runtime || "";
-	const estimatedTime = workflows?.data?.next_runtime || ""; // estimated_end_time
+	const estimatedTime = workflows?.data?.estimate_time || "";
 	const status = isLoading ? "" : workflows?.data?.status;
 	const statusParams = getWorkflowStatus(status);
 
