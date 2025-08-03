@@ -61,6 +61,16 @@ export function calculateNextScheduledScan(date?: string | null) {
 		return `Scheduled scan will start in ${date}`;
 	}
 }
+export function calculatePendingScheduledScan(date?: string | null) {
+	if (!date) return "- to complete scan";
+	try {
+		if (!dayjs(date).isValid()) return `~${date} to complete scan`;
+		const { getDifference } = getDifferenceDateTime({ date, format: "HH:mm" });
+		return `~${getDifference} to complete scan`;
+	} catch (_) {
+		return `~${date} to complete scan`;
+	}
+}
 
 export function phaseDescription<T extends Record<string, unknown>>(phase: T) {
 	const progressPhase = ((phase?.current_processed as number) / (phase?.total_processing as number)) * 100;

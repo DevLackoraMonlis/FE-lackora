@@ -23,7 +23,7 @@ export const WORKFLOW_STATUS: Record<WorkflowStatus, WorkflowStatusParams> = {
 		label: "Completed",
 		color: "green",
 		c: "green",
-		bg: "green.1",
+		bg: "green.2",
 		icon: IconCheck,
 	},
 	[WorkflowStatus.Idle]: {
@@ -31,7 +31,7 @@ export const WORKFLOW_STATUS: Record<WorkflowStatus, WorkflowStatusParams> = {
 		label: "Idle",
 		color: "gray",
 		c: "gray.5",
-		bg: "gray.1",
+		bg: "gray.2",
 		icon: IconPlayerPause,
 	},
 	[WorkflowStatus.Failed]: {
@@ -39,7 +39,7 @@ export const WORKFLOW_STATUS: Record<WorkflowStatus, WorkflowStatusParams> = {
 		label: "Failed",
 		color: "red",
 		c: "red",
-		bg: "red.1",
+		bg: "red.2",
 		icon: IconAlertTriangle,
 	},
 	[WorkflowStatus.PartialSuccess]: {
@@ -47,7 +47,7 @@ export const WORKFLOW_STATUS: Record<WorkflowStatus, WorkflowStatusParams> = {
 		label: "Partial Success",
 		color: "orange",
 		c: "orange",
-		bg: "orange.1",
+		bg: "orange.2",
 		icon: IconPercentage50,
 	},
 	[WorkflowStatus.Inprogress]: {
@@ -55,15 +55,15 @@ export const WORKFLOW_STATUS: Record<WorkflowStatus, WorkflowStatusParams> = {
 		label: "Inprogress",
 		color: "blue",
 		c: "blue",
-		bg: "blue.1",
+		bg: "blue.2",
 		icon: IconLoader,
 	},
 	[WorkflowStatus.Pending]: {
 		value: WorkflowStatus.Pending,
 		label: "Pending",
 		color: "gray",
-		c: "gray.5",
-		bg: "gray.1",
+		c: "gray.4",
+		bg: "gray.2",
 		icon: IconHourglassEmpty,
 	},
 };

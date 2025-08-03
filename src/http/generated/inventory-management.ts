@@ -6,19 +6,31 @@
  * OpenAPI spec version: 1.0.0
  */
 import {
+  useMutation,
   useQuery
 } from '@tanstack/react-query';
 import type {
   DataTag,
   DefinedInitialDataOptions,
   DefinedUseQueryResult,
+  MutationFunction,
   QueryClient,
   QueryFunction,
   QueryKey,
   UndefinedInitialDataOptions,
+  UseMutationOptions,
+  UseMutationResult,
   UseQueryOptions,
   UseQueryResult
 } from '@tanstack/react-query';
+
+import type {
+  HTTPValidationError,
+  InventoryCategoryResponse,
+  InventoryDataAdvanceFilterRequestModel,
+  InventoryDataAdvancedFilterResponse,
+  InventoryManagementFilterColumnsResponse
+} from './models';
 
 import { orvalMutator } from '../orval-mutator';
 
@@ -113,3 +125,243 @@ export function useTestInventoryBulkInsertApiInventoryManagementBulkInsertTestGe
 
 
 
+/**
+ * @summary Get Inventory Types
+ */
+export const getInventoryTypes = (
+    
+ signal?: AbortSignal
+) => {
+      
+      
+      return orvalMutator<InventoryCategoryResponse>(
+      {url: "/api/inventory-management/available-types", method: 'GET', signal
+    },
+      );
+    }
+  
+
+const getGetInventoryTypesQueryKey = () => {
+    return ["/api/inventory-management/available-types"] as const;
+    }
+
+    
+export const getGetInventoryTypesQueryOptions = <TData = Awaited<ReturnType<typeof getInventoryTypes>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getInventoryTypes>>, TError, TData>>, }
+) => {
+
+const {query: queryOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetInventoryTypesQueryKey();
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getInventoryTypes>>> = ({ signal }) => getInventoryTypes(signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getInventoryTypes>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetInventoryTypesQueryResult = NonNullable<Awaited<ReturnType<typeof getInventoryTypes>>>
+export type GetInventoryTypesQueryError = unknown
+
+
+export function useGetInventoryTypes<TData = Awaited<ReturnType<typeof getInventoryTypes>>, TError = unknown>(
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getInventoryTypes>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getInventoryTypes>>,
+          TError,
+          Awaited<ReturnType<typeof getInventoryTypes>>
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetInventoryTypes<TData = Awaited<ReturnType<typeof getInventoryTypes>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getInventoryTypes>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getInventoryTypes>>,
+          TError,
+          Awaited<ReturnType<typeof getInventoryTypes>>
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetInventoryTypes<TData = Awaited<ReturnType<typeof getInventoryTypes>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getInventoryTypes>>, TError, TData>>, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary Get Inventory Types
+ */
+
+export function useGetInventoryTypes<TData = Awaited<ReturnType<typeof getInventoryTypes>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getInventoryTypes>>, TError, TData>>, }
+ , queryClient?: QueryClient 
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetInventoryTypesQueryOptions(options)
+
+  const query = useQuery(queryOptions , queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+/**
+ * @summary Get Inventory Filter Columns
+ */
+export const getInventoryFilterColumns = (
+    type: string,
+ signal?: AbortSignal
+) => {
+      
+      
+      return orvalMutator<InventoryManagementFilterColumnsResponse>(
+      {url: `/api/inventory-management/${type}/columns`, method: 'GET', signal
+    },
+      );
+    }
+  
+
+const getGetInventoryFilterColumnsQueryKey = (type: string,) => {
+    return [`/api/inventory-management/${type}/columns`] as const;
+    }
+
+    
+export const getGetInventoryFilterColumnsQueryOptions = <TData = Awaited<ReturnType<typeof getInventoryFilterColumns>>, TError = HTTPValidationError>(type: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getInventoryFilterColumns>>, TError, TData>>, }
+) => {
+
+const {query: queryOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetInventoryFilterColumnsQueryKey(type);
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getInventoryFilterColumns>>> = ({ signal }) => getInventoryFilterColumns(type, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, enabled: !!(type), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getInventoryFilterColumns>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetInventoryFilterColumnsQueryResult = NonNullable<Awaited<ReturnType<typeof getInventoryFilterColumns>>>
+export type GetInventoryFilterColumnsQueryError = HTTPValidationError
+
+
+export function useGetInventoryFilterColumns<TData = Awaited<ReturnType<typeof getInventoryFilterColumns>>, TError = HTTPValidationError>(
+ type: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getInventoryFilterColumns>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getInventoryFilterColumns>>,
+          TError,
+          Awaited<ReturnType<typeof getInventoryFilterColumns>>
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetInventoryFilterColumns<TData = Awaited<ReturnType<typeof getInventoryFilterColumns>>, TError = HTTPValidationError>(
+ type: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getInventoryFilterColumns>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getInventoryFilterColumns>>,
+          TError,
+          Awaited<ReturnType<typeof getInventoryFilterColumns>>
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetInventoryFilterColumns<TData = Awaited<ReturnType<typeof getInventoryFilterColumns>>, TError = HTTPValidationError>(
+ type: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getInventoryFilterColumns>>, TError, TData>>, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary Get Inventory Filter Columns
+ */
+
+export function useGetInventoryFilterColumns<TData = Awaited<ReturnType<typeof getInventoryFilterColumns>>, TError = HTTPValidationError>(
+ type: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getInventoryFilterColumns>>, TError, TData>>, }
+ , queryClient?: QueryClient 
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetInventoryFilterColumnsQueryOptions(type,options)
+
+  const query = useQuery(queryOptions , queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+/**
+ * @summary Get Inventory Type Related Data
+ */
+export const getAssetInventoryData = (
+    type: string,
+    inventoryDataAdvanceFilterRequestModel: InventoryDataAdvanceFilterRequestModel,
+ signal?: AbortSignal
+) => {
+      
+      
+      return orvalMutator<InventoryDataAdvancedFilterResponse>(
+      {url: `/api/inventory-management/${type}/inventory-data`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: inventoryDataAdvanceFilterRequestModel, signal
+    },
+      );
+    }
+  
+
+
+export const getGetAssetInventoryDataMutationOptions = <TError = HTTPValidationError,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof getAssetInventoryData>>, TError,{type: string;data: InventoryDataAdvanceFilterRequestModel}, TContext>, }
+): UseMutationOptions<Awaited<ReturnType<typeof getAssetInventoryData>>, TError,{type: string;data: InventoryDataAdvanceFilterRequestModel}, TContext> => {
+
+const mutationKey = ['getAssetInventoryData'];
+const {mutation: mutationOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof getAssetInventoryData>>, {type: string;data: InventoryDataAdvanceFilterRequestModel}> = (props) => {
+          const {type,data} = props ?? {};
+
+          return  getAssetInventoryData(type,data,)
+        }
+
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type GetAssetInventoryDataMutationResult = NonNullable<Awaited<ReturnType<typeof getAssetInventoryData>>>
+    export type GetAssetInventoryDataMutationBody = InventoryDataAdvanceFilterRequestModel
+    export type GetAssetInventoryDataMutationError = HTTPValidationError
+
+    /**
+ * @summary Get Inventory Type Related Data
+ */
+export const useGetAssetInventoryData = <TError = HTTPValidationError,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof getAssetInventoryData>>, TError,{type: string;data: InventoryDataAdvanceFilterRequestModel}, TContext>, }
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof getAssetInventoryData>>,
+        TError,
+        {type: string;data: InventoryDataAdvanceFilterRequestModel},
+        TContext
+      > => {
+
+      const mutationOptions = getGetAssetInventoryDataMutationOptions(options);
+
+      return useMutation(mutationOptions , queryClient);
+    }
+    

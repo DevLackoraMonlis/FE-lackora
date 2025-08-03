@@ -34,6 +34,9 @@ import type {
   CyberAssetLatestSoftwaresResponse,
   CyberAssetTopServicesResponse,
   CyberAssetVulnerabilityDetailsResponse,
+  EachCyberAssetActivityResponse,
+  EachCyberAssetAvailabilityResponse,
+  EachCyberAssetNotificationsResponse,
   HTTPValidationError
 } from './models';
 
@@ -706,6 +709,267 @@ export function useGetAssetVulnerabilityDetails<TData = Awaited<ReturnType<typeo
  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
   const queryOptions = getGetAssetVulnerabilityDetailsQueryOptions(assetId,options)
+
+  const query = useQuery(queryOptions , queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+/**
+ * @summary Get Cyber Asset Notifications
+ */
+export const getAssetNotifications = (
+    assetId: string,
+ signal?: AbortSignal
+) => {
+      
+      
+      return orvalMutator<EachCyberAssetNotificationsResponse[]>(
+      {url: `/api/asset-management/cyber-assets/${assetId}/notifications`, method: 'GET', signal
+    },
+      );
+    }
+  
+
+const getGetAssetNotificationsQueryKey = (assetId: string,) => {
+    return [`/api/asset-management/cyber-assets/${assetId}/notifications`] as const;
+    }
+
+    
+export const getGetAssetNotificationsQueryOptions = <TData = Awaited<ReturnType<typeof getAssetNotifications>>, TError = HTTPValidationError>(assetId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAssetNotifications>>, TError, TData>>, }
+) => {
+
+const {query: queryOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetAssetNotificationsQueryKey(assetId);
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getAssetNotifications>>> = ({ signal }) => getAssetNotifications(assetId, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, enabled: !!(assetId), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getAssetNotifications>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetAssetNotificationsQueryResult = NonNullable<Awaited<ReturnType<typeof getAssetNotifications>>>
+export type GetAssetNotificationsQueryError = HTTPValidationError
+
+
+export function useGetAssetNotifications<TData = Awaited<ReturnType<typeof getAssetNotifications>>, TError = HTTPValidationError>(
+ assetId: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAssetNotifications>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getAssetNotifications>>,
+          TError,
+          Awaited<ReturnType<typeof getAssetNotifications>>
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetAssetNotifications<TData = Awaited<ReturnType<typeof getAssetNotifications>>, TError = HTTPValidationError>(
+ assetId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAssetNotifications>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getAssetNotifications>>,
+          TError,
+          Awaited<ReturnType<typeof getAssetNotifications>>
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetAssetNotifications<TData = Awaited<ReturnType<typeof getAssetNotifications>>, TError = HTTPValidationError>(
+ assetId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAssetNotifications>>, TError, TData>>, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary Get Cyber Asset Notifications
+ */
+
+export function useGetAssetNotifications<TData = Awaited<ReturnType<typeof getAssetNotifications>>, TError = HTTPValidationError>(
+ assetId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAssetNotifications>>, TError, TData>>, }
+ , queryClient?: QueryClient 
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetAssetNotificationsQueryOptions(assetId,options)
+
+  const query = useQuery(queryOptions , queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+/**
+ * @summary Get Cyber Asset Availability
+ */
+export const getAssetAvailability = (
+    assetId: string,
+ signal?: AbortSignal
+) => {
+      
+      
+      return orvalMutator<EachCyberAssetAvailabilityResponse[]>(
+      {url: `/api/asset-management/cyber-assets/${assetId}/availability`, method: 'GET', signal
+    },
+      );
+    }
+  
+
+const getGetAssetAvailabilityQueryKey = (assetId: string,) => {
+    return [`/api/asset-management/cyber-assets/${assetId}/availability`] as const;
+    }
+
+    
+export const getGetAssetAvailabilityQueryOptions = <TData = Awaited<ReturnType<typeof getAssetAvailability>>, TError = HTTPValidationError>(assetId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAssetAvailability>>, TError, TData>>, }
+) => {
+
+const {query: queryOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetAssetAvailabilityQueryKey(assetId);
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getAssetAvailability>>> = ({ signal }) => getAssetAvailability(assetId, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, enabled: !!(assetId), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getAssetAvailability>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetAssetAvailabilityQueryResult = NonNullable<Awaited<ReturnType<typeof getAssetAvailability>>>
+export type GetAssetAvailabilityQueryError = HTTPValidationError
+
+
+export function useGetAssetAvailability<TData = Awaited<ReturnType<typeof getAssetAvailability>>, TError = HTTPValidationError>(
+ assetId: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAssetAvailability>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getAssetAvailability>>,
+          TError,
+          Awaited<ReturnType<typeof getAssetAvailability>>
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetAssetAvailability<TData = Awaited<ReturnType<typeof getAssetAvailability>>, TError = HTTPValidationError>(
+ assetId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAssetAvailability>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getAssetAvailability>>,
+          TError,
+          Awaited<ReturnType<typeof getAssetAvailability>>
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetAssetAvailability<TData = Awaited<ReturnType<typeof getAssetAvailability>>, TError = HTTPValidationError>(
+ assetId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAssetAvailability>>, TError, TData>>, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary Get Cyber Asset Availability
+ */
+
+export function useGetAssetAvailability<TData = Awaited<ReturnType<typeof getAssetAvailability>>, TError = HTTPValidationError>(
+ assetId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAssetAvailability>>, TError, TData>>, }
+ , queryClient?: QueryClient 
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetAssetAvailabilityQueryOptions(assetId,options)
+
+  const query = useQuery(queryOptions , queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+/**
+ * @summary Get Cyber Asset Activity
+ */
+export const getAssetActivity = (
+    assetId: string,
+ signal?: AbortSignal
+) => {
+      
+      
+      return orvalMutator<EachCyberAssetActivityResponse[]>(
+      {url: `/api/asset-management/cyber-assets/${assetId}/activity`, method: 'GET', signal
+    },
+      );
+    }
+  
+
+const getGetAssetActivityQueryKey = (assetId: string,) => {
+    return [`/api/asset-management/cyber-assets/${assetId}/activity`] as const;
+    }
+
+    
+export const getGetAssetActivityQueryOptions = <TData = Awaited<ReturnType<typeof getAssetActivity>>, TError = HTTPValidationError>(assetId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAssetActivity>>, TError, TData>>, }
+) => {
+
+const {query: queryOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetAssetActivityQueryKey(assetId);
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getAssetActivity>>> = ({ signal }) => getAssetActivity(assetId, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, enabled: !!(assetId), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getAssetActivity>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetAssetActivityQueryResult = NonNullable<Awaited<ReturnType<typeof getAssetActivity>>>
+export type GetAssetActivityQueryError = HTTPValidationError
+
+
+export function useGetAssetActivity<TData = Awaited<ReturnType<typeof getAssetActivity>>, TError = HTTPValidationError>(
+ assetId: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAssetActivity>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getAssetActivity>>,
+          TError,
+          Awaited<ReturnType<typeof getAssetActivity>>
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetAssetActivity<TData = Awaited<ReturnType<typeof getAssetActivity>>, TError = HTTPValidationError>(
+ assetId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAssetActivity>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getAssetActivity>>,
+          TError,
+          Awaited<ReturnType<typeof getAssetActivity>>
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetAssetActivity<TData = Awaited<ReturnType<typeof getAssetActivity>>, TError = HTTPValidationError>(
+ assetId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAssetActivity>>, TError, TData>>, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary Get Cyber Asset Activity
+ */
+
+export function useGetAssetActivity<TData = Awaited<ReturnType<typeof getAssetActivity>>, TError = HTTPValidationError>(
+ assetId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAssetActivity>>, TError, TData>>, }
+ , queryClient?: QueryClient 
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetAssetActivityQueryOptions(assetId,options)
 
   const query = useQuery(queryOptions , queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 

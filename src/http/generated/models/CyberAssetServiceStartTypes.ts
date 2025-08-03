@@ -15,5 +15,4 @@ export const CyberAssetServiceStartTypes = {
   Manual: 'Manual',
   Disabled: 'Disabled',
   Unknown: 'Unknown',
-  Total: 'Total',
 } as const;

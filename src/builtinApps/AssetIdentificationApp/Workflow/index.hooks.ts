@@ -1,9 +1,16 @@
+import { useToggle } from "@mantine/hooks";
+import { notifications } from "@mantine/notifications";
+
+import type { CustomError } from "@/http/end-points/GeneralService.types";
 import {
+	runWorkflow,
 	useGetWorkflowHistory,
 	useGetWorkflowHistoryDetail,
 	useGetWorkflowStep,
 	useGetWorkflows,
 } from "@/http/generated/workflow-management";
+import { getErrorMessage } from "@/shared/lib/utils";
+
 import { getValueFromDynamicColumnRecord } from "./index.helper";
 
 export function useWorkflow(refetchInterval: false | number = false) {
@@ -88,4 +95,34 @@ export function useWorkflowStep(stepId: string) {
 	});
 
 	return { stepDetails };
+}
+
+export function useWorkflowRunNow(workflowCallback: VoidFunction) {
+	const [loading, toggleLoading] = useToggle([false, true]);
+
+	function workflowRunNow() {
+		toggleLoading(true);
+		runWorkflow()
+			.then(() => {
+				workflowCallback();
+				toggleLoading(false);
+				notifications.show({
+					title: "Successfully Run",
+					message: "The workflow has been successfully triggered manually.",
+					color: "green",
+					withBorder: true,
+				});
+			})
+			.catch((error: CustomError) => {
+				toggleLoading(false);
+				notifications.show({
+					title: "Failed",
+					message: getErrorMessage(error),
+					color: "red",
+					withBorder: true,
+				});
+			});
+	}
+
+	return { workflowRunNow, loading };
 }

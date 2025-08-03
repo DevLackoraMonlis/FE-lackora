@@ -2,7 +2,7 @@
 
 import { Accordion, Badge, Button, Card, Flex, Grid, ScrollArea, Skeleton, Text } from "@mantine/core";
 import { useDisclosure, useViewportSize } from "@mantine/hooks";
-import { IconLineScan } from "@tabler/icons-react";
+import { IconBolt, IconLineScan } from "@tabler/icons-react";
 import { Fragment, useState } from "react";
 
 import { WORKFLOW_REDIRECT_PATH, WORKFLOW_REFETCH_INTERVAL } from "./index.constants";
@@ -20,12 +20,14 @@ import WorkflowAccordion from "./components/WorkflowAccordion";
 import WorkflowAccordionSkelton from "./components/WorkflowAccordionSkelton";
 import WorkflowDetectedStepModal from "./components/WorkflowDetectedStepModal";
 import WorkflowPlayerTracking from "./components/WorkflowPlayerTracking";
+import { WorkflowRunNowModal } from "./components/WorkflowRunNow";
 import WorkflowScanHistoryModal from "./components/WorkflowScanHistoryModal";
 
 export default function WorkflowAssetsIdentification() {
 	const { height } = useViewportSize();
 	const [openedDetectedAssets, handleDetectedAssets] = useDisclosure();
 	const [openedScanHistory, handleScanHistory] = useDisclosure();
+	const [openedRunNow, handleRunNow] = useDisclosure();
 	const { onOpenApp } = useAppRedirect();
 	const { workflows, isLoading } = useWorkflow(WORKFLOW_REFETCH_INTERVAL);
 
@@ -43,6 +45,11 @@ export default function WorkflowAssetsIdentification() {
 	};
 	return (
 		<>
+			<WorkflowRunNowModal
+				onClose={handleRunNow.close}
+				opened={openedRunNow}
+				refetchWorkflow={workflows.refetch}
+			/>
 			<WorkflowScanHistoryModal onClose={handleScanHistory.close} opened={openedScanHistory} />
 			<WorkflowDetectedStepModal
 				onClose={() => {
@@ -89,7 +96,7 @@ export default function WorkflowAssetsIdentification() {
 												{isLoading ? (
 													<Skeleton w="250px" h="10px" opacity={0.5} mt="2xs" />
 												) : (
-													<Text c={getWorkflowStatus(workflows.data?.status)?.color}>
+													<Text c={getWorkflowStatus(workflows.data?.status)?.c}>
 														{workflows.data?.message || "-"}
 													</Text>
 												)}
@@ -105,13 +112,23 @@ export default function WorkflowAssetsIdentification() {
 													</Text>
 												)}
 											</Badge>
-											<Badge variant="light" color={getWorkflowStatus(workflows.data?.status)?.color} p="md">
+											<Badge variant="light" color={getWorkflowStatus(workflows.data?.status)?.bg} p="md">
 												{isLoading ? (
 													<Skeleton w="100px" h="10px" opacity={0.5} mt="2xs" />
 												) : (
 													<Text p="2xs">{workflows.data?.mode || "-"}</Text>
 												)}
 											</Badge>
+											<Button
+												data-testid="workflow-button-run-manually"
+												disabled={isLoading}
+												variant="outline"
+												color="gray.4"
+												onClick={handleRunNow.open}
+												leftSection={<IconBolt size={15} />}
+											>
+												Run Manually
+											</Button>
 										</Flex>
 									</Flex>
 								</Accordion.Control>
@@ -147,7 +164,7 @@ export default function WorkflowAssetsIdentification() {
 											data-testid="workflow-button-scan-history"
 											loading={isLoading}
 											variant="outline"
-											color="white"
+											color="primary.2"
 											onClick={handleScanHistory.open}
 										>
 											Scan History
