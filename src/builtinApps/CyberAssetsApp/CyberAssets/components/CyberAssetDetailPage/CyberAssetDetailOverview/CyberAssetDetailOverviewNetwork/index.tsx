@@ -7,7 +7,7 @@ type Props = {
 
 export default function CyberAssetDetailOverviewNetwork(props: Props) {
 	const openPorts = props.network?.openPorts || [];
-	const macDisplay = 6;
+	const maxDisplay = 6;
 
 	return (
 		<Flex direction={"column"} gap={"2xs"} w={"100%"} p={"sm"}>
@@ -20,25 +20,25 @@ export default function CyberAssetDetailOverviewNetwork(props: Props) {
 			<Flex gap={"2xs"} align={"center"}>
 				<Text c={"gray.6"}>Open Ports:</Text>
 				<Flex h={32} gap={"xs"} align={"center"}>
-					{openPorts.slice(0, macDisplay).map((item) => (
-						<Pill bg={"gray.2"} size={"xs"} key={item.name}>
+					{openPorts.slice(0, maxDisplay).map((item) => (
+						<Pill tt={"uppercase"} bg={"gray.2"} size={"xs"} key={item.name}>
 							{item.name}
 						</Pill>
 					))}
 
-					{openPorts.length > macDisplay && (
+					{openPorts.length > maxDisplay && (
 						<Tooltip
 							label={
 								<Flex direction={"column"}>
-									{openPorts.slice(macDisplay).map((item) => (
-										<Text key={`ip-address-${item}`} fz={"xs"}>
+									{openPorts.slice(maxDisplay).map((item) => (
+										<Text tt={"uppercase"} key={`ip-address-${item}`} fz={"xs"}>
 											{item.name}
 										</Text>
 									))}
 								</Flex>
 							}
 						>
-							<Pill tt={"uppercase"}>+{openPorts.length - macDisplay} more</Pill>
+							<Pill tt={"uppercase"}>+{openPorts.length - maxDisplay} more</Pill>
 						</Tooltip>
 					)}
 				</Flex>

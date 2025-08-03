@@ -63,7 +63,6 @@ export default function CyberAssetDetailOverview(props: {
 						openPorts:
 							response.data.network?.open_ports?.map((item) => ({
 								name: item,
-								type: "HTTPS",
 							})) || [],
 						type: "STATIC",
 					},
