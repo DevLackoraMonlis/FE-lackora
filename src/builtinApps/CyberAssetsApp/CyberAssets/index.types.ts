@@ -120,7 +120,7 @@ export type CyberAssetDetailOverviewApplicationSecurity = {
 	riskScore: number | null;
 	criticality: CyberAssetCriticalityEnum;
 	totalVulnerabilities: number;
-	summary: Record<CyberAssetCriticalityEnum, number>;
+	summary?: Record<Partial<CyberAssetCriticalityEnum>, number>;
 	topVulnerabilities: {
 		name: string;
 		criticality: CyberAssetCriticalityEnum;
@@ -135,20 +135,20 @@ export type CyberAssetDetailOverviewApplicationSecurity = {
 
 export type CyberAssetDetailOverviewAvailabilityAndActivityTimelineType = "Online" | "Offline" | "Unmanaged";
 
-export type CyberAssetDetailOverviewAvailabilityAndActivityTimeline = {
+export type CyberAssetDetailOverviewAvailabilityTimeline = {
 	description: string;
 	type: CyberAssetDetailOverviewAvailabilityAndActivityTimelineType;
 };
 
-export type CyberAssetDetailOverviewAvailabilityAndActivityActivity = {
+export type CyberAssetDetailOverviewActivityTimeline = {
 	title: string;
 	time: string;
 	description: string;
 };
 
 export type CyberAssetDetailOverviewAvailabilityAndActivity = {
-	timeline: CyberAssetDetailOverviewAvailabilityAndActivityTimeline[];
-	activity: CyberAssetDetailOverviewAvailabilityAndActivityActivity[];
+	availability: CyberAssetDetailOverviewAvailabilityTimeline[];
+	activity: CyberAssetDetailOverviewActivityTimeline[];
 };
 
 export type CyberAssetDetailOverviewNotificationType = "AVAILABILITY" | "FAILED" | "PATCH" | "CONFLICT";
@@ -157,8 +157,8 @@ export type CyberAssetDetailOverviewNotification = {
 	title: string;
 	description: string;
 	date: string;
-	source: string;
 	type: CyberAssetDetailOverviewNotificationType;
+	sourceBy: string;
 };
 
 export type CyberAssetDetailOverviewProps = {
