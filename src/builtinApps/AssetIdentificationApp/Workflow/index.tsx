@@ -5,7 +5,7 @@ import { useDisclosure, useViewportSize } from "@mantine/hooks";
 import { IconBolt, IconLineScan } from "@tabler/icons-react";
 import { Fragment, useState } from "react";
 
-import { WORKFLOW_REDIRECT_PATH, WORKFLOW_REFETCH_INTERVAL } from "./index.constants";
+import { DISCOVERY_SETTINGS_REDIRECT_PATH, WORKFLOW_REFETCH_INTERVAL } from "./index.constants";
 import {
 	calculateNextScheduledScan,
 	calculateScheduledScanDate,
@@ -42,7 +42,7 @@ export default function WorkflowAssetsIdentification() {
 	const commonProps = {
 		handleGatewayConfiguration,
 		handleViewMatchedAssets,
-		onOpenApp: () => onOpenApp(WORKFLOW_REDIRECT_PATH),
+		onOpenApp: () => onOpenApp(DISCOVERY_SETTINGS_REDIRECT_PATH),
 	};
 	return (
 		<>
