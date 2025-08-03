@@ -46,9 +46,9 @@ export default function CyberAssetDetailHistory(props: CyberAssetDetailInventory
 							},
 						})),
 				})}
-				columnsQueryKey={["cyber-assets-changes-columns"]}
-				dataQueryKey={["cyber-assets-histories-data"]}
-				fullScreenTitle={"Cyber Asset Inventory"}
+				columnsQueryKey={["cyber-assets-history-columns"]}
+				dataQueryKey={["cyber-assets-histories-data", props.id || ""]}
+				fullScreenTitle={"Cyber Asset History"}
 				excludeColumns={["id"]}
 				store={store.current}
 				searchInputPlaceholder={"Search by hostname"}
