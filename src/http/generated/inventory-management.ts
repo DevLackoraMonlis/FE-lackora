@@ -6,16 +6,20 @@
  * OpenAPI spec version: 1.0.0
  */
 import {
+  useMutation,
   useQuery
 } from '@tanstack/react-query';
 import type {
   DataTag,
   DefinedInitialDataOptions,
   DefinedUseQueryResult,
+  MutationFunction,
   QueryClient,
   QueryFunction,
   QueryKey,
   UndefinedInitialDataOptions,
+  UseMutationOptions,
+  UseMutationResult,
   UseQueryOptions,
   UseQueryResult
 } from '@tanstack/react-query';
@@ -23,6 +27,8 @@ import type {
 import type {
   HTTPValidationError,
   InventoryCategoryResponse,
+  InventoryDataAdvanceFilterRequestModel,
+  InventoryDataAdvancedFilterResponse,
   InventoryManagementFilterColumnsResponse
 } from './models';
 
@@ -293,3 +299,69 @@ export function useGetInventoryFilterColumns<TData = Awaited<ReturnType<typeof g
 
 
 
+/**
+ * @summary Get Inventory Type Related Data
+ */
+export const getAssetInventoryData = (
+    type: string,
+    inventoryDataAdvanceFilterRequestModel: InventoryDataAdvanceFilterRequestModel,
+ signal?: AbortSignal
+) => {
+      
+      
+      return orvalMutator<InventoryDataAdvancedFilterResponse>(
+      {url: `/api/inventory-management/${type}/inventory-data`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: inventoryDataAdvanceFilterRequestModel, signal
+    },
+      );
+    }
+  
+
+
+export const getGetAssetInventoryDataMutationOptions = <TError = HTTPValidationError,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof getAssetInventoryData>>, TError,{type: string;data: InventoryDataAdvanceFilterRequestModel}, TContext>, }
+): UseMutationOptions<Awaited<ReturnType<typeof getAssetInventoryData>>, TError,{type: string;data: InventoryDataAdvanceFilterRequestModel}, TContext> => {
+
+const mutationKey = ['getAssetInventoryData'];
+const {mutation: mutationOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof getAssetInventoryData>>, {type: string;data: InventoryDataAdvanceFilterRequestModel}> = (props) => {
+          const {type,data} = props ?? {};
+
+          return  getAssetInventoryData(type,data,)
+        }
+
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type GetAssetInventoryDataMutationResult = NonNullable<Awaited<ReturnType<typeof getAssetInventoryData>>>
+    export type GetAssetInventoryDataMutationBody = InventoryDataAdvanceFilterRequestModel
+    export type GetAssetInventoryDataMutationError = HTTPValidationError
+
+    /**
+ * @summary Get Inventory Type Related Data
+ */
+export const useGetAssetInventoryData = <TError = HTTPValidationError,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof getAssetInventoryData>>, TError,{type: string;data: InventoryDataAdvanceFilterRequestModel}, TContext>, }
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof getAssetInventoryData>>,
+        TError,
+        {type: string;data: InventoryDataAdvanceFilterRequestModel},
+        TContext
+      > => {
+
+      const mutationOptions = getGetAssetInventoryDataMutationOptions(options);
+
+      return useMutation(mutationOptions , queryClient);
+    }
+    
