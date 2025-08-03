@@ -46,12 +46,12 @@ export default function WorkflowAssetsIdentification() {
 	};
 	return (
 		<>
+			<WorkflowScanHistoryModal onClose={handleScanHistory.close} opened={openedScanHistory} />
 			<WorkflowRunNowModal
 				onClose={handleRunNow.close}
 				opened={openedRunNow}
 				refetchWorkflow={workflows.refetch}
 			/>
-			<WorkflowScanHistoryModal onClose={handleScanHistory.close} opened={openedScanHistory} />
 			<WorkflowDetectedStepModal
 				onClose={() => {
 					setSelectedStepId("");
