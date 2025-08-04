@@ -79,14 +79,13 @@ export function useWorkflowStep(stepId: string) {
 			select: (res) => {
 				const results =
 					res?.data?.results?.map((record) => {
+						const key = Object.values(record).join("-");
 						return Object.entries(record).reduce(
 							(acc, [key]) => {
 								acc[key] = getValueFromDynamicColumnRecord(record, key);
 								return acc;
 							},
-							{
-								key: `${record.ip}-${record.mac}-${record.discovery_time}`,
-							} as Record<string, unknown>,
+							{ key } as Record<string, unknown>,
 						);
 					}) || [];
 				return { ...res.data, results };
