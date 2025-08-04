@@ -44,7 +44,7 @@ function WorkflowDetectedStep({ stepId = "" }: Props) {
 			),
 			render: (record) => {
 				return (
-					<Highlight c={key === "ip" ? "blue" : ""} highlight={[search]} highlightStyles={{}}>
+					<Highlight c={key.includes("ip") ? "blue" : ""} highlight={[search]} highlightStyles={{}}>
 						{record[key] as string}
 					</Highlight>
 				);
