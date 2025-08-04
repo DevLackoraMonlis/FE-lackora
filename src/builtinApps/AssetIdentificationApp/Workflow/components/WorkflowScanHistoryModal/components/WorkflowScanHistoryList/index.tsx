@@ -36,7 +36,7 @@ export default function WorkflowScanHistoryList({ setSelectedScan, selectedScan 
 
 	const handleUpdateQueryParams = (params: Partial<Filters>) => {
 		tablePagination.onPageChange(1);
-		setQueryParams((perParams) => ({ ...perParams, page: 1, ...params }));
+		setQueryParams((perParams) => ({ ...perParams, ...params }));
 	};
 
 	useEffect(() => {
