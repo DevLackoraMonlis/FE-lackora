@@ -23,7 +23,8 @@ test.describe("WorkflowAssetsIdentification E2E", () => {
 
 	test("should open and close Scan History modal", async ({ page }) => {
 		const scanHistoryButton = page.getByTestId("workflow-button-scan-history");
-		await scanHistoryButton.click({ delay: 2_000 });
+		await page.getByTestId("AppLoader").waitFor({ state: "detached", timeout: 2000 });
+		await scanHistoryButton.click();
 
 		const modalTitle = page.getByTestId("BCDrawer-title");
 		await expect(modalTitle).toBeVisible();
@@ -36,7 +37,8 @@ test.describe("WorkflowAssetsIdentification E2E", () => {
 
 	test("should open and close Run Workflow modal", async ({ page }) => {
 		const scanHistoryButton = page.getByTestId("workflow-button-run-manually");
-		await scanHistoryButton.click({ delay: 2_000 });
+		await page.getByTestId("AppLoader").waitFor({ state: "detached", timeout: 2000 });
+		await scanHistoryButton.click();
 
 		const modalTitle = page.getByTestId("BCModal-title");
 		await expect(modalTitle).toBeVisible();
