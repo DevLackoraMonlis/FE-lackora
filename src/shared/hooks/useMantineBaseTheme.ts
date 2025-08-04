@@ -33,7 +33,6 @@ export default function useMantineBaseTheme() {
 			Loader: {
 				defaultProps: {
 					type: "dots",
-					"data-testid": "َAppLoader",
 				},
 			},
 			LoadingOverlay: {
