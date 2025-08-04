@@ -55,7 +55,7 @@ type Props<T> = Pick<
 
 export default function ICAdvancedFilterGrid<T extends Record<string, unknown>>(props: Props<T>) {
 	const queryClient = useQueryClient();
-	const { height, width } = useViewportSize();
+	const { height } = useViewportSize();
 
 	const store = useStore(
 		props.store,
@@ -253,7 +253,6 @@ export default function ICAdvancedFilterGrid<T extends Record<string, unknown>>(
 			.map((column) => ({
 				...column,
 				minSize: props.minColumnSize,
-				width: store.getExistAnyGroupByColumn(firstDataObject) ? undefined : props.defaultColumnSize,
 				render: (record, row, rowIndex) => (
 					<ICAdvancedFilterGridRow
 						cellMenu={(visibleParent, onClose) =>
@@ -314,7 +313,6 @@ export default function ICAdvancedFilterGrid<T extends Record<string, unknown>>(
 				const column: TanStackDataTableColumnColDef<T> = {
 					accessor: key,
 					minSize: props.minColumnSize,
-					width: store.getExistAnyGroupByColumn(firstDataObject) ? undefined : props.defaultColumnSize,
 					render: (record, row, rowIndex) => (
 						<ICAdvancedFilterGridRow
 							withPaddingLeft={!!record[key]}
@@ -382,9 +380,9 @@ export default function ICAdvancedFilterGrid<T extends Record<string, unknown>>(
 
 	return (
 		<BCTanStackGrid<T>
-			{...(store.openedFullScreenModal && { parentWidth: width })}
 			h={tableHeight}
 			withTableBorder
+			defaultColumnWidth={props.defaultColumnSize}
 			withColumnBorders
 			fetching={isLoading}
 			withRowBorders

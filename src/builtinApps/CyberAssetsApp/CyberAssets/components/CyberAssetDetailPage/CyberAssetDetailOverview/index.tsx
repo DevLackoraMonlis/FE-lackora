@@ -29,6 +29,12 @@ export default function CyberAssetDetailOverview(props: {
 	id?: string;
 	appName?: string;
 	osType: CyberAssetOsTypeEnum;
+	onNetworkRedirect: VoidFunction;
+	onChangesRedirect: VoidFunction;
+	onTopServicesRedirect: VoidFunction;
+	onApplicationsRedirect: VoidFunction;
+	onSecurityRedirect: VoidFunction;
+	onActivityRedirect: VoidFunction;
 }) {
 	const { height } = useViewportSize();
 	const {
@@ -114,7 +120,7 @@ export default function CyberAssetDetailOverview(props: {
 							isLoading={getAssetOverviewBaseDataQuery.isFetching}
 							mih={120}
 							title={"Network"}
-							rightSection={<ArrowButton />}
+							rightSection={<ArrowButton onClick={props.onNetworkRedirect} />}
 						>
 							<CyberAssetDetailOverviewNetwork network={getAssetOverviewBaseDataQuery.data?.data.network} />
 						</CyberAssetDetailOverviewCard>
@@ -125,7 +131,7 @@ export default function CyberAssetDetailOverview(props: {
 							isLoading={getAssetOverviewLatestChangesDataQuery.isFetching}
 							mih={120}
 							title={"Changes"}
-							rightSection={<ArrowButton />}
+							rightSection={<ArrowButton onClick={props.onChangesRedirect} />}
 						>
 							<CyberAssetDetailOverviewChanges
 								changes={getAssetOverviewLatestChangesDataQuery.data?.data.changes}
@@ -139,7 +145,7 @@ export default function CyberAssetDetailOverview(props: {
 							isLoading={getAssetOverviewTopServicesDataQuery.isFetching}
 							mih={300}
 							title={"Top Services"}
-							rightSection={<ArrowButton />}
+							rightSection={<ArrowButton onClick={props.onTopServicesRedirect} />}
 						>
 							<CyberAssetDetailOverviewTopServices
 								serviceStartTypes={getAssetOverviewTopServicesDataQuery.data?.data.serviceStartTypes}
@@ -152,7 +158,7 @@ export default function CyberAssetDetailOverview(props: {
 							isLoading={getAssetOverviewApplicationsDataQuery.isFetching}
 							mih={300}
 							title={"Applications"}
-							rightSection={<ArrowButton />}
+							rightSection={<ArrowButton onClick={props.onApplicationsRedirect} />}
 						>
 							<CyberAssetDetailOverviewApplications
 								applications={getAssetOverviewApplicationsDataQuery.data?.data.applications}
@@ -167,7 +173,7 @@ export default function CyberAssetDetailOverview(props: {
 							mih={590}
 							isLoading={getAssetOverviewSecurityDataQuery.isFetching}
 							title={"Security"}
-							rightSection={<ArrowButton />}
+							rightSection={<ArrowButton onClick={props.onSecurityRedirect} />}
 						>
 							<CyberAssetDetailOverviewSecurity
 								security={getAssetOverviewSecurityDataQuery.data?.data.security}
@@ -182,7 +188,7 @@ export default function CyberAssetDetailOverview(props: {
 								getAssetOverviewActivityDataQuery.isFetching
 							}
 							title={"Availability & Activity"}
-							rightSection={<ArrowButton />}
+							rightSection={<ArrowButton onClick={props.onActivityRedirect} />}
 						>
 							<CyberAssetDetailOverviewAvailabilityAndActivity
 								availabilityAndActivity={availabilityAndActivity.availabilityAndActivity}

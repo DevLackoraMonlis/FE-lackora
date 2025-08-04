@@ -349,6 +349,7 @@ export function useCyberAssetDynamicStores(types: CyberAssetDetailInventoryType[
 
 					const page = () => (
 						<CyberAssetDetailInventoryDynamicGrid
+							defaultItem={type.defaultItem}
 							store={newStore}
 							type={type.type.value}
 							items={type.items}

@@ -27,7 +27,7 @@ export type TanStackGridProps<T> = {
 	withRowBorders?: boolean;
 	withTableBorder?: boolean;
 	withPaddingCells?: boolean;
-	parentWidth?: number;
+	defaultColumnWidth?: number;
 	idAccessor: string;
 	rowHeight?: number;
 	fetching?: boolean;

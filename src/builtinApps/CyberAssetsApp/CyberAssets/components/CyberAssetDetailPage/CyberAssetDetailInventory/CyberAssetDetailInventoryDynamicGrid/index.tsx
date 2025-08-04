@@ -19,6 +19,7 @@ type Props = {
 	items: LabelValueType[];
 	store?: StoreApi<ICAdvancedFilterStoreType>;
 	id?: string;
+	defaultItem?: string;
 };
 
 export default function CyberAssetDetailInventoryDynamicGrid(props: Props) {
@@ -30,9 +31,9 @@ export default function CyberAssetDetailInventoryDynamicGrid(props: Props) {
 
 	useEffect(() => {
 		if (props.items.length && !selectedItem) {
-			setSelectedItem(props.items[0].value);
+			setSelectedItem(props.defaultItem || props.items[0].value);
 		}
-	}, [props.items]);
+	}, [props.items, props.defaultItem]);
 
 	return (
 		<ICAdvancedFilter<ICAdvancedFilterDataRs>

@@ -21,6 +21,7 @@ export default function CyberAssetDetailInventory(props: CyberAssetDetailInvento
 							label: item.display_name,
 							value: item.name,
 						},
+						defaultItem: props.defaultType === item.name ? props.defaultItem : undefined,
 						items: item.types?.map((type) => ({ label: type.display_name, value: type.name })) || [],
 					};
 
@@ -40,9 +41,9 @@ export default function CyberAssetDetailInventory(props: CyberAssetDetailInvento
 
 	useEffect(() => {
 		if (getAssetOverviewSecurityDataQuery.data?.dataTypes.length && !selectedType) {
-			setSelectedType(getAssetOverviewSecurityDataQuery.data?.dataTypes[0].type.value);
+			setSelectedType(props.defaultType || getAssetOverviewSecurityDataQuery.data?.dataTypes[0].type.value);
 		}
-	}, [getAssetOverviewSecurityDataQuery.data?.dataTypes]);
+	}, [getAssetOverviewSecurityDataQuery.data?.dataTypes, props.defaultType]);
 
 	return (
 		<Box p={"sm"} w={"100%"}>
