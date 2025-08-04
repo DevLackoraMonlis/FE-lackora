@@ -57,8 +57,9 @@ export function useWorkflowHistoryDetail(stepId: string, _queryParams: Record<st
 			select: (res) => {
 				const results =
 					res?.data?.results?.map((record) => {
+						const key = Object.values(record).join("-");
 						return {
-							key: `${record.ip}-${record.mac}-${record.gateway_name}`,
+							key,
 							ipAddress: record.ip,
 							macAddress: record.mac,
 							discoveryTime: record.discovery_time,
