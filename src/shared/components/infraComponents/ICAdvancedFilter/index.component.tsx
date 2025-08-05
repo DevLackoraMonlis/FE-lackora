@@ -34,7 +34,7 @@ export default function ICAdvancedFilterComponent<T>(
 	const useGetColumnsQuery = useQuery({
 		queryKey: ["get-columns", ...props.columnsQueryKey],
 		queryFn: ({ signal }) => props.getColumnsApi?.(signal),
-		staleTime: 5 * 60 * 1000,
+		staleTime: 20 * 60 * 1000,
 	});
 
 	const allColumns = useGetColumnsQuery.data?.data.results || [];
@@ -56,10 +56,16 @@ export default function ICAdvancedFilterComponent<T>(
 	}, [props.defaultVariables]);
 
 	useEffect(() => {
-		if (allColumns.length && !store.variablesColumns.length) {
+		if (allColumns.length) {
 			store.setColumns(allColumns.filter((column) => column.isDefault));
 		}
 	}, [allColumns]);
+
+	useEffect(() => {
+		return () => {
+			store.setColumns([]);
+		};
+	}, []);
 
 	return (
 		<Flex h={"100%"} direction={"column"} w={"100%"}>
