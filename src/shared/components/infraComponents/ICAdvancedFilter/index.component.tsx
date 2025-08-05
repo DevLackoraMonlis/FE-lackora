@@ -61,12 +61,6 @@ export default function ICAdvancedFilterComponent<T>(
 		}
 	}, [allColumns]);
 
-	useEffect(() => {
-		return () => {
-			store.setColumns([]);
-		};
-	}, []);
-
 	return (
 		<Flex h={"100%"} direction={"column"} w={"100%"}>
 			<ICAdvancedFilterTopSection

@@ -58,7 +58,7 @@ export function tanStackGetExtendedWidth<T>(params: {
 	hasVerticalScroll?: boolean;
 }) {
 	if (params.viewportWidth > params.totalDefaultWidth) {
-		let remainWidth = params.viewportWidth - params.totalDefaultWidth - (params.hasVerticalScroll ? 14 : 2);
+		let remainWidth = params.viewportWidth - params.totalDefaultWidth - (params.hasVerticalScroll ? 14 : 1);
 
 		if (params.hasRowExpansion) {
 			remainWidth -= 50;

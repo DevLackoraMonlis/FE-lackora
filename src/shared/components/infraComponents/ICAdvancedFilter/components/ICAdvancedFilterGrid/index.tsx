@@ -84,7 +84,7 @@ export default function ICAdvancedFilterGrid<T extends Record<string, unknown>>(
 	const useGetDataQuery = useQuery({
 		queryKey: [...getDataQueryKey, store.variables.columns, store.runToken],
 		queryFn: ({ signal }) => props.getDataApi?.(store.variables, signal),
-		enabled: !!store.variables.columns.length && !hasEverFetched,
+		enabled: !!store.variables.columns.length && !hasEverFetched && !props.isLoading,
 	});
 
 	const data = useGetDataQuery.data?.data.results || [];
