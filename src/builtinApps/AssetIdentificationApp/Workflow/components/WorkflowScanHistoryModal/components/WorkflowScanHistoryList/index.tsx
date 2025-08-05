@@ -21,21 +21,22 @@ type Props = {
 };
 export default function WorkflowScanHistoryList({ setSelectedScan, selectedScan }: Props) {
 	const { height } = useViewportSize();
-	const [queryParams, setQueryParams] = useState<Filters>({
-		limit: 10,
-		page: 1,
-	});
-	const { scanHistoryList, filters } = useWorkflowScanHistory(queryParams);
-	const results = scanHistoryList.data?.results || [];
-	const total = scanHistoryList?.data?.total;
-	const stableFilters = useStableData<typeof filters>(filters);
-
 	const { tablePagination, page, pageSize, totalRecords, setTotalRecords } = useTablePagination({
 		defaultPageSize: 10,
 	});
+	const [queryParams, setQueryParams] = useState<Filters>({
+		limit: pageSize,
+		page,
+	});
+	const { scanHistoryList, filters } = useWorkflowScanHistory({ ...queryParams, page, limit: pageSize });
+	const results = scanHistoryList.data?.results || [];
+	const total = scanHistoryList?.data?.total;
+	const stableFilters = useStableData<typeof filters>(filters);
 	const showPagination = totalRecords > pageSize;
+
 	const handleUpdateQueryParams = (params: Partial<Filters>) => {
-		setQueryParams((perParams) => ({ ...perParams, page: 1, ...params }));
+		tablePagination.onPageChange(1);
+		setQueryParams((perParams) => ({ ...perParams, ...params }));
 	};
 
 	useEffect(() => {
