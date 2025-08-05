@@ -1,6 +1,6 @@
 import type { DrawerProps, MantineSize } from "@mantine/core";
 import { ActionIcon, CloseButton, Drawer, Flex, Text } from "@mantine/core";
-import { IconMaximize, IconXboxX } from "@tabler/icons-react";
+import { IconMaximize } from "@tabler/icons-react";
 import { useState } from "react";
 
 type Props = DrawerProps & {
@@ -39,7 +39,7 @@ export default function BCDrawer({
 			title={
 				!fullScreen && withFullScreen ? (
 					<Flex align="center" justify="space-between" px="2xs">
-						<Text fw="bold" fz="md" data-testid="BCDrawer-title">
+						<Text fz="md" data-testid="BCDrawer-title">
 							{title}
 						</Text>
 						<Flex gap="2xs" align="center">
@@ -51,23 +51,15 @@ export default function BCDrawer({
 							>
 								<IconMaximize size={17} />
 							</ActionIcon>
-							<CloseButton
-								onClick={handleClose}
-								data-testid="BCDrawer-close"
-								icon={<IconXboxX size={22} stroke={1.5} />}
-							/>
+							<CloseButton onClick={handleClose} data-testid="BCDrawer-close" />
 						</Flex>
 					</Flex>
 				) : (
 					<Flex align="center" justify="space-between" px="2xs">
-						<Text fw="bold" fz="md" data-testid="BCDrawer-title">
+						<Text fz="md" data-testid="BCDrawer-title">
 							{title}
 						</Text>
-						<CloseButton
-							onClick={handleClose}
-							data-testid="BCDrawer-close"
-							icon={<IconXboxX size={22} stroke={1.5} />}
-						/>
+						<CloseButton onClick={handleClose} data-testid="BCDrawer-close" />
 					</Flex>
 				)
 			}
