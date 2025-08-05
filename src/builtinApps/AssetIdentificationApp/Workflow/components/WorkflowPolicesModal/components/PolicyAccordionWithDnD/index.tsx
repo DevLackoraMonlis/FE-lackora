@@ -7,6 +7,7 @@ import { DndProvider } from "react-dnd";
 import { useDrag, useDrop } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
+import type { PolicyHandles } from "../../../../index.types";
 import PolicyAccordion from "../PolicyAccordion";
 
 type DragItem = {
@@ -106,7 +107,7 @@ const DnDCardBox: FC<DnDCardBoxProps> = ({ index, moveCard, id, content }) => {
 	);
 };
 
-export default function PolicyAccordionWithDnD() {
+export default function PolicyAccordionWithDnD(handles: PolicyHandles) {
 	const [cards, setCards] = useState([
 		{
 			id: "1",
@@ -140,7 +141,7 @@ export default function PolicyAccordionWithDnD() {
 				id={card.id}
 				index={index}
 				moveCard={moveCard}
-				content={<PolicyAccordion {...card} />}
+				content={<PolicyAccordion {...card} {...handles} />}
 			/>
 		);
 	}, []);

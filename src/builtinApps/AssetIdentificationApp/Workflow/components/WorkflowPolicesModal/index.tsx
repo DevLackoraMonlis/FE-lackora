@@ -1,12 +1,14 @@
 import { Button, Flex, Grid, Text } from "@mantine/core";
 import { useDisclosure, useViewportSize } from "@mantine/hooks";
 import { IconPlus } from "@tabler/icons-react";
+import { useState } from "react";
 
 import BCDrawer from "@/shared/components/baseComponents/BCDrawer";
 import BCEmptyWithCreate from "@/shared/components/baseComponents/BCEmptyWithCreate";
 import { NoPolicies } from "@/shared/icons/components/general";
 
 import PolicyAccordionWithDnD from "./components/PolicyAccordionWithDnD";
+import PolicyCreateModal from "./components/PolicyCreateModal";
 
 type Props = {
 	onClose: VoidFunction;
@@ -16,12 +18,28 @@ type Props = {
 
 function WorkflowPolices({ stepId = "" }: Props) {
 	const { height } = useViewportSize();
-	const [openedCreate, handleOpenedCreate] = useDisclosure();
+	const [openedCreateOrEdit, handleOpenedCreateOrEdit] = useDisclosure(true);
 
-	if (openedCreate && stepId) {
+	const [selectedPolicyId, setSelectedPolicyId] = useState("");
+
+	const total = 0;
+
+	const handleEditOrCreatePolicy = (id?: string) => {
+		setSelectedPolicyId(id || "");
+		handleOpenedCreateOrEdit.open();
+	};
+	const handleDeletePolicy = (id: string) => {
+		setSelectedPolicyId(id);
+		handleOpenedCreateOrEdit.open();
+	};
+	const handleEnforcePolicy = (id: string) => {
+		setSelectedPolicyId(id);
+		handleOpenedCreateOrEdit.open();
+	};
+	if (!stepId) {
 		return (
 			<BCEmptyWithCreate
-				onCreate={handleOpenedCreate.open}
+				onCreate={handleEditOrCreatePolicy}
 				buttonText="Create First Policy"
 				icon={<NoPolicies width={140} height={140} />}
 				title="No Policies Defined Yet!"
@@ -29,18 +47,29 @@ function WorkflowPolices({ stepId = "" }: Props) {
 			/>
 		);
 	}
+	const commonProps = {
+		handleEditOrCreatePolicy,
+		handleDeletePolicy,
+		handleEnforcePolicy,
+	};
 	return (
-		<Flex direction="column" gap="xs" mt="xs">
-			<Flex direction="column">
-				<Flex justify="space-between" align="center">
-					<Text fw="bold" fz="h4">{`Total Polices ( ${openedCreate ?? "-"} )`}</Text>
-					<Button color="main" onClick={handleOpenedCreate.open} leftSection={<IconPlus size={20} />}>
-						Create Policy
-					</Button>
-				</Flex>
-				<Grid gutter="sm" mt="md" pr="xs" style={{ overflowY: "auto" }} h={height - 160} pos="relative">
-					<PolicyAccordionWithDnD />
-					{/* {adapterManagement.isLoading ? (
+		<>
+			<PolicyCreateModal
+				onClose={handleOpenedCreateOrEdit.close}
+				opened={openedCreateOrEdit}
+				policyId={selectedPolicyId}
+			/>
+			<Flex direction="column" gap="xs" mt="xs">
+				<Flex direction="column">
+					<Flex justify="space-between" align="center">
+						<Text fw="bold" fz="h4">{`Total Polices ( ${total ?? "-"} )`}</Text>
+						<Button color="main" onClick={handleOpenedCreateOrEdit.open} leftSection={<IconPlus size={20} />}>
+							Create Policy
+						</Button>
+					</Flex>
+					<Grid gutter="sm" mt="md" pr="xs" style={{ overflowY: "auto" }} h={height - 160} pos="relative">
+						<PolicyAccordionWithDnD {...commonProps} />
+						{/* {adapterManagement.isLoading ? (
             <AdapterSingleCardSkelton count={9} />
           ) : (
             results?.map((item) => (
@@ -61,9 +90,10 @@ function WorkflowPolices({ stepId = "" }: Props) {
               </Grid.Col>
             ))
           )} */}
-				</Grid>
+					</Grid>
+				</Flex>
 			</Flex>
-		</Flex>
+		</>
 	);
 }
 

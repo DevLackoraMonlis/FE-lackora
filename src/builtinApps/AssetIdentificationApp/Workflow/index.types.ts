@@ -50,3 +50,9 @@ export type PolicyCardData = {
 	isActive: boolean;
 	enforce: boolean;
 };
+
+export type PolicyHandles = {
+	handleEditOrCreatePolicy: (id: string) => void;
+	handleDeletePolicy: (id: string) => void;
+	handleEnforcePolicy: (id: string) => void;
+};

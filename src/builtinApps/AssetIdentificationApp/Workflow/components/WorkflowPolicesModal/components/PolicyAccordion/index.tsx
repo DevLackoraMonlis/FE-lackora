@@ -3,11 +3,11 @@ import { Accordion } from "@mantine/core";
 import { IconDotsVertical, IconInfoCircle, IconInfoTriangleFilled } from "@tabler/icons-react";
 import { IconList, IconPencil, IconTrash } from "@tabler/icons-react";
 
-import type { PolicyCardData } from "../../../../index.types";
+import type { PolicyCardData, PolicyHandles } from "../../../../index.types";
 
-type Props = PolicyCardData;
+type Props = PolicyCardData & PolicyHandles;
 
-export default function PolicyAccordion({ id, title, description, enforce, isActive = false }: Props) {
+export default function PolicyAccordion({ id, title, description, enforce, isActive, ...handles }: Props) {
 	if (!id) return null;
 	return (
 		<Accordion variant="separated" w="100%">
@@ -39,11 +39,6 @@ export default function PolicyAccordion({ id, title, description, enforce, isAct
 									</Button>
 								</>
 							)}
-							{/* <Badge variant="light" color={"phaseStatus?.color"} px="sm" py="md">
-                <Text p="2xs" tt="capitalize">
-                phaseStatus?.label
-                </Text>
-                </Badge> */}
 							<Switch
 								checked={isActive}
 								color="green"
@@ -61,21 +56,21 @@ export default function PolicyAccordion({ id, title, description, enforce, isAct
 									<Menu.Item
 										data-testid="policy-submenu-edit"
 										leftSection={<IconPencil size={15} />}
-										// onClick={() => props.handleGatewayConfiguration(step.id)}
+										onClick={() => handles.handleEditOrCreatePolicy(id)}
 									>
 										Edit
 									</Menu.Item>
 									<Menu.Item
 										data-testid="policy-submenu-delete"
 										leftSection={<IconTrash size={15} />}
-										// onClick={() => props.handleViewPolices(step.id)}
+										onClick={() => handles.handleDeletePolicy(id)}
 									>
 										Delete
 									</Menu.Item>
 									<Menu.Item
 										data-testid="policy-submenu-enforce"
 										leftSection={<IconList size={15} />}
-										// onClick={() => props.handleViewMatchedAssets(step.id)}
+										onClick={() => handles.handleEnforcePolicy(id)}
 									>
 										Enforce Now
 									</Menu.Item>
