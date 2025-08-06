@@ -1,7 +1,5 @@
-import type { SVGProps } from "react";
-import { type Ref, forwardRef, memo } from "react";
-
-const SvgNoPolicies = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
+import { type Ref, type SVGProps, forwardRef, memo } from "react";
+const SvgPolicyNoPolicies = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
 		width="1em"
@@ -19,6 +17,6 @@ const SvgNoPolicies = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) 
 		/>
 	</svg>
 );
-const ForwardRef = forwardRef(SvgNoPolicies);
+const ForwardRef = forwardRef(SvgPolicyNoPolicies);
 const Memo = memo(ForwardRef);
 export default Memo;

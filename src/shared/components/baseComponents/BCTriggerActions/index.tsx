@@ -1,43 +1,27 @@
 import { Button, Card, Combobox, Flex, Text, useCombobox } from "@mantine/core";
-import { IconChevronCompactDown, IconPlus } from "@tabler/icons-react";
-import { Fragment, useState } from "react";
-import { FcFolder } from "react-icons/fc";
+import { IconChevronCompactDown, IconPlus, IconZoomScan } from "@tabler/icons-react";
+import { Fragment, createElement, useState } from "react";
 
 import TriggerActionGenerator from "./components/TriggerActionGenerator";
+import { useIconPolicyManagementActions, usePolicyManagementActions } from "./index.hooks";
+import type { PolicyIconType } from "./index.types";
 
-const groceries = [
-	{
-		groupName: "groupName 1",
-		list: [
-			{ icon: <FcFolder />, value: "Apples", description: "Crisp and refreshing fruit" },
-			{ icon: <FcFolder />, value: "Bananas", description: "Naturally sweet and potassium-rich fruit" },
-			{ icon: <FcFolder />, value: "Broccoli", description: "Nutrient-packed green vegetable" },
-			{ icon: <FcFolder />, value: "Carrots", description: "Crunchy and vitamin-rich root vegetable" },
-			{ icon: <FcFolder />, value: "Chocolate", description: "Indulgent and decadent treat" },
-		],
-	},
-	{
-		groupName: "groupName 2",
-		list: [
-			{ icon: <FcFolder />, value: "Apples", description: "Crisp and refreshing fruit" },
-			{ icon: <FcFolder />, value: "Bananas", description: "Naturally sweet and potassium-rich fruit" },
-			{ icon: <FcFolder />, value: "Broccoli", description: "Nutrient-packed green vegetable" },
-			{ icon: <FcFolder />, value: "Carrots", description: "Crunchy and vitamin-rich root vegetable" },
-			{ icon: <FcFolder />, value: "Chocolate", description: "Indulgent and decadent treat" },
-		],
-	},
-];
+type SelectOptionProps = {
+	label: string;
+	description: string;
+	disabled: boolean;
+	iconType?: PolicyIconType;
+};
 
-type SelectOptions = (typeof groceries)[number]["list"][number] & { disabled: boolean };
-function SelectOption({ icon, value, description, disabled }: SelectOptions) {
+function SelectOption({ iconType, label, description, disabled }: SelectOptionProps) {
 	return (
 		<Card m={0} p={0}>
 			<Flex gap="md" p="xs" bg={disabled ? "gray.3" : "gray.1"}>
 				<Flex justify="center" align="center" fz="h1" bg="transparent">
-					{icon}
+					{iconType ? createElement(iconType) : <IconZoomScan />}
 				</Flex>
 				<Flex direction="column">
-					<Text fz="sm">{value}</Text>
+					<Text fz="sm">{label}</Text>
 					<Text fz="xs" c="dimmed">
 						{description}
 					</Text>
@@ -49,20 +33,27 @@ function SelectOption({ icon, value, description, disabled }: SelectOptions) {
 
 export default function BCTriggerActions() {
 	const [triggerActions, setTriggerActions] = useState<string[]>([]);
-
+	const { getPolicyActionIcon } = useIconPolicyManagementActions();
 	const combobox = useCombobox({
 		onDropdownClose: () => combobox.resetSelectedOption(),
 	});
-	const options = groceries.map(({ groupName, list }) => (
+
+	const { policyActions } = usePolicyManagementActions();
+	const options = Object.entries(policyActions?.data || {}).map(([groupName, list]) => (
 		<Fragment key={groupName}>
 			<Text c="dimmed" py="xs" px="2x">
 				{groupName}
 			</Text>
-			{list.map((item) => {
-				const disabled = triggerActions.includes(item.value);
+			{list?.map((item) => {
+				const disabled = triggerActions.includes(item.id);
 				return (
-					<Combobox.Option key={item.value} m={0} p="3xs" value={item.value} disabled={disabled}>
-						<SelectOption {...item} disabled={disabled} />
+					<Combobox.Option key={item.id} m={0} p="3xs" value={item.id} disabled={disabled}>
+						<SelectOption
+							iconType={getPolicyActionIcon(item.name)}
+							label={item.display_name}
+							description={item.description}
+							disabled={disabled}
+						/>
 					</Combobox.Option>
 				);
 			})}
@@ -83,6 +74,7 @@ export default function BCTriggerActions() {
 			>
 				<Combobox.Target>
 					<Button
+						loading={policyActions.isLoading}
 						w="500px"
 						variant="transparent"
 						rightSection={<IconChevronCompactDown size={15} />}

@@ -5,7 +5,7 @@ import { useState } from "react";
 
 import BCDrawer from "@/shared/components/baseComponents/BCDrawer";
 import BCEmptyWithCreate from "@/shared/components/baseComponents/BCEmptyWithCreate";
-import { NoPolicies } from "@/shared/icons/components/general";
+import { PolicyNoPolicies } from "@/shared/icons/components/policy";
 
 import PolicyAccordionWithDnD from "./components/PolicyAccordionWithDnD";
 import PolicyCreateModal from "./components/PolicyCreateModal";
@@ -41,7 +41,7 @@ function WorkflowPolices({ stepId = "" }: Props) {
 			<BCEmptyWithCreate
 				onCreate={handleEditOrCreatePolicy}
 				buttonText="Create First Policy"
-				icon={<NoPolicies width={140} height={140} />}
+				icon={<PolicyNoPolicies width={140} height={140} />}
 				title="No Policies Defined Yet!"
 				description="You haven’t added any workflow policies for this step. Click “Create First Policy” to get started."
 			/>
