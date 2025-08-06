@@ -50,6 +50,17 @@ export default function useMantineBaseTheme() {
 					fz: "sm",
 				},
 			},
+			Tooltip: {
+				defaultProps: {
+					withArrow: true,
+					transitionProps: { duration: 200 },
+				},
+			},
+			Menu: {
+				defaultProps: {
+					transitionProps: { transition: "pop", duration: 150 },
+				},
+			},
 		},
 		fontFamily: "var(--manrope) !important",
 		white: "#FAFAFA",

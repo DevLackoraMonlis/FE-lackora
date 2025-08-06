@@ -1,6 +1,6 @@
-import { Badge, Box, Card, Flex, Menu, Text, Timeline } from "@mantine/core";
+import { ActionIcon, Badge, Box, Card, Flex, Menu, Text, Timeline } from "@mantine/core";
 import { Accordion, Progress, getGradient } from "@mantine/core";
-import { IconCheck, IconDotsVertical, IconEye, IconSettings, IconX } from "@tabler/icons-react";
+import { IconCheck, IconDotsVertical, IconEye, IconGavel, IconSettings, IconX } from "@tabler/icons-react";
 import { useMemo } from "react";
 
 import { WorkflowStatus } from "@/shared/enums/index.enums";
@@ -81,6 +81,15 @@ export default function WorkflowAccordion({ type, status, title, description, st
 									{phaseStatus?.label}
 								</Text>
 							</Badge>
+							<ActionIcon
+								data-testid="workflow-phase-policy"
+								variant="transparent"
+								color="default"
+								title="Policies"
+								onClick={() => props.handleViewPolices(props.phaseId)}
+							>
+								<IconGavel size={24} />
+							</ActionIcon>
 						</Flex>
 					</Flex>
 				</Accordion.Control>
@@ -112,9 +121,16 @@ export default function WorkflowAccordion({ type, status, title, description, st
 														<Menu.Item
 															data-testid="workflow-submenu-redirect"
 															leftSection={<IconSettings size={15} />}
-															onClick={props.onOpenApp}
+															onClick={() => props.handleGatewayConfiguration(step.id)}
 														>
 															Go to Gateway Configuration
+														</Menu.Item>
+														<Menu.Item
+															data-testid="workflow-submenu-policy"
+															leftSection={<IconGavel size={15} />}
+															onClick={() => props.handleViewPolices(step.id)}
+														>
+															Polices
 														</Menu.Item>
 														<Menu.Item
 															disabled={stepParams.value !== WorkflowStatus.Completed}
