@@ -181,11 +181,18 @@ export function fieldsTransformDependenciesOptions<FormItem extends Record<strin
 			?.find((object) => object[fieldKey]);
 
 		if (haveDependency) {
-			const defaultValue = haveDependency[fieldKey]?.[0];
-			if (defaultValue) {
+			const defaultValues = haveDependency[fieldKey];
+			const defaultValuesLength = defaultValues?.length;
+			if (defaultValuesLength === 1) {
+				const defaultValue = haveDependency[fieldKey][0];
 				updateOptions.defaultValue = defaultValue;
 				updateOptions.disabled = true;
 				updateValuesState.current = { ...updateValuesState.current, [listKey]: defaultValue.value };
+			}
+			if (defaultValuesLength && defaultValuesLength > 1) {
+				updateOptions.options = defaultValues;
+				updateOptions.custom = false;
+				// updateValuesState.current = { ...updateValuesState.current, [listKey]: undefined };
 			}
 		}
 	});
