@@ -1,5 +1,6 @@
 import { getCyberAssetsInventoryFormattedColumns } from "@/builtinApps/CyberAssetsApp/CyberAssets/index.constants";
 import { getAssetInventoryData, getInventoryFilterColumns } from "@/http/generated/inventory-management";
+import type { EachInventorySubCategory } from "@/http/generated/models";
 import ICAdvancedFilter from "@/shared/components/infraComponents/ICAdvancedFilter";
 import {
 	convertICAdvancedFilterResponseColumns,
@@ -22,7 +23,8 @@ type Props = {
 };
 
 export default function CyberAssetDetailInventoryDynamicGrid(props: Props) {
-	const [selectedItem, setSelectedItem] = useState<string | null>(null);
+	const [selectedItem, setSelectedItem] = useState<EachInventorySubCategory | null>(null);
+	const onChangeSelectedItem = (item: string | null) => setSelectedItem(item as EachInventorySubCategory);
 
 	if (!props.store) {
 		return null;
@@ -30,7 +32,7 @@ export default function CyberAssetDetailInventoryDynamicGrid(props: Props) {
 
 	useEffect(() => {
 		if (props.items.length && !selectedItem) {
-			setSelectedItem(props.items[0].value);
+			setSelectedItem(props.items[0].value as EachInventorySubCategory);
 		}
 	}, [props.items]);
 
@@ -45,14 +47,14 @@ export default function CyberAssetDetailInventoryDynamicGrid(props: Props) {
 			tableMinusHeight={160}
 			{...(selectedItem && {
 				getColumnsApi: (signal) =>
-					getInventoryFilterColumns(selectedItem || "", signal).then((response) =>
+					getInventoryFilterColumns(selectedItem, signal).then((response) =>
 						convertICAdvancedFilterResponseColumns(response),
 					),
 			})}
 			{...(selectedItem && {
 				getDataApi: (variables, signal) =>
 					getAssetInventoryData(
-						selectedItem || "",
+						selectedItem,
 						{ ...convertICAdvancedFilterToDefaultVariables(variables), asset_id: props.id || "" },
 						signal,
 					).then((response) => ({
@@ -74,7 +76,12 @@ export default function CyberAssetDetailInventoryDynamicGrid(props: Props) {
 			minColumnSize={180}
 			defaultColumnSize={200}
 			leftSection={
-				<Select value={selectedItem} onChange={setSelectedItem} allowDeselect={false} data={props.items} />
+				<Select
+					value={selectedItem}
+					onChange={onChangeSelectedItem}
+					allowDeselect={false}
+					data={props.items}
+				/>
 			}
 		/>
 	);

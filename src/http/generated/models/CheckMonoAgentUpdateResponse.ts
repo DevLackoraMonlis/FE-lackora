@@ -5,10 +5,16 @@
  * MonoWatch Security Asset Management
  * OpenAPI spec version: 1.0.0
  */
-import type { CheckMonoAgentUpdateResponseSha1 } from './CheckMonoAgentUpdateResponseSha1';
+import type { CheckMonoAgentUpdateResponseAgentHash } from './CheckMonoAgentUpdateResponseAgentHash';
+import type { CheckMonoAgentUpdateResponseAgentLink } from './CheckMonoAgentUpdateResponseAgentLink';
+import type { CheckMonoAgentUpdateResponseExpire } from './CheckMonoAgentUpdateResponseExpire';
+import type { CheckMonoAgentUpdateResponseUpdaterLink } from './CheckMonoAgentUpdateResponseUpdaterLink';
 
 export interface CheckMonoAgentUpdateResponse {
   status: boolean;
   message: string;
-  sha1?: CheckMonoAgentUpdateResponseSha1;
+  agent_hash?: CheckMonoAgentUpdateResponseAgentHash;
+  agent_link?: CheckMonoAgentUpdateResponseAgentLink;
+  updater_link?: CheckMonoAgentUpdateResponseUpdaterLink;
+  expire?: CheckMonoAgentUpdateResponseExpire;
 }

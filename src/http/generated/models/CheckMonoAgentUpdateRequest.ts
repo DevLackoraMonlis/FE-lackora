@@ -7,6 +7,5 @@
  */
 
 export interface CheckMonoAgentUpdateRequest {
-  udi: string;
-  sha1: string;
+  hash: string;
 }

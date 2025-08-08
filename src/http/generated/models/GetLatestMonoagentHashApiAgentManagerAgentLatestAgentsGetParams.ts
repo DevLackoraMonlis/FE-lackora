@@ -6,10 +6,6 @@
  * OpenAPI spec version: 1.0.0
  */
 
-export interface RegisterNewAgentRequest {
-  udi: string;
-  hash: string;
-  hostname: string;
-  primary_ip: string;
-  os_family: string;
-}
+export type GetLatestMonoagentHashApiAgentManagerAgentLatestAgentsGetParams = {
+hash: string;
+};

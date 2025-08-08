@@ -6,21 +6,30 @@
  * OpenAPI spec version: 1.0.0
  */
 import {
-  useMutation
+  useMutation,
+  useQuery
 } from '@tanstack/react-query';
 import type {
+  DataTag,
+  DefinedInitialDataOptions,
+  DefinedUseQueryResult,
   MutationFunction,
   QueryClient,
+  QueryFunction,
+  QueryKey,
+  UndefinedInitialDataOptions,
   UseMutationOptions,
-  UseMutationResult
+  UseMutationResult,
+  UseQueryOptions,
+  UseQueryResult
 } from '@tanstack/react-query';
 
 import type {
-  BodyProcessAgentJobApiAgentManagerAgentProcessJobPost,
+  BodyProcessAgentJobApiAgentManagerAgentResultCallbackPost,
   CheckMonoAgentUpdateRequest,
   CheckMonoAgentUpdateResponse,
-  DownloadMonoAgentRequest,
-  DownloadMonoAgentResponse,
+  GetLatestAgentHashResponse,
+  GetLatestMonoagentHashApiAgentManagerAgentLatestAgentsGetParams,
   HTTPValidationError,
   ProcessAgentInventoryResponse,
   RegisterNewAgentRequest,
@@ -38,14 +47,14 @@ import { orvalMutator } from '../orval-mutator';
 /**
  * @summary Check For Monoagent Update
  */
-export const checkForMonoagentUpdateApiAgentManagerAgentCheckUpdatePost = (
+export const checkForMonoagentUpdateApiAgentManagerAgentUpdateRequiredPost = (
     checkMonoAgentUpdateRequest: CheckMonoAgentUpdateRequest,
  signal?: AbortSignal
 ) => {
       
       
       return orvalMutator<CheckMonoAgentUpdateResponse>(
-      {url: "/api/agent-manager/agent/check-update", method: 'POST',
+      {url: "/api/agent-manager/agent/update-required", method: 'POST',
       headers: {'Content-Type': 'application/json', },
       data: checkMonoAgentUpdateRequest, signal
     },
@@ -54,11 +63,11 @@ export const checkForMonoagentUpdateApiAgentManagerAgentCheckUpdatePost = (
   
 
 
-export const getCheckForMonoagentUpdateApiAgentManagerAgentCheckUpdatePostMutationOptions = <TError = HTTPValidationError,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof checkForMonoagentUpdateApiAgentManagerAgentCheckUpdatePost>>, TError,{data: CheckMonoAgentUpdateRequest}, TContext>, }
-): UseMutationOptions<Awaited<ReturnType<typeof checkForMonoagentUpdateApiAgentManagerAgentCheckUpdatePost>>, TError,{data: CheckMonoAgentUpdateRequest}, TContext> => {
+export const getCheckForMonoagentUpdateApiAgentManagerAgentUpdateRequiredPostMutationOptions = <TError = HTTPValidationError,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof checkForMonoagentUpdateApiAgentManagerAgentUpdateRequiredPost>>, TError,{data: CheckMonoAgentUpdateRequest}, TContext>, }
+): UseMutationOptions<Awaited<ReturnType<typeof checkForMonoagentUpdateApiAgentManagerAgentUpdateRequiredPost>>, TError,{data: CheckMonoAgentUpdateRequest}, TContext> => {
 
-const mutationKey = ['checkForMonoagentUpdateApiAgentManagerAgentCheckUpdatePost'];
+const mutationKey = ['checkForMonoagentUpdateApiAgentManagerAgentUpdateRequiredPost'];
 const {mutation: mutationOptions} = options ?
       options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
       options
@@ -68,10 +77,10 @@ const {mutation: mutationOptions} = options ?
       
 
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof checkForMonoagentUpdateApiAgentManagerAgentCheckUpdatePost>>, {data: CheckMonoAgentUpdateRequest}> = (props) => {
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof checkForMonoagentUpdateApiAgentManagerAgentUpdateRequiredPost>>, {data: CheckMonoAgentUpdateRequest}> = (props) => {
           const {data} = props ?? {};
 
-          return  checkForMonoagentUpdateApiAgentManagerAgentCheckUpdatePost(data,)
+          return  checkForMonoagentUpdateApiAgentManagerAgentUpdateRequiredPost(data,)
         }
 
         
@@ -79,155 +88,115 @@ const {mutation: mutationOptions} = options ?
 
   return  { mutationFn, ...mutationOptions }}
 
-    export type CheckForMonoagentUpdateApiAgentManagerAgentCheckUpdatePostMutationResult = NonNullable<Awaited<ReturnType<typeof checkForMonoagentUpdateApiAgentManagerAgentCheckUpdatePost>>>
-    export type CheckForMonoagentUpdateApiAgentManagerAgentCheckUpdatePostMutationBody = CheckMonoAgentUpdateRequest
-    export type CheckForMonoagentUpdateApiAgentManagerAgentCheckUpdatePostMutationError = HTTPValidationError
+    export type CheckForMonoagentUpdateApiAgentManagerAgentUpdateRequiredPostMutationResult = NonNullable<Awaited<ReturnType<typeof checkForMonoagentUpdateApiAgentManagerAgentUpdateRequiredPost>>>
+    export type CheckForMonoagentUpdateApiAgentManagerAgentUpdateRequiredPostMutationBody = CheckMonoAgentUpdateRequest
+    export type CheckForMonoagentUpdateApiAgentManagerAgentUpdateRequiredPostMutationError = HTTPValidationError
 
     /**
  * @summary Check For Monoagent Update
  */
-export const useCheckForMonoagentUpdateApiAgentManagerAgentCheckUpdatePost = <TError = HTTPValidationError,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof checkForMonoagentUpdateApiAgentManagerAgentCheckUpdatePost>>, TError,{data: CheckMonoAgentUpdateRequest}, TContext>, }
+export const useCheckForMonoagentUpdateApiAgentManagerAgentUpdateRequiredPost = <TError = HTTPValidationError,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof checkForMonoagentUpdateApiAgentManagerAgentUpdateRequiredPost>>, TError,{data: CheckMonoAgentUpdateRequest}, TContext>, }
  , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof checkForMonoagentUpdateApiAgentManagerAgentCheckUpdatePost>>,
+        Awaited<ReturnType<typeof checkForMonoagentUpdateApiAgentManagerAgentUpdateRequiredPost>>,
         TError,
         {data: CheckMonoAgentUpdateRequest},
         TContext
       > => {
 
-      const mutationOptions = getCheckForMonoagentUpdateApiAgentManagerAgentCheckUpdatePostMutationOptions(options);
+      const mutationOptions = getCheckForMonoagentUpdateApiAgentManagerAgentUpdateRequiredPostMutationOptions(options);
 
       return useMutation(mutationOptions , queryClient);
     }
     /**
- * @summary Download Latest Monoagent
+ * @summary Get Latest Monoagent Hash
  */
-export const downloadLatestMonoagentApiAgentManagerAgentDownloadMonoagentPost = (
-    downloadMonoAgentRequest: DownloadMonoAgentRequest,
+export const getLatestMonoagentHashApiAgentManagerAgentLatestAgentsGet = (
+    params: GetLatestMonoagentHashApiAgentManagerAgentLatestAgentsGetParams,
  signal?: AbortSignal
 ) => {
       
       
-      return orvalMutator<DownloadMonoAgentResponse>(
-      {url: "/api/agent-manager/agent/download-monoagent", method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: downloadMonoAgentRequest, signal
+      return orvalMutator<GetLatestAgentHashResponse>(
+      {url: "/api/agent-manager/agent/latest-agents", method: 'GET',
+        params, signal
     },
       );
     }
   
 
-
-export const getDownloadLatestMonoagentApiAgentManagerAgentDownloadMonoagentPostMutationOptions = <TError = HTTPValidationError,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof downloadLatestMonoagentApiAgentManagerAgentDownloadMonoagentPost>>, TError,{data: DownloadMonoAgentRequest}, TContext>, }
-): UseMutationOptions<Awaited<ReturnType<typeof downloadLatestMonoagentApiAgentManagerAgentDownloadMonoagentPost>>, TError,{data: DownloadMonoAgentRequest}, TContext> => {
-
-const mutationKey = ['downloadLatestMonoagentApiAgentManagerAgentDownloadMonoagentPost'];
-const {mutation: mutationOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }};
-
-      
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof downloadLatestMonoagentApiAgentManagerAgentDownloadMonoagentPost>>, {data: DownloadMonoAgentRequest}> = (props) => {
-          const {data} = props ?? {};
-
-          return  downloadLatestMonoagentApiAgentManagerAgentDownloadMonoagentPost(data,)
-        }
-
-        
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type DownloadLatestMonoagentApiAgentManagerAgentDownloadMonoagentPostMutationResult = NonNullable<Awaited<ReturnType<typeof downloadLatestMonoagentApiAgentManagerAgentDownloadMonoagentPost>>>
-    export type DownloadLatestMonoagentApiAgentManagerAgentDownloadMonoagentPostMutationBody = DownloadMonoAgentRequest
-    export type DownloadLatestMonoagentApiAgentManagerAgentDownloadMonoagentPostMutationError = HTTPValidationError
-
-    /**
- * @summary Download Latest Monoagent
- */
-export const useDownloadLatestMonoagentApiAgentManagerAgentDownloadMonoagentPost = <TError = HTTPValidationError,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof downloadLatestMonoagentApiAgentManagerAgentDownloadMonoagentPost>>, TError,{data: DownloadMonoAgentRequest}, TContext>, }
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof downloadLatestMonoagentApiAgentManagerAgentDownloadMonoagentPost>>,
-        TError,
-        {data: DownloadMonoAgentRequest},
-        TContext
-      > => {
-
-      const mutationOptions = getDownloadLatestMonoagentApiAgentManagerAgentDownloadMonoagentPostMutationOptions(options);
-
-      return useMutation(mutationOptions , queryClient);
+const getGetLatestMonoagentHashApiAgentManagerAgentLatestAgentsGetQueryKey = (params: GetLatestMonoagentHashApiAgentManagerAgentLatestAgentsGetParams,) => {
+    return ["/api/agent-manager/agent/latest-agents", ...(params ? [params]: [])] as const;
     }
-    /**
- * @summary Report Monoagent Activity
- */
-export const reportMonoagentActivityApiAgentManagerAgentReportPost = (
-    reportNewActivityRequest: ReportNewActivityRequest,
- signal?: AbortSignal
+
+    
+export const getGetLatestMonoagentHashApiAgentManagerAgentLatestAgentsGetQueryOptions = <TData = Awaited<ReturnType<typeof getLatestMonoagentHashApiAgentManagerAgentLatestAgentsGet>>, TError = HTTPValidationError>(params: GetLatestMonoagentHashApiAgentManagerAgentLatestAgentsGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getLatestMonoagentHashApiAgentManagerAgentLatestAgentsGet>>, TError, TData>>, }
 ) => {
-      
-      
-      return orvalMutator<ReportNewActivityResponse>(
-      {url: "/api/agent-manager/agent/report", method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: reportNewActivityRequest, signal
-    },
-      );
-    }
+
+const {query: queryOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetLatestMonoagentHashApiAgentManagerAgentLatestAgentsGetQueryKey(params);
+
   
 
-
-export const getReportMonoagentActivityApiAgentManagerAgentReportPostMutationOptions = <TError = HTTPValidationError,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof reportMonoagentActivityApiAgentManagerAgentReportPost>>, TError,{data: ReportNewActivityRequest}, TContext>, }
-): UseMutationOptions<Awaited<ReturnType<typeof reportMonoagentActivityApiAgentManagerAgentReportPost>>, TError,{data: ReportNewActivityRequest}, TContext> => {
-
-const mutationKey = ['reportMonoagentActivityApiAgentManagerAgentReportPost'];
-const {mutation: mutationOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }};
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getLatestMonoagentHashApiAgentManagerAgentLatestAgentsGet>>> = ({ signal }) => getLatestMonoagentHashApiAgentManagerAgentLatestAgentsGet(params, signal);
 
       
 
+      
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof reportMonoagentActivityApiAgentManagerAgentReportPost>>, {data: ReportNewActivityRequest}> = (props) => {
-          const {data} = props ?? {};
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getLatestMonoagentHashApiAgentManagerAgentLatestAgentsGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
 
-          return  reportMonoagentActivityApiAgentManagerAgentReportPost(data,)
-        }
-
-        
+export type GetLatestMonoagentHashApiAgentManagerAgentLatestAgentsGetQueryResult = NonNullable<Awaited<ReturnType<typeof getLatestMonoagentHashApiAgentManagerAgentLatestAgentsGet>>>
+export type GetLatestMonoagentHashApiAgentManagerAgentLatestAgentsGetQueryError = HTTPValidationError
 
 
-  return  { mutationFn, ...mutationOptions }}
-
-    export type ReportMonoagentActivityApiAgentManagerAgentReportPostMutationResult = NonNullable<Awaited<ReturnType<typeof reportMonoagentActivityApiAgentManagerAgentReportPost>>>
-    export type ReportMonoagentActivityApiAgentManagerAgentReportPostMutationBody = ReportNewActivityRequest
-    export type ReportMonoagentActivityApiAgentManagerAgentReportPostMutationError = HTTPValidationError
-
-    /**
- * @summary Report Monoagent Activity
+export function useGetLatestMonoagentHashApiAgentManagerAgentLatestAgentsGet<TData = Awaited<ReturnType<typeof getLatestMonoagentHashApiAgentManagerAgentLatestAgentsGet>>, TError = HTTPValidationError>(
+ params: GetLatestMonoagentHashApiAgentManagerAgentLatestAgentsGetParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getLatestMonoagentHashApiAgentManagerAgentLatestAgentsGet>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getLatestMonoagentHashApiAgentManagerAgentLatestAgentsGet>>,
+          TError,
+          Awaited<ReturnType<typeof getLatestMonoagentHashApiAgentManagerAgentLatestAgentsGet>>
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetLatestMonoagentHashApiAgentManagerAgentLatestAgentsGet<TData = Awaited<ReturnType<typeof getLatestMonoagentHashApiAgentManagerAgentLatestAgentsGet>>, TError = HTTPValidationError>(
+ params: GetLatestMonoagentHashApiAgentManagerAgentLatestAgentsGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getLatestMonoagentHashApiAgentManagerAgentLatestAgentsGet>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getLatestMonoagentHashApiAgentManagerAgentLatestAgentsGet>>,
+          TError,
+          Awaited<ReturnType<typeof getLatestMonoagentHashApiAgentManagerAgentLatestAgentsGet>>
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetLatestMonoagentHashApiAgentManagerAgentLatestAgentsGet<TData = Awaited<ReturnType<typeof getLatestMonoagentHashApiAgentManagerAgentLatestAgentsGet>>, TError = HTTPValidationError>(
+ params: GetLatestMonoagentHashApiAgentManagerAgentLatestAgentsGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getLatestMonoagentHashApiAgentManagerAgentLatestAgentsGet>>, TError, TData>>, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary Get Latest Monoagent Hash
  */
-export const useReportMonoagentActivityApiAgentManagerAgentReportPost = <TError = HTTPValidationError,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof reportMonoagentActivityApiAgentManagerAgentReportPost>>, TError,{data: ReportNewActivityRequest}, TContext>, }
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof reportMonoagentActivityApiAgentManagerAgentReportPost>>,
-        TError,
-        {data: ReportNewActivityRequest},
-        TContext
-      > => {
 
-      const mutationOptions = getReportMonoagentActivityApiAgentManagerAgentReportPostMutationOptions(options);
+export function useGetLatestMonoagentHashApiAgentManagerAgentLatestAgentsGet<TData = Awaited<ReturnType<typeof getLatestMonoagentHashApiAgentManagerAgentLatestAgentsGet>>, TError = HTTPValidationError>(
+ params: GetLatestMonoagentHashApiAgentManagerAgentLatestAgentsGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getLatestMonoagentHashApiAgentManagerAgentLatestAgentsGet>>, TError, TData>>, }
+ , queryClient?: QueryClient 
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
-      return useMutation(mutationOptions , queryClient);
-    }
-    /**
+  const queryOptions = getGetLatestMonoagentHashApiAgentManagerAgentLatestAgentsGetQueryOptions(params,options)
+
+  const query = useQuery(queryOptions , queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+/**
  * @summary Register New Agent
  */
 export const registerNewAgentApiAgentManagerAgentRegisterPost = (
@@ -292,39 +261,29 @@ export const useRegisterNewAgentApiAgentManagerAgentRegisterPost = <TError = HTT
       return useMutation(mutationOptions , queryClient);
     }
     /**
- * @summary Process Agent Job
+ * @summary Report Monoagent Activity
  */
-export const processAgentJobApiAgentManagerAgentProcessJobPost = (
-    bodyProcessAgentJobApiAgentManagerAgentProcessJobPost: BodyProcessAgentJobApiAgentManagerAgentProcessJobPost,
+export const reportMonoagentActivityApiAgentManagerAgentActivityCallbackPost = (
+    reportNewActivityRequest: ReportNewActivityRequest,
  signal?: AbortSignal
 ) => {
       
-      const formData = new FormData();
-formData.append("udi", bodyProcessAgentJobApiAgentManagerAgentProcessJobPost.udi)
-formData.append("sha1", bodyProcessAgentJobApiAgentManagerAgentProcessJobPost.sha1)
-formData.append("job_type", bodyProcessAgentJobApiAgentManagerAgentProcessJobPost.job_type)
-if(bodyProcessAgentJobApiAgentManagerAgentProcessJobPost.result !== undefined && bodyProcessAgentJobApiAgentManagerAgentProcessJobPost.result !== null) {
- formData.append("result", bodyProcessAgentJobApiAgentManagerAgentProcessJobPost.result)
- }
-if(bodyProcessAgentJobApiAgentManagerAgentProcessJobPost.file !== undefined && bodyProcessAgentJobApiAgentManagerAgentProcessJobPost.file !== null) {
- formData.append("file", bodyProcessAgentJobApiAgentManagerAgentProcessJobPost.file)
- }
-
-      return orvalMutator<ProcessAgentInventoryResponse>(
-      {url: "/api/agent-manager/agent/process-job", method: 'POST',
-      headers: {'Content-Type': 'multipart/form-data', },
-       data: formData, signal
+      
+      return orvalMutator<ReportNewActivityResponse>(
+      {url: "/api/agent-manager/agent/activity-callback", method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: reportNewActivityRequest, signal
     },
       );
     }
   
 
 
-export const getProcessAgentJobApiAgentManagerAgentProcessJobPostMutationOptions = <TError = HTTPValidationError,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof processAgentJobApiAgentManagerAgentProcessJobPost>>, TError,{data: BodyProcessAgentJobApiAgentManagerAgentProcessJobPost}, TContext>, }
-): UseMutationOptions<Awaited<ReturnType<typeof processAgentJobApiAgentManagerAgentProcessJobPost>>, TError,{data: BodyProcessAgentJobApiAgentManagerAgentProcessJobPost}, TContext> => {
+export const getReportMonoagentActivityApiAgentManagerAgentActivityCallbackPostMutationOptions = <TError = HTTPValidationError,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof reportMonoagentActivityApiAgentManagerAgentActivityCallbackPost>>, TError,{data: ReportNewActivityRequest}, TContext>, }
+): UseMutationOptions<Awaited<ReturnType<typeof reportMonoagentActivityApiAgentManagerAgentActivityCallbackPost>>, TError,{data: ReportNewActivityRequest}, TContext> => {
 
-const mutationKey = ['processAgentJobApiAgentManagerAgentProcessJobPost'];
+const mutationKey = ['reportMonoagentActivityApiAgentManagerAgentActivityCallbackPost'];
 const {mutation: mutationOptions} = options ?
       options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
       options
@@ -334,10 +293,10 @@ const {mutation: mutationOptions} = options ?
       
 
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof processAgentJobApiAgentManagerAgentProcessJobPost>>, {data: BodyProcessAgentJobApiAgentManagerAgentProcessJobPost}> = (props) => {
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof reportMonoagentActivityApiAgentManagerAgentActivityCallbackPost>>, {data: ReportNewActivityRequest}> = (props) => {
           const {data} = props ?? {};
 
-          return  processAgentJobApiAgentManagerAgentProcessJobPost(data,)
+          return  reportMonoagentActivityApiAgentManagerAgentActivityCallbackPost(data,)
         }
 
         
@@ -345,23 +304,97 @@ const {mutation: mutationOptions} = options ?
 
   return  { mutationFn, ...mutationOptions }}
 
-    export type ProcessAgentJobApiAgentManagerAgentProcessJobPostMutationResult = NonNullable<Awaited<ReturnType<typeof processAgentJobApiAgentManagerAgentProcessJobPost>>>
-    export type ProcessAgentJobApiAgentManagerAgentProcessJobPostMutationBody = BodyProcessAgentJobApiAgentManagerAgentProcessJobPost
-    export type ProcessAgentJobApiAgentManagerAgentProcessJobPostMutationError = HTTPValidationError
+    export type ReportMonoagentActivityApiAgentManagerAgentActivityCallbackPostMutationResult = NonNullable<Awaited<ReturnType<typeof reportMonoagentActivityApiAgentManagerAgentActivityCallbackPost>>>
+    export type ReportMonoagentActivityApiAgentManagerAgentActivityCallbackPostMutationBody = ReportNewActivityRequest
+    export type ReportMonoagentActivityApiAgentManagerAgentActivityCallbackPostMutationError = HTTPValidationError
+
+    /**
+ * @summary Report Monoagent Activity
+ */
+export const useReportMonoagentActivityApiAgentManagerAgentActivityCallbackPost = <TError = HTTPValidationError,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof reportMonoagentActivityApiAgentManagerAgentActivityCallbackPost>>, TError,{data: ReportNewActivityRequest}, TContext>, }
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof reportMonoagentActivityApiAgentManagerAgentActivityCallbackPost>>,
+        TError,
+        {data: ReportNewActivityRequest},
+        TContext
+      > => {
+
+      const mutationOptions = getReportMonoagentActivityApiAgentManagerAgentActivityCallbackPostMutationOptions(options);
+
+      return useMutation(mutationOptions , queryClient);
+    }
+    /**
+ * @summary Process Agent Job
+ */
+export const processAgentJobApiAgentManagerAgentResultCallbackPost = (
+    bodyProcessAgentJobApiAgentManagerAgentResultCallbackPost: BodyProcessAgentJobApiAgentManagerAgentResultCallbackPost,
+ signal?: AbortSignal
+) => {
+      
+      const formData = new FormData();
+formData.append("udi", bodyProcessAgentJobApiAgentManagerAgentResultCallbackPost.udi)
+formData.append("hash", bodyProcessAgentJobApiAgentManagerAgentResultCallbackPost.hash)
+formData.append("job_type", bodyProcessAgentJobApiAgentManagerAgentResultCallbackPost.job_type)
+if(bodyProcessAgentJobApiAgentManagerAgentResultCallbackPost.result !== undefined && bodyProcessAgentJobApiAgentManagerAgentResultCallbackPost.result !== null) {
+ formData.append("result", bodyProcessAgentJobApiAgentManagerAgentResultCallbackPost.result)
+ }
+if(bodyProcessAgentJobApiAgentManagerAgentResultCallbackPost.file !== undefined && bodyProcessAgentJobApiAgentManagerAgentResultCallbackPost.file !== null) {
+ formData.append("file", bodyProcessAgentJobApiAgentManagerAgentResultCallbackPost.file)
+ }
+
+      return orvalMutator<ProcessAgentInventoryResponse>(
+      {url: "/api/agent-manager/agent/result-callback", method: 'POST',
+      headers: {'Content-Type': 'multipart/form-data', },
+       data: formData, signal
+    },
+      );
+    }
+  
+
+
+export const getProcessAgentJobApiAgentManagerAgentResultCallbackPostMutationOptions = <TError = HTTPValidationError,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof processAgentJobApiAgentManagerAgentResultCallbackPost>>, TError,{data: BodyProcessAgentJobApiAgentManagerAgentResultCallbackPost}, TContext>, }
+): UseMutationOptions<Awaited<ReturnType<typeof processAgentJobApiAgentManagerAgentResultCallbackPost>>, TError,{data: BodyProcessAgentJobApiAgentManagerAgentResultCallbackPost}, TContext> => {
+
+const mutationKey = ['processAgentJobApiAgentManagerAgentResultCallbackPost'];
+const {mutation: mutationOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof processAgentJobApiAgentManagerAgentResultCallbackPost>>, {data: BodyProcessAgentJobApiAgentManagerAgentResultCallbackPost}> = (props) => {
+          const {data} = props ?? {};
+
+          return  processAgentJobApiAgentManagerAgentResultCallbackPost(data,)
+        }
+
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type ProcessAgentJobApiAgentManagerAgentResultCallbackPostMutationResult = NonNullable<Awaited<ReturnType<typeof processAgentJobApiAgentManagerAgentResultCallbackPost>>>
+    export type ProcessAgentJobApiAgentManagerAgentResultCallbackPostMutationBody = BodyProcessAgentJobApiAgentManagerAgentResultCallbackPost
+    export type ProcessAgentJobApiAgentManagerAgentResultCallbackPostMutationError = HTTPValidationError
 
     /**
  * @summary Process Agent Job
  */
-export const useProcessAgentJobApiAgentManagerAgentProcessJobPost = <TError = HTTPValidationError,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof processAgentJobApiAgentManagerAgentProcessJobPost>>, TError,{data: BodyProcessAgentJobApiAgentManagerAgentProcessJobPost}, TContext>, }
+export const useProcessAgentJobApiAgentManagerAgentResultCallbackPost = <TError = HTTPValidationError,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof processAgentJobApiAgentManagerAgentResultCallbackPost>>, TError,{data: BodyProcessAgentJobApiAgentManagerAgentResultCallbackPost}, TContext>, }
  , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof processAgentJobApiAgentManagerAgentProcessJobPost>>,
+        Awaited<ReturnType<typeof processAgentJobApiAgentManagerAgentResultCallbackPost>>,
         TError,
-        {data: BodyProcessAgentJobApiAgentManagerAgentProcessJobPost},
+        {data: BodyProcessAgentJobApiAgentManagerAgentResultCallbackPost},
         TContext
       > => {
 
-      const mutationOptions = getProcessAgentJobApiAgentManagerAgentProcessJobPostMutationOptions(options);
+      const mutationOptions = getProcessAgentJobApiAgentManagerAgentResultCallbackPostMutationOptions(options);
 
       return useMutation(mutationOptions , queryClient);
     }

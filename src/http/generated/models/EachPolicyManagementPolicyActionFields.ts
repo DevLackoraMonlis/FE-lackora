@@ -5,11 +5,6 @@
  * MonoWatch Security Asset Management
  * OpenAPI spec version: 1.0.0
  */
+import type { FieldGenerator } from './FieldGenerator';
 
-export interface RegisterNewAgentRequest {
-  udi: string;
-  hash: string;
-  hostname: string;
-  primary_ip: string;
-  os_family: string;
-}
+export type EachPolicyManagementPolicyActionFields = FieldGenerator[] | null;

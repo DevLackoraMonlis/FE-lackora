@@ -5,7 +5,9 @@
  * MonoWatch Security Asset Management
  * OpenAPI spec version: 1.0.0
  */
+import type { InventoryDataAdvancedFilterMetadataScanId } from './InventoryDataAdvancedFilterMetadataScanId';
 
 export interface InventoryDataAdvancedFilterMetadata {
   total: number;
+  scan_id?: InventoryDataAdvancedFilterMetadataScanId;
 }
