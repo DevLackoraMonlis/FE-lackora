@@ -1,17 +1,17 @@
 import type { TanStackDataTableColumnColDef } from "@/shared/components/baseComponents/BCTanStackGrid/index.types";
-import type { ICAdvancedFilterColumnType } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
+import type {
+	ICAdvancedFilterColumnType,
+	ICAdvancedFilterConditionOperator,
+} from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
 import { Flex, Text } from "@mantine/core";
 
 export const IC_ADVANCED_FILTER_DEFAULT_OPERATORS = {
 	"=": "equal",
 	"!=": "not_equal",
-	"==": "==",
-	"!==": "!==",
-	">": "greater_than",
-	">=": "greater_than_or_equal",
-	"<": "less_than",
-	"<=": "less_than_or_equal",
+
 	"Is Null": "is_null",
+	In: "in",
+	"Not In": "not_in",
 	"Is Not Null": "is_not_null",
 	"Field Equal": "field_equal",
 	"Field Not Equal": "field_not_equal",
@@ -32,12 +32,14 @@ export const IC_ADVANCED_FILTER_STRING_OPERATORS = {
 	Regex: "regex",
 	"Field Like": "field_like",
 	"Field Not Like": "field_not_like",
-	Contains: "contains",
-	"Not Contains": "not_contains",
 } as const;
 
 export const IC_ADVANCED_FILTER_INT64_OPERATORS = {
 	...IC_ADVANCED_FILTER_DEFAULT_OPERATORS,
+	">": "greater_than",
+	">=": "greater_than_or_equal",
+	"<": "less_than",
+	"<=": "less_than_or_equal",
 } as const;
 
 export const IC_ADVANCED_FILTER_DATE_OPERATORS = {
@@ -48,16 +50,14 @@ export const IC_ADVANCED_FILTER_DATE_OPERATORS = {
 	"Field Not Like": "field_not_like",
 } as const;
 
-export const IC_ADVANCED_FILTER_OPERATORS_MAP: Record<
-	Exclude<ICAdvancedFilterColumnType, "Boolean">,
-	Record<string, string>
-> = {
+export const IC_ADVANCED_FILTER_OPERATORS_MAP: Record<ICAdvancedFilterColumnType, Record<string, string>> = {
 	Date: IC_ADVANCED_FILTER_DATE_OPERATORS,
 	DateTime: IC_ADVANCED_FILTER_DATE_OPERATORS,
 	Int64: IC_ADVANCED_FILTER_INT64_OPERATORS,
 	IP: IC_ADVANCED_FILTER_INT64_OPERATORS,
 	List: IC_ADVANCED_FILTER_STRING_OPERATORS,
 	String: IC_ADVANCED_FILTER_STRING_OPERATORS,
+	Boolean: IC_ADVANCED_FILTER_DEFAULT_OPERATORS,
 };
 
 export const ROW_NUMBER_COLUMN: TanStackDataTableColumnColDef<unknown> = {
@@ -82,3 +82,33 @@ export const IC_ADVANCED_FILTER_BLANK_TEXT = (
 );
 
 export const GET_ADVANCED_FILTER_DATA = "get-advanced-filter-data";
+
+export const IC_ADVANCED_FILTER_CONDITION_MULTIPLE_VALUE_TYPES: ICAdvancedFilterConditionOperator[] = [
+	IC_ADVANCED_FILTER_STRING_OPERATORS["="],
+	IC_ADVANCED_FILTER_STRING_OPERATORS["!="],
+	IC_ADVANCED_FILTER_STRING_OPERATORS.Like,
+	IC_ADVANCED_FILTER_STRING_OPERATORS["Not Like"],
+	IC_ADVANCED_FILTER_STRING_OPERATORS["Starts With"],
+	IC_ADVANCED_FILTER_STRING_OPERATORS["Ends With"],
+	IC_ADVANCED_FILTER_STRING_OPERATORS["Not Ends With"],
+	IC_ADVANCED_FILTER_STRING_OPERATORS["Not Starts With"],
+	IC_ADVANCED_FILTER_STRING_OPERATORS.Regex,
+	IC_ADVANCED_FILTER_STRING_OPERATORS.In,
+	IC_ADVANCED_FILTER_STRING_OPERATORS["Not In"],
+];
+
+export const IC_ADVANCED_FILTER_CONDITION_EMPTY_OPERATORS: string[] = [
+	IC_ADVANCED_FILTER_DEFAULT_OPERATORS["Is Null"],
+	IC_ADVANCED_FILTER_DEFAULT_OPERATORS["Is Not Null"],
+];
+
+export const IC_ADVANCED_FILTER_CONDITION_COLUMN_OPERATORS: string[] = [
+	IC_ADVANCED_FILTER_DEFAULT_OPERATORS["Field Equal"],
+	IC_ADVANCED_FILTER_DEFAULT_OPERATORS["Field Not Equal"],
+	IC_ADVANCED_FILTER_DEFAULT_OPERATORS["Field Greater Than"],
+	IC_ADVANCED_FILTER_DEFAULT_OPERATORS["Field Greater Than Or Equal"],
+	IC_ADVANCED_FILTER_DEFAULT_OPERATORS["Field Less Than"],
+	IC_ADVANCED_FILTER_DEFAULT_OPERATORS["Field Less Than Or Equal"],
+	IC_ADVANCED_FILTER_STRING_OPERATORS["Field Like"],
+	IC_ADVANCED_FILTER_STRING_OPERATORS["Field Not Like"],
+];

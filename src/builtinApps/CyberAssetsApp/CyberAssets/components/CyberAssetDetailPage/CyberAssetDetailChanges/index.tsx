@@ -1,7 +1,12 @@
 import { getCyberAssetsChangesFormattedColumns } from "@/builtinApps/CyberAssetsApp/CyberAssets/index.constants";
 import type { CyberAssetDetailInventoryProps } from "@/builtinApps/CyberAssetsApp/CyberAssets/index.types";
 import { getChangeColumns, getChanges } from "@/http/generated/change-management";
-import type { ChangeDataAdvanceFilterRequestModelAction } from "@/http/generated/models";
+import type {
+	AdvanceFilterRequestModel,
+	ChangeDataAdvanceFilterRequestModelAction,
+	EachAdvanceFilterConditionOperator,
+	EachAdvanceFilterConditionValue,
+} from "@/http/generated/models";
 import ICAdvancedFilter from "@/shared/components/infraComponents/ICAdvancedFilter";
 import {
 	convertICAdvancedFilterResponseColumns,
@@ -67,7 +72,11 @@ export default function CyberAssetDetailChanges(props: CyberAssetDetailInventory
 					getDataApi: (variables, signal) =>
 						getChanges(
 							{
-								...convertICAdvancedFilterToDefaultVariables(variables),
+								...convertICAdvancedFilterToDefaultVariables<
+									EachAdvanceFilterConditionOperator,
+									EachAdvanceFilterConditionValue,
+									AdvanceFilterRequestModel
+								>(variables),
 								asset_id: props.id || "",
 								action: status as ChangeDataAdvanceFilterRequestModelAction,
 							},

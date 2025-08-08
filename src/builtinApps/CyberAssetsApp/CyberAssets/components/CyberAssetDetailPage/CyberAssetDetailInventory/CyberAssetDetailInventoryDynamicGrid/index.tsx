@@ -1,5 +1,10 @@
 import { getCyberAssetsInventoryFormattedColumns } from "@/builtinApps/CyberAssetsApp/CyberAssets/index.constants";
 import { getAssetInventoryData, getInventoryFilterColumns } from "@/http/generated/inventory-management";
+import type {
+	AdvanceFilterRequestModel,
+	EachAdvanceFilterConditionOperator,
+	EachAdvanceFilterConditionValue,
+} from "@/http/generated/models";
 import ICAdvancedFilter from "@/shared/components/infraComponents/ICAdvancedFilter";
 import {
 	convertICAdvancedFilterResponseColumns,
@@ -54,7 +59,14 @@ export default function CyberAssetDetailInventoryDynamicGrid(props: Props) {
 				getDataApi: (variables, signal) =>
 					getAssetInventoryData(
 						selectedItem || "",
-						{ ...convertICAdvancedFilterToDefaultVariables(variables), asset_id: props.id || "" },
+						{
+							...convertICAdvancedFilterToDefaultVariables<
+								EachAdvanceFilterConditionOperator,
+								EachAdvanceFilterConditionValue,
+								AdvanceFilterRequestModel
+							>(variables),
+							asset_id: props.id || "",
+						},
 						signal,
 					).then((response) => ({
 						...response,

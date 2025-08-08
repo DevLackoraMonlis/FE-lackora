@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-export type LabelValueType<T extends ReactNode = string> = {
+export type LabelValueType<T extends ReactNode | unknown = string> = {
 	label: string;
 	value: T;
 };

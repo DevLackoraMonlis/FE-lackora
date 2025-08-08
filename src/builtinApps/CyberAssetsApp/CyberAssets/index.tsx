@@ -1,6 +1,11 @@
 import CyberAssetsCrudButtons from "@/builtinApps/CyberAssetsApp/CyberAssets/components/CyberAssetsCrudButtons";
 import { getCyberAssetsFormattedColumns } from "@/builtinApps/CyberAssetsApp/CyberAssets/index.constants";
 import { getAssetFilterColumns, getAssets } from "@/http/generated/cyber-asset-management-cyber-assets";
+import type {
+	AdvanceFilterRequestModel,
+	EachAdvanceFilterConditionOperator,
+	EachAdvanceFilterConditionValue,
+} from "@/http/generated/models";
 import BCMultiTabPage from "@/shared/components/baseComponents/BCMultiTabPage";
 import type { BCMultiTabPageActions } from "@/shared/components/baseComponents/BCMultiTabPage/index.types";
 import ICAdvancedFilter from "@/shared/components/infraComponents/ICAdvancedFilter";
@@ -38,7 +43,14 @@ export default function CyberAssetsLandingPage(props: ICMonoAppPagesDefaultProps
 						getAssetFilterColumns(signal).then((response) => convertICAdvancedFilterResponseColumns(response))
 					}
 					getDataApi={(variables, signal) =>
-						getAssets(convertICAdvancedFilterToDefaultVariables(variables), signal).then((response) => ({
+						getAssets(
+							convertICAdvancedFilterToDefaultVariables<
+								EachAdvanceFilterConditionOperator,
+								EachAdvanceFilterConditionValue,
+								AdvanceFilterRequestModel
+							>(variables),
+							signal,
+						).then((response) => ({
 							...response,
 							data: {
 								...response.data,
@@ -58,7 +70,7 @@ export default function CyberAssetsLandingPage(props: ICMonoAppPagesDefaultProps
 					defaultColumnSize={200}
 					onGroupByExpand={(variables, getColumnOption) => {
 						ref.current?.addNewPage(
-							`Group by ${variables.conditions.map((item) => getColumnOption(item.columnName)?.displayName || item.columnName).join(",")}`,
+							`Group by ${variables.conditions.map((item) => getColumnOption(item.columnName || "")?.displayName || item.columnName).join(",")}`,
 							{
 								store: createDynamicICAdvancedStore(),
 								defaultVariables: variables,

@@ -9,7 +9,7 @@ import type { ICAdvancedGroupByFunctions } from "@/shared/components/infraCompon
 import type { LabelValueType } from "@/shared/lib/general-types";
 import type { ValueOf } from "@/shared/types/index.types";
 import type { AxiosResponse } from "axios";
-import type { ReactNode } from "react";
+import type { ReactNode, RefObject } from "react";
 import type { StoreApi } from "zustand/index";
 
 export type ICAdvancedFilterOrder = "asc" | "desc";
@@ -23,7 +23,7 @@ type ICAdvancedFilterDataColumnRq = {
 export type ICAdvancedConditionValueTypeRq = {
 	objectType?: string;
 	label: string;
-	value: string;
+	value: number | string | boolean | unknown[] | unknown;
 };
 
 export type ICAdvancedFilterConditionOperator =
@@ -33,8 +33,8 @@ export type ICAdvancedFilterConditionOperator =
 export type ICAdvancedFilterCondition = {
 	id: string;
 	openBracket: number;
-	columnName: string;
-	operator: ICAdvancedFilterConditionOperator;
+	columnName?: string;
+	operator?: ICAdvancedFilterConditionOperator;
 	values: ICAdvancedConditionValueTypeRq[];
 	closeBracket: number;
 	nextOperator: ICAdvancedFilterOperator;
@@ -183,4 +183,40 @@ export type ICAdvancedFilterDynamicStoreType = {
 	store: StoreApi<ICAdvancedFilterStoreType>;
 	types: CyberAssetDetailInventoryType[];
 	mainPage: ReactNode;
+};
+
+export type ICAdvancedFilterConditionBuilderCondition = ICAdvancedFilterCondition & {
+	error: boolean;
+	disabled: boolean;
+	bracketError?: BracketError;
+};
+
+export type ICAdvancedFilterConditionBuilderRowProps = {
+	condition: ICAdvancedFilterConditionBuilderCondition;
+	columns: LabelValueType[];
+	onPlusOpenBracket: VoidFunction;
+	onPlusCloseBracket: VoidFunction;
+	onMinusOpenBracket: VoidFunction;
+	onMinusCloseBracket: VoidFunction;
+	columnOption?: ICAdvancedFilterColumnRs;
+	index: number;
+	onChange: (newCondition: ICAdvancedFilterConditionBuilderCondition) => void;
+	inputValue: ReactNode;
+	isLastCondition: boolean;
+};
+
+export type ICAdvancedFilterConditionBuilderProps = {
+	onChange: (newConditions: ICAdvancedFilterConditionBuilderCondition[]) => void;
+	conditions: ICAdvancedFilterConditionBuilderCondition[];
+	allColumns: ICAdvancedFilterColumnRs[];
+	h?: number;
+	ref?: RefObject<{ hasError: () => boolean } | null>;
+};
+
+export type BracketError = {
+	index: number;
+	itemId: string;
+	type: "open" | "close";
+	count: number;
+	message: string;
 };

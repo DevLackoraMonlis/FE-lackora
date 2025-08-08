@@ -1,11 +1,8 @@
 import type { PaginationRs } from "@/http/end-points/GeneralService.types";
-import type {
-	AdvanceFilterRequestModel,
-	AdvancedFilterColumnInformation,
-	EachAdvanceFilterConditionOperator,
-} from "@/http/generated/models";
+import type { AdvancedFilterColumnInformation } from "@/http/generated/models";
 import { ICAdvancedGroupByFunctions } from "@/shared/components/infraComponents/ICAdvancedFilter/index.enum";
 import type {
+	BracketError,
 	ICAdvancedFilterColumnRs,
 	ICAdvancedFilterColumnType,
 	ICAdvancedFilterCondition,
@@ -325,9 +322,7 @@ export function convertICAdvancedFilterResponseColumns<META_DATA>(
 	};
 }
 
-export function convertICAdvancedFilterToDefaultVariables(
-	variables: ICAdvancedFilterRq,
-): AdvanceFilterRequestModel {
+export function convertICAdvancedFilterToDefaultVariables<O, V, R>(variables: ICAdvancedFilterRq): R {
 	return {
 		columns: variables.columns.map((column) => ({
 			name: column.name,
@@ -338,8 +333,8 @@ export function convertICAdvancedFilterToDefaultVariables(
 			column_name: item.columnName,
 			next_operator: item.nextOperator,
 			open_bracket: item.openBracket,
-			operator: item.operator as EachAdvanceFilterConditionOperator,
-			values: item.values,
+			operator: item.operator as O, // as EachAdvanceFilterConditionOperator,
+			values: item.values as V, //as unknown as EachAdvanceFilterConditionValue[],
 		})),
 		end_date: variables.endDate || null,
 		group_by: variables.groupBy
@@ -367,5 +362,41 @@ export function convertICAdvancedFilterToDefaultVariables(
 					}
 				: null,
 		start_date: variables.startDate || null,
-	};
+	} as R;
+}
+
+export function checkBracketBalance(conditions: ICAdvancedFilterCondition[]): BracketError[] {
+	let balance = 0;
+	const errors: BracketError[] = [];
+
+	conditions.forEach((item, index) => {
+		balance += item.openBracket;
+
+		if (item.closeBracket > balance) {
+			// Trying to close more than opened
+			errors.push({
+				index,
+				itemId: item.id,
+				type: "close",
+				count: item.closeBracket - balance,
+				message: `Item at index ${index} (id=${item.id}) has ${item.closeBracket} closing brackets, but only ${balance} open brackets available.`,
+			});
+			balance = 0; // reset balance to avoid negative
+		} else {
+			balance -= item.closeBracket;
+		}
+	});
+
+	// After full iteration, if still unclosed open brackets exist
+	if (balance > 0) {
+		errors.push({
+			index: conditions.length - 1,
+			itemId: conditions[conditions.length - 1].id,
+			type: "open",
+			count: balance,
+			message: `Unclosed ${balance} opening bracket(s) remaining at the end of the list.`,
+		});
+	}
+
+	return errors;
 }

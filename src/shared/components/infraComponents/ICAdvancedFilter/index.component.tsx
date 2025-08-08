@@ -24,6 +24,7 @@ export default function ICAdvancedFilterComponent<T>(
 		props.store,
 		useShallow((state) => ({
 			setVariables: state.setVariables,
+			setConditions: state.setConditions,
 			variablesColumns: state.variables.columns,
 			setRunToken: state.setRunToken,
 			setPage: state.setPage,
@@ -73,6 +74,7 @@ export default function ICAdvancedFilterComponent<T>(
 				getDataApi={props.getDataApi}
 				searchInputPlaceholder={props.searchInputPlaceholder}
 			/>
+			{/* <ICAdvancedFilterConditionModal allColumns={allColumns} store={props.store} /> */}
 			<ICAdvancedFilterConditionSection
 				hideConditionSection={props.hideConditionSection}
 				run={run}

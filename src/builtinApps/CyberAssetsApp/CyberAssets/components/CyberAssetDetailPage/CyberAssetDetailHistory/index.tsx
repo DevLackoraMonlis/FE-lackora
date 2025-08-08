@@ -3,6 +3,11 @@ import {
 	getAssetActivityHistory,
 	getCyberAssetHistoryFilterColumns,
 } from "@/http/generated/cyber-asset-management-history";
+import type {
+	AdvanceFilterRequestModel,
+	EachAdvanceFilterConditionOperator,
+	EachAdvanceFilterConditionValue,
+} from "@/http/generated/models";
 import ICAdvancedFilter from "@/shared/components/infraComponents/ICAdvancedFilter";
 import {
 	convertICAdvancedFilterResponseColumns,
@@ -35,7 +40,14 @@ export default function CyberAssetDetailHistory(props: CyberAssetDetailInventory
 				{...(props.id && {
 					getDataApi: (variables, signal) =>
 						getAssetActivityHistory(
-							{ ...convertICAdvancedFilterToDefaultVariables(variables), asset_id: props.id || "" },
+							{
+								...convertICAdvancedFilterToDefaultVariables<
+									EachAdvanceFilterConditionOperator,
+									EachAdvanceFilterConditionValue,
+									AdvanceFilterRequestModel
+								>(variables),
+								asset_id: props.id || "",
+							},
 							signal,
 						).then((response) => ({
 							...response,
