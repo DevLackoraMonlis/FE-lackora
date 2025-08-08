@@ -10,8 +10,30 @@ import type {
 	CyberAssetDetailGeneralInfoCardProps,
 	CyberAssetDetailGeneralInfoProps,
 	CyberAssetDetailInventoryType,
+	CyberAssetDetailOverviewActivityTimeline,
+	CyberAssetDetailOverviewApplicationSecurityStatus,
+	CyberAssetDetailOverviewAvailabilityAndActivityTimelineType,
+	CyberAssetDetailOverviewAvailabilityTimeline,
+	CyberAssetDetailOverviewNotification,
+	CyberAssetDetailOverviewNotificationType,
+	CyberAssetDetailOverviewProps,
 } from "@/builtinApps/CyberAssetsApp/CyberAssets/index.types";
-import { useGetAssetGeneralInfo } from "@/http/generated/cyber-asset-management-cyber-assets";
+import {
+	useGetAssetActivity,
+	useGetAssetAvailability,
+	useGetAssetBaseOverview,
+	useGetAssetGeneralInfo,
+	useGetAssetLatestChanges,
+	useGetAssetLatestSoftwares,
+	useGetAssetNotifications,
+	useGetAssetTopServices,
+	useGetAssetVulnerabilityDetails,
+} from "@/http/generated/cyber-asset-management-cyber-assets";
+import type {
+	CyberAssetNotificationsTypes,
+	EachCyberAssetAvailabilityStatus,
+	VulnerabilityStatusTypes,
+} from "@/http/generated/models";
 import { createDynamicICAdvancedStore } from "@/shared/components/infraComponents/ICAdvancedFilter/index.store";
 import type { ICAdvancedFilterDynamicStoreType } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
 import { Badge, Flex, Text, Tooltip } from "@mantine/core";
@@ -23,9 +45,11 @@ import {
 	IconNetwork,
 	IconUserCircle,
 } from "@tabler/icons-react";
+import { maxBy, sum } from "lodash";
 import { useEffect, useRef } from "react";
 import type {
 	CyberAssetClassificationEnum,
+	CyberAssetCriticalityEnum,
 	CyberAssetDiscoveryTypeEnum,
 	CyberAssetOsTypeEnum,
 	CyberAssetStateEnum,
@@ -73,11 +97,16 @@ export const useGetCyberAssetDetailGeneralInfo = (params: {
 			},
 			{
 				label: "OS Version:",
-				value: (
-					<Text fz={"xs"}>
-						{getCyberAssetsGeneralInfoQuery.data?.data.asset_identification.os_version || ""}
-					</Text>
-				),
+				value: getCyberAssetsGeneralInfoQuery.data?.data.asset_identification.os_type
+					? getCyberAssetOsTypeBadge({
+							type: getCyberAssetsGeneralInfoQuery.data?.data.asset_identification
+								.os_type as CyberAssetOsTypeEnum,
+							wrapperProps: {
+								fz: "xs",
+							},
+							customType: getCyberAssetsGeneralInfoQuery.data?.data.asset_identification.os_version || "",
+						})
+					: "",
 			},
 			{
 				label: "Discovery Type:",
@@ -320,6 +349,7 @@ export function useCyberAssetDynamicStores(types: CyberAssetDetailInventoryType[
 
 					const page = () => (
 						<CyberAssetDetailInventoryDynamicGrid
+							defaultItem={type.defaultItem}
 							store={newStore}
 							type={type.type.value}
 							items={type.items}
@@ -339,3 +369,242 @@ export function useCyberAssetDynamicStores(types: CyberAssetDetailInventoryType[
 
 	return { storesRef };
 }
+
+export const useCyberAssetDetailOverview = (id?: string, appName?: string) => {
+	const getAssetOverviewBaseDataQuery = useGetAssetBaseOverview(id || "", {
+		query: {
+			enabled: !!id,
+			select: (response) => {
+				const data: Pick<
+					CyberAssetDetailOverviewProps,
+					"disk" | "ram" | "cpu" | "network" | "configurationItemsCount" | "osName"
+				> = {
+					configurationItemsCount: response.data.configuration_items,
+					cpu: {
+						cores: response.data.cpu?.cores || 0,
+						processors: response.data.cpu?.processor || 0,
+					},
+					disk: response.data.disk?.total_capacity || 0,
+					network: {
+						ip: response.data.network?.primary_ip || "",
+						openPorts:
+							response.data.network?.open_ports?.map((item) => ({
+								name: item,
+							})) || [],
+						type: "STATIC",
+					},
+					osName: response.data.operating_system || "",
+					ram: response.data.ram?.total_capacity || 0,
+				};
+
+				return {
+					data,
+				};
+			},
+		},
+	});
+
+	const getAssetOverviewLatestChangesDataQuery = useGetAssetLatestChanges(id || "", {
+		query: {
+			enabled: !!id,
+			select: (response) => {
+				const data: Pick<CyberAssetDetailOverviewProps, "changes"> = {
+					changes: {
+						summary: {
+							modify: response.data.modify,
+							add: response.data.add,
+							delete: response.data.delete,
+						},
+						total: response.data.total,
+					},
+				};
+
+				return {
+					data,
+				};
+			},
+		},
+	});
+
+	const getAssetOverviewTopServicesDataQuery = useGetAssetTopServices(id || "", {
+		query: {
+			enabled: !!id,
+			select: (response) => {
+				const data: Pick<CyberAssetDetailOverviewProps, "topServices" | "serviceStartTypes"> = {
+					topServices: response.data.top_services.map((item) => ({
+						name: item.display_name,
+						status: item.state === "Running" ? "RUNNING" : "STOPPED",
+					})),
+					serviceStartTypes: {
+						summary: {
+							Unknown: response.data.start_mode?.Unknown,
+							Manual: response.data.start_mode?.Manual,
+							Auto: response.data.start_mode?.Auto,
+							Disabled: response.data.start_mode?.Disabled,
+						},
+						type: maxBy(Object.entries(response.data.start_mode), (item) => item[1])?.[0]?.toString() || "",
+						total: maxBy(Object.entries(response.data.start_mode), (item) => item[1])?.[1] || 0,
+					},
+				};
+				return {
+					data,
+				};
+			},
+		},
+	});
+
+	const getAssetOverviewApplicationsDataQuery = useGetAssetLatestSoftwares(id || "", {
+		query: {
+			enabled: !!id,
+			select: (response) => {
+				const data: Pick<CyberAssetDetailOverviewProps, "applications"> = {
+					applications: {
+						items: response.data.latest_softwares.map((item) => ({
+							name: item.name,
+							installDate: item.install_date,
+						})),
+						total: response.data.total,
+					},
+				};
+				return {
+					data,
+				};
+			},
+		},
+	});
+
+	const getAssetOverviewSecurityDataQuery = useGetAssetVulnerabilityDetails(id || "", {
+		query: {
+			enabled: !!id,
+			select: (response) => {
+				const statusMap: Record<VulnerabilityStatusTypes, CyberAssetDetailOverviewApplicationSecurityStatus> =
+					{
+						available: "ACTIVE",
+						configuration_failed: "FAILED",
+						expired: "MC EXPIRED",
+						unavailable: "DE ACTIVE",
+						upgrade: "UPGRADE",
+					};
+
+				const data: Pick<CyberAssetDetailOverviewProps, "security"> = {
+					security: {
+						status: statusMap[response.data.status],
+						appName: appName || "",
+						onUpgradeLicense: () => {
+							console.log("upgrade");
+						},
+						onMCExpired: () => {
+							console.log("onMCExpired");
+						},
+						onActivateVulnerabilitiesAssessment: () => {
+							console.log("onActivateVulnerabilitiesAssessment");
+						},
+						onFailed: () => {
+							console.log("onFailed");
+						},
+						summary: response.data.total_vulnerability as Record<Partial<CyberAssetCriticalityEnum>, number>,
+						criticality: response.data.criticality as CyberAssetCriticalityEnum,
+						riskScore: response.data.cyber_risk_score || null,
+						totalVulnerabilities: response.data.total_vulnerability
+							? sum(Object.values(response.data.total_vulnerability))
+							: 0,
+						topVulnerabilities:
+							response.data.top_vulnerability?.map((item) => ({
+								name: item.vulnerability,
+								criticality: item.criticality as CyberAssetCriticalityEnum,
+							})) || [],
+					},
+				};
+				return {
+					data,
+				};
+			},
+		},
+	});
+
+	const getAssetOverviewNotificationsDataQuery = useGetAssetNotifications(id || "", {
+		query: {
+			enabled: !!id,
+			select: (response) => {
+				const data: Pick<CyberAssetDetailOverviewProps, "notifications"> = {
+					notifications: response.data.map((item) => {
+						const typeMap: Record<CyberAssetNotificationsTypes, CyberAssetDetailOverviewNotificationType> = {
+							config: "PATCH",
+							error: "FAILED",
+							info: "AVAILABILITY",
+							warning: "CONFLICT",
+						};
+						const notification: CyberAssetDetailOverviewNotification = {
+							description: item.description || "",
+							date: item.created_time || "",
+							title: item.summary,
+							type: typeMap[item.type],
+							sourceBy: item.creator || "",
+						};
+
+						return notification;
+					}),
+				};
+				return {
+					data,
+				};
+			},
+		},
+	});
+
+	const getAssetOverviewActivityDataQuery = useGetAssetActivity(id || "", {
+		query: {
+			enabled: !!id,
+		},
+	});
+
+	const getAssetOverviewAvailabilityDataQuery = useGetAssetAvailability(id || "", {
+		query: {
+			enabled: !!id,
+		},
+	});
+
+	const availabilityAndActivity: Pick<CyberAssetDetailOverviewProps, "availabilityAndActivity"> = {
+		availabilityAndActivity: {
+			activity:
+				getAssetOverviewActivityDataQuery.data?.data.map((item) => {
+					const activity: CyberAssetDetailOverviewActivityTimeline = {
+						title: item.summary,
+						description: item.description || "",
+						time: "",
+					};
+
+					return activity;
+				}) || [],
+			availability:
+				getAssetOverviewAvailabilityDataQuery.data?.data.map((item) => {
+					const typeMap: Record<
+						EachCyberAssetAvailabilityStatus,
+						CyberAssetDetailOverviewAvailabilityAndActivityTimelineType
+					> = {
+						offline: "Offline",
+						online: "Online",
+						unmanaged: "Unmanaged",
+					};
+					const timeline: CyberAssetDetailOverviewAvailabilityTimeline = {
+						type: typeMap[item.status],
+						description: item.description || "",
+					};
+
+					return timeline;
+				}) || [],
+		},
+	};
+
+	return {
+		availabilityAndActivity,
+		getAssetOverviewNotificationsDataQuery,
+		getAssetOverviewSecurityDataQuery,
+		getAssetOverviewApplicationsDataQuery,
+		getAssetOverviewTopServicesDataQuery,
+		getAssetOverviewLatestChangesDataQuery,
+		getAssetOverviewBaseDataQuery,
+		getAssetOverviewAvailabilityDataQuery,
+		getAssetOverviewActivityDataQuery,
+	};
+};

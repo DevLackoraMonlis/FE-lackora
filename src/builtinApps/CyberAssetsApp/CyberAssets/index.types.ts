@@ -6,13 +6,9 @@ import type {
 	CyberAssetStateEnum,
 	CyberAssetStatusEnum,
 } from "@/builtinApps/CyberAssetsApp/CyberAssets/index.enum";
-import type {
-	ICAdvancedFilterRq,
-	ICAdvancedFilterStoreType,
-} from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
+import type { ICAdvancedFilterRq } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
 import type { LabelValueType } from "@/shared/lib/general-types";
 import type { ReactNode } from "react";
-import type { StoreApi } from "zustand/index";
 
 export type CyberAssetsDefaultProps = { defaultFilterParams?: ICAdvancedFilterRq };
 
@@ -120,7 +116,7 @@ export type CyberAssetDetailOverviewApplicationSecurity = {
 	riskScore: number | null;
 	criticality: CyberAssetCriticalityEnum;
 	totalVulnerabilities: number;
-	summary: Record<CyberAssetCriticalityEnum, number>;
+	summary?: Record<Partial<CyberAssetCriticalityEnum>, number>;
 	topVulnerabilities: {
 		name: string;
 		criticality: CyberAssetCriticalityEnum;
@@ -135,20 +131,20 @@ export type CyberAssetDetailOverviewApplicationSecurity = {
 
 export type CyberAssetDetailOverviewAvailabilityAndActivityTimelineType = "Online" | "Offline" | "Unmanaged";
 
-export type CyberAssetDetailOverviewAvailabilityAndActivityTimeline = {
+export type CyberAssetDetailOverviewAvailabilityTimeline = {
 	description: string;
 	type: CyberAssetDetailOverviewAvailabilityAndActivityTimelineType;
 };
 
-export type CyberAssetDetailOverviewAvailabilityAndActivityActivity = {
+export type CyberAssetDetailOverviewActivityTimeline = {
 	title: string;
 	time: string;
 	description: string;
 };
 
 export type CyberAssetDetailOverviewAvailabilityAndActivity = {
-	timeline: CyberAssetDetailOverviewAvailabilityAndActivityTimeline[];
-	activity: CyberAssetDetailOverviewAvailabilityAndActivityActivity[];
+	availability: CyberAssetDetailOverviewAvailabilityTimeline[];
+	activity: CyberAssetDetailOverviewActivityTimeline[];
 };
 
 export type CyberAssetDetailOverviewNotificationType = "AVAILABILITY" | "FAILED" | "PATCH" | "CONFLICT";
@@ -157,8 +153,8 @@ export type CyberAssetDetailOverviewNotification = {
 	title: string;
 	description: string;
 	date: string;
-	source: string;
 	type: CyberAssetDetailOverviewNotificationType;
+	sourceBy: string;
 };
 
 export type CyberAssetDetailOverviewProps = {
@@ -178,9 +174,14 @@ export type CyberAssetDetailOverviewProps = {
 	notifications: CyberAssetDetailOverviewNotification[];
 };
 
-export type CyberAssetDetailInventoryType = { type: LabelValueType; items: LabelValueType[] };
-export type CyberAssetDetailInventoryStoreData = { type: string; store: StoreApi<ICAdvancedFilterStoreType> };
+export type CyberAssetDetailInventoryType = {
+	type: LabelValueType;
+	items: LabelValueType[];
+	defaultItem?: string;
+};
 
 export type CyberAssetDetailInventoryProps = {
 	id?: string;
+	defaultType?: string;
+	defaultItem?: string;
 };

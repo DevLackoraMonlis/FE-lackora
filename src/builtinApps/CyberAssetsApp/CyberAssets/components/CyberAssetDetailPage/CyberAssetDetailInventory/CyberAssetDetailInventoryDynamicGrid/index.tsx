@@ -1,6 +1,11 @@
 import { getCyberAssetsInventoryFormattedColumns } from "@/builtinApps/CyberAssetsApp/CyberAssets/index.constants";
 import { getAssetInventoryData, getInventoryFilterColumns } from "@/http/generated/inventory-management";
-import type { EachInventorySubCategory } from "@/http/generated/models";
+import type {
+	AdvanceFilterRequestModel,
+	EachAdvanceFilterConditionOperator,
+	EachAdvanceFilterConditionValue,
+	EachInventorySubCategory,
+} from "@/http/generated/models";
 import ICAdvancedFilter from "@/shared/components/infraComponents/ICAdvancedFilter";
 import {
 	convertICAdvancedFilterResponseColumns,
@@ -20,6 +25,7 @@ type Props = {
 	items: LabelValueType[];
 	store?: StoreApi<ICAdvancedFilterStoreType>;
 	id?: string;
+	defaultItem?: string;
 };
 
 export default function CyberAssetDetailInventoryDynamicGrid(props: Props) {
@@ -31,9 +37,9 @@ export default function CyberAssetDetailInventoryDynamicGrid(props: Props) {
 
 	useEffect(() => {
 		if (props.items.length && !selectedItem) {
-			setSelectedItem(props.items[0].value);
+			setSelectedItem(props.defaultItem || props.items[0].value);
 		}
-	}, [props.items]);
+	}, [props.items, props.defaultItem]);
 
 	return (
 		<ICAdvancedFilter<ICAdvancedFilterDataRs>
@@ -54,7 +60,14 @@ export default function CyberAssetDetailInventoryDynamicGrid(props: Props) {
 				getDataApi: (variables, signal) =>
 					getAssetInventoryData(
 						(selectedItem || "") as EachInventorySubCategory,
-						{ ...convertICAdvancedFilterToDefaultVariables(variables), asset_id: props.id || "" },
+						{
+							...convertICAdvancedFilterToDefaultVariables<
+								EachAdvanceFilterConditionOperator,
+								EachAdvanceFilterConditionValue,
+								AdvanceFilterRequestModel
+							>(variables),
+							asset_id: props.id || "",
+						},
 						signal,
 					).then((response) => ({
 						...response,

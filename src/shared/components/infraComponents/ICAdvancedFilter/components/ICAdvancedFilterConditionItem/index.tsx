@@ -25,7 +25,7 @@ export default function ICAdvancedFilterConditionItem<T>(props: Props<T>) {
 		})),
 	);
 
-	const getColumnOption = props.getColumnOption(props.condition.columnName);
+	const getColumnOption = props.getColumnOption(props.condition.columnName || "");
 
 	return (
 		<Flex align={"center"} gap={"xs"} wrap={"nowrap"}>
@@ -45,7 +45,7 @@ export default function ICAdvancedFilterConditionItem<T>(props: Props<T>) {
 				radius={"xl"}
 				variant={"light"}
 				color={"gray"}
-			>{`${getColumnOption?.displayName || props.condition.columnName} ${findAllOperatorKeyByValue(props.condition.operator) || props.condition.operator} ${props.condition.values.map((item) => item.label).join(",")}`}</Badge>
+			>{`${getColumnOption?.displayName || props.condition.columnName} ${findAllOperatorKeyByValue(props.condition.operator || "") || props.condition.operator || ""} ${props.condition.values.map((item) => item.label).join(",")}`}</Badge>
 			{props.showNextOperator && <Text fz={"xs"}>{props.condition.nextOperator}</Text>}
 		</Flex>
 	);

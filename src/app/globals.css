@@ -59,3 +59,16 @@ body {
 .bg-white {
 	background-color: white !important;
 }
+
+.flex {
+	display: flex;
+}
+
+.flex-important {
+	display: flex !important;
+}
+
+.flex-center {
+	justify-content: center;
+	align-items: center;
+}

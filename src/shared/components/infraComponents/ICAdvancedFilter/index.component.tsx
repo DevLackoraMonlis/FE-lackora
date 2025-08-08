@@ -24,6 +24,7 @@ export default function ICAdvancedFilterComponent<T>(
 		props.store,
 		useShallow((state) => ({
 			setVariables: state.setVariables,
+			setConditions: state.setConditions,
 			variablesColumns: state.variables.columns,
 			setRunToken: state.setRunToken,
 			setPage: state.setPage,
@@ -34,7 +35,7 @@ export default function ICAdvancedFilterComponent<T>(
 	const useGetColumnsQuery = useQuery({
 		queryKey: ["get-columns", ...props.columnsQueryKey],
 		queryFn: ({ signal }) => props.getColumnsApi?.(signal),
-		staleTime: 5 * 60 * 1000,
+		staleTime: 20 * 60 * 1000,
 	});
 
 	const allColumns = useGetColumnsQuery.data?.data.results || [];
@@ -56,7 +57,7 @@ export default function ICAdvancedFilterComponent<T>(
 	}, [props.defaultVariables]);
 
 	useEffect(() => {
-		if (allColumns.length && !store.variablesColumns.length) {
+		if (allColumns.length) {
 			store.setColumns(allColumns.filter((column) => column.isDefault));
 		}
 	}, [allColumns]);
@@ -73,6 +74,7 @@ export default function ICAdvancedFilterComponent<T>(
 				getDataApi={props.getDataApi}
 				searchInputPlaceholder={props.searchInputPlaceholder}
 			/>
+			{/* <ICAdvancedFilterConditionModal allColumns={allColumns} store={props.store} /> */}
 			<ICAdvancedFilterConditionSection
 				hideConditionSection={props.hideConditionSection}
 				run={run}

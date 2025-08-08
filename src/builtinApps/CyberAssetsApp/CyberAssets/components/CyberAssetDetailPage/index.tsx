@@ -40,6 +40,8 @@ enum TabTypes {
 
 export default function CyberAssetDetailPage(props: Props) {
 	const [activeTab, setActiveTab] = useState<TabTypes>(TabTypes.OVERVIEW);
+	const [defaultInventoryType, setDefaultInventoryType] = useState<string | undefined>();
+	const [defaultInventoryItem, setDefaultInventoryItem] = useState<string | undefined>();
 	const { generalInfo, osType, isLoading, assetId } = useGetCyberAssetDetailGeneralInfo({ id: props.id });
 
 	return (
@@ -97,11 +99,42 @@ export default function CyberAssetDetailPage(props: Props) {
 						</Tabs.List>
 						<Tabs.Panel value={TabTypes.OVERVIEW}>
 							{activeTab === TabTypes.OVERVIEW && (
-								<CyberAssetDetailOverview osType={osType} id={assetId} appName={"Nessus"} />
+								<CyberAssetDetailOverview
+									onApplicationsRedirect={() => {
+										setDefaultInventoryType("");
+										setDefaultInventoryItem("");
+									}}
+									onNetworkRedirect={() => {
+										setDefaultInventoryType("");
+										setDefaultInventoryItem("");
+									}}
+									onSecurityRedirect={() => {
+										setDefaultInventoryType("");
+										setDefaultInventoryItem("");
+									}}
+									onTopServicesRedirect={() => {
+										setDefaultInventoryType("");
+										setDefaultInventoryItem("");
+									}}
+									onActivityRedirect={() => {
+										setDefaultInventoryType("");
+										setDefaultInventoryItem("");
+									}}
+									onChangesRedirect={() => setActiveTab(TabTypes.CHANGES)}
+									osType={osType}
+									id={assetId}
+									appName={"Nessus"}
+								/>
 							)}
 						</Tabs.Panel>
 						<Tabs.Panel value={TabTypes.INVENTORY}>
-							{activeTab === TabTypes.INVENTORY && <CyberAssetDetailInventory id={assetId} />}
+							{activeTab === TabTypes.INVENTORY && (
+								<CyberAssetDetailInventory
+									defaultItem={defaultInventoryItem}
+									defaultType={defaultInventoryType}
+									id={assetId}
+								/>
+							)}
 						</Tabs.Panel>
 						<Tabs.Panel value={TabTypes.CHANGES}>
 							{activeTab === TabTypes.CHANGES && <CyberAssetDetailChanges id={assetId} />}

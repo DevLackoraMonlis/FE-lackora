@@ -58,7 +58,7 @@ export function tanStackGetExtendedWidth<T>(params: {
 	hasVerticalScroll?: boolean;
 }) {
 	if (params.viewportWidth > params.totalDefaultWidth) {
-		let remainWidth = params.viewportWidth - params.totalDefaultWidth - (params.hasVerticalScroll ? 14 : 2);
+		let remainWidth = params.viewportWidth - params.totalDefaultWidth - (params.hasVerticalScroll ? 14 : 1);
 
 		if (params.hasRowExpansion) {
 			remainWidth -= 50;
@@ -95,16 +95,22 @@ export function tanStackGenerateColumns<T>(
 		hasVerticalScroll: boolean;
 	} & Pick<
 		Props<T>,
-		"columns" | "pinLastColumn" | "recordsPerPage" | "page" | "rowExpansion" | "onSelectedRecordsChange"
+		| "columns"
+		| "pinLastColumn"
+		| "recordsPerPage"
+		| "page"
+		| "rowExpansion"
+		| "onSelectedRecordsChange"
+		| "defaultColumnWidth"
 	>,
 ): ColumnDef<T>[] {
-	const { viewportWidth } = params;
+	const { viewportWidth, defaultColumnWidth } = params;
+
+	const defaultWidth = defaultColumnWidth || TAN_STACK_DEFAULT_COLUMN_SIZE;
+
 	const filteredColumns = params.columns.filter((item) => !item.hidden);
 
-	const totalDefaultWidth = filteredColumns.reduce(
-		(sum, column) => sum + (column.width || TAN_STACK_DEFAULT_COLUMN_SIZE),
-		0,
-	);
+	const totalDefaultWidth = filteredColumns.reduce((sum, column) => sum + (column.width || defaultWidth), 0);
 
 	const defaultColumns = filteredColumns.map(({ hidden: _hidden, wrap, accessor, ...column }, index) => {
 		const columnTitle =
@@ -135,8 +141,7 @@ export function tanStackGenerateColumns<T>(
 		const mappedColumn: ColumnDef<T> = {
 			...column,
 			accessorKey: accessor,
-			size:
-				(column.width || TAN_STACK_DEFAULT_COLUMN_SIZE) + (extend?.getExtend ? extend.extendedWidth || 0 : 0),
+			size: (column.width || defaultWidth) + (extend?.getExtend ? extend.extendedWidth || 0 : 0),
 			id: accessor,
 			enablePinning: index === filteredColumns.length - 1 && params.pinLastColumn,
 			meta: {

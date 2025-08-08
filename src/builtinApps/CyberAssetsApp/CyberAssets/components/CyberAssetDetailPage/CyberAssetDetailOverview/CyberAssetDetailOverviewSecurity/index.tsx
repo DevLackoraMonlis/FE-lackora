@@ -12,7 +12,7 @@ import take from "lodash/take";
 import type { ReactNode } from "react";
 
 type Props = {
-	security: CyberAssetDetailOverviewProps["security"];
+	security?: CyberAssetDetailOverviewProps["security"];
 };
 
 const RiskScoreChart = (props: { riskScore: number | null }) => {
@@ -107,7 +107,7 @@ const CriticalityChart = (props: {
 
 const CustomAlert = (props: {
 	title: string;
-	onClick: VoidFunction;
+	onClick?: VoidFunction;
 	color: string;
 	description: string;
 	buttonText: string;
@@ -156,17 +156,17 @@ export default function CyberAssetDetailOverviewSecurity(props: Props) {
 	const alertMap: Record<CyberAssetDetailOverviewApplicationSecurityStatus, ReactNode> = {
 		FAILED: (
 			<CustomAlert
-				title={`Failed to connect to ${props.security.appName}`}
-				onClick={props.security.onFailed}
+				title={`Failed to connect to ${props.security?.appName}`}
+				onClick={props.security?.onFailed}
 				color={"red"}
 				description={"Please check your network or configuration settings"}
-				buttonText={`Check ${props.security.appName} Configuration`}
+				buttonText={`Check ${props.security?.appName} Configuration`}
 			/>
 		),
 		"MC EXPIRED": (
 			<CustomAlert
-				title={`${props.security.appName} MonoCare license has expired!`}
-				onClick={props.security.onMCExpired}
+				title={`${props.security?.appName} MonoCare license has expired!`}
+				onClick={props.security?.onMCExpired}
 				color={"yellow"}
 				description={"Displaying the latest available data. Please renew your support to receive fresh data"}
 				buttonText={"Upgrade MonoCare License"}
@@ -178,7 +178,7 @@ export default function CyberAssetDetailOverviewSecurity(props: Props) {
 				title={
 					"Upgrade your system to access additional security features and more MonoApps for vulnerability assessment."
 				}
-				onClick={props.security.onUpgradeLicense}
+				onClick={props.security?.onUpgradeLicense}
 				color={"blue"}
 				description={""}
 				buttonText={"Upgrade License"}
@@ -190,7 +190,7 @@ export default function CyberAssetDetailOverviewSecurity(props: Props) {
 					<b>Want to see vulnerabilities and risk levels?</b> <br /> Assessment is not yet activated for{" "}
 					<br /> this system. <br /> Please activate to start vulnerability assessment.
 				</Text>
-				<Button size={"xs"} onClick={props.security.onActivateVulnerabilitiesAssessment}>
+				<Button size={"xs"} onClick={props.security?.onActivateVulnerabilitiesAssessment}>
 					Active Vulnerabilities Assessment.
 				</Button>
 			</Flex>
@@ -203,8 +203,8 @@ export default function CyberAssetDetailOverviewSecurity(props: Props) {
 	return (
 		<Flex h={600} mah={600} direction={"column"} bg={"gray.1"} gap={"xs"} w={"100%"}>
 			<Flex gap={"xs"} w={"100%"}>
-				{props.security.status !== "DE ACTIVE" ? (
-					<RiskScoreChart riskScore={props.security.riskScore} />
+				{props.security?.status !== "DE ACTIVE" ? (
+					<RiskScoreChart riskScore={props.security?.riskScore || 0} />
 				) : (
 					<Flex gap={"xs"} direction={"column"} bg={"white"} w={"100%"} align={"center"} justify={"center"}>
 						<IconShieldX size={40} color={"gray"} />
@@ -213,33 +213,42 @@ export default function CyberAssetDetailOverviewSecurity(props: Props) {
 						</Text>
 					</Flex>
 				)}
-				<CriticalityChart
-					criticality={props.security.criticality}
-					criticalityColorMap={criticalityColorMap}
-					criticalityValueMap={criticalityValueMap}
-				/>
+				{props.security?.criticality && (
+					<CriticalityChart
+						criticality={props.security.criticality}
+						criticalityColorMap={criticalityColorMap}
+						criticalityValueMap={criticalityValueMap}
+					/>
+				)}
 			</Flex>
-			{topAlerts.includes(props.security.status) && alertMap[props.security.status]}
+			{props.security?.status && topAlerts.includes(props.security.status) && alertMap[props.security.status]}
 
-			{props.security.status !== "DE ACTIVE" ? (
-				<Box bg={"white"} p={"xs"} w={"100%"} h={topAlerts.includes(props.security.status) ? 290 : "100%"}>
+			{props.security?.status !== "DE ACTIVE" ? (
+				<Box
+					bg={"white"}
+					p={"xs"}
+					w={"100%"}
+					h={props.security?.status && topAlerts.includes(props.security.status) ? 290 : "100%"}
+				>
 					<ScrollArea h={260} scrollbarSize={2} scrollbars={"y"}>
 						<Flex gap={"xs"} align={"center"}>
 							<Text fw={"bolder"} fz={"xl"}>
-								{props.security.totalVulnerabilities}
+								{props.security?.totalVulnerabilities || 0}
 							</Text>
 							<Text c={"gray.6"}>total vulnerabilities</Text>
 						</Flex>
 						<Flex gap={"xs"} wrap={"wrap"}>
-							{Object.entries(props.security.summary).map(([key, value]) =>
-								getCyberAssetCriticalityBadge({ type: key as CyberAssetCriticalityEnum, value }),
-							)}
+							{props.security?.summary
+								? Object.entries(props.security?.summary).map(([key, value]) =>
+										getCyberAssetCriticalityBadge({ type: key as CyberAssetCriticalityEnum, value }),
+									)
+								: null}
 						</Flex>
 						<Text mt={"sm"} fw={500}>
 							Top Vulnerabilities:
 						</Text>
 						<Flex direction={"column"} gap={"2xs"}>
-							{take(props.security.topVulnerabilities, 4).map((item) => (
+							{take(props.security?.topVulnerabilities, 4).map((item) => (
 								<Flex p={"xs"} bg={"gray.1"} key={item.name} justify={"space-between"}>
 									<Text fz={"xs"}>{item.name}</Text>
 									{getCyberAssetCriticalityBadge({ type: item.criticality })}
@@ -247,7 +256,7 @@ export default function CyberAssetDetailOverviewSecurity(props: Props) {
 							))}
 						</Flex>
 					</ScrollArea>
-					<Box mt={"xs"}>{props.security.status === "UPGRADE" && alertMap[props.security.status]}</Box>
+					<Box mt={"xs"}>{props.security?.status === "UPGRADE" && alertMap[props.security?.status]}</Box>
 				</Box>
 			) : (
 				alertMap["DE ACTIVE"]

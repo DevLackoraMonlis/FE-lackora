@@ -25,6 +25,7 @@ export default function ICAdvancedFilterActionButtons<T>(props: Props<T>) {
 		useShallow((state) => ({
 			variables: state.variables,
 			setOpenFullScreenModal: state.setOpenFullScreenModal,
+			openedFullScreenModal: state.openedFullScreenModal,
 		})),
 	);
 
@@ -57,9 +58,12 @@ export default function ICAdvancedFilterActionButtons<T>(props: Props<T>) {
 			>
 				<IconFileExport size={20} />
 			</Button>
-			<Button px={"xs"} variant={"default"} onClick={() => store.setOpenFullScreenModal(true)} size={"sm"}>
-				<IconWindowMaximize size={20} />
-			</Button>
+			{!store.openedFullScreenModal && (
+				<Button px={"xs"} variant={"default"} onClick={() => store.setOpenFullScreenModal(true)} size={"sm"}>
+					<IconWindowMaximize size={20} />
+				</Button>
+			)}
+
 			{!props.hideManageColumnButton && (
 				<Tooltip label={"Manage Columns"}>
 					<Button px={"xs"} variant={"default"} size={"sm"}>

@@ -1,0 +1,14 @@
+.blink {
+	border: 1px solid red;
+	animation: blink-border-animation 1s steps(2, start) infinite;
+	border-radius: var(--mantine-radius-xs);
+}
+
+@keyframes blink-border-animation {
+	0% {
+		border-color: red;
+	}
+	100% {
+		border-color: transparent;
+	}
+}

@@ -1,7 +1,13 @@
-import { getCyberAssetsChangesFormattedColumns } from "@/builtinApps/CyberAssetsApp/CyberAssets/index.constants";
 import type { CyberAssetDetailInventoryProps } from "@/builtinApps/CyberAssetsApp/CyberAssets/index.types";
-import { getAssets } from "@/http/generated/cyber-asset-management-cyber-assets";
-import { getCyberAssetHistoryFilterColumns } from "@/http/generated/cyber-asset-management-history";
+import {
+	getAssetActivityHistory,
+	getCyberAssetHistoryFilterColumns,
+} from "@/http/generated/cyber-asset-management-history";
+import type {
+	AdvanceFilterRequestModel,
+	EachAdvanceFilterConditionOperator,
+	EachAdvanceFilterConditionValue,
+} from "@/http/generated/models";
 import ICAdvancedFilter from "@/shared/components/infraComponents/ICAdvancedFilter";
 import {
 	convertICAdvancedFilterResponseColumns,
@@ -33,7 +39,17 @@ export default function CyberAssetDetailHistory(props: CyberAssetDetailInventory
 				})}
 				{...(props.id && {
 					getDataApi: (variables, signal) =>
-						getAssets(convertICAdvancedFilterToDefaultVariables(variables), signal).then((response) => ({
+						getAssetActivityHistory(
+							{
+								...convertICAdvancedFilterToDefaultVariables<
+									EachAdvanceFilterConditionOperator,
+									EachAdvanceFilterConditionValue,
+									AdvanceFilterRequestModel
+								>(variables),
+								asset_id: props.id || "",
+							},
+							signal,
+						).then((response) => ({
 							...response,
 							data: {
 								...response.data,
@@ -41,16 +57,15 @@ export default function CyberAssetDetailHistory(props: CyberAssetDetailInventory
 							},
 						})),
 				})}
-				columnsQueryKey={["cyber-assets-changes-columns"]}
-				dataQueryKey={["cyber-assets-histories-data"]}
-				fullScreenTitle={"Cyber Asset Inventory"}
+				columnsQueryKey={["cyber-assets-history-columns"]}
+				dataQueryKey={["cyber-assets-histories-data", props.id || ""]}
+				fullScreenTitle={"Cyber Asset History"}
 				excludeColumns={["id"]}
 				store={store.current}
 				searchInputPlaceholder={"Search by hostname"}
-				columns={getCyberAssetsChangesFormattedColumns()}
+				columns={[]}
 				idAccessor={"id"}
 				minColumnSize={180}
-				defaultColumnSize={200}
 			/>
 		</Box>
 	);

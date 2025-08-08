@@ -82,9 +82,9 @@ export default function ICAdvancedFilterGrid<T extends Record<string, unknown>>(
 		(state?.dataUpdatedAt || 0) > 0 || state?.status === "success" || state?.status === "error";
 
 	const useGetDataQuery = useQuery({
-		queryKey: [...getDataQueryKey, store.variables.columns.length, store.runToken],
+		queryKey: [...getDataQueryKey, store.variables.columns, store.runToken],
 		queryFn: ({ signal }) => props.getDataApi?.(store.variables, signal),
-		enabled: !!store.variables.columns.length && !hasEverFetched,
+		enabled: !!store.variables.columns.length && !hasEverFetched && !props.isLoading,
 	});
 
 	const data = useGetDataQuery.data?.data.results || [];
@@ -253,7 +253,6 @@ export default function ICAdvancedFilterGrid<T extends Record<string, unknown>>(
 			.map((column) => ({
 				...column,
 				minSize: props.minColumnSize,
-				width: store.getExistAnyGroupByColumn(firstDataObject) ? undefined : props.defaultColumnSize,
 				render: (record, row, rowIndex) => (
 					<ICAdvancedFilterGridRow
 						cellMenu={(visibleParent, onClose) =>
@@ -299,6 +298,7 @@ export default function ICAdvancedFilterGrid<T extends Record<string, unknown>>(
 		onCopyValue,
 		getColumnOption,
 		firstDataObject,
+		cellRenderValue,
 	]);
 
 	const defaultColumns: TanStackDataTableColumnColDef<T>[] = useMemo(() => {
@@ -313,7 +313,6 @@ export default function ICAdvancedFilterGrid<T extends Record<string, unknown>>(
 				const column: TanStackDataTableColumnColDef<T> = {
 					accessor: key,
 					minSize: props.minColumnSize,
-					width: store.getExistAnyGroupByColumn(firstDataObject) ? undefined : props.defaultColumnSize,
 					render: (record, row, rowIndex) => (
 						<ICAdvancedFilterGridRow
 							withPaddingLeft={!!record[key]}
@@ -367,6 +366,7 @@ export default function ICAdvancedFilterGrid<T extends Record<string, unknown>>(
 		onCopyValue,
 		getColumnOption,
 		modifiedColumns,
+		cellRenderValue,
 	]);
 
 	const differedColumns = useDeferredValue(defaultColumns);
@@ -382,6 +382,7 @@ export default function ICAdvancedFilterGrid<T extends Record<string, unknown>>(
 		<BCTanStackGrid<T>
 			h={tableHeight}
 			withTableBorder
+			defaultColumnWidth={props.defaultColumnSize}
 			withColumnBorders
 			fetching={isLoading}
 			withRowBorders
