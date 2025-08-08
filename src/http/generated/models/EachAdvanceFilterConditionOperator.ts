@@ -11,20 +11,20 @@ export type EachAdvanceFilterConditionOperator = typeof EachAdvanceFilterConditi
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const EachAdvanceFilterConditionOperator = {
-  equal: 'equal', // +
-  not_equal: 'not_equal', // +
-  in: 'in', // +
-  not_in: 'not_in', // +
+  equal: 'equal',
+  not_equal: 'not_equal',
+  in: 'in',
+  not_in: 'not_in',
   contains: 'contains',
   not_contains: 'not_contains',
-  like: 'like', // +
-  not_like: 'not_like', // +
-  start_with: 'start_with', // +
-  end_with: 'end_with', // +
-  not_start_with: 'not_start_with', // +
+  like: 'like',
+  not_like: 'not_like',
+  start_with: 'start_with',
+  end_with: 'end_with',
+  not_start_with: 'not_start_with',
   is_null: 'is_null',
   is_not_null: 'is_not_null',
-  not_end_with: 'not_end_with', // +
+  not_end_with: 'not_end_with',
   greater_than: 'greater_than',
   greater_than_or_equal: 'greater_than_or_equal',
   less_than: 'less_than',
