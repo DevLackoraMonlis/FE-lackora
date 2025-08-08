@@ -3,7 +3,7 @@
 import { Accordion, Badge, Button, Card, Flex, Grid, ScrollArea, Skeleton, Text } from "@mantine/core";
 import { useDisclosure, useViewportSize } from "@mantine/hooks";
 import { IconBolt, IconLineScan } from "@tabler/icons-react";
-import { Fragment, useState } from "react";
+import { Fragment, useMemo, useState } from "react";
 
 import { DISCOVERY_SETTINGS_REDIRECT_PATH, WORKFLOW_REFETCH_INTERVAL } from "./index.constants";
 import {
@@ -20,11 +20,13 @@ import WorkflowAccordion from "./components/WorkflowAccordion";
 import WorkflowAccordionSkelton from "./components/WorkflowAccordionSkelton";
 import WorkflowDetectedStepModal from "./components/WorkflowDetectedStepModal";
 import WorkflowPlayerTracking from "./components/WorkflowPlayerTracking";
+import WorkflowPolicesModal from "./components/WorkflowPolicesModal";
 import { WorkflowRunNowModal } from "./components/WorkflowRunNow";
 import WorkflowScanHistoryModal from "./components/WorkflowScanHistoryModal";
 
 export default function WorkflowAssetsIdentification() {
 	const { height } = useViewportSize();
+	const [openedPolices, handlePolices] = useDisclosure();
 	const [openedDetectedAssets, handleDetectedAssets] = useDisclosure();
 	const [openedScanHistory, handleScanHistory] = useDisclosure();
 	const [openedRunNow, handleRunNow] = useDisclosure();
@@ -33,24 +35,36 @@ export default function WorkflowAssetsIdentification() {
 	const workflowStatus = getWorkflowStatus(workflows.data?.status);
 
 	const [selectedStepId, setSelectedStepId] = useState<string>("");
-	const handleGatewayConfiguration = () => {};
+	const handleGatewayConfiguration = () => {
+		onOpenApp(DISCOVERY_SETTINGS_REDIRECT_PATH);
+	};
 	const handleViewMatchedAssets = (id: string) => {
 		setSelectedStepId(id);
 		handleDetectedAssets.open();
 	};
+	const handleViewPolices = (id: string) => {
+		setSelectedStepId(id);
+		handlePolices.open();
+	};
 
+	const nextRuntime = useMemo(
+		() => calculateNextScheduledScan(workflows.data?.next_runtime),
+		[workflows.data?.next_runtime],
+	);
 	const commonProps = {
 		handleGatewayConfiguration,
 		handleViewMatchedAssets,
-		onOpenApp: () => onOpenApp(DISCOVERY_SETTINGS_REDIRECT_PATH),
+		handleViewPolices,
 	};
 	return (
 		<>
-			<WorkflowRunNowModal
-				onClose={handleRunNow.close}
-				opened={openedRunNow}
-				refetchWorkflow={workflows.refetch}
-				nextRuntime={workflows.data?.next_runtime}
+			<WorkflowPolicesModal
+				onClose={() => {
+					setSelectedStepId("");
+					handlePolices.close();
+				}}
+				opened={openedPolices}
+				stepId={selectedStepId}
 			/>
 			<WorkflowDetectedStepModal
 				onClose={() => {
@@ -59,6 +73,12 @@ export default function WorkflowAssetsIdentification() {
 				}}
 				opened={openedDetectedAssets}
 				stepId={selectedStepId}
+			/>
+			<WorkflowRunNowModal
+				onClose={handleRunNow.close}
+				opened={openedRunNow}
+				refetchWorkflow={workflows.refetch}
+				nextRuntime={workflows.data?.next_runtime}
 			/>
 			<WorkflowScanHistoryModal onClose={handleScanHistory.close} opened={openedScanHistory} />
 			<ScrollArea h={height - 130}>
@@ -113,7 +133,7 @@ export default function WorkflowAssetsIdentification() {
 													<Skeleton w="200px" h="10px" opacity={0.5} mt="2xs" />
 												) : (
 													<Text p="2xs" tt="none" fz="xs">
-														{calculateNextScheduledScan(workflows.data?.next_runtime)}
+														{nextRuntime}
 													</Text>
 												)}
 											</Badge>
@@ -191,6 +211,7 @@ export default function WorkflowAssetsIdentification() {
 											defaultOpened={array?.length === 1}
 											type={phase.name}
 											title={phase.display_name}
+											phaseId={phase.id || ""}
 											status={phase.status}
 											description={description}
 											steps={steps?.map((step) => {

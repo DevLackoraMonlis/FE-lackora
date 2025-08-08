@@ -14,4 +14,5 @@ export const EachWorkflowPhaseStepName = {
   gateway_ip_discovery: 'gateway_ip_discovery',
   connection_method_discovery: 'connection_method_discovery',
   web_application: 'web_application',
+  mac_vendor_extraction: 'mac_vendor_extraction',
 } as const;
