@@ -1,3 +1,5 @@
+import type { ReOrderPoliciesRequest } from "@/http/generated/models";
+
 export type WorkflowDescription = {
 	message: string;
 	description: string;
@@ -43,6 +45,8 @@ export type WorkflowHandles = {
 	handleViewPolices: (id: string) => void;
 };
 
+export type PolicyWorkflowTypes = ReOrderPoliciesRequest["workflow"];
+
 export type PolicyCardData = {
 	id: string;
 	title: string;
@@ -54,5 +58,6 @@ export type PolicyCardData = {
 export type PolicyHandles = {
 	handleEditOrCreatePolicy: (id: string) => void;
 	handleDeletePolicy: (id: string) => void;
-	handleEnforcePolicy: (id: string) => void;
+	handleRefetchPolicies: VoidFunction;
+	policyCards?: PolicyCardData[];
 };

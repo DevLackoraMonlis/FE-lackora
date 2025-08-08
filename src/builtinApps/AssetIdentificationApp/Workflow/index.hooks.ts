@@ -1,7 +1,12 @@
 import { useToggle } from "@mantine/hooks";
 import { notifications } from "@mantine/notifications";
 
-import type { CustomError } from "@/http/end-points/GeneralService.types";
+import {
+	enablePolicy,
+	enforcePolicy,
+	useGetPolicies,
+	useOrderPolicyPriority,
+} from "@/http/generated/policy-management";
 import {
 	runWorkflow,
 	useGetWorkflowHistory,
@@ -9,8 +14,9 @@ import {
 	useGetWorkflowStep,
 	useGetWorkflows,
 } from "@/http/generated/workflow-management";
-import { getErrorMessage } from "@/shared/lib/utils";
 
+import type { CustomError } from "@/http/end-points/GeneralService.types";
+import { getErrorMessage } from "@/shared/lib/utils";
 import { getValueFromDynamicColumnRecord } from "./index.helper";
 
 export function useWorkflow(refetchInterval: false | number = false) {
@@ -128,4 +134,92 @@ export function useWorkflowRunNow(workflowCallback: VoidFunction) {
 	}
 
 	return { workflowRunNow, loading };
+}
+
+export function useWorkflowPolicy(workflow: string) {
+	const polices = useGetPolicies(
+		{ workflow },
+		{
+			query: {
+				enabled: !!workflow,
+				select: (response) => {
+					const results = response?.data?.results?.map((item) => ({
+						id: item.id,
+						title: item.name,
+						description: item.summary,
+						enforce: !!item.has_triggered,
+						isActive: !!item.enabled,
+					}));
+					return { ...response?.data, results };
+				},
+			},
+		},
+	);
+
+	return { polices };
+}
+
+export function useWorkflowPolicyReOrder() {
+	const reOrderPolices = useOrderPolicyPriority();
+	return { reOrderPolices };
+}
+
+export function useWorkflowPolicyEnforce(updateEnforceCallback: VoidFunction) {
+	const [loading, toggleLoading] = useToggle([false, true]);
+
+	function workflowEnforcePolicy(policyId: string) {
+		toggleLoading(true);
+		enforcePolicy(policyId)
+			.then(() => {
+				updateEnforceCallback();
+				toggleLoading(false);
+				notifications.show({
+					title: "Success",
+					message: "The operation was successful.",
+					color: "green",
+					withBorder: true,
+				});
+			})
+			.catch((error: CustomError) => {
+				toggleLoading(false);
+				notifications.show({
+					title: "Failed",
+					message: getErrorMessage(error),
+					color: "red",
+					withBorder: true,
+				});
+			});
+	}
+
+	return { workflowEnforcePolicy, loading };
+}
+
+export function useWorkflowPolicyEnabled(updateEnabledCallback: VoidFunction) {
+	const [loading, toggleLoading] = useToggle([false, true]);
+
+	function workflowEnabledPolicy(policyId: string) {
+		toggleLoading(true);
+		enablePolicy(policyId)
+			.then(() => {
+				updateEnabledCallback();
+				toggleLoading(false);
+				notifications.show({
+					title: "Success",
+					message: "The operation was successful.",
+					color: "green",
+					withBorder: true,
+				});
+			})
+			.catch((error: CustomError) => {
+				toggleLoading(false);
+				notifications.show({
+					title: "Failed",
+					message: getErrorMessage(error),
+					color: "red",
+					withBorder: true,
+				});
+			});
+	}
+
+	return { workflowEnabledPolicy, loading };
 }

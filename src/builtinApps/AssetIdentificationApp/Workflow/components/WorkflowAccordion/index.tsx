@@ -86,7 +86,7 @@ export default function WorkflowAccordion({ type, status, title, description, st
 								variant="transparent"
 								color="default"
 								title="Policies"
-								onClick={() => props.handleViewPolices(props.phaseId)}
+								onClick={() => props.handleViewPolices(type)}
 							>
 								<IconGavel size={24} />
 							</ActionIcon>
@@ -128,7 +128,7 @@ export default function WorkflowAccordion({ type, status, title, description, st
 														<Menu.Item
 															data-testid="workflow-submenu-policy"
 															leftSection={<IconGavel size={15} />}
-															onClick={() => props.handleViewPolices(step.id)}
+															onClick={() => props.handleViewPolices(step.type || "")}
 														>
 															Polices
 														</Menu.Item>

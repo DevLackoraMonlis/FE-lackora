@@ -1,25 +1,41 @@
-import { Box, Button, Flex, Menu, Switch, Text, Tooltip } from "@mantine/core";
+import { Box, Button, Flex, LoadingOverlay, Menu, Switch, Text, Tooltip } from "@mantine/core";
 import { Accordion } from "@mantine/core";
 import { IconDotsVertical, IconInfoCircle, IconInfoTriangleFilled } from "@tabler/icons-react";
 import { IconList, IconPencil, IconTrash } from "@tabler/icons-react";
 
 import type { PolicyCardData, PolicyHandles } from "../../../../index.types";
 
-type Props = PolicyCardData & PolicyHandles;
+type Props = PolicyCardData &
+	Omit<PolicyHandles, "policyCards"> & {
+		handleWorkflowEnforcePolicy: (id: string) => void;
+		handleWorkflowEnabledPolicy: (id: string) => void;
+		selectedId: string;
+		loading: boolean;
+	};
 
-export default function PolicyAccordion({ id, title, description, enforce, isActive, ...handles }: Props) {
+export default function PolicyAccordion({
+	id,
+	title,
+	description,
+	enforce,
+	isActive,
+	selectedId,
+	loading,
+	...handles
+}: Props) {
 	if (!id) return null;
 	return (
 		<Accordion variant="separated" w="100%">
 			<Accordion.Item value={id}>
-				<Accordion.Control data-testid="policy-single-accordion">
+				<Accordion.Control data-testid="policy-single-accordion" pos="relative">
+					<LoadingOverlay visible={selectedId === id && loading} />
 					<Flex align="center" justify="space-between">
 						<Flex direction="column">
 							<Text fw="bold">{title}</Text>
 							<Text fz="xs">{description}</Text>
 						</Flex>
 						<Flex align="center" gap="xs" px="sm">
-							{enforce && (
+							{!enforce && (
 								<>
 									<Flex align="center" gap="2xs">
 										<IconInfoTriangleFilled size={15} color="orange" />
@@ -34,7 +50,12 @@ export default function PolicyAccordion({ id, title, description, enforce, isAct
 											<IconInfoCircle size={15} />
 										</Tooltip>
 									</Flex>
-									<Button variant="filled" color="white" bg="white">
+									<Button
+										variant="filled"
+										color="white"
+										bg="white"
+										onClick={() => handles.handleWorkflowEnforcePolicy(id)}
+									>
 										<Text c="blue">Enforce Now</Text>
 									</Button>
 								</>
@@ -45,6 +66,8 @@ export default function PolicyAccordion({ id, title, description, enforce, isAct
 								labelPosition="left"
 								label={isActive ? "Enable" : "Disable"}
 								radius="lg"
+								onChange={() => handles.handleWorkflowEnabledPolicy(id)}
+								className="cursor-pointer"
 							/>
 							<Menu trigger="hover" shadow="md">
 								<Menu.Target>
@@ -70,7 +93,7 @@ export default function PolicyAccordion({ id, title, description, enforce, isAct
 									<Menu.Item
 										data-testid="policy-submenu-enforce"
 										leftSection={<IconList size={15} />}
-										onClick={() => handles.handleEnforcePolicy(id)}
+										onClick={() => handles.handleWorkflowEnforcePolicy(id)}
 									>
 										Enforce Now
 									</Menu.Item>
