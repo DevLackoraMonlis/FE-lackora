@@ -4,6 +4,7 @@ import type {
 	AdvanceFilterRequestModel,
 	EachAdvanceFilterConditionOperator,
 	EachAdvanceFilterConditionValue,
+	EachInventorySubCategory,
 } from "@/http/generated/models";
 import ICAdvancedFilter from "@/shared/components/infraComponents/ICAdvancedFilter";
 import {
@@ -51,14 +52,14 @@ export default function CyberAssetDetailInventoryDynamicGrid(props: Props) {
 			tableMinusHeight={160}
 			{...(selectedItem && {
 				getColumnsApi: (signal) =>
-					getInventoryFilterColumns(selectedItem || "", signal).then((response) =>
-						convertICAdvancedFilterResponseColumns(response),
+					getInventoryFilterColumns((selectedItem || "") as EachInventorySubCategory, signal).then(
+						(response) => convertICAdvancedFilterResponseColumns(response),
 					),
 			})}
 			{...(selectedItem && {
 				getDataApi: (variables, signal) =>
 					getAssetInventoryData(
-						selectedItem || "",
+						(selectedItem || "") as EachInventorySubCategory,
 						{
 							...convertICAdvancedFilterToDefaultVariables<
 								EachAdvanceFilterConditionOperator,
