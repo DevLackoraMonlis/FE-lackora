@@ -10,7 +10,7 @@ import type { ReportNewActivityRequestMessage } from './ReportNewActivityRequest
 
 export interface ReportNewActivityRequest {
   udi: string;
-  sha1: string;
+  hash: string;
   activity_type: AgentManagerReportTypes;
   message?: ReportNewActivityRequestMessage;
 }
