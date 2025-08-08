@@ -46,14 +46,14 @@ export default function CyberAssetDetailInventoryDynamicGrid(props: Props) {
 			tableMinusHeight={160}
 			{...(selectedItem && {
 				getColumnsApi: (signal) =>
-					getInventoryFilterColumns(selectedItem as EachInventorySubCategory, signal).then((response) =>
-						convertICAdvancedFilterResponseColumns(response),
+					getInventoryFilterColumns((selectedItem || "") as EachInventorySubCategory, signal).then(
+						(response) => convertICAdvancedFilterResponseColumns(response),
 					),
 			})}
 			{...(selectedItem && {
 				getDataApi: (variables, signal) =>
 					getAssetInventoryData(
-						selectedItem as EachInventorySubCategory,
+						(selectedItem || "") as EachInventorySubCategory,
 						{ ...convertICAdvancedFilterToDefaultVariables(variables), asset_id: props.id || "" },
 						signal,
 					).then((response) => ({
