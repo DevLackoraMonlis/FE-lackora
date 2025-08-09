@@ -20,6 +20,7 @@ const DnDCardBox = ({ id, content }: { id: string; content: ReactNode }) => {
 			transform: `translate3d(0px, ${transform?.y}px, 0)`,
 		}),
 		transition,
+		width: "100%",
 	};
 
 	return (
