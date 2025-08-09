@@ -42,7 +42,6 @@ BCModal.Footer = function Footer(props: {
 				onClick={props.onApply}
 				disabled={props.disabled}
 				loading={props.loading}
-				type="submit"
 			>
 				{props.applyLabel || "Apply"}
 			</Button>
@@ -51,7 +50,6 @@ BCModal.Footer = function Footer(props: {
 				onClick={props.onCancel}
 				variant="default"
 				disabled={props.loading}
-				type="reset"
 			>
 				Cancel
 			</Button>
@@ -78,22 +76,10 @@ BCModal.FooterTwoButton = function Footer(props: {
 }) {
 	return (
 		<Flex p={16} gap="sm" justify="flex-end" className={classes.footer}>
-			<Button
-				data-testid="BCModal-ok"
-				type="submit"
-				loading={props.loading}
-				{...props.okButtonProps}
-				onClick={props.onOk}
-			>
+			<Button data-testid="BCModal-ok" loading={props.loading} {...props.okButtonProps} onClick={props.onOk}>
 				{props.okLabel || "Ok"}
 			</Button>
-			<Button
-				data-testid="BCModal-cancel"
-				type="reset"
-				loading={props.loading}
-				onClick={props.onCancel}
-				variant="default"
-			>
+			<Button data-testid="BCModal-cancel" loading={props.loading} onClick={props.onCancel} variant="default">
 				Cancel
 			</Button>
 		</Flex>
@@ -117,7 +103,6 @@ BCModal.FooterThreeButtons = function Footer(props: {
 				loading={props.loading}
 				disabled={props.setAndApplyDisabled}
 				size="xs"
-				type="submit"
 				onClick={props.onSetAndApply}
 			>
 				{props.setAndApplyLabel || "Set and Apply"}
@@ -128,7 +113,6 @@ BCModal.FooterThreeButtons = function Footer(props: {
 				disabled={props.setDisabled}
 				variant="outline"
 				size="xs"
-				type="submit"
 				onClick={props.onSet}
 			>
 				{props.setLabel || "Set"}
@@ -139,7 +123,6 @@ BCModal.FooterThreeButtons = function Footer(props: {
 				size="xs"
 				onClick={props.onCancel}
 				variant="default"
-				type="reset"
 			>
 				Cancel
 			</Button>
