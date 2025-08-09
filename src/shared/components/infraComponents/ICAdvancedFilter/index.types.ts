@@ -62,6 +62,11 @@ export type ICAdvancedFilterColumnOption = {
 	value: string;
 };
 
+export type ICAdvancedFilterListColumn = {
+	url?: string;
+	value: string;
+};
+
 export type ICAdvancedFilterColumnRs = {
 	name: string;
 	type: ICAdvancedFilterColumnType;
