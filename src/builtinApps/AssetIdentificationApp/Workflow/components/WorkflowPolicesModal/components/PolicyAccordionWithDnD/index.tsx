@@ -70,25 +70,6 @@ export default function PolicyAccordionWithDnD({
 		[cards, workflowName],
 	);
 
-	const renderCard = useCallback((card: PolicyCardData) => {
-		return (
-			<DnDCardBox
-				key={card.id}
-				id={card.id}
-				content={
-					<PolicyAccordion
-						{...card}
-						{...handles}
-						selectedId={selectedId}
-						loading={enforceLoading || enabledLoading}
-						handleWorkflowEnforcePolicy={handleWorkflowEnforcePolicy}
-						handleWorkflowEnabledPolicy={handleWorkflowEnabledPolicy}
-					/>
-				}
-			/>
-		);
-	}, []);
-
 	useEffect(() => {
 		policyCards && setCards(policyCards);
 		return () => setCards([]);
@@ -96,7 +77,22 @@ export default function PolicyAccordionWithDnD({
 
 	return (
 		<BCSortable<PolicyCardData> items={cards} handleItemChange={(_event, updated) => updateOrder(updated)}>
-			{cards.map((card) => renderCard(card))}
+			{cards.map((card) => (
+				<DnDCardBox
+					key={card.id}
+					id={card.id}
+					content={
+						<PolicyAccordion
+							{...card}
+							{...handles}
+							selectedId={selectedId}
+							loading={enforceLoading || enabledLoading}
+							handleWorkflowEnforcePolicy={handleWorkflowEnforcePolicy}
+							handleWorkflowEnabledPolicy={handleWorkflowEnabledPolicy}
+						/>
+					}
+				/>
+			))}
 		</BCSortable>
 	);
 }
