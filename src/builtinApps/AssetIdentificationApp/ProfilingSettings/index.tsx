@@ -1,33 +1,25 @@
 "use client";
 
-import { Grid, Tabs } from "@mantine/core";
-import { IconBuilding, IconRadar2 } from "@tabler/icons-react";
+import { Tabs } from "@mantine/core";
 
-import { ProfilingSettingsTabs } from "./index.enum";
+import ProfilingAccordionWithDnD from "./components/ProfilingAccordionWithDnD";
+import { ProfilingInventoryRules, ProfilingSettingsTabs } from "./index.enum";
 
 export default function AssetIdentificationProfilingSettingsPage() {
 	return (
 		<Tabs defaultValue={ProfilingSettingsTabs.PullBase} styles={({ headings }) => ({ tabLabel: headings })}>
 			{/* TABS */}
 			<Tabs.List justify="center">
-				<Tabs.Tab value={ProfilingSettingsTabs.PullBase} leftSection={<IconRadar2 size={20} />}>
-					{ProfilingSettingsTabs.PullBase}
-				</Tabs.Tab>
-				<Tabs.Tab value={ProfilingSettingsTabs.PushBase} leftSection={<IconBuilding size={20} />}>
-					{ProfilingSettingsTabs.PushBase}
-				</Tabs.Tab>
+				<Tabs.Tab value={ProfilingSettingsTabs.PullBase}>{ProfilingSettingsTabs.PullBase}</Tabs.Tab>
+				<Tabs.Tab value={ProfilingSettingsTabs.PushBase}>{ProfilingSettingsTabs.PushBase}</Tabs.Tab>
 			</Tabs.List>
 			{/* PANELS */}
-			<Grid>
-				<Grid.Col span={10}>
-					<Tabs.Panel value={ProfilingSettingsTabs.PullBase}>
-						{"<DiscoverySettingsDiscoveryAdapters />"}
-					</Tabs.Panel>
-					<Tabs.Panel value={ProfilingSettingsTabs.PushBase}>
-						{"<DiscoverySettingsNoneCredentialAdapters />"}
-					</Tabs.Panel>
-				</Grid.Col>
-			</Grid>
+			<Tabs.Panel value={ProfilingSettingsTabs.PullBase}>
+				<ProfilingAccordionWithDnD type={ProfilingInventoryRules[ProfilingSettingsTabs.PullBase]} />
+			</Tabs.Panel>
+			<Tabs.Panel value={ProfilingSettingsTabs.PushBase}>
+				<ProfilingAccordionWithDnD type={ProfilingInventoryRules[ProfilingSettingsTabs.PushBase]} />
+			</Tabs.Panel>
 		</Tabs>
 	);
 }

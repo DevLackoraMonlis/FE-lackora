@@ -3,13 +3,13 @@ import { notifications } from "@mantine/notifications";
 import { v4 } from "uuid";
 
 import type { CustomError } from "@/http/end-points/GeneralService.types";
-import { useGetAssetFilterColumns } from "@/http/generated/cyber-asset-management-cyber-assets";
 import {
 	enablePolicy,
 	enforcePolicy,
 	getPolicyDependency,
 	useDeletePolicy,
 	useGetPolicies,
+	useGetPolicyManagementColumns,
 	useOrderPolicyPriority,
 } from "@/http/generated/policy-management";
 import {
@@ -215,14 +215,17 @@ export function useWorkflowPolicyEnabled(updateEnabledCallback: VoidFunction) {
 		toggleLoading(true);
 		enablePolicy(policyId)
 			.then(() => {
-				updateEnabledCallback();
-				toggleLoading(false);
-				notifications.show({
-					title: "Success",
-					message: "The operation was successful.",
-					color: "green",
-					withBorder: true,
-				});
+				const debouncedCallback = setTimeout(() => {
+					updateEnabledCallback();
+					toggleLoading(false);
+					notifications.show({
+						title: "Success",
+						message: "The operation was successful.",
+						color: "green",
+						withBorder: true,
+					});
+					clearTimeout(debouncedCallback);
+				}, 2000);
 			})
 			.catch((error: CustomError) => {
 				toggleLoading(false);
@@ -272,7 +275,7 @@ export function useDeletePolicyDependency() {
 }
 
 export function useColumnPolicyConditions() {
-	const columnConditions = useGetAssetFilterColumns({
+	const columnConditions = useGetPolicyManagementColumns({
 		query: { select: (res) => convertICAdvancedFilterResponseColumns(res) },
 	});
 

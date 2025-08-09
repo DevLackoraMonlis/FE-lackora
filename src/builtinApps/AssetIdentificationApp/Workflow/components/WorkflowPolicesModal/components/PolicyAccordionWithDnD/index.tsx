@@ -68,7 +68,7 @@ export default function PolicyAccordionWithDnD({
 				},
 			);
 		},
-		[cards, workflowName],
+		[workflowName],
 	);
 
 	useEffect(() => {

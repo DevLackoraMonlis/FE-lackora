@@ -130,7 +130,7 @@ export default function PolicyAccordion({ id, ...props }: Props) {
 				</Accordion.Control>
 				{/* Panel */}
 				<Accordion.Panel>
-					<Flex direction="column" gap="2xs" w="50%">
+					<Flex direction="column" gap="2xs" w="50%" mt="xs">
 						{accordionPanel.map(({ label, value }) => (
 							<Grid key={label}>
 								<Grid.Col span={6}>

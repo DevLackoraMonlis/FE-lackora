@@ -21,7 +21,7 @@ export default function BCEmptyWithCreate({ icon, onCreate, title, description, 
 						<Text component="span" fw="bold" fz="md">
 							{title}
 						</Text>
-						<Text component="span" c="dimmed">
+						<Text component="span" c="dimmed" w="70%" ta="center">
 							{description}
 						</Text>
 						<Button onClick={onCreate} color={"main"} leftSection={<IconPlus size={20} />}>
