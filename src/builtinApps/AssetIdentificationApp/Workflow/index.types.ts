@@ -64,8 +64,8 @@ export type PolicyHandles = {
 };
 
 type DeletePolicyData = {
-	status: string;
-	ipAddress: string;
+	status?: string | null;
+	ipAddress?: string | null;
 	key: string;
 };
 export type DeletePolicy = {

@@ -241,8 +241,8 @@ export function useDeletePolicyDependency() {
 			.then(({ data }) => {
 				toggleDependencyLoading(false);
 				const results = data?.results?.map(({ primary_ip, status }, idx) => ({
-					status: status as string,
-					ipAddress: primary_ip as string,
+					status,
+					ipAddress: primary_ip,
 					key: `${idx + 1}`,
 				}));
 				return { ...data, disabledDeletion: false, results };

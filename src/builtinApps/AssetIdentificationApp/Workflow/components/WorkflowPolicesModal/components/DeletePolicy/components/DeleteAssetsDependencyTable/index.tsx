@@ -22,7 +22,7 @@ export function DeleteAssetsDependencyTable({ results = [] }: Props) {
 	};
 
 	// data sorting
-	const filteredResults = results.filter(({ ipAddress }) => ipAddress.includes(search));
+	const filteredResults = results.filter(({ ipAddress }) => (ipAddress || "").includes(search));
 	// pagination options
 	const from = (queryParams.page - 1) * queryParams.limit;
 	const to = from + queryParams.limit;
@@ -51,7 +51,7 @@ export function DeleteAssetsDependencyTable({ results = [] }: Props) {
 									<Flex gap="xl">
 										<Text>{`${key}.`}</Text>
 										<Highlight highlight={[search]} highlightStyles={{}}>
-											{ipAddress}
+											{ipAddress || ""}
 										</Highlight>
 									</Flex>
 								</Grid.Col>
