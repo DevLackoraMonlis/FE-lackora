@@ -8,6 +8,7 @@ import BCEmptyWithCreate from "@/shared/components/baseComponents/BCEmptyWithCre
 import { PolicyNoPolicies } from "@/shared/icons/components/policy";
 
 import { useWorkflowPolicy } from "../../index.hooks";
+import { DeletePolicyModal } from "./components/DeletePolicy";
 import PolicyAccordionSkelton from "./components/PolicyAccordionSkelton";
 import PolicyAccordionWithDnD from "./components/PolicyAccordionWithDnD";
 import PolicyCreateOrEditModal from "./components/PolicyCreateOrEditModal";
@@ -15,13 +16,14 @@ import PolicyCreateOrEditModal from "./components/PolicyCreateOrEditModal";
 type Props = {
 	onClose: VoidFunction;
 	opened: boolean;
-	stepName?: string;
+	workflowName?: string;
 };
 
-function WorkflowPolices({ stepName = "" }: Props) {
+function WorkflowPolices({ workflowName = "" }: Props) {
 	const { height } = useViewportSize();
 	const [openedCreateOrEdit, handleOpenedCreateOrEdit] = useDisclosure();
-	const { polices } = useWorkflowPolicy(stepName);
+	const [openedDelete, handleOpenedDelete] = useDisclosure();
+	const { polices } = useWorkflowPolicy(workflowName);
 
 	const [selectedPolicyId, setSelectedPolicyId] = useState("");
 	const handleEditOrCreatePolicy = (id?: string) => {
@@ -30,7 +32,12 @@ function WorkflowPolices({ stepName = "" }: Props) {
 	};
 	const handleDeletePolicy = (id: string) => {
 		setSelectedPolicyId(id);
-		handleOpenedCreateOrEdit.open();
+		handleOpenedDelete.open();
+	};
+	const handleClosePolicy = () => {
+		setSelectedPolicyId("");
+		handleOpenedCreateOrEdit.close();
+		handleOpenedDelete.close();
 	};
 	const handleRefetchPolicies = () => {
 		polices.refetch();
@@ -42,11 +49,17 @@ function WorkflowPolices({ stepName = "" }: Props) {
 	};
 	return (
 		<>
+			<DeletePolicyModal
+				onClose={handleClosePolicy}
+				opened={openedDelete}
+				policyId={selectedPolicyId}
+				refetchPolicy={handleRefetchPolicies}
+			/>
 			<PolicyCreateOrEditModal
-				onClose={handleOpenedCreateOrEdit.close}
+				onClose={handleClosePolicy}
 				opened={openedCreateOrEdit}
 				policyId={selectedPolicyId}
-				onSubmit={(_values) => {}}
+				workflowName={workflowName}
 			/>
 			{!polices?.isLoading && !polices?.data?.results?.length ? (
 				<BCEmptyWithCreate
@@ -75,7 +88,7 @@ function WorkflowPolices({ stepName = "" }: Props) {
 							) : (
 								<PolicyAccordionWithDnD
 									policyCards={polices?.data?.results}
-									workflowName={stepName}
+									workflowName={workflowName}
 									{...commonProps}
 								/>
 							)}
@@ -87,10 +100,10 @@ function WorkflowPolices({ stepName = "" }: Props) {
 	);
 }
 
-export default function WorkflowPolicesModal({ onClose, opened, stepName }: Props) {
+export default function WorkflowPolicesModal({ onClose, opened, workflowName }: Props) {
 	return (
 		<BCDrawer size="60%" onClose={onClose} opened={opened} title="Discovery Policies">
-			<WorkflowPolices onClose={onClose} opened={opened} stepName={stepName} />
+			<WorkflowPolices onClose={onClose} opened={opened} workflowName={workflowName} />
 		</BCDrawer>
 	);
 }

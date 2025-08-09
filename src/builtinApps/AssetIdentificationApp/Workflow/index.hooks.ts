@@ -4,6 +4,8 @@ import { notifications } from "@mantine/notifications";
 import {
 	enablePolicy,
 	enforcePolicy,
+	getPolicyDependency,
+	useDeletePolicy,
 	useGetPolicies,
 	useOrderPolicyPriority,
 } from "@/http/generated/policy-management";
@@ -16,6 +18,7 @@ import {
 } from "@/http/generated/workflow-management";
 
 import type { CustomError } from "@/http/end-points/GeneralService.types";
+import { toFormattedDate } from "@/shared/lib/dayJs";
 import { getErrorMessage } from "@/shared/lib/utils";
 import { getValueFromDynamicColumnRecord } from "./index.helper";
 
@@ -144,9 +147,10 @@ export function useWorkflowPolicy(workflow: string) {
 				enabled: !!workflow,
 				select: (response) => {
 					const results = response?.data?.results?.map((item) => ({
+						...item,
 						id: item.id,
 						title: item.name,
-						description: item.summary,
+						description: `Created at ${toFormattedDate(item.created_time, "YYYY-MM-DD")} by ${item.creator}`,
 						enforce: !!item.has_triggered,
 						isActive: !!item.enabled,
 					}));
@@ -222,4 +226,38 @@ export function useWorkflowPolicyEnabled(updateEnabledCallback: VoidFunction) {
 	}
 
 	return { workflowEnabledPolicy, loading };
+}
+
+export function useDeleteSinglePolicy() {
+	const deletePolicy = useDeletePolicy();
+	return { deletePolicy };
+}
+export function useDeletePolicyDependency() {
+	const [dependencyLoading, toggleDependencyLoading] = useToggle([false, true]);
+
+	async function getDependency(configurationId: string) {
+		toggleDependencyLoading(true);
+		return await getPolicyDependency(configurationId)
+			.then(({ data }) => {
+				toggleDependencyLoading(false);
+				const results = data?.results?.map(({ primary_ip, status }, idx) => ({
+					status: status as string,
+					ipAddress: primary_ip as string,
+					key: `${idx + 1}`,
+				}));
+				return { ...data, disabledDeletion: false, results };
+			})
+			.catch(() => {
+				toggleDependencyLoading(false);
+				return {
+					disabledDeletion: true,
+					message: "",
+					status: false,
+					total: 0,
+					results: [],
+				};
+			});
+	}
+
+	return { getDependency, dependencyLoading };
 }

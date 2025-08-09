@@ -7,10 +7,10 @@ import BCSearchInput from "@/shared/components/baseComponents/BCSearchInput";
 import { ASSETS_STATUS } from "@/shared/constants/assets";
 import type { AssetsStatus } from "@/shared/enums/index.enums";
 
-import type { DeleteDependencyAssets } from "../../../../../../index.types";
+import type { DeletePolicy } from "../../../../../../index.types";
 
 type Props = {
-	results: DeleteDependencyAssets["results"];
+	results: DeletePolicy["results"];
 };
 
 export function DeleteAssetsDependencyTable({ results = [] }: Props) {
@@ -22,9 +22,7 @@ export function DeleteAssetsDependencyTable({ results = [] }: Props) {
 	};
 
 	// data sorting
-	const filteredResults = results.filter(
-		({ hostname, ipAddress }) => hostname.includes(search) || ipAddress.includes(search),
-	);
+	const filteredResults = results.filter(({ ipAddress }) => ipAddress.includes(search));
 	// pagination options
 	const from = (queryParams.page - 1) * queryParams.limit;
 	const to = from + queryParams.limit;
@@ -34,26 +32,26 @@ export function DeleteAssetsDependencyTable({ results = [] }: Props) {
 	return (
 		<Flex direction="column" bg="white">
 			<Flex align="center" justify="space-between" p="xs">
-				<Text fw="bold">{`Associated Assets ( ${totalRecords} )`}</Text>
+				<Text fw="bold">{`Matched Assets ( ${totalRecords} )`}</Text>
 				<BCSearchInput
 					clientSide
 					onSubmitSearch={(value) => handleUpdateQueryParams({ search: value })}
-					placeholder="Search by Hostname or IP address"
+					placeholder="Search by IP address"
 					inputWidth="270px"
 				/>
 			</Flex>
 			<ScrollArea px="xs" h={height - 500}>
-				{tableRecords?.map(({ hostname, id, ipAddress, key, status }) => {
+				{tableRecords?.map(({ ipAddress, key, status }) => {
 					const { color } = ASSETS_STATUS[status as AssetsStatus] || {};
 					return (
-						<Flex w="100%" direction="column" key={id}>
+						<Flex w="100%" direction="column" key={`${ipAddress}-${status}`}>
 							<Divider />
 							<Grid px="xs" py="2xs">
 								<Grid.Col span={8}>
 									<Flex gap="xl">
 										<Text>{`${key}.`}</Text>
 										<Highlight highlight={[search]} highlightStyles={{}}>
-											{`${hostname} - ${ipAddress}`}
+											{ipAddress}
 										</Highlight>
 									</Flex>
 								</Grid.Col>

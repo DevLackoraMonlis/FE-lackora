@@ -53,6 +53,7 @@ export type PolicyCardData = {
 	description: string;
 	isActive: boolean;
 	enforce: boolean;
+	[key: string]: unknown;
 };
 
 export type PolicyHandles = {
@@ -60,4 +61,17 @@ export type PolicyHandles = {
 	handleDeletePolicy: (id: string) => void;
 	handleRefetchPolicies: VoidFunction;
 	policyCards?: PolicyCardData[];
+};
+
+type DeletePolicyData = {
+	status: string;
+	ipAddress: string;
+	key: string;
+};
+export type DeletePolicy = {
+	disabledDeletion: boolean;
+	message: string;
+	status: boolean;
+	total: number;
+	results?: DeletePolicyData[];
 };

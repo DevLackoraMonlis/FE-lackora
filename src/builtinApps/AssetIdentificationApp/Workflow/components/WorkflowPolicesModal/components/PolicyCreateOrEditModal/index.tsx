@@ -1,7 +1,8 @@
 import { Card, Flex, Grid, Text } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 
+import { useWorkflowPolicy } from "@/builtinApps/AssetIdentificationApp/Workflow/index.hooks";
 import { getDynamicField } from "@/shared/components/baseComponents/BCDynamicField";
 import BCModal from "@/shared/components/baseComponents/BCModal";
 import BCTriggerActions from "@/shared/components/baseComponents/BCTriggerActions";
@@ -18,7 +19,7 @@ type Props = {
 	onClose: VoidFunction;
 	opened: boolean;
 	policyId?: string;
-	onSubmit: (values: FormValues) => void;
+	workflowName: string;
 };
 
 const fields = [
@@ -43,7 +44,9 @@ const fields = [
 	},
 ] as const;
 
-function PolicyCreateOrEdit({ policyId = "", onSubmit }: Props) {
+function PolicyCreateOrEdit({ workflowName, policyId }: Props) {
+	const { polices } = useWorkflowPolicy(workflowName);
+
 	const updateValueOnce = useRef<FormList>({});
 	const onValuesChange = () => {
 		setTimeout(() => {
@@ -60,8 +63,17 @@ function PolicyCreateOrEdit({ policyId = "", onSubmit }: Props) {
 	});
 
 	const handleSubmit = (values: typeof form.values) => {
-		onSubmit(values);
+		console.log(values);
 	};
+
+	useEffect(() => {
+		const policyData = polices?.data?.results?.find(({ id }) => id === policyId);
+		if (policyData) {
+			form.setValues(policyData);
+		} else {
+			form.reset();
+		}
+	}, [policyId]);
 
 	return (
 		<Flex direction="column" gap="xs" key={policyId}>
