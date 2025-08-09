@@ -203,6 +203,7 @@ export type ICAdvancedFilterConditionBuilderRowProps = {
 	onChange: (newCondition: ICAdvancedFilterConditionBuilderCondition) => void;
 	inputValue: ReactNode;
 	isLastCondition: boolean;
+	onRemove: VoidFunction;
 };
 
 export type ICAdvancedFilterConditionBuilderProps = {

@@ -5,7 +5,8 @@ import type {
 	ICAdvancedFilterOperator,
 } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
 import { useSortable } from "@dnd-kit/sortable";
-import { Flex, Grid, ScrollArea, Select } from "@mantine/core";
+import { ActionIcon, Flex, Grid, ScrollArea, Select } from "@mantine/core";
+import { IconX } from "@tabler/icons-react";
 
 export default function ICAdvancedFilterConditionBuilderConditionRow(
 	props: ICAdvancedFilterConditionBuilderRowProps,
@@ -66,20 +67,25 @@ export default function ICAdvancedFilterConditionBuilderConditionRow(
 					/>
 				</Grid.Col>
 				<Grid.Col span={1} p={0} pl={"xs"}>
-					<Select
-						disabled={props.isLastCondition}
-						w={"100%"}
-						miw={120}
-						value={props.condition.nextOperator}
-						onChange={(value) => {
-							props.onChange({
-								...props.condition,
-								nextOperator: (value || "and") as ICAdvancedFilterOperator,
-							});
-						}}
-						label={props.index === 0 && "AND/OR"}
-						data={nextOperators.map((item) => ({ label: item.toUpperCase(), value: item }))}
-					/>
+					<Flex w={"100%"} h={"100%"} align={"flex-end"} gap={"2xs"}>
+						<Select
+							disabled={props.isLastCondition}
+							w={"100%"}
+							miw={120}
+							value={props.condition.nextOperator}
+							onChange={(value) => {
+								props.onChange({
+									...props.condition,
+									nextOperator: (value || "and") as ICAdvancedFilterOperator,
+								});
+							}}
+							label={props.index === 0 && "AND/OR"}
+							data={nextOperators.map((item) => ({ label: item.toUpperCase(), value: item }))}
+						/>
+						<ActionIcon onClick={props.onRemove} mb={"2xs"} variant={"transparent"}>
+							<IconX size={20} />
+						</ActionIcon>
+					</Flex>
 				</Grid.Col>
 			</Grid>
 		</Flex>

@@ -107,6 +107,15 @@ export default function ICAdvancedFilterConditionBuilder(props: ICAdvancedFilter
 		[props.conditions, props.onChange],
 	);
 
+	const onRemove = useCallback(
+		(conditionId: string) => {
+			startTransition(() => {
+				props.onChange(props.conditions.filter((item) => item.id !== conditionId));
+			});
+		},
+		[props.conditions, props.onChange],
+	);
+
 	const columns = useMemo(
 		() => props.allColumns.map((item) => ({ label: item.displayName, value: item.name })),
 		[props.allColumns],
@@ -256,6 +265,7 @@ export default function ICAdvancedFilterConditionBuilder(props: ICAdvancedFilter
 						const columnOption = getColumnOption(condition.columnName || "");
 						return (
 							<ICAdvancedFilterConditionBuilderConditionRow
+								onRemove={() => onRemove(condition.id)}
 								index={index}
 								onMinusCloseBracket={() => onChangeBrackets(condition.id, "MinusClose")}
 								onMinusOpenBracket={() => onChangeBrackets(condition.id, "MinusOpen")}
