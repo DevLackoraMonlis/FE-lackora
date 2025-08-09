@@ -24,15 +24,7 @@ export default function ICAdvancedFilterConditionBuilderConditionRow(
 	};
 
 	return (
-		<Flex
-			style={style}
-			ref={setNodeRef}
-			gap={"2xs"}
-			align={"flex-end"}
-			w={"100%"}
-			miw={"100%"}
-			{...attributes}
-		>
+		<Flex ref={setNodeRef} gap={"2xs"} align={"flex-end"} w={"100%"} miw={"100%"}>
 			<Grid align={"end"} gutter={0} w={"100%"} miw={"100%"} classNames={{ inner: "w-full" }}>
 				<Grid.Col span={1} p={0}>
 					<BracketButtons
@@ -50,7 +42,7 @@ export default function ICAdvancedFilterConditionBuilderConditionRow(
 						condition={props.condition}
 					/>
 				</Grid.Col>
-				<Grid.Col span={9} p={0}>
+				<Grid.Col span={9} p={0} style={style} {...attributes}>
 					<ScrollArea scrollbars={"x"} w={"100%"} scrollbarSize={2}>
 						<ICAdvancedFilterConditionBuilderConditionRowSortable listener={listeners} {...props} />
 					</ScrollArea>

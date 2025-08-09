@@ -14,7 +14,9 @@ import { IconGripVertical } from "@tabler/icons-react";
 import { v4 } from "uuid";
 
 export default function ICAdvancedFilterConditionBuilderConditionRowSortable(
-	props: ICAdvancedFilterConditionBuilderRowProps & { listener?: SyntheticListenerMap },
+	props: ICAdvancedFilterConditionBuilderRowProps & {
+		listener?: SyntheticListenerMap;
+	},
 ) {
 	return (
 		<Grid gutter={0} align={"end"} miw={700} w={"100%"}>
