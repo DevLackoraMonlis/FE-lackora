@@ -1,8 +1,8 @@
+import BCSortable from "@/shared/components/baseComponents/BCSortable";
+import { useSortable } from "@dnd-kit/sortable";
 import { Flex } from "@mantine/core";
-import { clone, pullAt } from "lodash";
-import { useCallback, useEffect, useState } from "react";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
+import { IconGripVertical } from "@tabler/icons-react";
+import { type ReactNode, useCallback, useEffect, useState } from "react";
 
 import {
 	useWorkflowPolicyEnabled,
@@ -11,7 +11,26 @@ import {
 } from "../../../../index.hooks";
 import type { PolicyCardData, PolicyHandles, PolicyWorkflowTypes } from "../../../../index.types";
 import PolicyAccordion from "../PolicyAccordion";
-import DnDCardBox from "./components/DnDCardBox";
+
+const DnDCardBox = ({ id, content }: { id: string; content: ReactNode }) => {
+	const { listeners, setNodeRef, transform, transition } = useSortable({ id });
+
+	const style = {
+		...(transform?.y && {
+			transform: `translate3d(0px, ${transform?.y}px, 0)`,
+		}),
+		transition,
+	};
+
+	return (
+		<Flex justify="space-between" gap="sm" style={style} ref={setNodeRef}>
+			<Flex pt="2lg" pl="xs">
+				<IconGripVertical size={20} {...listeners} />
+			</Flex>
+			{content}
+		</Flex>
+	);
+};
 
 export default function PolicyAccordionWithDnD({
 	policyCards,
@@ -36,11 +55,8 @@ export default function PolicyAccordionWithDnD({
 		workflowEnforcePolicy(id);
 	};
 
-	const moveCard = useCallback(
-		(dragIndex: number, hoverIndex: number) => {
-			const updated = clone(cards);
-			const [draggedItem] = pullAt(updated, dragIndex);
-			updated.splice(hoverIndex, 0, draggedItem);
+	const updateOrder = useCallback(
+		(updated: PolicyCardData[]) => {
 			const policies = updated.map(({ id }) => id);
 			reOrderPolices.mutate(
 				{ data: { policies, workflow: workflowName as PolicyWorkflowTypes } },
@@ -54,13 +70,11 @@ export default function PolicyAccordionWithDnD({
 		[cards, workflowName],
 	);
 
-	const renderCard = useCallback((card: PolicyCardData, index: number) => {
+	const renderCard = useCallback((card: PolicyCardData) => {
 		return (
 			<DnDCardBox
 				key={card.id}
 				id={card.id}
-				index={index}
-				moveCard={moveCard}
 				content={
 					<PolicyAccordion
 						{...card}
@@ -81,10 +95,8 @@ export default function PolicyAccordionWithDnD({
 	}, [policyCards]);
 
 	return (
-		<DndProvider backend={HTML5Backend}>
-			<Flex direction="column" gap="xs" w="100%">
-				{cards.map((card, i) => renderCard(card, i))}
-			</Flex>
-		</DndProvider>
+		<BCSortable<PolicyCardData> items={cards} handleItemChange={(_event, updated) => updateOrder(updated)}>
+			{cards.map((card) => renderCard(card))}
+		</BCSortable>
 	);
 }

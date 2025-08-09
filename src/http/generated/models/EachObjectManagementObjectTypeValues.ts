@@ -13,4 +13,5 @@ export type EachObjectManagementObjectTypeValues = typeof EachObjectManagementOb
 export const EachObjectManagementObjectTypeValues = {
   connection: 'connection',
   web_service: 'web_service',
+  adapter: 'adapter',
 } as const;

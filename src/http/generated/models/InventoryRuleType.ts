@@ -6,12 +6,11 @@
  * OpenAPI spec version: 1.0.0
  */
 
-export type DiscoverySettingsType = typeof DiscoverySettingsType[keyof typeof DiscoverySettingsType];
+export type InventoryRuleType = typeof InventoryRuleType[keyof typeof InventoryRuleType];
 
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
-export const DiscoverySettingsType = {
-  discovery: 'discovery',
-  inventory: 'inventory',
-  'none-credential': 'none-credential',
+export const InventoryRuleType = {
+  pull_based: 'pull_based',
+  push_based: 'push_based',
 } as const;

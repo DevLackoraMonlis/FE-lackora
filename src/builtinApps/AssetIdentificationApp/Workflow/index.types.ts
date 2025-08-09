@@ -1,11 +1,5 @@
 import type { ReOrderPoliciesRequest } from "@/http/generated/models";
-import type {
-	BracketError,
-	ICAdvancedConditionValueTypeRq,
-	ICAdvancedFilterCondition,
-	ICAdvancedFilterConditionOperator,
-	ICAdvancedFilterOperator,
-} from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
+import type { ICAdvancedFilterConditionBuilderCondition } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
 
 export type WorkflowDescription = {
 	message: string;
@@ -54,29 +48,13 @@ export type WorkflowHandles = {
 
 export type PolicyWorkflowTypes = ReOrderPoliciesRequest["workflow"];
 
-// condition types
-export type PolicyConditionRq = {
-	id: string;
-	close_bracket: number;
-	open_bracket: number;
-	column_name: string;
-	next_operator: ICAdvancedFilterOperator;
-	operator: ICAdvancedFilterConditionOperator;
-	values: ICAdvancedConditionValueTypeRq[];
-};
-export type PolicyConditionRs = ICAdvancedFilterCondition & {
-	error: boolean;
-	disabled: boolean;
-	bracketError?: BracketError;
-};
-
 export type PolicyCardData = {
 	id: string;
 	title: string;
 	description: string;
 	isActive: boolean;
 	enforce: boolean;
-	conditions: PolicyConditionRs[];
+	conditions: ICAdvancedFilterConditionBuilderCondition[];
 	[key: string]: unknown;
 };
 

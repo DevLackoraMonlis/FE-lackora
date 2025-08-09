@@ -15,4 +15,7 @@ export const EachWorkflowPhaseStepName = {
   connection_method_discovery: 'connection_method_discovery',
   web_application: 'web_application',
   mac_vendor_extraction: 'mac_vendor_extraction',
+  windows_inventory: 'windows_inventory',
+  linux_inventory: 'linux_inventory',
+  pull_based_inventory: 'pull_based_inventory',
 } as const;

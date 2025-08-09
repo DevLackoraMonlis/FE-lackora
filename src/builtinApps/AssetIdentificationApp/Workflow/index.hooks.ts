@@ -3,6 +3,7 @@ import { notifications } from "@mantine/notifications";
 import { v4 } from "uuid";
 
 import type { CustomError } from "@/http/end-points/GeneralService.types";
+import { useGetAssetFilterColumns } from "@/http/generated/cyber-asset-management-cyber-assets";
 import {
 	enablePolicy,
 	enforcePolicy,
@@ -18,11 +19,12 @@ import {
 	useGetWorkflowStep,
 	useGetWorkflows,
 } from "@/http/generated/workflow-management";
+import { convertICAdvancedFilterResponseColumns } from "@/shared/components/infraComponents/ICAdvancedFilter/index.helper";
+
 import { toFormattedDate } from "@/shared/lib/dayJs";
 import { getErrorMessage } from "@/shared/lib/utils";
-
 import { getValueFromDynamicColumnRecord } from "./index.helper";
-import type { PolicyConditionRq, PolicyConditionRs } from "./index.types";
+import type { PolicyCardData } from "./index.types";
 
 export function useWorkflow(refetchInterval: false | number = false) {
 	const workflows = useGetWorkflows({
@@ -155,7 +157,7 @@ export function useWorkflowPolicy(workflow: string) {
 						enforce: !!item.has_triggered,
 						isActive: !!item.enabled,
 						description: `Created at ${toFormattedDate(item.created_time, "YYYY-MM-DD")} by ${item.creator}`,
-						conditions: (conditions as PolicyConditionRq[]).map((condition) => ({
+						conditions: (conditions as unknown as Record<string, unknown>[]).map((condition) => ({
 							id: v4(),
 							closeBracket: condition.close_bracket,
 							columnName: condition.column_name,
@@ -163,7 +165,7 @@ export function useWorkflowPolicy(workflow: string) {
 							openBracket: condition.open_bracket,
 							operator: condition.operator,
 							values: condition.values,
-						})) as PolicyConditionRs[],
+						})) as PolicyCardData["conditions"],
 					}));
 
 					return { ...response?.data, results };
@@ -272,4 +274,12 @@ export function useDeletePolicyDependency() {
 	}
 
 	return { getDependency, dependencyLoading };
+}
+
+export function useColumnPolicyConditions() {
+	const columnConditions = useGetAssetFilterColumns({
+		query: { select: (res) => convertICAdvancedFilterResponseColumns(res) },
+	});
+
+	return { columnConditions };
 }

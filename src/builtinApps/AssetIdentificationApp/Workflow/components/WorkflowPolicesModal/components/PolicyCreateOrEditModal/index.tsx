@@ -2,14 +2,15 @@ import { Button, Card, Flex, Grid, Text } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useEffect, useState } from "react";
 
-import { useWorkflowPolicy } from "@/builtinApps/AssetIdentificationApp/Workflow/index.hooks";
-import { getDynamicField } from "@/shared/components/baseComponents/BCDynamicField";
 import BCModal from "@/shared/components/baseComponents/BCModal";
 import BCTriggerActions from "@/shared/components/baseComponents/BCTriggerActions";
 import type { TriggerActionForm } from "@/shared/components/baseComponents/BCTriggerActions/index.types";
 import ICAdvancedFilterConditionBuilder from "@/shared/components/infraComponents/ICAdvancedFilter/components/ICAdvancedFilterConditionBuilder";
-import type { ICAdvancedFilterConditionBuilderCondition } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
+
+import { getDynamicField } from "@/shared/components/baseComponents/BCDynamicField";
 import { validateInput } from "@/shared/lib/utils";
+import { useColumnPolicyConditions, useWorkflowPolicy } from "../../../../index.hooks";
+import type { PolicyCardData } from "../../../../index.types";
 
 type FormList = TriggerActionForm;
 type FormValues = FormList & {
@@ -47,7 +48,7 @@ const fields = [
 ] as const;
 
 function PolicyCreateOrEdit({ workflowName, policyId, onClose }: Props) {
-	const [conditions, setConditions] = useState<ICAdvancedFilterConditionBuilderCondition[]>([]);
+	const [conditions, setConditions] = useState<PolicyCardData["conditions"]>([]);
 	const [triggerActionForm, setTriggerActionForm] = useState<FormValues | object>({});
 	const form = useForm<FormValues>({
 		validate: {
@@ -55,6 +56,7 @@ function PolicyCreateOrEdit({ workflowName, policyId, onClose }: Props) {
 		},
 	});
 
+	const { columnConditions } = useColumnPolicyConditions();
 	const { polices } = useWorkflowPolicy(workflowName);
 	const policyData = polices?.data?.results?.find(({ id }) => id === policyId);
 	const loading = false;
@@ -115,7 +117,7 @@ function PolicyCreateOrEdit({ workflowName, policyId, onClose }: Props) {
 					<Card bg="gray.1" m={0}>
 						<ICAdvancedFilterConditionBuilder
 							onChange={setConditions}
-							allColumns={[]}
+							allColumns={columnConditions?.data?.data?.results || []}
 							conditions={conditions}
 							h={100}
 						/>
