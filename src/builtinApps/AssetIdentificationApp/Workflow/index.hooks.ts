@@ -1,6 +1,8 @@
 import { useToggle } from "@mantine/hooks";
 import { notifications } from "@mantine/notifications";
+import { v4 } from "uuid";
 
+import type { CustomError } from "@/http/end-points/GeneralService.types";
 import {
 	enablePolicy,
 	enforcePolicy,
@@ -16,11 +18,11 @@ import {
 	useGetWorkflowStep,
 	useGetWorkflows,
 } from "@/http/generated/workflow-management";
-
-import type { CustomError } from "@/http/end-points/GeneralService.types";
 import { toFormattedDate } from "@/shared/lib/dayJs";
 import { getErrorMessage } from "@/shared/lib/utils";
+
 import { getValueFromDynamicColumnRecord } from "./index.helper";
+import type { PolicyConditionRq, PolicyConditionRs } from "./index.types";
 
 export function useWorkflow(refetchInterval: false | number = false) {
 	const workflows = useGetWorkflows({
@@ -146,14 +148,24 @@ export function useWorkflowPolicy(workflow: string) {
 			query: {
 				enabled: !!workflow,
 				select: (response) => {
-					const results = response?.data?.results?.map((item) => ({
+					const results = response?.data?.results?.map(({ conditions, ...item }) => ({
 						...item,
 						id: item.id,
 						title: item.name,
-						description: `Created at ${toFormattedDate(item.created_time, "YYYY-MM-DD")} by ${item.creator}`,
 						enforce: !!item.has_triggered,
 						isActive: !!item.enabled,
+						description: `Created at ${toFormattedDate(item.created_time, "YYYY-MM-DD")} by ${item.creator}`,
+						conditions: (conditions as PolicyConditionRq[]).map((condition) => ({
+							id: v4(),
+							closeBracket: condition.close_bracket,
+							columnName: condition.column_name,
+							nextOperator: condition.next_operator,
+							openBracket: condition.open_bracket,
+							operator: condition.operator,
+							values: condition.values,
+						})) as PolicyConditionRs[],
 					}));
+
 					return { ...response?.data, results };
 				},
 			},

@@ -7,6 +7,8 @@ import { getDynamicField } from "@/shared/components/baseComponents/BCDynamicFie
 import BCModal from "@/shared/components/baseComponents/BCModal";
 import BCTriggerActions from "@/shared/components/baseComponents/BCTriggerActions";
 import type { TriggerActionForm } from "@/shared/components/baseComponents/BCTriggerActions/index.types";
+import ICAdvancedFilterConditionBuilder from "@/shared/components/infraComponents/ICAdvancedFilter/components/ICAdvancedFilterConditionBuilder";
+import type { ICAdvancedFilterConditionBuilderCondition } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
 import { validateInput } from "@/shared/lib/utils";
 
 type FormList = TriggerActionForm;
@@ -45,7 +47,8 @@ const fields = [
 ] as const;
 
 function PolicyCreateOrEdit({ workflowName, policyId, onClose }: Props) {
-	const [triggerActionForm, setTriggerActionForm] = useState<FormValues>();
+	const [conditions, setConditions] = useState<ICAdvancedFilterConditionBuilderCondition[]>([]);
+	const [triggerActionForm, setTriggerActionForm] = useState<FormValues | object>({});
 	const form = useForm<FormValues>({
 		validate: {
 			name: (value) => validateInput(value, { required: true }),
@@ -53,18 +56,26 @@ function PolicyCreateOrEdit({ workflowName, policyId, onClose }: Props) {
 	});
 
 	const { polices } = useWorkflowPolicy(workflowName);
+	const policyData = polices?.data?.results?.find(({ id }) => id === policyId);
 	const loading = false;
 	const handleSubmit = (values: typeof form.values) => {
-		console.log(values, triggerActionForm);
+		console.log(values, triggerActionForm, conditions);
 	};
 
+	const resetComponents = () => {
+		form.reset();
+		setConditions([]);
+		setTriggerActionForm({});
+	};
 	useEffect(() => {
-		const policyData = polices?.data?.results?.find(({ id }) => id === policyId);
 		if (policyData) {
+			setTriggerActionForm(policyData.actions);
+			setConditions(policyData.conditions);
 			form.setValues(policyData);
 		} else {
-			form.reset();
+			resetComponents();
 		}
+		return () => resetComponents();
 	}, [policyId]);
 
 	return (
@@ -101,8 +112,13 @@ function PolicyCreateOrEdit({ workflowName, policyId, onClose }: Props) {
 							Condition(s)
 						</Text>
 					</Card.Section>
-					<Card bg="gray.1" mx={0}>
-						Condition(s)
+					<Card bg="gray.1" m={0}>
+						<ICAdvancedFilterConditionBuilder
+							onChange={setConditions}
+							allColumns={[]}
+							conditions={conditions}
+							h={100}
+						/>
 					</Card>
 				</Card>
 				<Card shadow="xs" radius="xs">
@@ -112,7 +128,7 @@ function PolicyCreateOrEdit({ workflowName, policyId, onClose }: Props) {
 						</Text>
 					</Card.Section>
 					<Card bg="gray.1" mx={0}>
-						<BCTriggerActions<FormValues> onChangeValues={setTriggerActionForm} />
+						<BCTriggerActions<FormValues> onChange={setTriggerActionForm} />
 					</Card>
 				</Card>
 				<Card m={0} p={0}>

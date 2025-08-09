@@ -33,9 +33,11 @@ function SelectOption({ iconType, label, description, disabled }: SelectOptionPr
 }
 
 export default function BCTriggerActions<T extends TriggerActionForm>({
-	onChangeValues,
+	initializeValues,
+	onChange,
 }: {
-	onChangeValues: (values: T) => void;
+	initializeValues?: T;
+	onChange: (values: T) => void;
 }) {
 	const updateValueOnce = useRef<TriggerActionFormList>({});
 	const form = useForm<T>({
@@ -82,8 +84,14 @@ export default function BCTriggerActions<T extends TriggerActionForm>({
 
 	useEffect(() => {
 		const values = form.getValues();
-		onChangeValues(values);
+		onChange(values);
 	}, [form]);
+
+	useEffect(() => {
+		if (initializeValues) {
+			form.setValues(initializeValues);
+		}
+	}, [initializeValues]);
 
 	return (
 		<>
