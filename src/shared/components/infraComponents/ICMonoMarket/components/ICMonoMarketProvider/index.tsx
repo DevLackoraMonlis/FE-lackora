@@ -12,10 +12,36 @@ import AssetIdentificationProfilingSettingsPage from "@/builtinApps/AssetIdentif
 import WorkflowAssetsIdentification from "@/builtinApps/AssetIdentificationApp/Workflow";
 import CyberAssetsLandingPage from "@/builtinApps/CyberAssetsApp/CyberAssets";
 import CyberAssetDetailPage from "@/builtinApps/CyberAssetsApp/CyberAssets/components/CyberAssetDetailPage";
+import InventoryAppDefaultPage from "@/builtinApps/InventoryApp/components/InventoryAppDefaultPage";
 import ObjectsConnectionsPage from "@/builtinApps/ObjectsApp/Connections";
 import ICMonoMarket from "@/shared/components/infraComponents/ICMonoMarket/components/ICMonoMarket";
 
 const apps: ICMonoMarketAppType[] = [
+	{
+		name: AllApplications.INVENTORY_MANAGEMENT.name,
+		modules: [
+			{
+				name: AllApplications.INVENTORY_MANAGEMENT.modules.SYSTEM_DETAILS,
+				page: InventoryAppDefaultPage,
+			},
+			{
+				name: AllApplications.INVENTORY_MANAGEMENT.modules.SOFTWARE,
+				page: InventoryAppDefaultPage,
+			},
+			{
+				name: AllApplications.INVENTORY_MANAGEMENT.modules.HARDWARE,
+				page: InventoryAppDefaultPage,
+			},
+			{
+				name: AllApplications.INVENTORY_MANAGEMENT.modules.NETWORK,
+				page: InventoryAppDefaultPage,
+			},
+			{
+				name: AllApplications.INVENTORY_MANAGEMENT.modules.USERS,
+				page: InventoryAppDefaultPage,
+			},
+		],
+	},
 	{
 		name: AllApplications.CYBER_ASSETS.name,
 		headerTitle: "Cyber Assets",

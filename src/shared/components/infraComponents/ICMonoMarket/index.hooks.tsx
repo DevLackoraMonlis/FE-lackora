@@ -36,6 +36,8 @@ export function useMonoApp(): {
 		})),
 	);
 
+	console.log(store);
+
 	const app = allApps.find((app) => app.name === appName);
 	const userAvailableApp = store.apps.find((app) => app.name === appName);
 	const module = app?.modules.find((module) => module.name === appModuleName);

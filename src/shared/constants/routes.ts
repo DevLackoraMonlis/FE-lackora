@@ -16,6 +16,16 @@ export const AllApplications = {
 	ADAPTER_MANAGEMENT: {
 		name: "adapter_management",
 	},
+	INVENTORY_MANAGEMENT: {
+		name: "inventory_management",
+		modules: {
+			SYSTEM_DETAILS: "System Details", // "Cyber Assets Identification Workflow",
+			SOFTWARE: "Software",
+			HARDWARE: "Hardware",
+			NETWORK: "Network",
+			USERS: "Users",
+		},
+	},
 	CYBER_ASSETS: {
 		name: "cyber_asset_management",
 		modules: {
