@@ -1,7 +1,7 @@
 import { Button, Card, Combobox, Flex, Text, useCombobox } from "@mantine/core";
-import type { UseFormReturnType } from "@mantine/form";
+import { useForm } from "@mantine/form";
 import { IconChevronCompactDown, IconPlus, IconZoomScan } from "@tabler/icons-react";
-import { Fragment, type RefObject, createElement, useState } from "react";
+import { Fragment, createElement, useEffect, useRef, useState } from "react";
 
 import TriggerActionGenerator from "./components/TriggerActionGenerator";
 import { useIconPolicyManagementActions, usePolicyManagementActions } from "./index.hooks";
@@ -33,12 +33,21 @@ function SelectOption({ iconType, label, description, disabled }: SelectOptionPr
 }
 
 export default function BCTriggerActions<T extends TriggerActionForm>({
-	form,
-	updateValueOnce,
+	onChangeValues,
 }: {
-	form: UseFormReturnType<T>;
-	updateValueOnce: RefObject<TriggerActionFormList>;
+	onChangeValues: (values: T) => void;
 }) {
+	const updateValueOnce = useRef<TriggerActionFormList>({});
+	const form = useForm<T>({
+		onValuesChange: () => {
+			setTimeout(() => {
+				Object.entries(updateValueOnce.current).forEach(([key, value]) => {
+					form.setFieldValue(key, value as never);
+				});
+			}, 100);
+		},
+	});
+
 	const [triggerActions, setTriggerActions] = useState<string[]>([]);
 	const { getPolicyActionIcon } = useIconPolicyManagementActions();
 	const combobox = useCombobox({
@@ -70,6 +79,11 @@ export default function BCTriggerActions<T extends TriggerActionForm>({
 			})}
 		</Fragment>
 	));
+
+	useEffect(() => {
+		const values = form.getValues();
+		onChangeValues(values);
+	}, [form]);
 
 	return (
 		<>

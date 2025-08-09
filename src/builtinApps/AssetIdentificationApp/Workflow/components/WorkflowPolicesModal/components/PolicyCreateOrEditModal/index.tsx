@@ -1,6 +1,6 @@
 import { Button, Card, Flex, Grid, Text } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { useEffect, useRef } from "react";
+import { useEffect, useState } from "react";
 
 import { useWorkflowPolicy } from "@/builtinApps/AssetIdentificationApp/Workflow/index.hooks";
 import { getDynamicField } from "@/shared/components/baseComponents/BCDynamicField";
@@ -45,26 +45,17 @@ const fields = [
 ] as const;
 
 function PolicyCreateOrEdit({ workflowName, policyId, onClose }: Props) {
-	const { polices } = useWorkflowPolicy(workflowName);
-
-	const updateValueOnce = useRef<FormList>({});
-	const onValuesChange = () => {
-		setTimeout(() => {
-			Object.entries(updateValueOnce.current).forEach(([key, value]) => {
-				form.setFieldValue(key, value);
-			});
-		}, 100);
-	};
+	const [triggerActionForm, setTriggerActionForm] = useState<FormValues>();
 	const form = useForm<FormValues>({
-		onValuesChange,
 		validate: {
 			name: (value) => validateInput(value, { required: true }),
 		},
 	});
 
+	const { polices } = useWorkflowPolicy(workflowName);
 	const loading = false;
 	const handleSubmit = (values: typeof form.values) => {
-		console.log(values);
+		console.log(values, triggerActionForm);
 	};
 
 	useEffect(() => {
@@ -121,7 +112,7 @@ function PolicyCreateOrEdit({ workflowName, policyId, onClose }: Props) {
 						</Text>
 					</Card.Section>
 					<Card bg="gray.1" mx={0}>
-						<BCTriggerActions<FormValues> form={form} updateValueOnce={updateValueOnce} />
+						<BCTriggerActions<FormValues> onChangeValues={setTriggerActionForm} />
 					</Card>
 				</Card>
 				<Card m={0} p={0}>
