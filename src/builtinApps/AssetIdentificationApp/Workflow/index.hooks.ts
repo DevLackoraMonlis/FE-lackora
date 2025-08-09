@@ -179,7 +179,7 @@ export function useWorkflowPolicyEnforce(updateEnforceCallback: VoidFunction) {
 				toggleLoading(false);
 				notifications.show({
 					title: "Success",
-					message: "The operation was successful.",
+					message: "Successfully applied to the current scan.",
 					color: "green",
 					withBorder: true,
 				});

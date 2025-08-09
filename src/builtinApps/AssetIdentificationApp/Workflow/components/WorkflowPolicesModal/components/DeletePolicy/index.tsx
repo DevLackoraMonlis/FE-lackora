@@ -59,7 +59,7 @@ export function DeletePolicyModal({ onClose, opened, policyId = "", refetchPolic
 		if (status === true) {
 			return (
 				<List listStyleType="none">
-					<List.Item>This gateway has no asset dependencies.</List.Item>
+					<List.Item>This policy has no asset dependencies.</List.Item>
 					<List.Item>You can safely remove it.</List.Item>
 					<List.Item>Do you want to proceed with deletion</List.Item>
 				</List>
@@ -88,7 +88,7 @@ export function DeletePolicyModal({ onClose, opened, policyId = "", refetchPolic
 		}
 		return (
 			<List listStyleType="none">
-				<List.Item>Failed to check the matched gateway.</List.Item>
+				<List.Item>Failed to check the matched assets.</List.Item>
 				<List.Item>please try again.</List.Item>
 			</List>
 		);

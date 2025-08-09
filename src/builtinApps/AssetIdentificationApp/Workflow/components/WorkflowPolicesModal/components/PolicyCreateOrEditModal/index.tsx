@@ -1,4 +1,4 @@
-import { Card, Flex, Grid, Text } from "@mantine/core";
+import { Button, Card, Flex, Grid, Text } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useEffect, useRef } from "react";
 
@@ -44,7 +44,7 @@ const fields = [
 	},
 ] as const;
 
-function PolicyCreateOrEdit({ workflowName, policyId }: Props) {
+function PolicyCreateOrEdit({ workflowName, policyId, onClose }: Props) {
 	const { polices } = useWorkflowPolicy(workflowName);
 
 	const updateValueOnce = useRef<FormList>({});
@@ -62,6 +62,7 @@ function PolicyCreateOrEdit({ workflowName, policyId }: Props) {
 		},
 	});
 
+	const loading = false;
 	const handleSubmit = (values: typeof form.values) => {
 		console.log(values);
 	};
@@ -76,8 +77,8 @@ function PolicyCreateOrEdit({ workflowName, policyId }: Props) {
 	}, [policyId]);
 
 	return (
-		<Flex direction="column" gap="xs" key={policyId}>
-			<form onSubmit={form.onSubmit(handleSubmit)}>
+		<>
+			<form onSubmit={form.onSubmit(handleSubmit)} key={policyId}>
 				<Card shadow="xs" radius="xs">
 					<Card.Section inheritPadding py="xs">
 						<Text size="sm" fw="bold">
@@ -123,8 +124,24 @@ function PolicyCreateOrEdit({ workflowName, policyId }: Props) {
 						<BCTriggerActions<FormValues> form={form} updateValueOnce={updateValueOnce} />
 					</Card>
 				</Card>
+				<Card m={0} p={0}>
+					<Flex px="md" py="xs" gap="sm" justify="flex-end">
+						<Button loading={loading} type="submit">
+							Save
+						</Button>
+						<Button
+							data-testid="create-policy-cancel"
+							onClick={onClose}
+							variant="default"
+							disabled={loading}
+							type="reset"
+						>
+							Cancel
+						</Button>
+					</Flex>
+				</Card>
 			</form>
-		</Flex>
+		</>
 	);
 }
 
