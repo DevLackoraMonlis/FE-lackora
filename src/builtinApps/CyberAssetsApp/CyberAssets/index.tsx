@@ -14,23 +14,19 @@ import {
 	convertICAdvancedFilterToDefaultVariables,
 } from "@/shared/components/infraComponents/ICAdvancedFilter/index.helper";
 import { createDynamicICAdvancedStore } from "@/shared/components/infraComponents/ICAdvancedFilter/index.store";
-import type {
-	ICAdvancedFilterDataRs,
-	ICAdvancedFilterProps,
-} from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
+import type { ICAdvancedFilterDataRs } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
 import type { ICMonoAppPagesDefaultProps } from "@/shared/components/infraComponents/ICMonoMarket/index.types";
+import type { AddAdvancedFilterNewPageType } from "@/shared/types/index.types";
 import { Text } from "@mantine/core";
 import { useRef, useState } from "react";
 import { v4 } from "uuid";
 
-type AddNewPageType = Pick<ICAdvancedFilterProps<ICAdvancedFilterDataRs>, "defaultVariables" | "store">;
-
 export default function CyberAssetsLandingPage(props: ICMonoAppPagesDefaultProps) {
 	const [total, setTotal] = useState(0);
-	const ref = useRef<BCMultiTabPageActions<AddNewPageType> | null>(null);
+	const ref = useRef<BCMultiTabPageActions<AddAdvancedFilterNewPageType> | null>(null);
 
 	return (
-		<BCMultiTabPage<AddNewPageType>
+		<BCMultiTabPage<AddAdvancedFilterNewPageType>
 			subTitle={<Text mt={"2xs"} c={"gray.7"} fz={"xs"}>{`(Result for last Scan: ${total})`}</Text>}
 			staticPageTitle={"All Assets"}
 			ref={ref}

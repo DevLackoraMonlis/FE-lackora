@@ -2,10 +2,15 @@ import { AllApplications } from "@/shared/constants/routes";
 import {
 	IconArrowsLeftRight,
 	IconAsset,
+	IconBox,
 	IconBrandAppgallery,
+	IconBuildingBroadcastTower,
 	IconCategory2,
+	IconCpu,
 	IconDevices2,
 	IconDiscount,
+	IconTableOptions,
+	IconUsers,
 } from "@tabler/icons-react";
 import type { ReactNode } from "react";
 
@@ -14,6 +19,7 @@ export function getSidePanelAppIcon(iconSize: number, name: string, color = "#C9
 		[AllApplications.ASSET_IDENTIFICATION.name]: (
 			<IconAsset color={color} width={iconSize} height={iconSize} />
 		),
+		[AllApplications.INVENTORY_MANAGEMENT.name]: <IconBox color={color} width={iconSize} height={iconSize} />,
 		[AllApplications.MONO_MARKET.name]: (
 			<IconBrandAppgallery color={color} width={iconSize} height={iconSize} />
 		),
@@ -33,6 +39,21 @@ export function getSidePanelAppModuleIcon(iconSize: number, name: string, color 
 		),
 		[AllApplications.CYBER_ASSETS.modules.CYBER_ASSETS]: (
 			<IconDevices2 color={color} width={iconSize} height={iconSize} />
+		),
+		[AllApplications.INVENTORY_MANAGEMENT.modules.SYSTEM_DETAILS]: (
+			<IconDevices2 color={color} width={iconSize} height={iconSize} />
+		),
+		[AllApplications.INVENTORY_MANAGEMENT.modules.SOFTWARE]: (
+			<IconTableOptions color={color} width={iconSize} height={iconSize} />
+		),
+		[AllApplications.INVENTORY_MANAGEMENT.modules.HARDWARE]: (
+			<IconCpu color={color} width={iconSize} height={iconSize} />
+		),
+		[AllApplications.INVENTORY_MANAGEMENT.modules.NETWORK]: (
+			<IconBuildingBroadcastTower color={color} width={iconSize} height={iconSize} />
+		),
+		[AllApplications.INVENTORY_MANAGEMENT.modules.USERS]: (
+			<IconUsers color={color} width={iconSize} height={iconSize} />
 		),
 	};
 

@@ -20,6 +20,7 @@ export default function ICAdvancedFilterConditionModal<T>(props: Props<T>) {
 	// );
 
 	const [conditions, setConditions] = useState<ICAdvancedFilterConditionBuilderCondition[]>([]);
+	console.log(conditions.some((item) => item.error));
 	return (
 		<ICAdvancedFilterConditionBuilder
 			onChange={setConditions}

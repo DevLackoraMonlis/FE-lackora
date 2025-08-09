@@ -130,7 +130,6 @@ export default function ICAdvancedFilterCreatableMultiSelect<T extends DefaultTy
 
 	const showOptionsSection = (!exactOptionMatch && search.trim().length > 0) || options?.length || 0;
 
-	console.log(props.item);
 	return (
 		<Flex key={`condition-row-values-${props.item?.id}`} direction="column" w={props.w} miw={props.miw}>
 			<InputWrapper label={props.label} required={props.required}>

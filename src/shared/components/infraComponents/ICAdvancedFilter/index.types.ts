@@ -9,7 +9,7 @@ import type { ICAdvancedGroupByFunctions } from "@/shared/components/infraCompon
 import type { LabelValueType } from "@/shared/lib/general-types";
 import type { ValueOf } from "@/shared/types/index.types";
 import type { AxiosResponse } from "axios";
-import type { ReactNode, RefObject } from "react";
+import type { ReactNode } from "react";
 import type { StoreApi } from "zustand/index";
 
 export type ICAdvancedFilterOrder = "asc" | "desc";
@@ -203,6 +203,7 @@ export type ICAdvancedFilterConditionBuilderRowProps = {
 	onChange: (newCondition: ICAdvancedFilterConditionBuilderCondition) => void;
 	inputValue: ReactNode;
 	isLastCondition: boolean;
+	onRemove: VoidFunction;
 };
 
 export type ICAdvancedFilterConditionBuilderProps = {
@@ -210,7 +211,6 @@ export type ICAdvancedFilterConditionBuilderProps = {
 	conditions: ICAdvancedFilterConditionBuilderCondition[];
 	allColumns: ICAdvancedFilterColumnRs[];
 	h?: number;
-	ref?: RefObject<{ hasError: () => boolean } | null>;
 };
 
 export type BracketError = {

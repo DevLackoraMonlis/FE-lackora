@@ -18,16 +18,10 @@ import type {
 import { validateInput } from "@/shared/lib/utils";
 import { Button, Flex, ScrollArea, Select, Switch } from "@mantine/core";
 import { IconPlus } from "@tabler/icons-react";
-import { startTransition, useCallback, useImperativeHandle, useMemo } from "react";
+import { startTransition, useCallback, useMemo } from "react";
 import { v4 } from "uuid";
 
 export default function ICAdvancedFilterConditionBuilder(props: ICAdvancedFilterConditionBuilderProps) {
-	useImperativeHandle(props.ref, () => ({
-		hasError: () => {
-			return props.conditions.some((item) => item.error);
-		},
-	}));
-
 	const getColumnOption = useCallback(
 		(columnName: string) => {
 			return props.allColumns.find((column) => column.name === columnName);
@@ -64,8 +58,6 @@ export default function ICAdvancedFilterConditionBuilder(props: ICAdvancedFilter
 			}
 
 			const bracketErrors = checkBracketBalance(newConditions);
-
-			console.log(bracketErrors);
 
 			const updatedErrorConditions = newConditions.map((item) => {
 				const updatedItem = { ...item };
@@ -110,6 +102,15 @@ export default function ICAdvancedFilterConditionBuilder(props: ICAdvancedFilter
 
 			startTransition(() => {
 				props.onChange(newConditions);
+			});
+		},
+		[props.conditions, props.onChange],
+	);
+
+	const onRemove = useCallback(
+		(conditionId: string) => {
+			startTransition(() => {
+				props.onChange(props.conditions.filter((item) => item.id !== conditionId));
 			});
 		},
 		[props.conditions, props.onChange],
@@ -264,6 +265,7 @@ export default function ICAdvancedFilterConditionBuilder(props: ICAdvancedFilter
 						const columnOption = getColumnOption(condition.columnName || "");
 						return (
 							<ICAdvancedFilterConditionBuilderConditionRow
+								onRemove={() => onRemove(condition.id)}
 								index={index}
 								onMinusCloseBracket={() => onChangeBrackets(condition.id, "MinusClose")}
 								onMinusOpenBracket={() => onChangeBrackets(condition.id, "MinusOpen")}

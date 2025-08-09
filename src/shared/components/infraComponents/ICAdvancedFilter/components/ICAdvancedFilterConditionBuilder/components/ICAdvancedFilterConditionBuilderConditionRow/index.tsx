@@ -5,7 +5,8 @@ import type {
 	ICAdvancedFilterOperator,
 } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
 import { useSortable } from "@dnd-kit/sortable";
-import { Flex, Grid, ScrollArea, Select } from "@mantine/core";
+import { ActionIcon, Flex, Grid, ScrollArea, Select } from "@mantine/core";
+import { IconX } from "@tabler/icons-react";
 
 export default function ICAdvancedFilterConditionBuilderConditionRow(
 	props: ICAdvancedFilterConditionBuilderRowProps,
@@ -24,18 +25,11 @@ export default function ICAdvancedFilterConditionBuilderConditionRow(
 	};
 
 	return (
-		<Flex
-			style={style}
-			ref={setNodeRef}
-			gap={"2xs"}
-			align={"flex-end"}
-			w={"100%"}
-			miw={"100%"}
-			{...attributes}
-		>
+		<Flex ref={setNodeRef} gap={"2xs"} align={"flex-end"} w={"100%"} miw={"100%"}>
 			<Grid align={"end"} gutter={0} w={"100%"} miw={"100%"} classNames={{ inner: "w-full" }}>
 				<Grid.Col span={1} p={0}>
 					<BracketButtons
+						bracketError={props.condition.bracketError}
 						error={
 							props.condition.bracketError?.type === "close" &&
 							props.condition.bracketError?.index === props.index
@@ -50,13 +44,14 @@ export default function ICAdvancedFilterConditionBuilderConditionRow(
 						condition={props.condition}
 					/>
 				</Grid.Col>
-				<Grid.Col span={9} p={0}>
+				<Grid.Col span={9} p={0} style={style} {...attributes}>
 					<ScrollArea scrollbars={"x"} w={"100%"} scrollbarSize={2}>
 						<ICAdvancedFilterConditionBuilderConditionRowSortable listener={listeners} {...props} />
 					</ScrollArea>
 				</Grid.Col>
 				<Grid.Col span={1} p={0} pl={"xs"}>
 					<BracketButtons
+						bracketError={props.condition.bracketError}
 						error={
 							props.condition.bracketError?.type === "open" &&
 							props.condition.bracketError?.index === props.index
@@ -72,20 +67,25 @@ export default function ICAdvancedFilterConditionBuilderConditionRow(
 					/>
 				</Grid.Col>
 				<Grid.Col span={1} p={0} pl={"xs"}>
-					<Select
-						disabled={props.isLastCondition}
-						w={"100%"}
-						miw={120}
-						value={props.condition.nextOperator}
-						onChange={(value) => {
-							props.onChange({
-								...props.condition,
-								nextOperator: (value || "and") as ICAdvancedFilterOperator,
-							});
-						}}
-						label={props.index === 0 && "AND/OR"}
-						data={nextOperators.map((item) => ({ label: item.toUpperCase(), value: item }))}
-					/>
+					<Flex w={"100%"} h={"100%"} align={"flex-end"} gap={"2xs"}>
+						<Select
+							disabled={props.isLastCondition}
+							w={"100%"}
+							miw={120}
+							value={props.condition.nextOperator}
+							onChange={(value) => {
+								props.onChange({
+									...props.condition,
+									nextOperator: (value || "and") as ICAdvancedFilterOperator,
+								});
+							}}
+							label={props.index === 0 && "AND/OR"}
+							data={nextOperators.map((item) => ({ label: item.toUpperCase(), value: item }))}
+						/>
+						<ActionIcon onClick={props.onRemove} mb={"2xs"} variant={"transparent"}>
+							<IconX size={20} />
+						</ActionIcon>
+					</Flex>
 				</Grid.Col>
 			</Grid>
 		</Flex>
