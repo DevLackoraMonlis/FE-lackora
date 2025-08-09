@@ -18,16 +18,10 @@ import type {
 import { validateInput } from "@/shared/lib/utils";
 import { Button, Flex, ScrollArea, Select, Switch } from "@mantine/core";
 import { IconPlus } from "@tabler/icons-react";
-import { startTransition, useCallback, useImperativeHandle, useMemo } from "react";
+import { startTransition, useCallback, useMemo } from "react";
 import { v4 } from "uuid";
 
 export default function ICAdvancedFilterConditionBuilder(props: ICAdvancedFilterConditionBuilderProps) {
-	useImperativeHandle(props.ref, () => ({
-		hasError: () => {
-			return props.conditions.some((item) => item.error);
-		},
-	}));
-
 	const getColumnOption = useCallback(
 		(columnName: string) => {
 			return props.allColumns.find((column) => column.name === columnName);
