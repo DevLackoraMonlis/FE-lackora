@@ -6,6 +6,7 @@ import type {
 	ICAdvancedFilterColumnRs,
 	ICAdvancedFilterColumnType,
 	ICAdvancedFilterCondition,
+	ICAdvancedFilterListColumn,
 	ICAdvancedFilterRq,
 	ICAdvancedFilterStoreType,
 	SetStateStore,
@@ -46,9 +47,9 @@ function includeExcludeAction(
 	const findColumn = allColumns.find((column) => column.name === columnName);
 
 	if (findColumn?.type === "List") {
-		condition.values = (value as string[]).map((item) => ({
-			label: item,
-			value: item,
+		condition.values = (value as ICAdvancedFilterListColumn[]).map((item) => ({
+			label: v4(),
+			value: item.value,
 		}));
 	} else {
 		Object.assign(condition, {
@@ -63,8 +64,10 @@ function includeExcludeAction(
 
 	const isEmptyCondition = () => {
 		if (findColumn?.type === "List") {
-			if ((value as unknown[])?.length === 0) return true;
-			return (value as unknown[]).some((item) => [undefined, null, ""].includes(item as string));
+			if ((value as ICAdvancedFilterListColumn[])?.length === 0) return true;
+			return (value as ICAdvancedFilterListColumn[]).some((item) =>
+				[undefined, null, ""].includes(item.value),
+			);
 		}
 
 		if (!value) return true;

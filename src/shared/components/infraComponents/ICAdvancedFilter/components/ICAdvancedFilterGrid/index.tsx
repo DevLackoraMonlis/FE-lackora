@@ -13,6 +13,7 @@ import {
 } from "@/shared/components/infraComponents/ICAdvancedFilter/index.constants";
 import type {
 	ICAdvancedFilterCondition,
+	ICAdvancedFilterListColumn,
 	ICAdvancedFilterProps,
 	ICAdvancedFilterRq,
 } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
@@ -218,13 +219,13 @@ export default function ICAdvancedFilterGrid<T extends Record<string, unknown>>(
 
 			if (columnOption?.type === "List") {
 				const maxDisplay = 5;
-				const arrayValue = record[columnName] as string[];
+				const arrayValue = record[columnName] as ICAdvancedFilterListColumn[];
 				return (
 					<ScrollArea h={"100%"} scrollbarSize={1} scrollbars={"x"}>
 						<Flex h={32} gap={"xs"} align={"center"}>
 							{arrayValue.slice(0, maxDisplay).map((item) => (
-								<Pill bg={"gray.2"} size={"xs"} key={item}>
-									{item}
+								<Pill bg={"gray.2"} size={"xs"} key={item.value}>
+									{item.value}
 								</Pill>
 							))}
 							{arrayValue.length > maxDisplay && <Pill>+{arrayValue.length - maxDisplay} more</Pill>}
