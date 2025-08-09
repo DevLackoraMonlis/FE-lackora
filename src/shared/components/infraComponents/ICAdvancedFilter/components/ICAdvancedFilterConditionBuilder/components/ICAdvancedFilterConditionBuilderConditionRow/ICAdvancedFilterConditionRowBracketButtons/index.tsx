@@ -1,4 +1,5 @@
 import type {
+	BracketError,
 	ICAdvancedFilterCondition,
 	ICAdvancedFilterConditionBuilderRowProps,
 } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
@@ -12,6 +13,7 @@ export const BracketButtons = (
 		type: "OpenBracket" | "CloseBracket";
 		showLabel: boolean;
 		error: boolean;
+		bracketError?: BracketError;
 	} & Pick<
 		ICAdvancedFilterConditionBuilderRowProps,
 		"onMinusCloseBracket" | "onMinusOpenBracket" | "onPlusCloseBracket" | "onPlusOpenBracket"
@@ -67,7 +69,7 @@ export const BracketButtons = (
 				>
 					{props.type === "OpenBracket" && <ButtonsSection />}
 					<Tooltip
-						label={`${props.type === "OpenBracket" ? props.condition.openBracket : props.condition.closeBracket} parenthesis`}
+						label={`${props.type === "OpenBracket" ? props.condition.openBracket : props.condition.closeBracket} parenthesis. ${props.bracketError ? `${props.bracketError ? `${props.bracketError.count} error for ${props.type === "OpenBracket" ? '"("' : '")"'}` : ""}` : ""}`}
 					>
 						<ScrollArea scrollbars={"x"} scrollbarSize={2} w={"100%"}>
 							<Flex
@@ -108,17 +110,21 @@ export const BracketButtons = (
 			)}
 
 			<Flex w={"100%"} justify={props.type === "OpenBracket" ? "flex-end" : "flex-start"}>
-				<Button
-					className={props.error ? classes.blink : ""}
-					onClick={props.type === "OpenBracket" ? props.onPlusOpenBracket : props.onPlusCloseBracket}
-					miw={32}
-					w={32}
-					size={"sm"}
-					px={"2xs"}
-					variant={"default"}
+				<Tooltip
+					label={`Add new parenthesis. ${props.bracketError ? `${props.bracketError ? `${props.bracketError.count} error for ${props.type === "OpenBracket" ? '"("' : '")"'}` : ""}` : ""}`}
 				>
-					{"{+}"}
-				</Button>
+					<Button
+						className={props.error ? classes.blink : ""}
+						onClick={props.type === "OpenBracket" ? props.onPlusOpenBracket : props.onPlusCloseBracket}
+						miw={32}
+						w={32}
+						size={"sm"}
+						px={"2xs"}
+						variant={"default"}
+					>
+						{"{+}"}
+					</Button>
+				</Tooltip>
 			</Flex>
 		</Flex>
 	);

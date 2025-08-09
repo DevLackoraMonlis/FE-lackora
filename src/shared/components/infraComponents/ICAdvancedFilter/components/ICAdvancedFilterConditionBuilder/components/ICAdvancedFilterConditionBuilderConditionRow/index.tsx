@@ -28,6 +28,7 @@ export default function ICAdvancedFilterConditionBuilderConditionRow(
 			<Grid align={"end"} gutter={0} w={"100%"} miw={"100%"} classNames={{ inner: "w-full" }}>
 				<Grid.Col span={1} p={0}>
 					<BracketButtons
+						bracketError={props.condition.bracketError}
 						error={
 							props.condition.bracketError?.type === "close" &&
 							props.condition.bracketError?.index === props.index
@@ -49,6 +50,7 @@ export default function ICAdvancedFilterConditionBuilderConditionRow(
 				</Grid.Col>
 				<Grid.Col span={1} p={0} pl={"xs"}>
 					<BracketButtons
+						bracketError={props.condition.bracketError}
 						error={
 							props.condition.bracketError?.type === "open" &&
 							props.condition.bracketError?.index === props.index
