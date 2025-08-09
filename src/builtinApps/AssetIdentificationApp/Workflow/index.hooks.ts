@@ -112,7 +112,6 @@ export function useWorkflowStep(stepId: string) {
 
 export function useWorkflowRunNow(workflowCallback: VoidFunction) {
 	const [loading, toggleLoading] = useToggle([false, true]);
-
 	function workflowRunNow() {
 		toggleLoading(true);
 		runWorkflow()
@@ -167,7 +166,6 @@ export function useWorkflowPolicy(workflow: string) {
 							values: condition.values,
 						})) as PolicyCardData["conditions"],
 					}));
-
 					return { ...response?.data, results };
 				},
 			},
@@ -184,7 +182,6 @@ export function useWorkflowPolicyReOrder() {
 
 export function useWorkflowPolicyEnforce(updateEnforceCallback: VoidFunction) {
 	const [loading, toggleLoading] = useToggle([false, true]);
-
 	function workflowEnforcePolicy(policyId: string) {
 		toggleLoading(true);
 		enforcePolicy(policyId)
@@ -214,7 +211,6 @@ export function useWorkflowPolicyEnforce(updateEnforceCallback: VoidFunction) {
 
 export function useWorkflowPolicyEnabled(updateEnabledCallback: VoidFunction) {
 	const [loading, toggleLoading] = useToggle([false, true]);
-
 	function workflowEnabledPolicy(policyId: string) {
 		toggleLoading(true);
 		enablePolicy(policyId)
@@ -248,7 +244,6 @@ export function useDeleteSinglePolicy() {
 }
 export function useDeletePolicyDependency() {
 	const [dependencyLoading, toggleDependencyLoading] = useToggle([false, true]);
-
 	async function getDependency(configurationId: string) {
 		toggleDependencyLoading(true);
 		return await getPolicyDependency(configurationId)
