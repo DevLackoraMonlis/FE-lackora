@@ -10,12 +10,12 @@ export default function InventoryAppSideCardItem(props: InventoryAppSideCardProp
 				<Flex align={"center"} justify={"space-between"} gap={"xs"} h={"100%"} px={"xs"}>
 					<Flex align={"center"} gap={"xs"} h={"100%"}>
 						{props.icon}
-						<Text fw={"bold"} c={"blue"}>
+						<Text fw={"bold"} c={props.isSelected ? "blue" : "gray"}>
 							{props.title}
 						</Text>
 					</Flex>
 					<Button p={0} onClick={props.onRedirect} variant={"transparent"}>
-						<IconArrowRight color={"blue"} size={20} />
+						<IconArrowRight color={props.isSelected ? "blue" : "gray"} size={20} />
 					</Button>
 				</Flex>
 			</Card.Section>

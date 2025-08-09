@@ -14,7 +14,7 @@ export default function InventoryAppPageWrapper(props: InventoryAppPageWrapperPr
 					</Flex>
 					{props.sideItems.map((item) => (
 						<InventoryAppSideCardItem
-							key={item.title}
+							key={item.name}
 							isSelected={props.selectedInventoryType === item.name}
 							isLoading={props.isLoading}
 							{...item}

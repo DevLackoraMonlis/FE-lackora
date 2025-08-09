@@ -23,15 +23,35 @@ import {
 import { createDynamicICAdvancedStore } from "@/shared/components/infraComponents/ICAdvancedFilter/index.store";
 import type { ICAdvancedFilterDataRs } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
 import type { ICMonoAppPagesDefaultProps } from "@/shared/components/infraComponents/ICMonoMarket/index.types";
+import { AllApplications } from "@/shared/constants/routes";
 import type { AddAdvancedFilterNewPageType } from "@/shared/types/index.types";
 import { Text } from "@mantine/core";
-import { IconDevices2 } from "@tabler/icons-react";
-import { useEffect, useRef, useState } from "react";
+import {
+	IconBuildingBroadcastTower,
+	IconCpu,
+	IconDevices2,
+	IconTableOptions,
+	IconUsers,
+} from "@tabler/icons-react";
+import { type ReactNode, useCallback, useEffect, useRef, useState } from "react";
 
 export default function InventoryAppDefaultPage(props: ICMonoAppPagesDefaultProps) {
 	const [total, setTotal] = useState(0);
 	const [selectedInventoryType, setSelectedInventoryType] = useState<string | undefined>();
 	const ref = useRef<BCMultiTabPageActions<AddAdvancedFilterNewPageType> | null>(null);
+
+	const iconMap = useCallback<(color: string) => Record<string, ReactNode>>(
+		(color: string) => ({
+			[AllApplications.INVENTORY_MANAGEMENT.modules.SYSTEM_DETAILS]: <IconDevices2 size={20} color={color} />,
+			[AllApplications.INVENTORY_MANAGEMENT.modules.USERS]: <IconUsers size={20} color={color} />,
+			[AllApplications.INVENTORY_MANAGEMENT.modules.NETWORK]: (
+				<IconBuildingBroadcastTower size={20} color={color} />
+			),
+			[AllApplications.INVENTORY_MANAGEMENT.modules.SOFTWARE]: <IconTableOptions size={20} color={color} />,
+			[AllApplications.INVENTORY_MANAGEMENT.modules.HARDWARE]: <IconCpu size={20} color={color} />,
+		}),
+		[],
+	);
 
 	const getInventoryOverviewQuery = useGetInventoryOverview(
 		{ category: props.moduleName as EachInventoryCategoryDisplayName },
@@ -39,12 +59,11 @@ export default function InventoryAppDefaultPage(props: ICMonoAppPagesDefaultProp
 			query: {
 				enabled: !!props.moduleName,
 				select: (response) => {
-					const data: Omit<InventoryAppSideCardProps, "isLoading" | "isSelected">[] = response.data.map(
-						(item) => {
-							const sideCardItem: Omit<InventoryAppSideCardProps, "isLoading" | "isSelected"> = {
+					const data: Omit<InventoryAppSideCardProps, "isLoading" | "isSelected" | "icon">[] =
+						response.data.map((item) => {
+							const sideCardItem: Omit<InventoryAppSideCardProps, "isLoading" | "isSelected" | "icon"> = {
 								onRedirect: () => setSelectedInventoryType(item.name),
 								title: item.display_name,
-								icon: <IconDevices2 size={20} color={"blue"} />,
 								items: item.overview.map((ov) => ({
 									label: ov.split(" ")[0],
 									value: ov.split(" ").slice(1).join(" "),
@@ -52,8 +71,7 @@ export default function InventoryAppDefaultPage(props: ICMonoAppPagesDefaultProp
 								name: item.name,
 							};
 							return sideCardItem;
-						},
-					);
+						});
 
 					return {
 						...response,
@@ -76,7 +94,12 @@ export default function InventoryAppDefaultPage(props: ICMonoAppPagesDefaultProp
 			selectedInventoryType={selectedInventoryType}
 			isLoading={getInventoryOverviewQuery.isFetching}
 			title={props.moduleName}
-			sideItems={getInventoryOverviewQuery.data?.data || []}
+			sideItems={
+				getInventoryOverviewQuery.data?.data.map((item) => ({
+					...item,
+					icon: iconMap(selectedInventoryType === item.name ? "blue" : "gray")[props.moduleName || ""],
+				})) || []
+			}
 			page={
 				selectedInventoryType && (
 					<BCMultiTabPage<AddAdvancedFilterNewPageType>

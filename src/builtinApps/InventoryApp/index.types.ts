@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 
 export type InventoryAppSideCardProps = {
 	title: string;
-	icon: ReactNode;
+	icon?: ReactNode;
 	items: LabelValueType[];
 	isLoading: boolean;
 	onRedirect: VoidFunction;
