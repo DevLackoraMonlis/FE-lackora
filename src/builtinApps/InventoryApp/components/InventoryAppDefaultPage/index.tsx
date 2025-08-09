@@ -81,7 +81,10 @@ export default function InventoryAppDefaultPage(props: ICMonoAppPagesDefaultProp
 				selectedInventoryType && (
 					<BCMultiTabPage<AddAdvancedFilterNewPageType>
 						subTitle={<Text mt={"2xs"} c={"gray.7"} fz={"xs"}>{`(Result for last Scan: ${total})`}</Text>}
-						title={props.moduleName || ""}
+						title={
+							getInventoryOverviewQuery.data?.data?.find((item) => item.name === selectedInventoryType)
+								?.title || ""
+						}
 						staticPageTitle={"All Assets"}
 						ref={ref}
 						mainPage={(values) => (
