@@ -65,8 +65,6 @@ export default function ICAdvancedFilterConditionBuilder(props: ICAdvancedFilter
 
 			const bracketErrors = checkBracketBalance(newConditions);
 
-			console.log(bracketErrors);
-
 			const updatedErrorConditions = newConditions.map((item) => {
 				const updatedItem = { ...item };
 				const findError = bracketErrors.find((errorItem) => errorItem.itemId === item.id);

@@ -18,7 +18,6 @@ export default function ICAdvancedFilterComponent<T>(
 		"run" | "allColumns" | "data" | "isLoading" | "totalRecords" | "searchInputItems" | "tableHeight"
 	>,
 ) {
-	console.log(props);
 	const { ref: conditionFixedSectionRef, height: conditionFixedSectionHeight } = useElementSize();
 	const { ref: conditionItemsSectionRef, height: conditionItemsSectionHeight } = useElementSize();
 	const store = useStore(
