@@ -2,9 +2,9 @@ import { Flex, LoadingOverlay, Text } from "@mantine/core";
 import { IconDatabaseSearch } from "@tabler/icons-react";
 import type { ReactNode } from "react";
 
-type Props = { iconSize?: number; title?: string; description?: ReactNode };
+type Props = { iconSize?: number; title?: string; description?: ReactNode; icon?: ReactNode };
 
-export default function BCEmpty({ iconSize = 50, title, description = "" }: Props) {
+export default function BCEmpty({ iconSize = 50, title, description = "", icon }: Props) {
 	return (
 		<LoadingOverlay
 			visible
@@ -12,7 +12,7 @@ export default function BCEmpty({ iconSize = 50, title, description = "" }: Prop
 				children: (
 					<Flex justify="center" align="center" direction="column">
 						<Text component="span" c="primary.5">
-							<IconDatabaseSearch size={iconSize} />
+							{icon || <IconDatabaseSearch size={iconSize} />}
 						</Text>
 						<Text component="span" fw="bold" fz="md">
 							{title ?? "No date found!"}

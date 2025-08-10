@@ -4,6 +4,7 @@ import { useDisclosure, useViewportSize } from "@mantine/hooks";
 import { IconGripVertical, IconPlus } from "@tabler/icons-react";
 import { type ReactNode, useCallback, useEffect, useState } from "react";
 
+import BCEmpty from "@/shared/components/baseComponents/BCEmpty";
 import BCEmptyWithCreate from "@/shared/components/baseComponents/BCEmptyWithCreate";
 import BCSortable from "@/shared/components/baseComponents/BCSortable";
 import { PolicyNoPolicies } from "@/shared/icons/components/policy";
@@ -113,13 +114,20 @@ export default function ProfilingAccordionWithDnD({ type }: { type: ProfilingInv
 				<Grid p="xs" pt="sm">
 					<Grid.Col span={8} offset={2} pos="relative" h={showLandingCreate ? height - 230 : "100%"}>
 						{showLandingCreate ? (
-							<BCEmptyWithCreate
-								onCreate={() => {}}
-								icon={<PolicyNoPolicies width={140} height={140} />}
-								buttonText="Create First Inventory Rule"
-								title="No inventory rule has been created to identify assets yet!"
-								description="To get started, define a new rule with your desired conditions and appropriate connections Define rules to identify Pull Base assets by collecting information through various adapters."
-							/>
+							inventoryRules.isError ? (
+								<BCEmpty
+									icon={<PolicyNoPolicies width={140} height={140} />}
+									title="Inventory rule has error!"
+								/>
+							) : (
+								<BCEmptyWithCreate
+									onCreate={handleOpenedCreateOrEdit.open}
+									icon={<PolicyNoPolicies width={140} height={140} />}
+									buttonText="Create First Inventory Rule"
+									title="No inventory rule has been created to identify assets yet!"
+									description="To get started, define a new rule with your desired conditions and appropriate connections Define rules to identify Pull Base assets by collecting information through various adapters."
+								/>
+							)
 						) : inventoryRules?.isLoading ? (
 							<ProfilingAccordionSkelton count={6} />
 						) : (
