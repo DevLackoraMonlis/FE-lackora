@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 
 type Props = { iconSize?: number; title?: string; description?: ReactNode; icon?: ReactNode };
 
-export default function BCEmpty({ iconSize = 50, title, description = "", icon }: Props) {
+export default function BCEmptyOrError({ iconSize = 50, title, description = "", icon }: Props) {
 	return (
 		<LoadingOverlay
 			visible

@@ -4,7 +4,7 @@ import { useDisclosure, useViewportSize } from "@mantine/hooks";
 import { IconGripVertical, IconPlus } from "@tabler/icons-react";
 import { type ReactNode, useCallback, useEffect, useState } from "react";
 
-import BCEmpty from "@/shared/components/baseComponents/BCEmpty";
+import BCEmptyOrError from "@/shared/components/baseComponents/BCEmptyOrError";
 import BCEmptyWithCreate from "@/shared/components/baseComponents/BCEmptyWithCreate";
 import BCSortable from "@/shared/components/baseComponents/BCSortable";
 import { PolicyNoPolicies } from "@/shared/icons/components/policy";
@@ -115,7 +115,7 @@ export default function ProfilingAccordionWithDnD({ type }: { type: ProfilingInv
 					<Grid.Col span={8} offset={2} pos="relative" h={showLandingCreate ? height - 230 : "100%"}>
 						{showLandingCreate ? (
 							inventoryRules.isError ? (
-								<BCEmpty
+								<BCEmptyOrError
 									icon={<PolicyNoPolicies width={140} height={140} />}
 									title="Inventory rule has error!"
 								/>
