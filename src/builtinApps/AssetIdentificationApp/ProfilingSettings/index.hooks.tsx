@@ -7,9 +7,11 @@ import { useGetAssetFilterColumns } from "@/http/generated/cyber-asset-managemen
 import {
 	changeInventoryRuleStatus,
 	getInventoryRuleDependency,
+	useCreateInventoryRule,
 	useDeleteInventoryRule,
 	useGetInventoryRules,
 	useOrderInventoryRulePriority,
+	useUpdateInventoryRule,
 } from "@/http/generated/inventory-rules";
 import { convertICAdvancedFilterResponseColumns } from "@/shared/components/infraComponents/ICAdvancedFilter/index.helper";
 
@@ -127,4 +129,14 @@ export function useColumnProfilingConditions() {
 	});
 
 	return { columnConditions };
+}
+
+export function useCreateProfiling() {
+	const createInventoryRule = useCreateInventoryRule();
+	return { createInventoryRule };
+}
+
+export function useUpdateProfiling() {
+	const updateInventoryRule = useUpdateInventoryRule();
+	return { updateInventoryRule };
 }

@@ -14,6 +14,7 @@ import type { ProfilingCardData } from "../../index.types";
 import DeleteProfilingModal from "../DeleteProfiling";
 import ProfilingAccordion from "../ProfilingAccordion";
 import ProfilingAccordionSkelton from "../ProfilingAccordionSkelton";
+import ProfilingCreateOrEditModal from "../ProfilingCreateOrEditModal";
 
 const DnDCardBox = ({ id, content }: { id: string; content: ReactNode }) => {
 	const { listeners, setNodeRef, transform, transition } = useSortable({ id });
@@ -63,7 +64,7 @@ export default function ProfilingAccordionWithDnD({ type }: { type: ProfilingInv
 		setSelectedId(id);
 		handleOpenedCreateOrEdit.open();
 	};
-	const handleClosePolicy = () => {
+	const handleCloseProfiling = () => {
 		setSelectedId("");
 		handleOpenedCreateOrEdit.close();
 		handleOpenedDelete.close();
@@ -95,8 +96,15 @@ export default function ProfilingAccordionWithDnD({ type }: { type: ProfilingInv
 	return (
 		<>
 			<DeleteProfilingModal
-				onClose={handleClosePolicy}
-				opened={openedDelete || openedCreateOrEdit}
+				onClose={handleCloseProfiling}
+				opened={openedDelete}
+				inventoryRuleId={selectedId}
+				refetchProfiling={handleRefetchRules}
+				type={type}
+			/>
+			<ProfilingCreateOrEditModal
+				onClose={handleCloseProfiling}
+				opened={openedCreateOrEdit}
 				inventoryRuleId={selectedId}
 				refetchProfiling={handleRefetchRules}
 				type={type}

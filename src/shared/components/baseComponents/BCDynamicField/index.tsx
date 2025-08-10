@@ -158,7 +158,7 @@ export const fieldsTransformRs = (
 	return (
 		fields?.map(({ object_type, ...item }) => ({
 			...item,
-			api: getObjectRelatedRecords,
+			api: getObjectRelatedRecords as BCDynamicFieldProps<string>["api"],
 			objectType: object_type,
 		})) || []
 	);

@@ -53,6 +53,7 @@ export type BCDynamicFieldRs = {
 	label: string;
 	key: string;
 	objectType?: string | null;
+	placeholder?: string;
 	type?: BCDynamicFieldType | null;
 	paginate?: boolean | null;
 	options?: LabelValueType[] | OptionsLabelValueType | null;
