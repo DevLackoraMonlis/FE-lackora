@@ -1,7 +1,8 @@
 import { Button, Card, Combobox, Flex, Text, useCombobox } from "@mantine/core";
 import { useForm } from "@mantine/form";
+import { useShallowEffect } from "@mantine/hooks";
 import { IconChevronCompactDown, IconPlus, IconZoomScan } from "@tabler/icons-react";
-import { Fragment, createElement, useEffect, useRef, useState } from "react";
+import { Fragment, createElement, useRef, useState } from "react";
 
 import TriggerActionGenerator from "./components/TriggerActionGenerator";
 import { useIconPolicyManagementActions, usePolicyManagementActions } from "./index.hooks";
@@ -39,16 +40,15 @@ export default function BCTriggerActions<T extends TriggerActionForm>({
 	initializeValues?: T;
 	onChange: (values: T) => void;
 }) {
-	const updateValueOnce = useRef<TriggerActionFormList>({});
+	const updateValueByDependency = useRef<TriggerActionFormList>({});
 	const form = useForm<T>({
-		onValuesChange: (values) => {
-			console.log(values, onChange);
-			// // onChange(values);
-			// setTimeout(() => {
-			// 	Object.entries(updateValueOnce.current).forEach(([key, value]) => {
-			// 		form.setFieldValue(key, value as never);
-			// 	});
-			// }, 100);
+		onValuesChange: () => {
+			setTimeout(() => {
+				Object.entries(updateValueByDependency.current).forEach(([key, value]) => {
+					form.setFieldValue(key, value as never);
+				});
+				onChange(form.values);
+			}, 100);
 		},
 	});
 
@@ -84,7 +84,7 @@ export default function BCTriggerActions<T extends TriggerActionForm>({
 		</Fragment>
 	));
 
-	useEffect(() => {
+	useShallowEffect(() => {
 		if (initializeValues) {
 			form.setValues(initializeValues);
 		}
@@ -95,7 +95,7 @@ export default function BCTriggerActions<T extends TriggerActionForm>({
 			{triggerActions.map((triggerAction = "") => (
 				<TriggerActionGenerator<T>
 					key={triggerAction}
-					{...{ triggerActions, setTriggerActions, form, updateValueOnce, triggerAction }}
+					{...{ triggerActions, setTriggerActions, form, updateValueByDependency, triggerAction }}
 				/>
 			))}
 			<Combobox

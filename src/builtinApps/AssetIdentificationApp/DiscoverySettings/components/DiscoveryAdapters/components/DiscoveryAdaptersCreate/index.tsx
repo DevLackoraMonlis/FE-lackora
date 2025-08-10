@@ -26,10 +26,10 @@ type Props = {
 };
 
 const DiscoveryAdaptersCreateGateway = (props: Props) => {
-	const updateValueOnce = useRef<FormList>({});
+	const updateValueByDependency = useRef<FormList>({});
 	const onValuesChange = () => {
 		setTimeout(() => {
-			Object.entries(updateValueOnce.current).forEach(([key, value]) => {
+			Object.entries(updateValueByDependency.current).forEach(([key, value]) => {
 				form.setFieldValue(key, value);
 			});
 		}, 100);
@@ -47,8 +47,10 @@ const DiscoveryAdaptersCreateGateway = (props: Props) => {
 
 	const handleRemoveFromList = (index: number) => {
 		form.removeListItem("list", index);
-		const filterRemoved = omitBy(updateValueOnce.current, (_value, key) => key.includes(index.toString()));
-		updateValueOnce.current = filterRemoved;
+		const filterRemoved = omitBy(updateValueByDependency.current, (_value, key) =>
+			key.includes(index.toString()),
+		);
+		updateValueByDependency.current = filterRemoved;
 		onValuesChange();
 	};
 
@@ -86,7 +88,7 @@ const DiscoveryAdaptersCreateGateway = (props: Props) => {
 							{ listKey, key },
 							listItem,
 							props.fields,
-							updateValueOnce,
+							updateValueByDependency,
 						);
 						return (
 							<Fragment key={`list.${index + 1}.${key}`}>

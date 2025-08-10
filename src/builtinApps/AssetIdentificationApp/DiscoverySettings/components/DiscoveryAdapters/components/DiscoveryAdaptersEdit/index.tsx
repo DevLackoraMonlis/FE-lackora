@@ -34,13 +34,13 @@ const DiscoveryAdaptersForm = ({
 	handleEditAdapterConfigurations,
 	fields,
 }: Props) => {
-	const updateValueOnce = useRef<FormValues>({});
+	const updateValueByDependency = useRef<FormValues>({});
 	const initValidations = getDynamicFieldValidate<FormValues, string>(fields);
 	const form = useForm<FormValues>({
 		validate: initValidations,
 		onValuesChange: () => {
 			setTimeout(() => {
-				Object.entries(updateValueOnce.current).forEach(([key, value]) => {
+				Object.entries(updateValueByDependency.current).forEach(([key, value]) => {
 					form.setFieldValue(key, value);
 				});
 			}, 100);
@@ -63,7 +63,7 @@ const DiscoveryAdaptersForm = ({
 
 		form.initialize(formInitialValues);
 		return () => {
-			updateValueOnce.current = {};
+			updateValueByDependency.current = {};
 		};
 	}, [configs]);
 
@@ -79,7 +79,7 @@ const DiscoveryAdaptersForm = ({
 								{ listKey: key, key },
 								form.values,
 								fields,
-								updateValueOnce,
+								updateValueByDependency,
 							);
 							return (
 								<Fragment key={`${key}-${idx + 1}`}>

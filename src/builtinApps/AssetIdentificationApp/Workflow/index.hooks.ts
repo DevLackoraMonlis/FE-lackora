@@ -7,10 +7,12 @@ import {
 	enablePolicy,
 	enforcePolicy,
 	getPolicyDependency,
+	useCreatePolicy,
 	useDeletePolicy,
 	useGetPolicies,
 	useGetPolicyManagementColumns,
 	useOrderPolicyPriority,
+	useUpdatePolicy,
 } from "@/http/generated/policy-management";
 import {
 	runWorkflow,
@@ -280,4 +282,14 @@ export function useColumnPolicyConditions() {
 	});
 
 	return { columnConditions };
+}
+
+export function useCreateWorkflowPolicy() {
+	const createPolicy = useCreatePolicy();
+	return { createPolicy };
+}
+
+export function useUpdateWorkflowPolicy() {
+	const updatePolicy = useUpdatePolicy();
+	return { updatePolicy };
 }

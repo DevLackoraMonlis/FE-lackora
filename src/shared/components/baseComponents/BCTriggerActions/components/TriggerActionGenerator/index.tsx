@@ -18,13 +18,13 @@ type Props<T extends TriggerActionForm> = {
 	triggerActions: string[];
 	setTriggerActions: Dispatch<SetStateAction<string[]>>;
 	form: UseFormReturnType<T>;
-	updateValueOnce: RefObject<TriggerActionFormList>;
+	updateValueByDependency: RefObject<TriggerActionFormList>;
 	triggerAction: string;
 };
 
 export default function TriggerActionGenerator<T extends TriggerActionForm>({
 	form,
-	updateValueOnce,
+	updateValueByDependency,
 	triggerAction,
 	triggerActions,
 	setTriggerActions,
@@ -41,23 +41,23 @@ export default function TriggerActionGenerator<T extends TriggerActionForm>({
 
 	const onValuesChange = () => {
 		setTimeout(() => {
-			Object.entries(updateValueOnce.current).forEach(([key, value]) => {
+			Object.entries(updateValueByDependency.current).forEach(([key, value]) => {
 				form.setFieldValue(key, value as never);
 			});
 		}, 100);
 	};
 	const handleRemoveFromList = (index: number) => {
 		form.removeListItem(type, index);
-		const filterRemoved = omitBy(updateValueOnce.current, (_, key) => key.includes(index.toString()));
-		updateValueOnce.current = filterRemoved;
+		const filterRemoved = omitBy(updateValueByDependency.current, (_, key) => key.includes(index.toString()));
+		updateValueByDependency.current = filterRemoved;
 		onValuesChange();
 	};
 	const handleRemoveSection = () => {
 		const updateActions = triggerActions.filter((item) => item !== triggerAction);
 		setTriggerActions(updateActions);
 		form.setFieldValue(type, [] as never);
-		const filterRemoved = omitBy(updateValueOnce.current, (_, key) => key.includes(type));
-		updateValueOnce.current = filterRemoved;
+		const filterRemoved = omitBy(updateValueByDependency.current, (_, key) => key.includes(type));
+		updateValueByDependency.current = filterRemoved;
 		onValuesChange();
 	};
 	const insertListItem = useMemo(
@@ -67,7 +67,7 @@ export default function TriggerActionGenerator<T extends TriggerActionForm>({
 					accumulator[key] = "";
 					return accumulator;
 				},
-				{ key: randomId() } as TriggerActionFormList,
+				{ key: randomId(), fields: sectionData.fields } as TriggerActionFormList,
 			),
 		[sectionData?.fields?.length],
 	);
@@ -82,7 +82,7 @@ export default function TriggerActionGenerator<T extends TriggerActionForm>({
 						{ listKey, key },
 						listItem,
 						sectionData.fields,
-						updateValueOnce,
+						updateValueByDependency,
 					);
 					return (
 						<Fragment key={listKey}>

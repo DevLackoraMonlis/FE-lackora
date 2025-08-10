@@ -1,21 +1,28 @@
 import { Button, Card, Flex, Grid, Text } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 
+import type { EditPolicyRequestConditions } from "@/http/generated/models";
+import { configsUpdateTransformRq, getDynamicField } from "@/shared/components/baseComponents/BCDynamicField";
 import BCModal from "@/shared/components/baseComponents/BCModal";
+import BCTriggerActions from "@/shared/components/baseComponents/BCTriggerActions";
 import type { TriggerActionForm } from "@/shared/components/baseComponents/BCTriggerActions/index.types";
-
-import { getDynamicField } from "@/shared/components/baseComponents/BCDynamicField";
 import ICAdvancedFilterConditionBuilder from "@/shared/components/infraComponents/ICAdvancedFilter/components/ICAdvancedFilterConditionBuilder";
 import { validateInput } from "@/shared/lib/utils";
-import { useColumnPolicyConditions, useWorkflowPolicy } from "../../../../index.hooks";
-import type { PolicyCardData } from "../../../../index.types";
 
-type FormList = TriggerActionForm;
-type FormValues = FormList & {
+import {
+	useColumnPolicyConditions,
+	useCreateWorkflowPolicy,
+	useUpdateWorkflowPolicy,
+	useWorkflowPolicy,
+} from "../../../../index.hooks";
+import type { PolicyCardData, PolicyWorkflowTypes } from "../../../../index.types";
+
+type FormValues = {
 	name: string;
 	summary: string;
 	conditions: PolicyCardData["conditions"];
+	triggerActionForm: TriggerActionForm;
 };
 
 type Props = {
@@ -48,10 +55,10 @@ const fields = [
 ] as const;
 
 function PolicyCreateOrEdit({ workflowName, policyId, onClose }: Props) {
-	// const [triggerActionForm, setTriggerActionForm] = useState<FormList>({});
 	const form = useForm<FormValues>({
 		initialValues: {
 			conditions: [],
+			triggerActionForm: {},
 			name: "",
 			summary: "",
 		},
@@ -61,31 +68,81 @@ function PolicyCreateOrEdit({ workflowName, policyId, onClose }: Props) {
 	});
 
 	const { columnConditions } = useColumnPolicyConditions();
-
 	const { polices } = useWorkflowPolicy(workflowName);
-	const policyData = polices?.data?.results?.find(({ id }) => id === policyId);
-	const loading = false;
+	const loading = polices.isLoading || columnConditions.isLoading;
+	const policyData = useMemo(() => polices?.data?.results?.find(({ id }) => id === policyId), [loading]);
 
-	const handleSubmit = (formValues: FormValues) => {
-		console.log(formValues, {}, formValues.conditions);
-	};
+	const { createPolicy } = useCreateWorkflowPolicy();
+	const { updatePolicy } = useUpdateWorkflowPolicy();
+	const handleSubmit = ({ triggerActionForm, conditions: formConditions, ...formValues }: FormValues) => {
+		const actions = Object.values(triggerActionForm)
+			.filter((valueAsArray = []) => !!valueAsArray?.length)
+			.map((valueAsArray = []) => {
+				const actionFields = valueAsArray.flatMap(({ fields = [], key, ...values }) =>
+					configsUpdateTransformRq(fields, values),
+				);
+				return actionFields;
+			});
+		const conditions = formConditions.map((item) => ({
+			close_bracket: item.closeBracket,
+			column_name: item.columnName || "",
+			next_operator: item.nextOperator,
+			open_bracket: item.openBracket,
+			operator: item.operator,
+			values: item.values,
+		})) as EditPolicyRequestConditions;
 
-	const resetComponents = () => {
-		form.reset();
-		// setTriggerActionForm({});
+		if (policyId) {
+			updatePolicy.mutate(
+				{
+					policyId,
+					data: {
+						...formValues,
+						actions,
+						workflow: workflowName as PolicyWorkflowTypes,
+						action_id: "",
+						conditions,
+					},
+				},
+				{
+					onSuccess() {
+						form.reset();
+						onClose();
+					},
+				},
+			);
+		} else {
+			createPolicy.mutate(
+				{
+					data: {
+						...formValues,
+						actions,
+						workflow: workflowName as PolicyWorkflowTypes,
+						order: 1,
+						action_id: "",
+						conditions,
+					},
+				},
+				{
+					onSuccess() {
+						form.reset();
+						onClose();
+					},
+				},
+			);
+		}
 	};
 
 	useEffect(() => {
-		if (policyData) {
-			// setTriggerActionForm(policyData.actions);
+		if (policyData && !loading) {
 			form.setValues(policyData);
 		} else {
-			resetComponents();
+			form.reset();
 		}
-	}, []);
+	}, [policyId, loading]);
 
 	useEffect(() => {
-		return () => resetComponents();
+		return () => form.reset();
 	}, []);
 
 	return (
@@ -138,7 +195,9 @@ function PolicyCreateOrEdit({ workflowName, policyId, onClose }: Props) {
 						</Text>
 					</Card.Section>
 					<Card bg="gray.1" mx={0}>
-						{/* <BCTriggerActions<FormValues> onChange={setTriggerActionForm} /> */}
+						<BCTriggerActions<FormValues["triggerActionForm"]>
+							onChange={(triggerActionForm) => form.setFieldValue("triggerActionForm", triggerActionForm)}
+						/>
 					</Card>
 				</Card>
 				<Card m={0} p={0}>
@@ -164,7 +223,7 @@ function PolicyCreateOrEdit({ workflowName, policyId, onClose }: Props) {
 
 export default function PolicyCreateOrEditModal({ onClose, opened, ...props }: Props) {
 	return (
-		<BCModal size="70%" onClose={onClose} opened={opened} title="Create New Policy">
+		<BCModal size="80%" onClose={onClose} opened={opened} title="Create New Policy">
 			<PolicyCreateOrEdit onClose={onClose} opened={opened} {...props} />
 		</BCModal>
 	);
