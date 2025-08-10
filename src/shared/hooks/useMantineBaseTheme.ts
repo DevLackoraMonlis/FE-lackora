@@ -4,6 +4,18 @@ import type { MantineThemeOverride } from "@mantine/core";
 export default function useMantineBaseTheme() {
 	const mantineBaseTheme: MantineThemeOverride = {
 		components: {
+			Select: {
+				defaultProps: {
+					checkIconPosition: "right",
+					comboboxProps: { transitionProps: { transition: "pop", duration: 150 } },
+					styles: () => ({
+						dropdown: {
+							dropdown: { maxHeight: 200, overflowY: "auto" },
+							zIndex: Number.MAX_SAFE_INTEGER,
+						},
+					}),
+				},
+			},
 			Accordion: {
 				defaultProps: {
 					styles: ({ colors }: MantineThemeOverride) => ({
@@ -53,7 +65,7 @@ export default function useMantineBaseTheme() {
 			Tooltip: {
 				defaultProps: {
 					withArrow: true,
-					transitionProps: { duration: 200 },
+					transitionProps: { duration: 150 },
 				},
 			},
 			Menu: {

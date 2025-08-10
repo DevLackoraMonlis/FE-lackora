@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 
 type Props = { iconSize?: number; title?: string; description?: ReactNode };
 
-export default function BCEmpty({ iconSize = 50, title = "No date found!", description = "" }: Props) {
+export default function BCEmpty({ iconSize = 50, title, description = "" }: Props) {
 	return (
 		<LoadingOverlay
 			visible
@@ -15,7 +15,7 @@ export default function BCEmpty({ iconSize = 50, title = "No date found!", descr
 							<IconDatabaseSearch size={iconSize} />
 						</Text>
 						<Text component="span" fw="bold" fz="md">
-							{title}
+							{title ?? "No date found!"}
 						</Text>
 						<Text component="span" c="dimmed">
 							{description}

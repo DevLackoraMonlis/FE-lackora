@@ -1,43 +1,28 @@
 import { Button, Card, Combobox, Flex, Text, useCombobox } from "@mantine/core";
-import { IconChevronCompactDown, IconPlus } from "@tabler/icons-react";
-import { Fragment, useState } from "react";
-import { FcFolder } from "react-icons/fc";
+import { useForm } from "@mantine/form";
+import { IconChevronCompactDown, IconPlus, IconZoomScan } from "@tabler/icons-react";
+import { Fragment, createElement, useEffect, useRef, useState } from "react";
 
 import TriggerActionGenerator from "./components/TriggerActionGenerator";
+import { useIconPolicyManagementActions, usePolicyManagementActions } from "./index.hooks";
+import type { TriggerActionForm, TriggerActionFormList, TriggerActionIcons } from "./index.types";
 
-const groceries = [
-	{
-		groupName: "groupName 1",
-		list: [
-			{ icon: <FcFolder />, value: "Apples", description: "Crisp and refreshing fruit" },
-			{ icon: <FcFolder />, value: "Bananas", description: "Naturally sweet and potassium-rich fruit" },
-			{ icon: <FcFolder />, value: "Broccoli", description: "Nutrient-packed green vegetable" },
-			{ icon: <FcFolder />, value: "Carrots", description: "Crunchy and vitamin-rich root vegetable" },
-			{ icon: <FcFolder />, value: "Chocolate", description: "Indulgent and decadent treat" },
-		],
-	},
-	{
-		groupName: "groupName 2",
-		list: [
-			{ icon: <FcFolder />, value: "Apples", description: "Crisp and refreshing fruit" },
-			{ icon: <FcFolder />, value: "Bananas", description: "Naturally sweet and potassium-rich fruit" },
-			{ icon: <FcFolder />, value: "Broccoli", description: "Nutrient-packed green vegetable" },
-			{ icon: <FcFolder />, value: "Carrots", description: "Crunchy and vitamin-rich root vegetable" },
-			{ icon: <FcFolder />, value: "Chocolate", description: "Indulgent and decadent treat" },
-		],
-	},
-];
+type SelectOptionProps = {
+	label: string;
+	description: string;
+	disabled: boolean;
+	iconType?: TriggerActionIcons;
+};
 
-type SelectOptions = (typeof groceries)[number]["list"][number] & { disabled: boolean };
-function SelectOption({ icon, value, description, disabled }: SelectOptions) {
+function SelectOption({ iconType, label, description, disabled }: SelectOptionProps) {
 	return (
 		<Card m={0} p={0}>
 			<Flex gap="md" p="xs" bg={disabled ? "gray.3" : "gray.1"}>
 				<Flex justify="center" align="center" fz="h1" bg="transparent">
-					{icon}
+					{iconType ? createElement(iconType) : <IconZoomScan />}
 				</Flex>
 				<Flex direction="column">
-					<Text fz="sm">{value}</Text>
+					<Text fz="sm">{label}</Text>
 					<Text fz="xs" c="dimmed">
 						{description}
 					</Text>
@@ -47,34 +32,77 @@ function SelectOption({ icon, value, description, disabled }: SelectOptions) {
 	);
 }
 
-export default function BCTriggerActions() {
-	const [triggerActions, setTriggerActions] = useState<string[]>([]);
+export default function BCTriggerActions<T extends TriggerActionForm>({
+	initializeValues,
+	onChange,
+}: {
+	initializeValues?: T;
+	onChange: (values: T) => void;
+}) {
+	const updateValueOnce = useRef<TriggerActionFormList>({});
+	const form = useForm<T>({
+		onValuesChange: () => {
+			setTimeout(() => {
+				Object.entries(updateValueOnce.current).forEach(([key, value]) => {
+					form.setFieldValue(key, value as never);
+				});
+			}, 100);
+		},
+	});
 
+	const [triggerActions, setTriggerActions] = useState<string[]>([]);
+	const { getPolicyActionIcon } = useIconPolicyManagementActions();
 	const combobox = useCombobox({
 		onDropdownClose: () => combobox.resetSelectedOption(),
 	});
-	const options = groceries.map(({ groupName, list }) => (
+
+	const { policyActions } = usePolicyManagementActions();
+	const options = Object.entries(policyActions?.data || {}).map(([groupName, list]) => (
 		<Fragment key={groupName}>
 			<Text c="dimmed" py="xs" px="2x">
 				{groupName}
 			</Text>
-			{list.map((item) => {
-				const disabled = triggerActions.includes(item.value);
+			{list?.map((item) => {
+				if (item.name && !form.getValues()?.[item.name]) {
+					form.setFieldValue(item.name, [] as never);
+				}
+				const key = `${groupName}|${item.name}`;
+				const disabled = triggerActions.includes(key);
 				return (
-					<Combobox.Option key={item.value} m={0} p="3xs" value={item.value} disabled={disabled}>
-						<SelectOption {...item} disabled={disabled} />
+					<Combobox.Option key={key} value={key} m={0} p="3xs" disabled={disabled}>
+						<SelectOption
+							iconType={getPolicyActionIcon(item.name)}
+							label={item.display_name}
+							description={item.description}
+							disabled={disabled}
+						/>
 					</Combobox.Option>
 				);
 			})}
 		</Fragment>
 	));
 
+	useEffect(() => {
+		const values = form.getValues();
+		onChange(values);
+	}, [form]);
+
+	useEffect(() => {
+		if (initializeValues) {
+			form.setValues(initializeValues);
+		}
+	}, [initializeValues]);
+
 	return (
 		<>
-			<TriggerActionGenerator {...{ triggerActions, setTriggerActions }} />
+			{triggerActions.map((triggerAction = "") => (
+				<TriggerActionGenerator<T>
+					key={triggerAction}
+					{...{ triggerActions, setTriggerActions, form, updateValueOnce, triggerAction }}
+				/>
+			))}
 			<Combobox
-				position="bottom"
-				withinPortal={true}
+				withinPortal
 				store={combobox}
 				onOptionSubmit={(val) => {
 					setTriggerActions((perArray) => [...perArray, val]);
@@ -82,15 +110,17 @@ export default function BCTriggerActions() {
 				}}
 			>
 				<Combobox.Target>
-					<Button
-						w="500px"
-						variant="transparent"
-						rightSection={<IconChevronCompactDown size={15} />}
-						leftSection={<IconPlus size={15} />}
-						onClick={() => combobox.toggleDropdown()}
-					>
-						Add actions
-					</Button>
+					<Flex w="500px" mt="sm">
+						<Button
+							loading={policyActions.isLoading}
+							variant="transparent"
+							rightSection={<IconChevronCompactDown size={15} />}
+							leftSection={<IconPlus size={15} />}
+							onClick={() => combobox.toggleDropdown()}
+						>
+							Add actions
+						</Button>
+					</Flex>
 				</Combobox.Target>
 				<Combobox.Dropdown>
 					<Combobox.Options style={{ maxHeight: 400, overflow: "auto" }}>

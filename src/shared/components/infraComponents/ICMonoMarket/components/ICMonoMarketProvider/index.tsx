@@ -8,7 +8,7 @@ import ICMonoMarketContext from "./ICMonoMarketContext";
 import AdapterManagementLandingPage from "@/builtinApps/AdaptersApp";
 import AssetIdentificationAppConfig from "@/builtinApps/AssetIdentificationApp/AssetIdentificationAppConfig";
 import AssetIdentificationDiscoverySettingsPage from "@/builtinApps/AssetIdentificationApp/DiscoverySettings";
-import AssetIdentificationProfilingSettingsPage from "@/builtinApps/AssetIdentificationApp/ProfillngSettings";
+import AssetIdentificationProfilingSettingsPage from "@/builtinApps/AssetIdentificationApp/ProfilingSettings";
 import WorkflowAssetsIdentification from "@/builtinApps/AssetIdentificationApp/Workflow";
 import CyberAssetsLandingPage from "@/builtinApps/CyberAssetsApp/CyberAssets";
 import CyberAssetDetailPage from "@/builtinApps/CyberAssetsApp/CyberAssets/components/CyberAssetDetailPage";

@@ -1,3 +1,6 @@
+import type { ReOrderPoliciesRequest } from "@/http/generated/models";
+import type { ICAdvancedFilterConditionBuilderCondition } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
+
 export type WorkflowDescription = {
 	message: string;
 	description: string;
@@ -43,16 +46,34 @@ export type WorkflowHandles = {
 	handleViewPolices: (id: string) => void;
 };
 
+export type PolicyWorkflowTypes = ReOrderPoliciesRequest["workflow"];
+
 export type PolicyCardData = {
 	id: string;
 	title: string;
 	description: string;
 	isActive: boolean;
 	enforce: boolean;
+	conditions: ICAdvancedFilterConditionBuilderCondition[];
+	[key: string]: unknown;
 };
 
 export type PolicyHandles = {
 	handleEditOrCreatePolicy: (id: string) => void;
 	handleDeletePolicy: (id: string) => void;
-	handleEnforcePolicy: (id: string) => void;
+	handleRefetchPolicies: VoidFunction;
+	policyCards?: PolicyCardData[];
+};
+
+type DeletePolicyData = {
+	status?: string | null;
+	ipAddress?: string | null;
+	key: string;
+};
+export type DeletePolicy = {
+	disabledDeletion: boolean;
+	message: string;
+	status: boolean;
+	total: number;
+	results?: DeletePolicyData[];
 };

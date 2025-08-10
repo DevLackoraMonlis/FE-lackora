@@ -34,16 +34,16 @@ export default function WorkflowAssetsIdentification() {
 	const { workflows, isLoading } = useWorkflow(WORKFLOW_REFETCH_INTERVAL);
 	const workflowStatus = getWorkflowStatus(workflows.data?.status);
 
-	const [selectedStepId, setSelectedStepId] = useState<string>("");
+	const [selectedStepIdOrName, setSelectedStepIdOrName] = useState<string>("");
 	const handleGatewayConfiguration = () => {
 		onOpenApp(DISCOVERY_SETTINGS_REDIRECT_PATH);
 	};
 	const handleViewMatchedAssets = (id: string) => {
-		setSelectedStepId(id);
+		setSelectedStepIdOrName(id);
 		handleDetectedAssets.open();
 	};
-	const handleViewPolices = (id: string) => {
-		setSelectedStepId(id);
+	const handleViewPolices = (name: string) => {
+		setSelectedStepIdOrName(name);
 		handlePolices.open();
 	};
 
@@ -60,19 +60,19 @@ export default function WorkflowAssetsIdentification() {
 		<>
 			<WorkflowPolicesModal
 				onClose={() => {
-					setSelectedStepId("");
+					setSelectedStepIdOrName("");
 					handlePolices.close();
 				}}
 				opened={openedPolices}
-				stepId={selectedStepId}
+				workflowName={selectedStepIdOrName}
 			/>
 			<WorkflowDetectedStepModal
 				onClose={() => {
-					setSelectedStepId("");
+					setSelectedStepIdOrName("");
 					handleDetectedAssets.close();
 				}}
 				opened={openedDetectedAssets}
-				stepId={selectedStepId}
+				stepId={selectedStepIdOrName}
 			/>
 			<WorkflowRunNowModal
 				onClose={handleRunNow.close}

@@ -36,6 +36,7 @@ import type {
   PolicyConditionValidationRequest,
   PolicyDependencyCheckResponse,
   PolicyManagementActionsResponse,
+  PolicyManagementFilterColumnsResponse,
   ReOrderPoliciesRequest,
   ReOrderPoliciesResponse
 } from './models';
@@ -111,6 +112,93 @@ export const useCreatePolicy = <TError = HTTPValidationError,
       return useMutation(mutationOptions , queryClient);
     }
     /**
+ * @summary Get Policy Management Filter Columns
+ */
+export const getPolicyManagementColumns = (
+    
+ signal?: AbortSignal
+) => {
+      
+      
+      return orvalMutator<PolicyManagementFilterColumnsResponse>(
+      {url: "/api/policy-management/columns", method: 'GET', signal
+    },
+      );
+    }
+  
+
+const getGetPolicyManagementColumnsQueryKey = () => {
+    return ["/api/policy-management/columns"] as const;
+    }
+
+    
+export const getGetPolicyManagementColumnsQueryOptions = <TData = Awaited<ReturnType<typeof getPolicyManagementColumns>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getPolicyManagementColumns>>, TError, TData>>, }
+) => {
+
+const {query: queryOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetPolicyManagementColumnsQueryKey();
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getPolicyManagementColumns>>> = ({ signal }) => getPolicyManagementColumns(signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getPolicyManagementColumns>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetPolicyManagementColumnsQueryResult = NonNullable<Awaited<ReturnType<typeof getPolicyManagementColumns>>>
+export type GetPolicyManagementColumnsQueryError = unknown
+
+
+export function useGetPolicyManagementColumns<TData = Awaited<ReturnType<typeof getPolicyManagementColumns>>, TError = unknown>(
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getPolicyManagementColumns>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getPolicyManagementColumns>>,
+          TError,
+          Awaited<ReturnType<typeof getPolicyManagementColumns>>
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetPolicyManagementColumns<TData = Awaited<ReturnType<typeof getPolicyManagementColumns>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getPolicyManagementColumns>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getPolicyManagementColumns>>,
+          TError,
+          Awaited<ReturnType<typeof getPolicyManagementColumns>>
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetPolicyManagementColumns<TData = Awaited<ReturnType<typeof getPolicyManagementColumns>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getPolicyManagementColumns>>, TError, TData>>, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary Get Policy Management Filter Columns
+ */
+
+export function useGetPolicyManagementColumns<TData = Awaited<ReturnType<typeof getPolicyManagementColumns>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getPolicyManagementColumns>>, TError, TData>>, }
+ , queryClient?: QueryClient 
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetPolicyManagementColumnsQueryOptions(options)
+
+  const query = useQuery(queryOptions , queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+/**
  * @summary Get Policy Management Available Actions
  */
 export const getPolicyManagementActions = (

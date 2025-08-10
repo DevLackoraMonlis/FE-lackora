@@ -5,102 +5,105 @@ import { useState } from "react";
 
 import BCDrawer from "@/shared/components/baseComponents/BCDrawer";
 import BCEmptyWithCreate from "@/shared/components/baseComponents/BCEmptyWithCreate";
-import { NoPolicies } from "@/shared/icons/components/general";
+import { PolicyNoPolicies } from "@/shared/icons/components/policy";
 
+import { useWorkflowPolicy } from "../../index.hooks";
+import { DeletePolicyModal } from "./components/DeletePolicy";
+import PolicyAccordionSkelton from "./components/PolicyAccordionSkelton";
 import PolicyAccordionWithDnD from "./components/PolicyAccordionWithDnD";
-import PolicyCreateModal from "./components/PolicyCreateModal";
+import PolicyCreateOrEditModal from "./components/PolicyCreateOrEditModal";
 
 type Props = {
 	onClose: VoidFunction;
 	opened: boolean;
-	stepId?: string;
+	workflowName?: string;
 };
 
-function WorkflowPolices({ stepId = "" }: Props) {
+function WorkflowPolices({ workflowName = "" }: Props) {
 	const { height } = useViewportSize();
-	const [openedCreateOrEdit, handleOpenedCreateOrEdit] = useDisclosure(true);
+	const [openedCreateOrEdit, handleOpenedCreateOrEdit] = useDisclosure();
+	const [openedDelete, handleOpenedDelete] = useDisclosure();
+	const { polices } = useWorkflowPolicy(workflowName);
 
 	const [selectedPolicyId, setSelectedPolicyId] = useState("");
-
-	const total = 0;
-
 	const handleEditOrCreatePolicy = (id?: string) => {
 		setSelectedPolicyId(id || "");
 		handleOpenedCreateOrEdit.open();
 	};
 	const handleDeletePolicy = (id: string) => {
 		setSelectedPolicyId(id);
-		handleOpenedCreateOrEdit.open();
+		handleOpenedDelete.open();
 	};
-	const handleEnforcePolicy = (id: string) => {
-		setSelectedPolicyId(id);
-		handleOpenedCreateOrEdit.open();
+	const handleClosePolicy = () => {
+		setSelectedPolicyId("");
+		handleOpenedCreateOrEdit.close();
+		handleOpenedDelete.close();
 	};
-	if (!stepId) {
-		return (
-			<BCEmptyWithCreate
-				onCreate={handleEditOrCreatePolicy}
-				buttonText="Create First Policy"
-				icon={<NoPolicies width={140} height={140} />}
-				title="No Policies Defined Yet!"
-				description="You haven’t added any workflow policies for this step. Click “Create First Policy” to get started."
-			/>
-		);
-	}
+	const handleRefetchPolicies = () => {
+		polices.refetch();
+	};
 	const commonProps = {
 		handleEditOrCreatePolicy,
 		handleDeletePolicy,
-		handleEnforcePolicy,
+		handleRefetchPolicies,
 	};
 	return (
 		<>
-			<PolicyCreateModal
-				onClose={handleOpenedCreateOrEdit.close}
+			<DeletePolicyModal
+				onClose={handleClosePolicy}
+				opened={openedDelete}
+				policyId={selectedPolicyId}
+				refetchPolicy={handleRefetchPolicies}
+			/>
+			<PolicyCreateOrEditModal
+				onClose={handleClosePolicy}
 				opened={openedCreateOrEdit}
 				policyId={selectedPolicyId}
+				workflowName={workflowName}
 			/>
-			<Flex direction="column" gap="xs" mt="xs">
-				<Flex direction="column">
-					<Flex justify="space-between" align="center">
-						<Text fw="bold" fz="h4">{`Total Polices ( ${total ?? "-"} )`}</Text>
-						<Button color="main" onClick={handleOpenedCreateOrEdit.open} leftSection={<IconPlus size={20} />}>
-							Create Policy
-						</Button>
+			{!polices?.isLoading && !polices?.data?.results?.length ? (
+				<BCEmptyWithCreate
+					onCreate={handleEditOrCreatePolicy}
+					buttonText="Create First Policy"
+					icon={<PolicyNoPolicies width={140} height={140} />}
+					title="No Policies Defined Yet!"
+					description="You haven’t added any workflow policies for this step. Click “Create First Policy” to get started."
+				/>
+			) : (
+				<Flex direction="column" gap="xs" mt="xs">
+					<Flex direction="column">
+						<Flex justify="space-between" align="center">
+							<Text fw="bold" fz="h4">{`Total Polices ( ${polices?.data?.total ?? "-"} )`}</Text>
+							<Button
+								color="main"
+								onClick={handleOpenedCreateOrEdit.open}
+								leftSection={<IconPlus size={20} />}
+							>
+								Create Policy
+							</Button>
+						</Flex>
+						<Grid gutter="sm" mt="md" pr="xs" style={{ overflowY: "auto" }} h={height - 160} pos="relative">
+							{polices?.isLoading ? (
+								<PolicyAccordionSkelton count={7} />
+							) : (
+								<PolicyAccordionWithDnD
+									policyCards={polices?.data?.results}
+									workflowName={workflowName}
+									{...commonProps}
+								/>
+							)}
+						</Grid>
 					</Flex>
-					<Grid gutter="sm" mt="md" pr="xs" style={{ overflowY: "auto" }} h={height - 160} pos="relative">
-						<PolicyAccordionWithDnD {...commonProps} />
-						{/* {adapterManagement.isLoading ? (
-            <AdapterSingleCardSkelton count={9} />
-          ) : (
-            results?.map((item) => (
-              <Grid.Col key={item.id} span={{ xs: 12, md: 6, lg: 4 }}>
-                <AdapterSingleCard
-                  onDeleteAdapter={() => {
-                    setSelectedAdapter(item);
-                    handleOpenedDelete.open();
-                  }}
-                  onUpdateAdapter={() => {
-                    setSelectedAdapter(item);
-                    handleOpenedUpdate.open();
-                  }}
-                  adapterBadge={renderAdapterBadge({ iconType: item.adapterType, h: "30px" })}
-                  adapterIconPath={item.icon}
-                  {...item}
-                />
-              </Grid.Col>
-            ))
-          )} */}
-					</Grid>
 				</Flex>
-			</Flex>
+			)}
 		</>
 	);
 }
 
-export default function WorkflowPolicesModal({ onClose, opened, stepId }: Props) {
+export default function WorkflowPolicesModal({ onClose, opened, workflowName }: Props) {
 	return (
 		<BCDrawer size="60%" onClose={onClose} opened={opened} title="Discovery Policies">
-			<WorkflowPolices onClose={onClose} opened={opened} stepId={stepId} />
+			<WorkflowPolices onClose={onClose} opened={opened} workflowName={workflowName} />
 		</BCDrawer>
 	);
 }
