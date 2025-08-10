@@ -24,7 +24,7 @@ export default function BCEmptyWithCreate({ icon, onCreate, title, description, 
 						<Text component="span" c="dimmed" w="70%" ta="center">
 							{description}
 						</Text>
-						<Button onClick={onCreate} color={"main"} leftSection={<IconPlus size={20} />}>
+						<Button onClick={() => onCreate()} color={"main"} leftSection={<IconPlus size={20} />}>
 							{buttonText}
 						</Button>
 					</Flex>

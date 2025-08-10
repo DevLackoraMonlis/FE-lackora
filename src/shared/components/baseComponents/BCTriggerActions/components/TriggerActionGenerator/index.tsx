@@ -15,6 +15,7 @@ import { useIconPolicyManagementActions, usePolicyManagementActions } from "../.
 import type { TriggerActionForm, TriggerActionFormList } from "../../index.types";
 
 type Props<T extends TriggerActionForm> = {
+	values: T;
 	triggerActions: string[];
 	setTriggerActions: Dispatch<SetStateAction<string[]>>;
 	form: UseFormReturnType<T>;
@@ -24,6 +25,7 @@ type Props<T extends TriggerActionForm> = {
 
 export default function TriggerActionGenerator<T extends TriggerActionForm>({
 	form,
+	values,
 	updateValueByDependency,
 	triggerAction,
 	triggerActions,
@@ -40,11 +42,9 @@ export default function TriggerActionGenerator<T extends TriggerActionForm>({
 	);
 
 	const onValuesChange = () => {
-		setTimeout(() => {
-			Object.entries(updateValueByDependency.current).forEach(([key, value]) => {
-				form.setFieldValue(key, value as never);
-			});
-		}, 100);
+		Object.entries(updateValueByDependency.current).forEach(([key, value]) => {
+			form.setFieldValue(key, value as never);
+		});
 	};
 	const handleRemoveFromList = (index: number) => {
 		form.removeListItem(type, index);
@@ -72,11 +72,11 @@ export default function TriggerActionGenerator<T extends TriggerActionForm>({
 		[sectionData?.fields?.length],
 	);
 
-	const list = form.getValues()?.[type] as Array<TriggerActionForm>;
-	const fields = list?.map((listItem, index) => (
+	const fields = values?.[type]?.map((listItem, index) => (
 		<Flex key={`${listItem.key}`} gap="xs" mt="xs" w="100%">
 			<Flex gap="xs" w="100%">
 				{sectionData?.fields.map(({ label, key, ...item }) => {
+					const defaultValue = { label: listItem[key] as string, value: listItem[key] as string };
 					const listKey = `${type}.${index}.${key}`;
 					const updateDependencyOptions = fieldsTransformDependenciesOptions<TriggerActionFormList>(
 						{ listKey, key },
@@ -95,6 +95,7 @@ export default function TriggerActionGenerator<T extends TriggerActionForm>({
 								label: index ? "" : label,
 								placeholder: label,
 								key,
+								defaultValue,
 								...item,
 								...updateDependencyOptions,
 							})}

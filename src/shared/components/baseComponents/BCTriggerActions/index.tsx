@@ -1,8 +1,7 @@
 import { Button, Card, Combobox, Flex, Text, useCombobox } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { useShallowEffect } from "@mantine/hooks";
 import { IconChevronCompactDown, IconPlus, IconZoomScan } from "@tabler/icons-react";
-import { Fragment, createElement, useRef, useState } from "react";
+import { Fragment, createElement, useEffect, useRef, useState } from "react";
 
 import TriggerActionGenerator from "./components/TriggerActionGenerator";
 import { useIconPolicyManagementActions, usePolicyManagementActions } from "./index.hooks";
@@ -34,21 +33,21 @@ function SelectOption({ iconType, label, description, disabled }: SelectOptionPr
 }
 
 export default function BCTriggerActions<T extends TriggerActionForm>({
-	initializeValues,
+	values,
 	onChange,
 }: {
-	initializeValues?: T;
+	values: T;
 	onChange: (values: T) => void;
 }) {
 	const updateValueByDependency = useRef<TriggerActionFormList>({});
 	const form = useForm<T>({
-		onValuesChange: () => {
-			setTimeout(() => {
-				Object.entries(updateValueByDependency.current).forEach(([key, value]) => {
-					form.setFieldValue(key, value as never);
-				});
-				onChange(form.values);
-			}, 100);
+		onValuesChange: (values) => {
+			const dependencyValue = updateValueByDependency.current;
+			Object.entries(dependencyValue).forEach(([key, value]) => {
+				form.setFieldValue(key, value as never);
+			});
+			Object.assign(values, dependencyValue);
+			onChange(values);
 		},
 	});
 
@@ -65,9 +64,6 @@ export default function BCTriggerActions<T extends TriggerActionForm>({
 				{groupName}
 			</Text>
 			{list?.map((item) => {
-				if (item.name && !form.getValues()?.[item.name]) {
-					form.setFieldValue(item.name, [] as never);
-				}
 				const key = `${groupName}|${item.name}`;
 				const disabled = triggerActions.includes(key);
 				return (
@@ -84,24 +80,42 @@ export default function BCTriggerActions<T extends TriggerActionForm>({
 		</Fragment>
 	));
 
-	useShallowEffect(() => {
-		if (initializeValues) {
-			form.setValues(initializeValues);
+	useEffect(() => {
+		if (!policyActions.isLoading) {
+			const defaultTriggerActions = Object.keys(values)
+				.filter((item) => item?.length)
+				.map((listKey) => {
+					let groupName = "";
+					Object.entries(policyActions?.data || {}).forEach(([gName, list]) => {
+						if (list.some((item) => item.name === listKey)) groupName = gName;
+					});
+					return `${groupName}|${listKey}`;
+				});
+			setTriggerActions(defaultTriggerActions);
 		}
-	}, [initializeValues]);
+	}, [policyActions.isLoading]);
 
 	return (
 		<>
 			{triggerActions.map((triggerAction = "") => (
 				<TriggerActionGenerator<T>
 					key={triggerAction}
-					{...{ triggerActions, setTriggerActions, form, updateValueByDependency, triggerAction }}
+					{...{
+						triggerActions,
+						setTriggerActions,
+						updateValueByDependency,
+						triggerAction,
+						form,
+						values,
+					}}
 				/>
 			))}
 			<Combobox
 				withinPortal
 				store={combobox}
 				onOptionSubmit={(val) => {
+					const [_, type] = val.split("|");
+					form.setFieldValue(type, [] as never);
 					setTriggerActions((perArray) => [...perArray, val]);
 					combobox.closeDropdown();
 				}}

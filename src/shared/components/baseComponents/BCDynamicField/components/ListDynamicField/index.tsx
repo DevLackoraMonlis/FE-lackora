@@ -47,8 +47,18 @@ export default function ListDynamicField<TObject extends string>({
 		));
 
 	useEffect(() => {
-		setSelectedValue(isObject(defaultValue) ? defaultValue : null);
-	}, [defaultValue]);
+		const label =
+			options?.find(({ value }) => {
+				if (isObject(defaultValue)) {
+					return value === defaultValue?.value;
+				}
+				return value === defaultValue;
+			})?.label || "";
+		setSelectedValue({
+			label,
+			value: isObject(defaultValue) ? defaultValue?.value || "" : defaultValue || "",
+		});
+	}, [defaultValue, options]);
 
 	useEffect(() => {
 		setData(options);

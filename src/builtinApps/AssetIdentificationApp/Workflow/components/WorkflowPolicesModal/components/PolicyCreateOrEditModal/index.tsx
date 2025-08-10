@@ -39,7 +39,6 @@ const fields = [
 		label: "Policy Name",
 		placeholder: "e.g., Policy Name",
 		otherElementOptions: {
-			span: 6,
 			withAsterisk: true,
 		},
 	},
@@ -48,9 +47,6 @@ const fields = [
 		key: "summary",
 		label: "Summary",
 		placeholder: "Short sentence about this policy",
-		otherElementOptions: {
-			span: 6,
-		},
 	},
 ] as const;
 
@@ -66,11 +62,6 @@ function PolicyCreateOrEdit({ workflowName, policyId, onClose }: Props) {
 			name: (value) => validateInput(value, { required: true }),
 		},
 	});
-
-	const { columnConditions } = useColumnPolicyConditions();
-	const { polices } = useWorkflowPolicy(workflowName);
-	const loading = polices.isLoading || columnConditions.isLoading;
-	const policyData = useMemo(() => polices?.data?.results?.find(({ id }) => id === policyId), [loading]);
 
 	const { createPolicy } = useCreateWorkflowPolicy();
 	const { updatePolicy } = useUpdateWorkflowPolicy();
@@ -91,7 +82,7 @@ function PolicyCreateOrEdit({ workflowName, policyId, onClose }: Props) {
 			operator: item.operator,
 			values: item.values,
 		})) as EditPolicyRequestConditions;
-
+		// submitting
 		if (policyId) {
 			updatePolicy.mutate(
 				{
@@ -133,6 +124,13 @@ function PolicyCreateOrEdit({ workflowName, policyId, onClose }: Props) {
 		}
 	};
 
+	const { columnConditions } = useColumnPolicyConditions();
+	const { polices } = useWorkflowPolicy(workflowName);
+	const loading = polices.isLoading || columnConditions.isLoading;
+	const policyData = useMemo(
+		() => polices?.data?.results?.find(({ id }) => id === policyId),
+		[loading, policyId],
+	);
 	useEffect(() => {
 		if (policyData && !loading) {
 			form.setValues(policyData);
@@ -158,7 +156,7 @@ function PolicyCreateOrEdit({ workflowName, policyId, onClose }: Props) {
 						<Grid gutter="xs">
 							{fields.map(({ key, ...item }) => {
 								return (
-									<Grid.Col span={{ xs: 12, md: item?.otherElementOptions?.span as number }} key={key}>
+									<Grid.Col span={{ xs: 12, md: 6 }} key={key}>
 										{getDynamicField({
 											formInputProps: {
 												key: form.key(key),
@@ -197,6 +195,7 @@ function PolicyCreateOrEdit({ workflowName, policyId, onClose }: Props) {
 					<Card bg="gray.1" mx={0}>
 						<BCTriggerActions<FormValues["triggerActionForm"]>
 							onChange={(triggerActionForm) => form.setFieldValue("triggerActionForm", triggerActionForm)}
+							values={form.values.triggerActionForm}
 						/>
 					</Card>
 				</Card>
