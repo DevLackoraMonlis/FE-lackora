@@ -1,4 +1,4 @@
-import { Button, Card, Flex, Grid, Text } from "@mantine/core";
+import { Button, Card, Flex, Grid, ScrollArea, Text } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useEffect, useMemo } from "react";
 
@@ -10,6 +10,7 @@ import type { TriggerActionForm } from "@/shared/components/baseComponents/BCTri
 import ICAdvancedFilterConditionBuilder from "@/shared/components/infraComponents/ICAdvancedFilter/components/ICAdvancedFilterConditionBuilder";
 import { validateInput } from "@/shared/lib/utils";
 
+import { useViewportSize } from "@mantine/hooks";
 import {
 	useColumnPolicyConditions,
 	useCreateWorkflowPolicy,
@@ -51,6 +52,7 @@ const fields = [
 ] as const;
 
 function PolicyCreateOrEdit({ workflowName, policyId, onClose }: Props) {
+	const { height } = useViewportSize();
 	const form = useForm<FormValues>({
 		initialValues: {
 			conditions: [],
@@ -146,59 +148,61 @@ function PolicyCreateOrEdit({ workflowName, policyId, onClose }: Props) {
 	return (
 		<>
 			<form onSubmit={form.onSubmit(handleSubmit)} key={policyId}>
-				<Card shadow="xs" radius="xs">
-					<Card.Section inheritPadding py="xs">
-						<Text size="sm" fw="bold">
-							General
-						</Text>
-					</Card.Section>
-					<Card bg="gray.1" mx={0}>
-						<Grid gutter="xs">
-							{fields.map(({ key, ...item }) => {
-								return (
-									<Grid.Col span={{ xs: 12, md: 6 }} key={key}>
-										{getDynamicField({
-											formInputProps: {
-												key: form.key(key),
-												...form.getInputProps(key),
-											},
-											key,
-											...item,
-										})}
-									</Grid.Col>
-								);
-							})}
-						</Grid>
+				<ScrollArea h={height - 270}>
+					<Card shadow="xs" radius="xs">
+						<Card.Section inheritPadding py="xs">
+							<Text size="sm" fw="bold">
+								General
+							</Text>
+						</Card.Section>
+						<Card bg="gray.1" mx={0}>
+							<Grid gutter="xs">
+								{fields.map(({ key, ...item }) => {
+									return (
+										<Grid.Col span={{ xs: 12, md: 6 }} key={key}>
+											{getDynamicField({
+												formInputProps: {
+													key: form.key(key),
+													...form.getInputProps(key),
+												},
+												key,
+												...item,
+											})}
+										</Grid.Col>
+									);
+								})}
+							</Grid>
+						</Card>
 					</Card>
-				</Card>
-				<Card shadow="xs" radius="xs">
-					<Card.Section inheritPadding py="xs">
-						<Text size="sm" fw="bold">
-							Condition(s)
-						</Text>
-					</Card.Section>
-					<Card bg="gray.1" m={0}>
-						<ICAdvancedFilterConditionBuilder
-							onChange={(newConditions) => form.setFieldValue("conditions", newConditions)}
-							allColumns={columnConditions.data?.data.results || []}
-							conditions={form.values.conditions}
-							h={100}
-						/>
+					<Card shadow="xs" radius="xs">
+						<Card.Section inheritPadding py="xs">
+							<Text size="sm" fw="bold">
+								Condition(s)
+							</Text>
+						</Card.Section>
+						<Card bg="gray.1" m={0}>
+							<ICAdvancedFilterConditionBuilder
+								onChange={(newConditions) => form.setFieldValue("conditions", newConditions)}
+								allColumns={columnConditions.data?.data.results || []}
+								conditions={form.values.conditions}
+								h={100}
+							/>
+						</Card>
 					</Card>
-				</Card>
-				<Card shadow="xs" radius="xs">
-					<Card.Section inheritPadding py="xs">
-						<Text size="sm" fw="bold">
-							Trigger Action(s)
-						</Text>
-					</Card.Section>
-					<Card bg="gray.1" mx={0}>
-						<BCTriggerActions<FormValues["triggerActionForm"]>
-							onChange={(triggerActionForm) => form.setFieldValue("triggerActionForm", triggerActionForm)}
-							values={form.values.triggerActionForm}
-						/>
+					<Card shadow="xs" radius="xs">
+						<Card.Section inheritPadding py="xs">
+							<Text size="sm" fw="bold">
+								Trigger Action(s)
+							</Text>
+						</Card.Section>
+						<Card bg="gray.1" mx={0}>
+							<BCTriggerActions<FormValues["triggerActionForm"]>
+								onChange={(triggerActionForm) => form.setFieldValue("triggerActionForm", triggerActionForm)}
+								values={form.values.triggerActionForm}
+							/>
+						</Card>
 					</Card>
-				</Card>
+				</ScrollArea>
 				<Card m={0} p={0}>
 					<Flex px="md" py="xs" gap="sm" justify="flex-end">
 						<Button loading={loading} type="submit">
