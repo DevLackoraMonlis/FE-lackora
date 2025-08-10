@@ -41,12 +41,14 @@ export default function BCTriggerActions<T extends TriggerActionForm>({
 }) {
 	const updateValueOnce = useRef<TriggerActionFormList>({});
 	const form = useForm<T>({
-		onValuesChange: () => {
-			setTimeout(() => {
-				Object.entries(updateValueOnce.current).forEach(([key, value]) => {
-					form.setFieldValue(key, value as never);
-				});
-			}, 100);
+		onValuesChange: (values) => {
+			console.log(values, onChange);
+			// // onChange(values);
+			// setTimeout(() => {
+			// 	Object.entries(updateValueOnce.current).forEach(([key, value]) => {
+			// 		form.setFieldValue(key, value as never);
+			// 	});
+			// }, 100);
 		},
 	});
 
@@ -81,11 +83,6 @@ export default function BCTriggerActions<T extends TriggerActionForm>({
 			})}
 		</Fragment>
 	));
-
-	useEffect(() => {
-		const values = form.getValues();
-		onChange(values);
-	}, [form]);
 
 	useEffect(() => {
 		if (initializeValues) {
