@@ -1,13 +1,12 @@
 import { Button, Card, Flex, Grid, Text } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import BCModal from "@/shared/components/baseComponents/BCModal";
-import BCTriggerActions from "@/shared/components/baseComponents/BCTriggerActions";
 import type { TriggerActionForm } from "@/shared/components/baseComponents/BCTriggerActions/index.types";
-import ICAdvancedFilterConditionBuilder from "@/shared/components/infraComponents/ICAdvancedFilter/components/ICAdvancedFilterConditionBuilder";
 
 import { getDynamicField } from "@/shared/components/baseComponents/BCDynamicField";
+import ICAdvancedFilterConditionBuilder from "@/shared/components/infraComponents/ICAdvancedFilter/components/ICAdvancedFilterConditionBuilder";
 import { validateInput } from "@/shared/lib/utils";
 import { useColumnPolicyConditions, useWorkflowPolicy } from "../../../../index.hooks";
 import type { PolicyCardData } from "../../../../index.types";
@@ -16,6 +15,7 @@ type FormList = TriggerActionForm;
 type FormValues = FormList & {
 	name: string;
 	summary: string;
+	conditions: PolicyCardData["conditions"];
 };
 
 type Props = {
@@ -48,37 +48,45 @@ const fields = [
 ] as const;
 
 function PolicyCreateOrEdit({ workflowName, policyId, onClose }: Props) {
-	const [conditions, setConditions] = useState<PolicyCardData["conditions"]>([]);
-	const [triggerActionForm, setTriggerActionForm] = useState<FormValues | object>({});
+	// const [triggerActionForm, setTriggerActionForm] = useState<FormList>({});
 	const form = useForm<FormValues>({
+		initialValues: {
+			conditions: [],
+			name: "",
+			summary: "",
+		},
 		validate: {
 			name: (value) => validateInput(value, { required: true }),
 		},
 	});
 
 	const { columnConditions } = useColumnPolicyConditions();
+
 	const { polices } = useWorkflowPolicy(workflowName);
 	const policyData = polices?.data?.results?.find(({ id }) => id === policyId);
 	const loading = false;
-	const handleSubmit = (values: typeof form.values) => {
-		console.log(values, triggerActionForm, conditions);
+
+	const handleSubmit = (formValues: FormValues) => {
+		console.log(formValues, {}, formValues.conditions);
 	};
 
 	const resetComponents = () => {
 		form.reset();
-		setConditions([]);
-		setTriggerActionForm({});
+		// setTriggerActionForm({});
 	};
+
 	useEffect(() => {
 		if (policyData) {
-			setTriggerActionForm(policyData.actions);
-			setConditions(policyData.conditions);
+			// setTriggerActionForm(policyData.actions);
 			form.setValues(policyData);
 		} else {
 			resetComponents();
 		}
+	}, []);
+
+	useEffect(() => {
 		return () => resetComponents();
-	}, [policyId]);
+	}, []);
 
 	return (
 		<>
@@ -116,9 +124,9 @@ function PolicyCreateOrEdit({ workflowName, policyId, onClose }: Props) {
 					</Card.Section>
 					<Card bg="gray.1" m={0}>
 						<ICAdvancedFilterConditionBuilder
-							onChange={setConditions}
-							allColumns={columnConditions?.data?.data?.results || []}
-							conditions={conditions}
+							onChange={(newConditions) => form.setFieldValue("conditions", newConditions)}
+							allColumns={columnConditions.data?.data.results || []}
+							conditions={form.values.conditions}
 							h={100}
 						/>
 					</Card>
@@ -130,7 +138,7 @@ function PolicyCreateOrEdit({ workflowName, policyId, onClose }: Props) {
 						</Text>
 					</Card.Section>
 					<Card bg="gray.1" mx={0}>
-						<BCTriggerActions<FormValues> onChange={setTriggerActionForm} />
+						{/* <BCTriggerActions<FormValues> onChange={setTriggerActionForm} /> */}
 					</Card>
 				</Card>
 				<Card m={0} p={0}>
