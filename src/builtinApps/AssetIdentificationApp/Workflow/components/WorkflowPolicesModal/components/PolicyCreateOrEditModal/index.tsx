@@ -1,5 +1,7 @@
 import { Button, Card, Flex, Grid, ScrollArea, Text } from "@mantine/core";
 import { useForm } from "@mantine/form";
+import { useViewportSize } from "@mantine/hooks";
+import { notifications } from "@mantine/notifications";
 import { useEffect, useMemo } from "react";
 
 import type { EditPolicyRequestConditions } from "@/http/generated/models";
@@ -10,7 +12,6 @@ import type { TriggerActionForm } from "@/shared/components/baseComponents/BCTri
 import ICAdvancedFilterConditionBuilder from "@/shared/components/infraComponents/ICAdvancedFilter/components/ICAdvancedFilterConditionBuilder";
 import { validateInput } from "@/shared/lib/utils";
 
-import { useViewportSize } from "@mantine/hooks";
 import {
 	useColumnPolicyConditions,
 	useCreateWorkflowPolicy,
@@ -68,6 +69,15 @@ function PolicyCreateOrEdit({ workflowName, policyId, onClose }: Props) {
 	const { createPolicy } = useCreateWorkflowPolicy();
 	const { updatePolicy } = useUpdateWorkflowPolicy();
 	const handleSubmit = ({ triggerActionForm, conditions: formConditions, ...formValues }: FormValues) => {
+		const conditionHasError = formConditions.some(({ error, bracketError }) => error || bracketError);
+		if (conditionHasError) {
+			notifications.show({
+				message: "Conditions has error!",
+				color: "red",
+				withBorder: true,
+			});
+			return;
+		}
 		const actions = Object.values(triggerActionForm)
 			.filter((valueAsArray = []) => !!valueAsArray?.length)
 			.map((valueAsArray = []) => {
@@ -111,7 +121,7 @@ function PolicyCreateOrEdit({ workflowName, policyId, onClose }: Props) {
 						...formValues,
 						actions,
 						workflow: workflowName as PolicyWorkflowTypes,
-						order: 1,
+						order: (polices?.data?.total || 0) + 1,
 						action_id: "",
 						conditions,
 					},

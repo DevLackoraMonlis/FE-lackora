@@ -12,12 +12,8 @@ export type EachInventorySubCategory = typeof EachInventorySubCategory[keyof typ
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const EachInventorySubCategory = {
   computer_system: 'computer_system',
-  computer_system_product: 'computer_system_product',
   operating_system: 'operating_system',
-  logical_disk: 'logical_disk',
   disk_partition: 'disk_partition',
-  base_board: 'base_board',
-  bios: 'bios',
   boot_configuration: 'boot_configuration',
   processor: 'processor',
   physical_memory: 'physical_memory',
@@ -35,7 +31,6 @@ export const EachInventorySubCategory = {
   printer_configuration: 'printer_configuration',
   process: 'process',
   share: 'share',
-  time_zone: 'time_zone',
   network_adapter: 'network_adapter',
   network_adapter_configuration: 'network_adapter_configuration',
   ip4_route_table: 'ip4_route_table',

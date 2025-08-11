@@ -11,6 +11,7 @@ import {
 	useDeleteDiscoverySettingConfiguration,
 	useDiscoverySettingRunNow,
 	useEditDiscoverySettingConfiguration,
+	useEditDiscoverySettingStatus,
 	useGetDiscoverySettingConfigurations,
 	useGetDiscoverySettingLastRun,
 	useGetDiscoverySettings,
@@ -149,6 +150,11 @@ export function useDeleteNoneCredential() {
 	const deleteDiscoverySetting = useDeleteDiscoverySettingConfiguration();
 	return { deleteDiscoverySetting };
 }
+export function useSwitchServiceNoneCredential() {
+	const switchDiscoverySettingStatus = useEditDiscoverySettingStatus();
+	return { switchDiscoverySettingStatus };
+}
+
 export function useDeleteAdapterDependency() {
 	const [dependencyLoading, toggleDependencyLoading] = useToggle([false, true]);
 

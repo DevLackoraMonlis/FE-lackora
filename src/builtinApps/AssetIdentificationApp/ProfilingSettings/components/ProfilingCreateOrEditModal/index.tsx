@@ -1,5 +1,6 @@
 import { Button, Card, Flex, Grid, Text } from "@mantine/core";
 import { useForm } from "@mantine/form";
+import { notifications } from "@mantine/notifications";
 import { useEffect, useMemo } from "react";
 
 import type { EditPolicyRequestConditions } from "@/http/generated/models";
@@ -112,6 +113,15 @@ function CreateOrEdit({ type, inventoryRuleId, onClose }: Props) {
 		name,
 		summary,
 	}: FormValues) => {
+		const conditionHasError = formConditions.some(({ error, bracketError }) => error || bracketError);
+		if (conditionHasError) {
+			notifications.show({
+				message: "Conditions has error!",
+				color: "red",
+				withBorder: true,
+			});
+			return;
+		}
 		const datasource = { adapter_id, connection_id };
 		const conditions = formConditions.map((item) => ({
 			close_bracket: item.closeBracket,
@@ -148,7 +158,7 @@ function CreateOrEdit({ type, inventoryRuleId, onClose }: Props) {
 						name,
 						type,
 						summary,
-						order: 0,
+						order: (inventoryRules?.data?.total || 0) + 1,
 						conditions,
 					},
 				},
