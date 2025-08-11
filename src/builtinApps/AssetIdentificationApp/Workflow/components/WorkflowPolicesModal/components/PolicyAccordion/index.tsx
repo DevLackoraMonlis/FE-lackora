@@ -104,21 +104,30 @@ export default function PolicyAccordion({ id, ...props }: Props) {
 									<Menu.Item
 										data-testid="policy-submenu-edit"
 										leftSection={<IconPencil size={15} />}
-										onClick={() => props.handleEditOrCreatePolicy(id)}
+										onClick={(e) => {
+											e.stopPropagation();
+											props.handleEditOrCreatePolicy(id);
+										}}
 									>
 										Edit
 									</Menu.Item>
 									<Menu.Item
 										data-testid="policy-submenu-delete"
 										leftSection={<IconTrash size={15} />}
-										onClick={() => props.handleDeletePolicy(id)}
+										onClick={(e) => {
+											e.stopPropagation();
+											props.handleDeletePolicy(id);
+										}}
 									>
 										Delete
 									</Menu.Item>
 									<Menu.Item
 										data-testid="policy-submenu-enforce"
 										leftSection={<IconList size={15} />}
-										onClick={() => props.handleWorkflowEnforcePolicy(id)}
+										onClick={(e) => {
+											e.stopPropagation();
+											props.handleWorkflowEnforcePolicy(id);
+										}}
 									>
 										Enforce Now
 									</Menu.Item>

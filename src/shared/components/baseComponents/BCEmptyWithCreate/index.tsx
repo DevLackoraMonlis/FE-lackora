@@ -8,12 +8,20 @@ type Props = {
 	buttonText: string;
 	icon: ReactNode;
 	onCreate: VoidFunction;
+	visible?: boolean;
 };
 
-export default function BCEmptyWithCreate({ icon, onCreate, title, description, buttonText }: Props) {
+export default function BCEmptyWithCreate({
+	icon,
+	onCreate,
+	title,
+	description,
+	buttonText,
+	visible = true,
+}: Props) {
 	return (
 		<LoadingOverlay
-			visible
+			visible={visible}
 			loaderProps={{
 				children: (
 					<Flex justify="center" align="center" direction="column" gap="xs">
@@ -30,7 +38,7 @@ export default function BCEmptyWithCreate({ icon, onCreate, title, description, 
 					</Flex>
 				),
 			}}
-			overlayProps={{ blur: 0, bg: "transparent" }}
+			overlayProps={{ blur: 2, bg: "transparent" }}
 		/>
 	);
 }

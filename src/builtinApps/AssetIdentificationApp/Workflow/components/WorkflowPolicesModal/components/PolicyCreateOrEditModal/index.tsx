@@ -1,6 +1,5 @@
-import { Button, Card, Flex, Grid, Loader, ScrollArea, Text } from "@mantine/core";
+import { Button, Card, Flex, Grid, Loader, Text } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { useViewportSize } from "@mantine/hooks";
 import { notifications } from "@mantine/notifications";
 import { useEffect, useMemo } from "react";
 
@@ -55,7 +54,6 @@ const fields = [
 ] as const;
 
 function PolicyCreateOrEdit({ workflowName, policyId, onClose }: Props) {
-	const { height } = useViewportSize();
 	const form = useForm<FormValues>({
 		initialValues: {
 			conditions: [],
@@ -160,78 +158,76 @@ function PolicyCreateOrEdit({ workflowName, policyId, onClose }: Props) {
 	return (
 		<>
 			<form onSubmit={form.onSubmit(handleSubmit)} key={policyId}>
-				<ScrollArea h={height - 250}>
-					<Card shadow="xs" radius="xs">
-						<Card.Section inheritPadding py="xs">
-							<Text size="sm" fw="bold">
-								General
-							</Text>
-						</Card.Section>
-						<Card bg="gray.1" mx={0}>
-							<Grid gutter="xs">
-								{fields.map(({ key, ...item }) => {
-									return (
-										<Grid.Col span={{ xs: 12, md: 6 }} key={key}>
-											{getDynamicField({
-												formInputProps: {
-													key: form.key(key),
-													...form.getInputProps(key),
-												},
-												key,
-												...item,
-											})}
-										</Grid.Col>
-									);
-								})}
-							</Grid>
-						</Card>
+				<Card shadow="xs" radius="xs">
+					<Card.Section inheritPadding py="xs">
+						<Text size="sm" fw="bold">
+							General
+						</Text>
+					</Card.Section>
+					<Card bg="gray.1" mx={0}>
+						<Grid gutter="xs">
+							{fields.map(({ key, ...item }) => {
+								return (
+									<Grid.Col span={{ xs: 12, md: 6 }} key={key}>
+										{getDynamicField({
+											formInputProps: {
+												key: form.key(key),
+												...form.getInputProps(key),
+											},
+											key,
+											...item,
+										})}
+									</Grid.Col>
+								);
+							})}
+						</Grid>
 					</Card>
-					<PolicyConditionValidation
-						formConditions={form.values.conditions}
-						renderProps={(onValidation, loading, alert) => (
-							<Card shadow="xs" radius="xs" pos="relative">
-								<BCEmptyOrOverlay
-									visible={loading}
-									icon={<Loader color="blue" type="bars" />}
-									title="Validating your policy..."
-									description="We’re checking the policy conditions for conflicts and errors. This might take a few seconds"
-								/>
-								<Card.Section inheritPadding py="xs">
-									<Flex justify="space-between" align="center">
-										<Text size="sm" fw="bold">
-											Condition(s)
-										</Text>
-										<Button variant="transparent" onClick={onValidation}>
-											Run Condition(s)
-										</Button>
-									</Flex>
-								</Card.Section>
-								{alert}
-								<Card bg="gray.1" m={0}>
-									<ICAdvancedFilterConditionBuilder
-										onChange={(newConditions) => form.setFieldValue("conditions", newConditions)}
-										allColumns={columnConditions.data?.data.results || []}
-										conditions={form.values.conditions}
-										h={100}
-									/>
-								</Card>
-							</Card>
-						)}
-					/>
-					<Card shadow="xs" radius="xs">
-						<Card.Section inheritPadding py="xs">
-							<Text size="sm" fw="bold">
-								Trigger Action(s)
-							</Text>
-						</Card.Section>
-						<Card bg="gray.1" mx={0}>
-							<BCTriggerActions<FormValues["triggerActionForm"]>
-								onChange={(triggerActionForm) => form.setFieldValue("triggerActionForm", triggerActionForm)}
-								values={form.values.triggerActionForm}
+				</Card>
+				<PolicyConditionValidation
+					formConditions={form.values.conditions}
+					renderProps={(onValidation, loading, alert) => (
+						<Card shadow="xs" radius="xs" pos="relative">
+							<BCEmptyOrOverlay
+								visible={loading}
+								icon={<Loader color="blue" type="bars" />}
+								title="Validating your policy..."
+								description="We’re checking the policy conditions for conflicts and errors. This might take a few seconds"
 							/>
+							<Card.Section inheritPadding py="xs">
+								<Flex justify="space-between" align="center">
+									<Text size="sm" fw="bold">
+										Condition(s)
+									</Text>
+									<Button variant="transparent" onClick={onValidation}>
+										Run Condition(s)
+									</Button>
+								</Flex>
+							</Card.Section>
+							{alert}
+							<Card bg="gray.1" m={0}>
+								<ICAdvancedFilterConditionBuilder
+									onChange={(newConditions) => form.setFieldValue("conditions", newConditions)}
+									allColumns={columnConditions.data?.data.results || []}
+									conditions={form.values.conditions}
+									h={100}
+								/>
+							</Card>
 						</Card>
+					)}
+				/>
+				<Card shadow="xs" radius="xs">
+					<Card.Section inheritPadding py="xs">
+						<Text size="sm" fw="bold">
+							Trigger Action(s)
+						</Text>
+					</Card.Section>
+					<Card bg="gray.1" mx={0}>
+						<BCTriggerActions<FormValues["triggerActionForm"]>
+							onChange={(triggerActionForm) => form.setFieldValue("triggerActionForm", triggerActionForm)}
+							values={form.values.triggerActionForm}
+						/>
 					</Card>
-				</ScrollArea>
+				</Card>
 				<Card m={0} p={0}>
 					<Flex px="md" py="xs" gap="sm" justify="flex-end">
 						<Button loading={loading} type="submit">

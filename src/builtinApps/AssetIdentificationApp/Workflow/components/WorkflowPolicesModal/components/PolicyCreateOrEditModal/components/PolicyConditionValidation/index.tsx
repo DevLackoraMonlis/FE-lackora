@@ -71,7 +71,7 @@ export default function PolicyConditionValidation({ renderProps, formConditions 
 					mb="2xs"
 					variant="light"
 					color="green"
-					withCloseButton
+					withCloseButton={false}
 					icon={<IconCheck />}
 					title={
 						<Flex align="center" gap="xs">

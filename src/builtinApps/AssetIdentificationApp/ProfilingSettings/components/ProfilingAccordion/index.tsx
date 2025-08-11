@@ -7,7 +7,6 @@ import type { ProfilingCardData, ProfilingHandles } from "../../index.types";
 
 type Props = ProfilingCardData &
 	Omit<ProfilingHandles, "profilingCards"> & {
-		handleEnabledProfiling: (id: string) => void;
 		selectedId: string;
 		loading: boolean;
 	};
@@ -78,20 +77,32 @@ export default function ProfilingAccordion({ id, ...props }: Props) {
 							</Flex>
 						</Flex>
 						<Flex align="center" gap="xs" px="sm">
-							<Badge w="180px" variant="light" color="gray" tt="capitalize" p="sm">
-								<Highlight
-									className="cursor-pointer"
-									highlight={[`${props.matched_assets ?? "-"}`]}
-									highlightStyles={{
-										background: "transparent",
-										fontWeight: "bold",
-										textDecoration: "underline",
-										margin: "0px 5px",
+							{!!props.matched_assets && (
+								<Badge
+									w="180px"
+									variant="light"
+									color="gray"
+									tt="capitalize"
+									p="sm"
+									onClick={(e) => {
+										e.stopPropagation();
+										props.handleMatchedAssets(id);
 									}}
 								>
-									{`${props.matched_assets ?? "-"} MATCHED ASSETS`}
-								</Highlight>
-							</Badge>
+									<Highlight
+										className="cursor-pointer"
+										highlight={[`${props.matched_assets ?? "-"}`]}
+										highlightStyles={{
+											background: "transparent",
+											fontWeight: "bold",
+											textDecoration: "underline",
+											margin: "0px 5px",
+										}}
+									>
+										{`${props.matched_assets ?? "-"} MATCHED ASSETS`}
+									</Highlight>
+								</Badge>
+							)}
 							<Switch
 								checked={props.isActive}
 								color="green"
@@ -111,14 +122,20 @@ export default function ProfilingAccordion({ id, ...props }: Props) {
 									<Menu.Item
 										data-testid="profiling-submenu-edit"
 										leftSection={<IconPencil size={15} />}
-										onClick={() => props.handleEditOrCreateProfiling(id)}
+										onClick={(e) => {
+											e.stopPropagation();
+											props.handleEditOrCreateProfiling(id);
+										}}
 									>
 										Edit
 									</Menu.Item>
 									<Menu.Item
 										data-testid="profiling-submenu-delete"
 										leftSection={<IconTrash size={15} />}
-										onClick={() => props.handleDeleteProfiling(id)}
+										onClick={(e) => {
+											e.stopPropagation();
+											props.handleDeleteProfiling(id);
+										}}
 									>
 										Delete
 									</Menu.Item>

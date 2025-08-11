@@ -90,7 +90,10 @@ export default function WorkflowAccordion({ type, status, title, description, st
 								variant="transparent"
 								color="default"
 								title="Policies"
-								onClick={() => props.handleViewPolices(type)}
+								onClick={(e) => {
+									e.stopPropagation();
+									props.handleViewPolices(type);
+								}}
 							>
 								<IconGavel size={24} />
 							</ActionIcon>

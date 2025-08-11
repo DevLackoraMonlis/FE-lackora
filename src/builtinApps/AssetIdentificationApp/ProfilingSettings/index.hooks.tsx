@@ -9,6 +9,7 @@ import {
 	getInventoryRuleDependency,
 	useCreateInventoryRule,
 	useDeleteInventoryRule,
+	useGetInventoryRuleMatchedAssets,
 	useGetInventoryRules,
 	useOrderInventoryRulePriority,
 	useUpdateInventoryRule,
@@ -148,4 +149,28 @@ export function usePolicyConditionsValidation() {
 	});
 
 	return { conditionsValidation };
+}
+
+export function useInventoryRuleMatchedAssets(adapterId: string) {
+	const matchedAssets = useGetInventoryRuleMatchedAssets(adapterId, {
+		query: {
+			refetchOnMount: true,
+			enabled: !!adapterId,
+			select: (res) => {
+				const results =
+					res?.data?.results?.map((record) => {
+						return {
+							key: `${record?.["Primary IP"]}-${record?.["Time of Inventory"]}-${record?.["MAC Address"]}`,
+							ipAddress: record?.["Primary IP"],
+							macAddress: record?.["MAC Address"],
+							inventoryTime: record?.["Time of Inventory"],
+							status: record?.Status,
+						};
+					}) || [];
+				return { ...res.data, results };
+			},
+		},
+	});
+
+	return { matchedAssets };
 }
