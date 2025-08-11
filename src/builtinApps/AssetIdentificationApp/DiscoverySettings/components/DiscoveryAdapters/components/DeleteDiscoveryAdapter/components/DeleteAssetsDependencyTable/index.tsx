@@ -42,7 +42,7 @@ export function DeleteAssetsDependencyTable({ results = [] }: Props) {
 					inputWidth="270px"
 				/>
 			</Flex>
-			<ScrollArea px="xs" h={height - 500}>
+			<ScrollArea px="xs" h={height - 550}>
 				{tableRecords?.map(({ hostname, id, ipAddress, key, status }) => {
 					const { color } = ASSETS_STATUS[status as AssetsStatus] || {};
 					return (
