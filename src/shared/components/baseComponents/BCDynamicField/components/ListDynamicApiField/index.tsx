@@ -56,12 +56,19 @@ export default function ListDynamicApiField<TObject extends string>({
 	useEffect(() => {
 		if (isNumber(getObjectQuery.data?.data.total)) {
 			setTotalRecords(getObjectQuery.data?.data?.total);
+			const label =
+				getObjectQuery.data?.data?.results?.find(({ value }) => {
+					if (isObject(defaultValue)) {
+						return value === defaultValue?.value;
+					}
+					return value === defaultValue;
+				})?.label || "";
+			setSelectedValue({
+				label,
+				value: isObject(defaultValue) ? defaultValue?.value || "" : defaultValue || "",
+			});
 		}
-	}, [getObjectQuery.data?.data.total]);
-
-	useEffect(() => {
-		setSelectedValue(isObject(defaultValue) ? defaultValue : null);
-	}, [defaultValue]);
+	}, [defaultValue, getObjectQuery.data?.data.total]);
 
 	// combobox configs
 	const combobox = useCombobox({
