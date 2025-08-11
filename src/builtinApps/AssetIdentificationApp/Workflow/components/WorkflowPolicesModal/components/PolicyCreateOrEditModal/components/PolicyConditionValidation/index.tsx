@@ -67,7 +67,7 @@ export default function PolicyConditionValidation({ renderProps, formConditions 
 				handleOnValidating,
 				conditionsValidation.isPending,
 				<Alert
-					hidden={!conditionsValidation.isSuccess && conditionsValidation.isPending}
+					hidden={!conditionsValidation.isSuccess}
 					mb="2xs"
 					variant="light"
 					color="green"

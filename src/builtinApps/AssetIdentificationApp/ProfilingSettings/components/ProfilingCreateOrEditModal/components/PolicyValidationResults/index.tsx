@@ -63,7 +63,6 @@ function PolicyValidationResults({ results, total }: Props) {
 			},
 		},
 	];
-
 	// data sorting
 	const sortedData = sortBy(results, (record) => record[sortStatus.columnAccessor]);
 	if (sortStatus.direction === "des") sortedData.reverse();

@@ -38,6 +38,7 @@ import type {
   InventoryRuleConditionValidationRequest,
   InventoryRuleDataSourceResponse,
   InventoryRuleDependencyCheckResponse,
+  InventoryRulesMatchedAssets,
   MessageOnlyResponse,
   PaginatedBaseResponseEachInventoryRuleNoneType,
   ReOrderInventoryRuleRequest,
@@ -597,6 +598,93 @@ export function useGetInventoryRuleDependency<TData = Awaited<ReturnType<typeof 
  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
   const queryOptions = getGetInventoryRuleDependencyQueryOptions(inventoryRuleId,params,options)
+
+  const query = useQuery(queryOptions , queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+/**
+ * @summary Get Single Inventory Rule Matched Assets
+ */
+export const getInventoryRuleMatchedAssets = (
+    inventoryRuleId: string,
+ signal?: AbortSignal
+) => {
+      
+      
+      return orvalMutator<InventoryRulesMatchedAssets>(
+      {url: `/api/inventory-rules/${inventoryRuleId}/matched-assets`, method: 'GET', signal
+    },
+      );
+    }
+  
+
+const getGetInventoryRuleMatchedAssetsQueryKey = (inventoryRuleId: string,) => {
+    return [`/api/inventory-rules/${inventoryRuleId}/matched-assets`] as const;
+    }
+
+    
+export const getGetInventoryRuleMatchedAssetsQueryOptions = <TData = Awaited<ReturnType<typeof getInventoryRuleMatchedAssets>>, TError = HTTPValidationError>(inventoryRuleId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getInventoryRuleMatchedAssets>>, TError, TData>>, }
+) => {
+
+const {query: queryOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetInventoryRuleMatchedAssetsQueryKey(inventoryRuleId);
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getInventoryRuleMatchedAssets>>> = ({ signal }) => getInventoryRuleMatchedAssets(inventoryRuleId, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, enabled: !!(inventoryRuleId), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getInventoryRuleMatchedAssets>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetInventoryRuleMatchedAssetsQueryResult = NonNullable<Awaited<ReturnType<typeof getInventoryRuleMatchedAssets>>>
+export type GetInventoryRuleMatchedAssetsQueryError = HTTPValidationError
+
+
+export function useGetInventoryRuleMatchedAssets<TData = Awaited<ReturnType<typeof getInventoryRuleMatchedAssets>>, TError = HTTPValidationError>(
+ inventoryRuleId: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getInventoryRuleMatchedAssets>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getInventoryRuleMatchedAssets>>,
+          TError,
+          Awaited<ReturnType<typeof getInventoryRuleMatchedAssets>>
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetInventoryRuleMatchedAssets<TData = Awaited<ReturnType<typeof getInventoryRuleMatchedAssets>>, TError = HTTPValidationError>(
+ inventoryRuleId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getInventoryRuleMatchedAssets>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getInventoryRuleMatchedAssets>>,
+          TError,
+          Awaited<ReturnType<typeof getInventoryRuleMatchedAssets>>
+        > , 'initialData'
+      >, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetInventoryRuleMatchedAssets<TData = Awaited<ReturnType<typeof getInventoryRuleMatchedAssets>>, TError = HTTPValidationError>(
+ inventoryRuleId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getInventoryRuleMatchedAssets>>, TError, TData>>, }
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary Get Single Inventory Rule Matched Assets
+ */
+
+export function useGetInventoryRuleMatchedAssets<TData = Awaited<ReturnType<typeof getInventoryRuleMatchedAssets>>, TError = HTTPValidationError>(
+ inventoryRuleId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getInventoryRuleMatchedAssets>>, TError, TData>>, }
+ , queryClient?: QueryClient 
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetInventoryRuleMatchedAssetsQueryOptions(inventoryRuleId,options)
 
   const query = useQuery(queryOptions , queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 

@@ -1,4 +1,4 @@
-import { Badge, Flex, Highlight, Text } from "@mantine/core";
+import { Badge, Flex, Highlight, LoadingOverlay, Text } from "@mantine/core";
 import { useViewportSize } from "@mantine/hooks";
 import { IconCheck } from "@tabler/icons-react";
 import { sortBy } from "lodash";
@@ -12,7 +12,9 @@ import type { TanStackGridProps } from "@/shared/components/baseComponents/BCTan
 import { ASSETS_STATUS } from "@/shared/constants/assets";
 import { useTableSort } from "@/shared/hooks/useTableSort";
 
+import { toFormattedDate } from "@/shared/lib/dayJs";
 import type { ProfilingInventoryRules } from "../../index.enum";
+import { useInventoryRuleMatchedAssets } from "../../index.hooks";
 
 type Props = {
 	onClose: VoidFunction;
@@ -22,17 +24,14 @@ type Props = {
 };
 
 function ProfilingMatchedAssets({ inventoryRuleId }: Props) {
-	const results = [
-		{
-			ipAddress: "1",
-			status: "profiled",
-			macAddress: "1",
-			inventoryTime: "1",
-			inventoryRuleId,
-		},
-	];
-	const total = 1;
 	const { height } = useViewportSize();
+	const { matchedAssets } = useInventoryRuleMatchedAssets(inventoryRuleId);
+	const results = matchedAssets.data?.results || [];
+	const total = matchedAssets.data?.total || 0;
+	const scanId = matchedAssets.data?.scan_id || 0;
+	const ruleName = matchedAssets.data?.rule_name;
+	const lastMatched = toFormattedDate(matchedAssets.data?.last_matched, "MMMM D, YYYY [at] HH:mm") || "";
+
 	const [{ search = "", ...queryParams }, setQueryParams] = useState<PaginationRq>({ limit: 25, page: 1 });
 	const { generateSortIcons, sortStatus } = useTableSort<(typeof results)[number]>();
 
@@ -119,6 +118,8 @@ function ProfilingMatchedAssets({ inventoryRuleId }: Props) {
 	const to = from + queryParams.limit;
 	const tableRecords = filteredResults.slice(from, to);
 	const totalRecords = filteredResults?.length;
+
+	if (matchedAssets.isLoading) return <LoadingOverlay visible />;
 	return (
 		<Flex direction="column" p="sm" gap="xs" w="100%">
 			<Flex direction="column" align="center" gap="sm" py="sm" bg="gray.1">
@@ -127,14 +128,14 @@ function ProfilingMatchedAssets({ inventoryRuleId }: Props) {
 						<IconCheck color="white" />
 					</Badge>
 					<Text fz="lg" fw="bold" tt="capitalize">
-						{`${total.toLocaleString()} assets matched`}
+						{`${total.toLocaleString()} assets matched with ${ruleName}`}
 					</Text>
 				</Flex>
 				<Text c="dimmed" fz="xs">
 					Condition: If source IP is in blackPull Base, then trigger Email Adapter using SMTP Connection.
 				</Text>
-				<Highlight c="dimmed" highlight={["#4301", "July 30, 2025 at 14:23"]} fz="xs">
-					{"Last matched: July 30, 2025 at 14:23 | Scan ID: #4301"}
+				<Highlight c="dimmed" highlight={[lastMatched, `${scanId}`]} fz="xs">
+					{`Last matched: ${lastMatched} | Scan ID: #${scanId}`}
 				</Highlight>
 			</Flex>
 			<Flex gap="sm" align="center" p="sm" bg="gray.1">
