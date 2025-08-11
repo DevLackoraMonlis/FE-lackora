@@ -19,7 +19,6 @@ type Props = {
 };
 
 function PolicyValidationResults({ results, total }: Props) {
-	console.log(results);
 	const { height } = useViewportSize();
 	const [{ search = "", ...queryParams }, setQueryParams] = useState<PaginationRq>({ limit: 25, page: 1 });
 	const { generateSortIcons, sortStatus } = useTableSort<(typeof results)[number]>();
@@ -67,7 +66,6 @@ function PolicyValidationResults({ results, total }: Props) {
 	const filteredResults = sortedData.filter(
 		({ ipAddress, status }) => status.includes(search) || ipAddress.includes(search),
 	);
-	console.log({ filteredResults });
 	// pagination options
 	const from = (queryParams.page - 1) * queryParams.limit;
 	const to = from + queryParams.limit;
