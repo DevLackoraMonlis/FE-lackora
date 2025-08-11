@@ -33,7 +33,7 @@ export default function TriggerActionGenerator<T extends TriggerActionForm>({
 }: Props<T>) {
 	const { getPolicyActionIcon } = useIconPolicyManagementActions();
 	const { policyActions } = usePolicyManagementActions();
-	const [groupName, type] = triggerAction.split("|");
+	const [groupName, type, actionId] = triggerAction.split("|");
 	const icon = getPolicyActionIcon(type);
 	const sectionData = useMemo(
 		() =>
@@ -67,7 +67,7 @@ export default function TriggerActionGenerator<T extends TriggerActionForm>({
 					accumulator[key] = "";
 					return accumulator;
 				},
-				{ key: randomId(), fields: sectionData.fields } as TriggerActionFormList,
+				{ key: randomId(), fields: sectionData.fields, actionId } as TriggerActionFormList,
 			),
 		[sectionData?.fields?.length],
 	);

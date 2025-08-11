@@ -6,4 +6,4 @@
  * OpenAPI spec version: 1.0.0
  */
 
-export type EditPolicyRequestActionId = string | null;
+export type EachPolicyManagementActionModelOutputActionDisplayName = string | null;

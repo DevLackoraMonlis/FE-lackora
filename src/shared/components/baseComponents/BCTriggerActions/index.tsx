@@ -64,7 +64,7 @@ export default function BCTriggerActions<T extends TriggerActionForm>({
 				{groupName}
 			</Text>
 			{list?.map((item) => {
-				const key = `${groupName}|${item.name}`;
+				const key = `${groupName}|${item.name}|${item.id}`;
 				const disabled = triggerActions.includes(key);
 				return (
 					<Combobox.Option key={key} value={key} m={0} p="3xs" disabled={disabled}>

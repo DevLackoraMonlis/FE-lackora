@@ -6,6 +6,7 @@ export type TriggerActionIcons = typeof PolicyEmail;
 export type TriggerActionFormList = Record<string, unknown> & {
 	fields?: BCDynamicConfigRs[];
 	key?: string;
+	actionId?: string;
 };
 
 export type TriggerActionForm = Record<string, TriggerActionFormList[]>;

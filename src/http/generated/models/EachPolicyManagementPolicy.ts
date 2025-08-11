@@ -1,7 +1,4 @@
-import type { EachAdapterConfigurationModel } from './EachAdapterConfigurationModel';
-import type { EachPolicyManagementPolicyActionDisplayName } from './EachPolicyManagementPolicyActionDisplayName';
-import type { EachPolicyManagementPolicyActionFields } from './EachPolicyManagementPolicyActionFields';
-import type { EachPolicyManagementPolicyActionName } from './EachPolicyManagementPolicyActionName';
+import type { EachPolicyManagementPolicyActions } from './EachPolicyManagementPolicyActions';
 import type { EachPolicyManagementPolicyLastTrigger } from './EachPolicyManagementPolicyLastTrigger';
 import type { EachPolicyManagementPolicyUpdatedTime } from './EachPolicyManagementPolicyUpdatedTime';
 import type { EachPolicyManagementPolicyUpdater } from './EachPolicyManagementPolicyUpdater';
@@ -20,11 +17,7 @@ export interface EachPolicyManagementPolicy {
   summary: string;
   workflow: typeof EachPolicyManagementPolicyWorkflow[keyof typeof EachPolicyManagementPolicyWorkflow] ;
   conditions: unknown[];
-  action_id: string;
-  action_name?: EachPolicyManagementPolicyActionName;
-  action_display_name?: EachPolicyManagementPolicyActionDisplayName;
-  action_fields?: EachPolicyManagementPolicyActionFields;
-  actions: EachAdapterConfigurationModel[][];
+  actions?: EachPolicyManagementPolicyActions;
   has_triggered: boolean;
   last_trigger?: EachPolicyManagementPolicyLastTrigger;
   enabled: boolean;

@@ -5,5 +5,6 @@
  * MonoWatch Security Asset Management
  * OpenAPI spec version: 1.0.0
  */
+import type { FieldGenerator } from './FieldGenerator';
 
-export type EachPolicyManagementPolicyActionName = string | null;
+export type EachPolicyManagementActionModelOutputActionFields = FieldGenerator[] | null;

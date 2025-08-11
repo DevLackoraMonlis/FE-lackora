@@ -81,10 +81,12 @@ function PolicyCreateOrEdit({ workflowName, policyId, onClose }: Props) {
 		const actions = Object.values(triggerActionForm)
 			.filter((valueAsArray = []) => !!valueAsArray?.length)
 			.map((valueAsArray = []) => {
-				const actionFields = valueAsArray.flatMap(({ fields = [], key, ...values }) =>
-					configsUpdateTransformRq(fields, values),
-				);
-				return actionFields;
+				let action_id = "";
+				const actionFields = valueAsArray.map(({ fields = [], key, actionId = "", ...values }) => {
+					action_id = actionId;
+					return configsUpdateTransformRq(fields, values).flat();
+				});
+				return { action_id, configurations: actionFields.flat() };
 			});
 		const conditions = formConditions.map((item) => ({
 			close_bracket: item.closeBracket,
@@ -103,7 +105,6 @@ function PolicyCreateOrEdit({ workflowName, policyId, onClose }: Props) {
 						...formValues,
 						actions,
 						workflow: workflowName as PolicyWorkflowTypes,
-						action_id: "",
 						conditions,
 					},
 				},
@@ -122,7 +123,6 @@ function PolicyCreateOrEdit({ workflowName, policyId, onClose }: Props) {
 						actions,
 						workflow: workflowName as PolicyWorkflowTypes,
 						order: (polices?.data?.total || 0) + 1,
-						action_id: "",
 						conditions,
 					},
 				},
