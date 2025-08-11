@@ -27,10 +27,10 @@ type Props = {
 };
 
 const NoneCredentialCreate = (props: Props) => {
-	const updateValueOnce = useRef<FormList>({});
+	const updateValueByDependency = useRef<FormList>({});
 	const onValuesChange = () => {
 		setTimeout(() => {
-			Object.entries(updateValueOnce.current).forEach(([key, value]) => {
+			Object.entries(updateValueByDependency.current).forEach(([key, value]) => {
 				form.setFieldValue(key, value);
 			});
 		}, 100);
@@ -48,8 +48,10 @@ const NoneCredentialCreate = (props: Props) => {
 	});
 	const handleRemoveFromList = (index: number) => {
 		form.removeListItem("list", index);
-		const filterRemoved = omitBy(updateValueOnce.current, (_value, key) => key.includes(index.toString()));
-		updateValueOnce.current = filterRemoved;
+		const filterRemoved = omitBy(updateValueByDependency.current, (_value, key) =>
+			key.includes(index.toString()),
+		);
+		updateValueByDependency.current = filterRemoved;
 		onValuesChange();
 	};
 
@@ -76,7 +78,7 @@ const NoneCredentialCreate = (props: Props) => {
 				onSuccess: () => {
 					props.refetchDiscoveryAdapters();
 					form.setValues({ list: [] });
-					updateValueOnce.current = {};
+					updateValueByDependency.current = {};
 				},
 			},
 		);
@@ -99,7 +101,7 @@ const NoneCredentialCreate = (props: Props) => {
 						{ listKey, key },
 						listItem,
 						props.fields,
-						updateValueOnce,
+						updateValueByDependency,
 					);
 					return (
 						<Fragment key={listKey}>

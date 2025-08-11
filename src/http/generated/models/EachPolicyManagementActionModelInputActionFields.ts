@@ -7,4 +7,4 @@
  */
 import type { FieldGenerator } from './FieldGenerator';
 
-export type EachPolicyManagementPolicyActionFields = FieldGenerator[] | null;
+export type EachPolicyManagementActionModelInputActionFields = FieldGenerator[] | null;

@@ -8,14 +8,13 @@ import type { CreatePolicyRequestConditions } from './CreatePolicyRequestConditi
  */
 import type { CreatePolicyRequestSummary } from './CreatePolicyRequestSummary';
 import type { CreatePolicyRequestWorkflow } from './CreatePolicyRequestWorkflow';
-import type { EachAdapterConfigurationModel } from './EachAdapterConfigurationModel';
+import type { EachPolicyManagementActionModelInput } from './EachPolicyManagementActionModelInput';
 
 export interface CreatePolicyRequest {
   name: string;
   summary?: CreatePolicyRequestSummary;
   workflow: typeof CreatePolicyRequestWorkflow[keyof typeof CreatePolicyRequestWorkflow] ;
   conditions?: CreatePolicyRequestConditions;
-  action_id: string;
-  actions: EachAdapterConfigurationModel[][];
+  actions: EachPolicyManagementActionModelInput[];
   order: number;
 }

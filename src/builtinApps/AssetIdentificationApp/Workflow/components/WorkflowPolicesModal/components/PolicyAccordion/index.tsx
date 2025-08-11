@@ -48,7 +48,6 @@ const accordionPanel = [
 ];
 
 export default function PolicyAccordion({ id, ...props }: Props) {
-	console.log(props);
 	if (!id) return null;
 	return (
 		<Accordion variant="separated" w="100%">

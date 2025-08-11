@@ -4,6 +4,7 @@ import { IconPlus } from "@tabler/icons-react";
 import { useState } from "react";
 
 import BCDrawer from "@/shared/components/baseComponents/BCDrawer";
+import BCEmptyOrOverlay from "@/shared/components/baseComponents/BCEmptyOrOverlay";
 import BCEmptyWithCreate from "@/shared/components/baseComponents/BCEmptyWithCreate";
 import { PolicyNoPolicies } from "@/shared/icons/components/policy";
 
@@ -62,13 +63,17 @@ function WorkflowPolices({ workflowName = "" }: Props) {
 				workflowName={workflowName}
 			/>
 			{!polices?.isLoading && !polices?.data?.results?.length ? (
-				<BCEmptyWithCreate
-					onCreate={handleEditOrCreatePolicy}
-					buttonText="Create First Policy"
-					icon={<PolicyNoPolicies width={140} height={140} />}
-					title="No Policies Defined Yet!"
-					description="You haven’t added any workflow policies for this step. Click “Create First Policy” to get started."
-				/>
+				polices.isError ? (
+					<BCEmptyOrOverlay icon={<PolicyNoPolicies width={140} height={140} />} title="Policy has error!" />
+				) : (
+					<BCEmptyWithCreate
+						onCreate={handleEditOrCreatePolicy}
+						buttonText="Create First Policy"
+						icon={<PolicyNoPolicies width={140} height={140} />}
+						title="No Policies Defined Yet!"
+						description="You haven’t added any workflow policies for this step. Click “Create First Policy” to get started."
+					/>
+				)
 			) : (
 				<Flex direction="column" gap="xs" mt="xs">
 					<Flex direction="column">

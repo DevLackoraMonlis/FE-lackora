@@ -12,8 +12,12 @@ export type EachInventoryCategoryDisplayName = typeof EachInventoryCategoryDispl
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const EachInventoryCategoryDisplayName = {
   System_Details: 'System Details',
+  General_Information: 'General Information',
+  Operating_System: 'Operating System',
   Hardware: 'Hardware',
   Software: 'Software',
   Network: 'Network',
-  Users: 'Users',
+  'Users_&_Groups': 'Users & Groups',
+  Persistence: 'Persistence',
+  Live_Snapshot: 'Live Snapshot',
 } as const;

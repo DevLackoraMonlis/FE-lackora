@@ -116,7 +116,7 @@ function DiscoveryLastRun(props: DiscoveryLastRunProps) {
 				<BCSearchInput
 					clientSide
 					onSubmitSearch={(value) => handleUpdateQueryParams({ search: value })}
-					placeholder="Search by IP , MAC address or Time of Discovery"
+					placeholder="Search by IP, MAC address and Time of Discovery"
 					inputWidth="360px"
 				/>
 			</Flex>

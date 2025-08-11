@@ -5,6 +5,6 @@
  * MonoWatch Security Asset Management
  * OpenAPI spec version: 1.0.0
  */
-import type { EachAdapterConfigurationModel } from './EachAdapterConfigurationModel';
+import type { EachPolicyManagementActionModelInput } from './EachPolicyManagementActionModelInput';
 
-export type EditPolicyRequestActions = EachAdapterConfigurationModel[][] | null;
+export type EditPolicyRequestActions = EachPolicyManagementActionModelInput[] | null;

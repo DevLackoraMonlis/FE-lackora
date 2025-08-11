@@ -1,4 +1,3 @@
-import type { EditPolicyRequestActionId } from './EditPolicyRequestActionId';
 import type { EditPolicyRequestActions } from './EditPolicyRequestActions';
 import type { EditPolicyRequestConditions } from './EditPolicyRequestConditions';
 /**
@@ -17,6 +16,5 @@ export interface EditPolicyRequest {
   summary?: EditPolicyRequestSummary;
   workflow?: EditPolicyRequestWorkflow;
   conditions?: EditPolicyRequestConditions;
-  action_id?: EditPolicyRequestActionId;
   actions?: EditPolicyRequestActions;
 }

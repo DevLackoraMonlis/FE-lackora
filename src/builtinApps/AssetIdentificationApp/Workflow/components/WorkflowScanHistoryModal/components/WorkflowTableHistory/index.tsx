@@ -9,7 +9,7 @@ import BCTanStackGrid from "@/shared/components/baseComponents/BCTanStackGrid";
 import type { TanStackGridProps } from "@/shared/components/baseComponents/BCTanStackGrid/index.types";
 import { useTableSort } from "@/shared/hooks/useTableSort";
 
-import BCEmpty from "@/shared/components/baseComponents/BCEmpty";
+import BCEmpty from "@/shared/components/baseComponents/BCEmptyOrOverlay";
 import { getWorkflowStatus } from "../../../../index.helper";
 import { useWorkflowHistoryDetail } from "../../../../index.hooks";
 import type { WorkflowScan } from "../../../../index.types";

@@ -15,23 +15,25 @@ import { useIconPolicyManagementActions, usePolicyManagementActions } from "../.
 import type { TriggerActionForm, TriggerActionFormList } from "../../index.types";
 
 type Props<T extends TriggerActionForm> = {
+	values: T;
 	triggerActions: string[];
 	setTriggerActions: Dispatch<SetStateAction<string[]>>;
 	form: UseFormReturnType<T>;
-	updateValueOnce: RefObject<TriggerActionFormList>;
+	updateValueByDependency: RefObject<TriggerActionFormList>;
 	triggerAction: string;
 };
 
 export default function TriggerActionGenerator<T extends TriggerActionForm>({
 	form,
-	updateValueOnce,
+	values,
+	updateValueByDependency,
 	triggerAction,
 	triggerActions,
 	setTriggerActions,
 }: Props<T>) {
 	const { getPolicyActionIcon } = useIconPolicyManagementActions();
 	const { policyActions } = usePolicyManagementActions();
-	const [groupName, type] = triggerAction.split("|");
+	const [groupName, type, actionId] = triggerAction.split("|");
 	const icon = getPolicyActionIcon(type);
 	const sectionData = useMemo(
 		() =>
@@ -40,24 +42,22 @@ export default function TriggerActionGenerator<T extends TriggerActionForm>({
 	);
 
 	const onValuesChange = () => {
-		setTimeout(() => {
-			Object.entries(updateValueOnce.current).forEach(([key, value]) => {
-				form.setFieldValue(key, value as never);
-			});
-		}, 100);
+		Object.entries(updateValueByDependency.current).forEach(([key, value]) => {
+			form.setFieldValue(key, value as never);
+		});
 	};
 	const handleRemoveFromList = (index: number) => {
 		form.removeListItem(type, index);
-		const filterRemoved = omitBy(updateValueOnce.current, (_, key) => key.includes(index.toString()));
-		updateValueOnce.current = filterRemoved;
+		const filterRemoved = omitBy(updateValueByDependency.current, (_, key) => key.includes(index.toString()));
+		updateValueByDependency.current = filterRemoved;
 		onValuesChange();
 	};
 	const handleRemoveSection = () => {
 		const updateActions = triggerActions.filter((item) => item !== triggerAction);
 		setTriggerActions(updateActions);
 		form.setFieldValue(type, [] as never);
-		const filterRemoved = omitBy(updateValueOnce.current, (_, key) => key.includes(type));
-		updateValueOnce.current = filterRemoved;
+		const filterRemoved = omitBy(updateValueByDependency.current, (_, key) => key.includes(type));
+		updateValueByDependency.current = filterRemoved;
 		onValuesChange();
 	};
 	const insertListItem = useMemo(
@@ -67,22 +67,22 @@ export default function TriggerActionGenerator<T extends TriggerActionForm>({
 					accumulator[key] = "";
 					return accumulator;
 				},
-				{ key: randomId() } as TriggerActionFormList,
+				{ key: randomId(), fields: sectionData.fields, actionId } as TriggerActionFormList,
 			),
 		[sectionData?.fields?.length],
 	);
 
-	const list = form.getValues()?.[type] as Array<TriggerActionForm>;
-	const fields = list?.map((listItem, index) => (
+	const fields = values?.[type]?.map((listItem, index) => (
 		<Flex key={`${listItem.key}`} gap="xs" mt="xs" w="100%">
 			<Flex gap="xs" w="100%">
 				{sectionData?.fields.map(({ label, key, ...item }) => {
+					const defaultValue = { label: listItem[key] as string, value: listItem[key] as string };
 					const listKey = `${type}.${index}.${key}`;
 					const updateDependencyOptions = fieldsTransformDependenciesOptions<TriggerActionFormList>(
 						{ listKey, key },
 						listItem,
 						sectionData.fields,
-						updateValueOnce,
+						updateValueByDependency,
 					);
 					return (
 						<Fragment key={listKey}>
@@ -95,6 +95,7 @@ export default function TriggerActionGenerator<T extends TriggerActionForm>({
 								label: index ? "" : label,
 								placeholder: label,
 								key,
+								defaultValue,
 								...item,
 								...updateDependencyOptions,
 							})}

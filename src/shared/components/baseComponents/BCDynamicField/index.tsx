@@ -158,7 +158,7 @@ export const fieldsTransformRs = (
 	return (
 		fields?.map(({ object_type, ...item }) => ({
 			...item,
-			api: getObjectRelatedRecords,
+			api: getObjectRelatedRecords as BCDynamicFieldProps<string>["api"],
 			objectType: object_type,
 		})) || []
 	);
@@ -181,18 +181,21 @@ export function fieldsTransformDependenciesOptions<FormItem extends Record<strin
 			?.find((object) => object[fieldKey]);
 
 		if (haveDependency) {
-			const defaultValues = haveDependency[fieldKey];
-			const defaultValuesLength = defaultValues?.length;
+			const options = haveDependency[fieldKey];
+			const defaultValuesLength = options?.length;
+
+			if (defaultValuesLength && defaultValuesLength > 1) {
+				updateOptions.options = options;
+				updateOptions.custom = false;
+				// updateOptions.defaultValue = haveDependency
+				// updateValuesState.current = { ...updateValuesState.current, [listKey]: undefined };
+			}
+
 			if (defaultValuesLength === 1) {
 				const defaultValue = haveDependency[fieldKey][0];
 				updateOptions.defaultValue = defaultValue;
 				updateOptions.disabled = true;
 				updateValuesState.current = { ...updateValuesState.current, [listKey]: defaultValue.value };
-			}
-			if (defaultValuesLength && defaultValuesLength > 1) {
-				updateOptions.options = defaultValues;
-				updateOptions.custom = false;
-				// updateValuesState.current = { ...updateValuesState.current, [listKey]: undefined };
 			}
 		}
 	});

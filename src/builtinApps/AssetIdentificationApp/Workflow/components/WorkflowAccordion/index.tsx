@@ -18,7 +18,11 @@ export default function WorkflowAccordion({ type, status, title, description, st
 	const timelineActiveStep = useMemo(() => steps?.length, [status]);
 	const disabledAccordion = useMemo(() => description.failed || description.idle, [description]);
 	const openedAccordionType = useMemo(
-		() => (status === "inprogress" || props.defaultOpened ? (disabledAccordion ? "" : type) : ""),
+		() =>
+			(status === WorkflowStatus.Inprogress || status === WorkflowStatus.Pending || props.defaultOpened) &&
+			!disabledAccordion
+				? type
+				: "",
 		[status, type, disabledAccordion, props.defaultOpened],
 	);
 	return (

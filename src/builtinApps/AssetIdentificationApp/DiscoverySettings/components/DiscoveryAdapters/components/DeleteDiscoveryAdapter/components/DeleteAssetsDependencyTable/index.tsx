@@ -38,7 +38,7 @@ export function DeleteAssetsDependencyTable({ results = [] }: Props) {
 				<BCSearchInput
 					clientSide
 					onSubmitSearch={(value) => handleUpdateQueryParams({ search: value })}
-					placeholder="Search by Hostname or IP address"
+					placeholder="Search by Hostname and IP address"
 					inputWidth="270px"
 				/>
 			</Flex>

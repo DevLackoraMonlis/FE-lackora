@@ -19,8 +19,8 @@ export async function middleware(request: NextRequest) {
       script-src 'self' 'unsafe-eval' 'nonce-${nonce.nonce}';
       style-src 'self' 'unsafe-inline';
       font-src 'self';
-      img-src 'self' data: ${process.env.IMAGE_BASE_URL || ""};
-      object-src 'self' data:;
+      img-src 'self' data: ${process.env.IMAGE_BASE_URL || ""} ${process.env.IMAGE_BASE_URL_OBJ || ""};
+      object-src 'self' data: ${process.env.IMAGE_BASE_URL_OBJ || ""};
     `
 			.replace(/\s{2,}/g, " ")
 			.trim(),

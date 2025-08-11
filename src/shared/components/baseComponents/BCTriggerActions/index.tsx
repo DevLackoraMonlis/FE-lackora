@@ -33,22 +33,21 @@ function SelectOption({ iconType, label, description, disabled }: SelectOptionPr
 }
 
 export default function BCTriggerActions<T extends TriggerActionForm>({
-	initializeValues,
+	values,
 	onChange,
 }: {
-	initializeValues?: T;
+	values: T;
 	onChange: (values: T) => void;
 }) {
-	const updateValueOnce = useRef<TriggerActionFormList>({});
+	const updateValueByDependency = useRef<TriggerActionFormList>({});
 	const form = useForm<T>({
 		onValuesChange: (values) => {
-			console.log(values, onChange);
-			// // onChange(values);
-			// setTimeout(() => {
-			// 	Object.entries(updateValueOnce.current).forEach(([key, value]) => {
-			// 		form.setFieldValue(key, value as never);
-			// 	});
-			// }, 100);
+			const dependencyValue = updateValueByDependency.current;
+			Object.entries(dependencyValue).forEach(([key, value]) => {
+				form.setFieldValue(key, value as never);
+			});
+			Object.assign(values, dependencyValue);
+			onChange(values);
 		},
 	});
 
@@ -65,10 +64,7 @@ export default function BCTriggerActions<T extends TriggerActionForm>({
 				{groupName}
 			</Text>
 			{list?.map((item) => {
-				if (item.name && !form.getValues()?.[item.name]) {
-					form.setFieldValue(item.name, [] as never);
-				}
-				const key = `${groupName}|${item.name}`;
+				const key = `${groupName}|${item.name}|${item.id}`;
 				const disabled = triggerActions.includes(key);
 				return (
 					<Combobox.Option key={key} value={key} m={0} p="3xs" disabled={disabled}>
@@ -85,23 +81,41 @@ export default function BCTriggerActions<T extends TriggerActionForm>({
 	));
 
 	useEffect(() => {
-		if (initializeValues) {
-			form.setValues(initializeValues);
+		if (!policyActions.isLoading) {
+			const defaultTriggerActions = Object.keys(values)
+				.filter((item) => item?.length)
+				.map((listKey) => {
+					let groupName = "";
+					Object.entries(policyActions?.data || {}).forEach(([gName, list]) => {
+						if (list.some((item) => item.name === listKey)) groupName = gName;
+					});
+					return `${groupName}|${listKey}`;
+				});
+			setTriggerActions(defaultTriggerActions);
 		}
-	}, [initializeValues]);
+	}, [policyActions.isLoading]);
 
 	return (
 		<>
 			{triggerActions.map((triggerAction = "") => (
 				<TriggerActionGenerator<T>
 					key={triggerAction}
-					{...{ triggerActions, setTriggerActions, form, updateValueOnce, triggerAction }}
+					{...{
+						triggerActions,
+						setTriggerActions,
+						updateValueByDependency,
+						triggerAction,
+						form,
+						values,
+					}}
 				/>
 			))}
 			<Combobox
 				withinPortal
 				store={combobox}
 				onOptionSubmit={(val) => {
+					const [_, type] = val.split("|");
+					form.setFieldValue(type, [] as never);
 					setTriggerActions((perArray) => [...perArray, val]);
 					combobox.closeDropdown();
 				}}

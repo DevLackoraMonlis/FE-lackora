@@ -1,37 +1,27 @@
-import { Badge, Flex, Highlight, LoadingOverlay, Text } from "@mantine/core";
+import { Badge, Flex, Highlight, Text } from "@mantine/core";
 import { useViewportSize } from "@mantine/hooks";
-import { IconCheck, IconX } from "@tabler/icons-react";
+import { IconCheck } from "@tabler/icons-react";
 import { sortBy } from "lodash";
 import { useState } from "react";
 
 import type { PaginationRq } from "@/http/end-points/GeneralService.types";
+import BCDrawer from "@/shared/components/baseComponents/BCDrawer";
 import BCSearchInput from "@/shared/components/baseComponents/BCSearchInput";
 import BCTanStackGrid from "@/shared/components/baseComponents/BCTanStackGrid";
 import type { TanStackGridProps } from "@/shared/components/baseComponents/BCTanStackGrid/index.types";
 import { useTableSort } from "@/shared/hooks/useTableSort";
 
-import { useDiscoverySettingQuickDiscovery } from "../../../../../../index.hooks";
-import type { ConfigurationRs } from "../../../../../../index.types";
-
-type Props = Partial<ConfigurationRs> & {
-	enabledQuery: boolean;
+type Props = {
+	onClose: VoidFunction;
+	opened: boolean;
+	total: number;
+	results: { ipAddress: string; status: string; key: string }[];
 };
 
-export function DiscoveryQuickResults(props: Props) {
+function PolicyValidationResults({ results, total }: Props) {
 	const { height } = useViewportSize();
-	const { discoverySettingRunNow } = useDiscoverySettingQuickDiscovery(
-		props.enabledQuery,
-		props.adapterId || "",
-		props.configurationId || "",
-	);
-	const results = discoverySettingRunNow?.data?.results || [];
-	const status = discoverySettingRunNow?.data?.status;
-
 	const [{ search = "", ...queryParams }, setQueryParams] = useState<PaginationRq>({ limit: 25, page: 1 });
-	const { generateSortIcons, sortStatus } = useTableSort<(typeof results)[number]>({
-		columnAccessor: "discoveryTime",
-		direction: "des",
-	});
+	const { generateSortIcons, sortStatus } = useTableSort<(typeof results)[number]>();
 
 	const handleUpdateQueryParams = (params: Partial<PaginationRq>) => {
 		setQueryParams((perParams) => ({ ...perParams, page: 1, ...params }));
@@ -53,31 +43,19 @@ export function DiscoveryQuickResults(props: Props) {
 			),
 		},
 		{
-			accessor: "macAddress",
+			accessor: "status",
 			title: (
 				<Flex justify="space-between" align="center">
-					<Text>MAC Address</Text>
-					{generateSortIcons("macAddress")}
+					<Text>Status</Text>
+					{generateSortIcons("status")}
 				</Flex>
 			),
-			render: ({ macAddress }) => (
-				<Highlight highlight={[search]} highlightStyles={{}}>
-					{macAddress}
-				</Highlight>
-			),
-		},
-		{
-			accessor: "discoveryTime",
-			title: (
-				<Flex justify="space-between" align="center">
-					<Text>Time of Discovery</Text>
-					{generateSortIcons("discoveryTime")}
-				</Flex>
-			),
-			render: ({ discoveryTime }) => (
-				<Highlight highlight={[search]} highlightStyles={{}}>
-					{discoveryTime}
-				</Highlight>
+			render: ({ status }) => (
+				<Badge variant="dot">
+					<Highlight highlight={[search]} highlightStyles={{}} fz="xs">
+						{status}
+					</Highlight>
+				</Badge>
 			),
 		},
 	];
@@ -86,8 +64,7 @@ export function DiscoveryQuickResults(props: Props) {
 	const sortedData = sortBy(results, (record) => record[sortStatus.columnAccessor]);
 	if (sortStatus.direction === "des") sortedData.reverse();
 	const filteredResults = sortedData.filter(
-		({ macAddress, ipAddress, discoveryTime }) =>
-			macAddress.includes(search) || ipAddress.includes(search) || discoveryTime.includes(search),
+		({ ipAddress, status }) => status.includes(search) || ipAddress.includes(search),
 	);
 	// pagination options
 	const from = (queryParams.page - 1) * queryParams.limit;
@@ -95,31 +72,30 @@ export function DiscoveryQuickResults(props: Props) {
 	const tableRecords = filteredResults.slice(from, to);
 	const totalRecords = filteredResults?.length;
 
-	if (discoverySettingRunNow.isLoading && props.enabledQuery) return <LoadingOverlay visible />;
 	return (
 		<Flex direction="column" p="sm" gap="xs" w="100%">
-			<Flex gap="sm" align="center" justify="center" py="sm" bg="gray.1">
-				<Badge color={status ? "green" : "red"} circle size="30px">
-					{status ? <IconCheck color="white" /> : <IconX color="white" />}
-				</Badge>
-				<Text fz="lg" fw="bold" tt="capitalize">
-					{status
-						? `${discoverySettingRunNow?.data?.total ?? ""} IPs discovered In ${
-								discoverySettingRunNow?.data?.duration
-							} From ${props.configurationIP}`
-						: `${discoverySettingRunNow?.data?.message || ""}`}
+			<Flex direction="column" align="center" gap="sm" py="sm" bg="gray.1">
+				<Flex gap="sm" align="center" justify="center">
+					<Badge color="green" circle size="30px">
+						<IconCheck color="white" />
+					</Badge>
+					<Text fz="lg" fw="bold" tt="capitalize">
+						{`${total.toLocaleString()} assets matched with your condition`}
+					</Text>
+				</Flex>
+				<Text c="dimmed" fz="xs">
+					Condition: If source IP is in blackPull Base and status is profiled
 				</Text>
 			</Flex>
 			<Flex gap="sm" align="center" p="sm" bg="gray.1">
 				<BCSearchInput
 					clientSide
 					onSubmitSearch={(value) => handleUpdateQueryParams({ search: value })}
-					placeholder="Search by IP, MAC address and Time of Discovery"
-					inputWidth="360px"
+					placeholder="Search by IP and Status"
 				/>
 			</Flex>
 			<BCTanStackGrid
-				h={height - 350}
+				h={height - 320}
 				withTableBorder
 				withColumnBorders
 				withRowBorders
@@ -136,5 +112,13 @@ export function DiscoveryQuickResults(props: Props) {
 				recordsPerPageOptions={[25, 50, 100]}
 			/>
 		</Flex>
+	);
+}
+
+export default function PolicyValidationResultsModal({ onClose, opened, ...configs }: Props) {
+	return (
+		<BCDrawer onClose={onClose} opened={opened} title="Matched Assets">
+			<PolicyValidationResults {...configs} {...{ onClose, opened }} />
+		</BCDrawer>
 	);
 }

@@ -3,14 +3,17 @@ import { notifications } from "@mantine/notifications";
 import { v4 } from "uuid";
 
 import type { CustomError } from "@/http/end-points/GeneralService.types";
+import { useGetAssetFilterColumns } from "@/http/generated/cyber-asset-management-cyber-assets";
 import {
 	enablePolicy,
 	enforcePolicy,
 	getPolicyDependency,
+	useCreatePolicy,
 	useDeletePolicy,
 	useGetPolicies,
-	useGetPolicyManagementColumns,
 	useOrderPolicyPriority,
+	useUpdatePolicy,
+	useValidatePolicyCondition,
 } from "@/http/generated/policy-management";
 import {
 	runWorkflow,
@@ -275,9 +278,28 @@ export function useDeletePolicyDependency() {
 }
 
 export function useColumnPolicyConditions() {
-	const columnConditions = useGetPolicyManagementColumns({
+	// useGetPolicyManagementColumns;
+	const columnConditions = useGetAssetFilterColumns({
 		query: { select: (res) => convertICAdvancedFilterResponseColumns(res) },
 	});
 
 	return { columnConditions };
+}
+
+export function usePolicyConditionsValidation() {
+	const conditionsValidation = useValidatePolicyCondition({
+		mutation: { onMutate: () => ({ hideErrorMessage: false, hideSuccessMessage: true }) },
+	});
+
+	return { conditionsValidation };
+}
+
+export function useCreateWorkflowPolicy() {
+	const createPolicy = useCreatePolicy();
+	return { createPolicy };
+}
+
+export function useUpdateWorkflowPolicy() {
+	const updatePolicy = useUpdatePolicy();
+	return { updatePolicy };
 }
