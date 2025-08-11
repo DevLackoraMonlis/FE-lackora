@@ -9,6 +9,7 @@ import BCDrawer from "@/shared/components/baseComponents/BCDrawer";
 import BCSearchInput from "@/shared/components/baseComponents/BCSearchInput";
 import BCTanStackGrid from "@/shared/components/baseComponents/BCTanStackGrid";
 import type { TanStackGridProps } from "@/shared/components/baseComponents/BCTanStackGrid/index.types";
+import { ASSETS_STATUS } from "@/shared/constants/assets";
 import { useTableSort } from "@/shared/hooks/useTableSort";
 
 type Props = {
@@ -50,16 +51,18 @@ function PolicyValidationResults({ results, total }: Props) {
 					{generateSortIcons("status")}
 				</Flex>
 			),
-			render: ({ status }) => (
-				<Badge variant="dot">
-					<Highlight highlight={[search]} highlightStyles={{}} fz="xs">
-						{status}
-					</Highlight>
-				</Badge>
-			),
+			render: ({ status }) => {
+				const { color } = ASSETS_STATUS[status as keyof typeof ASSETS_STATUS] || {};
+				return (
+					<Badge variant="dot" color={color}>
+						<Highlight highlight={[search]} highlightStyles={{}} fz="xs">
+							{status}
+						</Highlight>
+					</Badge>
+				);
+			},
 		},
 	];
-
 	// data sorting
 	const sortedData = sortBy(results, (record) => record[sortStatus.columnAccessor]);
 	if (sortStatus.direction === "des") sortedData.reverse();
@@ -71,7 +74,6 @@ function PolicyValidationResults({ results, total }: Props) {
 	const to = from + queryParams.limit;
 	const tableRecords = filteredResults.slice(from, to);
 	const totalRecords = filteredResults?.length;
-
 	return (
 		<Flex direction="column" p="sm" gap="xs" w="100%">
 			<Flex direction="column" align="center" gap="sm" py="sm" bg="gray.1">

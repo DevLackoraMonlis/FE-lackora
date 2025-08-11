@@ -67,11 +67,11 @@ export default function PolicyConditionValidation({ renderProps, formConditions 
 				handleOnValidating,
 				conditionsValidation.isPending,
 				<Alert
-					hidden={!conditionsValidation.isSuccess}
+					hidden={!conditionsValidation.isSuccess && conditionsValidation.isPending}
 					mb="2xs"
 					variant="light"
 					color="green"
-					withCloseButton
+					withCloseButton={false}
 					icon={<IconCheck />}
 					title={
 						<Flex align="center" gap="xs">

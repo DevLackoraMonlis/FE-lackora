@@ -6,6 +6,7 @@
  * OpenAPI spec version: 1.0.0
  */
 import type { CyberAssetAssetIdentificationHostname } from './CyberAssetAssetIdentificationHostname';
+import type { CyberAssetAssetIdentificationOsFamily } from './CyberAssetAssetIdentificationOsFamily';
 import type { CyberAssetAssetIdentificationOsVersion } from './CyberAssetAssetIdentificationOsVersion';
 import type { CyberAssetAssetIdentificationUptimeSince } from './CyberAssetAssetIdentificationUptimeSince';
 
@@ -13,7 +14,7 @@ export interface CyberAssetAssetIdentification {
   hostname?: CyberAssetAssetIdentificationHostname;
   uptime_since?: CyberAssetAssetIdentificationUptimeSince;
   os_type: string;
-  os_family: string;
+  os_family?: CyberAssetAssetIdentificationOsFamily;
   os_version?: CyberAssetAssetIdentificationOsVersion;
   discovery_type: string;
 }

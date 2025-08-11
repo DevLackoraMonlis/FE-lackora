@@ -12,14 +12,26 @@ import type { TanStackGridProps } from "@/shared/components/baseComponents/BCTan
 import { ASSETS_STATUS } from "@/shared/constants/assets";
 import { useTableSort } from "@/shared/hooks/useTableSort";
 
+import type { ProfilingInventoryRules } from "../../index.enum";
+
 type Props = {
 	onClose: VoidFunction;
 	opened: boolean;
-	total: number;
-	results: { ipAddress: string; status: string; key: string }[];
+	inventoryRuleId: string;
+	type: ProfilingInventoryRules;
 };
 
-function PolicyValidationResults({ results, total }: Props) {
+function ProfilingMatchedAssets({ inventoryRuleId }: Props) {
+	const results = [
+		{
+			ipAddress: "1",
+			status: "profiled",
+			macAddress: "1",
+			inventoryTime: "1",
+			inventoryRuleId,
+		},
+	];
+	const total = 1;
 	const { height } = useViewportSize();
 	const [{ search = "", ...queryParams }, setQueryParams] = useState<PaginationRq>({ limit: 25, page: 1 });
 	const { generateSortIcons, sortStatus } = useTableSort<(typeof results)[number]>();
@@ -44,6 +56,20 @@ function PolicyValidationResults({ results, total }: Props) {
 			),
 		},
 		{
+			accessor: "macAddress",
+			title: (
+				<Flex justify="space-between" align="center">
+					<Text>MAC Address</Text>
+					{generateSortIcons("macAddress")}
+				</Flex>
+			),
+			render: ({ macAddress }) => (
+				<Highlight highlight={[search]} highlightStyles={{}}>
+					{macAddress}
+				</Highlight>
+			),
+		},
+		{
 			accessor: "status",
 			title: (
 				<Flex justify="space-between" align="center">
@@ -62,13 +88,31 @@ function PolicyValidationResults({ results, total }: Props) {
 				);
 			},
 		},
+		{
+			accessor: "inventoryTime",
+			title: (
+				<Flex justify="space-between" align="center">
+					<Text>Time of Inventory</Text>
+					{generateSortIcons("inventoryTime")}
+				</Flex>
+			),
+			render: ({ inventoryTime }) => (
+				<Highlight highlight={[search]} highlightStyles={{}}>
+					{inventoryTime}
+				</Highlight>
+			),
+		},
 	];
 
 	// data sorting
 	const sortedData = sortBy(results, (record) => record[sortStatus.columnAccessor]);
 	if (sortStatus.direction === "des") sortedData.reverse();
 	const filteredResults = sortedData.filter(
-		({ ipAddress, status }) => status.includes(search) || ipAddress.includes(search),
+		({ ipAddress, status, inventoryTime, macAddress }) =>
+			status.includes(search) ||
+			ipAddress.includes(search) ||
+			inventoryTime.includes(search) ||
+			macAddress.includes(search),
 	);
 	// pagination options
 	const from = (queryParams.page - 1) * queryParams.limit;
@@ -83,22 +127,25 @@ function PolicyValidationResults({ results, total }: Props) {
 						<IconCheck color="white" />
 					</Badge>
 					<Text fz="lg" fw="bold" tt="capitalize">
-						{`${total.toLocaleString()} assets matched with your condition`}
+						{`${total.toLocaleString()} assets matched`}
 					</Text>
 				</Flex>
 				<Text c="dimmed" fz="xs">
-					Condition: If source IP is in blackPull Base and status is profiled
+					Condition: If source IP is in blackPull Base, then trigger Email Adapter using SMTP Connection.
 				</Text>
+				<Highlight c="dimmed" highlight={["#4301", "July 30, 2025 at 14:23"]} fz="xs">
+					{"Last matched: July 30, 2025 at 14:23 | Scan ID: #4301"}
+				</Highlight>
 			</Flex>
 			<Flex gap="sm" align="center" p="sm" bg="gray.1">
 				<BCSearchInput
 					clientSide
 					onSubmitSearch={(value) => handleUpdateQueryParams({ search: value })}
-					placeholder="Search by IP and Status"
+					placeholder="Search on columns"
 				/>
 			</Flex>
 			<BCTanStackGrid
-				h={height - 320}
+				h={height - 350}
 				withTableBorder
 				withColumnBorders
 				withRowBorders
@@ -118,10 +165,10 @@ function PolicyValidationResults({ results, total }: Props) {
 	);
 }
 
-export default function PolicyValidationResultsModal({ onClose, opened, ...configs }: Props) {
+export default function ProfilingMatchedAssetsModal({ onClose, opened, ...configs }: Props) {
 	return (
-		<BCDrawer onClose={onClose} opened={opened} title="Matched Assets">
-			<PolicyValidationResults {...configs} {...{ onClose, opened }} />
+		<BCDrawer size="50%" onClose={onClose} opened={opened} title="Matched Assets">
+			<ProfilingMatchedAssets {...configs} {...{ onClose, opened }} />
 		</BCDrawer>
 	);
 }

@@ -16,6 +16,7 @@ import DeleteProfilingModal from "../DeleteProfiling";
 import ProfilingAccordion from "../ProfilingAccordion";
 import ProfilingAccordionSkelton from "../ProfilingAccordionSkelton";
 import ProfilingCreateOrEditModal from "../ProfilingCreateOrEditModal";
+import ProfilingMatchedAssetsModal from "../ProfilingMatchedAssets";
 
 const DnDCardBox = ({ id, content }: { id: string; content: ReactNode }) => {
 	const { listeners, setNodeRef, transform, transition } = useSortable({ id });
@@ -39,6 +40,7 @@ const DnDCardBox = ({ id, content }: { id: string; content: ReactNode }) => {
 };
 
 export default function ProfilingAccordionWithDnD({ type }: { type: ProfilingInventoryRules }) {
+	const [openedAssets, handleOpenedAssets] = useDisclosure();
 	const [openedDelete, handleOpenedDelete] = useDisclosure();
 	const [openedCreateOrEdit, handleOpenedCreateOrEdit] = useDisclosure();
 	const [cards, setCards] = useState<ProfilingCardData[]>([]);
@@ -65,10 +67,15 @@ export default function ProfilingAccordionWithDnD({ type }: { type: ProfilingInv
 		setSelectedId(id);
 		handleOpenedCreateOrEdit.open();
 	};
+	const handleMatchedAssets = (id: string) => {
+		setSelectedId(id);
+		handleOpenedAssets.open();
+	};
 	const handleCloseProfiling = () => {
 		setSelectedId("");
 		handleOpenedCreateOrEdit.close();
 		handleOpenedDelete.close();
+		handleOpenedAssets.close();
 	};
 
 	useEffect(() => {
@@ -96,6 +103,12 @@ export default function ProfilingAccordionWithDnD({ type }: { type: ProfilingInv
 
 	return (
 		<>
+			<ProfilingMatchedAssetsModal
+				onClose={handleCloseProfiling}
+				opened={openedAssets}
+				inventoryRuleId={selectedId}
+				type={type}
+			/>
 			<DeleteProfilingModal
 				onClose={handleCloseProfiling}
 				opened={openedDelete}
@@ -121,6 +134,7 @@ export default function ProfilingAccordionWithDnD({ type }: { type: ProfilingInv
 								/>
 							) : (
 								<BCEmptyWithCreate
+									visible={!openedCreateOrEdit}
 									onCreate={handleOpenedCreateOrEdit.open}
 									icon={<PolicyNoPolicies width={140} height={140} />}
 									buttonText="Create First Inventory Rule"
@@ -159,6 +173,7 @@ export default function ProfilingAccordionWithDnD({ type }: { type: ProfilingInv
 													handleRefetchPolicies={handleRefetchRules}
 													handleEnabledProfiling={handleEnabledProfiling}
 													handleEditOrCreateProfiling={handleEditOrCreateProfiling}
+													handleMatchedAssets={handleMatchedAssets}
 												/>
 											}
 										/>

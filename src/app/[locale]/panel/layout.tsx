@@ -1,5 +1,4 @@
 import PanelLayout from "@/app/[locale]/panel/layout.component";
-import { getHttpRequestXNonce } from "@/app/actions/get-http-request-x-nonce";
 import { GlobalService } from "@/http/end-points/GlobalService";
 import type { ActiveApplicationsResponse } from "@/http/generated/models";
 import type { SessionUserType } from "@/http/httpService";
@@ -27,12 +26,12 @@ export default async function Layout(props: PropsWithChildren) {
 
 	try {
 		console.info("trying to get new x-nonce ...");
-		const xNonceRes = await getHttpRequestXNonce({
-			baseUrl: process.env.BASE_URL,
-			method: "GET",
-			route: "/api/application-management/active-applications",
-		});
-		xNonce = xNonceRes.data.nonce;
+		// const xNonceRes = await getHttpRequestXNonce({
+		// 	baseUrl: process.env.BASE_URL,
+		// 	method: "GET",
+		// 	route: "/api/application-management/active-applications",
+		// });
+		xNonce = "xNonceRes.data.nonce";
 		console.info("get new x-nonce successfully");
 		console.info("trying to get active-apps ...");
 		const activeAppsRes = await GlobalService.getActiveApplications(
@@ -51,12 +50,12 @@ export default async function Layout(props: PropsWithChildren) {
 				accessToken = newTokenRes.data.access_token;
 
 				console.info("trying to get new x-nonce with new token ...");
-				const xNonceRes = await getHttpRequestXNonce({
-					baseUrl: process.env.BASE_URL,
-					method: "GET",
-					route: "/api/application-management/active-applications",
-				});
-				xNonce = xNonceRes.data.nonce;
+				// const xNonceRes = await getHttpRequestXNonce({
+				// 	baseUrl: process.env.BASE_URL,
+				// 	method: "GET",
+				// 	route: "/api/application-management/active-applications",
+				// });
+				xNonce = "xNonceRes.data.nonce";
 				console.info("get new x-nonce with new token successfully");
 				console.info("trying to get new active-apps with new token ...");
 				const activeAppsRes = await GlobalService.getActiveApplications(

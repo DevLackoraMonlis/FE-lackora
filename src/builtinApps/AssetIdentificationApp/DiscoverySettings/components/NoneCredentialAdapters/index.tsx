@@ -39,7 +39,7 @@ const DiscoverySettingsNoneCredentialAdapters = () => {
 		<Grid p="sm" pt="md">
 			<Grid.Col span={{ xs: 12, lg: 9 }} offset={{ lg: 3 }}>
 				<ScrollArea px="xs" h={height - 160}>
-					<Accordion variant="separated" onChange={setActiveAccordion}>
+					<Accordion variant="separated" onChange={setActiveAccordion} px="2xs">
 						{discoveryAdapters.data?.results?.map(
 							({ id, fields, display_name, caption, icon, is_active, description }) => {
 								const switchMode = !fields?.length;

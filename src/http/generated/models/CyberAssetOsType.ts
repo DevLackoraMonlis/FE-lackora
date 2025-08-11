@@ -13,4 +13,5 @@ export type CyberAssetOsType = typeof CyberAssetOsType[keyof typeof CyberAssetOs
 export const CyberAssetOsType = {
   linux: 'linux',
   windows: 'windows',
+  infrastructure: 'infrastructure',
 } as const;

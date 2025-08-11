@@ -1,4 +1,3 @@
-import { getHttpRequestXNonce } from "@/app/actions/get-http-request-x-nonce";
 import { validateSignedCsrfToken } from "@/shared/lib/csrf";
 import { getToken } from "next-auth/jwt";
 import { cookies } from "next/headers";
@@ -22,9 +21,9 @@ export async function POST(req: NextRequest) {
 		return new NextResponse("Unauthorized Validate Access Token", { status: 401 });
 	}
 
-	const body = await req.json();
-	const xNonce = await getHttpRequestXNonce({
-		...body,
-	});
-	return NextResponse.json(xNonce.data);
+	// const body = await req.json();
+	// const xNonce = await getHttpRequestXNonce({
+	// 	...body,
+	// });
+	return NextResponse.json("xNonce.data");
 }

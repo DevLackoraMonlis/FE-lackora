@@ -7,7 +7,6 @@ import type { ProfilingCardData, ProfilingHandles } from "../../index.types";
 
 type Props = ProfilingCardData &
 	Omit<ProfilingHandles, "profilingCards"> & {
-		handleEnabledProfiling: (id: string) => void;
 		selectedId: string;
 		loading: boolean;
 	};
@@ -78,7 +77,14 @@ export default function ProfilingAccordion({ id, ...props }: Props) {
 							</Flex>
 						</Flex>
 						<Flex align="center" gap="xs" px="sm">
-							<Badge w="180px" variant="light" color="gray" tt="capitalize" p="sm">
+							<Badge
+								w="180px"
+								variant="light"
+								color="gray"
+								tt="capitalize"
+								p="sm"
+								onClick={() => props.handleMatchedAssets(id)}
+							>
 								<Highlight
 									className="cursor-pointer"
 									highlight={[`${props.matched_assets ?? "-"}`]}

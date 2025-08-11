@@ -15,6 +15,8 @@ export type ProfilingCardData = {
 export type ProfilingHandles = {
 	handleEditOrCreateProfiling: (id: string) => void;
 	handleDeleteProfiling: (id: string) => void;
+	handleMatchedAssets: (id: string) => void;
+	handleEnabledProfiling: (id: string) => void;
 	handleRefetchPolicies: VoidFunction;
 	profilingCards?: ProfilingCardData[];
 };
