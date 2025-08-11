@@ -4,7 +4,7 @@ import { IconPlus } from "@tabler/icons-react";
 import { useState } from "react";
 
 import BCDrawer from "@/shared/components/baseComponents/BCDrawer";
-import BCEmptyOrError from "@/shared/components/baseComponents/BCEmptyOrError";
+import BCEmptyOrOverlay from "@/shared/components/baseComponents/BCEmptyOrOverlay";
 import BCEmptyWithCreate from "@/shared/components/baseComponents/BCEmptyWithCreate";
 import { PolicyNoPolicies } from "@/shared/icons/components/policy";
 
@@ -64,7 +64,7 @@ function WorkflowPolices({ workflowName = "" }: Props) {
 			/>
 			{!polices?.isLoading && !polices?.data?.results?.length ? (
 				polices.isError ? (
-					<BCEmptyOrError icon={<PolicyNoPolicies width={140} height={140} />} title="Policy has error!" />
+					<BCEmptyOrOverlay icon={<PolicyNoPolicies width={140} height={140} />} title="Policy has error!" />
 				) : (
 					<BCEmptyWithCreate
 						onCreate={handleEditOrCreatePolicy}

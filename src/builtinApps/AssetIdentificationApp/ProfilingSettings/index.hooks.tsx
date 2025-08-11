@@ -12,6 +12,7 @@ import {
 	useGetInventoryRules,
 	useOrderInventoryRulePriority,
 	useUpdateInventoryRule,
+	useValidateInventoryRuleCondition,
 } from "@/http/generated/inventory-rules";
 import { convertICAdvancedFilterResponseColumns } from "@/shared/components/infraComponents/ICAdvancedFilter/index.helper";
 
@@ -139,4 +140,12 @@ export function useCreateProfiling() {
 export function useUpdateProfiling() {
 	const updateInventoryRule = useUpdateInventoryRule();
 	return { updateInventoryRule };
+}
+
+export function usePolicyConditionsValidation() {
+	const conditionsValidation = useValidateInventoryRuleCondition({
+		mutation: { onMutate: () => ({ hideErrorMessage: false, hideSuccessMessage: true }) },
+	});
+
+	return { conditionsValidation };
 }

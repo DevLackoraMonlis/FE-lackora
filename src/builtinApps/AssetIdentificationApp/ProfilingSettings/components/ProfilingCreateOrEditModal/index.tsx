@@ -1,4 +1,4 @@
-import { Button, Card, Flex, Grid, Text } from "@mantine/core";
+import { Button, Card, Flex, Grid, Loader, Text } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { notifications } from "@mantine/notifications";
 import { useEffect, useMemo } from "react";
@@ -9,6 +9,7 @@ import BCModal from "@/shared/components/baseComponents/BCModal";
 import ICAdvancedFilterConditionBuilder from "@/shared/components/infraComponents/ICAdvancedFilter/components/ICAdvancedFilterConditionBuilder";
 import { validateInput } from "@/shared/lib/utils";
 
+import BCEmptyOrOverlay from "@/shared/components/baseComponents/BCEmptyOrOverlay";
 import type { ProfilingInventoryRules } from "../../index.enum";
 import {
 	useColumnProfilingConditions,
@@ -17,6 +18,7 @@ import {
 	useUpdateProfiling,
 } from "../../index.hooks";
 import type { ProfilingCardData } from "../../index.types";
+import PolicyConditionValidation from "./components/PolicyConditionValidation";
 
 type FormValues = {
 	name: string;
@@ -212,21 +214,38 @@ function CreateOrEdit({ type, inventoryRuleId, onClose }: Props) {
 						</Grid>
 					</Card>
 				</Card>
-				<Card shadow="xs" radius="xs">
-					<Card.Section inheritPadding py="xs">
-						<Text size="sm" fw="bold">
-							Condition(s)
-						</Text>
-					</Card.Section>
-					<Card bg="gray.1" m={0}>
-						<ICAdvancedFilterConditionBuilder
-							onChange={(newConditions) => form.setFieldValue("conditions", newConditions)}
-							allColumns={columnConditions.data?.data.results || []}
-							conditions={form.values.conditions}
-							h={100}
-						/>
-					</Card>
-				</Card>
+				<PolicyConditionValidation
+					formConditions={form.values.conditions}
+					renderProps={(onValidation, loading, alert) => (
+						<Card shadow="xs" radius="xs" pos="relative">
+							<BCEmptyOrOverlay
+								visible={loading}
+								icon={<Loader color="blue" type="bars" />}
+								title="Validating your policy..."
+								description="We’re checking the policy conditions for conflicts and errors. This might take a few seconds"
+							/>
+							<Card.Section inheritPadding py="xs">
+								<Flex justify="space-between" align="center">
+									<Text size="sm" fw="bold">
+										Condition(s)
+									</Text>
+									<Button variant="transparent" onClick={onValidation}>
+										Run Condition(s)
+									</Button>
+								</Flex>
+							</Card.Section>
+							{alert}
+							<Card bg="gray.1" m={0}>
+								<ICAdvancedFilterConditionBuilder
+									onChange={(newConditions) => form.setFieldValue("conditions", newConditions)}
+									allColumns={columnConditions.data?.data.results || []}
+									conditions={form.values.conditions}
+									h={100}
+								/>
+							</Card>
+						</Card>
+					)}
+				/>
 				<Card shadow="xs" radius="xs">
 					<Card.Section inheritPadding py="xs">
 						<Text size="sm" fw="bold">

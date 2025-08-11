@@ -109,7 +109,7 @@ const DiscoveryAdapterGateways = ({ enabled, adapterId, fields, refetchDiscovery
 					Added Configurations
 				</Text>
 				{!!discoverySettingConfigurations.data?.results?.length && (
-					<BCSearchInput clientSide onSubmitSearch={setSearch} placeholder="Search by Name or IP" />
+					<BCSearchInput clientSide onSubmitSearch={setSearch} placeholder="Search by Name and IP" />
 				)}
 			</Flex>
 			<Flex

@@ -2,12 +2,24 @@ import { Flex, LoadingOverlay, Text } from "@mantine/core";
 import { IconDatabaseSearch } from "@tabler/icons-react";
 import type { ReactNode } from "react";
 
-type Props = { iconSize?: number; title?: string; description?: ReactNode; icon?: ReactNode };
+type Props = {
+	iconSize?: number;
+	title?: string;
+	description?: ReactNode;
+	icon?: ReactNode;
+	visible?: boolean;
+};
 
-export default function BCEmptyOrError({ iconSize = 50, title, description = "", icon }: Props) {
+export default function BCEmptyOrOverlay({
+	iconSize = 50,
+	title,
+	description = "",
+	icon,
+	visible = true,
+}: Props) {
 	return (
 		<LoadingOverlay
-			visible
+			visible={visible}
 			loaderProps={{
 				children: (
 					<Flex justify="center" align="center" direction="column">
@@ -23,7 +35,6 @@ export default function BCEmptyOrError({ iconSize = 50, title, description = "",
 					</Flex>
 				),
 			}}
-			overlayProps={{ blur: 0, bg: "transparent" }}
 		/>
 	);
 }

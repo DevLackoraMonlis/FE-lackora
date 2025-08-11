@@ -1,4 +1,4 @@
-import { Button, Card, Flex, Grid, ScrollArea, Text } from "@mantine/core";
+import { Button, Card, Flex, Grid, Loader, ScrollArea, Text } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { useViewportSize } from "@mantine/hooks";
 import { notifications } from "@mantine/notifications";
@@ -12,6 +12,7 @@ import type { TriggerActionForm } from "@/shared/components/baseComponents/BCTri
 import ICAdvancedFilterConditionBuilder from "@/shared/components/infraComponents/ICAdvancedFilter/components/ICAdvancedFilterConditionBuilder";
 import { validateInput } from "@/shared/lib/utils";
 
+import BCEmptyOrOverlay from "@/shared/components/baseComponents/BCEmptyOrOverlay";
 import {
 	useColumnPolicyConditions,
 	useCreateWorkflowPolicy,
@@ -19,6 +20,7 @@ import {
 	useWorkflowPolicy,
 } from "../../../../index.hooks";
 import type { PolicyCardData, PolicyWorkflowTypes } from "../../../../index.types";
+import PolicyConditionValidation from "./components/PolicyConditionValidation";
 
 type FormValues = {
 	name: string;
@@ -158,7 +160,7 @@ function PolicyCreateOrEdit({ workflowName, policyId, onClose }: Props) {
 	return (
 		<>
 			<form onSubmit={form.onSubmit(handleSubmit)} key={policyId}>
-				<ScrollArea h={height - 270}>
+				<ScrollArea h={height - 250}>
 					<Card shadow="xs" radius="xs">
 						<Card.Section inheritPadding py="xs">
 							<Text size="sm" fw="bold">
@@ -184,21 +186,38 @@ function PolicyCreateOrEdit({ workflowName, policyId, onClose }: Props) {
 							</Grid>
 						</Card>
 					</Card>
-					<Card shadow="xs" radius="xs">
-						<Card.Section inheritPadding py="xs">
-							<Text size="sm" fw="bold">
-								Condition(s)
-							</Text>
-						</Card.Section>
-						<Card bg="gray.1" m={0}>
-							<ICAdvancedFilterConditionBuilder
-								onChange={(newConditions) => form.setFieldValue("conditions", newConditions)}
-								allColumns={columnConditions.data?.data.results || []}
-								conditions={form.values.conditions}
-								h={100}
-							/>
-						</Card>
-					</Card>
+					<PolicyConditionValidation
+						formConditions={form.values.conditions}
+						renderProps={(onValidation, loading, alert) => (
+							<Card shadow="xs" radius="xs" pos="relative">
+								<BCEmptyOrOverlay
+									visible={loading}
+									icon={<Loader color="blue" type="bars" />}
+									title="Validating your policy..."
+									description="We’re checking the policy conditions for conflicts and errors. This might take a few seconds"
+								/>
+								<Card.Section inheritPadding py="xs">
+									<Flex justify="space-between" align="center">
+										<Text size="sm" fw="bold">
+											Condition(s)
+										</Text>
+										<Button variant="transparent" onClick={onValidation}>
+											Run Condition(s)
+										</Button>
+									</Flex>
+								</Card.Section>
+								{alert}
+								<Card bg="gray.1" m={0}>
+									<ICAdvancedFilterConditionBuilder
+										onChange={(newConditions) => form.setFieldValue("conditions", newConditions)}
+										allColumns={columnConditions.data?.data.results || []}
+										conditions={form.values.conditions}
+										h={100}
+									/>
+								</Card>
+							</Card>
+						)}
+					/>
 					<Card shadow="xs" radius="xs">
 						<Card.Section inheritPadding py="xs">
 							<Text size="sm" fw="bold">
