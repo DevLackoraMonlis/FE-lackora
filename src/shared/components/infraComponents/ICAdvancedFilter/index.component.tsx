@@ -1,5 +1,4 @@
 import type { TanStackDataTableColumnColDef } from "@/shared/components/baseComponents/BCTanStackGrid/index.types";
-import ICAdvancedFilterConditionSection from "@/shared/components/infraComponents/ICAdvancedFilter/components/ICAdvancedFilterConditionSection";
 import ICAdvancedFilterConditionSectionItems from "@/shared/components/infraComponents/ICAdvancedFilter/components/ICAdvancedFilterConditionSectionItems";
 import ICAdvancedFilterGrid from "@/shared/components/infraComponents/ICAdvancedFilter/components/ICAdvancedFilterGrid";
 import ICAdvancedFilterTopSection from "@/shared/components/infraComponents/ICAdvancedFilter/components/ICAdvancedFilterTopSection";
@@ -18,7 +17,6 @@ export default function ICAdvancedFilterComponent<T>(
 		"run" | "allColumns" | "data" | "isLoading" | "totalRecords" | "searchInputItems" | "tableHeight"
 	>,
 ) {
-	const { ref: conditionFixedSectionRef, height: conditionFixedSectionHeight } = useElementSize();
 	const { ref: conditionItemsSectionRef, height: conditionItemsSectionHeight } = useElementSize();
 	const store = useStore(
 		props.store,
@@ -75,13 +73,6 @@ export default function ICAdvancedFilterComponent<T>(
 				searchInputPlaceholder={props.searchInputPlaceholder}
 			/>
 			{/* <ICAdvancedFilterConditionModal allColumns={allColumns} store={props.store} /> */}
-			<ICAdvancedFilterConditionSection
-				hideConditionSection={props.hideConditionSection}
-				run={run}
-				allColumns={allColumns}
-				ref={conditionFixedSectionRef}
-				store={props.store}
-			/>
 			<ICAdvancedFilterConditionSectionItems
 				hideConditionSection={props.hideConditionSection}
 				run={run}
@@ -90,7 +81,6 @@ export default function ICAdvancedFilterComponent<T>(
 				store={props.store}
 			/>
 			<ICAdvancedFilterGrid<Record<string, unknown>>
-				conditionFixedSectionHeight={conditionFixedSectionHeight}
 				conditionItemsSectionHeight={conditionItemsSectionHeight}
 				tableMinusHeight={props.tableMinusHeight}
 				defaultColumnSize={props.defaultColumnSize}

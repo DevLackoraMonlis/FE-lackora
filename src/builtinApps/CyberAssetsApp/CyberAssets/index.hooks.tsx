@@ -89,6 +89,7 @@ export const useGetCyberAssetDetailGeneralInfo = (params: {
 							? getCyberAssetClassificationIcon({
 									type: getCyberAssetsGeneralInfoQuery.data?.data
 										.classification as CyberAssetClassificationEnum,
+									isAssociated: false,
 								})
 							: ""}
 						<Text fz={"xs"}>{getCyberAssetsGeneralInfoQuery.data?.data.asset_identification.os_family}</Text>
@@ -324,6 +325,7 @@ export const useGetCyberAssetDetailGeneralInfo = (params: {
 		icon: getCyberAssetClassificationIcon({
 			type: getCyberAssetsGeneralInfoQuery.data?.data.classification as CyberAssetClassificationEnum,
 			size: 60,
+			isAssociated: false,
 		}),
 		subTitle: getCyberAssetsGeneralInfoQuery.data?.data.asset_identification.os_family || "",
 		title: getCyberAssetsGeneralInfoQuery.data?.data.asset_identification.hostname || "",

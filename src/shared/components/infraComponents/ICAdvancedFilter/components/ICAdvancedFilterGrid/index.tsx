@@ -24,6 +24,7 @@ import { notifications } from "@mantine/notifications";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import type { Row } from "@tanstack/react-table";
 import { uniqBy } from "lodash";
+import Link from "next/link";
 import { type ReactNode, useCallback, useDeferredValue, useEffect, useMemo } from "react";
 import { v4 } from "uuid";
 import { useStore } from "zustand";
@@ -50,7 +51,6 @@ type Props<T> = Pick<
 	| "getDataApi"
 	| "dataQueryKey"
 > & {
-	conditionFixedSectionHeight: number;
 	conditionItemsSectionHeight: number;
 };
 
@@ -70,7 +70,6 @@ export default function ICAdvancedFilterGrid<T extends Record<string, unknown>>(
 			getExistAnyGroupByColumn: state.getExistAnyGroupByColumn,
 			openedFullScreenModal: state.openedFullScreenModal,
 			setOpenFullScreenModal: state.setOpenFullScreenModal,
-			openedConditionSection: state.openedConditionSection,
 			runToken: state.runToken,
 		})),
 	);
@@ -93,13 +92,11 @@ export default function ICAdvancedFilterGrid<T extends Record<string, unknown>>(
 	const total = useGetDataQuery.data?.data?.metadata?.total;
 	const isLoading = useGetDataQuery.isFetching || props.isLoading;
 
-	const conditionFixedHeight = store.openedConditionSection ? props.conditionFixedSectionHeight : 0;
 	const conditionItemsHeight =
 		store.variables.conditions.length || store.variables.groupBy ? props.conditionItemsSectionHeight + 10 : 0;
 	const fixedTopSectionHeight = 110;
 
-	const tableHeight =
-		height - fixedTopSectionHeight - props.tableMinusHeight - conditionFixedHeight - conditionItemsHeight;
+	const tableHeight = height - fixedTopSectionHeight - props.tableMinusHeight - conditionItemsHeight;
 
 	const onCopyValue = useCallback((value: unknown) => {
 		unsecuredCopyToClipboard((value || "") as string);
@@ -224,7 +221,12 @@ export default function ICAdvancedFilterGrid<T extends Record<string, unknown>>(
 					<ScrollArea h={"100%"} scrollbarSize={1} scrollbars={"x"}>
 						<Flex h={32} gap={"xs"} align={"center"}>
 							{arrayValue.slice(0, maxDisplay).map((item) => (
-								<Pill bg={"gray.2"} size={"xs"} key={item.value}>
+								<Pill
+									{...(item.url && { component: Link, href: item.url, target: "blank" })}
+									bg={"gray.2"}
+									size={"xs"}
+									key={item.value}
+								>
 									{item.value}
 								</Pill>
 							))}

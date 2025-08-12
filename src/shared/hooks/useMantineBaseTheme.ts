@@ -88,6 +88,7 @@ export default function useMantineBaseTheme() {
 			"2lg": "26px",
 			"2xl": "40px",
 			"3xl": "60px",
+			"4xl": "80px",
 		},
 		fontSizes: {
 			"2xs": "10px",

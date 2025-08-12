@@ -5,7 +5,7 @@ import type {
 	ICAdvancedFilterGroupByRq,
 	ICAdvancedFilterProps,
 } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
-import { Flex, Text } from "@mantine/core";
+import { Flex, Text, Tooltip } from "@mantine/core";
 
 type Props<T> = {
 	columnName: string;
@@ -27,7 +27,11 @@ export default function ICAdvancedFilterGridColumn<T>(props: Props<T>) {
 
 	return (
 		<Flex px={"xs"} justify={"space-between"} align={"center"} pos={"relative"}>
-			<Text fw={"bold"}>{columnTitle}</Text>
+			<Tooltip label={columnTitle}>
+				<Text w={"75%"} truncate={"end"} fw={"bold"}>
+					{columnTitle}
+				</Text>
+			</Tooltip>
 			<Flex align={"center"} pos={"absolute"} right={0} top={-2}>
 				<ICAdvancedFilterGridColumnSort
 					visibleParent={true}

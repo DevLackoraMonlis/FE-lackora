@@ -12,7 +12,6 @@ import type {
 import type { SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities";
 import { Flex, Select } from "@mantine/core";
 import { IconGripVertical } from "@tabler/icons-react";
-import { v4 } from "uuid";
 
 export default function ICAdvancedFilterConditionBuilderConditionRowSortable(
 	props: ICAdvancedFilterConditionBuilderRowProps & {
@@ -91,7 +90,7 @@ export default function ICAdvancedFilterConditionBuilderConditionRowSortable(
 						onChange={(value) => {
 							props.onChange({
 								...props.condition,
-								values: [{ label: v4(), value }],
+								values: [{ label: `${value}`, value }],
 								error: false,
 								disabled: false,
 							});

@@ -1,6 +1,6 @@
 import type { SessionUserType } from "@/http/httpService";
 import ICLoginLocked from "@/shared/components/infraComponents/ICLogin/components/ICLoginForm/ICLoginLocked";
-import { AppRoutes } from "@/shared/constants/routes";
+import { AllApplications, AppRoutes } from "@/shared/constants/routes";
 import { validateInput } from "@/shared/lib/utils";
 import envStore from "@/shared/stores/envStore";
 import { Alert, Button, Card, Checkbox, Flex, PasswordInput, Text, TextInput, Title } from "@mantine/core";
@@ -54,7 +54,12 @@ export default function ICLoginForm() {
 				setError("credentials");
 				setIsLoading(false);
 			} else {
-				router.push(AppRoutes.panel);
+				router.push(
+					AppRoutes.appModulePage(
+						AllApplications.CYBER_ASSETS.name,
+						AllApplications.CYBER_ASSETS.modules.CYBER_ASSETS,
+					),
+				);
 			}
 		} catch (_error) {
 			setError("credentials");
@@ -64,7 +69,12 @@ export default function ICLoginForm() {
 
 	useEffect(() => {
 		if (sessionUser) {
-			router.push(AppRoutes.panel);
+			router.push(
+				AppRoutes.appModulePage(
+					AllApplications.CYBER_ASSETS.name,
+					AllApplications.CYBER_ASSETS.modules.CYBER_ASSETS,
+				),
+			);
 		}
 	}, [sessionUser, router.push]);
 

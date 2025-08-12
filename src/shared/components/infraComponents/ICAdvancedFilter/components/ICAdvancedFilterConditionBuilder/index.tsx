@@ -159,7 +159,9 @@ export default function ICAdvancedFilterConditionBuilder(props: ICAdvancedFilter
 					onChange={(event) =>
 						onChange({
 							...condition,
-							values: [{ label: v4(), value: event.currentTarget.checked }],
+							values: [
+								{ label: event.currentTarget.checked ? "true" : "false", value: event.currentTarget.checked },
+							],
 						})
 					}
 				/>
@@ -169,7 +171,9 @@ export default function ICAdvancedFilterConditionBuilder(props: ICAdvancedFilter
 					multiple
 					{...defaultInputProps(condition.id, index)}
 					error={condition.error}
-					onChange={(value) => onChange({ ...condition, values: [{ label: v4(), value: value as string }] })}
+					onChange={(value) =>
+						onChange({ ...condition, values: [{ label: value as string, value: value as string }] })
+					}
 					allowDeselect={false}
 					data={columnOption?.options}
 				/>

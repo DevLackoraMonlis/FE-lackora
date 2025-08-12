@@ -52,7 +52,13 @@ export default function ICAdvancedFilterTopSection<T>(props: Props<T>) {
 						{props.leftSection}
 						<Flex pl={"xs"} align={"center"} gap={"xs"}>
 							{search}
-							{!props.hideCollapseButton && <ICAdvancedFilterCollapseButton store={props.store} />}
+							{!props.hideCollapseButton && (
+								<ICAdvancedFilterCollapseButton
+									allColumns={props.allColumns}
+									run={props.run}
+									store={props.store}
+								/>
+							)}
 							{actionButtons}
 						</Flex>
 					</>
@@ -60,7 +66,13 @@ export default function ICAdvancedFilterTopSection<T>(props: Props<T>) {
 					<>
 						{search}
 						<Flex pl={"xs"} align={"center"} gap={"xs"}>
-							{!props.hideCollapseButton && <ICAdvancedFilterCollapseButton store={props.store} />}
+							{!props.hideCollapseButton && (
+								<ICAdvancedFilterCollapseButton
+									allColumns={props.allColumns}
+									run={props.run}
+									store={props.store}
+								/>
+							)}
 							{actionButtons}
 						</Flex>
 					</>

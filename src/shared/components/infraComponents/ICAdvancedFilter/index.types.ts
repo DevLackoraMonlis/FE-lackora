@@ -126,8 +126,6 @@ export type ICAdvancedFilterStoreType = {
 	setOpenFilterConditionModal: (opened: boolean) => void;
 	openedFullScreenModal: boolean;
 	setOpenFullScreenModal: (opened: boolean) => void;
-	openedConditionSection: boolean;
-	setOpenFilterConditionSection: (opened: boolean) => void;
 	openedGroupByModal: boolean;
 	setOpenGroupByModal: (opened: boolean) => void;
 	removeCondition: (id: string) => void;

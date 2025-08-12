@@ -9,6 +9,7 @@ import type {
 import BCMultiTabPage from "@/shared/components/baseComponents/BCMultiTabPage";
 import type { BCMultiTabPageActions } from "@/shared/components/baseComponents/BCMultiTabPage/index.types";
 import ICAdvancedFilter from "@/shared/components/infraComponents/ICAdvancedFilter";
+import { IC_ADVANCED_FILTER_STRING_OPERATORS } from "@/shared/components/infraComponents/ICAdvancedFilter/index.constants";
 import {
 	convertICAdvancedFilterResponseColumns,
 	convertICAdvancedFilterToDefaultVariables,
@@ -17,13 +18,29 @@ import { createDynamicICAdvancedStore } from "@/shared/components/infraComponent
 import type { ICAdvancedFilterDataRs } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
 import type { ICMonoAppPagesDefaultProps } from "@/shared/components/infraComponents/ICMonoMarket/index.types";
 import type { AddAdvancedFilterNewPageType } from "@/shared/types/index.types";
-import { Text } from "@mantine/core";
+import { Flex, Loader, Text } from "@mantine/core";
+import { useQuery } from "@tanstack/react-query";
 import { useRef, useState } from "react";
 import { v4 } from "uuid";
 
 export default function CyberAssetsLandingPage(props: ICMonoAppPagesDefaultProps) {
 	const [total, setTotal] = useState(0);
 	const ref = useRef<BCMultiTabPageActions<AddAdvancedFilterNewPageType> | null>(null);
+
+	const getDefaultAllColumnsQuery = useQuery({
+		queryKey: ["get-columns", "cyber-assets-columns"],
+		queryFn: ({ signal }) =>
+			getAssetFilterColumns(signal).then((response) => convertICAdvancedFilterResponseColumns(response)),
+		staleTime: 20 * 60 * 1000,
+	});
+
+	if (!getDefaultAllColumnsQuery.data) {
+		return (
+			<Flex w={"100%"} h={"100%"}>
+				<Loader />
+			</Flex>
+		);
+	}
 
 	return (
 		<BCMultiTabPage<AddAdvancedFilterNewPageType>
@@ -60,7 +77,31 @@ export default function CyberAssetsLandingPage(props: ICMonoAppPagesDefaultProps
 					excludeColumns={["id", "classification", "has_related_ip"]}
 					store={values?.params?.store || createDynamicICAdvancedStore()}
 					searchInputPlaceholder={"Search by hostname"}
-					columns={getCyberAssetsFormattedColumns(props.appName, props.moduleName)}
+					columns={getCyberAssetsFormattedColumns(props.appName, props.moduleName, (record) => {
+						ref.current?.addNewPage("Associated Assets", {
+							store: createDynamicICAdvancedStore(),
+							defaultVariables: {
+								search: {
+									columnName: "",
+									value: "",
+								},
+								page: 1,
+								limit: 35,
+								columns: getDefaultAllColumnsQuery.data.data.results,
+								conditions: [
+									{
+										nextOperator: "and",
+										values: [{ label: record.primary_ip, value: record.primary_ip }],
+										openBracket: 0,
+										closeBracket: 0,
+										id: v4(),
+										operator: IC_ADVANCED_FILTER_STRING_OPERATORS["="],
+										columnName: "related_to",
+									},
+								],
+							},
+						});
+					})}
 					idAccessor={"id"}
 					minColumnSize={180}
 					defaultColumnSize={200}

@@ -5,3 +5,11 @@
 .cyberAssetDetailDeActiveTab {
 	background-color: var(--mantine-color-gray-2);
 }
+
+.pointer {
+	cursor: pointer;
+}
+
+.rotate {
+	transform: rotate(180deg);
+}

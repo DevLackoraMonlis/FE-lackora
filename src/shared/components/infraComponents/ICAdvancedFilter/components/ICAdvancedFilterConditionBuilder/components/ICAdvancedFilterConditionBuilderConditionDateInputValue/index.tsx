@@ -1,7 +1,6 @@
 import type { ICAdvancedFilterConditionBuilderCondition } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
 import { DatePickerInput, type DatePickerInputProps, type DateValue } from "@mantine/dates";
 import { startTransition } from "react";
-import { v4 } from "uuid";
 
 type Props = {
 	defaultProps: DatePickerInputProps;
@@ -21,7 +20,7 @@ export default function ICAdvancedFilterConditionBuilderConditionDateInputValue(
 				startTransition(() => {
 					props.onChange({
 						...props.condition,
-						values: [{ label: v4(), value: value || "" }],
+						values: [{ label: `${value}`, value: value || "" }],
 					});
 				});
 			}}

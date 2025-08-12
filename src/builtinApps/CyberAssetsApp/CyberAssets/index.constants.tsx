@@ -26,11 +26,13 @@ import {
 	CyberAssetStateEnum,
 	CyberAssetStatusEnum,
 } from "./index.enum";
+import classes from "./index.module.css";
 
 export const getCyberAssetsFormattedColumns: (
 	appName?: string,
 	moduleName?: string,
-) => TanStackDataTableColumnColDef<ICAdvancedFilterDataRs>[] = (appName, moduleName) => [
+	onAssociatedClick?: (record: ICAdvancedFilterDataRs) => void,
+) => TanStackDataTableColumnColDef<ICAdvancedFilterDataRs>[] = (appName, moduleName, onAssociatedClick) => [
 	{
 		accessor: "primary_ip",
 		render: (record) => {
@@ -44,7 +46,10 @@ export const getCyberAssetsFormattedColumns: (
 						mr={"xs"}
 					/>
 					<Flex align={"center"} gap={"xs"}>
-						{getCyberAssetClassificationIcon({ type: record.classification as CyberAssetClassificationEnum })}
+						{getCyberAssetClassificationIcon({
+							type: record.classification as CyberAssetClassificationEnum,
+							isAssociated: !!record.is_associated,
+						})}
 						<Text
 							href={
 								appName && moduleName ? AppRoutes.appModuleDetailPage(appName, moduleName, record.id) : "#"
@@ -66,7 +71,13 @@ export const getCyberAssetsFormattedColumns: (
 		accessor: "hostname",
 		render: (record) => {
 			return (
-				<Flex w={"100%"} key={`hostname-${record.hostname}`} justify={"space-between"} align={"center"}>
+				<Flex
+					w={"100%"}
+					key={`hostname-${record.hostname}`}
+					justify={"space-between"}
+					align={"center"}
+					pr={"xl"}
+				>
 					{record.hostname ? (
 						<Text fz={"xs"} fw={"bold"} ml={"xs"}>
 							{record.hostname}
@@ -76,7 +87,13 @@ export const getCyberAssetsFormattedColumns: (
 					)}
 
 					{!!record.has_related_ip && (
-						<Badge variant={"light"} size={"xs"} leftSection={<IconLink size={12} />}>
+						<Badge
+							className={classes.pointer}
+							onClick={() => onAssociatedClick?.(record)}
+							variant={"light"}
+							size={"xs"}
+							leftSection={<IconLink size={12} />}
+						>
 							{record.has_related_ip}
 						</Badge>
 					)}

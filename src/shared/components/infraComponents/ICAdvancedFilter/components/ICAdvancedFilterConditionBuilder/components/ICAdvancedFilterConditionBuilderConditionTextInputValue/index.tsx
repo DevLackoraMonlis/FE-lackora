@@ -1,7 +1,6 @@
 import type { ICAdvancedFilterConditionBuilderCondition } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
 import { TextInput, type TextInputProps } from "@mantine/core";
 import { startTransition } from "react";
-import { v4 } from "uuid";
 
 type Props = {
 	defaultProps: TextInputProps;
@@ -19,7 +18,10 @@ export default function ICAdvancedFilterConditionBuilderConditionTextInputValue(
 			disabled={props.condition.disabled}
 			onChange={(event) => {
 				startTransition(() => {
-					props.onChange({ ...props.condition, values: [{ label: v4(), value: event.target.value }] });
+					props.onChange({
+						...props.condition,
+						values: [{ label: event.target.value, value: event.target.value }],
+					});
 				});
 			}}
 		/>

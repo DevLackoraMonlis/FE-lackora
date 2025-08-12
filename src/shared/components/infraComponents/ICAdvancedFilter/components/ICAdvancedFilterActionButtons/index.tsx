@@ -5,7 +5,7 @@ import type {
 import useExportCSV from "@/shared/hooks/useExportCSV";
 import { Button, Flex, Tooltip } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
-import { IconFileExport, IconRefresh, IconSettings, IconWindowMaximize } from "@tabler/icons-react";
+import { IconAdjustments, IconFileExport, IconRefresh, IconWindowMaximize } from "@tabler/icons-react";
 import { useMutation } from "@tanstack/react-query";
 import { useStore } from "zustand/index";
 import { useShallow } from "zustand/react/shallow";
@@ -67,7 +67,7 @@ export default function ICAdvancedFilterActionButtons<T>(props: Props<T>) {
 			{!props.hideManageColumnButton && (
 				<Tooltip label={"Manage Columns"}>
 					<Button px={"xs"} variant={"default"} size={"sm"}>
-						<IconSettings size={20} />
+						<IconAdjustments size={20} />
 					</Button>
 				</Tooltip>
 			)}

@@ -22,7 +22,7 @@ import {
 	Icons8Workstation1,
 	LinuxSvgrepoCom1,
 } from "@/shared/icons/components/assets";
-import { Badge, type BadgeProps, Flex, type FlexProps, Text } from "@mantine/core";
+import { Badge, type BadgeProps, Flex, type FlexProps, Indicator, Text } from "@mantine/core";
 import {
 	IconAlertTriangle,
 	IconArchive,
@@ -33,6 +33,7 @@ import {
 	IconEqual,
 	IconHighlight,
 	IconInfoSquare,
+	IconLink,
 	IconPencil,
 	IconPlus,
 	IconSearch,
@@ -56,6 +57,7 @@ import {
 	type CyberAssetStateEnum,
 	type CyberAssetStatusEnum,
 } from "./index.enum";
+import classes from "./index.module.css";
 
 export function getCyberAssetCriticalityBadge(params: {
 	type: CyberAssetCriticalityEnum;
@@ -66,8 +68,8 @@ export function getCyberAssetCriticalityBadge(params: {
 		[CyberAssetCriticalityEnum.HIGH]: <IconArrowBadgeUp size={12} />,
 		[CyberAssetCriticalityEnum.LOW]: <IconArrowBadgeDown size={12} />,
 		[CyberAssetCriticalityEnum.MEDIUM]: <IconEqual size={12} />,
-		[CyberAssetCriticalityEnum.VERY_HIGH]: <IconBadges size={12} />,
-		[CyberAssetCriticalityEnum.CRITICAL]: <IconBadges size={12} />,
+		[CyberAssetCriticalityEnum.VERY_HIGH]: <IconBadges className={classes.rotate} size={12} />,
+		[CyberAssetCriticalityEnum.CRITICAL]: <IconBadges className={classes.rotate} size={12} />,
 	};
 
 	return (
@@ -177,27 +179,44 @@ export function getCyberAssetChangeTypeBadge(params: {
 export function getCyberAssetClassificationIcon({
 	type,
 	size = 16,
+	isAssociated,
 }: {
 	type: CyberAssetClassificationEnum;
 	size?: number;
+	isAssociated?: boolean;
 }) {
+	const customSize = isAssociated ? size - 4 : size;
 	const icons: Record<CyberAssetClassificationEnum, ReactNode> = {
-		[CyberAssetClassificationEnum.ACCESS_POINT]: <Icons8WiFiRouter1 width={size} height={size} />,
-		[CyberAssetClassificationEnum.CAMERA_IP]: <Icons8PtzCamera1 width={size} height={size} />,
-		[CyberAssetClassificationEnum.FIREWALL]: <Icons8Firewall1 width={size} height={size} />,
-		[CyberAssetClassificationEnum.IP_PRINTER]: <Icons8Printer1 width={size} height={size} />,
-		[CyberAssetClassificationEnum.MOBILE]: <Icons8MobilePhone1 width={size} height={size} />,
-		[CyberAssetClassificationEnum.NVR_DVR]: <Icons8Dvr1 width={size} height={size} />,
-		[CyberAssetClassificationEnum.ROUTER]: <Icons8RouterSymbol1 width={size} height={size} />,
-		[CyberAssetClassificationEnum.SERVER]: <Icons8Server1 width={size} height={size} />,
-		[CyberAssetClassificationEnum.SWITCH]: <Icons8Switch1 width={size} height={size} />,
-		[CyberAssetClassificationEnum.STORAGE]: <Icons8Database1 width={size} height={size} />,
-		[CyberAssetClassificationEnum.PHYSICAL_HOST]: <Icons8DatabaseServer11 width={size} height={size} />,
-		[CyberAssetClassificationEnum.WORK_STATION]: <Icons8Workstation1 width={size} height={size} />,
-		[CyberAssetClassificationEnum.UPS]: <Icons8MediumChargingBattery1 width={size} height={size} />,
-		[CyberAssetClassificationEnum.IOT]: <Icons8InternetOfThings1 width={size} height={size} />,
-		[CyberAssetClassificationEnum.IP_PHONE]: <Icons8Voip1 width={size} height={size} />,
+		[CyberAssetClassificationEnum.ACCESS_POINT]: <Icons8WiFiRouter1 width={customSize} height={customSize} />,
+		[CyberAssetClassificationEnum.CAMERA_IP]: <Icons8PtzCamera1 width={customSize} height={customSize} />,
+		[CyberAssetClassificationEnum.FIREWALL]: <Icons8Firewall1 width={customSize} height={customSize} />,
+		[CyberAssetClassificationEnum.IP_PRINTER]: <Icons8Printer1 width={customSize} height={customSize} />,
+		[CyberAssetClassificationEnum.MOBILE]: <Icons8MobilePhone1 width={customSize} height={customSize} />,
+		[CyberAssetClassificationEnum.NVR_DVR]: <Icons8Dvr1 width={customSize} height={customSize} />,
+		[CyberAssetClassificationEnum.ROUTER]: <Icons8RouterSymbol1 width={customSize} height={customSize} />,
+		[CyberAssetClassificationEnum.SERVER]: <Icons8Server1 width={customSize} height={customSize} />,
+		[CyberAssetClassificationEnum.SWITCH]: <Icons8Switch1 width={customSize} height={customSize} />,
+		[CyberAssetClassificationEnum.STORAGE]: <Icons8Database1 width={customSize} height={customSize} />,
+		[CyberAssetClassificationEnum.PHYSICAL_HOST]: (
+			<Icons8DatabaseServer11 width={customSize} height={customSize} />
+		),
+		[CyberAssetClassificationEnum.WORK_STATION]: (
+			<Icons8Workstation1 width={customSize} height={customSize} />
+		),
+		[CyberAssetClassificationEnum.UPS]: (
+			<Icons8MediumChargingBattery1 width={customSize} height={customSize} />
+		),
+		[CyberAssetClassificationEnum.IOT]: <Icons8InternetOfThings1 width={customSize} height={customSize} />,
+		[CyberAssetClassificationEnum.IP_PHONE]: <Icons8Voip1 width={customSize} height={customSize} />,
 	};
+
+	if (isAssociated) {
+		return (
+			<Indicator position={"bottom-end"} label={<IconLink size={4} />}>
+				{icons[type]}
+			</Indicator>
+		);
+	}
 	return icons[type] || <IconDeviceDesktop size={size} />;
 }
 
