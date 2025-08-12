@@ -1,5 +1,5 @@
 import { Alert, Flex, Text } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
+import { useDisclosure, useShallowEffect, useToggle } from "@mantine/hooks";
 import { notifications } from "@mantine/notifications";
 import { IconCheck } from "@tabler/icons-react";
 import { type ReactNode, useState } from "react";
@@ -16,9 +16,11 @@ type Props = {
 };
 
 export default function PolicyConditionValidation({ renderProps, formConditions }: Props) {
+	const [openedItems, handleOpenedItems] = useDisclosure();
+	const [hiddenAlert, toggleAlert] = useToggle([false, true]);
+
 	const { conditionsValidation } = usePolicyConditionsValidation();
 	const [response, setResponse] = useState<Awaited<typeof conditionsValidation.data>>();
-	const [openedItems, handleOpenedItems] = useDisclosure();
 
 	const handleOnValidating = () => {
 		const conditionHasError = formConditions.some(({ error, bracketError }) => error || bracketError);
@@ -49,6 +51,10 @@ export default function PolicyConditionValidation({ renderProps, formConditions 
 		);
 	};
 
+	useShallowEffect(() => {
+		toggleAlert(true);
+	}, [`${formConditions}`]);
+
 	return (
 		<>
 			<PolicyValidationResultsModal
@@ -67,11 +73,12 @@ export default function PolicyConditionValidation({ renderProps, formConditions 
 				handleOnValidating,
 				conditionsValidation.isPending,
 				<Alert
-					hidden={!conditionsValidation.isSuccess}
+					onClose={toggleAlert}
+					withCloseButton={true}
+					hidden={!conditionsValidation.isSuccess || hiddenAlert}
 					mb="2xs"
 					variant="light"
 					color="green"
-					withCloseButton={false}
 					icon={<IconCheck />}
 					title={
 						<Flex align="center" gap="xs">

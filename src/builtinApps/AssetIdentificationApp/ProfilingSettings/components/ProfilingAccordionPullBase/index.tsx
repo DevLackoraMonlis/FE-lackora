@@ -21,7 +21,7 @@ const accordionPanel = [
 		value: "summary",
 	},
 	{
-		label: "Condition/Action:",
+		label: "Condition(s):",
 		value: "conditions",
 		type: "condition",
 	},

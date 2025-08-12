@@ -198,7 +198,7 @@ function PolicyCreateOrEdit({ workflowName, policyId, onClose }: Props) {
 									<Text size="sm" fw="bold">
 										Condition(s)
 									</Text>
-									<Button variant="transparent" onClick={onValidation}>
+									<Button variant="transparent" onClick={onValidation} size="xs">
 										Run Condition(s)
 									</Button>
 								</Flex>
