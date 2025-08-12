@@ -47,8 +47,8 @@ export default function InventoryAppDefaultPage(props: ICMonoAppPagesDefaultProp
 								onRedirect: () => setSelectedInventoryType(item.name),
 								title: item.display_name,
 								items: item.overview.map((ov) => ({
-									label: ov.split(" ")[0],
-									value: ov.split(" ").slice(1).join(" "),
+									label: ov.label,
+									value: `${ov.value}`,
 								})),
 								name: item.name,
 							};
