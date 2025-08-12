@@ -2,7 +2,6 @@ import { Badge, Card, Flex, Grid, Image, ScrollArea, Switch, Text } from "@manti
 import { Accordion } from "@mantine/core";
 import { useViewportSize } from "@mantine/hooks";
 import { createStyles } from "@mantine/styles";
-import { IconChevronLeft } from "@tabler/icons-react";
 import { useState } from "react";
 
 import { useDiscoveryAdapters, useSwitchServiceNoneCredential } from "../../index.hooks";
@@ -48,7 +47,7 @@ const DiscoverySettingsNoneCredentialAdapters = () => {
 										<Accordion.Control
 											h="56px"
 											p="xs"
-											chevron={switchMode ? <IconChevronLeft /> : null}
+											chevron={switchMode ? " " : null}
 											disabled={switchMode}
 											classNames={{ control: classes.disabledItem }}
 										>

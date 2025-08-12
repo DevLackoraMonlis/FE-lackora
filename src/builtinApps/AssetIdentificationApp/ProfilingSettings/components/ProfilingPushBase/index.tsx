@@ -38,7 +38,7 @@ export default function ProfilingPushBase({ type }: { type: ProfilingInventoryRu
 
 	useEffect(() => {
 		if (!inventoryRules?.isFetching && inventoryRules?.data?.results) {
-			setCards(inventoryRules.data.results);
+			setCards(inventoryRules.data.results as ProfilingCardData[]);
 		}
 	}, [inventoryRules?.isFetching]);
 

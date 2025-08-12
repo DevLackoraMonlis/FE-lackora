@@ -30,12 +30,13 @@ export function useProfiling(type: ProfilingInventoryRules) {
 			query: {
 				enabled: !!type,
 				select: (response) => {
-					const results = response?.data?.results?.map(({ conditions, ...item }) => ({
+					const results = response?.data?.results?.map(({ conditions, datasource, ...item }) => ({
 						...item,
 						id: item.id,
 						title: item.name,
 						isActive: !!item.enabled,
 						description: `Created at ${toFormattedDate(item.created_time, "YYYY-MM-DD")} by ${item.creator}`,
+						datasource: datasource,
 						conditions: (conditions as unknown as Record<string, unknown>[]).map((condition) => ({
 							id: v4(),
 							closeBracket: condition.close_bracket,
