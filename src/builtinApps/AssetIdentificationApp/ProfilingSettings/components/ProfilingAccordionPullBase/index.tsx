@@ -23,7 +23,7 @@ const accordionPanel = [
 	{
 		label: "Condition(s):",
 		value: "conditions",
-		type: "condition",
+		type: "conditions",
 	},
 	{
 		label: "Created Time:",
@@ -43,7 +43,7 @@ const accordionPanel = [
 		label: "Updater:",
 		value: "updater",
 	},
-];
+] as const;
 
 export default function ProfilingAccordion({ id, ...props }: Props) {
 	if (!id) return null;
@@ -153,7 +153,7 @@ export default function ProfilingAccordion({ id, ...props }: Props) {
 									<Text fw="bold">{label}</Text>
 								</Grid.Col>
 								<Grid.Col span={6}>
-									<Text>{`${props[value as keyof typeof props] || "-"}`}</Text>
+									<Text>{`${props[value] || "-"}`}</Text>
 								</Grid.Col>
 							</Grid>
 						))}
