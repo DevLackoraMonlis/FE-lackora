@@ -128,6 +128,7 @@ export default function BCTriggerActions<T extends TriggerActionForm>({
 							rightSection={<IconChevronCompactDown size={15} />}
 							leftSection={<IconPlus size={15} />}
 							onClick={() => combobox.toggleDropdown()}
+							size="xs"
 						>
 							Add actions
 						</Button>

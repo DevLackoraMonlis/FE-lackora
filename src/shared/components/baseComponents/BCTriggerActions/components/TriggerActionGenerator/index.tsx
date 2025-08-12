@@ -132,6 +132,7 @@ export default function TriggerActionGenerator<T extends TriggerActionForm>({
 					leftSection={<IconPlus size={15} />}
 					variant="transparent"
 					onClick={() => form.insertListItem(type, insertListItem)}
+					size="xs"
 				>
 					Add Another
 				</Button>
