@@ -64,7 +64,7 @@ export default function ListDynamicApiField<TObject extends string>({
 					return value === defaultValue;
 				})?.label || "";
 			setSelectedValue({
-				label: label || (isObject(defaultValue) ? defaultValue?.label : ""),
+				label: label || (isObject(defaultValue) ? defaultValue?.label : defaultValue || ""),
 				value: isObject(defaultValue) ? defaultValue?.value || "" : defaultValue || "",
 			});
 		}

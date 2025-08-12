@@ -2,6 +2,7 @@ import { Button, Card, Flex, Grid, Loader, Text } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { notifications } from "@mantine/notifications";
 import { useEffect, useMemo } from "react";
+import { v4 } from "uuid";
 
 import type { EditPolicyRequestConditions } from "@/http/generated/models";
 import { configsUpdateTransformRq, getDynamicField } from "@/shared/components/baseComponents/BCDynamicField";
@@ -58,7 +59,7 @@ const fields = [
 function PolicyCreateOrEdit({ workflowName, policyId, refetchPolicy, onClose }: Props) {
 	const form = useForm<FormValues>({
 		initialValues: {
-			conditions: [{} as FormValues["conditions"][number]],
+			conditions: [{ error: true, id: v4() } as FormValues["conditions"][number]],
 			triggerActionForm: {},
 			name: "",
 			summary: "",
@@ -75,7 +76,7 @@ function PolicyCreateOrEdit({ workflowName, policyId, refetchPolicy, onClose }: 
 		form.reset();
 		onClose();
 	};
-	const handleSubmit = ({ triggerActionForm, conditions: formConditions, ...formValues }: FormValues) => {
+	const handleSubmit = ({ triggerActionForm, conditions: formConditions, name, summary }: FormValues) => {
 		const conditionHasError = formConditions.some(({ error, bracketError }) => error || bracketError);
 		if (conditionHasError) {
 			notifications.show({
@@ -109,7 +110,8 @@ function PolicyCreateOrEdit({ workflowName, policyId, refetchPolicy, onClose }: 
 				{
 					policyId,
 					data: {
-						...formValues,
+						name,
+						summary,
 						actions,
 						workflow: workflowName as PolicyWorkflowTypes,
 						conditions,
@@ -123,7 +125,8 @@ function PolicyCreateOrEdit({ workflowName, policyId, refetchPolicy, onClose }: 
 			createPolicy.mutate(
 				{
 					data: {
-						...formValues,
+						name,
+						summary,
 						actions,
 						workflow: workflowName as PolicyWorkflowTypes,
 						order: (polices?.data?.total || 0) + 1,
@@ -151,9 +154,8 @@ function PolicyCreateOrEdit({ workflowName, policyId, refetchPolicy, onClose }: 
 			const actionKeys = Object.entries(policyActions?.data || {}).flatMap(([groupName, list]) =>
 				list?.map((item) => ({ id: item.id, value: `${groupName}|${item.name}|${item.id}` })),
 			);
-
 			const triggerActionForm = policyData?.actions?.reduce(
-				(actions, { action_id, configurations }) => {
+				(actions, { action_id, action_fields, configurations }) => {
 					const key = actionKeys.find(({ id }) => id === action_id)?.value as string;
 					actions[key] = configurations?.map((items) => {
 						const object =
@@ -162,7 +164,10 @@ function PolicyCreateOrEdit({ workflowName, policyId, refetchPolicy, onClose }: 
 									acc[cur.key] = cur.value;
 									return acc;
 								},
-								{} as unknown as Record<string, unknown>,
+								{ key: v4(), adapterId: action_fields, fields: action_fields } as unknown as Record<
+									string,
+									unknown
+								>,
 							) || {};
 
 						return object;

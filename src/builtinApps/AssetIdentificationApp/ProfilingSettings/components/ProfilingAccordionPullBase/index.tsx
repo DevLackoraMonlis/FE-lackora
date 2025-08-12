@@ -16,15 +16,27 @@ const accordionPanel = [
 	{
 		label: "Profiling Name:",
 		value: "name",
+		type: "none",
 	},
 	{
 		label: "Summary:",
 		value: "summary",
+		type: "none",
 	},
 	{
 		label: "Condition(s):",
 		value: "conditions",
 		type: "conditions",
+	},
+	{
+		label: "Adapter:",
+		value: "adapter",
+		type: "datasource",
+	},
+	{
+		label: "Connection:",
+		value: "connection",
+		type: "datasource",
 	},
 	{
 		label: "Created Time:",
@@ -34,6 +46,7 @@ const accordionPanel = [
 	{
 		label: "Creator:",
 		value: "creator",
+		type: "none",
 	},
 	{
 		label: "Updated Time:",
@@ -43,6 +56,7 @@ const accordionPanel = [
 	{
 		label: "Updater:",
 		value: "updater",
+		type: "none",
 	},
 ] as const;
 
@@ -148,13 +162,13 @@ export default function ProfilingAccordion({ id, ...props }: Props) {
 				{/* Panel */}
 				<Accordion.Panel>
 					<Flex direction="column" gap="2xs" w="60%" mt="xs">
-						{accordionPanel.map(({ label, value }) => (
+						{accordionPanel.map(({ label, value, type }) => (
 							<Grid key={label}>
 								<Grid.Col span={5}>
 									<Text fw="bold">{label}</Text>
 								</Grid.Col>
 								<Grid.Col span={7}>
-									{value === "conditions" ? (
+									{type === "conditions" ? (
 										<ScrollArea w={390} scrollbarSize={2} scrollbars={"x"}>
 											<Flex gap={"xs"} align={"center"}>
 												{props[value]?.map((condition, index) => (
@@ -166,6 +180,10 @@ export default function ProfilingAccordion({ id, ...props }: Props) {
 												))}
 											</Flex>
 										</ScrollArea>
+									) : type === "datasource" ? (
+										<Text>{`${
+											props.datasource?.find(({ key }) => key === value)?.value?.label || "-"
+										}`}</Text>
 									) : (
 										<Text>{`${props[value] || "-"}`}</Text>
 									)}

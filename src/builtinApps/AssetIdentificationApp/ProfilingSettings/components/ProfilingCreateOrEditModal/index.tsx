@@ -2,6 +2,7 @@ import { Button, Card, Flex, Grid, Loader, Text } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { notifications } from "@mantine/notifications";
 import { useEffect, useMemo } from "react";
+import { v4 } from "uuid";
 
 import type { EditPolicyRequestConditions } from "@/http/generated/models";
 import { fieldsTransformRs, getDynamicField } from "@/shared/components/baseComponents/BCDynamicField";
@@ -76,7 +77,7 @@ const dataSourceFields = fieldsTransformRs([
 function CreateOrEdit({ type, inventoryRuleId, refetchProfiling, onClose }: Props) {
 	const form = useForm<FormValues>({
 		initialValues: {
-			conditions: [{} as FormValues["conditions"][number]],
+			conditions: [{ error: true, id: v4() } as FormValues["conditions"][number]],
 			name: "",
 			summary: "",
 			adapter_id: "",
