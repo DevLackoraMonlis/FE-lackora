@@ -6,14 +6,15 @@ import { v4 } from "uuid";
 
 import type { EditPolicyRequestConditions } from "@/http/generated/models";
 import { configsUpdateTransformRq, getDynamicField } from "@/shared/components/baseComponents/BCDynamicField";
+import BCEmptyOrOverlay from "@/shared/components/baseComponents/BCEmptyOrOverlay";
 import BCModal from "@/shared/components/baseComponents/BCModal";
 import BCTriggerActions from "@/shared/components/baseComponents/BCTriggerActions";
+import { usePolicyManagementActions } from "@/shared/components/baseComponents/BCTriggerActions/index.hooks";
 import type { TriggerActionForm } from "@/shared/components/baseComponents/BCTriggerActions/index.types";
 import ICAdvancedFilterConditionBuilder from "@/shared/components/infraComponents/ICAdvancedFilter/components/ICAdvancedFilterConditionBuilder";
+import type { ICAdvancedFilterConditionBuilderCondition } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
 import { validateInput } from "@/shared/lib/utils";
 
-import BCEmptyOrOverlay from "@/shared/components/baseComponents/BCEmptyOrOverlay";
-import { usePolicyManagementActions } from "@/shared/components/baseComponents/BCTriggerActions/index.hooks";
 import {
 	useColumnPolicyConditions,
 	useCreateWorkflowPolicy,
@@ -56,10 +57,19 @@ const fields = [
 	},
 ] as const;
 
+const initCondition: ICAdvancedFilterConditionBuilderCondition = {
+	id: v4(),
+	closeBracket: 0,
+	openBracket: 0,
+	values: [],
+	nextOperator: "and",
+	disabled: false,
+	error: false,
+};
 function PolicyCreateOrEdit({ workflowName, policyId, refetchPolicy, onClose }: Props) {
 	const form = useForm<FormValues>({
 		initialValues: {
-			conditions: [{ error: true, id: v4() } as FormValues["conditions"][number]],
+			conditions: [initCondition],
 			triggerActionForm: {},
 			name: "",
 			summary: "",

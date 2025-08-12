@@ -6,11 +6,12 @@ import { v4 } from "uuid";
 
 import type { EditPolicyRequestConditions } from "@/http/generated/models";
 import { fieldsTransformRs, getDynamicField } from "@/shared/components/baseComponents/BCDynamicField";
+import BCEmptyOrOverlay from "@/shared/components/baseComponents/BCEmptyOrOverlay";
 import BCModal from "@/shared/components/baseComponents/BCModal";
 import ICAdvancedFilterConditionBuilder from "@/shared/components/infraComponents/ICAdvancedFilter/components/ICAdvancedFilterConditionBuilder";
+import type { ICAdvancedFilterConditionBuilderCondition } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
 import { validateInput } from "@/shared/lib/utils";
 
-import BCEmptyOrOverlay from "@/shared/components/baseComponents/BCEmptyOrOverlay";
 import type { ProfilingInventoryRules } from "../../index.enum";
 import {
 	useColumnProfilingConditions,
@@ -74,10 +75,19 @@ const dataSourceFields = fieldsTransformRs([
 	},
 ]);
 
+const initCondition: ICAdvancedFilterConditionBuilderCondition = {
+	id: v4(),
+	closeBracket: 0,
+	openBracket: 0,
+	values: [],
+	nextOperator: "and",
+	disabled: false,
+	error: false,
+};
 function CreateOrEdit({ type, inventoryRuleId, refetchProfiling, onClose }: Props) {
 	const form = useForm<FormValues>({
 		initialValues: {
-			conditions: [{ error: true, id: v4() } as FormValues["conditions"][number]],
+			conditions: [initCondition],
 			name: "",
 			summary: "",
 			adapter_id: "",
@@ -97,7 +107,7 @@ function CreateOrEdit({ type, inventoryRuleId, refetchProfiling, onClose }: Prop
 		const result = inventoryRules?.data?.results?.find(({ id }) => id === inventoryRuleId);
 		if (result) {
 			const adapter_id = result.datasource.find(({ type }) => type === "adapter")?.id || "";
-			const connection_id = result.datasource.find(({ type }) => type === "adapter")?.id || "";
+			const connection_id = result.datasource.find(({ type }) => type === "connection")?.id || "";
 			return {
 				...result,
 				summary: result.summary || "",
@@ -130,7 +140,10 @@ function CreateOrEdit({ type, inventoryRuleId, refetchProfiling, onClose }: Prop
 			});
 			return;
 		}
-		const datasource = { adapter_id, connection_id };
+		const datasource = [
+			{ key: "adapter", type: null, value: null, id: adapter_id },
+			{ key: "connection", type: null, value: null, id: connection_id },
+		];
 		const conditions = formConditions.map((item) => ({
 			close_bracket: item.closeBracket,
 			column_name: item.columnName || "",
