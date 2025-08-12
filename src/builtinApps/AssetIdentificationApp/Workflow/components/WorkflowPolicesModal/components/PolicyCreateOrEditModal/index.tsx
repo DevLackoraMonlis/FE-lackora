@@ -86,7 +86,7 @@ function PolicyCreateOrEdit({ workflowName, policyId, onClose }: Props) {
 					action_id = actionId;
 					return configsUpdateTransformRq(fields, values).flat();
 				});
-				return { action_id, configurations: actionFields.flat() };
+				return { action_id, configurations: actionFields};
 			});
 		const conditions = formConditions.map((item) => ({
 			close_bracket: item.closeBracket,

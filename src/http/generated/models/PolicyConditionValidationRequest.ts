@@ -6,8 +6,8 @@
  * OpenAPI spec version: 1.0.0
  */
 import type { PolicyConditionValidationRequestConditions } from './PolicyConditionValidationRequestConditions';
-import type { PolicyConditionValidationRequestLimit } from './PolicyConditionValidationRequestLimit';
 import type { PolicyConditionValidationRequestPage } from './PolicyConditionValidationRequestPage';
+import type { PolicyConditionValidationRequestLimit } from './PolicyConditionValidationRequestLimit';
 
 export interface PolicyConditionValidationRequest {
   conditions?: PolicyConditionValidationRequestConditions;

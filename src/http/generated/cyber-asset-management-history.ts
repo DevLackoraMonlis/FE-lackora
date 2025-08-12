@@ -47,14 +47,14 @@ export const getCyberAssetHistoryFilterColumns = (
       
       
       return orvalMutator<CyberAssetHistoryFilterColumnsResponse>(
-      {url: "/api/asset-management/history/columns", method: 'GET', signal
+      {url: `/api/asset-management/history/columns`, method: 'GET', signal
     },
       );
     }
   
 
 const getGetCyberAssetHistoryFilterColumnsQueryKey = () => {
-    return ["/api/asset-management/history/columns"] as const;
+    return [`/api/asset-management/history/columns`] as const;
     }
 
     
@@ -134,7 +134,7 @@ export const getAssetActivityHistory = (
       
       
       return orvalMutator<CyberAssetHistoryDataAdvancedFilterResponse>(
-      {url: "/api/asset-management/history/", method: 'POST',
+      {url: `/api/asset-management/history/`, method: 'POST',
       headers: {'Content-Type': 'application/json', },
       data: cyberAssetHistoryDataAdvanceFilterRequestModel, signal
     },

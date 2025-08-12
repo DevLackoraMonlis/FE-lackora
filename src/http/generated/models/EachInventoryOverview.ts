@@ -6,9 +6,10 @@
  * OpenAPI spec version: 1.0.0
  */
 import type { EachInventorySubCategory } from './EachInventorySubCategory';
+import type { EachInventoryOverviewItem } from './EachInventoryOverviewItem';
 
 export interface EachInventoryOverview {
   name: EachInventorySubCategory;
   display_name: string;
-  overview: string[];
+  overview: EachInventoryOverviewItem[];
 }

@@ -326,6 +326,8 @@ export * from './EachInventoryCategoryDisplayName';
 export * from './EachInventoryCategoryResponse';
 export * from './EachInventoryCategoryResponseTypes';
 export * from './EachInventoryOverview';
+export * from './EachInventoryOverviewItem';
+export * from './EachInventoryOverviewItemValue';
 export * from './EachInventoryRule';
 export * from './EachInventoryRuleConditionValidationResult';
 export * from './EachInventoryRuleConditionValidationResultCreatedTime';

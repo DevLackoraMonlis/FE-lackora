@@ -36,14 +36,14 @@ export const openapiOpenapiJsonGet = (
       
       
       return orvalMutator<unknown>(
-      {url: "/openapi.json", method: 'GET', signal
+      {url: `/openapi.json`, method: 'GET', signal
     },
       );
     }
   
 
 const getOpenapiOpenapiJsonGetQueryKey = () => {
-    return ["/openapi.json"] as const;
+    return [`/openapi.json`] as const;
     }
 
     

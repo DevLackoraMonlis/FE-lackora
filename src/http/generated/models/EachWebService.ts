@@ -6,8 +6,8 @@
  * OpenAPI spec version: 1.0.0
  */
 import type { EachWebServiceDescription } from './EachWebServiceDescription';
-import type { EachWebServiceUpdatedTime } from './EachWebServiceUpdatedTime';
 import type { EachWebServiceUpdater } from './EachWebServiceUpdater';
+import type { EachWebServiceUpdatedTime } from './EachWebServiceUpdatedTime';
 
 export interface EachWebService {
   id: string;
