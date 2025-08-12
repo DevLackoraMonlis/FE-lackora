@@ -61,7 +61,7 @@ export const createInventoryRule = (
       
       
       return orvalMutator<EachInventoryRule>(
-      {url: "/api/inventory-rules/", method: 'POST',
+      {url: `/api/inventory-rules/`, method: 'POST',
       headers: {'Content-Type': 'application/json', },
       data: createInventoryRule, signal
     },
@@ -125,7 +125,7 @@ export const getInventoryRules = (
       
       
       return orvalMutator<PaginatedBaseResponseEachInventoryRuleNoneType>(
-      {url: "/api/inventory-rules/", method: 'GET',
+      {url: `/api/inventory-rules/`, method: 'GET',
         params, signal
     },
       );
@@ -133,7 +133,7 @@ export const getInventoryRules = (
   
 
 const getGetInventoryRulesQueryKey = (params: GetInventoryRulesParams,) => {
-    return ["/api/inventory-rules/", ...(params ? [params]: [])] as const;
+    return [`/api/inventory-rules/`, ...(params ? [params]: [])] as const;
     }
 
     
@@ -213,7 +213,7 @@ export const orderInventoryRulePriority = (
       
       
       return orvalMutator<ReOrderInventoryRuleResponse>(
-      {url: "/api/inventory-rules/re-order", method: 'POST',
+      {url: `/api/inventory-rules/re-order`, method: 'POST',
       headers: {'Content-Type': 'application/json', },
       data: reOrderInventoryRuleRequest, signal
     },
@@ -277,7 +277,7 @@ export const validateInventoryRuleCondition = (
       
       
       return orvalMutator<AssetManagementAdvancedFilterResponse>(
-      {url: "/api/inventory-rules/validate", method: 'POST',
+      {url: `/api/inventory-rules/validate`, method: 'POST',
       headers: {'Content-Type': 'application/json', },
       data: inventoryRuleConditionValidationRequest, signal
     },
@@ -341,14 +341,14 @@ export const getInventorRuleDataSource = (
       
       
       return orvalMutator<InventoryRuleDataSourceResponse>(
-      {url: "/api/inventory-rules/data-sources", method: 'GET', signal
+      {url: `/api/inventory-rules/data-sources`, method: 'GET', signal
     },
       );
     }
   
 
 const getGetInventorRuleDataSourceQueryKey = () => {
-    return ["/api/inventory-rules/data-sources"] as const;
+    return [`/api/inventory-rules/data-sources`] as const;
     }
 
     

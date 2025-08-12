@@ -40,14 +40,14 @@ export const getLicenses = (
       
       
       return orvalMutator<PaginatedBaseResponseEachLicenseResponseEachLicenseMetadataWrapper>(
-      {url: "/api/license-management/", method: 'GET', signal
+      {url: `/api/license-management/`, method: 'GET', signal
     },
       );
     }
   
 
 const getGetLicensesQueryKey = () => {
-    return ["/api/license-management/"] as const;
+    return [`/api/license-management/`] as const;
     }
 
     

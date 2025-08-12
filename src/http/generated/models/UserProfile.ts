@@ -6,11 +6,11 @@
  * OpenAPI spec version: 1.0.0
  */
 import type { UserProfileCreatedTime } from './UserProfileCreatedTime';
+import type { UserProfileLastLogin } from './UserProfileLastLogin';
+import type { UserProfileValidUntil } from './UserProfileValidUntil';
+import type { UserProfileOrganization } from './UserProfileOrganization';
 import type { UserProfileDepartment } from './UserProfileDepartment';
 import type { UserProfileLastIp } from './UserProfileLastIp';
-import type { UserProfileLastLogin } from './UserProfileLastLogin';
-import type { UserProfileOrganization } from './UserProfileOrganization';
-import type { UserProfileValidUntil } from './UserProfileValidUntil';
 
 export interface UserProfile {
   id: string;

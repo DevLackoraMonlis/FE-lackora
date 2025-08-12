@@ -42,7 +42,7 @@ export const getNonceApiCoreGetNonceGet = (
       
       
       return orvalMutator<unknown>(
-      {url: "/api/core/get-nonce", method: 'GET',
+      {url: `/api/core/get-nonce`, method: 'GET',
         params, signal
     },
       );
@@ -50,7 +50,7 @@ export const getNonceApiCoreGetNonceGet = (
   
 
 const getGetNonceApiCoreGetNonceGetQueryKey = (params: GetNonceApiCoreGetNonceGetParams,) => {
-    return ["/api/core/get-nonce", ...(params ? [params]: [])] as const;
+    return [`/api/core/get-nonce`, ...(params ? [params]: [])] as const;
     }
 
     
@@ -130,7 +130,7 @@ export const sampleNonceProtectedEndpointApiCoreNonceProtectedSampleGet = (
       
       
       return orvalMutator<unknown>(
-      {url: "/api/core/nonce-protected-sample", method: 'GET',
+      {url: `/api/core/nonce-protected-sample`, method: 'GET',
         params, signal
     },
       );
@@ -138,7 +138,7 @@ export const sampleNonceProtectedEndpointApiCoreNonceProtectedSampleGet = (
   
 
 const getSampleNonceProtectedEndpointApiCoreNonceProtectedSampleGetQueryKey = (params?: SampleNonceProtectedEndpointApiCoreNonceProtectedSampleGetParams,) => {
-    return ["/api/core/nonce-protected-sample", ...(params ? [params]: [])] as const;
+    return [`/api/core/nonce-protected-sample`, ...(params ? [params]: [])] as const;
     }
 
     

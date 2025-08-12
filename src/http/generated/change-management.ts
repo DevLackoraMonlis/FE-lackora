@@ -47,14 +47,14 @@ export const getChangeColumns = (
       
       
       return orvalMutator<ChangeManagementFilterColumnsResponse>(
-      {url: "/api/change-management/columns", method: 'GET', signal
+      {url: `/api/change-management/columns`, method: 'GET', signal
     },
       );
     }
   
 
 const getGetChangeColumnsQueryKey = () => {
-    return ["/api/change-management/columns"] as const;
+    return [`/api/change-management/columns`] as const;
     }
 
     
@@ -134,7 +134,7 @@ export const getChanges = (
       
       
       return orvalMutator<ChangeDataAdvancedFilterResponse>(
-      {url: "/api/change-management/", method: 'POST',
+      {url: `/api/change-management/`, method: 'POST',
       headers: {'Content-Type': 'application/json', },
       data: changeDataAdvanceFilterRequestModel, signal
     },

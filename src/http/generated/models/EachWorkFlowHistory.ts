@@ -6,8 +6,8 @@
  * OpenAPI spec version: 1.0.0
  */
 import type { EachWorkFlowHistoryId } from './EachWorkFlowHistoryId';
-import type { EachWorkFlowHistoryScanId } from './EachWorkFlowHistoryScanId';
 import type { WorkFlowStatus } from './WorkFlowStatus';
+import type { EachWorkFlowHistoryScanId } from './EachWorkFlowHistoryScanId';
 
 export interface EachWorkFlowHistory {
   id?: EachWorkFlowHistoryId;
