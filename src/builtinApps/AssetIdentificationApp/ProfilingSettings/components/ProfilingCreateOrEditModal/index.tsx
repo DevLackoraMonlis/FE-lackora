@@ -82,7 +82,7 @@ const initCondition: ICAdvancedFilterConditionBuilderCondition = {
 	values: [],
 	nextOperator: "and",
 	disabled: false,
-	error: false,
+	error: true,
 };
 function CreateOrEdit({ type, inventoryRuleId, refetchProfiling, onClose }: Props) {
 	const form = useForm<FormValues>({

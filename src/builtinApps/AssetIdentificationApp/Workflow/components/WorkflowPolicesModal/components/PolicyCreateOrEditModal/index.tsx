@@ -64,7 +64,7 @@ const initCondition: ICAdvancedFilterConditionBuilderCondition = {
 	values: [],
 	nextOperator: "and",
 	disabled: false,
-	error: false,
+	error: true,
 };
 function PolicyCreateOrEdit({ workflowName, policyId, refetchPolicy, onClose }: Props) {
 	const form = useForm<FormValues>({
