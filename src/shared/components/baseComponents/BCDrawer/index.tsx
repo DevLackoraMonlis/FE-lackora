@@ -44,6 +44,7 @@ export default function BCDrawer({
 						</Text>
 						<Flex gap="2xs" align="center">
 							<ActionIcon
+								autoFocus={false}
 								c="black"
 								variant="transparent"
 								pb="2px"

@@ -7,4 +7,4 @@
  */
 import type { EachAdapterConfigurationModel } from './EachAdapterConfigurationModel';
 
-export type EditInventoryRuleDatasource = EachAdapterConfigurationModel[] | null;
+export type CreateInventoryRuleDatasource = EachAdapterConfigurationModel[] | null;

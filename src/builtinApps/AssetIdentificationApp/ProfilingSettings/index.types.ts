@@ -1,5 +1,6 @@
 import type { ReOrderPoliciesRequest } from "@/http/generated/models";
 import type { ICAdvancedFilterConditionBuilderCondition } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
+import type { LabelValueType } from "@/shared/lib/general-types";
 
 export type ProfilingWorkflowTypes = ReOrderPoliciesRequest["workflow"];
 
@@ -9,6 +10,7 @@ export type ProfilingCardData = {
 	description: string;
 	isActive: boolean;
 	conditions: ICAdvancedFilterConditionBuilderCondition[];
+	datasource: Array<{ key: string; value: LabelValueType }>;
 	[key: string]: unknown;
 };
 
