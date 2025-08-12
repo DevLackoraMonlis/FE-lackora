@@ -6,6 +6,7 @@ import ICAdvancedFilterConditionBuilderConditionRow from "@/shared/components/in
 import ICAdvancedFilterConditionBuilderConditionTextInputValue from "@/shared/components/infraComponents/ICAdvancedFilter/components/ICAdvancedFilterConditionBuilder/components/ICAdvancedFilterConditionBuilderConditionTextInputValue";
 import ICAdvancedFilterCreatableMultiSelect from "@/shared/components/infraComponents/ICAdvancedFilter/components/ICAdvancedFilterCreatableMultiSelect";
 import {
+	IC_ADVANCED_FILTER_CONDITION_BUILDER_DEFAULT_WIDTH,
 	IC_ADVANCED_FILTER_CONDITION_EMPTY_OPERATORS,
 	IC_ADVANCED_FILTER_CONDITION_MULTIPLE_VALUE_TYPES,
 } from "@/shared/components/infraComponents/ICAdvancedFilter/index.constants";
@@ -125,8 +126,8 @@ export default function ICAdvancedFilterConditionBuilder(props: ICAdvancedFilter
 		(id: string, index: number) => ({
 			required: true,
 			label: index === 0 && "Value",
-			w: "100%",
-			miw: 250,
+			w: IC_ADVANCED_FILTER_CONDITION_BUILDER_DEFAULT_WIDTH,
+			miw: IC_ADVANCED_FILTER_CONDITION_BUILDER_DEFAULT_WIDTH,
 			key: `condition-row-value-${id}`,
 		}),
 		[],
@@ -209,8 +210,8 @@ export default function ICAdvancedFilterConditionBuilder(props: ICAdvancedFilter
 	const multiValueInput = useCallback(
 		(condition: ICAdvancedFilterConditionBuilderCondition, index: number) => (
 			<ICAdvancedFilterCreatableMultiSelect<ICAdvancedFilterConditionBuilderCondition>
-				w={"100%"}
-				miw={250}
+				w={IC_ADVANCED_FILTER_CONDITION_BUILDER_DEFAULT_WIDTH}
+				miw={IC_ADVANCED_FILTER_CONDITION_BUILDER_DEFAULT_WIDTH}
 				required
 				item={condition}
 				onChange={onChange}

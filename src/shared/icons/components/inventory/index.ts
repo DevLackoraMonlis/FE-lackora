@@ -1,3 +1,4 @@
+export { default as BootConfiguration1 } from "./BootConfiguration1";
 export { default as InstalledApplications1 } from "./InstalledApplications1";
 export { default as Membership1 } from "./Membership1";
 export { default as PhysicalMemory1 } from "./PhysicalMemory1";
@@ -17,6 +18,8 @@ export { default as QuickFix1 } from "./QuickFix1";
 export { default as ScheduleTask } from "./ScheduleTask";
 export { default as ServiceProcessName1 } from "./ServiceProcessName1";
 export { default as Service11 } from "./Service11";
+export { default as Share1 } from "./Share1";
+export { default as Software1 } from "./Software1";
 export { default as StartupCommand1 } from "./StartupCommand1";
 export { default as UsbController1 } from "./UsbController1";
 export { default as UserAccount1 } from "./UserAccount1";

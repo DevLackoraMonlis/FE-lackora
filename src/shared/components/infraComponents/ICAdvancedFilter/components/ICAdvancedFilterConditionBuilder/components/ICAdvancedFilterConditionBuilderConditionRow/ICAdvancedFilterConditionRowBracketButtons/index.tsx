@@ -57,7 +57,7 @@ export const BracketButtons = (
 			classNames={{ label: "flex-important flex-center w-full" }}
 			label={props.showLabel && label}
 		>
-			<Card withBorder p={0} w={"100%"}>
+			<Card withBorder p={0} w={"100%"} shadow={"none"}>
 				<Flex
 					w={"100%"}
 					align={"center"}

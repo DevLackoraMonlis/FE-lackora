@@ -235,7 +235,7 @@ function CreateOrEdit({ type, inventoryRuleId, onClose }: Props) {
 								</Flex>
 							</Card.Section>
 							{alert}
-							<Card bg="gray.1" m={0}>
+							<Card bg="gray.1" m={0} p={0}>
 								<ICAdvancedFilterConditionBuilder
 									onChange={(newConditions) => form.setFieldValue("conditions", newConditions)}
 									allColumns={columnConditions.data?.data.results || []}
