@@ -2,7 +2,8 @@
 
 import { Tabs } from "@mantine/core";
 
-import ProfilingAccordionWithDnD from "./components/ProfilingAccordionWithDnD";
+import ProfilingPullBase from "./components/ProfilingPullBase";
+import ProfilingPushBase from "./components/ProfilingPushBase";
 import { ProfilingInventoryRules, ProfilingSettingsTabs } from "./index.enum";
 
 export default function AssetIdentificationProfilingSettingsPage() {
@@ -15,10 +16,10 @@ export default function AssetIdentificationProfilingSettingsPage() {
 			</Tabs.List>
 			{/* PANELS */}
 			<Tabs.Panel value={ProfilingSettingsTabs.PullBase}>
-				<ProfilingAccordionWithDnD type={ProfilingInventoryRules[ProfilingSettingsTabs.PullBase]} />
+				<ProfilingPullBase type={ProfilingInventoryRules[ProfilingSettingsTabs.PullBase]} />
 			</Tabs.Panel>
 			<Tabs.Panel value={ProfilingSettingsTabs.PushBase}>
-				<ProfilingAccordionWithDnD type={ProfilingInventoryRules[ProfilingSettingsTabs.PushBase]} />
+				<ProfilingPushBase type={ProfilingInventoryRules[ProfilingSettingsTabs.PushBase]} />
 			</Tabs.Panel>
 		</Tabs>
 	);

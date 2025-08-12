@@ -13,10 +13,10 @@ import type { ProfilingInventoryRules } from "../../index.enum";
 import { useProfiling, useProfilingEnabled, useProfilingReOrder } from "../../index.hooks";
 import type { ProfilingCardData } from "../../index.types";
 import DeleteProfilingModal from "../DeleteProfiling";
-import ProfilingAccordion from "../ProfilingAccordion";
-import ProfilingAccordionSkelton from "../ProfilingAccordionSkelton";
+import ProfilingAccordionPullBase from "../ProfilingAccordionPullBase";
 import ProfilingCreateOrEditModal from "../ProfilingCreateOrEditModal";
 import ProfilingMatchedAssetsModal from "../ProfilingMatchedAssets";
+import ProfilingPullBaseSkelton from "../ProfilingPullBaseSkelton";
 
 const DnDCardBox = ({ id, content }: { id: string; content: ReactNode }) => {
 	const { listeners, setNodeRef, transform, transition } = useSortable({ id });
@@ -39,7 +39,7 @@ const DnDCardBox = ({ id, content }: { id: string; content: ReactNode }) => {
 	);
 };
 
-export default function ProfilingAccordionWithDnD({ type }: { type: ProfilingInventoryRules }) {
+export default function ProfilingPullBase({ type }: { type: ProfilingInventoryRules }) {
 	const [openedAssets, handleOpenedAssets] = useDisclosure();
 	const [openedDelete, handleOpenedDelete] = useDisclosure();
 	const [openedCreateOrEdit, handleOpenedCreateOrEdit] = useDisclosure();
@@ -143,7 +143,7 @@ export default function ProfilingAccordionWithDnD({ type }: { type: ProfilingInv
 								/>
 							)
 						) : inventoryRules?.isLoading ? (
-							<ProfilingAccordionSkelton count={6} />
+							<ProfilingPullBaseSkelton count={6} />
 						) : (
 							<>
 								<Flex justify="space-between" align="center" mb="xs">
@@ -165,7 +165,7 @@ export default function ProfilingAccordionWithDnD({ type }: { type: ProfilingInv
 											key={card.id}
 											id={card.id}
 											content={
-												<ProfilingAccordion
+												<ProfilingAccordionPullBase
 													{...card}
 													selectedId={selectedId}
 													loading={enabledLoading}
