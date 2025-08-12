@@ -21,7 +21,7 @@ const apps: ICMonoMarketAppType[] = [
 		name: AllApplications.INVENTORY_MANAGEMENT.name,
 		modules: [
 			{
-				name: AllApplications.INVENTORY_MANAGEMENT.modules.SYSTEM_DETAILS,
+				name: AllApplications.INVENTORY_MANAGEMENT.modules.GENERAL_INFORMATION,
 				page: InventoryAppDefaultPage,
 			},
 			{
@@ -37,7 +37,19 @@ const apps: ICMonoMarketAppType[] = [
 				page: InventoryAppDefaultPage,
 			},
 			{
-				name: AllApplications.INVENTORY_MANAGEMENT.modules.USERS,
+				name: AllApplications.INVENTORY_MANAGEMENT.modules.USERS_AND_GROUPS,
+				page: InventoryAppDefaultPage,
+			},
+			{
+				name: AllApplications.INVENTORY_MANAGEMENT.modules.LIVE_SNAPSHOT,
+				page: InventoryAppDefaultPage,
+			},
+			{
+				name: AllApplications.INVENTORY_MANAGEMENT.modules.OPERATING_SYSTEM,
+				page: InventoryAppDefaultPage,
+			},
+			{
+				name: AllApplications.INVENTORY_MANAGEMENT.modules.PERSISTENCE,
 				page: InventoryAppDefaultPage,
 			},
 		],

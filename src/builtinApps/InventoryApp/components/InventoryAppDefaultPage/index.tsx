@@ -42,8 +42,10 @@ export default function InventoryAppDefaultPage(props: ICMonoAppPagesDefaultProp
 
 	const iconMap = useCallback<(color: string) => Record<string, ReactNode>>(
 		(color: string) => ({
-			[AllApplications.INVENTORY_MANAGEMENT.modules.SYSTEM_DETAILS]: <IconDevices2 size={20} color={color} />,
-			[AllApplications.INVENTORY_MANAGEMENT.modules.USERS]: <IconUsers size={20} color={color} />,
+			[AllApplications.INVENTORY_MANAGEMENT.modules.GENERAL_INFORMATION]: (
+				<IconDevices2 size={20} color={color} />
+			),
+			[AllApplications.INVENTORY_MANAGEMENT.modules.USERS_AND_GROUPS]: <IconUsers size={20} color={color} />,
 			[AllApplications.INVENTORY_MANAGEMENT.modules.NETWORK]: (
 				<IconBuildingBroadcastTower size={20} color={color} />
 			),
