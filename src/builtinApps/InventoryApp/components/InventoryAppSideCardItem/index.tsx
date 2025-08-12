@@ -28,7 +28,7 @@ export default function InventoryAppSideCardItem(props: InventoryAppSideCardProp
 						: props.items.map((item) => (
 								<Flex key={`${item.label}-${item.value}`} gap={"2xs"}>
 									<Text fz={"xs"} fw={"bold"}>
-										{item.label}
+										{item.value}
 									</Text>
 									<Text fz={"xs"} c={"gray.6"}>
 										{item.label}
