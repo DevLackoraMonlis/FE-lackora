@@ -1,8 +1,8 @@
 import { Alert, Flex, Text } from "@mantine/core";
-import { useDisclosure, useShallowEffect, useToggle } from "@mantine/hooks";
+import { useDisclosure, useToggle } from "@mantine/hooks";
 import { notifications } from "@mantine/notifications";
 import { IconCheck } from "@tabler/icons-react";
-import { type ReactNode, useState } from "react";
+import { type ReactNode, useEffect, useState } from "react";
 
 import type { EditPolicyRequestConditions } from "@/http/generated/models";
 
@@ -52,7 +52,7 @@ export default function PolicyConditionValidation({ renderProps, formConditions 
 		);
 	};
 
-	useShallowEffect(() => {
+	useEffect(() => {
 		toggleAlert(true);
 	}, [`${formConditions}`]);
 

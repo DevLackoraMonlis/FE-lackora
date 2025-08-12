@@ -55,26 +55,24 @@ const fields = [
 		placeholder: "Short sentence about this rule",
 	},
 ] as const;
+const adapter = {
+	paginate: true,
+	label: "Adapters",
+	required: true,
+	key: "adapter_id",
+	object_type: "adapter",
+	placeholder: "Select Adapter",
+} as const;
+const connection = {
+	label: "Connection",
+	key: "connection_id",
+	paginate: true,
+	placeholder: "Select Connection",
+	required: true,
+	object_type: "connection",
+} as const;
 
-const dataSourceFields = fieldsTransformRs([
-	{
-		paginate: true,
-		label: "Adapters",
-		required: true,
-		key: "adapter_id",
-		object_type: "adapter",
-		placeholder: "Select Adapter",
-	},
-	{
-		label: "Connection",
-		key: "connection_id",
-		paginate: true,
-		placeholder: "Select Connection",
-		required: true,
-		object_type: "connection",
-	},
-]);
-
+const dataSourceFields = fieldsTransformRs([adapter, connection]);
 const initCondition: ICAdvancedFilterConditionBuilderCondition = {
 	id: v4(),
 	closeBracket: 0,
@@ -106,8 +104,8 @@ function CreateOrEdit({ type, inventoryRuleId, refetchProfiling, onClose }: Prop
 	const profilingData = useMemo(() => {
 		const result = inventoryRules?.data?.results?.find(({ id }) => id === inventoryRuleId);
 		if (result) {
-			const adapter_id = result.datasource.find(({ type }) => type === "adapter")?.id || "";
-			const connection_id = result.datasource.find(({ type }) => type === "connection")?.id || "";
+			const adapter_id = result.datasource.find(({ type }) => type === adapter.object_type)?.id || "";
+			const connection_id = result.datasource.find(({ type }) => type === connection.object_type)?.id || "";
 			return {
 				...result,
 				summary: result.summary || "",
@@ -124,13 +122,7 @@ function CreateOrEdit({ type, inventoryRuleId, refetchProfiling, onClose }: Prop
 		form.reset();
 		onClose();
 	};
-	const handleSubmit = ({
-		conditions: formConditions,
-		adapter_id,
-		connection_id,
-		name,
-		summary,
-	}: FormValues) => {
+	const handleSubmit = ({ conditions: formConditions, name, summary, ...values }: FormValues) => {
 		const conditionHasError = formConditions.some(({ error, bracketError }) => error || bracketError);
 		if (conditionHasError) {
 			notifications.show({
@@ -141,8 +133,8 @@ function CreateOrEdit({ type, inventoryRuleId, refetchProfiling, onClose }: Prop
 			return;
 		}
 		const datasource = [
-			{ key: "adapter", type: null, value: null, id: adapter_id },
-			{ key: "connection", type: null, value: null, id: connection_id },
+			{ key: adapter.object_type, type: null, value: null, id: values[adapter.key] },
+			{ key: connection.object_type, type: null, value: null, id: values[connection.key] },
 		];
 		const conditions = formConditions.map((item) => ({
 			close_bracket: item.closeBracket,
@@ -253,7 +245,7 @@ function CreateOrEdit({ type, inventoryRuleId, refetchProfiling, onClose }: Prop
 									onChange={(newConditions) => form.setFieldValue("conditions", newConditions)}
 									allColumns={columnConditions.data?.data.results || []}
 									conditions={form.values.conditions}
-									h={100}
+									h={150}
 								/>
 							</Card>
 						</Card>
