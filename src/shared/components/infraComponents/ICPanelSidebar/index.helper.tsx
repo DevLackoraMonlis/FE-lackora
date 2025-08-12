@@ -6,9 +6,11 @@ import {
 	IconBrandAppgallery,
 	IconBuildingBroadcastTower,
 	IconCategory2,
+	IconCode,
 	IconCpu,
 	IconDevices2,
 	IconDiscount,
+	IconScan,
 	IconTableOptions,
 	IconUsers,
 } from "@tabler/icons-react";
@@ -40,7 +42,8 @@ export function getSidePanelAppModuleIcon(iconSize: number, name: string, color 
 		[AllApplications.CYBER_ASSETS.modules.CYBER_ASSETS]: (
 			<IconDevices2 color={color} width={iconSize} height={iconSize} />
 		),
-		[AllApplications.INVENTORY_MANAGEMENT.modules.SYSTEM_DETAILS]: (
+
+		[AllApplications.INVENTORY_MANAGEMENT.modules.GENERAL_INFORMATION]: (
 			<IconDevices2 color={color} width={iconSize} height={iconSize} />
 		),
 		[AllApplications.INVENTORY_MANAGEMENT.modules.SOFTWARE]: (
@@ -52,8 +55,14 @@ export function getSidePanelAppModuleIcon(iconSize: number, name: string, color 
 		[AllApplications.INVENTORY_MANAGEMENT.modules.NETWORK]: (
 			<IconBuildingBroadcastTower color={color} width={iconSize} height={iconSize} />
 		),
-		[AllApplications.INVENTORY_MANAGEMENT.modules.USERS]: (
+		[AllApplications.INVENTORY_MANAGEMENT.modules.USERS_AND_GROUPS]: (
 			<IconUsers color={color} width={iconSize} height={iconSize} />
+		),
+		[AllApplications.INVENTORY_MANAGEMENT.modules.PERSISTENCE]: (
+			<IconCode color={color} width={iconSize} height={iconSize} />
+		),
+		[AllApplications.INVENTORY_MANAGEMENT.modules.LIVE_SNAPSHOT]: (
+			<IconScan color={color} width={iconSize} height={iconSize} />
 		),
 	};
 

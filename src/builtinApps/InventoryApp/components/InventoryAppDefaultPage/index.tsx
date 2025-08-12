@@ -1,5 +1,6 @@
 import { getCyberAssetsInventoryFormattedColumns } from "@/builtinApps/CyberAssetsApp/CyberAssets/index.constants";
 import InventoryAppPageWrapper from "@/builtinApps/InventoryApp/components/InventoryAppPageWrapper";
+import { useGetInventoryTablesIcon } from "@/builtinApps/InventoryApp/index.hooks";
 import type { InventoryAppSideCardProps } from "@/builtinApps/InventoryApp/index.types";
 import {
 	getInventoryData,
@@ -23,35 +24,16 @@ import {
 import { createDynamicICAdvancedStore } from "@/shared/components/infraComponents/ICAdvancedFilter/index.store";
 import type { ICAdvancedFilterDataRs } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
 import type { ICMonoAppPagesDefaultProps } from "@/shared/components/infraComponents/ICMonoMarket/index.types";
-import { AllApplications } from "@/shared/constants/routes";
 import type { AddAdvancedFilterNewPageType } from "@/shared/types/index.types";
 import { Text } from "@mantine/core";
-import {
-	IconBuildingBroadcastTower,
-	IconCpu,
-	IconDevices2,
-	IconTableOptions,
-	IconUsers,
-} from "@tabler/icons-react";
-import { type ReactNode, useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function InventoryAppDefaultPage(props: ICMonoAppPagesDefaultProps) {
 	const [total, setTotal] = useState(0);
 	const [selectedInventoryType, setSelectedInventoryType] = useState<string | undefined>();
 	const ref = useRef<BCMultiTabPageActions<AddAdvancedFilterNewPageType> | null>(null);
 
-	const iconMap = useCallback<(color: string) => Record<string, ReactNode>>(
-		(color: string) => ({
-			[AllApplications.INVENTORY_MANAGEMENT.modules.SYSTEM_DETAILS]: <IconDevices2 size={20} color={color} />,
-			[AllApplications.INVENTORY_MANAGEMENT.modules.USERS]: <IconUsers size={20} color={color} />,
-			[AllApplications.INVENTORY_MANAGEMENT.modules.NETWORK]: (
-				<IconBuildingBroadcastTower size={20} color={color} />
-			),
-			[AllApplications.INVENTORY_MANAGEMENT.modules.SOFTWARE]: <IconTableOptions size={20} color={color} />,
-			[AllApplications.INVENTORY_MANAGEMENT.modules.HARDWARE]: <IconCpu size={20} color={color} />,
-		}),
-		[],
-	);
+	const { getTableIcon } = useGetInventoryTablesIcon();
 
 	const getInventoryOverviewQuery = useGetInventoryOverview(
 		{ category: props.moduleName as EachInventoryCategoryDisplayName },
@@ -65,8 +47,8 @@ export default function InventoryAppDefaultPage(props: ICMonoAppPagesDefaultProp
 								onRedirect: () => setSelectedInventoryType(item.name),
 								title: item.display_name,
 								items: item.overview.map((ov) => ({
-									label: ov.split(" ")[0],
-									value: ov.split(" ").slice(1).join(" "),
+									label: ov.label,
+									value: `${ov.value}`,
 								})),
 								name: item.name,
 							};
@@ -97,7 +79,7 @@ export default function InventoryAppDefaultPage(props: ICMonoAppPagesDefaultProp
 			sideItems={
 				getInventoryOverviewQuery.data?.data.map((item) => ({
 					...item,
-					icon: iconMap(selectedInventoryType === item.name ? "blue" : "gray")[props.moduleName || ""],
+					icon: getTableIcon(item.name, selectedInventoryType === item.name ? "blue" : "gray"),
 				})) || []
 			}
 			page={

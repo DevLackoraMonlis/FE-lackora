@@ -110,6 +110,8 @@ export default function ICPanelSidebar(props: Props) {
 		})),
 	);
 
+	console.log(store);
+
 	const onMouseEnter = (href: string) => {
 		setColor(hoverColor);
 		setHovered(href);

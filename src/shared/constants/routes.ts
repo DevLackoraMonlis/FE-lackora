@@ -19,11 +19,14 @@ export const AllApplications = {
 	INVENTORY_MANAGEMENT: {
 		name: "inventory_management",
 		modules: {
-			SYSTEM_DETAILS: "System Details", // "Cyber Assets Identification Workflow",
+			GENERAL_INFORMATION: "General Information",
+			OPERATING_SYSTEM: "Operating system",
+			USERS_AND_GROUPS: "Users & Groups",
+			PERSISTENCE: "Persistence",
+			LIVE_SNAPSHOT: "Live Snapshot",
 			SOFTWARE: "Software",
 			HARDWARE: "Hardware",
 			NETWORK: "Network",
-			USERS: "Users",
 		},
 	},
 	CYBER_ASSETS: {
