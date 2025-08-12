@@ -1,8 +1,9 @@
-import { LoadingOverlay, Menu, Switch, Text, getGradient } from "@mantine/core";
+import { LoadingOverlay, Menu, ScrollArea, Switch, Text, getGradient } from "@mantine/core";
 import { Badge, Box, Card, Flex, Grid, Highlight } from "@mantine/core";
 import { Accordion } from "@mantine/core";
 import { IconDotsVertical, IconGavel, IconPencil, IconTrash } from "@tabler/icons-react";
 
+import ICAdvancedFilterConditionItemReadonly from "@/shared/components/infraComponents/ICAdvancedFilter/components/ICAdvancedFilterConditionItemReadonly";
 import type { ProfilingCardData, ProfilingHandles } from "../../index.types";
 
 type Props = ProfilingCardData &
@@ -47,6 +48,7 @@ const accordionPanel = [
 
 export default function ProfilingAccordion({ id, ...props }: Props) {
 	if (!id) return null;
+
 	return (
 		<Accordion variant="separated" w="100%" mt="xs">
 			<Accordion.Item value={id}>
@@ -146,17 +148,35 @@ export default function ProfilingAccordion({ id, ...props }: Props) {
 				</Accordion.Control>
 				{/* Panel */}
 				<Accordion.Panel>
-					<Flex direction="column" gap="2xs" w="50%" mt="xs">
-						{accordionPanel.map(({ label, value }) => (
-							<Grid key={label}>
-								<Grid.Col span={6}>
-									<Text fw="bold">{label}</Text>
-								</Grid.Col>
-								<Grid.Col span={6}>
-									<Text>{`${props[value] || "-"}`}</Text>
-								</Grid.Col>
-							</Grid>
-						))}
+					<Flex direction="column" gap="2xs" w="60%" mt="xs">
+						{accordionPanel.map(({ label, value }) => {
+							const conditions = value === "conditions" ? props[value] : [];
+							return (
+								<Grid key={label}>
+									<Grid.Col span={5}>
+										<Text fw="bold">{label}</Text>
+									</Grid.Col>
+
+									<Grid.Col span={7}>
+										{value === "conditions" ? (
+											<ScrollArea w={390} scrollbarSize={2} scrollbars={"x"}>
+												<Flex gap={"xs"} align={"center"}>
+													{conditions.map((condition, index) => (
+														<ICAdvancedFilterConditionItemReadonly
+															showNextOperator={conditions.length - 1 !== index}
+															condition={condition}
+															key={condition.id}
+														/>
+													))}
+												</Flex>
+											</ScrollArea>
+										) : (
+											<Text>{`${props[value] || "-"}`}</Text>
+										)}
+									</Grid.Col>
+								</Grid>
+							);
+						})}
 					</Flex>
 				</Accordion.Panel>
 			</Accordion.Item>
