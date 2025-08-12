@@ -1,4 +1,5 @@
 import type { TanStackDataTableColumnColDef } from "@/shared/components/baseComponents/BCTanStackGrid/index.types";
+import ICAdvancedFilterConditionModal from "@/shared/components/infraComponents/ICAdvancedFilter/components/ICAdvancedFilterConditionModal";
 import ICAdvancedFilterConditionSectionItems from "@/shared/components/infraComponents/ICAdvancedFilter/components/ICAdvancedFilterConditionSectionItems";
 import ICAdvancedFilterGrid from "@/shared/components/infraComponents/ICAdvancedFilter/components/ICAdvancedFilterGrid";
 import ICAdvancedFilterTopSection from "@/shared/components/infraComponents/ICAdvancedFilter/components/ICAdvancedFilterTopSection";
@@ -72,7 +73,7 @@ export default function ICAdvancedFilterComponent<T>(
 				getDataApi={props.getDataApi}
 				searchInputPlaceholder={props.searchInputPlaceholder}
 			/>
-			{/* <ICAdvancedFilterConditionModal allColumns={allColumns} store={props.store} /> */}
+			<ICAdvancedFilterConditionModal run={run} allColumns={allColumns} store={props.store} />
 			<ICAdvancedFilterConditionSectionItems
 				hideConditionSection={props.hideConditionSection}
 				run={run}

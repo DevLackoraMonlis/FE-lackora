@@ -213,7 +213,8 @@ export type ICAdvancedFilterConditionBuilderProps = {
 	onChange: (newConditions: ICAdvancedFilterConditionBuilderCondition[]) => void;
 	conditions: ICAdvancedFilterConditionBuilderCondition[];
 	allColumns: ICAdvancedFilterColumnRs[];
-	h?: number;
+	h?: number | string;
+	w?: number | string;
 };
 
 export type BracketError = {

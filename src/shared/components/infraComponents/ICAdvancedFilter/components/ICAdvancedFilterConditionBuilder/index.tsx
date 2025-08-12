@@ -62,9 +62,7 @@ export default function ICAdvancedFilterConditionBuilder(props: ICAdvancedFilter
 
 			const updatedErrorConditions = newConditions.map((item) => {
 				const updatedItem = { ...item };
-				const findError = bracketErrors.find((errorItem) => errorItem.itemId === item.id);
-				updatedItem.error = !!findError;
-				updatedItem.bracketError = findError;
+				updatedItem.bracketError = bracketErrors.find((errorItem) => errorItem.itemId === item.id);
 				return updatedItem;
 			});
 
@@ -244,12 +242,11 @@ export default function ICAdvancedFilterConditionBuilder(props: ICAdvancedFilter
 			h={props.h || 800}
 			scrollbars={"xy"}
 			scrollbarSize={2}
-			w={"100%"}
+			w={props.w || "100%"}
 			miw={"100%"}
 			bg={"gray.1"}
-			p={"xs"}
 		>
-			<Flex direction={"column"} gap={"2xs"} h={"100%"} w={"100%"}>
+			<Flex direction={"column"} p={"xs"} gap={"2xs"} h={"100%"} w={"100%"}>
 				<BCSortable<ICAdvancedFilterConditionBuilderCondition>
 					items={props.conditions}
 					handleItemChange={(_e, newConditions) => {
