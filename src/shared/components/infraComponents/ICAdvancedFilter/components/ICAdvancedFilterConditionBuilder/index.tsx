@@ -258,6 +258,7 @@ export default function ICAdvancedFilterConditionBuilder(props: ICAdvancedFilter
 								...newCondition,
 								openBracket: findInOld.openBracket,
 								closeBracket: findInOld.closeBracket,
+								nextOperator: findInOld.nextOperator,
 							};
 						});
 						props.onChange(updatedConditions);

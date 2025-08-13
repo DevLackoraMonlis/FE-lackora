@@ -34,6 +34,7 @@ export default function ICAdvancedFilterConditionSectionItems<T>(props: Props<T>
 		useShallow((state) => ({
 			variables: state.variables,
 			setConditions: state.setConditions,
+			setOpenFilterConditionModal: state.setOpenFilterConditionModal,
 			setGroupBy: state.setGroupBy,
 			setColumns: state.setColumns,
 		})),
@@ -71,6 +72,9 @@ export default function ICAdvancedFilterConditionSectionItems<T>(props: Props<T>
 			))}
 			{!!store.variables.conditions.length && (
 				<DeleteButtons
+					onEdit={() => {
+						store.setOpenFilterConditionModal(true);
+					}}
 					onDelete={() => {
 						store.setConditions([]);
 						props.run();
