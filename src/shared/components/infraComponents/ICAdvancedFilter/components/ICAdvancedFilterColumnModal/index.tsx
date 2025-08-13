@@ -72,26 +72,29 @@ export default function ICAdvancedFilterColumnModal<T>(props: ICAdvancedFilterCo
 		});
 	};
 
-	const columns: TanStackDataTableColumnColDef<ICAdvancedFilterColumnRs>[] = [
-		{
-			accessor: "displayName",
-			width: 230,
-			title: (
-				<Flex justify="space-between" align="center">
-					<Text fw={"bold"}>Column Name</Text>
-					<ActionIcon
-						onClick={() => {
-							setSort((prevState) => (prevState === "asc" ? "desc" : "asc"));
-						}}
-						variant={"transparent"}
-					>
-						<IconArrowsSort size={16} />
-					</ActionIcon>
-				</Flex>
-			),
-			render: (record) => <Text fz={"xs"}>{record.displayName}</Text>,
-		},
-	];
+	const columns: TanStackDataTableColumnColDef<ICAdvancedFilterColumnRs>[] = useMemo(
+		() => [
+			{
+				accessor: "displayName",
+				width: 230,
+				title: (
+					<Flex justify="space-between" align="center">
+						<Text fw={"bold"}>Column Name</Text>
+						<ActionIcon
+							onClick={() => {
+								setSort((prevState) => (prevState === "asc" ? "desc" : "asc"));
+							}}
+							variant={"transparent"}
+						>
+							<IconArrowsSort size={16} />
+						</ActionIcon>
+					</Flex>
+				),
+				render: (record) => <Text fz={"xs"}>{record.displayName}</Text>,
+			},
+		],
+		[setSort],
+	);
 
 	useEffect(() => {
 		if (lastSelectedColumns && store.openedColumnModal) {
