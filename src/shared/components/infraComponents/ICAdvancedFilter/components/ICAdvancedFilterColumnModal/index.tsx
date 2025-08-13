@@ -74,7 +74,8 @@ export default function ICAdvancedFilterColumnModal<T>(props: ICAdvancedFilterCo
 
 	const columns: TanStackDataTableColumnColDef<ICAdvancedFilterColumnRs>[] = [
 		{
-			accessor: "name",
+			accessor: "displayName",
+			width: 230,
 			title: (
 				<Flex justify="space-between" align="center">
 					<Text fw={"bold"}>Column Name</Text>
@@ -88,6 +89,7 @@ export default function ICAdvancedFilterColumnModal<T>(props: ICAdvancedFilterCo
 					</ActionIcon>
 				</Flex>
 			),
+			render: (record) => <Text fz={"xs"}>{record.displayName}</Text>,
 		},
 	];
 
