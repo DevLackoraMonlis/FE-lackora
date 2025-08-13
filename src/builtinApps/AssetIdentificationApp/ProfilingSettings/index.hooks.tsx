@@ -36,7 +36,7 @@ export function useProfiling(type: ProfilingInventoryRules) {
 						title: item.name,
 						isActive: !!item.enabled,
 						description: `Created at ${toFormattedDate(item.created_time, "YYYY-MM-DD")} by ${item.creator}`,
-						datasource: datasource,
+						datasource: datasource as ProfilingCardData["datasource"],
 						conditions: (conditions as unknown as Record<string, unknown>[]).map((condition) => ({
 							id: v4(),
 							closeBracket: condition.close_bracket,
