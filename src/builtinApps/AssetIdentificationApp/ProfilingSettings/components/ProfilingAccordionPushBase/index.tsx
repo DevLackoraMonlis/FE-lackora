@@ -1,4 +1,4 @@
-import { Switch, Text, getGradient } from "@mantine/core";
+import { Switch, Text } from "@mantine/core";
 import { Badge, Card, Flex, Highlight } from "@mantine/core";
 import { IconGavel } from "@tabler/icons-react";
 
@@ -12,22 +12,10 @@ type Props = ProfilingCardData &
 
 export default function ProfilingAccordionPushBase({ id, ...props }: Props) {
 	return (
-		<Card mt="xs">
+		<Card mt="xs" bg="gray.2" h="56px" p="xs">
 			<Flex align="center" justify="space-between">
 				<Flex align="center" gap="xs">
-					<Card
-						w={40}
-						h={40}
-						variant="light"
-						shadow="none"
-						padding={0}
-						styles={(theme) => ({
-							root: {
-								background: getGradient({ deg: 180, from: "primary.4", to: "primary.9" }, theme),
-								color: theme.white,
-							},
-						})}
-					>
+					<Card w={40} h={40} variant="light" padding={0}>
 						<Flex justify="center" align="center" m="auto">
 							<IconGavel size={20} />
 						</Flex>
