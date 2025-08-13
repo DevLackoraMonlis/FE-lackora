@@ -79,6 +79,7 @@ export default function BCTriggerActions<T extends TriggerActionForm>({
 			})}
 		</Fragment>
 	));
+	console.log({ form: form.values });
 
 	useEffect(() => {
 		if (triggerActions?.length) {
@@ -104,7 +105,7 @@ export default function BCTriggerActions<T extends TriggerActionForm>({
 				withinPortal
 				store={combobox}
 				onOptionSubmit={(val) => {
-					form.setFieldValue(val, [] as never);
+					form.setFieldValue(val, [{}] as never);
 					combobox.closeDropdown();
 				}}
 			>
