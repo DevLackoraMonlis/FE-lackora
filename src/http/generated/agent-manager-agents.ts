@@ -54,7 +54,7 @@ export const checkForMonoagentUpdateApiAgentManagerAgentUpdateRequiredPost = (
       
       
       return orvalMutator<CheckMonoAgentUpdateResponse>(
-      {url: `/api/agent-manager/agent/update-required`, method: 'POST',
+      {url: "/api/agent-manager/agent/update-required", method: 'POST',
       headers: {'Content-Type': 'application/json', },
       data: checkMonoAgentUpdateRequest, signal
     },
@@ -118,7 +118,7 @@ export const getLatestMonoagentHashApiAgentManagerAgentLatestAgentsGet = (
       
       
       return orvalMutator<GetLatestAgentHashResponse>(
-      {url: `/api/agent-manager/agent/latest-agents`, method: 'GET',
+      {url: "/api/agent-manager/agent/latest-agents", method: 'GET',
         params, signal
     },
       );
@@ -126,7 +126,7 @@ export const getLatestMonoagentHashApiAgentManagerAgentLatestAgentsGet = (
   
 
 const getGetLatestMonoagentHashApiAgentManagerAgentLatestAgentsGetQueryKey = (params: GetLatestMonoagentHashApiAgentManagerAgentLatestAgentsGetParams,) => {
-    return [`/api/agent-manager/agent/latest-agents`, ...(params ? [params]: [])] as const;
+    return ["/api/agent-manager/agent/latest-agents", ...(params ? [params]: [])] as const;
     }
 
     
@@ -206,7 +206,7 @@ export const registerNewAgentApiAgentManagerAgentRegisterPost = (
       
       
       return orvalMutator<RegisterNewAgentResponse>(
-      {url: `/api/agent-manager/agent/register`, method: 'POST',
+      {url: "/api/agent-manager/agent/register", method: 'POST',
       headers: {'Content-Type': 'application/json', },
       data: registerNewAgentRequest, signal
     },
@@ -270,7 +270,7 @@ export const reportMonoagentActivityApiAgentManagerAgentActivityCallbackPost = (
       
       
       return orvalMutator<ReportNewActivityResponse>(
-      {url: `/api/agent-manager/agent/activity-callback`, method: 'POST',
+      {url: "/api/agent-manager/agent/activity-callback", method: 'POST',
       headers: {'Content-Type': 'application/json', },
       data: reportNewActivityRequest, signal
     },
@@ -333,18 +333,18 @@ export const processAgentJobApiAgentManagerAgentResultCallbackPost = (
 ) => {
       
       const formData = new FormData();
-formData.append(`udi`, bodyProcessAgentJobApiAgentManagerAgentResultCallbackPost.udi)
-formData.append(`hash`, bodyProcessAgentJobApiAgentManagerAgentResultCallbackPost.hash)
-formData.append(`job_type`, bodyProcessAgentJobApiAgentManagerAgentResultCallbackPost.job_type)
+formData.append("udi", bodyProcessAgentJobApiAgentManagerAgentResultCallbackPost.udi)
+formData.append("hash", bodyProcessAgentJobApiAgentManagerAgentResultCallbackPost.hash)
+formData.append("job_type", bodyProcessAgentJobApiAgentManagerAgentResultCallbackPost.job_type)
 if(bodyProcessAgentJobApiAgentManagerAgentResultCallbackPost.result !== undefined && bodyProcessAgentJobApiAgentManagerAgentResultCallbackPost.result !== null) {
- formData.append(`result`, bodyProcessAgentJobApiAgentManagerAgentResultCallbackPost.result)
+ formData.append("result", bodyProcessAgentJobApiAgentManagerAgentResultCallbackPost.result)
  }
 if(bodyProcessAgentJobApiAgentManagerAgentResultCallbackPost.file !== undefined && bodyProcessAgentJobApiAgentManagerAgentResultCallbackPost.file !== null) {
- formData.append(`file`, bodyProcessAgentJobApiAgentManagerAgentResultCallbackPost.file)
+ formData.append("file", bodyProcessAgentJobApiAgentManagerAgentResultCallbackPost.file)
  }
 
       return orvalMutator<ProcessAgentInventoryResponse>(
-      {url: `/api/agent-manager/agent/result-callback`, method: 'POST',
+      {url: "/api/agent-manager/agent/result-callback", method: 'POST',
       headers: {'Content-Type': 'multipart/form-data', },
        data: formData, signal
     },

@@ -6,9 +6,9 @@
  * OpenAPI spec version: 1.0.0
  */
 import type { EachAdapterConfigurationModel } from './EachAdapterConfigurationModel';
-import type { EachPolicyManagementActionModelOutputActionName } from './EachPolicyManagementActionModelOutputActionName';
 import type { EachPolicyManagementActionModelOutputActionDisplayName } from './EachPolicyManagementActionModelOutputActionDisplayName';
 import type { EachPolicyManagementActionModelOutputActionFields } from './EachPolicyManagementActionModelOutputActionFields';
+import type { EachPolicyManagementActionModelOutputActionName } from './EachPolicyManagementActionModelOutputActionName';
 
 export interface EachPolicyManagementActionModelOutput {
   action_id: string;

@@ -56,7 +56,7 @@ export const getAssets = (
       
       
       return orvalMutator<AssetManagementAdvancedFilterResponse>(
-      {url: `/api/asset-management/cyber-assets/`, method: 'POST',
+      {url: "/api/asset-management/cyber-assets/", method: 'POST',
       headers: {'Content-Type': 'application/json', },
       data: advanceFilterRequestModel, signal
     },
@@ -120,14 +120,14 @@ export const getAssetFilterColumns = (
       
       
       return orvalMutator<AssetManagementFilterColumnsResponse>(
-      {url: `/api/asset-management/cyber-assets/columns`, method: 'GET', signal
+      {url: "/api/asset-management/cyber-assets/columns", method: 'GET', signal
     },
       );
     }
   
 
 const getGetAssetFilterColumnsQueryKey = () => {
-    return [`/api/asset-management/cyber-assets/columns`] as const;
+    return ["/api/asset-management/cyber-assets/columns"] as const;
     }
 
     

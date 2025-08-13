@@ -72,6 +72,7 @@ function PushBaseMatchedAssets({ inventoryRuleId }: Props) {
 			title: (
 				<Flex justify="space-between" align="center">
 					<Text>Activity</Text>
+					{generateSortIcons("activity")}
 				</Flex>
 			),
 			render: ({ activity }) => {

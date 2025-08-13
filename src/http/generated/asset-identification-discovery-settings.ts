@@ -59,7 +59,7 @@ export const getDiscoverySettings = (
       
       
       return orvalMutator<PaginatedBaseResponseEachDiscoverySettingEachListMetadataWrapper>(
-      {url: `/api/asset-identification/discovery-settings/`, method: 'GET',
+      {url: "/api/asset-identification/discovery-settings/", method: 'GET',
         params, signal
     },
       );
@@ -67,7 +67,7 @@ export const getDiscoverySettings = (
   
 
 const getGetDiscoverySettingsQueryKey = (params?: GetDiscoverySettingsParams,) => {
-    return [`/api/asset-identification/discovery-settings/`, ...(params ? [params]: [])] as const;
+    return ["/api/asset-identification/discovery-settings/", ...(params ? [params]: [])] as const;
     }
 
     
