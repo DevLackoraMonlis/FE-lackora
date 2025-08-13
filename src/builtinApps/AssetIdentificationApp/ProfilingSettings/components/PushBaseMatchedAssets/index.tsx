@@ -126,7 +126,7 @@ function PushBaseMatchedAssets({ inventoryRuleId }: Props) {
 						<IconCheck color="white" />
 					</Badge>
 					<Text fz="lg" fw="bold" tt="capitalize">
-						{`${total.toLocaleString()} assets matched with ${ruleName}`}
+						{`${total.toLocaleString()} assets with Windows agent ${ruleName}`}
 					</Text>
 				</Flex>
 				<Highlight c="dimmed" highlight={[lastMatched, `${scanId}`]} fz="xs">
