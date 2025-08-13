@@ -20,7 +20,7 @@ export const AllApplications = {
 		name: "inventory_management",
 		modules: {
 			GENERAL_INFORMATION: "General Information",
-			OPERATING_SYSTEM: "Operating system",
+			OPERATING_SYSTEM: "Operating System",
 			USERS_AND_GROUPS: "Users & Groups",
 			PERSISTENCE: "Persistence",
 			LIVE_SNAPSHOT: "Live Snapshot",
