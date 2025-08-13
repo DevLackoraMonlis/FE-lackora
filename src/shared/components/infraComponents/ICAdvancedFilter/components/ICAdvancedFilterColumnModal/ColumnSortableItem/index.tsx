@@ -6,6 +6,7 @@ import type { PropsWithChildren } from "react";
 type Props = {
 	id: string;
 	onRemove: () => void;
+	name: string;
 } & PropsWithChildren;
 
 export default function ICAdvancedFilterColumnSortableItem(props: Props) {
@@ -32,7 +33,7 @@ export default function ICAdvancedFilterColumnSortableItem(props: Props) {
 				<IconGripVertical color={"gray"} size={16} />
 			</Flex>
 			<Box w="100%">
-				<Text fz="xs">{`${props.id}`}</Text>
+				<Text fz="xs">{`${props.name}`}</Text>
 			</Box>
 			<Button id="remove-selected-columns" p={8} variant="transparent" onClick={props.onRemove}>
 				<IconX color={"gray"} size={16} />

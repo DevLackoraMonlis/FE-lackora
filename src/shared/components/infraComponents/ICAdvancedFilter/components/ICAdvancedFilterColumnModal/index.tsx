@@ -19,6 +19,7 @@ import { useShallow } from "zustand/react/shallow";
 
 export default function ICAdvancedFilterColumnModal<T>(props: ICAdvancedFilterColumnModalProps<T>) {
 	const tableRef = useRef<TanStackDataTableRef<T>>(null);
+
 	const store = useStore(
 		props.store,
 		useShallow((state) => ({
@@ -33,7 +34,7 @@ export default function ICAdvancedFilterColumnModal<T>(props: ICAdvancedFilterCo
 	const defaultColumns = useMemo(() => props.allColumns.filter((item) => item.isDefault), [props.allColumns]);
 	const lastSelectedColumns = useMemo(
 		() => store.variables.columns.map((item) => item.name),
-		[store.variables.columns],
+		[store.variables],
 	);
 
 	const [selectedColumns, setSelectedColumns] = useState<string[]>([]);
@@ -43,6 +44,7 @@ export default function ICAdvancedFilterColumnModal<T>(props: ICAdvancedFilterCo
 
 	const handleClose = () => {
 		setSelectedColumns([]);
+		setSelectedRecords([]);
 		store.setOpenColumnModal(false);
 	};
 
@@ -109,7 +111,6 @@ export default function ICAdvancedFilterColumnModal<T>(props: ICAdvancedFilterCo
 			size={600}
 			title="Customize Table Columns"
 			withCloseButton
-			keepMounted={false}
 			closeOnClickOutside
 			closeOnEscape
 			opened={store.openedColumnModal}
@@ -181,6 +182,7 @@ export default function ICAdvancedFilterColumnModal<T>(props: ICAdvancedFilterCo
 										onRemove={() => handleRemoveFromNewColumns(item)}
 										key={item}
 										id={item}
+										name={props.allColumns.find((col) => col.name === item)?.displayName || item}
 									/>
 								))}
 							</Flex>
@@ -188,6 +190,7 @@ export default function ICAdvancedFilterColumnModal<T>(props: ICAdvancedFilterCo
 					</ScrollArea>
 				</Flex>
 			</Flex>
+
 			<BCModal.EmptyFooter>
 				<Flex h={"100%"} bg={"white"} align={"center"} gap="sm" justify="space-between" px={"sm"}>
 					<Button
