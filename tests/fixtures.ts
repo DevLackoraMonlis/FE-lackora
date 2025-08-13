@@ -1,4 +1,4 @@
-import { AppRoutes } from "@/shared/constants/routes";
+import { AllApplications, AppRoutes } from "@/shared/constants/routes";
 // tests/fixtures.ts
 import { test as baseTest } from "@playwright/test";
 
@@ -11,7 +11,12 @@ export const test = baseTest.extend({
 		await page.getByTestId("login-password").fill("Admin@Watcher1!");
 		await page.getByTestId("login-submit-button").click();
 
-		await page.waitForURL(AppRoutes.panel);
+		await page.waitForURL(
+			AppRoutes.appModulePage(
+				AllApplications.CYBER_ASSETS.name,
+				AllApplications.CYBER_ASSETS.modules.CYBER_ASSETS,
+			),
+		);
 
 		await use(page);
 	},
