@@ -166,7 +166,7 @@ function ProfilingMatchedAssets({ inventoryRuleId }: Props) {
 	);
 }
 
-export default function ProfilingMatchedAssetsModal({ onClose, opened, ...configs }: Props) {
+export default function PullBaseMatchedAssetsModal({ onClose, opened, ...configs }: Props) {
 	return (
 		<BCDrawer size="50%" onClose={onClose} opened={opened} title="Matched Assets">
 			<ProfilingMatchedAssets {...configs} {...{ onClose, opened }} />

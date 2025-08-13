@@ -128,9 +128,9 @@ export default function WorkflowAccordion({ type, status, title, description, st
 														<Menu.Item
 															data-testid="workflow-submenu-redirect"
 															leftSection={<IconSettings size={15} />}
-															onClick={() => props.handleGatewayConfiguration(step.id)}
+															onClick={() => props.handleGatewayConfiguration(step.phaseType || "")}
 														>
-															Go to Gateway Configuration
+															Go to Configuration
 														</Menu.Item>
 														<Menu.Item
 															data-testid="workflow-submenu-policy"

@@ -22,8 +22,10 @@ import {
 	useGetWorkflowStep,
 	useGetWorkflows,
 } from "@/http/generated/workflow-management";
+import { IC_ADVANCED_FILTER_CONDITION_EMPTY_OPERATORS } from "@/shared/components/infraComponents/ICAdvancedFilter/index.constants";
 import { convertICAdvancedFilterResponseColumns } from "@/shared/components/infraComponents/ICAdvancedFilter/index.helper";
 
+import { triggerActionHumanReadableText } from "@/shared/components/baseComponents/BCTriggerActions/index.helper";
 import { toFormattedDate } from "@/shared/lib/dayJs";
 import { getErrorMessage } from "@/shared/lib/utils";
 import { getValueFromDynamicColumnRecord } from "./index.helper";
@@ -152,23 +154,37 @@ export function useWorkflowPolicy(workflow: string) {
 			query: {
 				enabled: !!workflow,
 				select: (response) => {
-					const results = response?.data?.results?.map(({ conditions, ...item }) => ({
-						...item,
-						id: item.id,
-						title: item.name,
-						enforce: !!item.has_triggered,
-						isActive: !!item.enabled,
-						description: `Created at ${toFormattedDate(item.created_time, "YYYY-MM-DD")} by ${item.creator}`,
-						conditions: (conditions as unknown as Record<string, unknown>[]).map((condition) => ({
-							id: v4(),
-							closeBracket: condition.close_bracket,
-							columnName: condition.column_name,
-							nextOperator: condition.next_operator,
-							openBracket: condition.open_bracket,
-							operator: condition.operator,
-							values: condition.values,
-						})) as PolicyCardData["conditions"],
-					}));
+					const results = response?.data?.results?.map(({ conditions, actions, ...item }) => {
+						return {
+							...item,
+							actions,
+							displayAction: triggerActionHumanReadableText(actions),
+							id: item.id,
+							title: item.name,
+							enforce: !!item.has_triggered,
+							isActive: !!item.enabled,
+							description: `Created at ${toFormattedDate(item.created_time, "YYYY-MM-DD")} by ${
+								item.creator
+							}`,
+							conditions: (conditions as unknown as Record<string, unknown>[]).map((condition) => {
+								const record = {
+									id: v4(),
+									closeBracket: condition.close_bracket,
+									columnName: condition.column_name,
+									nextOperator: condition.next_operator,
+									openBracket: condition.open_bracket,
+									operator: condition.operator,
+									values: condition.values,
+									disabled: false,
+								};
+								if (IC_ADVANCED_FILTER_CONDITION_EMPTY_OPERATORS.includes(condition.operator as string)) {
+									record.disabled = true;
+									record.values = [];
+								}
+								return record;
+							}) as PolicyCardData["conditions"],
+						};
+					});
 					return { ...response?.data, results };
 				},
 			},

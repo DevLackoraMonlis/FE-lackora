@@ -15,8 +15,8 @@ import type { ProfilingCardData } from "../../index.types";
 import DeleteProfilingModal from "../DeleteProfiling";
 import ProfilingAccordionPullBase from "../ProfilingAccordionPullBase";
 import ProfilingCreateOrEditModal from "../ProfilingCreateOrEditModal";
-import ProfilingMatchedAssetsModal from "../ProfilingMatchedAssets";
 import ProfilingPullBaseSkelton from "../ProfilingPullBaseSkelton";
+import PullBaseMatchedAssetsModal from "../PullBaseMatchedAssets";
 
 const DnDCardBox = ({ id, content }: { id: string; content: ReactNode }) => {
 	const { listeners, setNodeRef, transform, transition } = useSortable({ id });
@@ -103,7 +103,7 @@ export default function ProfilingPullBase({ type }: { type: ProfilingInventoryRu
 
 	return (
 		<>
-			<ProfilingMatchedAssetsModal
+			<PullBaseMatchedAssetsModal
 				onClose={handleCloseProfiling}
 				opened={openedAssets}
 				inventoryRuleId={selectedId}
