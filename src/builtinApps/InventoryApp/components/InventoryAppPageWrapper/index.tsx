@@ -23,46 +23,6 @@ export default function InventoryAppPageWrapper(props: InventoryAppPageWrapperPr
 								{...item}
 							/>
 						))}
-						{props.sideItems.map((item) => (
-							<InventoryAppSideCardItem
-								key={item.name}
-								isSelected={props.selectedInventoryType === item.name}
-								isLoading={props.isLoading}
-								{...item}
-							/>
-						))}
-						{props.sideItems.map((item) => (
-							<InventoryAppSideCardItem
-								key={item.name}
-								isSelected={props.selectedInventoryType === item.name}
-								isLoading={props.isLoading}
-								{...item}
-							/>
-						))}
-						{props.sideItems.map((item) => (
-							<InventoryAppSideCardItem
-								key={item.name}
-								isSelected={props.selectedInventoryType === item.name}
-								isLoading={props.isLoading}
-								{...item}
-							/>
-						))}
-						{props.sideItems.map((item) => (
-							<InventoryAppSideCardItem
-								key={item.name}
-								isSelected={props.selectedInventoryType === item.name}
-								isLoading={props.isLoading}
-								{...item}
-							/>
-						))}
-						{props.sideItems.map((item) => (
-							<InventoryAppSideCardItem
-								key={item.name}
-								isSelected={props.selectedInventoryType === item.name}
-								isLoading={props.isLoading}
-								{...item}
-							/>
-						))}
 					</Flex>
 				</ScrollArea>
 			</Grid.Col>
