@@ -104,8 +104,9 @@ function CreateOrEdit({ type, inventoryRuleId, refetchProfiling, onClose }: Prop
 	const profilingData = useMemo(() => {
 		const result = inventoryRules?.data?.results?.find(({ id }) => id === inventoryRuleId);
 		if (result) {
-			const adapter_id = result.datasource.find(({ type }) => type === adapter.object_type)?.id || "";
-			const connection_id = result.datasource.find(({ type }) => type === connection.object_type)?.id || "";
+			const adapter_id = result.datasource.find(({ key }) => key === adapter.object_type)?.value?.value || "";
+			const connection_id =
+				result.datasource.find(({ key }) => key === connection.object_type)?.value?.value || "";
 			return {
 				...result,
 				summary: result.summary || "",
@@ -262,7 +263,7 @@ function CreateOrEdit({ type, inventoryRuleId, refetchProfiling, onClose }: Prop
 							{dataSourceFields.map(({ key, ...item }) => {
 								const defaultValue = profilingData?.datasource?.find(
 									(source) => source.key === item.objectType,
-								)?.value as string;
+								)?.value;
 								return (
 									<Grid.Col span={{ xs: 12, md: 6 }} key={key}>
 										{getDynamicField({

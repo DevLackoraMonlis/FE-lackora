@@ -10,7 +10,7 @@ export type ProfilingCardData = {
 	description: string;
 	isActive: boolean;
 	conditions: ICAdvancedFilterConditionBuilderCondition[];
-	datasource: Array<{ key: string; value: LabelValueType }>;
+	datasource: Array<{ key: string; value: LabelValueType<string> }>;
 	[key: string]: unknown;
 };
 
