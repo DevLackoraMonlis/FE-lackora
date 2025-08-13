@@ -50,7 +50,7 @@ export function DeleteAssetsDependencyTable({ results = [] }: Props) {
 							<Divider />
 							<Grid px="xs" py="2xs">
 								<Grid.Col span={8}>
-									<Flex gap="xl">
+									<Flex gap="sm">
 										<Text>{`${key}.`}</Text>
 										<Highlight highlight={[search]} highlightStyles={{}}>
 											{`${hostname} - ${ipAddress}`}
