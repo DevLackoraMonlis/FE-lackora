@@ -13,3 +13,14 @@
 .rotate {
 	transform: rotate(180deg);
 }
+
+.circle {
+	border: 1px solid var(--mantine-color-primary-5);
+	background-color: var(--mantine-color-primary-6);
+	border-radius: 50%;
+	width: 6px;
+	height: 6px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}

@@ -22,7 +22,7 @@ import {
 	Icons8Workstation1,
 	LinuxSvgrepoCom1,
 } from "@/shared/icons/components/assets";
-import { Badge, type BadgeProps, Flex, type FlexProps, Indicator, Text } from "@mantine/core";
+import { Badge, type BadgeProps, Box, Flex, type FlexProps, Text } from "@mantine/core";
 import {
 	IconAlertTriangle,
 	IconArchive,
@@ -185,7 +185,7 @@ export function getCyberAssetClassificationIcon({
 	size?: number;
 	isAssociated?: boolean;
 }) {
-	const customSize = isAssociated ? size - 4 : size;
+	const customSize = isAssociated ? size - 2 : size;
 	const icons: Record<CyberAssetClassificationEnum, ReactNode> = {
 		[CyberAssetClassificationEnum.ACCESS_POINT]: <Icons8WiFiRouter1 width={customSize} height={customSize} />,
 		[CyberAssetClassificationEnum.CAMERA_IP]: <Icons8PtzCamera1 width={customSize} height={customSize} />,
@@ -212,9 +212,12 @@ export function getCyberAssetClassificationIcon({
 
 	if (isAssociated) {
 		return (
-			<Indicator position={"bottom-end"} label={<IconLink size={4} />}>
-				{icons[type]}
-			</Indicator>
+			<Box pos={"relative"} w={customSize} h={customSize}>
+				{icons[type] || <IconDeviceDesktop size={customSize} />}
+				<Box className={classes.circle} pos={"absolute"} right={-1} top={8}>
+					<IconLink size={4} color={"white"} />
+				</Box>
+			</Box>
 		);
 	}
 	return icons[type] || <IconDeviceDesktop size={size} />;
