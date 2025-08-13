@@ -6,6 +6,7 @@ import { GlobalService } from "@/http/end-points/GlobalService";
 export async function getHttpRequestXNonce(params: Omit<GetNonceRq, "xNonceAuthenticate">) {
 	return GlobalService.getNonce({
 		...params,
+		route: params.route.replace(process.env.BASE_URL || "", ""),
 		xNonceAuthenticate: process.env.X_NONCE_AUTHENTICATE || "",
 		baseUrl: process.env.BASE_URL,
 	});

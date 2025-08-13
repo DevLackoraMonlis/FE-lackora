@@ -26,7 +26,9 @@ export default function InventoryAppPageWrapper(props: InventoryAppPageWrapperPr
 					</Flex>
 				</ScrollArea>
 			</Grid.Col>
-			<Grid.Col span={9}>{props.page}</Grid.Col>
+			<Grid.Col span={9} key={props.selectedInventoryType}>
+				{props.page}
+			</Grid.Col>
 		</Grid>
 	);
 }

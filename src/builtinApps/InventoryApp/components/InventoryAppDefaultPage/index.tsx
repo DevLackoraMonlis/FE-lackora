@@ -70,6 +70,8 @@ export default function InventoryAppDefaultPage(props: ICMonoAppPagesDefaultProp
 		}
 	}, [getInventoryOverviewQuery.data?.data?.[0]?.name]);
 
+	console.log(selectedInventoryType, "ty");
+
 	return (
 		<InventoryAppPageWrapper
 			key={props.moduleName}
