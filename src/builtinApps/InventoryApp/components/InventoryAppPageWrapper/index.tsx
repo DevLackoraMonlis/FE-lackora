@@ -6,7 +6,7 @@ export default function InventoryAppPageWrapper(props: InventoryAppPageWrapperPr
 	return (
 		<Grid gutter={0} h={"100%"} classNames={{ inner: "h-full" }}>
 			<Grid.Col span={3}>
-				<Flex direction={"column"} h="100%" bg={"gray.2"} gap={"xs"} p={"sm"}>
+				<Flex direction={"column"} h="100%" bg={"gray.2"} gap={"xs"} px={"lg"} py={"sm"}>
 					<Flex pl={"xs"} align={"center"} bg={"gray.2"} h={48}>
 						<Text fz={"lg"} fw={"bolder"}>
 							{props.title}
