@@ -104,7 +104,7 @@ export default function BCTriggerActions<T extends TriggerActionForm>({
 				withinPortal
 				store={combobox}
 				onOptionSubmit={(val) => {
-					form.setFieldValue(val, [{}] as never);
+					form.setFieldValue(val, [] as never);
 					combobox.closeDropdown();
 				}}
 			>
