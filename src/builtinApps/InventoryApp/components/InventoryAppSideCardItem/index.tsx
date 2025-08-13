@@ -20,14 +20,14 @@ export default function InventoryAppSideCardItem(props: InventoryAppSideCardProp
 				</Flex>
 			</Card.Section>
 			<Card.Section>
-				<Flex direction={"column"} bg={"gray.1"} p={"md"} align={"center"}>
+				<Flex direction={"column"} bg={"gray.1"} pl={"2xl"} py={"lg"} align={"flex-start"}>
 					{props.isLoading
 						? Array.from({ length: 5 })
 								.fill(0)
 								.map((_item) => <Skeleton key={v4()} width={"100%"} h={20} animate />)
 						: props.items.map((item) => (
 								<Flex key={`${item.label}-${item.value}`} gap={"2xs"}>
-									<Text fz={"xs"} fw={"bold"}>
+									<Text fz={"xs"} fw={"bolder"}>
 										{item.value}
 									</Text>
 									<Text fz={"xs"} c={"gray.6"}>
