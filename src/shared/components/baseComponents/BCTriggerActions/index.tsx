@@ -79,7 +79,6 @@ export default function BCTriggerActions<T extends TriggerActionForm>({
 			})}
 		</Fragment>
 	));
-	console.log({ form: form.values });
 
 	useEffect(() => {
 		if (triggerActions?.length) {
