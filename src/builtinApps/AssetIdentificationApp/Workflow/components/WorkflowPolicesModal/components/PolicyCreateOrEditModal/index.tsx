@@ -96,6 +96,14 @@ function PolicyCreateOrEdit({ workflowName, policyId, refetchPolicy, onClose }: 
 			});
 			return;
 		}
+		const conditions = formConditions.map((item) => ({
+			close_bracket: item.closeBracket,
+			column_name: item.columnName || "",
+			next_operator: item.nextOperator,
+			open_bracket: item.openBracket,
+			operator: item.operator,
+			values: item.values,
+		})) as EditPolicyRequestConditions;
 		const actions = Object.values(triggerActionForm)
 			.filter((valueAsArray = []) => !!valueAsArray?.length)
 			.map((valueAsArray = []) => {
@@ -106,14 +114,6 @@ function PolicyCreateOrEdit({ workflowName, policyId, refetchPolicy, onClose }: 
 				});
 				return { action_id, configurations: actionFields };
 			});
-		const conditions = formConditions.map((item) => ({
-			close_bracket: item.closeBracket,
-			column_name: item.columnName || "",
-			next_operator: item.nextOperator,
-			open_bracket: item.openBracket,
-			operator: item.operator,
-			values: item.values,
-		})) as EditPolicyRequestConditions;
 		// submitting
 		if (policyId) {
 			updatePolicy.mutate(
@@ -174,7 +174,7 @@ function PolicyCreateOrEdit({ workflowName, policyId, refetchPolicy, onClose }: 
 									acc[cur.key] = cur.value;
 									return acc;
 								},
-								{ key: v4(), adapterId: action_fields, fields: action_fields } as unknown as Record<
+								{ key: v4(), actionId: action_id, fields: action_fields } as unknown as Record<
 									string,
 									unknown
 								>,
