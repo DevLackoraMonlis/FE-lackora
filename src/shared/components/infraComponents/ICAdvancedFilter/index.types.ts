@@ -15,7 +15,7 @@ import type { StoreApi } from "zustand/index";
 export type ICAdvancedFilterOrder = "asc" | "desc";
 export type ICAdvancedFilterOperator = "and" | "or";
 
-type ICAdvancedFilterDataColumnRq = {
+export type ICAdvancedFilterDataColumnRq = {
 	name: string;
 	orderBy?: ICAdvancedFilterOrder | null;
 };
@@ -124,6 +124,8 @@ export type ICAdvancedFilterStoreType = {
 	resetToDefaultVariables: (allColumns: ICAdvancedFilterColumnRs[]) => void;
 	openedFilterConditionModal: boolean;
 	setOpenFilterConditionModal: (opened: boolean) => void;
+	openedColumnModal: boolean;
+	setOpenColumnModal: (opened: boolean) => void;
 	openedFullScreenModal: boolean;
 	setOpenFullScreenModal: (opened: boolean) => void;
 	openedGroupByModal: boolean;
@@ -223,4 +225,11 @@ export type BracketError = {
 	type: "open" | "close";
 	count: number;
 	message: string;
+};
+
+export type ICAdvancedFilterColumnModalProps<T> = {
+	isLoading: boolean;
+	allColumns: ICAdvancedFilterColumnRs[];
+	store: ICAdvancedFilterProps<T>["store"];
+	run: ICAdvancedFilterProps<T>["run"];
 };

@@ -14,7 +14,7 @@ export default function TanStackHeadRowItemCell<T extends Record<string, unknown
 
 	let className = TAN_STACK_EXCLUDE_COLUMNS_FROM_STYLES.includes(header.column.id) ? "" : "ellipsis";
 
-	if (props.withPaddingCells) {
+	if (props.withPaddingCells && !TAN_STACK_EXCLUDE_COLUMNS_FROM_STYLES.includes(header.column.id)) {
 		className += " defaultPadding";
 	}
 

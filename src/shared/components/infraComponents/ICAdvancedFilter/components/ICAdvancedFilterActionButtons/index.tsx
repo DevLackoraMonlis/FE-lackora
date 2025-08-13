@@ -26,6 +26,7 @@ export default function ICAdvancedFilterActionButtons<T>(props: Props<T>) {
 			variables: state.variables,
 			setOpenFullScreenModal: state.setOpenFullScreenModal,
 			openedFullScreenModal: state.openedFullScreenModal,
+			setOpenColumnModal: state.setOpenColumnModal,
 		})),
 	);
 
@@ -66,7 +67,7 @@ export default function ICAdvancedFilterActionButtons<T>(props: Props<T>) {
 
 			{!props.hideManageColumnButton && (
 				<Tooltip label={"Manage Columns"}>
-					<Button px={"xs"} variant={"default"} size={"sm"}>
+					<Button onClick={() => store.setOpenColumnModal(true)} px={"xs"} variant={"default"} size={"sm"}>
 						<IconAdjustments size={20} />
 					</Button>
 				</Tooltip>

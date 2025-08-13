@@ -1,4 +1,5 @@
 import type { TanStackDataTableColumnColDef } from "@/shared/components/baseComponents/BCTanStackGrid/index.types";
+import ICAdvancedFilterColumnModal from "@/shared/components/infraComponents/ICAdvancedFilter/components/ICAdvancedFilterColumnModal";
 import ICAdvancedFilterConditionModal from "@/shared/components/infraComponents/ICAdvancedFilter/components/ICAdvancedFilterConditionModal";
 import ICAdvancedFilterConditionSectionItems from "@/shared/components/infraComponents/ICAdvancedFilter/components/ICAdvancedFilterConditionSectionItems";
 import ICAdvancedFilterGrid from "@/shared/components/infraComponents/ICAdvancedFilter/components/ICAdvancedFilterGrid";
@@ -63,6 +64,12 @@ export default function ICAdvancedFilterComponent<T>(
 
 	return (
 		<Flex h={"100%"} direction={"column"} w={"100%"}>
+			<ICAdvancedFilterColumnModal
+				run={run}
+				allColumns={allColumns}
+				isLoading={isLoading}
+				store={props.store}
+			/>
 			<ICAdvancedFilterTopSection
 				hideCollapseButton={props.hideCollapseButton}
 				hideManageColumnButton={props.hideManageColumnButton}

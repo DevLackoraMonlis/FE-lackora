@@ -3,6 +3,7 @@ import { type ExpandedState, type RowSelectionState, type Table, useReactTable }
 import { useVirtualizer } from "@tanstack/react-virtual";
 import find from "lodash/find";
 import type React from "react";
+import { useCallback } from "react";
 import type { RefObject } from "react";
 import { useMemo } from "react";
 import { useEffect, useImperativeHandle, useRef, useState } from "react";
@@ -67,6 +68,9 @@ export function useTanStackDefault<T extends Record<string, unknown>>(params: Ta
 				},
 				getRowSelection: () => {
 					return rowSelection;
+				},
+				updateSelectedRows: (selectedRows) => {
+					updatedSelectedRows(selectedRows);
 				},
 			};
 		},
@@ -170,6 +174,32 @@ export function useTanStackDefault<T extends Record<string, unknown>>(params: Ta
 
 	const table = useReactTable<T>(options);
 
+	const updatedSelectedRows = useCallback(
+		(selectedRows: T[]) => {
+			const initRowSelection = selectedRows.reduce((prev, cur) => {
+				return {
+					// biome-ignore lint/performance/noAccumulatingSpread: <explanation>
+					...prev,
+					[cur[props.idAccessor as keyof T] as string]: true,
+				};
+			}, {});
+
+			if (selectedRows.length) {
+				for (let i = 0; i < selectedRows.length; i++) {
+					const record = selectedRows[i];
+					const id = record[props.idAccessor] as string;
+					if (!privateSelectedRecords.current.has(id)) {
+						privateSelectedRecords.current.set(id, record);
+					}
+				}
+			}
+			if (initRowSelection) {
+				setRowSelection(initRowSelection as RowSelectionState);
+			}
+		},
+		[props.idAccessor],
+	);
+
 	useEffect(() => {
 		if (props.pinLastColumn) {
 			// Pin the last column to the right column
@@ -184,26 +214,7 @@ export function useTanStackDefault<T extends Record<string, unknown>>(params: Ta
 
 	useEffect(() => {
 		if (!isInitialRowSelection.current) {
-			const initRowSelection = props.selectedRecords?.reduce((prev, cur) => {
-				return {
-					// biome-ignore lint/performance/noAccumulatingSpread: <explanation>
-					...prev,
-					[cur[props.idAccessor as keyof T] as string]: true,
-				};
-			}, {});
-
-			if (props.selectedRecords) {
-				for (let i = 0; i < props.selectedRecords.length; i++) {
-					const record = props.selectedRecords[i];
-					const id = record[props.idAccessor] as string;
-					if (!privateSelectedRecords.current.has(id)) {
-						privateSelectedRecords.current.set(id, record);
-					}
-				}
-			}
-			if (initRowSelection) {
-				setRowSelection(initRowSelection as RowSelectionState);
-			}
+			updatedSelectedRows(props.selectedRecords || []);
 			isInitialRowSelection.current = true;
 		}
 	}, [props.selectedRecords]);

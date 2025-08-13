@@ -148,6 +148,8 @@ export function getDefaultICAdvancedStore(params: {
 		setRunToken: (runToken) => set({ runToken }),
 		openedGroupByModal: false,
 		openedFullScreenModal: false,
+		openedColumnModal: false,
+		setOpenColumnModal: (value) => set({ openedColumnModal: value }),
 		setOpenFullScreenModal: (value) => set({ openedFullScreenModal: value }),
 		setOpenGroupByModal: (value) => set({ openedGroupByModal: value }),
 		openedFilterConditionModal: false,

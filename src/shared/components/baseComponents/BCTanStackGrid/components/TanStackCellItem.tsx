@@ -15,7 +15,7 @@ export default function TanStackCellItem<T extends Record<string, unknown>>(
 	if (TAN_STACK_EXCLUDE_COLUMNS_FROM_STYLES.includes(cell.column.id)) {
 		className = "defaultNonStyleChild";
 	}
-	if (props.withPaddingCells) {
+	if (props.withPaddingCells && !TAN_STACK_EXCLUDE_COLUMNS_FROM_STYLES.includes(cell.column.id)) {
 		className += " defaultPadding";
 	}
 
@@ -28,7 +28,7 @@ export default function TanStackCellItem<T extends Record<string, unknown>>(
 			justifyContent: isCentered ? "center" : "flex-start",
 			...tanStackGetCommonPinningStyles<T>(cell.column),
 		}),
-		[props.rowHeight, cell.column.getSize(), isCentered],
+		[props.rowHeight, cell.column.getSize(), isCentered, cell.column],
 	);
 
 	return (

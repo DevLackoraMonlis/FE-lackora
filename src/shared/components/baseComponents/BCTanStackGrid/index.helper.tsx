@@ -199,6 +199,7 @@ export function tanStackGenerateColumns<T>(
 			id: "selection-column",
 			header: ({ table }) => (
 				<Checkbox
+					size={"xs"}
 					checked={table.getIsAllRowsSelected()}
 					indeterminate={table.getIsSomeRowsSelected()}
 					onChange={table.getToggleAllRowsSelectedHandler()} //or getToggleAllPageRowsSelectedHandler
@@ -206,6 +207,7 @@ export function tanStackGenerateColumns<T>(
 			),
 			cell: ({ row }) => (
 				<Checkbox
+					size={"xs"}
 					checked={row.getIsSelected()}
 					disabled={!row.getCanSelect()}
 					onChange={row.getToggleSelectedHandler()}

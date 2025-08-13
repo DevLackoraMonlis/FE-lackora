@@ -74,7 +74,7 @@ export default function CyberAssetsLandingPage(props: ICMonoAppPagesDefaultProps
 					columnsQueryKey={["cyber-assets-columns"]}
 					dataQueryKey={["cyber-asset-data", v4()]}
 					fullScreenTitle={"Cyber Assets"}
-					excludeColumns={["id", "classification", "has_related_ip"]}
+					excludeColumns={["id", "classification", "has_related_ip", "is_associated"]}
 					store={values?.params?.store || createDynamicICAdvancedStore()}
 					searchInputPlaceholder={"Search by hostname"}
 					columns={getCyberAssetsFormattedColumns(props.appName, props.moduleName, (record) => {

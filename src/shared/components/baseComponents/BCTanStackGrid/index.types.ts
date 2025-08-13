@@ -45,12 +45,13 @@ export type TanStackGridProps<T> = {
 	/*
 		const inputRef = useRef<TanStackDataTableRef>(null);
 	 */
-	ref?: RefObject<TanStackDataTableRef | null>;
+	ref?: RefObject<TanStackDataTableRef<T> | null>;
 } & TanStackGridPagination;
 
-export type TanStackDataTableRef = {
+export type TanStackDataTableRef<T> = {
 	clear: VoidFunction;
 	getRowSelection: () => RowSelectionState;
+	updateSelectedRows: (selectedRows: T[]) => void;
 };
 
 export type DataTableColumnTitleFn<T> = (values: Column<T, unknown>) => ReactNode;
