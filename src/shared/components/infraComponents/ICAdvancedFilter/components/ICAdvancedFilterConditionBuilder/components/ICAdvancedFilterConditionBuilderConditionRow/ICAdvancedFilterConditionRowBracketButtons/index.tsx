@@ -111,7 +111,7 @@ export const BracketButtons = (
 
 			<Flex w={"100%"} justify={props.type === "OpenBracket" ? "flex-end" : "flex-start"}>
 				<Tooltip
-					label={`Add new parenthesis. ${props.bracketError ? `${props.bracketError ? `${props.bracketError.count} error for ${props.type === "OpenBracket" ? '"("' : '")"'}` : ""}` : ""}`}
+					label={`Add new parenthesis. ${props.bracketError ? `${props.bracketError ? `${props.bracketError.count} error(s) for ${props.type === "OpenBracket" ? '"("' : '")"'}` : ""}` : ""}`}
 				>
 					<Button
 						className={props.error ? classes.blink : ""}
