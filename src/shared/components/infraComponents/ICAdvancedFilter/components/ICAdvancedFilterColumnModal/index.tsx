@@ -37,19 +37,17 @@ export default function ICAdvancedFilterColumnModal<T>(props: ICAdvancedFilterCo
 		[store.variables],
 	);
 
-	const [selectedColumns, setSelectedColumns] = useState<string[]>([]);
 	const [selectedRecords, setSelectedRecords] = useState<ICAdvancedFilterColumnRs[] | undefined>([]);
 	const [search, setSearch] = useState<string>("");
 	const [sort, setSort] = useState<"asc" | "desc">("asc");
 
 	const handleClose = () => {
-		setSelectedColumns([]);
 		setSelectedRecords([]);
 		store.setOpenColumnModal(false);
 	};
 
 	const onSave = () => {
-		store.setColumns(selectedColumns.map((item) => ({ name: item })));
+		store.setColumns(selectedRecords?.map((item) => ({ name: item.name })) || []);
 		handleClose();
 	};
 
@@ -60,13 +58,11 @@ export default function ICAdvancedFilterColumnModal<T>(props: ICAdvancedFilterCo
 	const sortedRecords = orderBy(filteredRecords, (item) => item.name, sort);
 
 	const handleDeselectAll = () => {
-		setSelectedColumns([]);
 		setSelectedRecords([]);
 		tableRef.current?.updateSelectedRows([] as T[]);
 	};
 
 	const handleRemoveFromNewColumns = (name: string) => {
-		setSelectedColumns((prevState) => prevState.filter((item) => item !== name));
 		setSelectedRecords((prevState) => {
 			const updatedRecords = prevState?.filter((item) => item.name !== name) || [];
 			tableRef.current?.updateSelectedRows(updatedRecords as T[]);
@@ -99,11 +95,15 @@ export default function ICAdvancedFilterColumnModal<T>(props: ICAdvancedFilterCo
 	);
 
 	useEffect(() => {
-		if (lastSelectedColumns && store.openedColumnModal) {
-			setSelectedColumns(lastSelectedColumns);
-			setSelectedRecords(props.allColumns.filter((item) => lastSelectedColumns.includes(item.name)));
+		if (lastSelectedColumns && store.openedColumnModal && props.allColumns.length) {
+			setSelectedRecords(
+				lastSelectedColumns.map((item) => {
+					const findItem = props.allColumns.find((col) => col.name === item);
+					return findItem as ICAdvancedFilterColumnRs;
+				}),
+			);
 		}
-	}, [lastSelectedColumns, store.openedColumnModal]);
+	}, [lastSelectedColumns, store.openedColumnModal, props.allColumns]);
 
 	return (
 		<BCModal
@@ -133,7 +133,6 @@ export default function ICAdvancedFilterColumnModal<T>(props: ICAdvancedFilterCo
 							selectedRecords={selectedRecords}
 							onSelectedRecordsChange={(selectedRecords) => {
 								setSelectedRecords(selectedRecords);
-								setSelectedColumns(selectedRecords?.map((item) => item.name) || []);
 							}}
 							withTableBorder
 							withColumnBorders
@@ -153,7 +152,7 @@ export default function ICAdvancedFilterColumnModal<T>(props: ICAdvancedFilterCo
 					</Text>
 					<Flex justify="space-between" align="center" mt={"xs"} p={"2xs"}>
 						<Text fz="xs" fw="bold">
-							{`Selected columns (${selectedColumns.length})`}
+							{`Selected columns (${selectedRecords?.length || 0})`}
 						</Text>
 						<Button
 							p={0}
@@ -166,23 +165,24 @@ export default function ICAdvancedFilterColumnModal<T>(props: ICAdvancedFilterCo
 						</Button>
 					</Flex>
 					<ScrollArea h={500} scrollbars={"y"} scrollbarSize={3}>
-						<BCSortable
+						<BCSortable<ICAdvancedFilterColumnRs & { id: string }>
 							handleItemChange={(_e, newItems) => {
-								setSelectedColumns(newItems.map((item) => item.id));
+								setSelectedRecords(newItems);
 							}}
 							items={
-								selectedColumns.map((item) => ({
-									id: item,
+								selectedRecords?.map((item) => ({
+									...item,
+									id: item.name,
 								})) || []
 							}
 						>
 							<Flex direction="column" gap="xs" bg={"gray.1"} w={"100%"} p={"2xs"}>
-								{selectedColumns.map((item) => (
+								{selectedRecords?.map((item) => (
 									<ICAdvancedFilterColumnSortableItem
-										onRemove={() => handleRemoveFromNewColumns(item)}
-										key={item}
-										id={item}
-										name={props.allColumns.find((col) => col.name === item)?.displayName || item}
+										onRemove={() => handleRemoveFromNewColumns(item.name)}
+										key={item.name}
+										id={item.name}
+										name={item.displayName}
 									/>
 								))}
 							</Flex>
@@ -195,7 +195,6 @@ export default function ICAdvancedFilterColumnModal<T>(props: ICAdvancedFilterCo
 				<Flex h={"100%"} bg={"white"} align={"center"} gap="sm" justify="space-between" px={"sm"}>
 					<Button
 						onClick={() => {
-							setSelectedColumns(defaultColumns.map((item) => item.name));
 							setSelectedRecords(defaultColumns);
 							tableRef.current?.updateSelectedRows(defaultColumns as T[]);
 						}}
@@ -205,7 +204,7 @@ export default function ICAdvancedFilterColumnModal<T>(props: ICAdvancedFilterCo
 						Restored default columns
 					</Button>
 					<Flex gap={"xs"}>
-						<Button disabled={!selectedColumns.length} size="xs" onClick={onSave}>
+						<Button disabled={!selectedRecords?.length} size="xs" onClick={onSave}>
 							Save
 						</Button>
 						<Button size="xs" onClick={handleClose} variant="default">
