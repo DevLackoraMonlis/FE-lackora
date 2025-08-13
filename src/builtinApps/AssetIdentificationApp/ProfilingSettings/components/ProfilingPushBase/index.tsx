@@ -6,8 +6,8 @@ import type { ProfilingInventoryRules } from "../../index.enum";
 import { useProfiling, useProfilingEnabled } from "../../index.hooks";
 import type { ProfilingCardData } from "../../index.types";
 import ProfilingAccordionPushBase from "../ProfilingAccordionPushBase";
-import ProfilingMatchedAssetsModal from "../ProfilingMatchedAssets";
 import ProfilingPushBaseSkelton from "../ProfilingPushBaseSkelton";
+import PushBaseMatchedAssetsModal from "../PushBaseMatchedAssets";
 
 export default function ProfilingPushBase({ type }: { type: ProfilingInventoryRules }) {
 	const [openedAssets, handleOpenedAssets] = useDisclosure();
@@ -44,7 +44,7 @@ export default function ProfilingPushBase({ type }: { type: ProfilingInventoryRu
 
 	return (
 		<>
-			<ProfilingMatchedAssetsModal
+			<PushBaseMatchedAssetsModal
 				onClose={handleCloseProfiling}
 				opened={openedAssets}
 				inventoryRuleId={selectedId}

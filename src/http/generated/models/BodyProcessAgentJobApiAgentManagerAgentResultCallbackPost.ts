@@ -6,8 +6,8 @@
  * OpenAPI spec version: 1.0.0
  */
 import type { AgentManagerJobTypes } from './AgentManagerJobTypes';
-import type { BodyProcessAgentJobApiAgentManagerAgentResultCallbackPostResult } from './BodyProcessAgentJobApiAgentManagerAgentResultCallbackPostResult';
 import type { BodyProcessAgentJobApiAgentManagerAgentResultCallbackPostFile } from './BodyProcessAgentJobApiAgentManagerAgentResultCallbackPostFile';
+import type { BodyProcessAgentJobApiAgentManagerAgentResultCallbackPostResult } from './BodyProcessAgentJobApiAgentManagerAgentResultCallbackPostResult';
 
 export interface BodyProcessAgentJobApiAgentManagerAgentResultCallbackPost {
   udi: string;

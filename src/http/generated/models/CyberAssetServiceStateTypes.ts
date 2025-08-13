@@ -13,4 +13,5 @@ export type CyberAssetServiceStateTypes = typeof CyberAssetServiceStateTypes[key
 export const CyberAssetServiceStateTypes = {
   Running: 'Running',
   Stopped: 'Stopped',
+  Undefined: 'Undefined',
 } as const;

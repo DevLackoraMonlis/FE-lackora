@@ -50,7 +50,7 @@ export const getWebServices = (
       
       
       return orvalMutator<PaginatedBaseResponseEachWebServiceNoneType>(
-      {url: `/api/management-center/webservices/`, method: 'GET',
+      {url: "/api/management-center/webservices/", method: 'GET',
         params, signal
     },
       );
@@ -58,7 +58,7 @@ export const getWebServices = (
   
 
 const getGetWebServicesQueryKey = (params?: GetWebServicesParams,) => {
-    return [`/api/management-center/webservices/`, ...(params ? [params]: [])] as const;
+    return ["/api/management-center/webservices/", ...(params ? [params]: [])] as const;
     }
 
     
@@ -138,7 +138,7 @@ export const createWebService = (
       
       
       return orvalMutator<EachWebService>(
-      {url: `/api/management-center/webservices/`, method: 'POST',
+      {url: "/api/management-center/webservices/", method: 'POST',
       headers: {'Content-Type': 'application/json', },
       data: createWebServiceRequest, signal
     },

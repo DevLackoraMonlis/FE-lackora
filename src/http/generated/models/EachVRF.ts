@@ -6,8 +6,8 @@
  * OpenAPI spec version: 1.0.0
  */
 import type { EachVRFDescription } from './EachVRFDescription';
-import type { EachVRFUpdater } from './EachVRFUpdater';
 import type { EachVRFUpdatedTime } from './EachVRFUpdatedTime';
+import type { EachVRFUpdater } from './EachVRFUpdater';
 
 export interface EachVRF {
   id: string;

@@ -9,7 +9,6 @@ import BCDrawer from "@/shared/components/baseComponents/BCDrawer";
 import BCSearchInput from "@/shared/components/baseComponents/BCSearchInput";
 import BCTanStackGrid from "@/shared/components/baseComponents/BCTanStackGrid";
 import type { TanStackGridProps } from "@/shared/components/baseComponents/BCTanStackGrid/index.types";
-import { ASSETS_STATUS } from "@/shared/constants/assets";
 import { useTableSort } from "@/shared/hooks/useTableSort";
 
 import { toFormattedDate } from "@/shared/lib/dayJs";
@@ -23,7 +22,7 @@ type Props = {
 	type: ProfilingInventoryRules;
 };
 
-function ProfilingMatchedAssets({ inventoryRuleId }: Props) {
+function PushBaseMatchedAssets({ inventoryRuleId }: Props) {
 	const { height } = useViewportSize();
 	const { matchedAssets } = useInventoryRuleMatchedAssets(inventoryRuleId);
 	const results = matchedAssets.data?.results || [];
@@ -69,19 +68,18 @@ function ProfilingMatchedAssets({ inventoryRuleId }: Props) {
 			),
 		},
 		{
-			accessor: "status",
+			accessor: "activity",
 			title: (
 				<Flex justify="space-between" align="center">
-					<Text>Status</Text>
-					{generateSortIcons("status")}
+					<Text>Activity</Text>
+					{generateSortIcons("activity")}
 				</Flex>
 			),
-			render: ({ status }) => {
-				const { color } = ASSETS_STATUS[status as keyof typeof ASSETS_STATUS] || {};
+			render: ({ activity }) => {
 				return (
-					<Badge variant="dot" color={color}>
+					<Badge variant="light" color={activity ? "green" : "red"}>
 						<Highlight highlight={[search]} highlightStyles={{}} fz="xs">
-							{status}
+							{activity ? "Connected" : "Disconnected"}
 						</Highlight>
 					</Badge>
 				);
@@ -131,9 +129,6 @@ function ProfilingMatchedAssets({ inventoryRuleId }: Props) {
 						{`${total.toLocaleString()} assets matched with ${ruleName}`}
 					</Text>
 				</Flex>
-				<Text c="dimmed" fz="xs">
-					Condition: If source IP is in blackPull Base, then trigger Email Adapter using SMTP Connection.
-				</Text>
 				<Highlight c="dimmed" highlight={[lastMatched, `${scanId}`]} fz="xs">
 					{`Last matched: ${lastMatched} | Scan ID: #${scanId}`}
 				</Highlight>
@@ -166,10 +161,10 @@ function ProfilingMatchedAssets({ inventoryRuleId }: Props) {
 	);
 }
 
-export default function ProfilingMatchedAssetsModal({ onClose, opened, ...configs }: Props) {
+export default function PushBaseMatchedAssetsModal({ onClose, opened, ...configs }: Props) {
 	return (
 		<BCDrawer size="50%" onClose={onClose} opened={opened} title="Matched Assets">
-			<ProfilingMatchedAssets {...configs} {...{ onClose, opened }} />
+			<PushBaseMatchedAssets {...configs} {...{ onClose, opened }} />
 		</BCDrawer>
 	);
 }

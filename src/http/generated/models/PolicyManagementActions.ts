@@ -6,8 +6,8 @@
  * OpenAPI spec version: 1.0.0
  */
 import type { FieldGenerator } from './FieldGenerator';
-import type { PolicyManagementActionsUpdater } from './PolicyManagementActionsUpdater';
 import type { PolicyManagementActionsUpdatedTime } from './PolicyManagementActionsUpdatedTime';
+import type { PolicyManagementActionsUpdater } from './PolicyManagementActionsUpdater';
 
 export interface PolicyManagementActions {
   id: string;

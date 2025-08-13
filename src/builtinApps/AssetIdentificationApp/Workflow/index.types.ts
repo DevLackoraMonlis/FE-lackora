@@ -12,6 +12,7 @@ export type WorkflowDescription = {
 
 export type WorkflowStep = {
 	id: string;
+	phaseType: string;
 	type?: string | null;
 	status?: string | null; // WorkflowStatus;
 	title?: string | null;

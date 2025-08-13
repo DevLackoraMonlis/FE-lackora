@@ -57,7 +57,7 @@ export const createPolicy = (
       
       
       return orvalMutator<EachPolicyManagementPolicy>(
-      {url: `/api/policy-management/`, method: 'POST',
+      {url: "/api/policy-management/", method: 'POST',
       headers: {'Content-Type': 'application/json', },
       data: createPolicyRequest, signal
     },
@@ -121,14 +121,14 @@ export const getPolicyManagementColumns = (
       
       
       return orvalMutator<PolicyManagementFilterColumnsResponse>(
-      {url: `/api/policy-management/columns`, method: 'GET', signal
+      {url: "/api/policy-management/columns", method: 'GET', signal
     },
       );
     }
   
 
 const getGetPolicyManagementColumnsQueryKey = () => {
-    return [`/api/policy-management/columns`] as const;
+    return ["/api/policy-management/columns"] as const;
     }
 
     
@@ -208,14 +208,14 @@ export const getPolicyManagementActions = (
       
       
       return orvalMutator<PolicyManagementActionsResponse>(
-      {url: `/api/policy-management/actions`, method: 'GET', signal
+      {url: "/api/policy-management/actions", method: 'GET', signal
     },
       );
     }
   
 
 const getGetPolicyManagementActionsQueryKey = () => {
-    return [`/api/policy-management/actions`] as const;
+    return ["/api/policy-management/actions"] as const;
     }
 
     
@@ -295,7 +295,7 @@ export const getPolicies = (
       
       
       return orvalMutator<PaginatedBaseResponseEachPolicyManagementPolicyNoneType>(
-      {url: `/api/policy-management/policies`, method: 'GET',
+      {url: "/api/policy-management/policies", method: 'GET',
         params, signal
     },
       );
@@ -303,7 +303,7 @@ export const getPolicies = (
   
 
 const getGetPoliciesQueryKey = (params: GetPoliciesParams,) => {
-    return [`/api/policy-management/policies`, ...(params ? [params]: [])] as const;
+    return ["/api/policy-management/policies", ...(params ? [params]: [])] as const;
     }
 
     
@@ -383,7 +383,7 @@ export const orderPolicyPriority = (
       
       
       return orvalMutator<ReOrderPoliciesResponse>(
-      {url: `/api/policy-management/re-order`, method: 'POST',
+      {url: "/api/policy-management/re-order", method: 'POST',
       headers: {'Content-Type': 'application/json', },
       data: reOrderPoliciesRequest, signal
     },
@@ -447,7 +447,7 @@ export const validatePolicyCondition = (
       
       
       return orvalMutator<AssetManagementAdvancedFilterResponse>(
-      {url: `/api/policy-management/validate`, method: 'POST',
+      {url: "/api/policy-management/validate", method: 'POST',
       headers: {'Content-Type': 'application/json', },
       data: policyConditionValidationRequest, signal
     },

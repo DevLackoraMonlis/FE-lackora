@@ -6,9 +6,9 @@
  * OpenAPI spec version: 1.0.0
  */
 import type { CyberAssetNotificationsTypes } from './CyberAssetNotificationsTypes';
-import type { EachCyberAssetNotificationsResponseDescription } from './EachCyberAssetNotificationsResponseDescription';
 import type { EachCyberAssetNotificationsResponseCreatedTime } from './EachCyberAssetNotificationsResponseCreatedTime';
 import type { EachCyberAssetNotificationsResponseCreator } from './EachCyberAssetNotificationsResponseCreator';
+import type { EachCyberAssetNotificationsResponseDescription } from './EachCyberAssetNotificationsResponseDescription';
 
 export interface EachCyberAssetNotificationsResponse {
   type: CyberAssetNotificationsTypes;

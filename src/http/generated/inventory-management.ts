@@ -52,14 +52,14 @@ export const testInventoryBulkInsertApiInventoryManagementBulkInsertTestGet = (
       
       
       return orvalMutator<unknown>(
-      {url: `/api/inventory-management/bulk-insert-test`, method: 'GET', signal
+      {url: "/api/inventory-management/bulk-insert-test", method: 'GET', signal
     },
       );
     }
   
 
 const getTestInventoryBulkInsertApiInventoryManagementBulkInsertTestGetQueryKey = () => {
-    return [`/api/inventory-management/bulk-insert-test`] as const;
+    return ["/api/inventory-management/bulk-insert-test"] as const;
     }
 
     
@@ -139,7 +139,7 @@ export const getInventoryOverview = (
       
       
       return orvalMutator<EachInventoryOverview[]>(
-      {url: `/api/inventory-management/overview`, method: 'GET',
+      {url: "/api/inventory-management/overview", method: 'GET',
         params, signal
     },
       );
@@ -147,7 +147,7 @@ export const getInventoryOverview = (
   
 
 const getGetInventoryOverviewQueryKey = (params: GetInventoryOverviewParams,) => {
-    return [`/api/inventory-management/overview`, ...(params ? [params]: [])] as const;
+    return ["/api/inventory-management/overview", ...(params ? [params]: [])] as const;
     }
 
     
@@ -227,14 +227,14 @@ export const getInventoryTypes = (
       
       
       return orvalMutator<EachInventoryCategoryResponse[]>(
-      {url: `/api/inventory-management/available-types`, method: 'GET', signal
+      {url: "/api/inventory-management/available-types", method: 'GET', signal
     },
       );
     }
   
 
 const getGetInventoryTypesQueryKey = () => {
-    return [`/api/inventory-management/available-types`] as const;
+    return ["/api/inventory-management/available-types"] as const;
     }
 
     
