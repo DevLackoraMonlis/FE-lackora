@@ -6,8 +6,8 @@
  * OpenAPI spec version: 1.0.0
  */
 import type { EachZoneDescription } from './EachZoneDescription';
-import type { EachZoneUpdater } from './EachZoneUpdater';
 import type { EachZoneUpdatedTime } from './EachZoneUpdatedTime';
+import type { EachZoneUpdater } from './EachZoneUpdater';
 
 export interface EachZone {
   id: string;

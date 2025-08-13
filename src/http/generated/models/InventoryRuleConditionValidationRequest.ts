@@ -6,8 +6,8 @@
  * OpenAPI spec version: 1.0.0
  */
 import type { InventoryRuleConditionValidationRequestConditions } from './InventoryRuleConditionValidationRequestConditions';
-import type { InventoryRuleConditionValidationRequestPage } from './InventoryRuleConditionValidationRequestPage';
 import type { InventoryRuleConditionValidationRequestLimit } from './InventoryRuleConditionValidationRequestLimit';
+import type { InventoryRuleConditionValidationRequestPage } from './InventoryRuleConditionValidationRequestPage';
 
 export interface InventoryRuleConditionValidationRequest {
   conditions?: InventoryRuleConditionValidationRequestConditions;

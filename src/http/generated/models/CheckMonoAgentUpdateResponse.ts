@@ -7,8 +7,8 @@
  */
 import type { CheckMonoAgentUpdateResponseAgentHash } from './CheckMonoAgentUpdateResponseAgentHash';
 import type { CheckMonoAgentUpdateResponseAgentLink } from './CheckMonoAgentUpdateResponseAgentLink';
-import type { CheckMonoAgentUpdateResponseUpdaterLink } from './CheckMonoAgentUpdateResponseUpdaterLink';
 import type { CheckMonoAgentUpdateResponseExpire } from './CheckMonoAgentUpdateResponseExpire';
+import type { CheckMonoAgentUpdateResponseUpdaterLink } from './CheckMonoAgentUpdateResponseUpdaterLink';
 
 export interface CheckMonoAgentUpdateResponse {
   status: boolean;

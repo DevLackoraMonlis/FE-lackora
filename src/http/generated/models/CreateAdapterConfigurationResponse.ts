@@ -7,8 +7,8 @@
  */
 import type { CreateAdapterConfigurationResponseConfig } from './CreateAdapterConfigurationResponseConfig';
 import type { CreateAdapterConfigurationResponseIsActive } from './CreateAdapterConfigurationResponseIsActive';
-import type { CreateAdapterConfigurationResponseUpdater } from './CreateAdapterConfigurationResponseUpdater';
 import type { CreateAdapterConfigurationResponseUpdatedTime } from './CreateAdapterConfigurationResponseUpdatedTime';
+import type { CreateAdapterConfigurationResponseUpdater } from './CreateAdapterConfigurationResponseUpdater';
 
 export interface CreateAdapterConfigurationResponse {
   id: string;

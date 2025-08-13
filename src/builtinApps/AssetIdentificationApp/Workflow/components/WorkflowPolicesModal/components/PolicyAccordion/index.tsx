@@ -4,6 +4,7 @@ import {
 	Button,
 	Flex,
 	Grid,
+	Highlight,
 	LoadingOverlay,
 	Menu,
 	ScrollArea,
@@ -157,8 +158,8 @@ export default function PolicyAccordion({ id, ...props }: Props) {
 								</Grid.Col>
 								<Grid.Col span={7}>
 									{value === "conditions" ? (
-										<ScrollArea w={390} scrollbarSize={2} scrollbars={"x"}>
-											<Flex gap={"xs"} align={"center"}>
+										<ScrollArea w={600} scrollbarSize={2} scrollbars={"x"}>
+											<Flex gap={"2xs"} align={"start"}>
 												{props[value]?.map((condition, index) => (
 													<ICAdvancedFilterConditionItemReadonly
 														showNextOperator={props[value]?.length - 1 !== index}
@@ -166,6 +167,9 @@ export default function PolicyAccordion({ id, ...props }: Props) {
 														key={condition.id}
 													/>
 												))}
+												<Highlight highlight={["Then"]} fz="xs">
+													{`${props.displayAction}`}
+												</Highlight>
 											</Flex>
 										</ScrollArea>
 									) : (

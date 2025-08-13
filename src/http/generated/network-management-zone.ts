@@ -49,7 +49,7 @@ export const getZones = (
       
       
       return orvalMutator<PaginatedBaseResponseEachZoneEachListMetadataWrapper>(
-      {url: `/api/network-management/zone/`, method: 'GET',
+      {url: "/api/network-management/zone/", method: 'GET',
         params, signal
     },
       );
@@ -57,7 +57,7 @@ export const getZones = (
   
 
 const getGetZonesQueryKey = (params?: GetZonesParams,) => {
-    return [`/api/network-management/zone/`, ...(params ? [params]: [])] as const;
+    return ["/api/network-management/zone/", ...(params ? [params]: [])] as const;
     }
 
     
@@ -137,7 +137,7 @@ export const createZone = (
       
       
       return orvalMutator<EachZone>(
-      {url: `/api/network-management/zone/`, method: 'POST',
+      {url: "/api/network-management/zone/", method: 'POST',
       headers: {'Content-Type': 'application/json', },
       data: createZone, signal
     },

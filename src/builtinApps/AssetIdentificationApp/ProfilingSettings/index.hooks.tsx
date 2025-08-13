@@ -15,6 +15,7 @@ import {
 	useUpdateInventoryRule,
 	useValidateInventoryRuleCondition,
 } from "@/http/generated/inventory-rules";
+import { IC_ADVANCED_FILTER_CONDITION_EMPTY_OPERATORS } from "@/shared/components/infraComponents/ICAdvancedFilter/index.constants";
 import { convertICAdvancedFilterResponseColumns } from "@/shared/components/infraComponents/ICAdvancedFilter/index.helper";
 
 import { toFormattedDate } from "@/shared/lib/dayJs";
@@ -37,15 +38,23 @@ export function useProfiling(type: ProfilingInventoryRules) {
 						isActive: !!item.enabled,
 						description: `Created at ${toFormattedDate(item.created_time, "YYYY-MM-DD")} by ${item.creator}`,
 						datasource: datasource as ProfilingCardData["datasource"],
-						conditions: (conditions as unknown as Record<string, unknown>[]).map((condition) => ({
-							id: v4(),
-							closeBracket: condition.close_bracket,
-							columnName: condition.column_name,
-							nextOperator: condition.next_operator,
-							openBracket: condition.open_bracket,
-							operator: condition.operator,
-							values: condition.values,
-						})) as ProfilingCardData["conditions"],
+						conditions: (conditions as unknown as Record<string, unknown>[]).map((condition) => {
+							const record = {
+								id: v4(),
+								closeBracket: condition.close_bracket,
+								columnName: condition.column_name,
+								nextOperator: condition.next_operator,
+								openBracket: condition.open_bracket,
+								operator: condition.operator,
+								values: condition.values,
+								disabled: false,
+							};
+							if (IC_ADVANCED_FILTER_CONDITION_EMPTY_OPERATORS.includes(condition.operator as string)) {
+								record.disabled = true;
+								record.values = [];
+							}
+							return record;
+						}) as ProfilingCardData["conditions"],
 					}));
 					return { ...response?.data, results };
 				},
@@ -165,6 +174,7 @@ export function useInventoryRuleMatchedAssets(adapterId: string) {
 							ipAddress: record?.["Primary IP"],
 							macAddress: record?.["MAC Address"],
 							inventoryTime: record?.["Time of Inventory"],
+							activity: !!record.State,
 							status: record?.Status,
 						};
 					}) || [];

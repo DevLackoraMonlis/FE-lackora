@@ -5,7 +5,7 @@ import { useDisclosure, useViewportSize } from "@mantine/hooks";
 import { IconBolt, IconLineScan } from "@tabler/icons-react";
 import { Fragment, useMemo, useState } from "react";
 
-import { DISCOVERY_SETTINGS_REDIRECT_PATH, WORKFLOW_REFETCH_INTERVAL } from "./index.constants";
+import { PATH_TYPES, WORKFLOW_REFETCH_INTERVAL } from "./index.constants";
 import {
 	calculateNextScheduledScan,
 	calculateScheduledScanDate,
@@ -35,8 +35,14 @@ export default function WorkflowAssetsIdentification() {
 	const workflowStatus = getWorkflowStatus(workflows.data?.status);
 
 	const [selectedStepIdOrName, setSelectedStepIdOrName] = useState<string>("");
-	const handleGatewayConfiguration = () => {
-		onOpenApp(DISCOVERY_SETTINGS_REDIRECT_PATH);
+	const handleGatewayConfiguration = (type: string) => {
+		let targetPath = "";
+		Object.entries(PATH_TYPES).forEach(([key, value]) => {
+			if (type.includes(key)) {
+				targetPath = value;
+			}
+		});
+		onOpenApp(targetPath);
 	};
 	const handleViewMatchedAssets = (id: string) => {
 		setSelectedStepIdOrName(id);
@@ -219,6 +225,7 @@ export default function WorkflowAssetsIdentification() {
 												return {
 													id: step.id || "",
 													type: step.name,
+													phaseType: phase.name,
 													progressStatus: step.progress_status,
 													title: step.display_name,
 													status: step.status,
