@@ -22,6 +22,7 @@ dev_test_pipeline:
   variables:
     PLAYWRIGHT_BROWSERS_PATH: .playwright-browsers
     BASE_URL: "http://172.31.100.57:8080"
+    IMAGE_BASE_URL: "https://172:31:100:57:9000"
     IMAGE_BASE_URL_OBJ: "https://objsrv-dev.houshafzar.ir:9000"
     NEXTAUTH_URL: "http://172.31.100.57:4000"
     HOST_URL: "http://172.31.100.57:4000"
@@ -80,6 +81,7 @@ dev_pipeline:
     BASE_URL: "http://172.31.100.57:8080"
     NEXTAUTH_URL: "http://172.31.100.57:3000"
     HOST_URL: "http://172.31.100.57:3000"
+    IMAGE_BASE_URL: "https://172:31:100:57:9000"
     IMAGE_BASE_URL_OBJ: "https://objsrv-dev.houshafzar.ir:9000"
     NODE_TLS_REJECT_UNAUTHORIZED: "0"
     X_NONCE_AUTHENTICATE: "Ewi5To8Pf2rbIINNFp9i9g"
@@ -124,6 +126,8 @@ uat_pipeline:
     BASE_URL: "http://172.31.100.58:8080"
     NEXTAUTH_URL: "http://172.31.100.58:3000"
     HOST_URL: "http://172.31.100.58:3000"
+    IMAGE_BASE_URL: "https://172:31:100:57:9000"
+    IMAGE_BASE_URL_OBJ: "https://objsrv-dev.houshafzar.ir:9000"
     NODE_TLS_REJECT_UNAUTHORIZED: "0"
     X_NONCE_AUTHENTICATE: "Ewi5To8Pf2rbIINNFp9i9g"
     CSRF_SECRET: "50FaWgdOhi9M9wyna8taR1k3ODOR8d6u"
@@ -167,6 +171,8 @@ prod_pipeline:
     NEXTAUTH_URL: "http://172.31.100.58:3000"
     HOST_URL: "http://172.31.100.58:3000"
     NODE_TLS_REJECT_UNAUTHORIZED: "0"
+    IMAGE_BASE_URL: "https://172:31:100:57:9000"
+    IMAGE_BASE_URL_OBJ: "https://objsrv-dev.houshafzar.ir:9000"
     X_NONCE_AUTHENTICATE: "Ewi5To8Pf2rbIINNFp9i9g"
     CSRF_SECRET: "50FaWgdOhi9M9wyna8taR1k3ODOR8d6u"
     PORT: "3000"
