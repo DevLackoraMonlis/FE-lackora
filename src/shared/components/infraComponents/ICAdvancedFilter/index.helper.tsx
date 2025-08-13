@@ -207,7 +207,10 @@ export function getDefaultICAdvancedStore(params: {
 						const groupBy = { ...state.variables.groupBy };
 						groupBy.order = order;
 						return {
-							groupBy,
+							variables: {
+								...variables,
+								groupBy,
+							},
 						};
 					}
 				}
