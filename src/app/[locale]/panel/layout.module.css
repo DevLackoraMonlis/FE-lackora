@@ -1,6 +1,6 @@
 .layoutBody {
 	height: calc(100% - 48px);
-	background-color: var(--mantine-color-main-6);
+	background-color: var(--mantine-color-primary-6);
 	overflow: hidden;
 }
 

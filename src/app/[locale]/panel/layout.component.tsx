@@ -40,7 +40,7 @@ export default function PanelLayout(
 						paddingRight: "14px",
 						paddingBottom: "4px",
 						paddingLeft: "14px",
-						backgroundColor: "var(--mantine-color-main-6)",
+						backgroundColor: "var(--mantine-color-primary-6)",
 					}}
 					applicationLogo={null}
 					onLogout={() => signOut({ redirect: true, callbackUrl: AppRoutes.login })}

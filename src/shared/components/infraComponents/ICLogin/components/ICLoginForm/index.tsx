@@ -110,7 +110,6 @@ export default function ICLoginForm() {
 									<Button
 										data-testid="login-submit-button"
 										size={"lg"}
-										color={"main"}
 										disabled={!form.isValid()}
 										type={"submit"}
 										loading={isLoading}
