@@ -13,7 +13,7 @@ const CyberAssetDetailGeneralInfoCard = (props: CyberAssetDetailGeneralInfoCardP
 			<Card.Section withBorder h={32}>
 				<Flex align={"center"} gap={"xs"} h={"100%"} pl={"xs"}>
 					{props.icon}
-					<Text fw={"bold"} c={"blue"}>
+					<Text fw={"bold"} c={"primary.6"}>
 						{props.title}
 					</Text>
 				</Flex>

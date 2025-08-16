@@ -8,17 +8,10 @@ import { Flex, Text } from "@mantine/core";
 export const IC_ADVANCED_FILTER_DEFAULT_OPERATORS = {
 	"=": "equal",
 	"!=": "not_equal",
-
 	"Is Null": "is_null",
 	In: "in",
 	"Not In": "not_in",
 	"Is Not Null": "is_not_null",
-	"Field Equal": "field_equal",
-	"Field Not Equal": "field_not_equal",
-	"Field Greater Than": "field_greater_than",
-	"Field Less Than": "field_less_than",
-	"Field Greater Than Or Equal": "field_greater_than_or_equal",
-	"Field Less Than Or Equal": "field_less_than_or_equal",
 } as const;
 
 export const IC_ADVANCED_FILTER_STRING_OPERATORS = {
@@ -30,8 +23,6 @@ export const IC_ADVANCED_FILTER_STRING_OPERATORS = {
 	"Ends With": "end_with",
 	"Not Ends With": "not_end_with",
 	Regex: "regex",
-	"Field Like": "field_like",
-	"Field Not Like": "field_not_like",
 } as const;
 
 export const IC_ADVANCED_FILTER_INT64_OPERATORS = {
@@ -100,17 +91,6 @@ export const IC_ADVANCED_FILTER_CONDITION_MULTIPLE_VALUE_TYPES: ICAdvancedFilter
 export const IC_ADVANCED_FILTER_CONDITION_EMPTY_OPERATORS: string[] = [
 	IC_ADVANCED_FILTER_DEFAULT_OPERATORS["Is Null"],
 	IC_ADVANCED_FILTER_DEFAULT_OPERATORS["Is Not Null"],
-];
-
-export const IC_ADVANCED_FILTER_CONDITION_COLUMN_OPERATORS: string[] = [
-	IC_ADVANCED_FILTER_DEFAULT_OPERATORS["Field Equal"],
-	IC_ADVANCED_FILTER_DEFAULT_OPERATORS["Field Not Equal"],
-	IC_ADVANCED_FILTER_DEFAULT_OPERATORS["Field Greater Than"],
-	IC_ADVANCED_FILTER_DEFAULT_OPERATORS["Field Greater Than Or Equal"],
-	IC_ADVANCED_FILTER_DEFAULT_OPERATORS["Field Less Than"],
-	IC_ADVANCED_FILTER_DEFAULT_OPERATORS["Field Less Than Or Equal"],
-	IC_ADVANCED_FILTER_STRING_OPERATORS["Field Like"],
-	IC_ADVANCED_FILTER_STRING_OPERATORS["Field Not Like"],
 ];
 
 export const IC_ADVANCED_FILTER_CONDITION_BUILDER_DEFAULT_WIDTH = 285;

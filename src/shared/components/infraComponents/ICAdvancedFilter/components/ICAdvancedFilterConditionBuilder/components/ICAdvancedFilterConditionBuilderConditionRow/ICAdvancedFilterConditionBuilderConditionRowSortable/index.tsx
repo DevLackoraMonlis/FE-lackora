@@ -1,7 +1,5 @@
 import ICAdvancedFilterMotionElement from "@/shared/components/infraComponents/ICAdvancedFilter/components/ICAdvancedFilterMotionElement";
 import {
-	IC_ADVANCED_FILTER_CONDITION_BUILDER_DEFAULT_WIDTH,
-	IC_ADVANCED_FILTER_CONDITION_COLUMN_OPERATORS,
 	IC_ADVANCED_FILTER_CONDITION_EMPTY_OPERATORS,
 	IC_ADVANCED_FILTER_OPERATORS_MAP,
 } from "@/shared/components/infraComponents/ICAdvancedFilter/index.constants";
@@ -80,30 +78,7 @@ export default function ICAdvancedFilterConditionBuilderConditionRowSortable(
 				/>
 			</ICAdvancedFilterMotionElement>
 			<ICAdvancedFilterMotionElement showConditionalElement={!!props.inputValue}>
-				{IC_ADVANCED_FILTER_CONDITION_COLUMN_OPERATORS.includes(props.condition.operator as string) ? (
-					<Select
-						error={!props.condition.values?.[0]?.value}
-						miw={IC_ADVANCED_FILTER_CONDITION_BUILDER_DEFAULT_WIDTH}
-						w={IC_ADVANCED_FILTER_CONDITION_BUILDER_DEFAULT_WIDTH}
-						key={`condition-row-value-${props.condition.id}`}
-						value={(props.condition.values?.[0]?.value as string) || ""}
-						onChange={(value) => {
-							props.onChange({
-								...props.condition,
-								values: [{ label: `${value}`, value }],
-								error: false,
-								disabled: false,
-							});
-						}}
-						required
-						size={"sm"}
-						label={props.index === 0 && "Value"}
-						allowDeselect={false}
-						data={props.columns}
-					/>
-				) : (
-					props.inputValue
-				)}
+				{props.inputValue}
 			</ICAdvancedFilterMotionElement>
 		</Flex>
 	);

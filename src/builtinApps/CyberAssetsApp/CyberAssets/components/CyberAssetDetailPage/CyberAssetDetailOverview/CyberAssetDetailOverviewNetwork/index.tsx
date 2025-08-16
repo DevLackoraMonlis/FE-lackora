@@ -15,7 +15,7 @@ export default function CyberAssetDetailOverviewNetwork(props: Props) {
 				<Text fw={"bolder"} fz={"xl"}>
 					{props.network?.ip || ""}
 				</Text>
-				<Badge color={"blue"} variant={"light"}>{`${props.network?.type || ""} IP`}</Badge>
+				<Badge color={"primary.6"} variant={"light"}>{`${props.network?.type || ""} IP`}</Badge>
 			</Flex>
 			<Flex gap={"2xs"} align={"center"}>
 				<Text c={"gray.6"}>Open Ports:</Text>
