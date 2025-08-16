@@ -48,7 +48,7 @@ function includeExcludeAction(
 
 	if (findColumn?.type === "List") {
 		condition.values = (value as ICAdvancedFilterListColumn[]).map((item) => ({
-			label: v4(),
+			label: item.value,
 			value: item.value,
 		}));
 	} else {
