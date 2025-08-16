@@ -179,7 +179,7 @@ export default function ICAdvancedFilterGrid<T extends Record<string, unknown>>(
 										value: "",
 									},
 									page: 1,
-									limit: 35,
+									limit: 50,
 									columns: uniqBy(
 										[...store.variables.columns, ...props.allColumns.filter((item) => item.isDefault)],
 										(item) => item.name,
@@ -404,7 +404,7 @@ export default function ICAdvancedFilterGrid<T extends Record<string, unknown>>(
 				store.setLimit(limit);
 				props.run();
 			}}
-			recordsPerPageOptions={props.recordsPerPageOptions || [35, 100, 200]}
+			recordsPerPageOptions={props.recordsPerPageOptions || [50, 100, 200]}
 		/>
 	);
 }

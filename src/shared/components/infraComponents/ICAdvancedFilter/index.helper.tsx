@@ -20,7 +20,7 @@ const defaultAdvancedVariables: ICAdvancedFilterRq = {
 		columnName: "",
 		value: "",
 	},
-	limit: 35,
+	limit: 50,
 	page: 1,
 	columns: [],
 	conditions: [],
