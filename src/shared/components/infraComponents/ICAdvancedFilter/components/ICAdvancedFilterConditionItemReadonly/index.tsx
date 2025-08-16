@@ -20,7 +20,7 @@ export default function ICAdvancedFilterConditionItemReadonly(props: Props) {
 			)}
 
 			{props.showNextOperator && props.condition.columnName && (
-				<Text fz={"xs"} fw={"bold"} tt={"capitalize"}>
+				<Text fz={"xs"} fw={"bold"} tt={"uppercase"}>
 					{props.condition.nextOperator}
 				</Text>
 			)}

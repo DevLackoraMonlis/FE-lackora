@@ -48,13 +48,13 @@ export default function ICAdvancedFilterConditionBuilderConditionRowSortable(
 			</Flex>
 			<ICAdvancedFilterMotionElement showConditionalElement={!!props.condition.columnName}>
 				<Select
-					w={220}
+					w={100}
 					error={!props.condition.operator}
 					key={`condition-row-operator-${props.condition.id}`}
 					value={props.condition.operator}
 					required
 					size={"sm"}
-					miw={220}
+					miw={100}
 					onChange={(value) => {
 						const isEmptyOperator = value && IC_ADVANCED_FILTER_CONDITION_EMPTY_OPERATORS.includes(value);
 

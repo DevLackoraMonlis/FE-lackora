@@ -49,7 +49,7 @@ export default function ICAdvancedFilterConditionBuilderConditionRow(
 						<ICAdvancedFilterConditionBuilderConditionRowSortable listener={listeners} {...props} />
 					</ScrollArea>
 				</Grid.Col>
-				<Grid.Col span={1} p={0} pl={"xs"}>
+				<Grid.Col span={1} p={0} ml={"xs"}>
 					<BracketButtons
 						bracketError={props.condition.bracketError}
 						error={

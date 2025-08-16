@@ -77,7 +77,6 @@ export const BracketButtons = (
 								w={"100%"}
 								align={"center"}
 								justify={props.type === "OpenBracket" ? "flex-end" : "flex-start"}
-								gap={"2xs"}
 							>
 								{Array.from({
 									length:
@@ -88,7 +87,7 @@ export const BracketButtons = (
 										justify={"center"}
 										bg={"gray.2"}
 										key={`${props.type}-p-${index}`}
-										w={12}
+										w={9}
 										h={24}
 									>
 										{props.type === "OpenBracket" ? "(" : ")"}

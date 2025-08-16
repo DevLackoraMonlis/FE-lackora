@@ -118,11 +118,6 @@ export default function ICAdvancedFilterConditionModal<T>(props: Props<T>) {
 				</Box>
 				{!!conditions.length && (
 					<Flex bg={"white"} align={"center"} mb={50} gap={"xs"}>
-						{conditions.length && (
-							<Text fz={"xs"} fw={"bolder"}>
-								IF
-							</Text>
-						)}
 						{conditions.map((condition, index) => (
 							<ICAdvancedFilterConditionItemReadonly
 								showNextOperator={conditions.length - 1 !== index}
