@@ -7,7 +7,7 @@ import type {
 	ICAdvancedFilterProps,
 } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
 import { EmptyData } from "@/shared/icons/components/general";
-import { Box, Button, Flex, Text } from "@mantine/core";
+import { Box, Button, Flex, ScrollArea, Text } from "@mantine/core";
 import { useViewportSize } from "@mantine/hooks";
 import { IconPlus } from "@tabler/icons-react";
 import { omit } from "lodash";
@@ -116,17 +116,19 @@ export default function ICAdvancedFilterConditionModal<T>(props: Props<T>) {
 						</Flex>
 					)}
 				</Box>
-				{!!conditions.length && (
-					<Flex bg={"white"} align={"center"} mb={50} gap={"xs"}>
-						{conditions.map((condition, index) => (
-							<ICAdvancedFilterConditionItemReadonly
-								showNextOperator={conditions.length - 1 !== index}
-								condition={condition}
-								key={condition.id}
-							/>
-						))}
-					</Flex>
-				)}
+				<ScrollArea scrollbars={"x"} scrollbarSize={2} w={"100%"}>
+					{!!conditions.length && (
+						<Flex bg={"white"} align={"center"} mb={50} gap={"xs"}>
+							{conditions.map((condition, index) => (
+								<ICAdvancedFilterConditionItemReadonly
+									showNextOperator={conditions.length - 1 !== index}
+									condition={condition}
+									key={condition.id}
+								/>
+							))}
+						</Flex>
+					)}
+				</ScrollArea>
 			</Flex>
 
 			<BCModal.EmptyFooter>
