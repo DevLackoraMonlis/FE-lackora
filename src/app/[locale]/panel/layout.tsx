@@ -11,12 +11,12 @@ export default async function Layout(props: PropsWithChildren) {
 	const session = await getServerSession(sessionOptions);
 	const sessionUser = session?.user as SessionUserType;
 
-	const accessToken = sessionUser?.data?.access_token;
-	const refreshToken = sessionUser?.data?.refresh_token;
+	// const accessToken = sessionUser?.data?.access_token;
+	// const refreshToken = sessionUser?.data?.refresh_token;
 
-	if (!accessToken || !refreshToken) {
-		redirect(AppRoutes.signout);
-	}
+	// if (!accessToken || !refreshToken) {
+	// 	redirect(AppRoutes.signout);
+	// }
 
 	// let xNonce: string | undefined;
 	// let activeApps: ActiveApplicationsResponse | undefined;
