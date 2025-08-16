@@ -1,4 +1,3 @@
-import type { SessionUserType } from "@/http/httpService";
 import ICLoginLocked from "@/shared/components/infraComponents/ICLogin/components/ICLoginForm/ICLoginLocked";
 import { AllApplications, AppRoutes } from "@/shared/constants/routes";
 import { validateInput } from "@/shared/lib/utils";
@@ -6,9 +5,9 @@ import envStore from "@/shared/stores/envStore";
 import { Alert, Button, Card, Checkbox, Flex, PasswordInput, Text, TextInput, Title } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { IconAlertOctagon, IconLock, IconUserCircle } from "@tabler/icons-react";
-import { signIn, useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 type FormValues = {
 	username: string;
@@ -18,8 +17,8 @@ type FormValues = {
 type AuthErrorType = "credentials" | "locked";
 
 export default function ICLoginForm() {
-	const { data } = useSession();
-	const sessionUser = data?.user as SessionUserType;
+	// const { data } = useSession();
+	// const sessionUser = data?.user as SessionUserType;
 	const [isLoading, setIsLoading] = useState(false);
 	const [error, setError] = useState<AuthErrorType | undefined>(undefined);
 	const router = useRouter();
@@ -67,16 +66,16 @@ export default function ICLoginForm() {
 		}
 	};
 
-	useEffect(() => {
-		if (sessionUser) {
-			router.push(
-				AppRoutes.appModulePage(
-					AllApplications.CYBER_ASSETS.name,
-					AllApplications.CYBER_ASSETS.modules.CYBER_ASSETS,
-				),
-			);
-		}
-	}, [sessionUser, router.push]);
+	// useEffect(() => {
+	// 	if (sessionUser) {
+	// 		router.push(
+	// 			AppRoutes.appModulePage(
+	// 				AllApplications.CYBER_ASSETS.name,
+	// 				AllApplications.CYBER_ASSETS.modules.CYBER_ASSETS,
+	// 			),
+	// 		);
+	// 	}
+	// }, [sessionUser, router.push]);
 
 	return (
 		<Flex w={"100%"} h={"100%"} justify={"center"} align={"center"}>
