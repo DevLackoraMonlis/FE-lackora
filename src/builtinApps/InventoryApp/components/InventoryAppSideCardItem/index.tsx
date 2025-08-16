@@ -2,10 +2,17 @@ import type { InventoryAppSideCardProps } from "@/builtinApps/InventoryApp/index
 import { Button, Card, Flex, Skeleton, Text } from "@mantine/core";
 import { IconArrowRight } from "@tabler/icons-react";
 import { v4 } from "uuid";
+import classes from "./index.module.css";
 
 export default function InventoryAppSideCardItem(props: InventoryAppSideCardProps) {
 	return (
-		<Card w={"100%"} withBorder bd={props.isSelected ? "1px solid primary.6" : undefined}>
+		<Card
+			className={classes.cursor}
+			onClick={props.onRedirect}
+			w={"100%"}
+			withBorder
+			bd={props.isSelected ? "1px solid primary.6" : undefined}
+		>
 			<Card.Section withBorder h={32}>
 				<Flex align={"center"} justify={"space-between"} gap={"xs"} h={"100%"} px={"xs"}>
 					<Flex align={"center"} gap={"xs"} h={"100%"}>
