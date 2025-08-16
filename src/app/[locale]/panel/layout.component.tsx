@@ -8,8 +8,7 @@ import { Box, Flex, useMantineTheme } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { IconBell } from "@tabler/icons-react";
 import { signOut } from "next-auth/react";
-import { redirect } from "next/navigation";
-import { type PropsWithChildren, useEffect } from "react";
+import type { PropsWithChildren } from "react";
 import classes from "./layout.module.css";
 
 export default function PanelLayout(
@@ -21,11 +20,11 @@ export default function PanelLayout(
 	const { white } = useMantineTheme();
 	const [opened, handlers] = useDisclosure(false);
 
-	useEffect(() => {
-		if (props.status === "unauthenticated") {
-			redirect(AppRoutes.login);
-		}
-	}, [props.status]);
+	// useEffect(() => {
+	// 	if (props.status === "unauthenticated") {
+	// 		redirect(AppRoutes.login);
+	// 	}
+	// }, [props.status]);
 
 	return (
 		<Box h="100%">

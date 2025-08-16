@@ -1,10 +1,8 @@
 import PanelLayout from "@/app/[locale]/panel/layout.component";
 import type { SessionUserType } from "@/http/httpService";
-import { AppRoutes } from "@/shared/constants/routes";
 import { sessionOptions } from "@/shared/lib/sessionOptions";
 import type { AxiosError } from "axios";
 import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
 import type { PropsWithChildren } from "react";
 
 export default async function Layout(props: PropsWithChildren) {
@@ -63,11 +61,12 @@ export default async function Layout(props: PropsWithChildren) {
 				// activeApps = activeAppsRes.data;
 				console.info("get active-apps with new token successfully");
 			} catch {
-				redirect(AppRoutes.signout);
+				// redirect(AppRoutes.signout);
+				console.info("get active-apps with new token successfully");
 			}
 		} else {
 			console.error("Unhandled server error while getting active apps:", error);
-			redirect(AppRoutes.signout);
+			// redirect(AppRoutes.signout);
 		}
 	}
 
