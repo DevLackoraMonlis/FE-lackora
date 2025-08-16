@@ -83,15 +83,12 @@ export default function ICAdvancedFilterConditionSectionItems<T>(props: Props<T>
 			)}
 			{store.variables.groupBy && (
 				<Flex align={"center"}>
-					{store.variables.columns.map((column) => (
-						<ICAdvancedFilterConditionGroupByItem<T>
-							run={props.run}
-							allColumns={props.allColumns}
-							key={column.name}
-							store={props.store}
-							columnName={column.name}
-						/>
-					))}
+					<ICAdvancedFilterConditionGroupByItem<T>
+						run={props.run}
+						allColumns={props.allColumns}
+						store={props.store}
+						columnNames={store.variables.columns.map((column) => column.name) || []}
+					/>
 					<DeleteButtons
 						onDelete={() => {
 							store.setGroupBy(undefined);

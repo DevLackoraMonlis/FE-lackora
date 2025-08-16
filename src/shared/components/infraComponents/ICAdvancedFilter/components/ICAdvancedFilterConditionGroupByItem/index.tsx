@@ -5,7 +5,7 @@ import { useStore } from "zustand/index";
 import { useShallow } from "zustand/react/shallow";
 
 type Props<T> = {
-	columnName: string;
+	columnNames: string[];
 	store: ICAdvancedFilterProps<T>["store"];
 	run: ICAdvancedFilterProps<T>["run"];
 	allColumns: ICAdvancedFilterProps<T>["allColumns"];
@@ -22,35 +22,39 @@ export default function ICAdvancedFilterConditionGroupByItem<T>(props: Props<T>)
 	);
 
 	return (
-		<Flex align={"center"} gap={"xs"} wrap={"nowrap"}>
+		<Flex align={"center"} gap={"xs"} wrap={"wrap"} p={"xs"}>
 			<Text fz={"xs"}>{store.variables.groupBy?.function}</Text>
-			<Badge
-				rightSection={
-					<ActionIcon
-						variant={"transparent"}
-						onClick={() => {
-							const filteredColumns = store.variables.columns.filter(
-								(column) => column.name !== props.columnName,
-							);
-							if (!filteredColumns.length) {
-								store.setColumns(props.allColumns.filter((column) => column.isDefault));
-								store.setGroupBy(undefined);
-							} else {
-								store.setColumns(filteredColumns);
-							}
-							props.run();
-						}}
-					>
-						<IconX size={12} />
-					</ActionIcon>
-				}
-				size={"sm"}
-				radius={"xl"}
-				variant={"light"}
-				color={"gray"}
-			>
-				{props.columnName}
-			</Badge>
+			{props.columnNames.map((columnName) => (
+				<Badge
+					w={"fit-content"}
+					key={columnName}
+					rightSection={
+						<ActionIcon
+							variant={"transparent"}
+							onClick={() => {
+								const filteredColumns = store.variables.columns.filter(
+									(column) => column.name !== columnName,
+								);
+								if (!filteredColumns.length) {
+									store.setColumns(props.allColumns.filter((column) => column.isDefault));
+									store.setGroupBy(undefined);
+								} else {
+									store.setColumns(filteredColumns);
+								}
+								props.run();
+							}}
+						>
+							<IconX size={12} />
+						</ActionIcon>
+					}
+					size={"sm"}
+					radius={"xl"}
+					variant={"light"}
+					color={"gray"}
+				>
+					{columnName}
+				</Badge>
+			))}
 		</Flex>
 	);
 }

@@ -3,6 +3,7 @@ import ICAdvancedFilterColumnModal from "@/shared/components/infraComponents/ICA
 import ICAdvancedFilterConditionModal from "@/shared/components/infraComponents/ICAdvancedFilter/components/ICAdvancedFilterConditionModal";
 import ICAdvancedFilterConditionSectionItems from "@/shared/components/infraComponents/ICAdvancedFilter/components/ICAdvancedFilterConditionSectionItems";
 import ICAdvancedFilterGrid from "@/shared/components/infraComponents/ICAdvancedFilter/components/ICAdvancedFilterGrid";
+import ICAdvancedFilterGroupByModal from "@/shared/components/infraComponents/ICAdvancedFilter/components/ICAdvancedFilterGroupByModal";
 import ICAdvancedFilterTopSection from "@/shared/components/infraComponents/ICAdvancedFilter/components/ICAdvancedFilterTopSection";
 import type { ICAdvancedFilterProps } from "@/shared/components/infraComponents/ICAdvancedFilter/index.types";
 import { Flex } from "@mantine/core";
@@ -81,6 +82,7 @@ export default function ICAdvancedFilterComponent<T>(
 				searchInputPlaceholder={props.searchInputPlaceholder}
 			/>
 			<ICAdvancedFilterConditionModal run={run} allColumns={allColumns} store={props.store} />
+			<ICAdvancedFilterGroupByModal run={run} allColumns={allColumns} store={props.store} />
 			<ICAdvancedFilterConditionSectionItems
 				hideConditionSection={props.hideConditionSection}
 				run={run}
