@@ -12,7 +12,7 @@ export const triggerActionHumanReadableText = (actions?: EachPolicyManagementPol
 							valuesAsArray?.map(
 								({ key, value }) => `${upperFirst(key)} is ${upperFirst((value || "") as string)}`,
 							) || "";
-						return `"Set ${text.join(" with ")}"`;
+						return `"Set ${text.join(" and ")}"`;
 					})
 					.join(" And "),
 			)

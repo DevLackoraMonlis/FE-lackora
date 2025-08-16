@@ -110,10 +110,10 @@ export default function TriggerActionGenerator<T extends TriggerActionForm>({
 	));
 
 	useEffect(() => {
-		if (sectionData?.fields?.length && !fields?.length) {
+		if (!policyActions.isLoading && sectionData?.fields?.length && !fields?.length) {
 			form.insertListItem(triggerAction, insertListItem);
 		}
-	}, [fields?.length]);
+	}, [fields?.length, policyActions.isLoading]);
 
 	return (
 		<Card withBorder bg="gray.1" bd="1px solid gray.4" shadow="none" mx={0} mt="xs">
