@@ -1,22 +1,22 @@
 "use client";
 
+import GlobalSettingContext from "@/shared/contexts/globalSettingContext";
 import useMantineBaseTheme from "@/shared/hooks/useMantineBaseTheme";
-import { type MantineColorScheme, MantineProvider } from "@mantine/core";
+import { MantineProvider } from "@mantine/core";
 import { Notifications } from "@mantine/notifications";
-import type { PropsWithChildren } from "react";
+import { type PropsWithChildren, useContext } from "react";
 import nonce from "../../../../nonce";
 
 export default function MantineBaseProvider(props: PropsWithChildren) {
-	const { mantineBaseTheme } = useMantineBaseTheme();
+	const { theme } = useContext(GlobalSettingContext);
+	const { mantineBaseTheme } = useMantineBaseTheme(theme);
 
-	const defaultTheme = window.localStorage.getItem("mantine-color-scheme-value") as
-		| MantineColorScheme
-		| undefined;
+	console.log(theme, mantineBaseTheme);
 
 	return (
 		<MantineProvider
 			getStyleNonce={() => nonce.nonce}
-			defaultColorScheme={defaultTheme === "dark" ? "dark" : "light"}
+			defaultColorScheme={"light"}
 			withCssVariables
 			theme={mantineBaseTheme}
 		>

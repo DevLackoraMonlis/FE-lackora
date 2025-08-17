@@ -1,0 +1,50 @@
+/* NeonButton.module.css */
+.root {
+	position: relative;
+	color: white;
+	border: none;
+	border-radius: 12px;
+	overflow: hidden;
+
+	/* پس‌زمینه ساده، قابل تغییر از Mantine هم هست */
+	background: linear-gradient(90deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+
+	/* سایه پایه */
+	box-shadow: var(--glow-1), var(--glow-2), var(--glow-3);
+
+	/* متن کمی براق */
+	text-shadow: 0 0 8px var(--glow-color), 0 0 6px var(--glow-color), 0 0 12px
+		color-mix(in oklab, var(--glow-color) 70%, white 30%);
+
+	/* پالس نرمِ فقط سایه */
+	animation: neonPulse 2.2s ease-in-out infinite;
+	transition: transform 120ms ease;
+}
+
+.root:hover {
+	transform: translateY(-1px);
+	animation-duration: 1.7s;
+}
+
+.root:active {
+	transform: translateY(0);
+	animation-duration: 1.2s;
+}
+
+.label {
+	position: relative;
+	z-index: 1;
+}
+
+/* پالس بین مین/مکس بدون درگیری با JS یا متغیرهای runtime پیچیده */
+@keyframes neonPulse {
+	0% {
+		box-shadow: var(--glow-1), var(--glow-2), var(--glow-3);
+	}
+	50% {
+		box-shadow: var(--glow-2), var(--glow-3), var(--glow-4);
+	}
+	100% {
+		box-shadow: var(--glow-1), var(--glow-2), var(--glow-3);
+	}
+}

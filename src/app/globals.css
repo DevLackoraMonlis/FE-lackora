@@ -1,5 +1,13 @@
 /* react-flow styles */
 
+:root {
+	--glow-color: var(--mantine-color-primary-6);
+	--glow-1: 0 0 4px var(--glow-color);
+	--glow-2: 0 0 10px color-mix(in oklab, var(--glow-color) 80%, var(--mantine-color-primary-0) 20%);
+	--glow-3: 0 0 18px color-mix(in oklab, var(--glow-color) 65%, var(--mantine-color-primary-0) 35%);
+	--glow-4: 0 0 28px color-mix(in oklab, var(--glow-color) 45%, var(--mantine-color-primary-0) 55%);
+}
+
 html,
 body {
 	height: 100%;

@@ -2,13 +2,15 @@
 
 import { createContext } from "react";
 
+export type GlobalTheme = "green" | "pink";
+
 export type GlobalSetting = {
-	openSidePanel: boolean;
-	setOpenSidePanel?: (value: boolean) => void;
+	theme: GlobalTheme;
+	setTheme?: (value: GlobalTheme) => void;
 };
 
 const GlobalSettingContext = createContext<GlobalSetting>({
-	openSidePanel: false,
+	theme: "green",
 });
 
 export default GlobalSettingContext;

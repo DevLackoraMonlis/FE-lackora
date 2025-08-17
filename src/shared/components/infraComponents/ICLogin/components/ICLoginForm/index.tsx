@@ -1,8 +1,9 @@
+import { NeonButton } from "@/shared/components/baseComponents/BCNeonButton";
 import ICLoginLocked from "@/shared/components/infraComponents/ICLogin/components/ICLoginForm/ICLoginLocked";
 import { AllApplications, AppRoutes } from "@/shared/constants/routes";
 import { validateInput } from "@/shared/lib/utils";
 import envStore from "@/shared/stores/envStore";
-import { Alert, Button, Card, Checkbox, Flex, PasswordInput, Text, TextInput, Title } from "@mantine/core";
+import { Alert, Card, Flex, PasswordInput, Text, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { IconAlertOctagon, IconLock, IconUserCircle } from "@tabler/icons-react";
 import { signIn } from "next-auth/react";
@@ -79,17 +80,30 @@ export default function ICLoginForm() {
 
 	return (
 		<Flex w={"100%"} h={"100%"} justify={"center"} align={"center"}>
-			<Card h={error ? 700 : 600} w={"100%"} p={"2xl"} radius={"lg"}>
+			<Card h={error ? 900 : 800} w={"100%"} bg={"transparent"} p={"2xl"} radius={"lg"}>
 				<Flex direction={"column"} h={"100%"} justify={"center"} align={"flex-start"} gap={"xs"}>
 					{error !== "locked" ? (
 						<>
-							<Title order={3}>Welcome back</Title>
-							<Text c={"#868E96"} fz={"md"}>
-								Please enter your login details below
+							<Text c={"white"} fz={"3xl"} fw={"bolder"}>
+								Lackora
 							</Text>
+
+							<Text
+								style={{
+									wordSpacing: "10px",
+								}}
+								w={"80%"}
+								fz={"2xl"}
+								c={"primary.3"}
+								fw={"bolder"}
+							>
+								Find trusted salons, book fast, and feel confidently beautiful.
+							</Text>
+
 							<form style={{ height: "fit-content", width: "100%" }} onSubmit={form.onSubmit(onSubmit)}>
 								<Flex mt={"xl"} gap={"xl"} direction={"column"} w={"100%"}>
 									<TextInput
+										c={"white"}
 										data-testid="login-username"
 										required
 										size={"lg"}
@@ -98,6 +112,7 @@ export default function ICLoginForm() {
 										label={"Username"}
 									/>
 									<PasswordInput
+										c={"white"}
 										data-testid="login-password"
 										minLength={8}
 										required
@@ -106,8 +121,8 @@ export default function ICLoginForm() {
 										{...form.getInputProps("password")}
 										label={"Password"}
 									/>
-									<Checkbox label={"Remember me"} />
-									<Button
+									<NeonButton
+										mt={"lg"}
 										data-testid="login-submit-button"
 										size={"lg"}
 										disabled={!form.isValid()}
@@ -115,7 +130,7 @@ export default function ICLoginForm() {
 										loading={isLoading}
 									>
 										Sign in
-									</Button>
+									</NeonButton>
 									{error === "credentials" && (
 										<Alert
 											onClose={() => setError(undefined)}

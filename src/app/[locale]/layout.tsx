@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { unstable_noStore as noStore } from "next/cache";
 import type { ReactElement } from "react";
 import "@/shared/components/baseComponents/BCTanStackGrid/tanstack-table-style.css";
 import "@mantine/notifications/styles.css";
@@ -15,7 +14,7 @@ import ContextProvider from "@/shared/providers/ContextProvider";
 import { EnvProvider } from "@/shared/providers/EnvProvider";
 import NextAuthSessionProvider from "@/shared/providers/NextAuthProvider";
 import QueryClientProvider from "@/shared/providers/QueryClientProvider";
-import MantineBaseProviderClient from "@/shared/providers/mantine/MantineBaseProvider.client";
+import MantineBaseProvider from "@/shared/providers/mantine/MantineBaseProvider";
 import { Manrope } from "next/font/google";
 
 export const metadata: Metadata = {
@@ -38,29 +37,27 @@ export default async function RootLayout({
 }) {
 	const { locale } = await params;
 
-	noStore();
-
 	return (
 		<html lang="en" className={manrope.className}>
 			<body>
-				<MantineBaseProviderClient>
-					<I18nProviderClient locale={locale}>
-						<EnvProvider
-							envs={{
-								wsUrl: process.env.WS_URL,
-								baseUrl: process.env.BASE_URL,
-								hostUrl: process.env.HOST_URL,
-								nextAuthUrl: process.env.NEXTAUTH_URL,
-							}}
-						>
-							<QueryClientProvider>
-								<ContextProvider>
+				<ContextProvider>
+					<MantineBaseProvider>
+						<I18nProviderClient locale={locale}>
+							<EnvProvider
+								envs={{
+									wsUrl: process.env.WS_URL,
+									baseUrl: process.env.BASE_URL,
+									hostUrl: process.env.HOST_URL,
+									nextAuthUrl: process.env.NEXTAUTH_URL,
+								}}
+							>
+								<QueryClientProvider>
 									<NextAuthSessionProvider>{children}</NextAuthSessionProvider>
-								</ContextProvider>
-							</QueryClientProvider>
-						</EnvProvider>
-					</I18nProviderClient>
-				</MantineBaseProviderClient>
+								</QueryClientProvider>
+							</EnvProvider>
+						</I18nProviderClient>
+					</MantineBaseProvider>
+				</ContextProvider>
 			</body>
 		</html>
 	);
