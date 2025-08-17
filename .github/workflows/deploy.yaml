@@ -58,7 +58,7 @@ jobs:
           chmod 600 my_custom_key
           mkdir -p ~/.ssh
           # Add server host key to known_hosts to avoid interactive prompt
-          ssh-keyscan -H "$HOST" >> ~/.ssh/known_hosts
+          ssh-keyscan -H "$SSH_HOST" >> ~/.ssh/known_hosts
 
       - name: Run remote commands over SSH
         env:
