@@ -1,6 +1,6 @@
 import { NeonButton } from "@/shared/components/baseComponents/BCNeonButton";
 import ICLoginLocked from "@/shared/components/infraComponents/ICLogin/components/ICLoginForm/ICLoginLocked";
-import { AllApplications, AppRoutes } from "@/shared/constants/routes";
+import { AppRoutes } from "@/shared/constants/routes";
 import { validateInput } from "@/shared/lib/utils";
 import envStore from "@/shared/stores/envStore";
 import { Alert, Card, Flex, PasswordInput, Text, TextInput } from "@mantine/core";
@@ -54,12 +54,7 @@ export default function ICLoginForm() {
 				setError("credentials");
 				setIsLoading(false);
 			} else {
-				router.push(
-					AppRoutes.appModulePage(
-						AllApplications.CYBER_ASSETS.name,
-						AllApplications.CYBER_ASSETS.modules.CYBER_ASSETS,
-					),
-				);
+				router.push(AppRoutes.panel);
 			}
 		} catch (_error) {
 			setError("credentials");
@@ -140,8 +135,10 @@ export default function ICLoginForm() {
 											title="Incorrect credentials!"
 											icon={<IconAlertOctagon />}
 										>
-											Incorrect username or password. Please try again. You have 2 attempts left before your
-											account is locked.
+											<Text c={"white"}>
+												Incorrect username or password. Please try again. You have 2 attempts left before your
+												account is locked.
+											</Text>
 										</Alert>
 									)}
 									<Flex gap={"xs"} w={"100%"} align={"center"} justify={"center"}>
