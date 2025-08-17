@@ -22,8 +22,8 @@ jobs:
           script: |
             cd /var/www/FE-lackora
             git pull 
-            npm ci 
+            npm i --force
             npm run build
             pm2 stop LACKORA_FRONT
-            pm2 remove LACKORA_FRONT
+            pm2 delete LACKORA_FRONT
             pm2 start "npm run start" --name LACKORA_FRONT
