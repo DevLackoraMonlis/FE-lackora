@@ -1,3 +1,39 @@
+#name: Deploy to Server on develop
+#
+#on:
+#  push:
+#    branches:
+#      - develop
+#
+#jobs:
+#  deploy:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Checkout
+#        uses: actions/checkout@v4
+#
+#      - name: Run remote commands over SSH
+#        uses: appleboy/ssh-action@v0.1.10
+#        with:
+#          host: ${{ secrets.HOST }}
+#          username: ${{ secrets.USERNAME }}
+#          key: ${{ secrets.SSH_PRIVATE_KEY }}
+#          port: ${{ secrets.PORT }}
+#          script: |
+#            set -euo pipefail
+#            echo "User: $(whoami)"
+#            echo "Home: $HOME"
+#            echo "Start PWD: $(pwd)"
+#            ls -la /var/www || true
+#            cd /var/www/FE-lackora
+#            git pull
+#            npm i --force
+#            npm run build
+#            pm2 stop LACKORA_FRONT
+#            pm2 delete LACKORA_FRONT
+#            pm2 start "npm run start" --name LACKORA_FRONT
+
+
 name: Deploy to Server on develop
 
 on:
@@ -12,23 +48,36 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Prepare SSH key and known_hosts
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_HOST: ${{ secrets.HOST }}
+        run: |
+          set -euo pipefail
+          echo "$SSH_PRIVATE_KEY" > my_custom_key
+          chmod 600 my_custom_key
+          mkdir -p ~/.ssh
+          # Add server host key to known_hosts to avoid interactive prompt
+          ssh-keyscan -H "$HOST" >> ~/.ssh/known_hosts
+
       - name: Run remote commands over SSH
-        uses: appleboy/ssh-action@v0.1.10
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: ${{ secrets.PORT }}
-          script: |
+        env:
+          SSH_HOST: ${{ secrets.HOST }}
+          SSH_USER: ${{ secrets.USERNAME }}
+          SSH_PORT: ${{ secrets.PORT }}
+        run: |
+          set -euo pipefail
+          ssh -i my_custom_key -p "$SSH_PORT" -o StrictHostKeyChecking=yes "$SSH_USER@$SSH_HOST" 'bash -s' << "EOF"
             set -euo pipefail
             echo "User: $(whoami)"
             echo "Home: $HOME"
             echo "Start PWD: $(pwd)"
             ls -la /var/www || true
             cd /var/www/FE-lackora
-            git pull 
+            git pull
             npm i --force
             npm run build
-            pm2 stop LACKORA_FRONT
-            pm2 delete LACKORA_FRONT
+            pm2 stop LACKORA_FRONT || true
+            pm2 delete LACKORA_FRONT || true
             pm2 start "npm run start" --name LACKORA_FRONT
+          EOF
