@@ -20,7 +20,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.PORT }}
           script: |
-            cd /var/www/myapp
+            cd /var/www/FE-lackora
             git pull 
             npm ci 
             npm run build
