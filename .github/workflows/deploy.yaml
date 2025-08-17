@@ -26,7 +26,8 @@ jobs:
             echo "Start PWD: $(pwd)"
             ls -la /var/www || true
             cd /var/www/FE-lackora
-            git pull
+            git remote set-url origin https://x-access-token:${GH_PAT}github.com/DevLackoraMonlis/FE-lackora.git
+            git pull origin develop
             npm i --force
             npm run build
             pm2 stop LACKORA_FRONT
