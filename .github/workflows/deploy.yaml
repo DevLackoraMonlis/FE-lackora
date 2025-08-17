@@ -20,6 +20,11 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.PORT }}
           script: |
+            set -euo pipefail
+            echo "User: $(whoami)"
+            echo "Home: $HOME"
+            echo "Start PWD: $(pwd)"
+            ls -la /var/www || true
             cd /var/www/FE-lackora
             git pull 
             npm i --force
