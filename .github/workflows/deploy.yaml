@@ -1,0 +1,29 @@
+name: Deploy to Server on develop
+
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run remote commands over SSH
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.PORT }}
+          script: |
+            cd /var/www/myapp
+            git pull 
+            npm ci 
+            npm run build
+            pm2 stop LACKORA_FRONT
+            pm2 remove LACKORA_FRONT
+            pm2 start "npm run start" --name LACKORA_FRONT
