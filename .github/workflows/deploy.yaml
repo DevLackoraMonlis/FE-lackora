@@ -54,8 +54,8 @@ jobs:
           SSH_HOST: ${{ secrets.HOST }}
         run: |
           set -euo pipefail
-          echo "$SSH_PRIVATE_KEY" > id_rsa
-          chmod 600 id_rsa
+          echo "$SSH_PRIVATE_KEY" > my_custom_key
+          chmod 600 my_custom_key
           mkdir -p ~/.ssh
           # Add server host key to known_hosts to avoid interactive prompt
           ssh-keyscan -H "$SSH_HOST" >> ~/.ssh/known_hosts
@@ -67,7 +67,7 @@ jobs:
           SSH_PORT: ${{ secrets.PORT }}
         run: |
           set -euo pipefail
-          ssh -i id_rsa -p "$SSH_PORT" -o StrictHostKeyChecking=yes "$SSH_USER@$SSH_HOST" 'bash -s' << "EOF"
+          ssh -i my_custom_key -p "$SSH_PORT" -o StrictHostKeyChecking=no "$SSH_USER@$SSH_HOST" 'bash -s' << "EOF"
             set -euo pipefail
             echo "User: $(whoami)"
             echo "Home: $HOME"
