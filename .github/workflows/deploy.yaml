@@ -28,7 +28,9 @@ jobs:
             cd /var/www/FE-lackora
             git remote set-url origin https://x-access-token:${{ secrets.GH_PAT }}@github.com/DevLackoraMonlis/FE-lackora.git
             git pull origin develop
+            export NODE_ENV=development
             npm i --force
+            export BASE_URL=http://google.com
             export NODE_ENV=production
             export NEXTAUTH_URL=65.109.180.250
             export HOST_URL=65.109.180.250
