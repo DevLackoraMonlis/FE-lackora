@@ -32,8 +32,8 @@ jobs:
             npm i --force
             export BASE_URL=http://google.com
             export NODE_ENV=production
-            export NEXTAUTH_URL=65.109.180.250
-            export HOST_URL=65.109.180.250
+            export NEXTAUTH_URL=http://65.109.180.250
+            export HOST_URL=http://65.109.180.250
             export CSRF_SECRET=dsjhdhj473uhwejh3w
             export NODE_TLS_REJECT_UNAUTHORIZED=0
             npm run build
