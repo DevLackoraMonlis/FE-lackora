@@ -29,12 +29,12 @@ jobs:
             git remote set-url origin https://x-access-token:${{ secrets.GH_PAT }}@github.com/DevLackoraMonlis/FE-lackora.git
             git pull origin develop
             npm i --force
-            npm run build
             export NODE_ENV=production
             export NEXTAUTH_URL=65.109.180.250
             export HOST_URL=65.109.180.250
             export CSRF_SECRET=dsjhdhj473uhwejh3w
             export NODE_TLS_REJECT_UNAUTHORIZED=0
+            npm run build
             pm2 stop LACKORA_FRONT
             pm2 delete LACKORA_FRONT || true
             pm2 start "npm run start" --name LACKORA_FRONT
