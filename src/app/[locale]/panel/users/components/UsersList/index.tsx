@@ -1,0 +1,121 @@
+import { Flex, Highlight, Text } from "@mantine/core";
+import { useViewportSize } from "@mantine/hooks";
+import { useState } from "react";
+
+import type { PaginationRq } from "@/http/end-points/GeneralService.types";
+import { useI18n } from "@/locales/client";
+import BCTanStackGrid from "@/shared/components/baseComponents/BCTanStackGrid";
+import type { TanStackGridProps } from "@/shared/components/baseComponents/BCTanStackGrid/index.types";
+import { useTableSearch } from "@/shared/hooks/useTableSearch";
+import { useTableSort } from "@/shared/hooks/useTableSort";
+
+import { useUsersList } from "../../lib/index.hooks";
+
+export default function UsersList() {
+	const t = useI18n();
+	const { height } = useViewportSize();
+	const [queryParams, setQueryParams] = useState<PaginationRq>({ limit: 25, page: 1 });
+	const { generateSortIcons, sortStatus } = useTableSort<(typeof results)[number]>();
+	const { searchState, generateSearchIcons } = useTableSearch<(typeof results)[number]>();
+
+	const { userList } = useUsersList({ ...queryParams, ...sortStatus, ...searchState });
+	const results = userList.data?.results || [];
+	const total = userList.data?.total || 0;
+
+	const handleUpdateQueryParams = (params: Partial<PaginationRq>) => {
+		setQueryParams((perParams) => ({ ...perParams, page: 1, ...params }));
+	};
+
+	const columns: TanStackGridProps<(typeof results)[number]>["columns"] = [
+		{
+			accessor: "name",
+			title: (
+				<Flex justify="space-between" align="center">
+					<Text>{t("users.name")}</Text>
+					<Flex gap="3xs">
+						{generateSearchIcons("name", t("users.name"))}
+						{generateSortIcons("name")}
+					</Flex>
+				</Flex>
+			),
+			render: ({ name }) => (
+				<Highlight highlight={[searchState.name || ""]} highlightStyles={{}}>
+					{name || "-"}
+				</Highlight>
+			),
+		},
+		{
+			accessor: "branch",
+			title: (
+				<Flex justify="space-between" align="center">
+					<Text>{t("users.branch")}</Text>
+					<Flex gap="3xs">
+						{generateSearchIcons("branch", t("users.branch"))}
+						{generateSortIcons("branch")}
+					</Flex>
+				</Flex>
+			),
+			render: ({ branch }) => (
+				<Highlight highlight={[searchState.branch || ""]} highlightStyles={{}}>
+					{branch || "-"}
+				</Highlight>
+			),
+		},
+		{
+			accessor: "job",
+			title: (
+				<Flex justify="space-between" align="center">
+					<Text>{t("users.job")}</Text>
+					<Flex gap="3xs">
+						{generateSearchIcons("job", t("users.job"))}
+						{generateSortIcons("job")}
+					</Flex>
+				</Flex>
+			),
+			render: ({ job }) => (
+				<Highlight highlight={[searchState.job || ""]} highlightStyles={{}}>
+					{job || "-"}
+				</Highlight>
+			),
+		},
+		{
+			accessor: "phone",
+			title: (
+				<Flex justify="space-between" align="center">
+					<Text>{t("users.phone")}</Text>
+					<Flex gap="3xs">
+						{generateSearchIcons("phone", t("users.phone"))}
+						{generateSortIcons("phone")}
+					</Flex>
+				</Flex>
+			),
+			render: ({ phone }) => (
+				<Highlight highlight={[searchState.phone || ""]} highlightStyles={{}}>
+					{phone || "-"}
+				</Highlight>
+			),
+		},
+	];
+
+	return (
+		<>
+			<BCTanStackGrid
+				h={height - 170}
+				withTableBorder
+				withColumnBorders
+				withRowBorders
+				withPaddingCells
+				disableVirtualize
+				idAccessor="id"
+				columns={columns}
+				records={results}
+				totalRecords={total}
+				page={queryParams.page}
+				recordsPerPage={queryParams.limit}
+				onPageChange={(page) => handleUpdateQueryParams({ page })}
+				onRecordsPerPageChange={(limit) => handleUpdateQueryParams({ limit })}
+				recordsPerPageOptions={[25, 50, 100]}
+			/>
+		</>
+	);
+}

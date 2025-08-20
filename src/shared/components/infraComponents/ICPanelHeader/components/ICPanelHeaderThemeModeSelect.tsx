@@ -5,21 +5,24 @@ import { useContext } from "react";
 
 export default function ICPanelHeaderThemeModeSelect() {
 	const { theme, setTheme } = useContext(GlobalSettingContext);
+	// const { toggleColorScheme, colorScheme } = useMantineColorScheme();
 	return (
-		<ActionIcon
-			variant="subtle"
-			w={44}
-			h={44}
-			c="white"
-			onClick={() => {
-				setTheme?.(theme === "green" ? "pink" : "green");
-			}}
-		>
-			{theme === "green" ? (
-				<IconColorFilter color={"pink"} size={24} />
-			) : (
-				<IconColorFilter color={"green"} size={24} />
-			)}
-		</ActionIcon>
+		<>
+			{/* <ActionIcon variant="subtle" c="white" onClick={toggleColorScheme}>
+        {colorScheme === "dark" ? <IconSunFilled size={20} /> : <IconMoon size={20} />}
+      </ActionIcon> */}
+			<ActionIcon
+				variant="subtle"
+				onClick={() => {
+					setTheme?.(theme === "green" ? "pink" : "green");
+				}}
+			>
+				{theme === "green" ? (
+					<IconColorFilter color={"pink"} size={20} />
+				) : (
+					<IconColorFilter color={"green"} size={20} />
+				)}
+			</ActionIcon>
+		</>
 	);
 }

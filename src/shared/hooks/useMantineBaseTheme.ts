@@ -1,33 +1,31 @@
 import type { GlobalTheme } from "@/shared/contexts/globalSettingContext";
 import { DEFAULT_THEME } from "@mantine/core";
-import type { MantineThemeOverride } from "@mantine/core";
+import type { MantineColorsTuple, MantineThemeOverride } from "@mantine/core";
 
-type PrimaryType = [string, string, string, string, string, string, string, string, string, string];
-
-const pinkPrimary: PrimaryType = [
-	"#FFF4F4",
-	"#FFE6E5",
-	"#FFD2D1",
-	"#FFC1BF",
-	"#F9B2B1",
-	"#F6A5A4",
-	"#F3B9B8",
-	"#E79C9B",
-	"#CC7E7D",
-	"#A25D5D",
+const brandGreen: MantineColorsTuple = [
+	"oklch(95% 0.02 194.57)",
+	"oklch(85% 0.04 194.57)",
+	"oklch(70% 0.05 194.57)",
+	"oklch(60% 0.06 194.57)",
+	"oklch(50% 0.065 194.57)",
+	"oklch(43.18% 0.065 194.57)", // main
+	"oklch(35% 0.06 194.57)",
+	"oklch(25% 0.05 194.57)",
+	"oklch(18% 0.04 194.57)",
+	"oklch(12% 0.03 194.57)",
 ];
 
-const greenPrimary: PrimaryType = [
-	"#CFEAE8", // 0
-	"#B2DDDA", // 1
-	"#94D0CC", // 2
-	"#6FBDB7", // 3
-	"#4BAAA2", // 4
-	"#2F8F88", // 5
-	"#1E5552", // 6
-	"#194846", // 7
-	"#133A39", // 8
-	"#0C2A2A", // 9
+const brandPink: MantineColorsTuple = [
+	"oklch(95% 0.01 20.53)",
+	"oklch(90% 0.03 20.53)",
+	"oklch(85% 0.045 20.53)",
+	"oklch(83% 0.05 20.53)",
+	"oklch(82.7% 0.055 20.53)",
+	"oklch(82.54% 0.063 20.53)", // main
+	"oklch(75% 0.06 20.53)",
+	"oklch(65% 0.05 20.53)",
+	"oklch(55% 0.04 20.53)",
+	"oklch(45% 0.03 20.53)",
 ];
 
 export default function useMantineBaseTheme(theme: GlobalTheme) {
@@ -104,8 +102,9 @@ export default function useMantineBaseTheme(theme: GlobalTheme) {
 			},
 		},
 		fontFamily: "var(--manrope) !important",
-		white: "#FAFAFA",
-		black: "#11121F",
+		white: "oklch(100% 0 0)",
+		black: "oklch(0% 0 0)",
+		defaultRadius: "md",
 		breakpoints: {
 			...DEFAULT_THEME.breakpoints,
 			"2xl": "120em",
@@ -126,10 +125,11 @@ export default function useMantineBaseTheme(theme: GlobalTheme) {
 			"2xl": "26px",
 			"3xl": "32px",
 		},
+		primaryShade: 5,
 		primaryColor: "primary",
 		colors: {
 			...DEFAULT_THEME.colors,
-			primary: theme === "pink" ? pinkPrimary : greenPrimary,
+			primary: theme === "pink" ? brandPink : brandGreen,
 		},
 	};
 
