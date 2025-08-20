@@ -14,7 +14,7 @@ export default function Users() {
 	return (
 		<Flex direction={"column"} p={"lg"} gap={"xs"}>
 			<Flex justify={"space-between"} align={isMd ? "center" : ""} gap={"xs"}>
-				<Text size="xl" variant="gradient" fz={isMd ? "h3" : ""} fw={"bold"}>
+				<Text size="xl" fz={isMd ? "h3" : ""} fw={"bold"}>
 					{t("users.title")}
 				</Text>
 				<Flex align={"center"} gap={"xs"}>

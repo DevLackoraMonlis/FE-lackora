@@ -1,6 +1,6 @@
 "use client";
 import type { ICPanelSidebarPopoverMenuGroupProps } from "@/shared/components/infraComponents/ICPanelSidebar/index.types";
-import { Box, Flex, Text } from "@mantine/core";
+import { Box, Card, Flex, Text } from "@mantine/core";
 import type { PropsWithChildren, ReactNode } from "react";
 import classes from "./index.module.css";
 type Props = PropsWithChildren<{
@@ -13,11 +13,13 @@ type Props = PropsWithChildren<{
 export default function ICPageWrapper(props: Props) {
 	return (
 		<Flex direction={"column"} h={"100%"}>
-			<Flex pl={"xs"} align={"center"} bg={"gray.2"} h={48}>
-				<Text fz={"lg"} fw={"bolder"}>
-					{props.title}
-				</Text>
-			</Flex>
+			<Card p={0} m={0}>
+				<Flex pl={"2xs"} align={"center"} h={48}>
+					<Text fz={"lg"} fw={"bolder"}>
+						{props.title}
+					</Text>
+				</Flex>
+			</Card>
 			<Box className={classes.root}>{props.children}</Box>
 		</Flex>
 	);

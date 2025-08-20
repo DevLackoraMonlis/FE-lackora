@@ -19,7 +19,7 @@ export default function Personnel() {
 				align={isMd ? "center" : ""}
 				gap={"xs"}
 			>
-				<Text size="xl" variant="gradient" fz={isSm ? "h3" : ""} fw={"bold"}>
+				<Text size="xl" fz={isSm ? "h3" : ""} fw={"bold"}>
 					{t("personnel.title")}
 				</Text>
 				<Flex align={"center"} gap={"xs"}>

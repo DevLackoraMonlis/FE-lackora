@@ -47,8 +47,7 @@ export default function useMantineBaseTheme(theme: GlobalTheme, isDark: boolean)
 			},
 			Accordion: {
 				defaultProps: {
-					styles: ({ colors, ...add }: MantineThemeOverride) => {
-						console.log({ add });
+					styles: ({ colors }: MantineThemeOverride) => {
 						return {
 							control: { backgroundColor: colors?.gray?.[2] },
 						};
@@ -96,6 +95,13 @@ export default function useMantineBaseTheme(theme: GlobalTheme, isDark: boolean)
 			Text: {
 				defaultProps: {
 					fz: "sm",
+					// c: isDark
+					//   ? theme === "pink"
+					//     ? "brandGreen.2"
+					//     : "brandPink.6"
+					//   : theme === "pink"
+					//   ? "brandGreen.6"
+					//   : "brandPink.7",
 				},
 			},
 			Tooltip: {
@@ -136,9 +142,9 @@ export default function useMantineBaseTheme(theme: GlobalTheme, isDark: boolean)
 		},
 		primaryShade: 5,
 		defaultGradient: {
-			from: theme === "pink" ? "brandPink" : "brandGreen",
+			from: theme === "pink" ? "brandPink.5" : "brandGreen.5",
 			to: theme !== "pink" ? "brandPink.7" : "brandGreen.3",
-			deg: 70,
+			deg: 80,
 		},
 		primaryColor: "primary",
 		colors: {
