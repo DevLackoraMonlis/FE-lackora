@@ -96,8 +96,8 @@ function generatePopoverMenuGroup(params: {
 export default function ICPanelSidebar(props: Props) {
 	const { height } = useViewportSize();
 	const { colors } = useMantineTheme();
-	const baseColor = colors.gray[4];
-	const hoverColor = colors.primary[6];
+	const baseColor = colors.gray[0];
+	const hoverColor = colors.gray[0];
 
 	const [color, setColor] = useState(baseColor);
 	const [hoveredName, setHovered] = useState("");
@@ -249,13 +249,7 @@ export default function ICPanelSidebar(props: Props) {
 					</Flex>
 				</ScrollArea>
 				<Flex justify={props.opened ? "flex-end" : "center"} align={"center"}>
-					<ActionIcon
-						size={24}
-						onClick={props.onToggle}
-						p={0}
-						className={classes.collapseBtn}
-						variant={"transparent"}
-					>
+					<ActionIcon size={20} onClick={props.onToggle} c={"white"} variant="transparent">
 						{props.opened ? <IconArrowLeft /> : <IconArrowRight />}
 					</ActionIcon>
 				</Flex>

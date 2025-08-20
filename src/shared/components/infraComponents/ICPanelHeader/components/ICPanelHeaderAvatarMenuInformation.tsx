@@ -1,31 +1,32 @@
-"use client";
-
-import { Avatar, Badge, Flex, Text } from "@mantine/core";
+import { Avatar, Flex, Text } from "@mantine/core";
 
 type Props = {
 	profileSrc?: string;
 	profileName?: string;
 	profileEmail?: string;
-	leftDays?: string;
+	profileRole?: string;
+};
+
+const avatarStyles = {
+	image: {
+		color: "var(--mantine-color-primary)",
+	},
+	placeholder: {
+		color: "var(--mantine-color-primary-2)",
+	},
 };
 
 export default function ICPanelHeaderAvatarMenuInformation(props: Props) {
 	return (
-		<Flex direction="column" align="center" justify="center" className="gap-y-1 pb-4">
-			<Avatar size={64} alt={props.profileName} src={props.profileSrc} radius="xl" />
-			<Text ta="center" size="md">
-				{props.profileName}
-			</Text>
-			<Text ta="center" size="xs">
-				{props.profileEmail}
-			</Text>
-			<div>
-				{props.leftDays && (
-					<Badge color="yellow" variant="outline" radius="sm">
-						Protection ends <b>{props.leftDays}</b> days
-					</Badge>
-				)}
-			</div>
+		<Flex align="center" gap={"sm"} my={"sm"}>
+			<Avatar size={55} alt={props.profileName} src={props.profileSrc} radius={"sm"} styles={avatarStyles} />
+			<Flex direction={"column"}>
+				<Text tt="capitalize" fw="bold">
+					{props.profileName}
+				</Text>
+				<Text fz="xs">{props.profileEmail}</Text>
+				<Text fz="xs">{props.profileRole}</Text>
+			</Flex>
 		</Flex>
 	);
 }

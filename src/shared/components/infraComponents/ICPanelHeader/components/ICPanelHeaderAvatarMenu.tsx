@@ -1,103 +1,66 @@
 import type { ICPanelHeaderProps } from "@/shared/components/infraComponents/ICPanelHeader/index.types";
-import { ActionIcon, Avatar, Box, Flex, Menu, Text, useMantineTheme } from "@mantine/core";
-import { useDisclosure } from "@mantine/hooks";
-import { IconChevronDown, IconX } from "@tabler/icons-react";
-import dayjs from "dayjs";
-import classes from "../index.module.css";
+import { Avatar, Box, Flex, Highlight, Menu, Text } from "@mantine/core";
+import { IconChevronDown } from "@tabler/icons-react";
 import ICPanelHeaderAvatarMenuInformation from "./ICPanelHeaderAvatarMenuInformation";
+
+const avatarStyles = {
+	root: {
+		backgroundColor: "var(--mantine-color-main-4)",
+	},
+	image: {
+		color: "var(--mantine-color-primary)",
+	},
+	placeholder: {
+		color: "var(--mantine-color-primary-1)",
+	},
+};
 
 export default function ICPanelHeaderAvatarMenu(props: ICPanelHeaderProps) {
 	const userSession = props.sessionUser;
-	const { colors } = useMantineTheme();
-	const [aboutMenuOpened, aboutMenuHandler] = useDisclosure(false);
-	const [mainMenuOpened, mainMenuHandler] = useDisclosure(false);
-
 	return (
 		<>
 			<Menu
-				id="data-test-profile-menu"
-				width={240}
+				width={"300px"}
 				radius="md"
 				shadow="md"
 				position="bottom-end"
-				onChange={mainMenuHandler.toggle}
-				opened={mainMenuOpened}
 				keepMounted
 				closeOnClickOutside
-				closeOnItemClick={false}
-				onClose={aboutMenuHandler.close}
+				closeOnItemClick={true}
 			>
 				<Menu.Target>
-					<Flex id="data-test-profile-menu-button" style={{ cursor: "pointer" }} align="center">
+					<Flex className="cursor-pointer" align="center">
 						<Box p="8px">
-							<Avatar
-								styles={{
-									root: {
-										backgroundColor: "var(--mantine-color-primary-4)",
-									},
-									image: {
-										color: "var(--mantine-color-white)",
-									},
-									placeholder: {
-										color: "var(--mantine-color-white)",
-									},
-								}}
-								c="white"
-								size={38}
-								alt="user-avatar"
-								radius="xl"
-							/>
+							<Avatar styles={avatarStyles} c="white" size={30} alt="user-avatar" radius="xl" />
 						</Box>
-						<Text data-testid="logged-username" ml="md" mr="md" c="white">
+						<Text data-testid="logged-username" mx="2xs" c="white">
 							{userSession?.data?.profile?.username}
 						</Text>
 						<IconChevronDown size={16} strokeWidth={2} color="white" />
 					</Flex>
 				</Menu.Target>
-				<Menu.Dropdown p={0}>
-					<Box lightHidden={aboutMenuOpened} darkHidden={!aboutMenuOpened}>
-						<Menu.Label>
+				<Menu.Dropdown p="2xs">
+					<>
+						<Menu.Label c="black">
+							<Flex justify={"space-between"}>
+								<Highlight highlight={["Lackora"]}>{"Lackora (v.0.0.1)"}</Highlight>
+								<Text c="red.5" size="sm" onClick={props.onLogout} component="div" className="cursor-pointer">
+									Logout
+								</Text>
+							</Flex>
 							<ICPanelHeaderAvatarMenuInformation
-								profileSrc=""
 								profileEmail={userSession?.data?.profile?.email}
-								profileName={`${userSession?.data?.profile?.name} ${userSession?.data?.profile?.familyname}`}
+								profileName={userSession?.data?.profile?.name}
+								profileRole={userSession?.data?.profile?.familyname}
 							/>
 						</Menu.Label>
-						<Menu.Item id="data-test-profile-menu-logout" onClick={props.onLogout}>
-							<Text c="red.4" size="sm">
-								Logout
-							</Text>
+						{/* <Menu.Item disabled fz="xs" className="cursor-auto">
+							Settings
 						</Menu.Item>
-						<Menu.Divider />
-					</Box>
-					<Box lightHidden={!aboutMenuOpened} darkHidden={aboutMenuOpened}>
-						<Flex justify="space-between" className={classes.aboutHeader}>
-							<Text size="lg" fw="bold">
-								About
-							</Text>
-							<ActionIcon size="md" variant="subtle" color="white" onClick={aboutMenuHandler.close}>
-								<IconX />
-							</ActionIcon>
-						</Flex>
-						<Menu.Divider />
-						<Menu.Item
-							id="data-test-profile-menu-about-privacy-policy"
-							onClick={() => {
-								aboutMenuHandler.close();
-								mainMenuHandler.close();
-							}}
-						>
-							<Text c={colors.primary[6]} size="sm" fw="500">
-								Privacy Policy
-							</Text>
-						</Menu.Item>
-						<Menu.Divider />
-						<Text
-							p="sm"
-							size="xs"
-							c={colors.gray[4]}
-						>{`©${dayjs().format("YYYY")} MonoLight. All rights reserved`}</Text>
-					</Box>
+						<Menu.Item leftSection={<IconInfoHexagon size={15} />} onClick={aboutHandler.open}>
+							About
+						</Menu.Item> */}
+					</>
 				</Menu.Dropdown>
 			</Menu>
 		</>

@@ -10,7 +10,7 @@ import { useTableSearch } from "@/shared/hooks/useTableSearch";
 import { useTableSort } from "@/shared/hooks/useTableSort";
 import { IconEdit, IconInfoCircle, IconTrash } from "@tabler/icons-react";
 
-import { useUsersList } from "../../lib/index.hooks";
+import { usePersonnelList } from "../../lib/index.hooks";
 
 export default function UsersList() {
 	const t = useI18n();
@@ -19,7 +19,7 @@ export default function UsersList() {
 	const { generateSortIcons, sortStatus } = useTableSort<(typeof results)[number]>();
 	const { searchState, generateSearchIcons } = useTableSearch<(typeof results)[number]>();
 
-	const { userList } = useUsersList({ ...queryParams, ...sortStatus, ...searchState });
+	const { userList } = usePersonnelList({ ...queryParams, ...sortStatus, ...searchState });
 	const results = userList.data?.results || [];
 	const total = userList.data?.total || 0;
 
@@ -32,9 +32,9 @@ export default function UsersList() {
 			accessor: "name",
 			title: (
 				<Flex justify="space-between" align="center">
-					<Text>{t("users.name")}</Text>
+					<Text>{t("personnel.name")}</Text>
 					<Flex gap="3xs">
-						{generateSearchIcons("name", t("users.name"))}
+						{generateSearchIcons("name", t("personnel.name"))}
 						{generateSortIcons("name")}
 					</Flex>
 				</Flex>
@@ -49,9 +49,9 @@ export default function UsersList() {
 			accessor: "branch",
 			title: (
 				<Flex justify="space-between" align="center">
-					<Text>{t("users.branch")}</Text>
+					<Text>{t("personnel.branch")}</Text>
 					<Flex gap="3xs">
-						{generateSearchIcons("branch", t("users.branch"))}
+						{generateSearchIcons("branch", t("personnel.branch"))}
 						{generateSortIcons("branch")}
 					</Flex>
 				</Flex>
@@ -66,9 +66,9 @@ export default function UsersList() {
 			accessor: "job",
 			title: (
 				<Flex justify="space-between" align="center">
-					<Text>{t("users.job")}</Text>
+					<Text>{t("personnel.job")}</Text>
 					<Flex gap="3xs">
-						{generateSearchIcons("job", t("users.job"))}
+						{generateSearchIcons("job", t("personnel.job"))}
 						{generateSortIcons("job")}
 					</Flex>
 				</Flex>
@@ -83,9 +83,9 @@ export default function UsersList() {
 			accessor: "phone",
 			title: (
 				<Flex justify="space-between" align="center">
-					<Text>{t("users.phone")}</Text>
+					<Text>{t("personnel.phone")}</Text>
 					<Flex gap="3xs">
-						{generateSearchIcons("phone", t("users.phone"))}
+						{generateSearchIcons("phone", t("personnel.phone"))}
 						{generateSortIcons("phone")}
 					</Flex>
 				</Flex>
@@ -100,7 +100,7 @@ export default function UsersList() {
 			accessor: "actions",
 			title: (
 				<Flex justify="space-between" align="center">
-					<Text>{t("users.action")}</Text>
+					<Text>{t("personnel.action")}</Text>
 				</Flex>
 			),
 			render: () => (
