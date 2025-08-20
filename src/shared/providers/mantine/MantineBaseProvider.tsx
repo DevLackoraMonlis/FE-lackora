@@ -8,10 +8,8 @@ import { type PropsWithChildren, useContext } from "react";
 import nonce from "../../../../nonce";
 
 export default function MantineBaseProvider(props: PropsWithChildren) {
-	const { theme } = useContext(GlobalSettingContext);
-	const { mantineBaseTheme } = useMantineBaseTheme(theme);
-
-	console.log(theme, mantineBaseTheme);
+	const { theme, mantineTheme } = useContext(GlobalSettingContext);
+	const { mantineBaseTheme } = useMantineBaseTheme(theme, mantineTheme === "dark");
 
 	return (
 		<MantineProvider

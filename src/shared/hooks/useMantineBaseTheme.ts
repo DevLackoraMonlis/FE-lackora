@@ -28,7 +28,9 @@ const brandPink: MantineColorsTuple = [
 	"oklch(45% 0.03 20.53)",
 ];
 
-export default function useMantineBaseTheme(theme: GlobalTheme) {
+export default function useMantineBaseTheme(theme: GlobalTheme, isDark: boolean) {
+	const white = "oklch(100% 0 0)";
+	const black = "oklch(0% 0 0)";
 	const mantineBaseTheme: MantineThemeOverride = {
 		components: {
 			Select: {
@@ -45,9 +47,12 @@ export default function useMantineBaseTheme(theme: GlobalTheme) {
 			},
 			Accordion: {
 				defaultProps: {
-					styles: ({ colors }: MantineThemeOverride) => ({
-						control: { backgroundColor: colors?.gray?.[2] },
-					}),
+					styles: ({ colors, ...add }: MantineThemeOverride) => {
+						console.log({ add });
+						return {
+							control: { backgroundColor: colors?.gray?.[2] },
+						};
+					},
 				},
 			},
 			AccordionPanel: {
@@ -81,7 +86,11 @@ export default function useMantineBaseTheme(theme: GlobalTheme) {
 			},
 			Highlight: {
 				defaultProps: {
-					highlightStyles: { background: "transparent", fontWeight: "bold" },
+					highlightStyles: {
+						background: "transparent",
+						fontWeight: "bold",
+						color: isDark ? white : black,
+					},
 				},
 			},
 			Text: {
@@ -102,8 +111,8 @@ export default function useMantineBaseTheme(theme: GlobalTheme) {
 			},
 		},
 		fontFamily: "var(--manrope) !important",
-		white: "oklch(100% 0 0)",
-		black: "oklch(0% 0 0)",
+		white,
+		black,
 		defaultRadius: "md",
 		breakpoints: {
 			...DEFAULT_THEME.breakpoints,

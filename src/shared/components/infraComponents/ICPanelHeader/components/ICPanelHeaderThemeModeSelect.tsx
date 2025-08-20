@@ -1,18 +1,25 @@
 import GlobalSettingContext from "@/shared/contexts/globalSettingContext";
-import { ActionIcon } from "@mantine/core";
-import { IconColorFilter } from "@tabler/icons-react";
+import { ActionIcon, useMantineColorScheme } from "@mantine/core";
+import { IconColorFilter, IconMoon, IconSunFilled } from "@tabler/icons-react";
 import { useContext } from "react";
 
 export default function ICPanelHeaderThemeModeSelect() {
-	const { theme, setTheme } = useContext(GlobalSettingContext);
-	// const { toggleColorScheme, colorScheme } = useMantineColorScheme();
+	const { theme, setTheme, setMantineTheme } = useContext(GlobalSettingContext);
+	const { toggleColorScheme, colorScheme } = useMantineColorScheme();
 	return (
 		<>
-			{/* <ActionIcon variant="subtle" c="white" onClick={toggleColorScheme}>
-        {colorScheme === "dark" ? <IconSunFilled size={20} /> : <IconMoon size={20} />}
-      </ActionIcon> */}
 			<ActionIcon
-				variant="subtle"
+				variant="transparent"
+				c="white"
+				onClick={() => {
+					setMantineTheme?.(colorScheme === "dark" ? "light" : "dark");
+					toggleColorScheme();
+				}}
+			>
+				{colorScheme === "dark" ? <IconSunFilled size={20} /> : <IconMoon size={20} />}
+			</ActionIcon>
+			<ActionIcon
+				variant="transparent"
 				onClick={() => {
 					setTheme?.(theme === "green" ? "pink" : "green");
 				}}

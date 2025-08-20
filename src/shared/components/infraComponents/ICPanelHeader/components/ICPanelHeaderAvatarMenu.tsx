@@ -41,7 +41,7 @@ export default function ICPanelHeaderAvatarMenu(props: ICPanelHeaderProps) {
 				</Menu.Target>
 				<Menu.Dropdown p="2xs">
 					<>
-						<Menu.Label c="black">
+						<Menu.Label>
 							<Flex justify={"space-between"}>
 								<Highlight highlight={["Lackora"]}>{"Lackora (v.0.0.1)"}</Highlight>
 								<Text c="red.5" size="sm" onClick={props.onLogout} component="div" className="cursor-pointer">

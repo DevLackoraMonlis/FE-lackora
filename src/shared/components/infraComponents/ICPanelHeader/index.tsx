@@ -14,9 +14,9 @@ export default function ICPanelHeader(props: ICPanelHeaderProps) {
 			</Flex>
 			<Flex align="center">
 				{props.notification}
-				<Divider orientation={"vertical"} mx={"md"} my={"md"} />
+				<Divider orientation={"vertical"} mx={"md"} my={"md"} color="white" />
 				<ICPanelHeaderThemeModeSelect />
-				<Divider orientation={"vertical"} mx={"md"} my={"md"} />
+				<Divider orientation={"vertical"} mx={"md"} my={"md"} color="white" />
 				<ICPanelHeaderAvatarMenu {...props} />
 			</Flex>
 		</Flex>

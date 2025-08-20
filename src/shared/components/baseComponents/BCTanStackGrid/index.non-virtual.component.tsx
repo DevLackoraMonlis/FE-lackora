@@ -1,5 +1,5 @@
 import TanStackPagination from "@/shared/components/baseComponents/BCTanStackGrid/TanStackPagination";
-import { LoadingOverlay } from "@mantine/core";
+import { Card, LoadingOverlay } from "@mantine/core";
 import TanStackMainTableNonVirtual from "./components/TanStackMainTableNonVirtual";
 import { useTanStackDefault } from "./index.hooks";
 import type { TanStackGridProps } from "./index.types";
@@ -7,13 +7,12 @@ import type { TanStackGridProps } from "./index.types";
 export default function TanStackGridNonVirtual<T extends Record<string, unknown>>(
 	props: TanStackGridProps<T>,
 ) {
-	const { table, ref, tableBodyRef, tableContainerRef, tableRef, bodyHeight, columns } =
-		useTanStackDefault(props);
+	const { table, ref, tableBodyRef, tableContainerRef, tableRef, columns } = useTanStackDefault(props);
 
 	const { rows } = table.getCoreRowModel();
 
 	return (
-		<div ref={ref} className={`tanstackTableTheme ${props.tableRootClassName}`}>
+		<Card m={0} p={0} ref={ref} className={`tanstackTableTheme ${props.tableRootClassName}`} radius="xs">
 			<div
 				className={`container ${props.tableContainerClassName}`}
 				ref={tableContainerRef}
@@ -21,29 +20,10 @@ export default function TanStackGridNonVirtual<T extends Record<string, unknown>
 					overflow: "auto", //our scrollable table container
 					position: "relative", //needed for sticky header
 					height: props.h || 500, //should be a fixed height
-					width: props.w || "100%",
+					width: props.w || "101%",
 				}}
 			>
-				<LoadingOverlay
-					loaderProps={{
-						type: "oval",
-						style: {
-							display: "flex",
-							width: "100%",
-							height: "100%",
-							justifyContent: "flex-start",
-							alignItems: "flex-start",
-							marginTop: "15px",
-							marginLeft: "15px",
-						},
-					}}
-					style={{
-						justifyContent: "flex-start",
-					}}
-					w={tableRef.current?.style.width || "100%"}
-					h={bodyHeight + 40 || "100%"}
-					visible={props.fetching}
-				/>
+				<LoadingOverlay visible={props.fetching} />
 
 				<TanStackMainTableNonVirtual
 					withPaddingCells={props.withPaddingCells}
@@ -73,6 +53,6 @@ export default function TanStackGridNonVirtual<T extends Record<string, unknown>
 					PaginationSize={props.paginationSize}
 				/>
 			)}
-		</div>
+		</Card>
 	);
 }
