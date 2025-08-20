@@ -1,19 +1,21 @@
 import { ActionIcon, Flex, Highlight, Text } from "@mantine/core";
 import { useViewportSize } from "@mantine/hooks";
+import { IconEdit, IconInfoCircle, IconTrash } from "@tabler/icons-react";
 import { useState } from "react";
 
 import type { PaginationRq } from "@/http/end-points/GeneralService.types";
 import { useI18n } from "@/locales/client";
 import BCTanStackGrid from "@/shared/components/baseComponents/BCTanStackGrid";
 import type { TanStackGridProps } from "@/shared/components/baseComponents/BCTanStackGrid/index.types";
+import { useBreakpoint } from "@/shared/hooks/useBreakpoint";
 import { useTableSearch } from "@/shared/hooks/useTableSearch";
 import { useTableSort } from "@/shared/hooks/useTableSort";
-import { IconEdit, IconInfoCircle, IconTrash } from "@tabler/icons-react";
 
 import { usePersonnelList } from "../../lib/index.hooks";
 
 export default function UsersList() {
 	const t = useI18n();
+	const { isSm } = useBreakpoint();
 	const { height } = useViewportSize();
 	const [queryParams, setQueryParams] = useState<PaginationRq>({ limit: 25, page: 1 });
 	const { generateSortIcons, sortStatus } = useTableSort<(typeof results)[number]>();
@@ -122,7 +124,7 @@ export default function UsersList() {
 	return (
 		<>
 			<BCTanStackGrid
-				h={height - 170}
+				h={height - (isSm ? 170 : 210)}
 				withTableBorder
 				withColumnBorders
 				withRowBorders

@@ -10,16 +10,16 @@ import UsersList from "./PersonnelList";
 
 export default function Personnel() {
 	const t = useI18n();
-	const { isMd } = useBreakpoint();
+	const { isMd, isSm } = useBreakpoint();
 	return (
 		<Flex direction={"column"} p={"lg"} gap={"sm"}>
 			<Flex
-				direction={isMd ? "row" : "column"}
+				direction={isSm ? "row" : "column"}
 				justify={"space-between"}
 				align={isMd ? "center" : ""}
 				gap={"xs"}
 			>
-				<Text size="xl" variant="gradient" fz={isMd ? "h3" : ""} fw={"bold"}>
+				<Text size="xl" variant="gradient" fz={isSm ? "h3" : ""} fw={"bold"}>
 					{t("personnel.title")}
 				</Text>
 				<Flex align={"center"} gap={"xs"}>
