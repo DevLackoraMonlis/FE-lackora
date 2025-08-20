@@ -12,7 +12,15 @@ export default function TanStackGridNonVirtual<T extends Record<string, unknown>
 	const { rows } = table.getCoreRowModel();
 
 	return (
-		<Card m={0} p={0} ref={ref} className={`tanstackTableTheme ${props.tableRootClassName}`} radius="xs">
+		<Card
+			m={0}
+			p={0}
+			pr={1}
+			ref={ref}
+			className={`tanstackTableTheme ${props.tableRootClassName}`}
+			radius="sm"
+			shadow="sm"
+		>
 			<div
 				className={`container ${props.tableContainerClassName}`}
 				ref={tableContainerRef}
@@ -20,7 +28,7 @@ export default function TanStackGridNonVirtual<T extends Record<string, unknown>
 					overflow: "auto", //our scrollable table container
 					position: "relative", //needed for sticky header
 					height: props.h || 500, //should be a fixed height
-					width: props.w || "101%",
+					width: props.w || "100%",
 				}}
 			>
 				<LoadingOverlay visible={props.fetching} />
