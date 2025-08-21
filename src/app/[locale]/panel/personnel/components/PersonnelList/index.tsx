@@ -1,6 +1,6 @@
 import { ActionIcon, Flex, Highlight, Text } from "@mantine/core";
 import { useViewportSize } from "@mantine/hooks";
-import { IconEdit, IconInfoCircle, IconTrash } from "@tabler/icons-react";
+import { IconEdit, IconInfoCircle, IconLocationShare, IconTrash } from "@tabler/icons-react";
 import { useState } from "react";
 
 import type { PaginationRq } from "@/http/end-points/GeneralService.types";
@@ -106,12 +106,15 @@ export default function UsersList() {
 				</Flex>
 			),
 			render: () => (
-				<Flex gap={"xs"} align={"xs"}>
+				<Flex gap={"md"} align={"center"}>
 					<ActionIcon variant="transparent" c={"blue"} size={"sm"}>
 						<IconInfoCircle />
 					</ActionIcon>
 					<ActionIcon variant="transparent" c={"orange"} size={"sm"}>
 						<IconEdit />
+					</ActionIcon>
+					<ActionIcon variant="transparent" c={"green"} size={"sm"}>
+						<IconLocationShare />
 					</ActionIcon>
 					<ActionIcon variant="transparent" c={"red"} size={"sm"}>
 						<IconTrash />

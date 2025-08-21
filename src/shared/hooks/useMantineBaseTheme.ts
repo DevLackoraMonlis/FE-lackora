@@ -21,7 +21,7 @@ const brandPink: MantineColorsTuple = [
 	"oklch(85% 0.045 20.53)",
 	"oklch(83% 0.05 20.53)",
 	"oklch(82.7% 0.055 20.53)",
-	"oklch(82.54% 0.063 20.53)", // main
+	"oklch(80% 0.055 20.53)", // main
 	"oklch(75% 0.06 20.53)",
 	"oklch(65% 0.05 20.53)",
 	"oklch(55% 0.04 20.53)",

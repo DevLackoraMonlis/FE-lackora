@@ -1,19 +1,14 @@
-// hooks/useTailwindBreakpoints.ts
+import { useMantineTheme } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 
 export function useBreakpoint() {
-	const isSm = useMediaQuery("(min-width: 640px)");
-	const isMd = useMediaQuery("(min-width: 768px)");
-	const isLg = useMediaQuery("(min-width: 1024px)");
-	const isXl = useMediaQuery("(min-width: 1280px)");
-	const is2xl = useMediaQuery("(min-width: 1536px)");
+	const { breakpoints } = useMantineTheme();
+	const isXs = useMediaQuery(`(min-width: ${breakpoints.xs})`);
+	const isSm = useMediaQuery(`(min-width: ${breakpoints.sm})`);
+	const isMd = useMediaQuery(`(min-width: ${breakpoints.md})`);
+	const isLg = useMediaQuery(`(min-width: ${breakpoints.lg})`);
+	const isXl = useMediaQuery(`(min-width: ${breakpoints.xl})`);
+	const is2xl = useMediaQuery(`(min-width: ${breakpoints["2xl"]})`);
 
-	let current: "base" | "sm" | "md" | "lg" | "xl" | "2xl" = "base";
-	if (isSm) current = "sm";
-	if (isMd) current = "md";
-	if (isLg) current = "lg";
-	if (isXl) current = "xl";
-	if (is2xl) current = "2xl";
-
-	return { isSm, isMd, isLg, isXl, is2xl, current };
+	return { isXs, isSm, isMd, isLg, isXl, is2xl };
 }

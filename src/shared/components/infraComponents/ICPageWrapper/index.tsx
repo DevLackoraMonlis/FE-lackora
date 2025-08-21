@@ -13,7 +13,7 @@ type Props = PropsWithChildren<{
 export default function ICPageWrapper(props: Props) {
 	return (
 		<Flex direction={"column"} h={"100%"}>
-			<Card p={0} m={0}>
+			<Card p={0} m={0} px="xs">
 				<Flex pl={"2xs"} align={"center"} h={48}>
 					<Text fz={"lg"} fw={"bolder"}>
 						{props.title}

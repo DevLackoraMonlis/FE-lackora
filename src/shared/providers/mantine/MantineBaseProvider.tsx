@@ -16,6 +16,8 @@ export default function MantineBaseProvider(props: PropsWithChildren) {
 			getStyleNonce={() => nonce.nonce}
 			defaultColorScheme={"light"}
 			withCssVariables
+			withStaticClasses
+			withGlobalClasses
 			theme={mantineBaseTheme}
 		>
 			<Notifications position="top-right" zIndex={Number.MAX_SAFE_INTEGER} />
