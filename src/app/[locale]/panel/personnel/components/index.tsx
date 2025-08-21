@@ -1,7 +1,7 @@
 "use client";
 
 import { Button, Flex, Text } from "@mantine/core";
-import { IconLocationShare, IconPlus } from "@tabler/icons-react";
+import { IconPlus } from "@tabler/icons-react";
 
 import { useI18n } from "@/locales/client";
 import { useBreakpoint } from "@/shared/hooks/useBreakpoint";
@@ -16,6 +16,10 @@ export default function Personnel() {
 	const { isMd, isSm } = useBreakpoint();
 	const [openedAddPersonnel, handleOpenedPersonnel] = useDisclosure();
 	const [openedAssignService, handleAssignService] = useDisclosure();
+	const common = {
+		assignService: handleAssignService.open,
+		editPersonnel: handleOpenedPersonnel.open,
+	};
 	return (
 		<>
 			<AddPersonnelModal
@@ -48,17 +52,9 @@ export default function Personnel() {
 						>
 							{t("personnel.add")}
 						</Button>
-						<Button
-							variant={"outline"}
-							leftSection={<IconLocationShare size={15} />}
-							size={isMd ? "sm" : "xs"}
-							onClick={handleAssignService.open}
-						>
-							{t("personnel.assign")}
-						</Button>
 					</Flex>
 				</Flex>
-				<UsersList />
+				<UsersList {...common} />
 			</Flex>
 		</>
 	);

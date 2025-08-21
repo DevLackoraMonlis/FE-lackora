@@ -1,6 +1,6 @@
 import { ActionIcon, Flex, Highlight, Text } from "@mantine/core";
 import { useViewportSize } from "@mantine/hooks";
-import { IconEdit, IconInfoCircle, IconLocationShare, IconTrash } from "@tabler/icons-react";
+import { IconEdit, IconLocationShare, IconTrash } from "@tabler/icons-react";
 import { useState } from "react";
 
 import type { PaginationRq } from "@/http/end-points/GeneralService.types";
@@ -13,7 +13,11 @@ import { useTableSort } from "@/shared/hooks/useTableSort";
 
 import { usePersonnelList } from "../../lib/index.hooks";
 
-export default function UsersList() {
+type Props = {
+	assignService: VoidFunction;
+	editPersonnel: VoidFunction;
+};
+export default function UsersList(props: Props) {
 	const t = useI18n();
 	const { isSm } = useBreakpoint();
 	const { height } = useViewportSize();
@@ -107,13 +111,13 @@ export default function UsersList() {
 			),
 			render: () => (
 				<Flex gap={"md"} align={"center"}>
-					<ActionIcon variant="transparent" c={"blue"} size={"sm"}>
-						<IconInfoCircle />
-					</ActionIcon>
-					<ActionIcon variant="transparent" c={"orange"} size={"sm"}>
+					{/* <ActionIcon variant="transparent" c={"blue"} size={"sm"}>
+            <IconInfoCircle />
+          </ActionIcon> */}
+					<ActionIcon variant="transparent" c={"orange"} size={"sm"} onClick={props.editPersonnel}>
 						<IconEdit />
 					</ActionIcon>
-					<ActionIcon variant="transparent" c={"green"} size={"sm"}>
+					<ActionIcon variant="transparent" c={"green"} size={"sm"} onClick={props.assignService}>
 						<IconLocationShare />
 					</ActionIcon>
 					<ActionIcon variant="transparent" c={"red"} size={"sm"}>

@@ -143,8 +143,8 @@ export default function useMantineBaseTheme(theme: GlobalTheme, isDark: boolean)
 		primaryShade: 5,
 		defaultGradient: {
 			from: theme === "pink" ? "brandPink.5" : "brandGreen.5",
-			to: theme !== "pink" ? "brandPink.7" : "brandGreen.3",
-			deg: 80,
+			to: theme !== "pink" ? "brandPink.5" : "brandGreen.5",
+			deg: 50,
 		},
 		primaryColor: "primary",
 		colors: {
