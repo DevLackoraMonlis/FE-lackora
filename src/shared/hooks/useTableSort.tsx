@@ -2,49 +2,49 @@ import { ActionIcon } from "@mantine/core";
 import { IconArrowsSort, IconSortAscending, IconSortDescending } from "@tabler/icons-react";
 import { useState } from "react";
 
-type SortState<TableDatasource extends Record<string, unknown>> = {
-	columnAccessor: keyof TableDatasource;
-	direction: "asc" | "des" | "";
+type SortState<TableDatasource extends Record<string, string>> = {
+	sort: keyof TableDatasource;
+	order: "asc" | "des" | "";
 };
 
-export function useTableSort<TableDatasource extends Record<string, unknown>>(
+export function useTableSort<TableDatasource extends Record<string, string>>(
 	defaultSortState?: SortState<TableDatasource>,
 ) {
 	const [sortStatus, setSortStatus] = useState<SortState<TableDatasource>>(
 		defaultSortState || {
-			columnAccessor: "",
-			direction: "",
+			sort: "",
+			order: "",
 		},
 	);
 
-	const handleSortOnTable = (accessor: SortState<TableDatasource>["columnAccessor"]) => {
-		setSortStatus(({ columnAccessor, direction }) => {
-			if (columnAccessor === accessor) {
-				if (direction === "asc") {
-					direction = "des";
-				} else if (direction === "des") {
-					direction = "";
+	const handleSortOnTable = (accessor: SortState<TableDatasource>["sort"]) => {
+		setSortStatus(({ sort, order }) => {
+			if (sort === accessor) {
+				if (order === "asc") {
+					order = "des";
+				} else if (order === "des") {
+					order = "";
 				} else {
-					direction = "asc";
+					order = "asc";
 				}
 			} else {
-				columnAccessor = accessor;
-				direction = "asc";
+				sort = accessor;
+				order = "asc";
 			}
-			return { columnAccessor, direction };
+			return { sort, order };
 		});
 	};
 
-	const generateSortIcons = (accessor: SortState<TableDatasource>["columnAccessor"]) => {
+	const generateSortIcons = (accessor: SortState<TableDatasource>["sort"]) => {
 		let iconWithTitle = { icon: <IconArrowsSort size={15} aria-label="sort-none" />, title: "Sort None" };
-		if (accessor === sortStatus.columnAccessor) {
-			if (sortStatus.direction === "asc") {
+		if (accessor === sortStatus.sort) {
+			if (sortStatus.order === "asc") {
 				iconWithTitle = {
 					icon: <IconSortAscending size={15} aria-label="sort-ascending" />,
 					title: "Sort Ascending",
 				};
 			}
-			if (sortStatus.direction === "des") {
+			if (sortStatus.order === "des") {
 				iconWithTitle = {
 					icon: <IconSortDescending size={15} aria-label="sort-descending" />,
 					title: "Sort Descending",
