@@ -31,7 +31,7 @@ const TanStackPagination: FC<AgPaginationProps> = (props) => {
 	};
 
 	return (
-		<Flex className={"tanStackTablePagination"} bg={"gray.2"} align="center" justify="space-between" p="2xs">
+		<Flex className={"tanStackTablePagination"} align="center" justify="space-between" p="2xs">
 			<Flex columnGap={8} align="center">
 				<Text size="xs">{` Showing ${showing()}-${(props.page || 0) * (props.recordsPerPage || 0)} of ${props.totalRecords} items`}</Text>
 			</Flex>

@@ -8,15 +8,5 @@ type Props = Omit<NavLinkProps, "classNames"> & {
 };
 
 export default function BCNavLink(props: Props) {
-	return (
-		<NavLink
-			{...props}
-			classNames={{
-				chevron: classes.chevron,
-				label: classes.label,
-				root: classes.root,
-				section: classes.section,
-			}}
-		/>
-	);
+	return <NavLink {...props} classNames={classes} />;
 }
