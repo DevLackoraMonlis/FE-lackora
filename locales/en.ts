@@ -1,4 +1,25 @@
 export default {
 	username: "Username",
 	password: "Password",
+	users: {
+		title: "User List",
+		name: "Name",
+		branch: "Branch",
+		job: "Job",
+		phone: "Phone",
+		add: "Add User",
+		edit: "Edit User",
+		action: "Actions",
+	},
+	personnel: {
+		title: "Personnel List",
+		name: "Name",
+		branch: "Branch",
+		job: "Job",
+		phone: "Phone",
+		add: "Add Personnel",
+		edit: "Edit Personnel",
+		action: "Actions",
+		assign: "Assign service",
+	},
 } as const;

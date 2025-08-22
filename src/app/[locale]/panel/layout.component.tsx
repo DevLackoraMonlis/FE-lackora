@@ -44,7 +44,7 @@ export default function PanelLayout(
 					applicationLogo={null}
 					onLogout={() => signOut({ redirect: true, callbackUrl: AppRoutes.login })}
 					sessionUser={props.sessionUser}
-					notification={<IconBell color={white} />}
+					notification={<IconBell color={white} size={20} />}
 				/>
 			</header>
 			<Flex className={classes.layoutBody}>

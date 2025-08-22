@@ -40,7 +40,6 @@ export default function BCSearchInput({
 				onChange={(event) => setValue(event.currentTarget.value)}
 				w={inputWidth}
 				leftSectionPointerEvents="none"
-				leftSection={<IconSearch size={15} />}
 				onKeyDown={getHotkeyHandler([["Enter", handleSubmit]])}
 				rightSectionPointerEvents="auto"
 				rightSection={
