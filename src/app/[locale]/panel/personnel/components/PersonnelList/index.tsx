@@ -1,4 +1,4 @@
-import { ActionIcon, Flex, Highlight, Text } from "@mantine/core";
+import { ActionIcon, Avatar, Flex, Group, Highlight, Text } from "@mantine/core";
 import { useViewportSize } from "@mantine/hooks";
 import { IconEdit, IconLocationShare, IconTrash } from "@tabler/icons-react";
 import { useState } from "react";
@@ -46,9 +46,12 @@ export default function UsersList(props: Props) {
 				</Flex>
 			),
 			render: ({ name }) => (
-				<Highlight highlight={[searchState.name || ""]} highlightStyles={{}}>
-					{name || "-"}
-				</Highlight>
+				<Group gap="xs">
+					<Avatar size={30} src={name} radius="lg" />
+					<Highlight highlight={[searchState.name || ""]} highlightStyles={{}}>
+						{name || "-"}
+					</Highlight>
+				</Group>
 			),
 		},
 		{

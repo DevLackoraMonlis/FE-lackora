@@ -95,13 +95,6 @@ export default function useMantineBaseTheme(theme: GlobalTheme, isDark: boolean)
 			Text: {
 				defaultProps: {
 					fz: "sm",
-					// c: isDark
-					//   ? theme === "pink"
-					//     ? "brandGreen.2"
-					//     : "brandPink.6"
-					//   : theme === "pink"
-					//   ? "brandGreen.6"
-					//   : "brandPink.7",
 				},
 			},
 			Tooltip: {
@@ -142,16 +135,15 @@ export default function useMantineBaseTheme(theme: GlobalTheme, isDark: boolean)
 		},
 		primaryShade: 5,
 		defaultGradient: {
-			from: theme === "pink" ? "brandPink.5" : "brandGreen.5",
-			to: theme !== "pink" ? "brandPink.5" : "brandGreen.5",
+			from: theme === "pink" ? "primary.5" : "primarySecondary.5",
+			to: theme !== "pink" ? "primary.5" : "primarySecondary.5",
 			deg: 50,
 		},
 		primaryColor: "primary",
 		colors: {
 			...DEFAULT_THEME.colors,
 			primary: theme === "pink" ? brandPink : brandGreen,
-			brandPink,
-			brandGreen,
+			primarySecondary: theme === "pink" ? brandGreen : brandPink,
 		},
 	};
 
