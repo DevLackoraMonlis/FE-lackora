@@ -1,6 +1,6 @@
 import GlobalSettingContext from "@/shared/contexts/globalSettingContext";
 import { ActionIcon, useMantineColorScheme } from "@mantine/core";
-import { IconColorFilter, IconMoon, IconSunFilled } from "@tabler/icons-react";
+import { IconMoon, IconSunFilled, IconTemplateFilled } from "@tabler/icons-react";
 import { useContext } from "react";
 
 export default function ICPanelHeaderThemeModeSelect() {
@@ -24,11 +24,7 @@ export default function ICPanelHeaderThemeModeSelect() {
 					setTheme?.(theme === "green" ? "pink" : "green");
 				}}
 			>
-				{theme === "green" ? (
-					<IconColorFilter color={"pink"} size={20} />
-				) : (
-					<IconColorFilter color={"green"} size={20} />
-				)}
+				<IconTemplateFilled color={theme === "green" ? "pink" : "green"} size={20} />
 			</ActionIcon>
 		</>
 	);

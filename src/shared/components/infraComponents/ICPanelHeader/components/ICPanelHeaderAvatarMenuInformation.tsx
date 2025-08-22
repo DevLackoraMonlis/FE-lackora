@@ -1,10 +1,12 @@
-import { Avatar, Flex, Text } from "@mantine/core";
+import { Avatar, Flex, Group, Text } from "@mantine/core";
+import { IconAt, IconPhoneCall } from "@tabler/icons-react";
 
 type Props = {
 	profileSrc?: string;
 	profileName?: string;
 	profileEmail?: string;
 	profileRole?: string;
+	profilePhone?: string;
 };
 
 const avatarStyles = {
@@ -18,14 +20,28 @@ const avatarStyles = {
 
 export default function ICPanelHeaderAvatarMenuInformation(props: Props) {
 	return (
-		<Flex align="center" gap={"sm"} my={"sm"}>
-			<Avatar size={55} alt={props.profileName} src={props.profileSrc} radius={"sm"} styles={avatarStyles} />
+		<Flex wrap="nowrap" gap={"xs"} pt={"xs"}>
+			<Avatar src={props.profileSrc} size={60} radius="md" styles={avatarStyles} />
 			<Flex direction={"column"}>
-				<Text tt="capitalize" fw="bold">
-					{props.profileName}
+				<Text fz="xs" tt="uppercase" fw={"bold"} c="dimmed">
+					{props.profileRole}
 				</Text>
-				<Text fz="xs">{props.profileEmail}</Text>
-				<Text fz="xs">{props.profileRole}</Text>
+
+				<Text fw={"bold"}>{props.profileName}</Text>
+
+				<Group wrap="nowrap" gap={10} mt={3}>
+					<IconAt stroke={1.5} size={16} />
+					<Text fz="xs" c="dimmed">
+						{props.profileEmail}
+					</Text>
+				</Group>
+
+				<Group wrap="nowrap" gap={10} mt={5}>
+					<IconPhoneCall stroke={1.5} size={16} />
+					<Text fz="xs" c="dimmed">
+						{props.profilePhone || "+11 (876) 890 56 23"}
+					</Text>
+				</Group>
 			</Flex>
 		</Flex>
 	);

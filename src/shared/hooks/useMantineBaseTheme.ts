@@ -3,7 +3,7 @@ import { DEFAULT_THEME } from "@mantine/core";
 import type { MantineColorsTuple, MantineThemeOverride } from "@mantine/core";
 
 const brandGreen: MantineColorsTuple = [
-	"oklch(95% 0.02 194.57)",
+	"oklch(98% 0.01 194.57)",
 	"oklch(85% 0.04 194.57)",
 	"oklch(70% 0.05 194.57)",
 	"oklch(60% 0.06 194.57)",
@@ -16,7 +16,7 @@ const brandGreen: MantineColorsTuple = [
 ];
 
 const brandPink: MantineColorsTuple = [
-	"oklch(95% 0.01 20.53)",
+	"oklch(98% 0.01 20.53)",
 	"oklch(90% 0.03 20.53)",
 	"oklch(85% 0.045 20.53)",
 	"oklch(83% 0.05 20.53)",

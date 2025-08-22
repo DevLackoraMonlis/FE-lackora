@@ -1,6 +1,10 @@
-import type { ICPanelHeaderProps } from "@/shared/components/infraComponents/ICPanelHeader/index.types";
 import { Avatar, Box, Flex, Highlight, Menu, Text } from "@mantine/core";
-import { IconChevronDown } from "@tabler/icons-react";
+import { IconChevronDown, IconUserSquareRounded } from "@tabler/icons-react";
+import { useRouter } from "next/navigation";
+
+import type { ICPanelHeaderProps } from "@/shared/components/infraComponents/ICPanelHeader/index.types";
+import { AppRoutes } from "@/shared/constants/routes";
+
 import ICPanelHeaderAvatarMenuInformation from "./ICPanelHeaderAvatarMenuInformation";
 
 const avatarStyles = {
@@ -15,8 +19,11 @@ const avatarStyles = {
 	},
 };
 
+const { profile } = AppRoutes;
+
 export default function ICPanelHeaderAvatarMenu(props: ICPanelHeaderProps) {
 	const userSession = props.sessionUser;
+	const router = useRouter();
 	return (
 		<>
 			<Menu
@@ -54,12 +61,12 @@ export default function ICPanelHeaderAvatarMenu(props: ICPanelHeaderProps) {
 								profileRole={userSession?.data?.profile?.familyname}
 							/>
 						</Menu.Label>
-						{/* <Menu.Item disabled fz="xs" className="cursor-auto">
+						<Menu.Item disabled fz="xs" className="cursor-auto">
 							Settings
 						</Menu.Item>
-						<Menu.Item leftSection={<IconInfoHexagon size={15} />} onClick={aboutHandler.open}>
-							About
-						</Menu.Item> */}
+						<Menu.Item leftSection={<IconUserSquareRounded size={15} />} onClick={() => router.push(profile)}>
+							Profile
+						</Menu.Item>
 					</>
 				</Menu.Dropdown>
 			</Menu>
