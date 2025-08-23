@@ -34,16 +34,7 @@ export default function Services() {
 					</Flex>
 				</Flex>
 				<Grid>
-					<Grid.Col span={{ md: 4 }}>
-						<ServiceSingleCard />
-					</Grid.Col>
-					<Grid.Col span={{ md: 4 }}>
-						<ServiceSingleCard />
-					</Grid.Col>
-					<Grid.Col span={{ md: 4 }}>
-						<ServiceSingleCard />
-					</Grid.Col>
-					<Grid.Col span={{ md: 4 }}>
+					<Grid.Col span={{ md: 3 }}>
 						<ServiceSingleCard />
 					</Grid.Col>
 				</Grid>
