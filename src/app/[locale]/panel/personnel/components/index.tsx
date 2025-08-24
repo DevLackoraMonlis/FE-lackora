@@ -33,13 +33,8 @@ export default function Personnel() {
 				refetchList={() => {}}
 			/>
 			{/* UI section */}
-			<Flex direction={"column"} p={"lg"} gap={"sm"}>
-				<Flex
-					direction={isSm ? "row" : "column"}
-					justify={"space-between"}
-					align={isMd ? "center" : ""}
-					gap={"xs"}
-				>
+			<Flex direction={"column"} p={"lg"} gap={"md"}>
+				<Flex justify={"space-between"} align={isMd ? "center" : ""} gap={"xs"}>
 					<Text size="xl" fz={isSm ? "h3" : ""} fw={"bold"}>
 						{t("personnel.title")}
 					</Text>

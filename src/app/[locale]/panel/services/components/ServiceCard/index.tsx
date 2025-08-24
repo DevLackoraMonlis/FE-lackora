@@ -1,22 +1,58 @@
-import { Card, Center, Flex, Text, ThemeIcon } from "@mantine/core";
-import { IconPencilDiscount } from "@tabler/icons-react";
+import { ActionIcon, Flex, Indicator, Transition, useMantineColorScheme } from "@mantine/core";
+import { Box, Card, Container, type MantineColor, Text } from "@mantine/core";
+import { useHover } from "@mantine/hooks";
+import { IconEdit, IconPlayerEject, IconTrash } from "@tabler/icons-react";
 
-export default function StatsCard() {
+type Props = {
+	c: MantineColor;
+	title: string;
+	description: string;
+	icon: typeof IconEdit;
+};
+export default function FeaturesAsymmetrical({ c, title, description, icon }: Props) {
+	const { hovered, ref } = useHover();
+	const { colorScheme } = useMantineColorScheme();
+	const Icon = icon;
 	return (
-		<Card mt={30}>
-			<Center>
-				<ThemeIcon size={60} radius={60} mt="-50px">
-					<IconPencilDiscount size={32} stroke={1.5} />
-				</ThemeIcon>
-			</Center>
-			<Flex direction={"column"}>
-				<Text ta="center" fw={700}>
-					Pedicure
-				</Text>
-				<Text c="dimmed" ta="center" fz="sm">
-					32 request / week
-				</Text>
-			</Flex>
-		</Card>
+		<Container h={160} ref={ref} className="cursor-pointer">
+			<Indicator inline position="top-start" processing color={`${c}.3`} offset={3} title="Activate">
+				<Box pos={"relative"} pt={"xl"} pl={"xl"}>
+					<Card
+						pos={"absolute"}
+						h={100}
+						w={100}
+						top={0}
+						left={0}
+						bg={colorScheme === "dark" ? "" : `${c}.1`}
+					/>
+					<Box pos={"relative"}>
+						<Box c={c}>{Icon && <Icon size={30} />}</Box>
+						<Flex gap={"md"} align={"center"} my={"2xs"}>
+							<Text fw={"bold"} fz="lg">
+								{title}
+							</Text>
+							<Transition mounted={hovered} transition="fade-right" duration={500} timingFunction="ease">
+								{(styles) => (
+									<Flex style={styles} gap={"2xs"} align={"center"}>
+										<ActionIcon variant="transparent" c={"orange"} size={"sm"} title="Edit">
+											<IconEdit />
+										</ActionIcon>
+										<ActionIcon variant="transparent" c={"blue"} size={"sm"} title="Deactivate">
+											<IconPlayerEject />
+										</ActionIcon>
+										<ActionIcon variant="transparent" c={"red"} size={"sm"} title="Delete">
+											<IconTrash />
+										</ActionIcon>
+									</Flex>
+								)}
+							</Transition>
+						</Flex>
+						<Text c="dimmed" fz="sm">
+							{description}
+						</Text>
+					</Box>
+				</Box>
+			</Indicator>
+		</Container>
 	);
 }

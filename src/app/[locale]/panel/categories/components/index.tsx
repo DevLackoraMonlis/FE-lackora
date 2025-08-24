@@ -10,7 +10,7 @@ export default function Categories() {
 	const { isSm } = useBreakpoint();
 	return (
 		<>
-			<Flex direction={"column"} p={"lg"} gap={"sm"}>
+			<Flex direction={"column"} p={"lg"} gap={"md"}>
 				<Text size="xl" fz={isSm ? "h3" : ""} fw={"bold"}>
 					Categories
 				</Text>
