@@ -126,7 +126,7 @@ function ServiceForm(props: Props) {
 									</Label>
 									<NumberInput
 										style={{ flex: 2 }}
-										placeholder="Percents"
+										placeholder="Top master price"
 										suffix="   $"
 										thousandSeparator=","
 										key={form.key("topMasterPrice")}
@@ -139,7 +139,7 @@ function ServiceForm(props: Props) {
 									</Label>
 									<NumberInput
 										style={{ flex: 2 }}
-										placeholder="Percents"
+										placeholder="Master price"
 										suffix="   $"
 										thousandSeparator=","
 										key={form.key("masterPrice")}
@@ -152,7 +152,7 @@ function ServiceForm(props: Props) {
 									</Label>
 									<NumberInput
 										style={{ flex: 2 }}
-										placeholder="Percents"
+										placeholder="Junior master price"
 										suffix="   $"
 										thousandSeparator=","
 										key={form.key("juniorPrice")}
@@ -196,7 +196,7 @@ function ServiceForm(props: Props) {
 					<Grid.Col span={{ md: 12 }}>
 						{fields}
 						<Button
-							mt={"md"}
+							mt={"sm"}
 							variant="transparent"
 							leftSection={<IconPlus size={15} />}
 							onClick={() => form.insertListItem("translations", { ...defaultNameFields, lang: "" })}
