@@ -48,13 +48,6 @@ export default function ServiceSingleCard() {
 		}
 	}, [debouncedHovered, debouncedDescription]);
 
-	useEffect(() => {
-		setIsFlip(true);
-		setTimeout(() => {
-			setIsFlip(false);
-		}, 2000);
-	}, []);
-
 	return (
 		<MotionDiv
 			className="animate-card-container"

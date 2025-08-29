@@ -15,16 +15,16 @@ export default function Categories() {
 					Categories
 				</Text>
 				<Grid>
-					<Grid.Col span={{ md: 6, lg: 4 }}>
+					<Grid.Col span={{ md: 6, lg: 4, "2xl": 3 }}>
 						<ServiceSingleCard />
 					</Grid.Col>
-					<Grid.Col span={{ md: 6, lg: 4 }}>
+					<Grid.Col span={{ md: 6, lg: 4, "2xl": 3 }}>
 						<ServiceSingleCard />
 					</Grid.Col>
-					<Grid.Col span={{ md: 6, lg: 4 }}>
+					<Grid.Col span={{ md: 6, lg: 4, "2xl": 3 }}>
 						<ServiceSingleCard />
 					</Grid.Col>
-					<Grid.Col span={{ md: 6, lg: 4 }}>
+					<Grid.Col span={{ md: 6, lg: 4, "2xl": 3 }}>
 						<ServiceSingleCard />
 					</Grid.Col>
 				</Grid>
