@@ -61,6 +61,7 @@ export default function Services() {
 						</Grid.Col>
 						<Grid.Col span={{ md: 3 }}>
 							<ServiceSingleCard
+								activation={false}
 								color="#fd7e14"
 								title="Eyelashes"
 								icon={IconEyeglassFilled}

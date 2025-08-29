@@ -44,9 +44,16 @@ export default function ServiceSingleCard({
 					<Box pos={"relative"}>
 						<Box c={color}>{Icon && <Icon size={30} />}</Box>
 						<Flex gap={"md"} align={"center"} my={"2xs"}>
-							<Text fw={"bold"} fz="lg">
-								{title}
-							</Text>
+							<Flex align={"center"} gap={"2xs"}>
+								<Text fw={"bold"} fz="lg">
+									{title}
+								</Text>
+								{!activation && (
+									<Text fz={"xs"} fw={"bold"} hidden={hovered && editable} c={"red"}>
+										{"( Deactivate )"}
+									</Text>
+								)}
+							</Flex>
 							<Transition
 								mounted={hovered && editable}
 								transition="fade-right"
@@ -58,7 +65,12 @@ export default function ServiceSingleCard({
 										<ActionIcon variant="transparent" c={"orange"} size={"sm"} title="Edit">
 											<IconEdit />
 										</ActionIcon>
-										<ActionIcon variant="transparent" c={"blue"} size={"sm"} title="Deactivate">
+										<ActionIcon
+											variant="transparent"
+											c={"blue"}
+											size={"sm"}
+											title={activation ? "Deactivate" : "Activation"}
+										>
 											<IconPlayerEject />
 										</ActionIcon>
 										<ActionIcon variant="transparent" c={"red"} size={"sm"} title="Delete">

@@ -1,23 +1,15 @@
-import { Card, Flex, Grid, Image, Indicator, Menu, RingProgress, ScrollArea, Text } from "@mantine/core";
+import { Card, Flex, Grid, Image, Menu, Text } from "@mantine/core";
+import { DEFAULT_THEME, Indicator, RingProgress, ScrollArea } from "@mantine/core";
 import { useDebouncedValue, useHover } from "@mantine/hooks";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
 import { IconDotsVertical, IconEdit, IconToggleRight } from "@tabler/icons-react";
 
-import img from "./login-bg-min.png";
-const MotionDiv = motion.div;
+import img from "./login-bg-min.jpg";
 
-// type Props = {
-//   serviceIconPath?: string | null;
-//   serviceBadge: ReactNode;
-//   serviceType: string;
-//   name: string;
-//   version: number;
-//   description?: string | null;
-//   onUpdateService: VoidFunction;
-//   onDeleteService: VoidFunction;
-// };
+const MotionDiv = motion.div;
+const { colors } = DEFAULT_THEME;
 
 const serviceList = [
 	"Pedicure",
@@ -33,7 +25,11 @@ const serviceList = [
 	"Manicure",
 	"Hair Cut",
 ];
-export default function ServiceSingleCard() {
+
+type Props = {
+	handleOpenedService: (categoryId: string) => void;
+};
+export default function ServiceSingleCard(props: Props) {
 	const [isFlipped, setIsFlip] = useState(false);
 	const { hovered, ref } = useHover();
 	const { hovered: hDescription, ref: refDescription } = useHover();
@@ -71,33 +67,38 @@ export default function ServiceSingleCard() {
 							<Flex gap={"sm"} direction={"column"}>
 								<Flex gap="xs" align={"center"} pt="2px">
 									<Text fw="bold">Hair Services</Text>
-									<Indicator position="middle-start" processing color={"primary"} />
+									<Indicator position="middle-start" color={"primary"} />
 									<Text fz="xs" fw="bold" c={"primary"}>
 										Active
 									</Text>
 								</Flex>
 								<ScrollArea h={180} type="never">
 									<Flex direction={"column"} px="md">
-										{serviceList.map((item) => {
+										{serviceList.map((item, idx) => {
 											return (
-												<Flex key={item} justify={"space-between"} align={"center"} w="100%">
+												<Flex
+													key={item}
+													justify={"space-between"}
+													align={"center"}
+													w="100%"
+													opacity={idx ? 1 : 0.3}
+													title={idx ? "" : "Service deactivated"}
+												>
 													<Flex gap="xs" align={"center"} pt="2px">
 														<Indicator
 															position="middle-start"
-															processing
+															processing={!!idx}
 															withBorder
-															color="primarySecondary"
+															color={Object.values(colors)[idx + 2][4]}
 														/>
-														<Text fz="xs" c={"primarySecondary"}>
-															{item}
-														</Text>
+														<Text fz="xs">{item}</Text>
 													</Flex>
 													<Flex gap="2xs">
 														<Text fz={"xs"}>30%</Text>
 														<RingProgress
 															size={22}
 															thickness={3}
-															sections={[{ value: 30, color: "primarySecondary" }]}
+															sections={[{ value: 30, color: Object.values(colors)[idx + 2][4] }]}
 														/>
 													</Flex>
 												</Flex>
@@ -137,13 +138,13 @@ export default function ServiceSingleCard() {
 				bd="2px dotted primary"
 			>
 				<Card.Section>
-					<Image src={img.src} alt="Running challenge" height={120} fit="fill" />
+					<Image src={img.src} alt={"img."} height={130} fit="cover" />
 				</Card.Section>
 				<Flex justify="space-between" align={"center"} mt="md">
 					<Flex align={"center"} gap={"md"}>
 						<Text fw="bold">Hair Services</Text>
 						<Flex gap="xs" align={"center"} pt="2px">
-							<Indicator position="middle-start" processing color={"primary"} />
+							<Indicator position="middle-start" color={"primary"} />
 							<Text fz="xs" fw="bold" c={"primary"}>
 								Active
 							</Text>
@@ -158,7 +159,9 @@ export default function ServiceSingleCard() {
 							</Menu.Target>
 							<Menu.Dropdown>
 								<Menu.Item leftSection={<IconToggleRight size={15} />}>Change status</Menu.Item>
-								<Menu.Item leftSection={<IconEdit size={15} />}>Edit services</Menu.Item>
+								<Menu.Item leftSection={<IconEdit size={15} />} onClick={() => props.handleOpenedService("")}>
+									Edit services
+								</Menu.Item>
 							</Menu.Dropdown>
 						</Menu>
 					</Flex>

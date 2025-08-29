@@ -85,6 +85,7 @@ function ServiceForm(props: Props) {
 					<Grid.Col span={{ md: 6 }} pos={"relative"}>
 						<Box pos={"absolute"} top={0} right={10}>
 							<Switch
+								style={{ zIndex: 9 }}
 								defaultChecked
 								label={"Service activation"}
 								labelPosition="left"
@@ -127,7 +128,7 @@ function ServiceForm(props: Props) {
 									<NumberInput
 										style={{ flex: 2 }}
 										placeholder="Top master price"
-										suffix="   $"
+										suffix="  $"
 										thousandSeparator=","
 										key={form.key("topMasterPrice")}
 										{...form.getInputProps("topMasterPrice")}
@@ -140,7 +141,7 @@ function ServiceForm(props: Props) {
 									<NumberInput
 										style={{ flex: 2 }}
 										placeholder="Master price"
-										suffix="   $"
+										suffix="  $"
 										thousandSeparator=","
 										key={form.key("masterPrice")}
 										{...form.getInputProps("masterPrice")}
@@ -153,7 +154,7 @@ function ServiceForm(props: Props) {
 									<NumberInput
 										style={{ flex: 2 }}
 										placeholder="Junior master price"
-										suffix="   $"
+										suffix="  $"
 										thousandSeparator=","
 										key={form.key("juniorPrice")}
 										{...form.getInputProps("juniorPrice")}
