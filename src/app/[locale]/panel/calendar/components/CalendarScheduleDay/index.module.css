@@ -1,0 +1,32 @@
+.table {
+	border-collapse: collapse;
+}
+
+.td {
+	border: 1px solid #ccc;
+	padding: 8px 12px;
+	text-align: left;
+	white-space: nowrap;
+	height: 100px;
+}
+
+.th {
+	border: 1px solid #ccc;
+	text-align: left;
+	white-space: nowrap;
+	height: 30px;
+	width: 100%;
+	background-color: #f3f3f3;
+	font-weight: 600;
+	position: sticky;
+	top: 0;
+	z-index: 1;
+}
+
+.tbody tr:nth-of-type(odd) {
+	background-color: #fafafa;
+}
+
+.tbody tr:nth-of-type(even) {
+	background-color: #fff;
+}

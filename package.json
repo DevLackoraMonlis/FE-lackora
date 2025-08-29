@@ -30,6 +30,7 @@
 		"@mantine/dropzone": "7.17.0",
 		"@mantine/form": "7.17.0",
 		"@mantine/hooks": "^7.17.0",
+		"@mantine/modals": "^8.2.7",
 		"@mantine/notifications": "7.17.0",
 		"@mantine/styles": "^6.0.22",
 		"@mantine/tiptap": "7.17.0",

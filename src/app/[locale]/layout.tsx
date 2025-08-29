@@ -15,6 +15,7 @@ import { EnvProvider } from "@/shared/providers/EnvProvider";
 import NextAuthSessionProvider from "@/shared/providers/NextAuthProvider";
 import QueryClientProvider from "@/shared/providers/QueryClientProvider";
 import MantineBaseProvider from "@/shared/providers/mantine/MantineBaseProvider";
+import { ModalsProvider } from "@mantine/modals";
 import { Manrope } from "next/font/google";
 
 export const metadata: Metadata = {
@@ -42,20 +43,22 @@ export default async function RootLayout({
 			<body>
 				<ContextProvider>
 					<MantineBaseProvider>
-						<I18nProviderClient locale={locale}>
-							<EnvProvider
-								envs={{
-									wsUrl: process.env.WS_URL,
-									baseUrl: process.env.BASE_URL,
-									hostUrl: process.env.HOST_URL,
-									nextAuthUrl: process.env.NEXTAUTH_URL,
-								}}
-							>
-								<QueryClientProvider>
-									<NextAuthSessionProvider>{children}</NextAuthSessionProvider>
-								</QueryClientProvider>
-							</EnvProvider>
-						</I18nProviderClient>
+						<ModalsProvider>
+							<I18nProviderClient locale={locale}>
+								<EnvProvider
+									envs={{
+										wsUrl: process.env.WS_URL,
+										baseUrl: process.env.BASE_URL,
+										hostUrl: process.env.HOST_URL,
+										nextAuthUrl: process.env.NEXTAUTH_URL,
+									}}
+								>
+									<QueryClientProvider>
+										<NextAuthSessionProvider>{children}</NextAuthSessionProvider>
+									</QueryClientProvider>
+								</EnvProvider>
+							</I18nProviderClient>
+						</ModalsProvider>
 					</MantineBaseProvider>
 				</ContextProvider>
 			</body>
