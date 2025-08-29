@@ -1,0 +1,8 @@
+.timeCell {
+	border-bottom: 1px solid var(--mantine-color-gray-3);
+	border-right: 1px dashed var(--mantine-color-gray-3);
+	display: flex;
+	align-items: flex-start;
+	justify-content: flex-end;
+	padding: 0;
+}
