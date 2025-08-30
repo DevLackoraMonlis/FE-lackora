@@ -1,13 +1,13 @@
-import { ActionIcon, Flex, Indicator, Transition, useMantineColorScheme } from "@mantine/core";
+import { ActionIcon, Avatar, Flex, Indicator, Transition, useMantineColorScheme } from "@mantine/core";
 import { Box, Card, Container, type MantineColor, Text } from "@mantine/core";
 import { useHover } from "@mantine/hooks";
-import { IconEdit, IconPlayerEject, IconTrash } from "@tabler/icons-react";
+import { IconEdit, IconPlayerEject, IconStar, IconTrash } from "@tabler/icons-react";
 
 type Props = {
 	color: MantineColor;
 	title: string;
 	description: string;
-	icon: typeof IconEdit;
+	imgSrc: string;
 	editable?: boolean;
 	activation?: boolean;
 };
@@ -15,13 +15,12 @@ export default function ServiceSingleCard({
 	color,
 	title,
 	description,
-	icon,
+	imgSrc,
 	editable = true,
 	activation = true,
 }: Props) {
 	const { hovered, ref } = useHover();
 	const { colorScheme } = useMantineColorScheme();
-	const Icon = icon;
 	return (
 		<Container h={160} ref={ref} className="cursor-pointer">
 			<Indicator
@@ -42,7 +41,9 @@ export default function ServiceSingleCard({
 						bg={colorScheme === "dark" ? "" : `${color}1a`}
 					/>
 					<Box pos={"relative"}>
-						<Box c={color}>{Icon && <Icon size={30} />}</Box>
+						<Avatar size={35} src={imgSrc} radius="lg" styles={{ placeholder: { color } }}>
+							<IconStar />
+						</Avatar>
 						<Flex gap={"md"} align={"center"} my={"2xs"}>
 							<Flex align={"center"} gap={"2xs"}>
 								<Text fw={"bold"} fz="lg">

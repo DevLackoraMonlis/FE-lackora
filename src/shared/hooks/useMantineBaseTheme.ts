@@ -30,7 +30,7 @@ const brandPink: MantineColorsTuple = [
 
 export default function useMantineBaseTheme(theme: GlobalTheme, isDark: boolean) {
 	const white = "oklch(100% 0 0)";
-	const black = "oklch(0% 0 0)";
+	const black = DEFAULT_THEME.colors.gray[9];
 	const mantineBaseTheme: MantineThemeOverride = {
 		other: { bg: isDark ? black : white },
 		components: {

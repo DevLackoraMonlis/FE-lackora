@@ -2,8 +2,7 @@
 
 import { Button, Flex, Grid, ScrollArea, Text } from "@mantine/core";
 import { useDisclosure, useViewportSize } from "@mantine/hooks";
-import { IconComet, IconEyeHeart, IconEyeglassFilled, IconGalaxy } from "@tabler/icons-react";
-import { IconBrandAirtable, IconMedicineSyrup, IconPlus } from "@tabler/icons-react";
+import { IconPlus } from "@tabler/icons-react";
 
 import { useBreakpoint } from "@/shared/hooks/useBreakpoint";
 
@@ -47,7 +46,7 @@ export default function Services() {
 							<ServiceSingleCard
 								color="#4dd158"
 								title="Pedicure"
-								icon={IconMedicineSyrup}
+								imgSrc=""
 								description={"Build fully functional accessible web applications with ease "}
 							/>
 						</Grid.Col>
@@ -55,7 +54,7 @@ export default function Services() {
 							<ServiceSingleCard
 								color="#7950f2"
 								title="Eyebrows"
-								icon={IconEyeHeart}
+								imgSrc=""
 								description={"Build fully functional accessible web applications with ease "}
 							/>
 						</Grid.Col>
@@ -64,7 +63,7 @@ export default function Services() {
 								activation={false}
 								color="#fd7e14"
 								title="Eyelashes"
-								icon={IconEyeglassFilled}
+								imgSrc=""
 								description={"Build fully functional accessible web applications with ease "}
 							/>
 						</Grid.Col>
@@ -72,7 +71,7 @@ export default function Services() {
 							<ServiceSingleCard
 								color="#228be6"
 								title="Cosmetology"
-								icon={IconComet}
+								imgSrc=""
 								description={"Build fully functional accessible web applications with ease "}
 							/>
 						</Grid.Col>
@@ -80,7 +79,7 @@ export default function Services() {
 							<ServiceSingleCard
 								color="#fab005"
 								title="Waxing"
-								icon={IconGalaxy}
+								imgSrc=""
 								description={"Build fully functional accessible web applications with ease "}
 							/>
 						</Grid.Col>
@@ -88,7 +87,7 @@ export default function Services() {
 							<ServiceSingleCard
 								color="#12b886"
 								title="Sugaring"
-								icon={IconBrandAirtable}
+								imgSrc=""
 								description={"Build fully functional accessible web applications with ease "}
 							/>
 						</Grid.Col>
