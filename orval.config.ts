@@ -2,7 +2,7 @@
 
 export default {
 	api: {
-		input: "http://172.31.100.57:8080/openapi.json",
+		input: "http://91.107.144.92:8080/swagger/v1/swagger.json",
 		biome: true,
 		prettier: true,
 		clean: true,

@@ -1,7 +1,6 @@
 import type { GetTokenRq, GetTokenRs } from "@/http/end-points/UserManagementService.types";
 
 import type { GetNonceRq } from "@/http/end-points/AuthService.types";
-import type { ActiveApplicationsResponse } from "@/http/generated/models";
 import axios from "axios";
 
 const ControllerPath = "/api/user-management";
